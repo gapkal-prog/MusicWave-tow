@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/account-dashboard",
+  "title": "داشبورد موسیقی کاربر",
+  "category": "music-wave",
+  "description": "منطقه حساب یکپارچه: کتابخانه موسیقی، سفارش‌ها، بارگیری‌ها، آدرس‌ها، روش‌های پرداخت، عضویت، پیگیری درخواست‌ها و فهرست‌های پخش در یک پیمایش.",
+  "keywords": ["کتابخانه", "حساب کاربری", "عضویت", "سفارشات", "ووکامرس", "درخواست", "پیگیری"],
+  "textdomain": "music-wave-core",
+  "icon": "dashboard",
+  "attributes": {
+    "showWelcome": { "type": "boolean", "default": true },
+    "showLibrary": { "type": "boolean", "default": true },
+    "showQuickLinks": { "type": "boolean", "default": true },
+    "showStats": { "type": "boolean", "default": true },
+    "showMembershipPanel": { "type": "boolean", "default": true },
+    "showOrders": { "type": "boolean", "default": true },
+    "showDownloads": { "type": "boolean", "default": true },
+    "showAddresses": { "type": "boolean", "default": true },
+    "showPaymentMethods": { "type": "boolean", "default": true },
+    "showAccountDetails": { "type": "boolean", "default": true },
+    "showRequests": { "type": "boolean", "default": true },
+    "showPlaylists": { "type": "boolean", "default": true },
+    "showSignOut": { "type": "boolean", "default": true },
+    "introText": { "type": "string", "default": "" },
+    "membershipHeading": { "type": "string", "default": "عضویت" },
+    "libraryHeading": { "type": "string", "default": "کتابخانه موسیقی من" },
+    "ordersHeading": { "type": "string", "default": "سفارش‌ها" },
+    "downloadsHeading": { "type": "string", "default": "دانلودها" },
+    "addressesHeading": { "type": "string", "default": "آدرس‌ها" },
+    "paymentHeading": { "type": "string", "default": "روش‌های پرداخت" },
+    "accountHeading": { "type": "string", "default": "جزئیات و ویرایش حساب" },
+    "requestsHeading": { "type": "string", "default": "پیگیری درخواست‌ها" },
+    "playlistsHeading": { "type": "string", "default": "فهرست‌های پخش" },
+    "panelOrder": { "type": "string", "default": "default" }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "color": { "background": true, "link": true, "text": true },
+    "spacing": { "blockGap": true, "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "example": {
+    "attributes": {
+      "showWelcome": true,
+      "showLibrary": true,
+      "showQuickLinks": true,
+      "showStats": true,
+      "showMembershipPanel": true,
+      "showOrders": true,
+      "showDownloads": true,
+      "showAddresses": true,
+      "showPaymentMethods": true,
+      "showAccountDetails": true,
+      "showRequests": true,
+      "showPlaylists": true,
+      "showSignOut": true,
+      "panelOrder": "default"
+    }
+  }
+}

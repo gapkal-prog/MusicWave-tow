@@ -1,0 +1,120 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/term-hero",
+  "title": "معرفی اصطلاح",
+  "category": "music-wave",
+  "description": "سربرگ بایگانی برای صفحات هنرمند، ژانر، حال‌وهوا و برچسب؛ با بنر جلد یا ردیف فشرده شامل نام، توضیحات، تعداد انتشار و گزینهٔ دنبال‌کردن. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای.",
+  "keywords": [
+    "معرفی",
+    "سربرگ",
+    "هنرمند",
+    "ژانر",
+    "آرشیو",
+    "بنر"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "format-image",
+  "attributes": {
+    "taxonomy": {
+      "type": "string",
+      "default": ""
+    },
+    "termId": {
+      "type": "integer",
+      "default": 0
+    },
+    "layout": {
+      "type": "string",
+      "default": "banner"
+    },
+    "size": {
+      "type": "string",
+      "default": "medium"
+    },
+    "imageShape": {
+      "type": "string",
+      "default": "rounded"
+    },
+    "showImage": {
+      "type": "boolean",
+      "default": true
+    },
+    "showEyebrow": {
+      "type": "boolean",
+      "default": true
+    },
+    "showName": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDescription": {
+      "type": "boolean",
+      "default": true
+    },
+    "showCount": {
+      "type": "boolean",
+      "default": true
+    },
+    "showFollowButton": {
+      "type": "boolean",
+      "default": true
+    },
+    "descriptionLength": {
+      "type": "integer",
+      "default": 40
+    },
+    "accentColor": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "radius": true,
+      "color": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "shadow": true,
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "styles": [
+    {
+      "name": "minimal",
+      "label": "حداقلی"
+    },
+    {
+      "name": "editorial",
+      "label": "سرمقاله‌ای"
+    },
+    {
+      "name": "glass",
+      "label": "شیشه‌ای"
+    }
+  ],
+  "example": {
+    "attributes": {
+      "layout": "banner",
+      "size": "tall"
+    }
+  }
+}

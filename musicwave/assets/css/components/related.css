@@ -1,0 +1,57 @@
+/* Related releases reuse the MusicWave release shelf layout system
+ * (mw-release-shelf--grid / --scroll / --list) so rails stay visually
+ * identical to the shelf block. Only the section chrome lives here. */
+.mw-related-releases {
+	display: grid;
+	gap: var(--wp--preset--spacing--50);
+	margin: var(--wp--preset--spacing--50) 0;
+}
+
+.mw-related-releases__section {
+	margin: 0;
+}
+
+.mw-related-releases__section-header {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: var(--wp--preset--spacing--30);
+}
+
+.mw-related-releases__section-header h2 {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--large);
+}
+
+.mw-related-releases__more {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	gap: 0.4rem;
+	color: var(--mw-color-accent-strong);
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.mw-related-releases__more span {
+	font-size: 1.1em;
+	transition: transform 0.2s ease;
+}
+
+.mw-related-releases__more:is(:hover, :focus-visible) span {
+	transform: translateX(0.2rem);
+}
+
+/* The functional preview trigger sits in the shelf card body. */
+.mw-release-shelf__body .mw-preview-button {
+	width: 100%;
+	margin-top: 0.35rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-related-releases__more span {
+		transition: none;
+	}
+}

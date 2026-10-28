@@ -1,0 +1,1549 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: music-wave-vip\n"
+"Language: en_US\n"
+"Language-Team: English\n"
+"PO-Revision-Date: 2026-08-30 00:00+0000\n"
+"Last-Translator: MusicWave Translation Team\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/Users/UsersListIntegration.php:253
+#, php-format
+msgid "%1$d روز مانده (تا %2$s)"
+msgstr "%1$d days remaining (until %2$s)"
+
+#: src/Users/UserProfilePanel.php:127
+#, php-format
+msgid "%1$s ذخیره · %2$s پلی‌لیست"
+msgstr "%1$s saved · %2$s playlists"
+
+#: src/Users/UsersListIntegration.php:391
+#, php-format
+msgid "%1$s سفارش (%2$s)"
+msgstr "%1$s orders (%2$s)"
+
+#: src/PlanProducts.php:424
+#, php-format
+msgid "%d روز"
+msgid_plural "%d روز"
+msgstr[0] "%d day"
+msgstr[1] "%d days"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:129
+#, php-format
+msgid "%d روز باقی‌مانده"
+msgid_plural "%d روز باقی‌مانده"
+msgstr[0] "%d day left"
+msgstr[1] "%d days left"
+
+#: src/PlanProducts.php:417
+#, php-format
+msgid "%d سال"
+msgid_plural "%d سال"
+msgstr[0] "%d year"
+msgstr[1] "%d years"
+
+#: src/PlanProducts.php:421
+#, php-format
+msgid "%d ماه"
+msgid_plural "%d ماه"
+msgstr[0] "%d month"
+msgstr[1] "%d months"
+
+#: src/Users/UsersListIntegration.php:393
+#, php-format
+msgid "%s سفارش"
+msgstr "%s orders"
+
+#: src/Admin/VipSettingsUi.php:47
+msgid "+ ایجاد محصول طرح جدید"
+msgstr "+ Create new plan product"
+
+#: src/Users/UsersListIntegration.php:297
+#, php-format
+msgid "+%d طرح دیگر"
+msgstr "+%d more plans"
+
+#: src/SettingsPage.php:464
+msgid "Apache / LiteSpeed — هدر X-Sendfile"
+msgstr "Apache / LiteSpeed — X-Sendfile header"
+
+#: src/SettingsPage.php:68 src/SettingsPage.php:552 src/VipPlans.php:96
+msgid "MusicWave VIP"
+msgstr "MusicWave VIP"
+
+#: src/Plugin.php:38
+#, php-format
+msgid "MusicWave VIP به MusicWave Core نسخهٔ %1$s یا بالاتر نیاز دارد؛ نسخهٔ فعال %2$s است."
+msgstr "MusicWave VIP requires MusicWave Core %1$s or newer; the active version is %2$s."
+
+#: src/Plugin.php:32
+msgid "MusicWave VIP به افزونهٔ MusicWave Core نیاز دارد."
+msgstr "MusicWave VIP requires the MusicWave Core plugin."
+
+#: src/SettingsPage.php:465
+msgid "Nginx — هدر X-Accel-Redirect"
+msgstr "Nginx — X-Accel-Redirect header"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:193
+msgid "VIP"
+msgstr "VIP"
+
+#: src/Users/UsersListIntegration.php:250
+#, php-format
+msgid "VIP فعال · %s"
+msgstr "Active VIP · %s"
+
+#: src/Users/UsersListIntegration.php:242
+#, php-format
+msgid "VIP مادام‌العمر · %s"
+msgstr "Lifetime VIP · %s"
+
+#: src/Users/UsersListIntegration.php:137 src/Users/UsersListIntegration.php:270
+msgid "VIP منقضی‌شده"
+msgstr "Expired VIP"
+
+#: src/Users/UsersListIntegration.php:577
+msgid "VIP: اعطای اشتراک سالانه (۳۶۵ روز)"
+msgstr "VIP: Grant 1-year plan (365 days)"
+
+#: src/Users/UsersListIntegration.php:575
+msgid "VIP: اعطای اشتراک ۱ ماهه (۳۰ روز)"
+msgstr "VIP: Grant 1-month plan (30 days)"
+
+#: src/Users/UsersListIntegration.php:576
+msgid "VIP: اعطای اشتراک ۶ ماهه (۱۸۰ روز)"
+msgstr "VIP: Grant 6-month plan (180 days)"
+
+#: src/Users/UsersListIntegration.php:578
+msgid "VIP: تمدید اشتراک فعال (+۳۰ روز)"
+msgstr "VIP: Extend active plan (+30 days)"
+
+#: src/Users/UsersListIntegration.php:579
+msgid "VIP: لغو همه اشتراک‌های فعال"
+msgstr "VIP: Revoke all active plans"
+
+#: src/ProtectedAssetStorage.php:377
+msgid "asset حفاظت‌شده ذخیره نشد."
+msgstr "The protected asset could not be stored."
+
+#: src/Users/UserProfilePanel.php:302
+msgid "آخرین آهنگ‌های پخش‌شده توسط کاربر"
+msgstr "Recent tracks played by user"
+
+#: src/SettingsPage.php:767
+msgid "آخرین رویدادهای حسابرسی عضویت VIP"
+msgstr "Recent VIP membership audit events"
+
+#: src/Users/UsersListIntegration.php:448
+#, php-format
+msgid "آخرین فعالیت: %s پیش"
+msgstr "Last active: %s ago"
+
+#: src/SettingsPage.php:143
+msgid "آداپترهای عضویت و مجوز دسترسی"
+msgstr "Membership and entitlement adapters"
+
+#: src/Checkout/VirtualCheckoutSimplifier.php:75
+msgid "آدرس ایمیل"
+msgstr "Email address"
+
+#: src/SettingsPage.php:613
+msgid "آماده سرویس‌دهی ایمن"
+msgstr "Ready for secure delivery"
+
+#: src/PlanProducts.php:143 src/PlanProducts.php:171
+msgid "اجازهٔ مدیریت طرح‌های VIP را ندارید."
+msgstr "You are not allowed to manage VIP plans."
+
+#: src/SettingsPage.php:130 src/SettingsPage.php:690
+msgid "ارائه‌دهندهٔ تحویل"
+msgstr "Delivery provider"
+
+#: src/SettingsPage.php:146 src/SettingsPage.php:752
+msgid "ارتقای نقش VIP"
+msgstr "VIP role promotion"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:173 src/Checkout/SubscriptionOrderPresenter.php:177
+msgid "اشتراک"
+msgstr "Membership"
+
+#: src/VipPlans.php:1033
+#, php-format
+msgid "اشتراک VIP اعطا شد: %s"
+msgstr "VIP membership granted: %s"
+
+#: src/VipPlans.php:273
+msgid "اشتراک VIP لغو شد (سفارش لغو/بازپرداخت/ناموفق). دسترسی به سطح عادی بازگشت."
+msgstr "VIP membership revoked after order cancellation, refund, or failure."
+
+#: src/Plans/VipPlanCatalog.php:62
+msgid "اشتراک شش‌ماهه اقتصادی برای شنوندگان حرفه‌ای با دسترسی بی‌وقفه به تمام انتشارهای جدید و آرشیو کامل باکیفیت."
+msgstr "Value 6-month membership for dedicated listeners with uninterrupted access to new releases and the full high-quality catalog."
+
+#: src/Checkout/SubscriptionOrderPresenter.php:92
+msgid "اشتراک شما فعال شد!"
+msgstr "Your VIP membership is now active!"
+
+#: music-wave-vip.php:334 src/SettingsPage.php:556
+msgid "اعضای VIP"
+msgstr "VIP Members"
+
+#: src/SettingsPage.php:285 src/Users/UsersListIntegration.php:127
+msgid "اعضای VIP فعال"
+msgstr "Active VIP Members"
+
+#: src/Users/UserProfilePanel.php:238
+msgid "اعطای اشتراک جدید یا تمدید مدت VIP کاربر"
+msgstr "Grant a new VIP membership or extend duration"
+
+#: src/SettingsPage.php:383
+msgid "اعطای خودکار نقش VIP MusicWave (mw_vip)"
+msgstr "Automatically grant MusicWave VIP role (mw_vip)"
+
+#: src/Users/UserProfilePanel.php:452
+msgid "اعطای دستی از ویرایش کاربر"
+msgstr "Manual grant from user edit screen"
+
+#: src/VipAuditLog.php:87 src/VipAuditLog.php:88
+msgid "اعطای دستی مدیر"
+msgstr "Manual admin grant"
+
+#: src/Users/UsersListIntegration.php:614 src/Users/UsersListIntegration.php:619 src/Users/UsersListIntegration.php:624
+msgid "اعطای گروهی در users.php"
+msgstr "Bulk grant on users.php"
+
+#: src/Users/UserProfilePanel.php:243
+msgid "اعمال اشتراک / تمدید جدید هنگام ذخیره پروفایل"
+msgstr "Apply new VIP grant / extension on profile save"
+
+#: src/SettingsPage.php:246
+msgid "اعمال عضویت VIP خاموش است — حالت پروموشن باز فعال است."
+msgstr "VIP membership enforcement is paused — open promotional mode is active."
+
+#: src/SettingsPage.php:242
+msgid "اعمال عضویت VIP روشن است."
+msgstr "VIP membership enforcement is ON."
+
+#: src/SettingsPage.php:575
+msgid "اعمال قوانین VIP"
+msgstr "VIP enforcement"
+
+#: src/SettingsPage.php:741
+msgid "اعمال قوانین خاموش است؛ با روشن کردن کلید اصلی در تب «عمومی» این گزینه‌ها بلافاصله برای ویرایش باز می‌شوند."
+msgstr "Enforcement is paused; enable the master switch in the General tab to edit these controls."
+
+#: src/SettingsPage.php:550
+msgid "اعمال قوانین روشن است"
+msgstr "Enforcement on"
+
+#: src/Users/UsersListIntegration.php:348
+msgid "افزودن به انتهای اعتبار فعلی"
+msgstr "Stack onto current expiry"
+
+#: src/SettingsPage.php:490
+msgid "افزونه WooCommerce Memberships"
+msgstr "WooCommerce Memberships integration"
+
+#: src/SettingsPage.php:491
+msgid "افزونه WooCommerce Subscriptions"
+msgstr "WooCommerce Subscriptions integration"
+
+#: src/Plans/VipPlanCatalog.php:67
+msgid "امکان خرید مجدد و افزودن خودکار مدت جدید به انتهای اعتبار فعلی"
+msgstr "Repurchase anytime to automatically stack extra time onto your active expiry"
+
+#: src/Users/UserProfilePanel.php:281
+msgid "انباشت روی انتهای اعتبار فعلی"
+msgstr "Stack onto active expiry"
+
+#: src/SettingsPage.php:557
+msgid "انتشارها"
+msgstr "Releases"
+
+#: src/SettingsPage.php:242
+msgid "انتشارهای حالت «فقط عضویت» و «خرید یا عضویت» بر اساس سطح اشتراک یا خرید تکی بررسی می‌شوند و تحویل فایل‌ها با توکن امضاشده انجام می‌گیرد."
+msgstr "Membership-only and Purchase-or-Membership releases are verified against active subscription tiers or single purchases and delivered via signed tokens."
+
+#: src/VipAuditLog.php:94
+msgid "انقضای زمانی"
+msgstr "Scheduled expiration"
+
+#: src/Plans/VipPlanCatalog.php:66
+msgid "اولویت بررسی و اجابت درخواست‌های موسیقی در پنل کاربری"
+msgstr "Priority review and fulfillment for music requests in your dashboard"
+
+#: src/SettingsPage.php:425
+msgid "ایجاد با دکمهٔ «ایجاد» یا openssl rand -hex 32"
+msgstr "Generate with the button beside this field or openssl rand -hex 32"
+
+#: src/SettingsPage.php:293
+msgid "ایجاد طرح‌های پیش‌فرض (۱، ۶ و ۱۲ ماهه)"
+msgstr "Create default plans (1 / 6 / 12 months)"
+
+#: src/Admin/VipSettingsUi.php:98
+msgid "ایجاد محصولات طرح پیش‌فرض ناموفق بود. آیا ووکامرس فعال است؟"
+msgstr "Creating the default plan products failed. Is WooCommerce active?"
+
+#: src/SettingsPage.php:427
+msgid "ایجاد کلید امن ۶۴ کاراکتری"
+msgstr "Generate 64-character secret key"
+
+#: src/SettingsPage.php:614
+msgid "ایجاد، ایمن‌سازی و همگام‌سازی خودکار پوشه"
+msgstr "Provision, harden & sync vault directory"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:138
+msgid "این سفارش شامل طرح اشتراک VIP است. دسترسی پس از پرداخت فعال شد."
+msgstr "This order includes a VIP membership plan; access is active upon payment."
+
+#: src/Checkout/DirectCheckoutHandler.php:45
+msgid "این محصول به‌عنوان طرح اشتراک VIP نگاشت شده اما مجازی نیست. برای حذف فیلدهای حمل‌ونقل و فعال‌سازی پرداخت مستقیم، آن را مجازی کنید."
+msgstr "This product is mapped to a VIP membership plan but is not marked Virtual; mark it Virtual for streamlined checkout without shipping fields."
+
+#: src/SettingsPage.php:356
+msgid "با تکمیل سفارش، سطح طرح و نقش mw_vip فوراً اعطا می‌شوند؛ تمدید زودتر روزها را روی باقیمانده قبلی تجمیع می‌کند؛ لغو یا استرداد وجه بلافاصله دسترسی همان سفارش را پس می‌گیرد."
+msgstr "Completed orders immediately grant the plan tier and mw_vip role; early renewals stack remaining days; refunds or cancellations immediately revoke that order grant."
+
+#: src/SettingsPage.php:405
+msgid "با ثابت MUSIC_WAVE_VIP_PROTECTED_ROOT در wp-config.php قفل شده است."
+msgstr "Locked via MUSIC_WAVE_VIP_PROTECTED_ROOT constant in wp-config.php."
+
+#: src/ProtectedAssetStorage.php:350
+msgid "بارگذاری asset حفاظت‌شده معتبر نیست."
+msgstr "The protected asset upload was invalid."
+
+#: src/SettingsPage.php:649
+msgid "بارگذاری در مخزن خصوصی"
+msgstr "Upload to private vault"
+
+#: src/SettingsPage.php:108
+msgid "بارگذاری فایل در مخزن خصوصی ناموفق بود."
+msgstr "Uploading file to the private vault failed."
+
+#: src/SettingsPage.php:878
+msgid "باز کردن تنظیمات VIP"
+msgstr "Open VIP settings"
+
+#: src/Users/UserProfilePanel.php:104
+msgid "باز کردن سفارش‌های این کاربر ←"
+msgstr "View user orders →"
+
+#: src/Admin/VipSettingsUi.php:46
+msgid "باز کردن ووکامرس → محصولات"
+msgstr "Open WooCommerce → Products"
+
+#: src/SettingsPage.php:265
+msgid "بازدیدکنندگان مهمان حتی روی انتشارهای عمومی/پروموشن برای پخش یا دانلود فایل حفاظت‌شده باید وارد حساب کاربری شوند."
+msgstr "Guest visitors must sign in before streaming or downloading protected files even on public or promotional releases."
+
+#: src/Checkout/SubscriptionOrderPresenter.php:96
+msgid "بازگشت به خانه"
+msgstr "Back to Home"
+
+#: src/Plans/VipPlanCatalog.php:80
+msgid "بالاترین اولویت در پیگیری درخواست‌های آهنگ و پشتیبانی اختصاصی مشترکین"
+msgstr "Top priority on track requests and dedicated subscriber support"
+
+#: src/SettingsPage.php:413
+msgid "باید HTTPS باشد. میزبان نشانی پایه خودکار در فهرست مجاز قرار می‌گیرد."
+msgstr "Must use HTTPS. The base URL host is allowlisted automatically."
+
+#: src/Users/UsersListIntegration.php:142
+msgid "بدون اشتراک VIP"
+msgstr "No VIP Membership"
+
+#: src/SettingsPage.php:268
+msgid "بر اساس حالت دسترسی هر انتشار (شامل مهمانان در آثار عمومی)"
+msgstr "Follow each release access policy (including guests on public releases)"
+
+#: src/SettingsPage.php:295
+msgid "برای ایجاد و فروش محصولات طرح، ووکامرس را فعال کنید."
+msgstr "Activate WooCommerce to create and sell plan products."
+
+#: src/SettingsPage.php:355
+msgid "برای دسترسی به انتشارهای «فقط عضویت» یا «خرید یا عضویت»، سطح پیش‌فرض mw_vip همهٔ مشترکین فعال VIP را پوشش می‌دهد و نامک اختصاصی طرح (مانند vip-12m) فقط دارندگان همان طرح را مجاز می‌کند."
+msgstr "For Membership-only or Purchase-or-Membership releases, mw_vip matches any active VIP subscriber while plan slugs (such as vip-12m) restrict access to that tier."
+
+#: src/SettingsPage.php:491
+msgid "بررسی اشتراک‌های تکرارشونده WooCommerce Subscriptions."
+msgstr "Evaluate recurring subscriptions managed by WooCommerce Subscriptions."
+
+#: src/SettingsPage.php:611
+msgid "بررسی خودکار مسیر خصوصی، مجوزهای خواندن/نوشتن، سپر .htaccess/web.config و فهرست فایل‌های ثبت‌شده."
+msgstr "Live verification of vault path isolation, read/write permissions, .htaccess/web.config shields, and indexed assets."
+
+#: src/Users/UserProfilePanel.php:141
+msgid "بررسی درخواست‌های کاربر ←"
+msgstr "Review user requests →"
+
+#: src/SettingsPage.php:490
+msgid "بررسی طرح‌های فعال افزونه WooCommerce Memberships."
+msgstr "Evaluate active plans managed by WooCommerce Memberships."
+
+#: src/SettingsPage.php:488
+msgid "بررسی مستقیم نقش وردپرس هم‌نام با نامک سطح عضویت."
+msgstr "Evaluate matching WordPress user roles directly against required level keys."
+
+#: src/Plans/VipPlanCatalog.php:75
+msgid "بهترین ارزش سالانه"
+msgstr "Best Annual Value"
+
+#: src/SettingsPage.php:791
+msgid "به‌صورت پیش‌فرض خاموش و ایمن است: هنگام حذف موقت یا به‌روزرسانی دستی افزونه، تمام اشتراک‌های پرداخت‌شدهٔ مشتریان، جدول mw_vip_assets، گزارش حسابرسی و تنظیمات حفظ می‌شوند. تنها در صورت روشن کردن این گزینه، هنگام حذف کامل افزونه تمام داده‌های پایگاه داده پاک خواهند شد (فایل‌های روی دیسک هرگز پاک نمی‌شوند)."
+msgstr "Disabled by default for safety: paid customer subscriptions, mw_vip_assets records, audit logs, and settings are preserved across updates or reinstallations. Only when enabled will full plugin uninstallation drop VIP database tables and options (vault files on disk are never deleted)."
+
+#: src/SettingsPage.php:112 src/SettingsPage.php:681
+msgid "تأیید حذف قطعی؟"
+msgstr "Confirm permanent removal?"
+
+#: src/SettingsPage.php:339
+msgid "تأیید حذف نگاشت؟"
+msgstr "Confirm remove mapping?"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:143
+#, php-format
+msgid "تاریخ اعطا: %s"
+msgstr "Granted on: %s"
+
+#: src/Users/UserProfilePanel.php:264
+msgid "تاریخ انقضای دقیق"
+msgstr "Exact expiry date"
+
+#: src/Users/UsersListIntegration.php:336
+msgid "تاریخ انقضای دقیق..."
+msgstr "Exact expiry date..."
+
+#: src/Users/UserProfilePanel.php:274
+msgid "تاریخ پایان"
+msgstr "End date"
+
+#: src/Users/UserProfilePanel.php:348
+msgid "تاریخچه تغییرات اشتراک VIP این کاربر"
+msgstr "VIP membership audit log for this user"
+
+#: src/SettingsPage.php:129 src/SettingsPage.php:564
+msgid "تحویل حفاظت‌شده"
+msgstr "Protected delivery"
+
+#: src/SettingsPage.php:865
+msgid "تحویل حفاظت‌شده و عضویت‌های VIP"
+msgstr "VIP protected delivery and memberships"
+
+#: src/SettingsPage.php:553
+msgid "تحویل فایل حفاظت‌شده، مخزن خصوصی فایل‌ها خارج از ریشهٔ وب، نشانی‌های امضاشده HMAC و اشتراک‌های زمان‌دار ووکامرس."
+msgstr "Protected file delivery, private off-webroot file vault, HMAC-signed URLs, and timed WooCommerce memberships."
+
+#: src/Users/UserProfilePanel.php:269 src/Users/UsersListIntegration.php:340
+msgid "تعداد روز"
+msgstr "Days"
+
+#: src/Users/UserProfilePanel.php:263
+msgid "تعداد روز دلخواه"
+msgstr "Custom number of days"
+
+#: src/Users/UsersListIntegration.php:335
+msgid "تعداد روز دلخواه..."
+msgstr "Custom days..."
+
+#: src/Users/UserProfilePanel.php:429
+msgid "تغییر به اشتراک مادام‌العمر"
+msgstr "Converted to lifetime membership"
+
+#: src/SettingsPage.php:391
+msgid "تغییرمسیر راه‌دور امضاشده با HTTPS HMAC (سرور دانلود / CDN)"
+msgstr "Signed HTTPS HMAC remote redirect (download server / CDN)"
+
+#: src/SettingsPage.php:537
+msgid "تمام تب‌ها یکجا اعتبارسنجی و ذخیره می‌شوند؛ پوشهٔ حفاظت‌شده خارج از ریشهٔ وب به صورت خودکار ایجاد و ایمن‌سازی می‌گردد."
+msgstr "All tabs validate and save peacefully together; the private vault outside the web root is provisioned and hardened automatically."
+
+#: src/VipAuditLog.php:89
+msgid "تمدید دستی مدیر"
+msgstr "Manual admin extension"
+
+#: src/Users/UsersListIntegration.php:629
+msgid "تمدید گروهی +۳۰ روز در users.php"
+msgstr "Bulk extend +30 days on users.php"
+
+#: music-wave-vip.php:335
+msgid "تنظیمات"
+msgstr "Settings"
+
+#: src/SettingsPage.php:67
+msgid "تنظیمات MusicWave VIP"
+msgstr "MusicWave VIP settings"
+
+#: src/SettingsPage.php:817
+msgid "تنظیمات VIP"
+msgstr "VIP settings"
+
+#: src/SettingsPage.php:801
+msgid "تنظیمات مرتبط در هستهٔ MusicWave"
+msgstr "Related settings in MusicWave Core"
+
+#: src/Users/UserProfilePanel.php:86
+msgid "تنظیمات و طرح‌های VIP"
+msgstr "VIP Settings & Plans"
+
+#: src/Users/UserProfilePanel.php:287
+msgid "توضیح ثبت در گزارش"
+msgstr "Audit log note"
+
+#: src/Plans/VipProductPagePresenter.php:149
+msgid "توضیحات محصول و قابلیت‌های اشتراک"
+msgstr "Product description & plan capabilities"
+
+#: src/SettingsPage.php:344
+msgid "توضیحات، چک‌لیست امکانات و قیمت هر طرح مستقیماً از صفحه ویرایش محصول در ووکامرس خوانده شده و در کارت‌های عضویت (.mw-membership__plan) و صفحه تک‌محصول نمایش داده می‌شود."
+msgstr "Each plan's description, feature checklist, and pricing are read directly from its WooCommerce product editor and displayed across membership cards (.mw-membership__plan) and single product pages."
+
+#: src/SettingsPage.php:447
+msgid "ثانیه (۳۰ تا ۹۰۰)"
+msgstr "seconds (30–900)"
+
+#: src/Users/UsersListIntegration.php:354
+msgid "ثبت / تمدید"
+msgstr "Apply / Extend"
+
+#: src/Users/UsersListIntegration.php:349
+msgid "جایگزینی از امروز"
+msgstr "Replace starting today"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:116
+msgid "جزئیات اشتراک"
+msgstr "Membership Details"
+
+#: src/Users/UsersListIntegration.php:361
+msgid "جزئیات کامل"
+msgstr "Full profile"
+
+#: src/SettingsPage.php:652
+msgid "جستجو در نام فایل‌های حفاظت‌شده…"
+msgstr "Search protected filenames…"
+
+#: src/SettingsPage.php:211
+msgid "حالت تغییرمسیر راه‌دور هم به نشانی پایهٔ HTTPS و هم به راز امضا (حداقل ۳۲ کاراکتر) نیاز دارد. تا پیکربندی هر دو، تحویل با رد امن پیش‌فرض باقی می‌ماند."
+msgstr "Remote redirect mode requires both an HTTPS base URL and a signing secret of at least 32 characters. Delivery safely fails closed until both are configured."
+
+#: src/SettingsPage.php:395
+msgid "حالت محلی فایل‌ها را از دیسک خصوصی می‌فرستد؛ حالت راه‌دور نشانی کوتاه‌عمر امضاشده با HMAC-SHA256 صادر می‌کند."
+msgstr "Local mode streams files from the private disk vault; remote mode issues short-lived HMAC-SHA256 signed URLs."
+
+#: src/SettingsPage.php:234
+msgid "حالت محلی فایل‌ها را خارج از ریشهٔ عمومی وب نگه می‌دارد و با PHP (پشتیبانی کامل HTTP Range) یا شتاب‌دهی وب‌سرور (X-Sendfile / Nginx X-Accel-Redirect) پخش می‌کند. حالت راه‌دور نشانی‌های کوتاه‌عمر HTTPS با امضای HMAC-SHA256 برای سرور دانلود، Cloudflare، R2 یا CDN می‌سازد."
+msgstr "Local mode stores files outside the public web root and streams via PHP HTTP Range or web-server acceleration (X-Sendfile / Nginx X-Accel-Redirect). Remote mode signs short-lived HTTPS URLs via HMAC-SHA256 for CDNs, R2, or dedicated download servers."
+
+#: src/SettingsPage.php:550
+msgid "حالت پروموشن باز (VIP خاموش)"
+msgstr "Open promotional mode (VIP paused)"
+
+#: src/SettingsPage.php:658
+msgid "حجم"
+msgstr "Size"
+
+#: src/SettingsPage.php:111 src/SettingsPage.php:681
+msgid "حذف"
+msgstr "Delete"
+
+#: src/SettingsPage.php:790
+msgid "حذف داده‌ها هنگام حذف افزونه"
+msgstr "Delete plugin data on uninstall"
+
+#: src/Users/UserProfilePanel.php:159
+msgid "حذف دسترسی"
+msgstr "Revoke grant"
+
+#: src/SettingsPage.php:339
+msgid "حذف نگاشت"
+msgstr "Remove mapping"
+
+#: src/SettingsPage.php:795
+msgid "حذف همهٔ داده‌های پایگاه دادهٔ VIP هنگام حذف افزونه"
+msgstr "Delete all VIP database data on plugin uninstall"
+
+#: src/SettingsPage.php:383
+msgid "حساب‌های VIP فعال را در فهرست کاربران وردپرس مشخص می‌کند و پس از انقضا یا لغو سفارش خودکار بازپس گرفته می‌شود."
+msgstr "Marks active VIP subscribers in WordPress Users and revokes automatically upon order refund or expiration."
+
+#: src/SettingsPage.php:620
+msgid "خارج بودن از ریشهٔ عمومی وب (ABSPATH / DOCUMENT_ROOT)"
+msgstr "Isolated outside public web root (ABSPATH / DOCUMENT_ROOT)"
+
+#: src/SettingsPage.php:407
+msgid "خالی بگذارید تا پوشهٔ خودکار کنار وردپرس ساخته شود، یا مسیر دلخواه خارج از ریشهٔ وب (مانند /var/private/musicwave) را وارد کنید تا خودکار ایجاد و ایمن‌سازی شود."
+msgstr "Leave blank to auto-provision beside WordPress, or specify an absolute directory outside the web root (e.g. /var/private/musicwave)."
+
+#: src/VipAuditLog.php:85 src/VipAuditLog.php:86
+msgid "خرید / تمدید اشتراک"
+msgstr "Plan purchase / renewal"
+
+#: src/SettingsPage.php:487
+msgid "خرید طرح یا اعطای دستی مدیر سطح را فوراً فعال می‌کند و بازپرداخت یا انقضا آن را خودکار پس می‌گیرد."
+msgstr "Purchasing a plan or granting access manually activates membership immediately; refunds or expiration revoke it automatically."
+
+#: src/Users/UsersListIntegration.php:103
+msgid "خطا در ذخیره وضعیت VIP."
+msgstr "Could not save VIP status."
+
+#: src/Users/UserProfilePanel.php:222
+msgid "دائمی"
+msgstr "Lifetime"
+
+#: src/Plans/VipPlanCatalog.php:65
+msgid "دانلود با لینک امن پرسرعت در بالاترین کیفیت استودیویی موجود"
+msgstr "High-speed signed downloads in the highest available studio quality"
+
+#: src/Plans/VipPlanCatalog.php:50
+msgid "دانلود مستقیم تک‌آهنگ‌ها و آلبوم‌های ویژه با کیفیت اصلی (320kbps / FLAC)"
+msgstr "Direct downloads of VIP singles and albums in original quality (320kbps / FLAC)"
+
+#: src/Plans/VipPlanCatalog.php:79
+msgid "دانلود نامحدود نسخه‌های اورجینال و Lossless / Hi-Res بدون افت کیفیت"
+msgstr "Unlimited Lossless / Hi-Res master downloads with zero transcoding loss"
+
+#: src/SettingsPage.php:246
+msgid "در این حالت انتشارهای «فقط عضویت» و «خرید یا عضویت» موقتاً رایگان‌اند، اما انتشارهای «فقط خرید تکی» و «محدود» همچنان بسته می‌مانند و سفارش‌های جدید اشتراک همچنان زمان VIP مشتریان را ثبت می‌کنند."
+msgstr "Membership-only and Purchase-or-Membership releases open temporarily while Single-Purchase and Restricted releases stay gated and new plan orders continue recording subscriber time."
+
+#: src/SettingsPage.php:104
+msgid "در حال ایجاد پوشه، ایمن‌سازی (.htaccess / web.config) و اسکن فایل‌ها…"
+msgstr "Provisioning vault directory, writing .htaccess / web.config shields, and indexing files…"
+
+#: src/SettingsPage.php:106
+msgid "در حال بارگذاری در مخزن خصوصی و محاسبه هش SHA-256…"
+msgstr "Uploading file to private vault and computing SHA-256 checksum…"
+
+#: src/SettingsPage.php:373
+#, php-format
+msgid "در حال حاضر %d طرح فعال پیکربندی‌شده است."
+msgstr "%d plan(s) currently configured and active."
+
+#: src/Users/UsersListIntegration.php:102
+msgid "در حال ذخیره..."
+msgstr "Saving..."
+
+#: src/Users/UserProfilePanel.php:313
+msgid "در حال پخش"
+msgstr "In progress"
+
+#: src/PrivacyPolicy.php:52
+msgid "در صورت حذف کامل افزونه، تنظیمات، نقش mw_vip و متاداده‌های مجوز عضویت VIP از پایگاه‌داده پاک می‌شوند؛ فایل‌های بارگذاری‌شده در پوشهٔ حفاظت‌شده دست‌نخورده باقی می‌مانند تا محتوای کاتالوگ از بین نرود."
+msgstr "Uninstalling the plugin removes its settings, the mw_vip role, and VIP entitlement metadata from the database; protected audio and archive files remain intact so catalog media is never destroyed."
+
+#: src/SettingsPage.php:368
+msgid "در هر خط یک طرح با فرمت level:product_id[:days]."
+msgstr "Enter one plan mapping per line in level:product_id[:days] format."
+
+#: src/Users/UserProfilePanel.php:136
+msgid "درخواست‌های موسیقی ثبت‌شده"
+msgstr "Submitted music requests"
+
+#: src/Plans/VipPlanCatalog.php:261
+msgid "دسترسی دائمی"
+msgstr "Lifetime Access"
+
+#: src/Users/UsersListIntegration.php:245
+msgid "دسترسی دائمی بدون انقضا"
+msgstr "Lifetime access with no expiration"
+
+#: src/Users/UsersListIntegration.php:674
+msgid "دسترسی مجاز نیست."
+msgstr "Permission denied."
+
+#: src/Plans/VipPlanCatalog.php:48
+msgid "دسترسی کامل یک‌ماهه به آرشیو ویژه، پخش آنلاین بدون محدودیت و دانلود مستقیم با بالاترین کیفیت صوتی."
+msgstr "Full 1-month access to the VIP catalog, unlimited streaming, and direct high-resolution downloads."
+
+#: src/Plans/VipPlanCatalog.php:64
+msgid "دسترسی کامل ۶ ماهه به تمام آلبوم‌ها، تک‌آهنگ‌ها و مجموعه‌های ویژه"
+msgstr "Full 6-month access to all VIP albums, singles, and curated collections"
+
+#: src/Users/UserProfilePanel.php:146
+msgid "دسترسی‌ها و دوره‌های VIP ثبت‌شده برای کاربر"
+msgstr "Recorded VIP grants & membership periods"
+
+#: src/Users/UserProfilePanel.php:194
+msgid "دستی توسط مدیر"
+msgstr "Manual admin grant"
+
+#: src/SettingsPage.php:536
+msgid "ذخیرهٔ تنظیمات VIP"
+msgstr "Save VIP settings"
+
+#: src/SettingsPage.php:876
+msgid "ذخیره‌سازی محلی خارج از ریشهٔ وب، سرور دانلود امضاشده با HMAC و اشتراک‌های زمان‌دار ووکامرس."
+msgstr "Off-webroot local file vault, HMAC-signed download servers, and timed WooCommerce memberships."
+
+#: src/SettingsPage.php:134 src/SettingsPage.php:702
+msgid "راز امضای راه‌دور"
+msgstr "Remote signing secret"
+
+#: src/SettingsPage.php:219
+msgid "راز امضای راه‌دور کوتاه‌تر از ۳۲ نویسه است. تا ذخیرهٔ راز قوی‌تر، نشانی امضاشده صادر نمی‌شود."
+msgstr "The remote signing secret is shorter than 32 characters. Signed URLs will not be issued until a stronger secret is saved."
+
+#: src/SettingsPage.php:425
+msgid "راز ذخیره‌شده — برای حفظ آن خالی بگذارید"
+msgstr "Stored secret — leave blank to keep"
+
+#: src/SettingsPage.php:798
+msgid "رازهای راه‌دور هرگز در معرض مرورگر قرار نمی‌گیرند؛ فقط نشانی‌های کوتاه‌عمر امضاشده با Referrer-Policy: no-referrer صادر می‌شوند."
+msgstr "Signing secrets are never exposed to the browser; only short-lived signed redirects with Referrer-Policy: no-referrer are issued."
+
+#: src/SettingsPage.php:873
+msgid "راه‌دورِ امضاشده"
+msgstr "Remote signed"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:95
+msgid "رفتن به پنل کاربری"
+msgstr "Go to My Account"
+
+#: src/SettingsPage.php:433
+msgid "رمز فعلی کوتاه‌تر از ۳۲ کاراکتر است. تا ذخیرهٔ رمز قوی‌تر، نشانی امضاشده صادر نمی‌شود."
+msgstr "Current signing secret is shorter than 32 characters. Signed URLs remain disabled until a stronger secret is saved."
+
+#: src/PlanProducts.php:175
+msgid "روش درخواست نامعتبر است. حذف طرح باید با POST انجام شود."
+msgstr "Invalid request method. Plan deletion requires POST."
+
+#: src/SettingsPage.php:253
+msgid "روشن: قفل‌های عضویت، خرید یا عضویت، سطح‌های پلن و زمان انقضا اعمال می‌شوند. خاموش: حالت پروموشن باز برای محتوای عضویت فعال می‌شود، بدون آنکه خریدهای تکی WooCommerce یا ثبت اشتراک سفارش‌های جدید مختل شود."
+msgstr "Enabled: membership gates, Purchase-or-Membership rules, plan tiers, and expirations are enforced. Disabled: membership content enters open promotional access while keeping single WooCommerce purchases and new plan grants intact."
+
+#: src/SettingsPage.php:269
+msgid "روی آثار عمومی ثبت‌نام اختیاری است، اما آثار VIP و خریدنی همچنان صددرصد نیازمند اشتراک معتبر یا خرید محصول‌اند (این گزینه هرگز آثار پولی را رایگان نمی‌کند)."
+msgstr "Public releases allow anonymous streaming while VIP and paid releases always require valid membership or product purchase."
+
+#: src/SettingsPage.php:771
+msgid "رویداد"
+msgstr "Event"
+
+#: src/SettingsPage.php:771
+msgid "زمان"
+msgstr "Timestamp"
+
+#: src/Plans/VipPlanCatalog.php:53
+msgid "ساخت فهرست‌های پخش نامحدود و ثبت درخواست اختصاصی موسیقی"
+msgstr "Unlimited personal playlists and dedicated music request submissions"
+
+#: src/SettingsPage.php:771
+msgid "سطح"
+msgstr "Level"
+
+#: src/Users/UserProfilePanel.php:153
+msgid "سطح / طرح"
+msgstr "Level / Plan"
+
+#: src/Users/UsersListIntegration.php:324
+msgid "سطح اشتراک"
+msgstr "Plan level"
+
+#: src/SettingsPage.php:301
+msgid "سطح و آیکن"
+msgstr "Level & Icon"
+
+#: src/SettingsPage.php:771
+msgid "سفارش / مدیر"
+msgstr "Order / Actor"
+
+#: src/Users/UserProfilePanel.php:188
+#, php-format
+msgid "سفارش ووکامرس #%d"
+msgstr "WooCommerce Order #%d"
+
+#: src/SettingsPage.php:293
+msgid "سه محصول مجازی ووکامرس همراه با آیکن اختصاصی، توضیحات کامل قابلیت‌ها و چک‌لیست امکانات ایجاد و به‌عنوان طرح VIP نگاشت می‌کند."
+msgstr "Creates three virtual WooCommerce products with custom tier icons, descriptions, and feature checklists mapped automatically as VIP plans."
+
+#: src/SettingsPage.php:578
+msgid "سیاست پخش و دانلود مهمانان در تحویل حفاظت‌شده"
+msgstr "Guest delivery policy for protected files"
+
+#: src/SettingsPage.php:140 src/SettingsPage.php:728
+msgid "شتاب‌دهی سرور"
+msgstr "Server acceleration"
+
+#: src/SettingsPage.php:726
+msgid "شتاب‌دهی وب‌سرور"
+msgstr "Web-server sendfile acceleration"
+
+#: src/Users/UserProfilePanel.php:155
+msgid "شروع دوره"
+msgstr "Start date"
+
+#: src/Plans/VipPlanCatalog.php:47
+msgid "شروع سریع"
+msgstr "Quick Start"
+
+#: src/SettingsPage.php:618
+msgid "شناسایی مسیر پوشهٔ خصوصی"
+msgstr "Private vault path resolution"
+
+#: src/Admin/VipSettingsUi.php:61
+msgid "شناسه"
+msgstr "ID"
+
+#: src/SettingsPage.php:659
+msgid "شناسه امن تحویل (Asset ID)"
+msgstr "Protected Asset ID"
+
+#: src/Admin/VipSettingsUi.php:73
+msgid "شناسه را در فیلد طرح پایین وارد کنید. اگر یک سطح چند محصول می‌پذیرد، شناسه‌ها را با کاما جدا کنید."
+msgstr "Copy an ID into the plan field below. Use comma-separated IDs if one level accepts multiple products."
+
+#: src/ProtectedAssetStorage.php:188
+msgid "شناسهٔ فایل حفاظت‌شده نامعتبر است."
+msgstr "Invalid protected asset ID."
+
+#: src/SettingsPage.php:139 src/SettingsPage.php:717
+msgid "شناسهٔ کلید امضا"
+msgstr "Signing key ID"
+
+#: src/SettingsPage.php:370
+msgid "شناسه‌های محصول، شناسهٔ محصولات ووکامرس هستند. مدت به‌روز است (۱ تا ۳۶۵۰)؛ برای مادام‌العمر خالی بگذارید."
+msgstr "Product IDs are WooCommerce product IDs. Duration is in days (1–3650); omit for lifetime."
+
+#: src/Users/UsersListIntegration.php:180
+msgid "صافی VIP"
+msgstr "Filter VIP"
+
+#: src/Users/UserProfilePanel.php:248
+msgid "طرح / سطح اشتراک"
+msgstr "Plan / Tier level"
+
+#: src/SettingsPage.php:356
+msgid "طرح‌های ووکامرس:"
+msgstr "WooCommerce plans:"
+
+#: src/Admin/VipSettingsUi.php:97
+msgid "طرح‌های پیش‌فرض از قبل پیکربندی‌شده‌اند؛ مورد جدیدی برای ایجاد نیست."
+msgstr "Default plans were already configured — nothing new to create."
+
+#: src/SettingsPage.php:137 src/SettingsPage.php:711
+msgid "طول عمر نشانی راه‌دور"
+msgstr "Remote URL lifetime"
+
+#: src/Users/UsersListIntegration.php:762
+msgid "عضویت VIP ۱ ماهه (vip-1m)"
+msgstr "1-Month VIP Membership (vip-1m)"
+
+#: src/Users/UsersListIntegration.php:764
+msgid "عضویت VIP ۱۲ ماهه (vip-12m)"
+msgstr "12-Month VIP Membership (vip-12m)"
+
+#: src/Users/UsersListIntegration.php:763
+msgid "عضویت VIP ۶ ماهه (vip-6m)"
+msgstr "6-Month VIP Membership (vip-6m)"
+
+#: src/Plans/VipPlanCatalog.php:44
+msgid "عضویت VIP — ۱ ماه"
+msgstr "VIP Membership — 1 Month"
+
+#: src/Plans/VipPlanCatalog.php:72
+msgid "عضویت VIP — ۱۲ ماه"
+msgstr "VIP Membership — 12 Months"
+
+#: src/Plans/VipPlanCatalog.php:58
+msgid "عضویت VIP — ۶ ماه"
+msgstr "VIP Membership — 6 Months"
+
+#: src/SettingsPage.php:565
+msgid "عضویت و طرح‌ها"
+msgstr "Membership & Plans"
+
+#: src/SettingsPage.php:739
+msgid "عضویت و مجوز دسترسی"
+msgstr "Membership & entitlement"
+
+#: src/Admin/VipSettingsUi.php:61 src/SettingsPage.php:301 src/SettingsPage.php:660
+msgid "عملیات"
+msgstr "Actions"
+
+#: src/Users/UsersListIntegration.php:659
+#, php-format
+msgid "عملیات گروهی اشتراک VIP برای %1$s کاربر با موفقیت اجرا شد (%2$s)."
+msgstr "Completed bulk VIP action for %1$s users (%2$s)."
+
+#: src/SettingsPage.php:563
+msgid "عمومی"
+msgstr "General"
+
+#: src/SettingsPage.php:572
+msgid "عمومی — کلید اصلی و سیاست تحویل"
+msgstr "General — Master Switch & Delivery Policy"
+
+#: src/ProtectedAssetStorage.php:404
+msgid "فایل انتخاب‌شده از رسانه‌ها در دسترس نیست."
+msgstr "The selected Media Library file is unavailable."
+
+#: src/SettingsPage.php:107
+msgid "فایل با موفقیت در مخزن خصوصی ذخیره شد:"
+msgstr "File saved to the private vault:"
+
+#: src/ProtectedAssetStorage.php:192 src/ProtectedAssetStorage.php:203
+msgid "فایل حفاظت‌شده موردنظر یافت نشد."
+msgstr "Protected file could not be found."
+
+#: src/ProtectedAssetStorage.php:422
+msgid "فایل رسانه‌ها در ذخیره‌سازی حفاظت‌شده کپی نشد."
+msgstr "The Media Library file could not be copied to protected storage."
+
+#: src/SettingsPage.php:646
+msgid "فایل صوتی (MP3, FLAC, WAV, M4A, AAC, OGG) یا بسته ZIP آلبوم را مستقیماً خارج از پوشهٔ عمومی وردپرس ذخیره کنید."
+msgstr "Upload master audio (MP3, FLAC, WAV, M4A, AAC, OGG) or album ZIP packages directly into the off-webroot private vault."
+
+#: src/SettingsPage.php:834
+msgid "فایل‌های بازدارندهٔ لایهٔ دفاعی (.htaccess / web.config) وجود دارند."
+msgstr "Web-server deny shields (.htaccess / web.config) are present."
+
+#: src/SettingsPage.php:637
+msgid "فایل‌های ثبت‌شده در مخزن:"
+msgstr "Indexed vault files:"
+
+#: src/SettingsPage.php:233
+msgid "فایل‌های حفاظت‌شده کجا قرار می‌گیرند و چگونه تحویل داده می‌شوند."
+msgstr "Where protected files live and how they are delivered."
+
+#: src/SettingsPage.php:657
+msgid "فرمت / مشخصات"
+msgstr "Format / Details"
+
+#: src/Users/UserProfilePanel.php:206
+#, php-format
+msgid "فعال (%d روز مانده)"
+msgstr "Active (%d days left)"
+
+#: src/Plans/VipProductPagePresenter.php:102
+msgid "فعال روی حساب شما"
+msgstr "Active on your account"
+
+#: src/Users/UsersListIntegration.php:189
+msgid "فعالیت و پرداخت‌ها"
+msgstr "Activity & Payments"
+
+#: src/Plans/VipPlanCatalog.php:52
+msgid "فعال‌سازی آنی بلافاصله پس از پرداخت آنلاین با قابلیت تمدید انباشتی"
+msgstr "Instant activation upon online payment with stackable renewal support"
+
+#: src/SettingsPage.php:253
+msgid "فعال‌سازی اعمال عضویت VIP (کلید اصلی)"
+msgstr "Enable VIP membership enforcement (master switch)"
+
+#: src/SettingsPage.php:795
+msgid "فقط هنگام حذف کامل افزونه اعمال می‌شود، نه غیرفعال‌سازی. پیش‌فرض امن: خاموش."
+msgstr "Runs only when deleting the plugin completely, never on deactivation. Safe default: disabled."
+
+#: src/SettingsPage.php:264
+msgid "فقط کاربران ثبت‌نام‌شده (الزام به ورود برای دانلود/استریم فایل حفاظت‌شده)"
+msgstr "Registered users only (require sign-in for protected stream/download)"
+
+#: src/Users/UserProfilePanel.php:322
+msgid "فهرست‌های پخش ساخته‌شده توسط کاربر"
+msgstr "Playlists created by user"
+
+#: src/Users/UsersListIntegration.php:173
+msgid "فیلتر سطح VIP"
+msgstr "Filter by VIP level"
+
+#: src/SettingsPage.php:489
+msgid "فیلتر عضویت خارجی (آداپتر توسعه‌دهنده)"
+msgstr "External membership filter (developer adapter)"
+
+#: src/Users/UserProfilePanel.php:228
+msgid "لغو"
+msgstr "Revoke"
+
+#: src/VipAuditLog.php:92 src/VipAuditLog.php:93
+msgid "لغو / استرداد سفارش"
+msgstr "Order refund / cancellation"
+
+#: src/Users/UsersListIntegration.php:358
+msgid "لغو VIP"
+msgstr "Revoke VIP"
+
+#: src/Users/UserProfilePanel.php:421
+msgid "لغو از صفحه ویرایش کاربر"
+msgstr "Revoked from user edit screen"
+
+#: src/VipAuditLog.php:90 src/VipAuditLog.php:91
+msgid "لغو دستی مدیر"
+msgstr "Manual admin revocation"
+
+#: src/Users/UsersListIntegration.php:686
+msgid "لغو سریع از users.php"
+msgstr "Quick revoke from users.php"
+
+#: src/Users/UsersListIntegration.php:634
+msgid "لغو گروهی در users.php"
+msgstr "Bulk revoke on users.php"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:123 src/PlanProducts.php:413 src/Users/UserProfilePanel.php:158 src/Users/UserProfilePanel.php:200 src/VipPlans.php:400
+msgid "مادام‌العمر"
+msgstr "Lifetime"
+
+#: src/Users/UserProfilePanel.php:262 src/Users/UsersListIntegration.php:334
+msgid "مادام‌العمر (بدون انقضا)"
+msgstr "Lifetime (never expires)"
+
+#: src/SettingsPage.php:872
+#, php-format
+msgid "متصل شد: تحویل %1$s فعال است و %2$d طرح اشتراک VIP پیکربندی شده است."
+msgstr "Connected: %1$s delivery active with %2$d VIP membership plans configured."
+
+#: src/Users/UserProfilePanel.php:288
+msgid "مثلاً هدیه پشتیبانی یا تمدید تلفنی"
+msgstr "e.g. support courtesy credit or phone renewal"
+
+#: src/SettingsPage.php:621
+msgid "مجوز خواندن توسط سرور"
+msgstr "Readable by PHP worker"
+
+#: src/SettingsPage.php:622
+msgid "مجوز نوشتن برای بارگذاری امن"
+msgstr "Writable for vault uploads"
+
+#: src/Users/UserProfilePanel.php:282
+msgid "محاسبه از همین لحظه"
+msgstr "Start counting from now"
+
+#: src/ProtectedAssetStorage.php:366
+msgid "محتوای فایل با پسوند آن مطابقت ندارد."
+msgstr "The file content does not match its extension."
+
+#: src/ProtectedAssetStorage.php:383
+msgid "محتوای فایل یک بایگانی ZIP معتبر نیست."
+msgstr "The file content is not a valid ZIP archive."
+
+#: src/SettingsPage.php:804
+msgid "محدودیت نرخ دانلود، سهمیهٔ روزانه و TTL توکن‌ها"
+msgstr "Download rate limits, daily quotas & token TTLs"
+
+#: src/Admin/VipSettingsUi.php:61
+msgid "محصول"
+msgstr "Product"
+
+#: src/SettingsPage.php:301
+msgid "محصول و توضیحات طرح"
+msgstr "Product & Plan Description"
+
+#: src/SettingsPage.php:145 src/SettingsPage.php:749
+msgid "محصولات طرح VIP"
+msgstr "VIP plan products"
+
+#: src/SettingsPage.php:487
+msgid "محصولات طرح ووکامرس و اعطای دستی پنل کاربران — پیشنهادشده"
+msgstr "WooCommerce plan products & manual user grants (recommended)"
+
+#: src/Admin/VipSettingsUi.php:96
+msgid "محصولات طرح پیش‌فرض ایجاد شدند. قیمت آن‌ها را در ووکامرس → محصولات تعیین کنید."
+msgstr "Default plan products created. Set their prices in WooCommerce → Products."
+
+#: src/SettingsPage.php:288 src/SettingsPage.php:555
+msgid "محصولات ووکامرس"
+msgstr "WooCommerce Products"
+
+#: src/Admin/VipSettingsUi.php:75
+msgid "محصولی پیدا نشد. برای شروع، نخستین محصول طرح VIP خود را ایجاد کنید."
+msgstr "No products found. Create your first VIP plan product to get started."
+
+#: src/SettingsPage.php:873
+msgid "محلی"
+msgstr "Local"
+
+#: src/SettingsPage.php:645
+msgid "مخزن فایل‌های خصوصی (بارگذاری مستقیم و مدیریت شناسه‌های vip:)"
+msgstr "Private File Vault (direct upload & vip: asset registry)"
+
+#: src/SettingsPage.php:301
+msgid "مدت"
+msgstr "Duration"
+
+#: src/Users/UserProfilePanel.php:257 src/Users/UsersListIntegration.php:330
+msgid "مدت اعتبار"
+msgstr "Duration"
+
+#: src/SettingsPage.php:783
+msgid "مدیر #"
+msgstr "Admin #"
+
+#: src/Users/UsersListIntegration.php:555
+msgid "مدیریت VIP و فعالیت"
+msgstr "Manage VIP & Activity"
+
+#: src/Users/UserProfilePanel.php:73
+msgid "مدیریت اشتراک ویژه (MusicWave VIP) و کارنامه فعالیت کاربر"
+msgstr "MusicWave VIP Membership & User Activity Overview"
+
+#: src/SettingsPage.php:805
+msgid "مدیریت حالت دسترسی انبوه کاتالوگ"
+msgstr "Bulk catalog access manager"
+
+#: src/SettingsPage.php:283
+msgid "مدیریت طرح‌های اشتراک VIP"
+msgstr "Manage VIP membership plans"
+
+#: src/SettingsPage.php:818
+msgid "مدیریت یکپارچه کلید اصلی VIP، تحویل حفاظت‌شده، طرح‌های اشتراک ووکامرس و چرخهٔ حیات داده‌ها."
+msgstr "Unified control center for the VIP master switch, protected file vault, WooCommerce subscription plans, and data lifecycle."
+
+#: src/SettingsPage.php:604
+msgid "مرکز کنترل تحویل حفاظت‌شده"
+msgstr "Protected Delivery Control Center"
+
+#: src/SettingsPage.php:636
+msgid "مسیر فعال فعلی:"
+msgstr "Active vault directory:"
+
+#: src/SettingsPage.php:403
+msgid "مسیر مطلق خارج از public_html؛ در صورت نبود، هنگام ذخیره به صورت خودکار ساخته و با .htaccess / web.config ایمن‌سازی می‌شود."
+msgstr "Absolute filesystem path outside public_html; automatically created and hardened with .htaccess / web.config on save."
+
+#: src/SettingsPage.php:829
+msgid "مسیر پوشهٔ حفاظت‌شده تنظیم شده یا قابل تشخیص است."
+msgstr "A protected directory path is configured or derivable."
+
+#: src/Users/UserProfilePanel.php:81
+msgid "مشاهده پرداخت‌ها و سفارش‌ها در ووکامرس"
+msgstr "View WooCommerce Payments & Orders"
+
+#: src/Users/UsersListIntegration.php:399
+msgid "مشاهده پرداخت‌ها و سفارش‌های ووکامرس این کاربر"
+msgstr "View this user's WooCommerce payments and orders"
+
+#: src/SettingsPage.php:337
+msgid "مشترکین"
+msgstr "Subscribers"
+
+#: src/Plans/VipProductPagePresenter.php:156
+msgid "مقایسه سایر طرح‌های اشتراک ویژه"
+msgstr "Compare other VIP membership plans"
+
+#: src/SettingsPage.php:144 src/SettingsPage.php:746
+msgid "منابع عضویت"
+msgstr "Membership sources"
+
+#: src/Users/UserProfilePanel.php:154
+msgid "منبع / سفارش"
+msgstr "Source / Order"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:131
+msgid "منقضی شده"
+msgstr "Expired"
+
+#: src/Users/UserProfilePanel.php:212
+msgid "منقضی‌شده"
+msgstr "Expired"
+
+#: src/SettingsPage.php:286
+msgid "منقضی‌شده‌ها"
+msgstr "Expired VIP"
+
+#: src/SettingsPage.php:138 src/SettingsPage.php:714
+msgid "میزبان‌های مجاز اضافی برای تغییرمسیر"
+msgstr "Additional allowed redirect hosts"
+
+#: src/SettingsPage.php:656
+msgid "نام فایل"
+msgstr "Filename"
+
+#: src/ProtectedAssetStorage.php:371
+msgid "نام فایل مجاز نیست."
+msgstr "The file name is not allowed."
+
+#: src/Users/UsersListIntegration.php:347
+msgid "نحوه اعمال"
+msgstr "Apply mode"
+
+#: src/Users/UserProfilePanel.php:279
+msgid "نحوه محاسبه"
+msgstr "Calculation mode"
+
+#: src/Users/UsersListIntegration.php:132
+msgid "نزدیک انقضا (۷ روز)"
+msgstr "Expiring Soon (7 days)"
+
+#: src/Plans/VipPlanCatalog.php:81
+msgid "نشان ویژه VIP در حساب کاربری با تضمین حفظ کامل سابقه و پلی‌لیست‌ها"
+msgstr "Verified VIP badge on your account with full playback history and playlists preserved"
+
+#: src/SettingsPage.php:132 src/SettingsPage.php:696
+msgid "نشانی پایهٔ میزبان راه‌دور"
+msgstr "Remote host base URL"
+
+#: src/SettingsPage.php:488
+msgid "نقش‌های وردپرس (مانند نقش mw_vip)"
+msgstr "WordPress roles (e.g. mw_vip role)"
+
+#: src/SettingsPage.php:426
+msgid "نمایش/پنهان‌کردن راز"
+msgstr "Show/hide secret"
+
+#: src/SettingsPage.php:370
+msgid "نمونهٔ نگاشت کامل"
+msgstr "Example complete mapping"
+
+#: src/ProtectedAssetStorage.php:359 src/ProtectedAssetStorage.php:416
+msgid "نوع یا اندازهٔ asset مجاز نیست."
+msgstr "The asset type or size is not allowed."
+
+#: src/Admin/VipSettingsUi.php:48
+msgid "نکته: یک محصول عادی ووکامرس بسازید (محصول ساده، قیمت و غیره). شناسهٔ آن را از فهرست محصولات یادداشت کنید (روی آن بروید → ID). سپس شناسه را پایین وارد کنید."
+msgstr "Tip: Create a normal WooCommerce product (Simple product, price, etc.). Note its ID from the Products list (hover → ID). Then reference that ID below."
+
+#: src/SettingsPage.php:368
+msgid "نگاشت طرح VIP"
+msgstr "VIP plan mapping"
+
+#: src/Admin/VipSettingsUi.php:99
+msgid "نگاشت طرح حذف شد. خود محصول حذف نشده است."
+msgstr "Plan mapping removed. The product itself was not deleted."
+
+#: src/SettingsPage.php:613
+msgid "نیازمند تکمیل پیکربندی"
+msgstr "Configuration required"
+
+#: src/SettingsPage.php:799
+msgid "هر تصمیم دسترسی به‌صورت زنده دوباره بررسی می‌شود تا لغو سفارش یا انقضا بلافاصله اثر کند."
+msgstr "Every entitlement check runs live so order refunds or expirations take effect immediately."
+
+#: src/Users/UsersListIntegration.php:104
+msgid "همه اشتراک‌های فعال این کاربر لغو شود؟"
+msgstr "Confirm revoking all active VIP plans?"
+
+#: src/Users/UserProfilePanel.php:77
+msgid "همه اعضای VIP فعال"
+msgstr "All Active VIP Members"
+
+#: src/Users/UsersListIntegration.php:175
+msgid "همه سطوح VIP"
+msgstr "All VIP Levels"
+
+#: music-wave-vip.php:282
+msgid "همه مشترکین فعال VIP (mw_vip)"
+msgstr "All active VIP subscribers (mw_vip)"
+
+#: src/SettingsPage.php:636
+msgid "هنوز ایجاد نشده است — روی دکمهٔ بالا کلیک کنید"
+msgstr "Not provisioned yet — click the button above"
+
+#: src/SettingsPage.php:769
+msgid "هنوز رویداد اعطا، تمدید، لغو یا انقضایی در گزارش حسابرسی ثبت نشده است."
+msgstr "No grant, extension, revocation, or expiration events have been logged yet."
+
+#: src/Users/UserProfilePanel.php:304
+msgid "هنوز سابقه پخشی ثبت نشده است."
+msgstr "No playback activity recorded yet."
+
+#: src/SettingsPage.php:375
+msgid "هنوز طرحی پیکربندی‌نشده است. دست‌کم یک خط اضافه و ذخیره کنید."
+msgstr "No plans configured yet. Add at least one line and save."
+
+#: src/SettingsPage.php:299
+msgid "هنوز نگاشتی برای طرح وجود ندارد. از دکمهٔ بالا استفاده کنید یا در کادر نگاشت پایین خط اضافه کنید."
+msgstr "No plan mappings yet. Use the button above or add lines in the mapping box below."
+
+#: src/SettingsPage.php:113 src/SettingsPage.php:663
+msgid "هنوز هیچ فایل حفاظت‌شده‌ای در مخزن خصوصی ثبت نشده است."
+msgstr "No protected files have been indexed in the private vault yet."
+
+#: src/PrivacyPolicy.php:50
+msgid "هنگام خرید یا اعطای اشتراک VIP، شناسهٔ سفارش ووکامرس، سطح دسترسی، زمان شروع و تاریخ انقضا در متادادهٔ حساب کاربری (mw_vip_plan_grants، mw_vip_effective_until، mw_vip_ever_granted و mw_vip_user_log) نگهداری می‌شود تا دسترسی به انتشارهای ویژه، صفحه مدیریت کاربران و انقضای خودکار بررسی شود."
+msgstr "When a VIP plan is purchased or granted, the WooCommerce order ID, access level, start timestamp, and expiry date are stored in user meta (mw_vip_plan_grants, mw_vip_effective_until, mw_vip_ever_granted, and mw_vip_user_log) to enforce VIP release access, power WordPress user management views, and handle automatic expiry."
+
+#: src/PrivacyPolicy.php:51
+msgid "هنگام دریافت فایل‌های صوتی یا ZIP حفاظت‌شده، در صورت فعال بودن محدودیت نرخ یا ثبت رویداد امنیتی، شمارنده‌های کوتاه‌مدت در جدول گزینه‌های وردپرس ذخیره می‌شوند و پس از پایان پنجرهٔ زمانی منقضی می‌گردند. در حالت تحویل راه‌دور، نشانی امضاشدهٔ کوتاه‌عمر تنها برای همان درخواست تولید می‌شود."
+msgstr "When downloading protected audio or ZIP files, short-lived rate-limit or security counters may be stored in WordPress transients until their window expires. In remote delivery mode, short-lived signed URLs are generated solely for the active download request."
+
+#: src/Users/UserProfilePanel.php:148
+msgid "هیچ دوره اشتراک فعالی یا قبلی برای این کاربر ثبت نشده است."
+msgstr "No active or historical VIP membership grants found for this user."
+
+#: src/SettingsPage.php:832
+msgid "وب‌سرور می‌تواند بارگذاری‌ها را در پوشهٔ حفاظت‌شده بنویسد."
+msgstr "The web server can write uploads into the protected directory."
+
+#: src/SettingsPage.php:831
+msgid "وب‌سرور می‌تواند پوشهٔ حفاظت‌شده را بخواند."
+msgstr "The web server can read the protected directory."
+
+#: src/SettingsPage.php:623
+msgid "وجود فایل‌های حفاظتی (.htaccess / web.config)"
+msgstr "Protective deny files (.htaccess / web.config)"
+
+#: src/SettingsPage.php:619
+msgid "وجود فیزیکی پوشه روی سرور"
+msgstr "Vault directory exists on disk"
+
+#: src/Admin/VipSettingsUi.php:61
+msgid "وضعیت"
+msgstr "Status"
+
+#: src/SettingsPage.php:610
+msgid "وضعیت زنده و پیش‌بررسی امنیتی مخزن"
+msgstr "Live vault status & security preflight"
+
+#: src/Users/UserProfilePanel.php:156
+msgid "وضعیت فعلی"
+msgstr "Current status"
+
+#: src/Users/UsersListIntegration.php:188
+msgid "وضعیت و مدت VIP"
+msgstr "VIP Status & Duration"
+
+#: src/Admin/VipSettingsUi.php:78
+msgid "ووکامرس فعال نیست. برای مدیریت محصولات طرح VIP آن را فعال کنید. پس از فعال‌شدن ووکامرس، شناسه‌های محصول در دسترس خواهند بود."
+msgstr "WooCommerce is not active. Activate it to manage VIP plan products. Product IDs will be available once WooCommerce is enabled."
+
+#: src/Admin/VipSettingsUi.php:70
+msgid "ویرایش"
+msgstr "Edit"
+
+#: src/Users/UserProfilePanel.php:439
+msgid "ویرایش تاریخ انقضا در پروفایل کاربر"
+msgstr "Updated expiry date on user profile"
+
+#: src/Users/UserProfilePanel.php:157
+msgid "ویرایش تاریخ پایان (UTC)"
+msgstr "Edit end date (UTC)"
+
+#: src/Users/UsersListIntegration.php:690
+msgid "ویرایش سریع در users.php"
+msgstr "Quick edit on users.php"
+
+#: src/SettingsPage.php:135 src/SettingsPage.php:705
+msgid "پارامتر query امضا"
+msgstr "Signature query parameter"
+
+#: src/SettingsPage.php:136 src/SettingsPage.php:708
+msgid "پارامتر query انقضا"
+msgstr "Expiry query parameter"
+
+#: src/Users/UsersListIntegration.php:692
+msgid "پارامترهای تاریخ یا سطح اشتراک معتبر نیستند."
+msgstr "Invalid plan level or expiration date parameters."
+
+#: src/SettingsPage.php:430
+msgid "پاک‌سازی راز امضای ذخیره‌شده"
+msgstr "Clear stored signing secret"
+
+#: src/Users/UsersListIntegration.php:274
+#, php-format
+msgid "پایان در %s"
+msgstr "Ended %s"
+
+#: src/Plans/VipPlanCatalog.php:51
+msgid "پخش آنلاین کامل و بدون وقفه تمامی آثار اختصاصی آرشیو"
+msgstr "Uninterrupted full-length streaming across the entire exclusive catalog"
+
+#: src/SettingsPage.php:463
+msgid "پخش جریانی مستقیم PHP با پشتیبانی کامل HTTP Range (پیش‌فرض)"
+msgstr "Direct PHP byte-range streaming (HTTP Range supported, default)"
+
+#: src/Users/UserProfilePanel.php:313
+msgid "پخش کامل"
+msgstr "Played"
+
+#: src/Users/UserProfilePanel.php:109
+msgid "پخش کامل آهنگ‌ها / در حال شنیدن"
+msgstr "Completed Plays / In Progress"
+
+#: src/Users/UsersListIntegration.php:406
+msgid "پخش کامل آهنگ‌ها و آیتم‌های ذخیره‌شده در کتابخانه"
+msgstr "Completed track plays and saved library items"
+
+#: src/Checkout/SubscriptionOrderPresenter.php:93
+msgid "پرداخت با موفقیت انجام شد و دسترسی VIP شما فعال شد. می‌توانید از پنل کاربری خود استفاده کنید و از محتوای ویژه لذت ببرید."
+msgstr "Payment succeeded and your VIP access is now active. Visit your account dashboard anytime to manage your membership."
+
+#: src/Checkout/SubscriptionOrderPresenter.php:26 src/Checkout/SubscriptionOrderPresenter.php:31
+msgid "پرداخت شما با موفقیت انجام شد. اشتراک VIP شما فعال شد."
+msgstr "Payment completed successfully. Your VIP membership is active."
+
+#: src/Users/UserProfilePanel.php:94
+msgid "پرداخت‌ها و سفارش‌های ووکامرس"
+msgstr "WooCommerce Payments & Orders"
+
+#: src/Users/UsersListIntegration.php:558
+msgid "پرداخت‌های ووکامرس"
+msgstr "WooCommerce Payments"
+
+#: src/SettingsPage.php:833
+msgid "پوشه خارج از همهٔ ریشه‌های وب عمومی است."
+msgstr "The directory is outside every publicly served web root."
+
+#: src/ProtectedAssetStorage.php:345 src/ProtectedAssetStorage.php:409
+msgid "پوشهٔ asset حفاظت‌شده در دسترس نیست یا قابل نوشتن نیست."
+msgstr "The protected asset directory is unavailable or not writable."
+
+#: src/SettingsPage.php:199
+msgid "پوشهٔ حفاظت‌شده باید خارج از ریشهٔ عمومی وب (ABSPATH / DOCUMENT_ROOT) بوده و قابل خواندن و نوشتن باشد. مقدار قبلی حفظ شد."
+msgstr "The protected vault path must live outside public web roots (ABSPATH / DOCUMENT_ROOT) and be readable and writable. Previous setting retained."
+
+#: src/SettingsPage.php:800
+msgid "پوشهٔ حفاظت‌شده خارج از تمام ریشه‌های وب (ABSPATH و DOCUMENT_ROOT) نگهداری و با .htaccess / web.config سخت‌سازی می‌شود."
+msgstr "Protected files stay isolated outside all web roots (ABSPATH & DOCUMENT_ROOT) and hardened with .htaccess / web.config."
+
+#: src/SettingsPage.php:830
+msgid "پوشهٔ حفاظت‌شده وجود دارد."
+msgstr "The protected directory exists."
+
+#: src/SettingsPage.php:390
+msgid "پوشهٔ حفاظت‌شدهٔ محلی خارج از ریشهٔ وب (پیشنهادشده)"
+msgstr "Local protected directory outside web root (recommended)"
+
+#: src/SettingsPage.php:105
+msgid "پوشهٔ خصوصی با موفقیت ایمن‌سازی و فهرست فایل‌ها همگام‌سازی شد."
+msgstr "Private vault hardened and asset index synchronized."
+
+#: src/SettingsPage.php:131 src/SettingsPage.php:693
+msgid "پوشهٔ فایل‌های حفاظت‌شده"
+msgstr "Protected files directory"
+
+#: src/ProtectedAssetStorage.php:84
+msgid "پوشهٔ فایل‌های حفاظت‌شده در دسترس نیست یا داخل ریشهٔ وب قرار دارد."
+msgstr "Protected vault directory is inaccessible or inside the public web root."
+
+#: src/SettingsPage.php:803
+msgid "پیام‌های دسترسی (شامل خرید یا عضویت) و رفتار ماژول عضویت"
+msgstr "Access gate messages (including Purchase or VIP) & fallback behavior"
+
+#: src/SettingsPage.php:566
+msgid "پیشرفته و حسابرسی"
+msgstr "Advanced & Audit"
+
+#: src/SettingsPage.php:763
+msgid "پیشرفته، حسابرسی و مدیریت چرخهٔ داده"
+msgstr "Advanced, Audit Trail & Data Lifecycle"
+
+#: src/Plans/VipPlanCatalog.php:61
+msgid "پیشنهاد محبوب"
+msgstr "Most Popular"
+
+#: src/SettingsPage.php:141 src/SettingsPage.php:731
+msgid "پیشوند داخلی X-Accel"
+msgstr "X-Accel internal prefix"
+
+#: src/SettingsPage.php:133 src/SettingsPage.php:699
+msgid "پیشوند مسیر راه‌دور"
+msgstr "Remote path prefix"
+
+#: src/SettingsPage.php:847
+msgid "پیش‌آزمایش تحویل حفاظت‌شده نیازمند اقدام است (در تب «تحویل حفاظت‌شده» روی «ایجاد، ایمن‌سازی و همگام‌سازی خودکار پوشه» کلیک کنید):"
+msgstr "Protected delivery preflight requires attention (click Provision, harden & sync vault directory in the Protected Delivery tab):"
+
+#: src/SettingsPage.php:802
+msgid "پیش‌فرض‌های انتشار جدید و سطح‌های عضویت پیش‌فرض"
+msgstr "New release defaults & default membership levels"
+
+#: src/SettingsPage.php:720
+msgid "پیش‌نمایش زنده لینک امضاشده آزمایشی:"
+msgstr "Live sample signed URL preview:"
+
+#: src/PrivacyPolicy.php:49
+msgid "چه داده‌هایی توسط افزونه عضویت VIP MusicWave ذخیره می‌شود"
+msgstr "What personal data MusicWave VIP stores"
+
+#: src/SettingsPage.php:771
+msgid "کاربر"
+msgstr "User"
+
+#: src/Users/UsersListIntegration.php:231
+msgid "کاربر عادی"
+msgstr "Standard User"
+
+#: src/Users/UsersListIntegration.php:680
+msgid "کاربر نامعتبر است."
+msgstr "Invalid user."
+
+#: src/Users/UserProfilePanel.php:324
+msgid "کاربر هنوز فهرست پخشی نساخته است."
+msgstr "This user has not created any playlists yet."
+
+#: src/Plans/VipPlanCatalog.php:76
+msgid "کامل‌ترین عضویت یک‌ساله MusicWave با بیشترین صرفه‌جویی، دانلود نامحدود کیفیت مستر و اولویت ویژه پشتیبانی."
+msgstr "MusicWave's complete annual VIP membership with maximum savings, unlimited master-quality downloads, and priority support."
+
+#: src/Users/UserProfilePanel.php:122
+msgid "کتابخانه موسیقی و فهرست‌های پخش"
+msgstr "Music Library & Playlists"
+
+#: src/SettingsPage.php:442
+msgid "کلید query که timestamp انقضای Unix را دریافت می‌کند."
+msgstr "Query key receiving the Unix expiry timestamp."
+
+#: src/SettingsPage.php:438
+msgid "کلید query که امضای base64url با HMAC-SHA256 را دریافت می‌کند."
+msgstr "Query key receiving the base64url HMAC-SHA256 signature."
+
+#: src/SettingsPage.php:868
+msgid "کلید اصلی خاموش است: انتشارهای عضویت در حالت پروموشن رایگان‌اند؛ خریدهای تکی ووکامرس و تحویل امن فعال‌اند."
+msgstr "Master switch paused: membership releases are in open promotional access while single WooCommerce purchases and secure delivery remain active."
+
+#: src/SettingsPage.php:109
+msgid "کپی شد!"
+msgstr "Copied!"
+
+#: src/SettingsPage.php:110 src/SettingsPage.php:679
+msgid "کپی شناسه"
+msgstr "Copy Asset ID"
+
+#: src/Users/UserProfilePanel.php:295
+msgid "یادداشت داخلی مدیریت برای این مشترک (فقط قابل مشاهده برای مدیر)"
+msgstr "Internal admin note for this member (visible to administrators only)"
+
+#: src/SettingsPage.php:797
+msgid "یادداشت‌های امنیتی"
+msgstr "Security notes"
+
+#: src/Plans/VipPlanCatalog.php:78
+msgid "یک سال کامل دسترسی نامحدود به تمام آرشیو ویژه و انتشارهای روز"
+msgstr "One full year of unlimited access to the entire VIP catalog and new releases"
+
+#: src/ProtectedAssetStorage.php:396
+msgid "یک فایل معتبر از رسانه‌ها انتخاب کنید."
+msgstr "Choose a valid Media Library file."
+
+#: src/SettingsPage.php:489
+msgid "یکپارچه‌سازی سفارشی از طریق فیلترهای music_wave_vip_membership_*."
+msgstr "Custom integrations via music_wave_vip_membership_* hooks."
+
+#: src/Users/UserProfilePanel.php:260 src/Users/UsersListIntegration.php:332
+msgid "۱۸۰ روز (۶ ماهه)"
+msgstr "180 days (6 months)"
+
+#: src/Users/UserProfilePanel.php:259 src/Users/UsersListIntegration.php:331
+msgid "۳۰ روز (۱ ماهه)"
+msgstr "30 days (1 month)"
+
+#: src/Users/UserProfilePanel.php:261 src/Users/UsersListIntegration.php:333
+msgid "۳۶۵ روز (سالانه)"
+msgstr "365 days (1 year)"
+
+#: src/Users/UsersListIntegration.php:322
+msgid "⚡ مدیریت سریع VIP"
+msgstr "⚡ Quick Manage VIP"
+
+#: src/Users/UsersListIntegration.php:410
+#, php-format
+msgid "🎧 %1$s پخش · %2$s ذخیره"
+msgstr "🎧 %1$s plays · %2$s saved"
+
+#: src/Users/UsersListIntegration.php:422
+#, php-format
+msgid "🎶 %s فهرست پخش"
+msgstr "🎶 %s playlists"
+
+#: src/Users/UsersListIntegration.php:435
+#, php-format
+msgid "📩 %1$s درخواست (%2$s باز)"
+msgstr "📩 %1$s requests (%2$s open)"
+
+#: src/Users/UsersListIntegration.php:437
+#, php-format
+msgid "📩 %s درخواست"
+msgstr "📩 %s requests"
+

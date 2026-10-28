@@ -1,0 +1,1957 @@
+{
+    "translation-revision-date": "2026-08-30 00:00+0000",
+    "generator": "MusicWave translation tooling",
+    "source": "assets/theme-preference.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "en_US",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "%d قطعه": [
+                "%d track",
+                "%d tracks"
+            ],
+            "%d مورد سفارشی‌سازی قالب MusicWave به زباله‌دان منتقل شد. فایل‌های معتبر قالب اکنون فعال هستند.": [
+                "%d customized MusicWave template records were moved to the Trash. The validated theme files are active again."
+            ],
+            "LRC": [
+                "LRC"
+            ],
+            "Live Sync Lyrics": [
+                "Live Sync Lyrics"
+            ],
+            "MusicWave": [
+                "MusicWave"
+            ],
+            "breadcrumb": [
+                "breadcrumb"
+            ],
+            "dark": [
+                "dark"
+            ],
+            "drawer": [
+                "drawer"
+            ],
+            "karaoke": [
+                "karaoke"
+            ],
+            "light": [
+                "light"
+            ],
+            "lyrics": [
+                "lyrics"
+            ],
+            "search": [
+                "search"
+            ],
+            "sidebar": [
+                "sidebar"
+            ],
+            "theme": [
+                "theme"
+            ],
+            "toggle": [
+                "toggle"
+            ],
+            "u{0639}u{0631}u{0636} u{0647}u{062F}u{0631}: u{062A}u{0645}u{0627}u{0645}u{0639}u{0631}u{0636}": [
+                "Header width: Full width"
+            ],
+            "u{0639}u{0631}u{0636} u{0647}u{062F}u{0631}: u{06AF}u{0633}u{062A}u{0631}u{062F}u{0647}": [
+                "Header width: Wide"
+            ],
+            "«نوار بالا» در همهٔ عرض‌ها دیده می‌شود (ریل دسکتاپ + کشوی موبایل) و در الگوهای پیش‌فرض استفاده شده است. «داخل برند» دکمه را کنار لوگو در خودِ ریل می‌گذارد و فقط در دسکتاپ دیده می‌شود. برای هر سربرگ فقط یک نمونه بگذارید.": [
+                "«Top bar» is visible at every width (desktop rail + mobile drawer) and is what the default headers use. «Inside the rail brand» places the button next to the logo inside the rail itself and only shows it on desktop. Keep exactly one instance per header."
+            ],
+            "آخرین انتشارها": [
+                "Latest releases"
+            ],
+            "آخرین جستجوهای هر بازدیدکننده فقط در مرورگر خودش ذخیره میشود.": [
+                "Each visitor’s recent searches are stored only in their own browser."
+            ],
+            "آلبوم‌ها": [
+                "Albums"
+            ],
+            "آهنگ و آلبوم": [
+                "Tracks & albums"
+            ],
+            "آیا شنیدن بدون حساب کاربری ممکن است؟": [
+                "Can I listen without an account?"
+            ],
+            "آیکون": [
+                "Icon"
+            ],
+            "آیکون دکمه را انتخاب کنید. در ویرایشگر و سایت به صورت زنده نمایش داده می‌شود.": [
+                "Choose the button icon. Previewed live in both the Site Editor and the frontend."
+            ],
+            "آیکون دکمه را نمایش یا پنهان کنید. وقتی خاموش باشد فقط متن (اگر فعال باشد) نمایش داده می‌شود.": [
+                "Show or hide the button icon. When off, only the label text (if enabled) is displayed."
+            ],
+            "آیکون منو": [
+                "Menu icon"
+            ],
+            "آیکون‌های منو": [
+                "Menu Icons"
+            ],
+            "ابزارک‌های سربرگ MusicWave": [
+                "MusicWave header widgets"
+            ],
+            "ابزارک‌های پابرگ": [
+                "Footer widgets"
+            ],
+            "ابزارک‌های پابرگ MusicWave": [
+                "MusicWave footer widgets"
+            ],
+            "اختیاری. با نامک نوع انتشار مانند album، single، ep، podcast_show یا podcast_episode فیلتر کنید. برای نمایش همه انواع، خالی بگذارید. این موارد در MusicWave → انواع انتشار قرار دارند.": [
+                "Optional. Filter by a release-type slug such as album, single, ep, podcast_show, podcast_episode. Leave empty to include all types. Found under MusicWave → Release Types."
+            ],
+            "اختیاری. برای تعیین ترتیب دقیق، شناسه انتشارها را با کاما جدا کرده و وارد کنید (مثلاً ۱۲، ۴۵، ۷۸). با بردن نشانگر روی عنوان انتشار در MusicWave → انتشارها، شناسه را در پیش‌نمایش پیوند ببینید. این گزینه همه فیلترهای دیگر را نادیده می‌گیرد.": [
+                "Optional. Paste comma-separated release IDs to fix an exact order (e.g. 12, 45, 78). Find the ID by hovering a release title in MusicWave → Releases — the ID shows in the link preview. Overrides all other filters."
+            ],
+            "اختیاری. فقط فهرست‌های پخش عمومی را نمایش بده که عنوانشان با این متن مطابقت دارد.": [
+                "Optional. Only show public playlists whose title matches this text."
+            ],
+            "اختیاری. نامک را از فهرست هنرمندان / سبک‌ها / حال‌وهواها در وردپرس → MusicWave کپی کنید. اگر خالی بگذارید، همهٔ موارد نمایش داده می‌شوند. نمونه: pop یا lo-fi.": [
+                "Optional. Copy the slug from WordPress → MusicWave → Artists / Genres / Moods list (the slug column). Leave empty to include every term. Example: pop or lo-fi."
+            ],
+            "اختیاری: ناحیه کوچک ابزارک برای سربرگ (مثلاً اعلان یا تغییر زبان). بلوک‌ها را از نمایش → ابزارک‌ها یا مستقیماً در بخش قالب سربرگ اضافه کنید.": [
+                "Optional: small widget area for the header (e.g., announcement, language switcher). Add blocks under Appearance → Widgets or directly in the Header template part."
+            ],
+            "ارتقا به VIP": [
+                "Upgrade to VIP"
+            ],
+            "از برگهٔ درخواستها استفاده کنید؛ هر پیشنهاد پس از بررسی در کاتالوگ قرار میگیرد.": [
+                "Use the requests page; every suggestion is reviewed before it lands in the catalogue."
+            ],
+            "از صفحهٔ حساب خود، هر زمان و بدون پرسش اضافه.": [
+                "From your account page, any time, with no extra questions."
+            ],
+            "از کجا شروع کنیم؟": [
+                "Where should we start?"
+            ],
+            "از یک ردیف سریع تا فهرست کامل صفحهبهصفحه؛ هر سه حالت از یک بلوک ساخته شدهاند و میتوانید هرکدام را نگه دارید.": [
+                "From a quick rail to a full page-by-page directory; all three shapes come from one block, and you can keep whichever you need."
+            ],
+            "استاندارد (۴ ستون دسکتاپ)": [
+                "Standard (4 desktop columns)"
+            ],
+            "استفاده از تنظیمات کلی": [
+                "Use global setting"
+            ],
+            "استفاده از فیلد توضیحات": [
+                "Use description field"
+            ],
+            "استفاده از پوسته تیره": [
+                "Use dark theme"
+            ],
+            "استفاده از پوسته روشن": [
+                "Use light theme"
+            ],
+            "استفاده از پوسته سیستم": [
+                "Use system theme"
+            ],
+            "استفاده از چکیده": [
+                "Use excerpt"
+            ],
+            "استودیوی شخصی شما در یک نگاه": [
+                "Your personal studio at a glance"
+            ],
+            "اسلاید %1$d از %2$d": [
+                "Slide %1$d of %2$d"
+            ],
+            "اسلاید %1$d: %2$s": [
+                "Slide %1$d: %2$s"
+            ],
+            "اسلاید بعدی": [
+                "Next slide"
+            ],
+            "اسلاید تمام‌قاب با تیتر بزرگ و پردهٔ تیره‌تر.": [
+                "Full-frame slide with an oversized title and a darker scrim."
+            ],
+            "اسلاید قبلی": [
+                "Previous slide"
+            ],
+            "اسلایدر": [
+                "Slider"
+            ],
+            "اسلایدر انتشارها": [
+                "Release slider"
+            ],
+            "اسلایدر انتشارهای MusicWave": [
+                "MusicWave release slider"
+            ],
+            "اسلایدر هیرو": [
+                "Hero slider"
+            ],
+            "اسلایدر واکنش‌گرا و دسترس‌پذیر برای انتشارهای منتخب یا جدید. از طریق ویرایشگر سایت و تنظیمات کلی اسلایدر کاملاً قابل سفارشی‌سازی است.": [
+                "A responsive, accessible slider for featured or recent releases. Fully customizable via Site Editor and global slider settings."
+            ],
+            "اسکرول خودکار": [
+                "Auto-scroll"
+            ],
+            "اشتراک فعال، طرحهای عضویت، تاریخچهٔ سفارش، دانلودهای مجاز، آدرس و روش پرداخت؛ هر بخش یک بلوک جداگانه و قابل ویرایش.": [
+                "Active subscription, membership plans, order history, entitled downloads, address and payment method; each part is a separate, editable block."
+            ],
+            "افقی (۱۶:۱۰)": [
+                "Landscape (16:10)"
+            ],
+            "الکترونیک": [
+                "Electronic"
+            ],
+            "امروز (۲۴ ساعت اخیر)": [
+                "Today (last 24 hours)"
+            ],
+            "انتخاب": [
+                "Select"
+            ],
+            "انتشار MusicWave": [
+                "MusicWave release"
+            ],
+            "انتشار یا آلبوم نمونه برای پیش‌نمایش": [
+                "Sample release or album for preview"
+            ],
+            "انتشارها": [
+                "Releases"
+            ],
+            "انتشارها برای نمایش": [
+                "Releases to show"
+            ],
+            "انتشارها، هنرمندان، آلبوم‌ها و دانلودهای اختصاصی را در تجربه‌ای یکپارچه کشف کنید.": [
+                "Explore releases, artists, albums, and exclusive downloads in one focused experience."
+            ],
+            "انتشارهای بعدی": [
+                "Next releases"
+            ],
+            "انتشارهای بیشتر": [
+                "More releases"
+            ],
+            "انتشارهای قبلی": [
+                "Previous releases"
+            ],
+            "انتشارهای منتخب": [
+                "Featured releases"
+            ],
+            "انتشاری پیدا نشد": [
+                "No releases found"
+            ],
+            "اندازه فونت عنوان (پیکسل، ۰ = پیش‌فرض)": [
+                "Title font size (px, 0 = default)"
+            ],
+            "اندازه کارت‌ها": [
+                "Card size"
+            ],
+            "این بلوک سه ناحیه ابزارک فوتر را نمایش می‌دهد. برای ویرایش مستقیم و ماژولار در ویرایشگر سایت، می‌توانید مستقیماً بلوک «ستون‌ها» وردپرس را با بلوک‌های فهرست، پیوند و متن ترکیب کنید.": [
+                "This block renders the three footer widget areas. To build custom modular footer columns directly in the Site Editor, compose core Columns with List, Navigation, and Paragraph blocks."
+            ],
+            "این دو گزینه فقط پیشنمایش داخل ویرایشگر را تغییر میدهند و هیچ اثری روی سایت ندارند.": [
+                "These two options only change the in-editor preview and have no effect on the site."
+            ],
+            "این متن روی دکمه دیده نمیشود و فقط به عنوان برچسب دسترسپذیری استفاده میشود.": [
+                "This text is not shown on the button and is used only as an accessibility label."
+            ],
+            "این ناحیه از «نمایش → ابزارک‌ها» با کشیدن هر بلوک یا ابزارک پر می‌شود؛ تا زمانی که ابزارکی اختصاص ندهید، نوار کناری در سایت به‌طور خودکار پنهان می‌ماند.": [
+                "This area is filled from Appearance → Widgets by dragging any block or widget here. Until you assign one, the sidebar stays hidden on the front end."
+            ],
+            "این کار انتشارها، صفحات، منوها، رسانه‌ها، تنظیمات افزونه یا سبک‌های کلی را حذف نمی‌کند.": [
+                "This does not delete releases, pages, menus, media, plugin settings, or global styles."
+            ],
+            "اینجا چیزی در حال پخش نیست.": [
+                "Nothing playing here."
+            ],
+            "با تب‌ها بین تازه‌ترین اضافه‌شده‌ها و پرسنشنیده‌ترین‌ها جابه‌جا شوید.": [
+                "Use the tabs to switch between the newest additions and the most played."
+            ],
+            "با زدن Ctrl+K در هر جای سایت، پنجره جستجو باز میشود.": [
+                "Pressing Ctrl+K anywhere on the site opens the search overlay."
+            ],
+            "باز و بستهٔ منو": [
+                "Toggle menu"
+            ],
+            "باز کردن %s": [
+                "Open %s"
+            ],
+            "باز کردن انتشار": [
+                "Open release"
+            ],
+            "باز کردن منو": [
+                "Open menu"
+            ],
+            "باز کردن پنجره جستجوی سریع": [
+                "Open quick search modal"
+            ],
+            "بازدیدها": [
+                "Views"
+            ],
+            "بازهٔ زمانی انتشار": [
+                "Release time window"
+            ],
+            "بازکردن منو": [
+                "Expand menu"
+            ],
+            "بازیابی فایل‌های معتبر قالب": [
+                "Restore validated theme templates"
+            ],
+            "بخش بزرگی از کاتالوگ آزاد است؛ فهرست پخش شخصی و دانلود به حساب کاربری نیاز دارد.": [
+                "A large part of the catalogue is open; personal playlists and downloads need an account."
+            ],
+            "بخش معرفی": [
+                "Hero"
+            ],
+            "بدنه وزیرمتن": [
+                "Vazirmatn body"
+            ],
+            "بدون افزونه، صفحات تک‌ریلیز و بلوک‌های کاتالوگ کار نمی‌کنند.": [
+                "Without the plugin, single-release pages and catalog blocks do not work."
+            ],
+            "بدون سطح کارت؛ فقط خطوط و تایپوگرافی. مناسب چیدمان‌های فهرستی.": [
+                "No card surfaces — rules and typography only. Best for list layouts."
+            ],
+            "بدون قاب و پس‌زمینه؛ فقط مسیر تایپوگرافیک تمیز.": [
+                "Unframed typographic breadcrumb trail with no container surface."
+            ],
+            "بدون متن بدنه": [
+                "No body text"
+            ],
+            "بدون نیاز به نصب؛ در هر دستگاهی با حساب کاربری خود ادامه دهید.": [
+                "Nothing to install — pick up on any device with your account."
+            ],
+            "بدون کارت و سایه، تایپوگرافی تمیز.": [
+                "Clean typography with no card frame or shadow."
+            ],
+            "برای «%s» هنوز متن ترانه یا زمان‌بندی LRC ثبت نشده است؛ در نمای عمومی نمایش داده نمی‌شود.": [
+                "No lyrics or LRC timing have been added for “%s” yet; this block stays hidden on the public page."
+            ],
+            "برای استفاده از برچسب پیش‌فرض ترجمه‌شده («خانه»)، خالی بگذارید.": [
+                "Leave empty to use the default translated label (\"Home\")."
+            ],
+            "برای استفاده از رنگ تأکیدی قالب، خالی بگذارید.": [
+                "Leave empty to use theme accent color."
+            ],
+            "برای استفاده از مقدار پیش‌فرض قالب، خالی بگذارید.": [
+                "Leave empty to use theme default."
+            ],
+            "برای این انتشار هنوز متن ترانه یا زمان‌بندی LRC ثبت نشده است؛ در نمای عمومی نمایش داده نمی‌شود.": [
+                "No lyrics or LRC timing have been added for this release yet; this block stays hidden on the public page."
+            ],
+            "برای تغییر آیکون هر پیوند منو (خانه، مرور، قطعه‌ها، هنرمندان، فروشگاه، درخواست‌ها و…): بلوک Navigation یا Navigation Link را انتخاب کنید → در ستون تنظیمات → پیشرفته → کلاس CSS اضافی، یک کلاس mw-icon-* اضافه کنید. مثلاً: mw-icon-home، mw-icon-browse، mw-icon-tracks، mw-icon-artists، mw-icon-charts، mw-icon-radio (درخواست‌ها)، mw-icon-library، mw-icon-playlists، mw-icon-genres، mw-icon-albums، mw-icon-podcasts، mw-icon-search، mw-icon-account، mw-icon-settings. اگر کلاسی ندهید، آیکون به صورت خودکار از روی برچسب فارسی/انگلیسی تشخیص داده می‌شود (خانه، مرور، قطعه‌ها، هنرمندان، فروشگاه و…).": [
+                "To customize any menu link icon, select the Navigation Link block, open Advanced -> Additional CSS class(es), and add an mw-icon-* class (such as mw-icon-home, mw-icon-browse, mw-icon-tracks, mw-icon-artists, mw-icon-charts, mw-icon-radio, mw-icon-library, mw-icon-playlists, mw-icon-genres, mw-icon-albums, mw-icon-podcasts, mw-icon-search, mw-icon-account, or mw-icon-settings). Without an explicit class, icons resolve automatically from the link label."
+            ],
+            "برای شما": [
+                "Made for you"
+            ],
+            "برای نمایش پیش‌نمایش زنده، انتشار منتشرشده اضافه کنید یا تنظیمات بلوک را بررسی کنید.": [
+                "Publish at least one release or adjust the block query settings to preview this block live."
+            ],
+            "برای پرش، روی خط بزنید": [
+                "Tap a line to jump"
+            ],
+            "برترین": [
+                "Top"
+            ],
+            "برجسته": [
+                "Elevated"
+            ],
+            "برچسب": [
+                "Label"
+            ],
+            "برچسب اقدام": [
+                "Action label"
+            ],
+            "برچسب بالایی": [
+                "Eyebrow"
+            ],
+            "برچسب دسترس‌پذیری (ARIA)": [
+                "Accessibility label (ARIA)"
+            ],
+            "برچسب دکمه": [
+                "Button label"
+            ],
+            "برچسب صفحه اصلی": [
+                "Home link label"
+            ],
+            "برچسب مشاهده همه": [
+                "View-all label"
+            ],
+            "برچسب پیوند": [
+                "Link label"
+            ],
+            "برچسب پیوند مشاهده همه": [
+                "View all link label"
+            ],
+            "برچسبهای پیشنهادی سریع (جداشده با کاما)": [
+                "Quick suggestion tags (comma separated)"
+            ],
+            "برگه (بدون نوار کناری)": [
+                "Page (no sidebar)"
+            ],
+            "برگه (عریض)": [
+                "Page (wide)"
+            ],
+            "برگه با نوار کناری": [
+                "Page with sidebar"
+            ],
+            "برگهٔ انتشار، همهٔ امکانات": [
+                "The release page, every feature"
+            ],
+            "بزرگ": [
+                "Large"
+            ],
+            "بزرگ (۳ ستون دسکتاپ)": [
+                "Large (3 desktop columns)"
+            ],
+            "بزرگ‌تر کردن متن": [
+                "Increase lyrics size"
+            ],
+            "بستن": [
+                "Close"
+            ],
+            "بستن جستجو": [
+                "Close search"
+            ],
+            "بسیار بزرگ": [
+                "XX Large"
+            ],
+            "بعدی": [
+                "Next"
+            ],
+            "بنتو (چیدمان موزاییکی)": [
+                "Bento (Mosaic Layout)"
+            ],
+            "به ما بپیوندید": [
+                "Join us"
+            ],
+            "به‌تازگی به‌روزرسانی‌شده": [
+                "Recently updated"
+            ],
+            "بوم": [
+                "Canvas"
+            ],
+            "بیشتر بخوانید": [
+                "Read more"
+            ],
+            "بیکلام": [
+                "Instrumental"
+            ],
+            "تأکید روی بوم": [
+                "Accent on canvas"
+            ],
+            "تاریخ انتشار": [
+                "Published date"
+            ],
+            "تاریخ ویرایش": [
+                "Modified date"
+            ],
+            "تاریک": [
+                "Dark"
+            ],
+            "تایپوگرافی شاخص و کنتراست مجله‌ای.": [
+                "Display typography and editorial contrast."
+            ],
+            "تبلت": [
+                "Tablet"
+            ],
+            "تبلت — ۷۶۸ تا ۱۰۲۳ پیکسل": [
+                "Tablet — 768 to 1023 pixels"
+            ],
+            "تبهای تفکیک محدوده (همه / آهنگ / هنرمند / پلیلیست)": [
+                "Scope tabs (all / song / artist / playlist)"
+            ],
+            "تب‌های شناسایی‌شده: ": [
+                "Detected tabs: "
+            ],
+            "تب‌های فیلتر (Today / Week / سبک)": [
+                "Filter tabs (Today / Week / Genre)"
+            ],
+            "تحریریه": [
+                "Editorial"
+            ],
+            "تحریریه روی بوم": [
+                "Editorial on canvas"
+            ],
+            "ترانه": [
+                "song"
+            ],
+            "ترجمه": [
+                "Translation"
+            ],
+            "تسویه‌حساب": [
+                "Checkout"
+            ],
+            "تصادفی": [
+                "Random"
+            ],
+            "تعداد انتشارهای بارگذاری‌شده": [
+                "Releases loaded"
+            ],
+            "تعداد سفارشی‌سازی‌های ذخیره‌شده قالب: %d": [
+                "Customized built-in template overrides found: %d"
+            ],
+            "تعداد نتیجههایی که هنگام تایپ، زیر فیلد جستجو پیشنهاد میشود.": [
+                "How many results are suggested under the search field while typing."
+            ],
+            "تعداد پیشنهادهای زنده": [
+                "Live suggestion limit"
+            ],
+            "تعریف تب‌های فیلتر پویا": [
+                "Dynamic filter tabs definition"
+            ],
+            "تعمیر قالب MusicWave": [
+                "MusicWave template repair"
+            ],
+            "تغییر پوسته": [
+                "Theme toggle"
+            ],
+            "تفکیک نوع انتشار (تک‌آهنگ / آلبوم)": [
+                "By release type (Singles / Albums)"
+            ],
+            "تمام‌عرض": [
+                "Full width"
+            ],
+            "تنظیمات اسلایدر هیرو": [
+                "Hero slider settings"
+            ],
+            "تنظیمات متن پویا": [
+                "Dynamic text settings"
+            ],
+            "تنظیمات مسیر راهنما": [
+                "Breadcrumb settings"
+            ],
+            "توضیح کوتاه بخش": [
+                "Short section description"
+            ],
+            "توضیحات": [
+                "Description"
+            ],
+            "توقف هنگام قرارگیری نشانگر یا تمرکز": [
+                "Pause on hover or focus"
+            ],
+            "تکرار": [
+                "Loop"
+            ],
+            "تک‌آهنگ‌ها": [
+                "Singles"
+            ],
+            "تک‌فاصله استودیو": [
+                "Studio Mono"
+            ],
+            "تگ HTML خروجی": [
+                "HTML wrapper tag"
+            ],
+            "تیتر اصلی": [
+                "Hero"
+            ],
+            "تیرگی لایه رویی": [
+                "Overlay darkness"
+            ],
+            "تیرگی لایه رویی (سبک سینمایی)": [
+                "Scrim opacity (Cinema style)"
+            ],
+            "جامعه": [
+                "Community"
+            ],
+            "جای دکمه": [
+                "Button position"
+            ],
+            "جداکننده مسیر": [
+                "Trail separator"
+            ],
+            "جدیدترین": [
+                "Newest"
+            ],
+            "جدیدترین / پربازدید / تصادفی": [
+                "Newest / Most popular / Shuffle"
+            ],
+            "جدیدترین و برترین انتشارها": [
+                "Newest and top releases"
+            ],
+            "جدیدترین‌ها در ابتدا": [
+                "Newest first"
+            ],
+            "جستجو": [
+                "Search"
+            ],
+            "جستجوهای اخیر": [
+                "Recent searches"
+            ],
+            "جستجوی آهنگ، هنرمند یا آلبوم…": [
+                "Search tracks, artists, or albums…"
+            ],
+            "جستجوی سربرگ MusicWave": [
+                "MusicWave Header Search"
+            ],
+            "جستجوی سربرگ در سه اندازه صفحه (دسکتاپ، تبلت و موبایل) جداگانه نمایش داده میشود. یک پیشتنظیم انتخاب کنید و بعد در صورت نیاز هر اندازه را پایینتر دقیق کنید.": [
+                "The header search is shown separately at three screen sizes (desktop, tablet and mobile). Pick a preset, then fine-tune each size below if needed."
+            ],
+            "جستجوی صوتی": [
+                "Voice search"
+            ],
+            "جستجوی صوتی فارسی و انگلیسی": [
+                "Voice search (Persian & English)"
+            ],
+            "جستجوی هوشمند": [
+                "Smart search"
+            ],
+            "جستجوی هوشمند کاتالوگ": [
+                "Smart catalog search"
+            ],
+            "جستوجو، هنرمند، سبک، حالوهوا، نوع و مرتبسازی؛ نتیجه بلافاصله در شبکهٔ پایین بهروز میشود.": [
+                "Search, artist, genre, mood, type and sort; the grid below updates immediately."
+            ],
+            "جست‌وجو": [
+                "Search"
+            ],
+            "جست‌وجوی فوری در کل کاتالوگ": [
+                "Instant search across the whole catalog"
+            ],
+            "جمع‌کردن منو": [
+                "Collapse menu"
+            ],
+            "جهت": [
+                "Direction"
+            ],
+            "جوهر نیمه‌شب": [
+                "Midnight ink"
+            ],
+            "حاشیه‌های خلوت بدون قاب و سایهٔ کارت.": [
+                "Clean unframed strip without card border or shadow."
+            ],
+            "حال‌وهوا": [
+                "Mood"
+            ],
+            "حداقلی": [
+                "Minimal"
+            ],
+            "حداکثر طول عنوان آیتم‌ها (۰ = نامحدود)": [
+                "Max item label length (0 = unlimited)"
+            ],
+            "حداکثر عرض نوار جستجو در دسکتاپ (پیکسل)": [
+                "Maximum search bar width on desktop (pixels)"
+            ],
+            "حذف تب‌ها": [
+                "Clear tabs"
+            ],
+            "حساب موسیقی": [
+                "Music account"
+            ],
+            "حساب کاربری": [
+                "Account"
+            ],
+            "حساب کاربری من": [
+                "My account"
+            ],
+            "حساب کاربری، بخش خرید": [
+                "Account, the purchase side"
+            ],
+            "حساب کاربری، چیدمان متفاوت": [
+                "Account, a different layout"
+            ],
+            "خالی بگذارید تا به شکل خودکار از محبوبترین ژانرهای سایت پر شود؛ برای پنهان کردن عبارت off را بنویسید.": [
+                "Leave empty to auto-fill from the site’s most popular genres; write off to hide it."
+            ],
+            "خاموش (بدون نوار پایین)": [
+                "Off (no bottom bar)"
+            ],
+            "خانه": [
+                "Home"
+            ],
+            "خروج": [
+                "Log out"
+            ],
+            "خروج از حساب": [
+                "Log out of your account"
+            ],
+            "خط تأکیدی": [
+                "Accent line"
+            ],
+            "خط تأکیدی خطی": [
+                "Outline accent"
+            ],
+            "خط تأکیدی عمودی در ابتدای مسیر راهنما.": [
+                "Editorial accent rule at the inline start of the breadcrumb trail."
+            ],
+            "خط تأکیدی عمودی و سلسلهمراتب مجلهای.": [
+                "Vertical accent rule and magazine hierarchy."
+            ],
+            "خط تیره (—)": [
+                "Em dash (—)"
+            ],
+            "خط عمودی (|)": [
+                "Vertical bar (|)"
+            ],
+            "خط مورب (/)": [
+                "Slash (/)"
+            ],
+            "خطا در دریافت پیش‌نمایش از سرور وردپرس.": [
+                "Failed to render block preview from WordPress server."
+            ],
+            "خطی": [
+                "Outline"
+            ],
+            "خودکار (محتوای واقعی فعلی سایت)": [
+                "Automatic (current live site content)"
+            ],
+            "خوشآمد، آمار شنیدن، ادامهٔ پخش، صف پخش و کتابخانهٔ شخصی؛ هر بخش یک بلوک مستقل که میتوانید جابهجا کنید یا حذف کنید.": [
+                "Welcome, listening stats, continue playing, the playback queue and your personal library; each part is an independent block you can move or remove."
+            ],
+            "خیلی بزرگ": [
+                "X Large"
+            ],
+            "خیلی کوچک": [
+                "X Small"
+            ],
+            "داخل برند ریل (فقط دسکتاپ)": [
+                "Inside the rail brand (desktop only)"
+            ],
+            "دانلود امن با کیفیت اصلی": [
+                "Secure downloads in original quality"
+            ],
+            "دایره": [
+                "Circle"
+            ],
+            "دایره‌ای": [
+                "Circle"
+            ],
+            "در این بازه یا دسته هنوز انتشاری ثبت نشده است.": [
+                "No releases found for this time window or filter yet."
+            ],
+            "در بخش قالب «ابزارک‌های پابرگ» نمایش داده می‌شود (نمایش → ویرایشگر → بخش‌های قالب → ابزارک‌های پابرگ). هر بلوک یا ابزارک قدیمی را بکشید و رها کنید؛ رنگ‌ها از سبک‌های کلی پیروی می‌کنند.": [
+                "Appears in the Footer widgets template part (Appearance → Editor → Template Parts → Footer widgets). Drag any block or legacy widget — colors follow global Styles."
+            ],
+            "در بخش قالب «نوار کناری فروشگاه» نمایش داده می‌شود (بخش‌های قالب → نوار کناری فروشگاه). از فیلترها و دسته‌بندی‌های ووکامرس یا هر بلوکی استفاده کنید.": [
+                "Appears in the Shop sidebar template part (Template Parts → Shop sidebar). Use WooCommerce filters, categories, or any block."
+            ],
+            "در بخش قالب «نوار کناری» نمایش داده می‌شود (نمایش → ویرایشگر → بخش‌های قالب → نوار کناری). هر بلوک یا ابزارک قدیمی را اینجا اضافه کنید. همه‌چیز بدون نیاز به کدنویسی از رابط بصری قابل ویرایش است.": [
+                "Appears in the Sidebar template part (Appearance → Editor → Template Parts → Sidebar). Add any block or legacy widget here. Fully editable visually — no code required."
+            ],
+            "در صورت پر بودن نمایش داده می‌شود؛ یا خالی بگذارید و بلوک عنوان بخش را بالای ویترین قرار دهید.": [
+                "Displayed when filled; leave blank to omit or pair with a standalone Section Header block above."
+            ],
+            "در هر خط یک تب بنویسید به شکل «عنوان تب|فرمان فیلتر». حداقل ۲ خط معتبر وارد کنید تا نوار تب‌ها نمایش داده شود و کاربران بدون رفرش صفحه بین تب‌ها جابه‌جا شوند.": [
+                "Enter one tab per line using \"Label|filter-rule\". Add at least 2 valid lines to render the interactive tab bar with instant no-reload switching."
+            ],
+            "در ویرایشگر سایت، «نمونه مسیر راهنما (Breadcrumb)» به‌صورت زنده نمایش داده می‌شود تا هر تغییر سبک، جداکننده، رنگ و فاصله بلافاصله قابل مشاهده باشد. در سایت واقعی، مسیر دقیق هر انتشار، هنرمند، سبک، برگه یا جست‌وجو به‌طور خودکار جایگزین و با اسکیمای سئو هماهنگ می‌شود.": [
+                "Inside the Site Editor, a live sample breadcrumb trail is previewed so style, separator, color, and spacing changes appear immediately. On the frontend, the exact route trail is resolved dynamically in sync with Schema.org BreadcrumbList SEO metadata."
+            ],
+            "درخشش غروب": [
+                "Sunset glow"
+            ],
+            "درخواست آهنگ و همکاری": [
+                "Song request & collaboration"
+            ],
+            "درخواست موسیقی تازه": [
+                "Request fresh music"
+            ],
+            "درخواست‌ها": [
+                "Requests"
+            ],
+            "دسکتاپ": [
+                "Desktop"
+            ],
+            "دسکتاپ — از ۱۰۲۴ پیکسل به بالا": [
+                "Desktop — 1024 pixels and up"
+            ],
+            "دموهای MusicWave": [
+                "MusicWave demos"
+            ],
+            "دموی استودیوی حساب کاربری": [
+                "Account studio demo"
+            ],
+            "دموی برگهٔ کامل انتشار": [
+                "Full release page demo"
+            ],
+            "دموی جامعه و درخواستها": [
+                "Community and requests demo"
+            ],
+            "دموی خرید و عضویت حساب کاربری": [
+                "Account purchase and membership demo"
+            ],
+            "دموی فهرست هنرمندان": [
+                "Artists directory demo"
+            ],
+            "دموی قابلیتها": [
+                "Feature demo"
+            ],
+            "دموی مرور و کشف کاتالوگ": [
+                "Catalog browse and discovery demo"
+            ],
+            "دنبال قطعه، هنرمند یا آلبوم بگردید": [
+                "Look for a track, artist, or album"
+            ],
+            "دنبال کردن پخش": [
+                "Follow playback"
+            ],
+            "دکمه آیکون + نوار کشویی بازشونده": [
+                "Icon button + expandable bar"
+            ],
+            "دکمه آیکون + پاپآپ شناور (پیشنهادی)": [
+                "Icon button + floating popup (recommended)"
+            ],
+            "دکمه آیکون + پنجره پاپآپ": [
+                "Icon button + popup window"
+            ],
+            "دکمه آیکون + پنجره پاپآپ در همه اندازهها (کمترین فضا)": [
+                "Icon button + popup window at every size (least space)"
+            ],
+            "دکمه تأکیدی": [
+                "Accent button"
+            ],
+            "دکمه فراخوان اقدام": [
+                "Call-to-action button"
+            ],
+            "دکمهٔ باز/بسته کردن ریل در دسکتاپ و کشو در موبایل. یک نمونه در هر سربرگ کافی است: «نوار بالا» همیشه دیده می‌شود، «داخل برند» فقط در دسکتاپ. آیکون، برچسب و رنگ را از تنظیمات بلوک تغییر دهید.": [
+                "Button that collapses the rail on desktop and opens the drawer on mobile. One instance per header is enough: «Top bar» is always visible, «Inside the rail brand» only on desktop. Change the icon, label and colours from the block settings."
+            ],
+            "دکمهٔ تغییر پوسته (روشن/تیره/سیستم). قابل حذف/جابه‌جایی در ویرایشگر سایت. کلاس nbp-theme-toggle-fallback همیشه در نوار بالا موجود است.": [
+                "Theme switcher button (light/dark/system), movable in the Site Editor with nbp-theme-toggle-fallback support in the top bar."
+            ],
+            "دکمهٔ منو": [
+                "Menu button"
+            ],
+            "دکمهٔ منوی کناری": [
+                "Side rail toggle"
+            ],
+            "رادیوی نیمه‌شب": [
+                "Midnight radio"
+            ],
+            "راهنمای کامل فرمان‌های قابل استفاده:": [
+                "Available filter rules reference:"
+            ],
+            "ردیف سبکها و حالوهواها، نوار فیلتر، خلاصهٔ نتایج، شبکهٔ انتشارها با صفحهبندی و یک ردیف پیشنهادی — همه در یک برگه.": [
+                "A rail of genres and moods, a filter bar, a results summary, a paginated release grid and a suggested rail — all on one page."
+            ],
+            "رز تحریریه": [
+                "Editorial rose"
+            ],
+            "رفتار اسلایدر": [
+                "Slider behavior"
+            ],
+            "رفتن به اسلاید %d": [
+                "Go to slide %d"
+            ],
+            "رفتن به گروه اسلاید %d": [
+                "Go to slide group %d"
+            ],
+            "رنگ تأکیدی": [
+                "Accent"
+            ],
+            "رنگ تأکیدی پررنگ": [
+                "Strong accent"
+            ],
+            "رنگ عنوان": [
+                "Title color"
+            ],
+            "رنگ متن بدنه": [
+                "Body text color"
+            ],
+            "رنگ متن دکمه": [
+                "Button text color"
+            ],
+            "رنگ نام هنرمند و متن توضیح روی کارت معرفی (مثلاً #e2e8f0).": [
+                "Artist and summary text color inside the hero card (e.g. #e2e8f0)."
+            ],
+            "رنگ، قلم و فاصلهها را از زبانه «شیوهنامهها» تنظیم کنید؛ این گزینه فقط قالب ظاهری فیلد را عوض میکند.": [
+                "Set colours, fonts and spacing from the Styles tab; this option only changes the look of the field."
+            ],
+            "روشن": [
+                "Light"
+            ],
+            "روشن: نوار پایین به همهٔ سربرگ‌ها اضافه می‌شود و در ویرایشگر سایت قابل ویرایش است. خاموش: نوار حذف می‌شود و پخش‌کنندهٔ سراسری به لبهٔ پایین صفحه می‌چسبد.": [
+                "On: the bottom bar is added to every header and stays editable in the Site Editor. Off: the bar is removed and the global player docks to the bottom edge of the page."
+            ],
+            "روی رنگ تأکیدی": [
+                "On accent"
+            ],
+            "ریل": [
+                "Rail"
+            ],
+            "سبد خرید": [
+                "Cart"
+            ],
+            "سبد خرید شما": [
+                "Your cart"
+            ],
+            "سبک": [
+                "Genre"
+            ],
+            "سبک دکمه": [
+                "Button style"
+            ],
+            "سبک نمایش": [
+                "Display style"
+            ],
+            "سبک‌ها": [
+                "Genres"
+            ],
+            "ستونی": [
+                "Stacked"
+            ],
+            "ستون‌های ابزارک فوتر": [
+                "Footer widget columns"
+            ],
+            "ستون‌های دسکتاپ": [
+                "Desktop columns"
+            ],
+            "سربرگ": [
+                "Header"
+            ],
+            "سربرگ (استریم — ریل انتها)": [
+                "Header (Stream — rail at the end edge)"
+            ],
+            "سربرگ (استریم)": [
+                "Header (stream)"
+            ],
+            "سربرگ (ساده)": [
+                "Header (minimal)"
+            ],
+            "سربرگ (وسط‌چین)": [
+                "Header (centered)"
+            ],
+            "سربرگ MusicWave": [
+                "MusicWave header"
+            ],
+            "سربرگ استریم (ریل انتها)": [
+                "Stream header (rail at end)"
+            ],
+            "سربرگ استریم (ریل شروع اینلاین)": [
+                "Stream header (inline start rail)"
+            ],
+            "سربرگ ساده (افقی)": [
+                "Simple header (horizontal)"
+            ],
+            "سربرگ ساده بدون پس‌زمینه سنگین.": [
+                "Minimal header without a heavy background."
+            ],
+            "سربرگ سراسری": [
+                "Global header"
+            ],
+            "سربرگ وسط‌چین": [
+                "Centered header"
+            ],
+            "سربرگ کمینه": [
+                "Minimal header"
+            ],
+            "سرصفحه": [
+                "section head"
+            ],
+            "سرصفحهٔ بخش MusicWave": [
+                "MusicWave section head"
+            ],
+            "سرصفحهٔ سرمقاله‌ای با پوستهٔ mw-section-head و سبک‌های وسط‌چین، ستونی و معکوس؛ بلوک‌های درونی جداگانه انتخاب و جابه‌جا می‌شوند. برای یک عنوان متنی ساده از بلوک «عنوان بخش» استفاده کنید.": [
+                "Editorial section header with the mw-section-head shell and centered, split, and inverted styles; inner blocks select and move independently. For a plain text title, use the Heading block."
+            ],
+            "سرمقالهای": [
+                "Editorial"
+            ],
+            "سرمقاله‌ای": [
+                "Editorial"
+            ],
+            "سریف تحریریه": [
+                "Editorial Serif"
+            ],
+            "سطح": [
+                "Surface"
+            ],
+            "سطح برجسته": [
+                "Raised surface"
+            ],
+            "سطح شیشه‌ای مات با حاشیه ظریف.": [
+                "Frosted glass surface with a subtle border."
+            ],
+            "سفارش": [
+                "Order"
+            ],
+            "سفارش آهنگ اختصاصی": [
+                "Custom song order"
+            ],
+            "سفارشها و دانلودها": [
+                "Orders and downloads"
+            ],
+            "سفارشی — تنظیم دستی هر اندازه": [
+                "Custom — set each size manually"
+            ],
+            "سفارشی‌سازی‌های ویرایشگر سایت در پایگاه داده ذخیره می‌شوند و بر فایل‌های به‌روزشده قالب اولویت دارند. فقط زمانی از این ابزار استفاده کنید که قالب MusicWave بخش قالبی ناموجود یا محتوای بلوک نامعتبر گزارش کند.": [
+                "Site Editor customizations are stored in the database and override updated theme files. Use this tool only when a MusicWave template reports an unavailable template part or invalid block content."
+            ],
+            "سنتی و تلفیقی": [
+                "Traditional & fusion"
+            ],
+            "سینمایی": [
+                "Cinema"
+            ],
+            "شبکه": [
+                "Grid"
+            ],
+            "شبکه واکنش‌گرا": [
+                "Responsive grid"
+            ],
+            "شبکهٔ انتشارها (حلقهٔ پرس‌وجو)": [
+                "Release grid (Query Loop)"
+            ],
+            "شدت سایه‌روشن روی تصویر در حالت نمایش «سینمایی» (۰ تا ۱۰۰).": [
+                "Scrim darkness over artwork in Cinema display style (0 to 100)."
+            ],
+            "شروع شنیدن": [
+                "Start listening"
+            ],
+            "شعار سایت (Tagline)": [
+                "Site tagline"
+            ],
+            "شعاع گوشه دکمه (پیکسل)": [
+                "Button corner radius (px)"
+            ],
+            "شفاف": [
+                "Ghost"
+            ],
+            "شما اجازه تعمیر قالب‌ها را ندارید.": [
+                "You are not allowed to repair theme templates."
+            ],
+            "شناسه انتشار منتخب (۰ = اولین نتیجه)": [
+                "Featured release ID (0 = first result)"
+            ],
+            "شناسه انتشارهای منتخب": [
+                "Curated release IDs"
+            ],
+            "شنیدن حرفه‌ای": [
+                "PREMIUM LISTENING"
+            ],
+            "شکل تصویر": [
+                "Artwork shape"
+            ],
+            "شیشهای (Glass)": [
+                "Glass"
+            ],
+            "شیشه‌ای": [
+                "Glass"
+            ],
+            "صدای شما، به‌زیبایی سازمان‌یافته": [
+                "Your sound, beautifully organized"
+            ],
+            "صعودی": [
+                "Ascending"
+            ],
+            "صفحه سرمقاله موسیقی": [
+                "Music editorial home"
+            ],
+            "صفحه فرود (بدون سربرگ/پابرگ)": [
+                "Landing (no header/footer)"
+            ],
+            "صفحه پیدا نشد (۴۰۴)": [
+                "Page Not Found (404)"
+            ],
+            "صفحهبندی اسلایدر": [
+                "Slider pagination"
+            ],
+            "صفحهٔ استریم (نوار کناری)": [
+                "Stream page (side rail)"
+            ],
+            "صفحه‌بندی اسلایدر": [
+                "Slider pagination"
+            ],
+            "ظاهر بلوک": [
+                "Block appearance"
+            ],
+            "ظریف": [
+                "Subtle"
+            ],
+            "عرض بیشینه فیلد جستجو در حالت «نوار جستجوی کامل»؛ برای نوار باریکتر عدد کوچکتری بگذارید.": [
+                "Maximum search field width in the “full search bar” mode; use a smaller number for a narrower bar."
+            ],
+            "عرض ستون کناری (پیکسل)": [
+                "Side column width (px)"
+            ],
+            "عرض سربرگ": [
+                "Header width"
+            ],
+            "عضو": [
+                "Member"
+            ],
+            "عضویت را چطور لغو کنم؟": [
+                "How do I cancel my membership?"
+            ],
+            "عضویت، سفارش و دانلود در یک برگه": [
+                "Membership, orders and downloads on one page"
+            ],
+            "عضویت‌ها، انتشارهای اختصاصی، دانلودها یا یک فهرست پخش منتخب را با این فراخوان قابل ویرایش برجسته کنید.": [
+                "Highlight memberships, exclusive releases, downloads, or a curated playlist with this editable callout."
+            ],
+            "عمودی (۴:۵)": [
+                "Portrait (4:5)"
+            ],
+            "عنوان": [
+                "Title"
+            ],
+            "عنوان بالای فهرست کناری در چیدمان ویژه‌نامه. برای پیش‌فرض («منتخب‌های بعدی») خالی بگذارید.": [
+                "Heading displayed above the side release list in Feature layout. Leave empty for default (\"Up Next\")."
+            ],
+            "عنوان بخش": [
+                "Section heading"
+            ],
+            "عنوان بخش معرفی": [
+                "Hero title"
+            ],
+            "عنوان فهرست کناری": [
+                "Side column heading"
+            ],
+            "عنوان و برچسب را خالی بگذارید و بلوک عنوان بخش را بالای اسلایدر قرار دهید.": [
+                "Leave the title and eyebrow empty and place the section head block above the slider."
+            ],
+            "غلاف آلبوم با صفحهٔ بیرون‌زننده هنگام قرارگیری نشانگر.": [
+                "Album sleeve with a vinyl disc sliding out on hover."
+            ],
+            "غلاف آلبوم با صفحهٔ بیرون‌زننده که هنگام هاور از غلاف خارج می‌شود.": [
+                "Album sleeve with a disc that slides out of the jacket on hover."
+            ],
+            "غیرفعال": [
+                "Disabled"
+            ],
+            "فاصله کم": [
+                "Tight gap"
+            ],
+            "فاصلهٔ تعویض اسلایدها (میلی‌ثانیه)": [
+                "Slide interval (milliseconds)"
+            ],
+            "فاصلهٔ پخش خودکار (میلی‌ثانیه)": [
+                "Autoplay interval (milliseconds)"
+            ],
+            "فراخوان سرویس موسیقی": [
+                "Music service callout"
+            ],
+            "فروشگاه": [
+                "Shop"
+            ],
+            "فروشگاه با نوار کناری": [
+                "Shop with sidebar"
+            ],
+            "فشرده (۵ ستون دسکتاپ)": [
+                "Compact (5 desktop columns)"
+            ],
+            "فعال": [
+                "Enabled"
+            ],
+            "فقط موبایل (تا ۴۸rem)": [
+                "Mobile only (up to 48rem)"
+            ],
+            "فلش": [
+                "Chevron"
+            ],
+            "فلش زاویه‌دار (‹ / ›)": [
+                "Chevron (‹ / ›)"
+            ],
+            "فلش‌های پیمایش": [
+                "Navigation arrows"
+            ],
+            "فهرست الفبایی": [
+                "Alphabetical directory"
+            ],
+            "فهرست جمع‌وجور": [
+                "Compact list"
+            ],
+            "فهرست شخصی با فیلتر، شمارش و امکان حذف؛ همان کتابخانهٔ حساب کاربری، اینبار بهصورت یک فهرست کامل.": [
+                "Your personal list with filters, counts and removal; the same account library, this time as a full list."
+            ],
+            "فهرست هنرمندان": [
+                "Artists directory"
+            ],
+            "فهرست پخش": [
+                "Playlist"
+            ],
+            "فهرستهای پخش عمومی و درخواستهای سفارش": [
+                "Public playlists and song requests"
+            ],
+            "فهرستهایی که شنوندگان ساختهاند، و فرمی که کار تازه را به سایت میآورد؛ هر دو در یک برگه و هر دو قابل ویرایش.": [
+                "Lists built by listeners, and the form that brings new work to the site; both on one page and both editable."
+            ],
+            "فهرست‌های پخش": [
+                "Playlists"
+            ],
+            "فهرست‌های پخش اجتماعی": [
+                "Community playlists"
+            ],
+            "فهرست‌های پخش برای نمایش": [
+                "Playlists to show"
+            ],
+            "فهرست‌های پخش عمومی": [
+                "Public playlists"
+            ],
+            "فیلتر بازه و سبک": [
+                "Range and genre filter"
+            ],
+            "فیلتر جست‌وجوی فهرست پخش": [
+                "Playlist search filter"
+            ],
+            "فیلتر طبقه‌بندی": [
+                "Filter taxonomy"
+            ],
+            "فیلترها": [
+                "Filters"
+            ],
+            "فیلترها را تغییر دهید یا کاتالوگ کامل را مرور کنید.": [
+                "Change the filters or browse the full catalog."
+            ],
+            "فیلد بدون سطح؛ فقط خط زیر.": [
+                "Borderless field with underline only."
+            ],
+            "فیلد فشرده داخل سربرگ": [
+                "Compact field inside the header"
+            ],
+            "فیلد فشرده هوشمند (پیشنهادی)": [
+                "Smart compact field (recommended)"
+            ],
+            "فیلد فشرده که با کلیک باز میشود": [
+                "Compact field that opens on click"
+            ],
+            "قاب شیشه‌ای مات روی تصویر بایگانی.": [
+                "Frosted glass frame over the archive image."
+            ],
+            "قالب": [
+                "Template"
+            ],
+            "قبلی": [
+                "Previous"
+            ],
+            "قدرت‌گرفته از MusicWave.": [
+                "Powered by MusicWave."
+            ],
+            "قطعه بعدی موردعلاقه‌تان را پیدا کنید.": [
+                "Discover the next track you will love."
+            ],
+            "قطعه‌ها": [
+                "Tracks"
+            ],
+            "قفسه فهرست‌های پخش": [
+                "Playlists Shelf"
+            ],
+            "قفسه موسیقی": [
+                "Music Shelf"
+            ],
+            "ماه اخیر (۳۰ روز گذشته)": [
+                "This Month (last 30 days)"
+            ],
+            "متن": [
+                "Text"
+            ],
+            "متن LRC انتشار را با خط فعال هم‌زمان با پخش‌کننده سراسری نشان می‌دهد. بدون جاوااسکریپت همهٔ خطوط خوانا می‌مانند.": [
+                "Shows the release’s LRC lyrics with the active line synced to the global player. Without JavaScript every line stays readable."
+            ],
+            "متن از کاتالوگ همین انتشار · هم‌زمان با پخش‌کننده سراسری": [
+                "Lyrics from this release’s catalog · synced with the global player"
+            ],
+            "متن بخش منتخب": [
+                "Featured body"
+            ],
+            "متن ترجمه‌شده برای قالب‌های MusicWave. کلید، رشتهٔ متناسب با زبان را انتخاب می‌کند.": [
+                "Translated template text for MusicWave templates. The key selects a language-aware string."
+            ],
+            "متن جایگزین (اگر متای LRC خالی باشد)": [
+                "Fallback lyrics (when the LRC meta is empty)"
+            ],
+            "متن دکمه": [
+                "Button text"
+            ],
+            "متن دکمه را کنار آیکون نمایش دهید. برای دکمه‌های فقط آیکون خاموش بگذارید.": [
+                "Show label text next to the icon. Turn off for icon-only buttons."
+            ],
+            "متن راهنمای داخل فیلد": [
+                "Placeholder text inside the field"
+            ],
+            "متن قالب MusicWave": [
+                "MusicWave template text"
+            ],
+            "متن معرفی فوتر (درباره ما)": [
+                "Footer about copy"
+            ],
+            "متن هم‌زمان": [
+                "Synced lyrics"
+            ],
+            "متن هم‌زمان MusicWave": [
+                "MusicWave synced lyrics"
+            ],
+            "متن هم‌زمان با آهنگ": [
+                "Lyrics synced to the song"
+            ],
+            "متن کم‌رنگ": [
+                "Muted text"
+            ],
+            "متن کپی‌رایت فوتر (همراه سال جاری)": [
+                "Footer copyright line (with current year)"
+            ],
+            "متنها و برچسبها": [
+                "Texts and labels"
+            ],
+            "متوسط": [
+                "Medium"
+            ],
+            "مثلاً album، single، podcast_show": [
+                "e.g. album, single, podcast_show"
+            ],
+            "مثلاً pop، lo-fi، hip-hop": [
+                "e.g. pop, lo-fi, hip-hop"
+            ],
+            "مثلاً ۱۲، ۴۵، ۷۸": [
+                "e.g. 12, 45, 78"
+            ],
+            "محتوای اسلایدر": [
+                "Slider content"
+            ],
+            "محتوای ویترین": [
+                "Shelf content"
+            ],
+            "محدود کردن انتشارها به بازهٔ زمانی مشخص (مثلاً داغ‌ترین‌های امروز یا هفته اخیر).": [
+                "Restrict releases to a rolling publication window (e.g. Today or This Week)."
+            ],
+            "محدوده جستجو": [
+                "Search scope"
+            ],
+            "مدیر سایت": [
+                "Site admin"
+            ],
+            "مربع (۱:۱)": [
+                "Square (1:1)"
+            ],
+            "مرتب‌سازی بر اساس": [
+                "Order by"
+            ],
+            "مرتب‌سازی فهرست‌های پخش بر اساس": [
+                "Order playlists by"
+            ],
+            "مرور": [
+                "Browse"
+            ],
+            "مرور سبک‌ها و حال‌وهواها": [
+                "Browse genres and moods"
+            ],
+            "مرور موسیقی": [
+                "Browse music"
+            ],
+            "مرور کاتالوگ": [
+                "Browse catalog"
+            ],
+            "مسیر": [
+                "breadcrumb"
+            ],
+            "مسیر راهنما": [
+                "Breadcrumb"
+            ],
+            "مسیر راهنما (Breadcrumb)": [
+                "Breadcrumb Trail"
+            ],
+            "مسیر سلسله‌مراتبی پویا برای انتشارها، هنرمندان، سبک‌ها، برگه‌ها و نتایج جست‌وجو؛ همراه با پیش‌نمایش نمونهٔ زنده در ویرایشگر سایت.": [
+                "Dynamic hierarchical breadcrumb navigation for releases, artists, genres, pages, and search results, with live preview inside the Site Editor."
+            ],
+            "مشاهده عضویت‌ها": [
+                "View memberships"
+            ],
+            "مشاهده همه": [
+                "See all"
+            ],
+            "مشاهدهٔ همهٔ فهرست‌های پخش": [
+                "See all playlists"
+            ],
+            "مشخصات فنی، دسترسی، پخش پیشنمایش، صف پخش، فهرست قطعه، دانلود، متن همگام، اعتبارات و انتشارهای مرتبط؛ همه روی یک برگه و همه قابل ویرایش.": [
+                "Specs, access, preview playback, the play queue, the tracklist, downloads, synced lyrics, credits and related releases; all on one page and all editable."
+            ],
+            "معرفی کشف موسیقی": [
+                "Music discovery hero"
+            ],
+            "معکوس (روی سطح رنگی)": [
+                "Inverted (on a colored surface)"
+            ],
+            "مقادیر سفارشی این متن‌ها از بخش سفارشی‌سازی پوسته یا تنظیمات عمومی وردپرس خوانده می‌شوند.": [
+                "Custom values are read from the WordPress Customizer or General Settings."
+            ],
+            "ممکن است صفحه جابه‌جا شده باشد. کاتالوگ را جست‌وجو کنید.": [
+                "The page may have moved. Try searching the catalog."
+            ],
+            "منبع متن قالب": [
+                "Theme text source"
+            ],
+            "منبع محتوا": [
+                "Content source"
+            ],
+            "منتخب": [
+                "Featured"
+            ],
+            "منتخب شنوندگان": [
+                "Curated by listeners"
+            ],
+            "منتخب‌های بعدی": [
+                "Up Next"
+            ],
+            "منو": [
+                "Menu"
+            ],
+            "منو (همبرگری)": [
+                "Menu (hamburger)"
+            ],
+            "منوی کناری": [
+                "Side rail"
+            ],
+            "موارد بعدی": [
+                "Next items"
+            ],
+            "موارد قبلی": [
+                "Previous items"
+            ],
+            "موبایل": [
+                "Mobile"
+            ],
+            "موبایل و تبلت (تا ۶۴rem)": [
+                "Mobile and tablet (up to 64rem)"
+            ],
+            "موبایل — کمتر از ۷۶۸ پیکسل": [
+                "Mobile — under 768 pixels"
+            ],
+            "موبایل: سربرگ + نوار پایین": [
+                "Mobile: header + bottom bar"
+            ],
+            "موبایل: سربرگ ساده + منوی کناری": [
+                "Mobile: simple header + drawer"
+            ],
+            "موبایل: منوی کناری + نوار پایین": [
+                "Mobile: side menu + bottom bar"
+            ],
+            "موتور جستجوی هوشمند سربرگ با کنترل مستقل چیدمان در دسکتاپ، تبلت و موبایل (فیلد خطی، فشرده، آیکون پاپ‌آپ یا نوار کشویی)، فیلتر آنی دسته‌بندی، جستجوهای اخیر، برچسب‌های سریع، جستجوی صوتی و میانبر صفحه‌کلید.": [
+                "Smart header search engine with independent desktop, tablet, and mobile layouts (inline bar, compact field, icon popup modal, or expandable bar), live scope filters, recent searches, quick tags, voice search, and keyboard shortcuts."
+            ],
+            "موسیقی": [
+                "Music"
+            ],
+            "موسیقی اختصاصی، همکاری روی پروژه یا درخواست قطعه؛ فرم زیر درخواست را مستقیم به تیم میرساند.": [
+                "Custom music, project collaboration or a song request; the form below sends the request straight to the team."
+            ],
+            "موسیقی‌ای پیدا نشد.": [
+                "No music was found."
+            ],
+            "میانبر سریع صفحهکلید (Ctrl+K و /)": [
+                "Quick keyboard shortcut (Ctrl+K and /)"
+            ],
+            "میزان تیرگی سایه‌روشن روی تصویر کاور اصلی (۰ = شفاف کامل، ۱۰۰ = حداکثر تیرگی).": [
+                "Backdrop scrim opacity over the featured cover art (0 = transparent, 100 = solid dark)."
+            ],
+            "مینیمال": [
+                "Minimal"
+            ],
+            "نام دکمه (برای صفحهخوانها و پنجره پاپآپ)": [
+                "Button name (for screen readers and the popup)"
+            ],
+            "نام قطعه، خواننده، آلبوم یا حال‌وهوا را بنویسید": [
+                "Type a track, artist, album, or mood"
+            ],
+            "نام قطعه، هنرمند یا آلبوم…": [
+                "Track, artist, or album name…"
+            ],
+            "نامک عبارت": [
+                "Term slug"
+            ],
+            "نان‌ریزه": [
+                "breadcrumbs"
+            ],
+            "ناوبری": [
+                "navigation"
+            ],
+            "ناوبری پایین": [
+                "Bottom navigation"
+            ],
+            "نحوه مرتب‌سازی انتشارها پیش از نمایش.": [
+                "How releases are sorted before they are displayed."
+            ],
+            "نزولی": [
+                "Descending"
+            ],
+            "نسبت تصویر و قاب کاور هر اسلاید را در پیش‌نمایش و سایت تعیین می‌کند.": [
+                "Controls the cover aspect ratio and frame shape of every slide in both editor preview and frontend."
+            ],
+            "نقاط": [
+                "Dots"
+            ],
+            "نقاط صفحه‌بندی": [
+                "Pagination dots"
+            ],
+            "نقطه (•)": [
+                "Bullet (•)"
+            ],
+            "نمایش آیتم خانه": [
+                "Show home link"
+            ],
+            "نمایش آیکون": [
+                "Show icon"
+            ],
+            "نمایش آیکون خانه": [
+                "Show home icon"
+            ],
+            "نمایش اسلایدر": [
+                "Slider visibility"
+            ],
+            "نمایش انتشارها بهصورت شبکهای، ویترین افقی، فهرست جمعوجور، ویژهنامه سرمقاله یا اسلایدر هیرو. بین انتشارها و فهرستهای پخش عمومی جامعه جابهجا شوید. چیدمان، رنگها و فاصلهها در ویرایشگر سایت قابل ویرایش هستند.": [
+                "Display releases as a grid, horizontal showcase, compact list, editorial feature, or hero slider. Switch between releases and the community's public playlists. Layout, colors, and spacing are editable in the Site Editor."
+            ],
+            "نمایش برچسب کنار آیکون‌های نوار پایین": [
+                "Show labels next to bottom bar icons"
+            ],
+            "نمایش تاریخ": [
+                "Show date"
+            ],
+            "نمایش تاریخچه جستجوهای اخیر کاربر": [
+                "Show recent user searches"
+            ],
+            "نمایش تصویر": [
+                "Show artwork"
+            ],
+            "نمایش تعداد بازدید": [
+                "Show view count"
+            ],
+            "نمایش ریشه کاتالوگ (انتشارها)": [
+                "Show catalog archive root (Releases)"
+            ],
+            "نمایش شماره رتبه": [
+                "Show rank numbers"
+            ],
+            "نمایش عنوان صفحه فعلی": [
+                "Show current page title"
+            ],
+            "نمایش فلش‌ها": [
+                "Show arrows"
+            ],
+            "نمایش متن دکمه": [
+                "Show button text"
+            ],
+            "نمایش نقاط صفحه‌بندی": [
+                "Show pagination dots"
+            ],
+            "نمایش هنرمند": [
+                "Show artist"
+            ],
+            "نمایش پنجره پاپآپ باز در پیشنمایش": [
+                "Show the popup open in the preview"
+            ],
+            "نمایش پیوند اقدام": [
+                "Show action link"
+            ],
+            "نمایش چکیده": [
+                "Show excerpt"
+            ],
+            "نمایش چکیده‌ها": [
+                "Show excerpts"
+            ],
+            "نمایش کنترل پخش": [
+                "Show play affordance"
+            ],
+            "نمایشی": [
+                "Display"
+            ],
+            "نمایشی وزیرمتن": [
+                "Vazirmatn display"
+            ],
+            "نمونه مسیر راهنما (Breadcrumb)": [
+                "Sample Breadcrumb Trail"
+            ],
+            "نمونه پیش‌نمایش در ویرایشگر": [
+                "Editor Preview Sample"
+            ],
+            "نوار بالا (همیشه دیده می‌شود)": [
+                "Top bar (always visible)"
+            ],
+            "نوار جستجوی کامل": [
+                "Full search bar"
+            ],
+            "نوار جستجوی کامل (پیشنهادی)": [
+                "Full search bar (recommended)"
+            ],
+            "نوار جستجوی کامل در همه اندازهها": [
+                "Full search bar at every size"
+            ],
+            "نوار دسکتاپ، فیلد فشرده در تبلت و موبایل": [
+                "Desktop bar, compact field on tablet and mobile"
+            ],
+            "نوار راهنمای کلیدهای میانبر در فوتر": [
+                "Keyboard shortcut footer hints"
+            ],
+            "نوار پایین (تبلت و موبایل)": [
+                "Bottom bar (tablet and mobile)"
+            ],
+            "نوار پایین موبایل": [
+                "Mobile bottom bar"
+            ],
+            "نوار کناری": [
+                "Sidebar"
+            ],
+            "نوار کناری MusicWave": [
+                "MusicWave sidebar"
+            ],
+            "نوار کناری فروشگاه": [
+                "Shop sidebar"
+            ],
+            "نوار کناری فروشگاه MusicWave": [
+                "MusicWave shop sidebar"
+            ],
+            "نوار کپسولی جمع‌وجور روی سطح کارت.": [
+                "Compact pill container over subtle card surface."
+            ],
+            "نوع انتشار": [
+                "Release type"
+            ],
+            "نوع انتشار (نامک)": [
+                "Release type (slug)"
+            ],
+            "هر سربرگ یا بخش سربرگی که در ویرایشگر سایت می‌سازید اینجا فهرست می‌شود. <a href=\"%s\">همین سربرگ را در ویرایشگر سایت ویرایش کنید</a>.": [
+                "Every header or header template part you create in the Site Editor is listed here. <a href=\"%s\">Edit the active header in the Site Editor</a>."
+            ],
+            "هفته اخیر (۷ روز گذشته)": [
+                "This Week (last 7 days)"
+            ],
+            "هم به عنوان متن روی دکمه و هم به عنوان توضیح صفحه‌خوان استفاده می‌شود.": [
+                "Used both as the visible button text and as the screen-reader label."
+            ],
+            "همان فهرست، اینبار صفحهبهصفحه و با امکان دنبال کردن؛ برای کاتالوگهای بزرگ مناسبتر است.": [
+                "The same directory, this time page by page with follow buttons; a better fit for large catalogs."
+            ],
+            "همبرگری": [
+                "Hamburger"
+            ],
+            "همه": [
+                "All"
+            ],
+            "همهٔ آنچه ذخیره کردهاید": [
+                "Everything you have saved"
+            ],
+            "همهٔ انتشارها": [
+                "All releases"
+            ],
+            "همهٔ انتشارها در دو نسخهٔ ۲۴ بیت ارائه میشوند: ۴۸ و ۹۶ کیلوهرتز.": [
+                "All releases come in two 24-bit versions: 48 and 96 kHz."
+            ],
+            "همهٔ زمان‌ها (بدون محدودیت)": [
+                "All time (no limit)"
+            ],
+            "همهٔ هنرمندان": [
+                "All artists"
+            ],
+            "همکاری": [
+                "Collaboration"
+            ],
+            "همگام با پخش": [
+                "Synced with playback"
+            ],
+            "همین الان گوش دهید": [
+                "Listen Now"
+            ],
+            "هنرمند": [
+                "Artist"
+            ],
+            "هنرمندان": [
+                "Artists"
+            ],
+            "هنرمندان را پیدا کنید و دنبال کنید": [
+                "Find artists and follow them"
+            ],
+            "هیرو": [
+                "Hero"
+            ],
+            "هیچ سفارشی‌سازی ذخیره‌شده‌ای پیدا نشد. وردپرس در حال حاضر از فایل‌های قالب بسته استفاده می‌کند.": [
+                "No database overrides were found. WordPress is already using the bundled template files."
+            ],
+            "ورود / ثبت‌نام": [
+                "Log in / Sign up"
+            ],
+            "ورود و ثبت‌نام": [
+                "Sign in & registration"
+            ],
+            "وسط‌چین": [
+                "Centered"
+            ],
+            "ویترین": [
+                "Shelf"
+            ],
+            "ویترین افقی": [
+                "Horizontal shelf"
+            ],
+            "ویترین افقی با فیلتر": [
+                "Filtered horizontal shelf"
+            ],
+            "ویترین انتشارهای MusicWave": [
+                "MusicWave release shelf"
+            ],
+            "ویترین را بین انتشارهای کاتالوگ و فهرست‌های پخش عمومی جامعه جابه‌جا کنید.": [
+                "Switch the shelf between catalog releases and community public playlists."
+            ],
+            "ویترین یا اسلایدر را به یک طبقه‌بندی محدود کنید، یا روی «همهٔ انتشارها» بگذارید.": [
+                "Limit the shelf/slider to one taxonomy, or leave on All releases."
+            ],
+            "ویترینهای MusicWave": [
+                "MusicWave showcases"
+            ],
+            "وینیل": [
+                "Vinyl"
+            ],
+            "ویژه‌نامه سرمقاله": [
+                "Editorial feature"
+            ],
+            "پابرگ": [
+                "Footer"
+            ],
+            "پابرگ (ساده)": [
+                "Footer (simple)"
+            ],
+            "پادکست‌ها": [
+                "Podcasts"
+            ],
+            "پاپ": [
+                "Pop"
+            ],
+            "پاپ‌آپ": [
+                "Popup"
+            ],
+            "پاپ‌آپ شیشه‌ای با بلور بیشتر.": [
+                "Frosted glass popup with enhanced blur."
+            ],
+            "پاک کردن متن جستجو": [
+                "Clear search query"
+            ],
+            "پاک‌سازی": [
+                "Clear"
+            ],
+            "پخش آنی و بدون نصب": [
+                "Instant playback, nothing to install"
+            ],
+            "پخش خودکار": [
+                "Autoplay"
+            ],
+            "پخش خودکار اسلایدها": [
+                "Autoplay slides"
+            ],
+            "پخش همه قطعه‌های %s": [
+                "Play all tracks in %s"
+            ],
+            "پخش‌کننده شناور": [
+                "Floating player"
+            ],
+            "پربازدیدترین": [
+                "Most viewed"
+            ],
+            "پرداخت": [
+                "Payment"
+            ],
+            "پرسشهای پرتکرار": [
+                "Frequently asked questions"
+            ],
+            "پرسشهای پرتکرار بخش": [
+                "Section FAQ"
+            ],
+            "پرس‌وجو و فیلتر": [
+                "Query and filtering"
+            ],
+            "پرس‌وجوی فهرست پخش": [
+                "Playlist query"
+            ],
+            "پرش به محتوا": [
+                "Skip to content"
+            ],
+            "پرشدگی یکدست": [
+                "Solid fill"
+            ],
+            "پریست زمانی (امروز / هفته / ماه / همه)": [
+                "Time window preset (Today / Week / Month / All)"
+            ],
+            "پس‌زمینه دکمه": [
+                "Button background"
+            ],
+            "پس‌زمینهٔ نیمه‌شفاف با بلور ظریف.": [
+                "Translucent frosted glass surface with subtle backdrop blur."
+            ],
+            "پشتیبانی از هنرمندان مستقل": [
+                "Built for independent artists"
+            ],
+            "پلی‌لیست": [
+                "Playlists"
+            ],
+            "پنهان در این اندازه": [
+                "Hidden at this size"
+            ],
+            "پنهان کردن جستجو در موبایل": [
+                "Hide search on mobile"
+            ],
+            "پنهان کردن در صفحه اصلی سایت": [
+                "Hide on site front page"
+            ],
+            "پهنای ستون فهرست کناری در نمایش دسکتاپ (بین ۲۰۰ تا ۵۶۰ پیکسل).": [
+                "Desktop width of the side release list column (200px to 560px)."
+            ],
+            "پوسته": [
+                "Theme"
+            ],
+            "پوستهٔ MusicWave به MusicWave Core نسخهٔ %1$s یا بالاتر نیاز دارد؛ نسخهٔ نصب‌شده %2$s است.": [
+                "The MusicWave theme requires MusicWave Core %1$s or newer; version %2$s is installed."
+            ],
+            "پوستهٔ MusicWave به افزونهٔ MusicWave Core نیاز دارد.": [
+                "The MusicWave theme requires the MusicWave Core plugin."
+            ],
+            "پیش از شروع": [
+                "Before you start"
+            ],
+            "پیشتنظیم آماده": [
+                "Ready preset"
+            ],
+            "پیشنمایش ویرایشگر": [
+                "Editor preview"
+            ],
+            "پیشنهاد": [
+                "Suggestion"
+            ],
+            "پیشنهاد MusicWave — نوار کامل دسکتاپ، فشرده تبلت، پاپآپ موبایل": [
+                "MusicWave suggestion — full bar on desktop, compact on tablet, popup on mobile"
+            ],
+            "پیشنهادهای سریع": [
+                "Quick suggestions"
+            ],
+            "پیش‌فرض همهٔ سربرگ‌ها. هر سربرگ می‌تواند در ویرایشگر سایت استایل عرض خودش را داشته باشد.": [
+                "Default for every header. Each header can also carry its own width style in the Site Editor."
+            ],
+            "پیمایش": [
+                "Navigate"
+            ],
+            "پیوند بخش": [
+                "Section link"
+            ],
+            "پیوند بخش (مشاهده همه)": [
+                "Section link (View all)"
+            ],
+            "پیوند مشاهده همه": [
+                "View-all link"
+            ],
+            "پیوند مشاهده همه (سمت چپ)": [
+                "View all link (end)"
+            ],
+            "پیکان (← / →)": [
+                "Arrow (← / →)"
+            ],
+            "پیکان بازگشت": [
+                "Back arrow"
+            ],
+            "پیگیری سفارش، فایلهای آمادهٔ دانلود و اطلاعات پرداخت، همه در یک قالب یکدست.": [
+                "Order tracking, downloadable files and payment details, all in one consistent layout."
+            ],
+            "چرخان": [
+                "Carousel"
+            ],
+            "چک‌لیست": [
+                "Checklist"
+            ],
+            "چگونه یک انتشار را پیشنهاد بدهم؟": [
+                "How do I suggest a release?"
+            ],
+            "چیدمان": [
+                "Layout"
+            ],
+            "چیدمان سربرگ (برند، منو، جست‌وجو، تغییر پوسته، حساب، آیکون‌ها) را در ویرایشگر سایت → بخش‌های قالب ویرایش کنید. این بخش فقط تصمیم‌های سراسری را می‌گیرد: کدام سربرگ فعال باشد، عرض آن، و نوار پایین موبایل/تبلت.": [
+                "Edit header composition (brand, menu, search, theme toggle, account, icons) in Site Editor → Template parts. This panel only holds the site-wide decisions: which header is active, its width, and the mobile/tablet bottom bar."
+            ],
+            "چیدمان نوار جستجو": [
+                "Search bar layout"
+            ],
+            "چیدمان و تصویر": [
+                "Layout and artwork"
+            ],
+            "کاتالوگ": [
+                "Catalog"
+            ],
+            "کاتالوگ را دقیق کنید": [
+                "Narrow the catalog"
+            ],
+            "کاتالوگ را مرور کنید، نه فقط تماشا": [
+                "Browse the catalog, not just look at it"
+            ],
+            "کارت": [
+                "Card"
+            ],
+            "کارت انتشار": [
+                "Release card"
+            ],
+            "کارت سطحی": [
+                "Surface card"
+            ],
+            "کارت مجله‌ای با خط تأکیدی، سطح شیشه‌ای و تیتر درشت.": [
+                "Magazine card with an accent rule, a glass surface, and an oversized headline."
+            ],
+            "کارت مجله‌ای با خط تأکیدی، سطح شیشه‌ای و تیتر نمایشی.": [
+                "Magazine card treatment with editorial accent rule and display typography."
+            ],
+            "کارتهای MusicWave": [
+                "MusicWave cards"
+            ],
+            "کتابخانه": [
+                "Library"
+            ],
+            "کتابخانه‌ای مطابق سلیقه خود بسازید.": [
+                "Build a library that sounds like you."
+            ],
+            "کد هگز (مثلاً #ffffff) یا انتخاب مستقیم از پالت رنگ.": [
+                "Enter a hex color (e.g. #ffffff) or pick directly from the swatch."
+            ],
+            "کشف موسیقی": [
+                "Explore music"
+            ],
+            "کمتر": [
+                "Show less"
+            ],
+            "کوتاهترین پاسخها به پرسشهایی که بیشتر از همه پرسیده میشود.": [
+                "The shortest answers to the questions asked most often."
+            ],
+            "کوچک": [
+                "Small"
+            ],
+            "کوچک‌تر کردن متن": [
+                "Decrease lyrics size"
+            ],
+            "کپسولی": [
+                "Pill"
+            ],
+            "کپسولی (MusicWave)": [
+                "Pill (MusicWave)"
+            ],
+            "کپسولی پیشفرض": [
+                "Default capsule"
+            ],
+            "کیفیت فایلها چه اندازه است؟": [
+                "What is the file quality?"
+            ],
+            "گرادیان تأکیدی": [
+                "Accent gradient"
+            ],
+            "گرد": [
+                "Rounded"
+            ],
+            "گروه اسلاید %1$d از %2$d": [
+                "Slide group %1$d of %2$d"
+            ],
+            "گسترده": [
+                "Wide"
+            ],
+            "یک انتشار، با تمام قابلیتهایش": [
+                "One release, with everything it can do"
+            ],
+            "یک ردیف کوتاه از انتشارهای تصادفی برای کسانی که هنوز تصمیم نگرفتهاند.": [
+                "A short rail of random releases for anyone who has not decided yet."
+            ],
+            "یک سال اخیر": [
+                "Past Year"
+            ],
+            "• بازه زمانی: امروز|period:today ، هفته|period:week ، ماه|period:month ، سال|period:year": [
+                "• Time windows: Today|period:today , Week|period:week , Month|period:month , Year|period:year"
+            ],
+            "• سبک یا هنرمند: پاپ|taxonomy:mw_genre:pop یا سنتی|taxonomy:mw_mood:chill": [
+                "• Genre or mood: Pop|taxonomy:mw_genre:pop or Chill|taxonomy:mw_mood:chill"
+            ],
+            "• مرتب‌سازی: جدیدترین|orderBy:date ، پربازدید|orderBy:views ، تصادفی|orderBy:rand": [
+                "• Sort order: Newest|orderBy:date , Popular|orderBy:views , Random|orderBy:rand"
+            ],
+            "• نوع انتشار و ترکیب هم‌زمان با + : داغ‌ترین هفته|period:week+orderBy:views+type:single": [
+                "• Release type & combined rules (+): Top Singles|period:week+orderBy:views+type:single"
+            ],
+            "• همه موارد بدون فیلتر: همه|all": [
+                "• Reset to show all releases: All|all"
+            ]
+        }
+    }
+}

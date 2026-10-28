@@ -1,0 +1,370 @@
+/**
+ * Single release page — WAVE mockup closeness (album / track / podcast).
+ */
+
+.mw-release-page,
+.mw-release-hero {
+	box-sizing: border-box;
+	width: auto;
+	max-width: 100%;
+	margin-inline: auto;
+}
+
+.mw-release-hero {
+	position: relative;
+    margin-block: 0 var(--wp--preset--spacing--30, 1.5rem);
+	--mw-color-vinyl-label: var(--mw-hero-cover, var(--mw-color-editorial, #fa2d65));
+	padding: clamp(0.85rem, 2vw, 1.35rem);
+	background:
+		linear-gradient(
+			165deg,
+			color-mix(in srgb, var(--mw-hero-cover, var(--mw-color-editorial, #fa2d65)) 34%, transparent),
+			var(--mw-color-surface, #16181d) 58%
+		);
+	border-radius: 1.15rem;
+}
+
+.mw-release-hero__inner {
+	align-items: center;
+}
+
+.mw-release-hero__cover-stack {
+	position: relative;
+	isolation: isolate;
+	margin: 0;
+}
+
+.mw-release-hero__cover-stack .wp-block-post-featured-image {
+	margin: 0;
+	overflow: hidden;
+	border-radius: 0.9rem;
+	box-shadow: 0 1.25rem 2.75rem rgb(0 0 0 / 55%);
+}
+
+.mw-release-hero__cover-stack .wp-block-post-featured-image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1;
+	object-fit: cover;
+}
+
+.mw-release-hero__cover-stack .mw-release-hero__cover-play,
+.mw-release-hero__cover-stack .mw-preview-player,
+.mw-release-hero .mw-card-play.mw-release-actions__play {
+	display: none;
+}
+
+.mw-release-hero__info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.85rem;
+	min-width: 0;
+	z-index: 1;
+}
+
+.mw-release-hero__overline {
+	gap: 0.45rem;
+}
+
+.mw-release-hero__overline .wp-block-post-terms {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin: 0;
+}
+
+.mw-release-hero__overline .wp-block-post-terms a {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.22rem 0.7rem;
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-decoration: none;
+	border-radius: 999px;
+}
+
+.mw-release-hero__chip--type a {
+	color: #ffb2bb;
+	background: color-mix(in srgb, var(--mw-color-editorial, #fa2d65) 22%, transparent);
+}
+
+.mw-release-hero__chip--genre a {
+	color: #82faab;
+	background: color-mix(in srgb, #21a55f 22%, transparent);
+}
+
+.mw-release-hero__chip--mood a {
+	color: #65dd91;
+	background: color-mix(in srgb, #65dd91 16%, transparent);
+}
+
+.mw-release-hero__chip--label a {
+	color: #c6bfff;
+	background: color-mix(in srgb, #6c5ce7 22%, transparent);
+}
+
+/* Hero artist — sleek inline streaming strip across compact & list templates on both Frontend
+ * and Site Editor (`div.mw-block-editor-shell.mw-release-hero__artist > ... > section.mw-artist-profile`),
+ * while preserving full card / spotlight layouts when selected in Inspector settings. */
+.mw-release-hero__artist.mw-block-editor-shell {
+	display: block;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+/* Geometry — the chip rhythm belongs to the strip, not to the card style, so it
+ * applies to every one of them: a skin variation must never change the strip's
+ * measurements or push the hero around. */
+.mw-release-hero__artist.mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight),
+.mw-release-hero__artist .mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) {
+	--artist-avatar-size: 2.5rem;
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-self: flex-start;
+	gap: 0.7rem;
+	margin: 0;
+	padding: 0.35rem 0.7rem 0.35rem 0.4rem;
+	max-inline-size: 100%;
+	border-radius: 999px;
+	box-shadow: none;
+}
+
+/* Skin — the pill surface is the framed (`editorial`) look, so it stands down
+ * while the `minimal` or `glass` card style is active: those own their own
+ * surface, and this four-class selector would otherwise outrank them. */
+.mw-release-hero__artist.mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight):not(.mw-artist-profile--minimal):not(.mw-artist-profile--glass),
+.mw-release-hero__artist .mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight):not(.mw-artist-profile--minimal):not(.mw-artist-profile--glass) {
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 76%, transparent);
+	border: 1px solid var(--mw-color-border-subtle);
+}
+
+.mw-release-hero__artist.mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__media,
+.mw-release-hero__artist .mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__media {
+	inline-size: 2.5rem;
+	block-size: 2.5rem;
+	flex: 0 0 2.5rem;
+}
+
+.mw-release-hero__artist.mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__body,
+.mw-release-hero__artist .mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__body {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem 0.65rem;
+	padding: 0;
+}
+
+.mw-release-hero__artist.mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__name,
+.mw-release-hero__artist .mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__name {
+	margin: 0;
+	font-size: 0.9375rem;
+	font-weight: 700;
+}
+
+.mw-release-hero__artist.mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__bio,
+.mw-release-hero__artist .mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__bio,
+.mw-release-hero__artist.mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__link,
+.mw-release-hero__artist .mw-artist-profile:not(.mw-artist-profile--card):not(.mw-artist-profile--spotlight) .mw-artist-profile__link {
+	display: none;
+}
+
+.mw-release-hero__specs {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-release-hero__specs .mw-release-meta__facts {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(9.25rem, 1fr));
+	gap: 0.6rem 0.75rem;
+	width: 100%;
+	margin: 0;
+}
+
+.mw-release-hero__specs .mw-release-meta__facts.mw-release-meta__facts--inline {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 0.75rem;
+}
+
+.mw-release-hero__specs .mw-release-meta__facts.mw-release-meta__facts--stack {
+	grid-template-columns: 1fr;
+}
+
+.mw-release-hero__specs .mw-release-meta--panel .mw-release-meta__item {
+	margin: 0;
+	padding: 0.5rem 0.7rem;
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 10%, transparent);
+	border-radius: var(--mw-radius-sm, 0.55rem);
+}
+
+.mw-release-hero__specs .mw-release-meta--panel .mw-release-meta__item dt {
+	margin: 0 0 0.2rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.7rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.mw-release-hero__specs .mw-release-meta--panel .mw-release-meta__item dd {
+	margin: 0;
+	font-size: 0.9rem;
+	font-weight: 700;
+	line-height: 1.35;
+	unicode-bidi: plaintext;
+	word-break: break-word;
+}
+
+.mw-release-hero__info .wp-block-post-title {
+	margin: 0;
+	font-size: clamp(1.85rem, 4.4vw, 2.75rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+}
+
+/* Single-release stage contract: keep grid alignment contract intact while delegating
+ * dynamic track column geometry cleanly to `--mw-track-cols`. */
+@media (min-width: 48rem) {
+	.mw-release-stage .mw-collection-list:not(.mw-collection-list--no-actions):not([style*="--mw-track-cols"]) .mw-collection-list__table-header,
+	.mw-release-stage .mw-collection-list:not(.mw-collection-list--no-actions):not([style*="--mw-track-cols"]) li.mw-collection-list__row {
+		grid-template-areas: "position title artist duration actions";
+		grid-template-columns: 2rem minmax(0, 3.5fr) minmax(7rem, 2fr) 4.5rem minmax(0, auto);
+	}
+
+	.mw-release-stage .mw-collection-list.mw-collection-list--no-actions:not([style*="--mw-track-cols"]) .mw-collection-list__table-header,
+	.mw-release-stage .mw-collection-list.mw-collection-list--no-actions:not([style*="--mw-track-cols"]) li.mw-collection-list__row {
+		grid-template-areas: "position title artist duration";
+		grid-template-columns: 2rem minmax(0, 3.5fr) minmax(7rem, 2fr) 4.5rem;
+	}
+}
+
+.mw-release-actions {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-block: 0.35rem 0;
+	gap: 0.65rem;
+}
+
+.mw-release-type-single .mw-release-actions:not(:has(.mw-block-editor-shell)) .mw-shuffle-button {
+	display: none;
+}
+
+/* Hide shuffle when no asset (PHP returns empty, but editor placeholder needs dim) */
+.mw-shuffle-button--no-asset {
+	opacity: 0.55;
+	pointer-events: none;
+}
+
+.mw-lyrics__header {
+	align-items: center;
+}
+
+.mw-lyrics__heading {
+	display: grid;
+	gap: 0.2rem;
+}
+
+.mw-release-stage__primary > .mw-collection-list > .mw-collection-list__heading {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.mw-release-stage {
+	align-items: start;
+	gap: clamp(1.25rem, 3vw, 2rem);
+	margin-block: 0 var(--wp--preset--spacing--50, 3rem);
+}
+
+.mw-release-stage__primary,
+.mw-release-stage__aside {
+	min-width: 0;
+}
+
+.mw-release-stage__primary > .mw-collection-list,
+.mw-release-stage__primary > .mw-lyrics,
+.mw-release-stage__primary > .mw-download-action,
+.mw-release-stage__primary > .mw-block-editor-shell :is(.mw-collection-list, .mw-lyrics, .mw-download-action:not(.mw-download-action--inline)),
+.mw-release-stage__aside > .wp-block-template-part,
+.mw-release-stage__aside > .mw-sidebar,
+.mw-release-stage__aside > .mw-release-credits,
+.mw-release-stage__aside > .mw-access-panel,
+.mw-release-stage__aside > .mw-block-editor-shell :is(.mw-release-credits, .mw-access-panel) {
+	padding: clamp(1rem, 2.4vw, 1.5rem);
+	background: var(--mw-color-surface, #16181d);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 60%, transparent);
+	border-radius: 1.15rem;
+	box-shadow: 0 1rem 2.4rem rgb(0 0 0 / 28%);
+}
+
+.mw-release-stage__aside {
+	display: grid;
+	gap: 1.25rem;
+}
+
+.mw-release-stage__aside > .wp-block-template-part:empty {
+	display: none;
+}
+
+.mw-release-stage:not(:has(.mw-sidebar)) > .mw-release-stage__primary,
+.mw-release-stage:not(:has(.mw-sidebar)) > .mw-release-stage__aside {
+	flex-basis: 100% !important;
+	max-inline-size: 100%;
+}
+
+.mw-release-stage__aside:not(:has(.mw-sidebar)):not(:has(.mw-release-credits)):not(:has(.mw-access-panel)) {
+	display: none;
+}
+
+/* Tracklist playing state — contextual accent */
+.mw-collection-list.mw-collection-list--tracklist li[data-mw-playing] {
+	background: color-mix(in srgb, var(--mw-color-accent, #fa2d65) 14%, transparent);
+	border-radius: 0.75rem;
+}
+
+.mw-collection-list.mw-collection-list--tracklist li[data-mw-playing] .mw-collection-list__title,
+.mw-collection-list.mw-collection-list--tracklist li[data-mw-playing] .mw-collection-list__duration {
+	color: var(--mw-color-accent, #fa2d65);
+	font-weight: 800;
+}
+
+.mw-release-type-podcast .mw-release-hero__cover::before,
+.mw-release-type-single .mw-release-hero__cover::before {
+	opacity: 0.28;
+}
+
+@media (max-width: 48rem) {
+	.mw-release-stage > .wp-block-column {
+		flex-basis: 100% !important;
+	}
+
+	.mw-release-hero {
+		margin-inline: 0;
+		border-radius: 1.15rem;
+	}
+
+	.mw-release-hero__cover-stack {
+		max-width: 18rem;
+		margin-inline: auto;
+	}
+
+	.mw-release-actions {
+		justify-content: flex-start;
+	}
+}

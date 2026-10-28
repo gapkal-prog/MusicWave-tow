@@ -1,0 +1,354 @@
+/**
+ * MusicWave VIP — WordPress Admin Users (`users.php`, `user-edit.php`, `settings_page_music-wave-vip`).
+ * Clean, native WP-Admin aesthetic with full RTL & LTR compatibility.
+ */
+
+.mw-vip-admin-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin: 14px 0 18px;
+	padding: 10px 14px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-inline-start: 4px solid #2271b1;
+	border-radius: 6px;
+}
+
+.mw-vip-admin-bar strong {
+	margin-inline-end: 6px;
+	color: #1d2327;
+}
+
+/* Status pills inside users.php & user-edit.php */
+.mw-vip-cell {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	min-width: 195px;
+}
+
+.mw-vip-pill-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 5px;
+}
+
+.mw-vip-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.45;
+	white-space: nowrap;
+}
+
+.mw-vip-pill--active {
+	background: #dcfce7;
+	color: #166534;
+	border: 1px solid #86efac;
+}
+
+.mw-vip-pill--lifetime {
+	background: #fef9c3;
+	color: #854d0e;
+	border: 1px solid #fde047;
+}
+
+.mw-vip-pill--expiring {
+	background: #ffedd5;
+	color: #9a3412;
+	border: 1px solid #fdba74;
+}
+
+.mw-vip-pill--expired {
+	background: #fee2e2;
+	color: #991b1b;
+	border: 1px solid #fca5a5;
+}
+
+.mw-vip-pill--none {
+	background: #f3f4f6;
+	color: #4b5563;
+	border: 1px solid #d1d5db;
+}
+
+.mw-vip-cell__meta {
+	color: #50575e;
+	font-size: 12px;
+	line-height: 1.45;
+}
+
+.mw-vip-cell__bar {
+	width: 100%;
+	max-width: 180px;
+	height: 5px;
+	overflow: hidden;
+	background: #e5e7eb;
+	border-radius: 999px;
+}
+
+.mw-vip-cell__bar > span {
+	display: block;
+	height: 100%;
+	background: linear-gradient(90deg, #2271b1, #16a34a);
+	border-radius: 999px;
+}
+
+/* Inline quick-editor inside users.php */
+.mw-vip-quick {
+	margin-top: 2px;
+}
+
+.mw-vip-quick > summary {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	cursor: pointer;
+	color: #2271b1;
+	font-size: 12px;
+	font-weight: 600;
+	list-style: none;
+	user-select: none;
+}
+
+.mw-vip-quick > summary::-webkit-details-marker {
+	display: none;
+}
+
+.mw-vip-quick > summary:hover {
+	color: #135e96;
+	text-decoration: underline;
+}
+
+.mw-vip-quick__box {
+	display: grid;
+	gap: 6px;
+	margin-top: 6px;
+	padding: 8px 10px;
+	background: #f6f7f7;
+	border: 1px solid #c3c4c7;
+	border-radius: 6px;
+}
+
+.mw-vip-quick__box select,
+.mw-vip-quick__box input[type="number"],
+.mw-vip-quick__box input[type="date"],
+.mw-vip-quick__box input[type="text"] {
+	width: 100%;
+	max-width: 100%;
+	min-height: 28px;
+	font-size: 12px;
+}
+
+.mw-vip-quick__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+.mw-vip-quick__status {
+	font-size: 11px;
+	font-weight: 600;
+	color: #166534;
+}
+
+.mw-vip-quick__status.is-error {
+	color: #991b1b;
+}
+
+@keyframes mw-vip-row-flash {
+	from { background-color: #ecfdf5; }
+	to   { background-color: transparent; }
+}
+
+.mw-vip-cell.is-updated {
+	animation: mw-vip-row-flash 1.4s ease-out;
+}
+
+/* Activity column pills inside users.php */
+.mw-vip-activity {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	min-width: 210px;
+}
+
+.mw-vip-stat-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 7px;
+	border-radius: 5px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	color: #2c3338;
+	font-size: 11.5px;
+	line-height: 1.45;
+	text-decoration: none;
+}
+
+a.mw-vip-stat-chip {
+	color: #1d4ed8;
+	background: #eff6ff;
+	border-color: #bfdbfe;
+}
+
+a.mw-vip-stat-chip:hover {
+	background: #dbeafe;
+	border-color: #93c5fd;
+	color: #1e3a8a;
+}
+
+.mw-vip-activity__last {
+	flex: 1 1 100%;
+	color: #646970;
+	font-size: 11px;
+}
+
+/* Full VIP Panel on user-edit.php / profile.php */
+.mw-vip-profile-panel {
+	margin: 22px 0;
+	padding: 20px 22px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 8px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.mw-vip-profile-panel__header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding-bottom: 14px;
+	margin-bottom: 16px;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.mw-vip-profile-panel__header h2 {
+	margin: 0;
+	font-size: 17px;
+	line-height: 1.35;
+}
+
+.mw-vip-profile-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	gap: 12px;
+	margin-bottom: 18px;
+}
+
+.mw-vip-kpi {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 12px 14px;
+	background: #f9fafb;
+	border: 1px solid #e5e7eb;
+	border-radius: 6px;
+}
+
+.mw-vip-kpi__label {
+	color: #646970;
+	font-size: 12px;
+}
+
+.mw-vip-kpi__value {
+	font-size: 18px;
+	font-weight: 700;
+	color: #1d2327;
+}
+
+.mw-vip-kpi__link {
+	font-size: 12px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.mw-vip-grant-box {
+	padding: 14px 16px;
+	margin: 16px 0;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+}
+
+.mw-vip-grant-box__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 12px;
+}
+
+.mw-vip-grant-box__field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.mw-vip-grant-box__field label {
+	font-size: 12px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.mw-vip-columns-2 {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 16px;
+	margin-top: 16px;
+}
+
+.mw-vip-card-list {
+	padding: 12px 14px;
+	background: #f9fafb;
+	border: 1px solid #e5e7eb;
+	border-radius: 6px;
+}
+
+.mw-vip-card-list h4 {
+	margin: 0 0 8px;
+	font-size: 13px;
+}
+
+.mw-vip-card-list ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-vip-card-list li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	padding: 5px 0;
+	border-bottom: 1px solid #eef0f2;
+	font-size: 12.5px;
+}
+
+.mw-vip-card-list li:last-child {
+	border-bottom: 0;
+}
+
+.mw-vip-plan-icon-badge {
+	display: inline-grid;
+	place-items: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 6px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #1d4ed8;
+	vertical-align: middle;
+	margin-inline-end: 6px;
+}

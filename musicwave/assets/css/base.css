@@ -1,0 +1,62 @@
+html {
+	scroll-behavior: smooth;
+	scroll-padding-block-start: var(--mw-scroll-offset, 5.5rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	background: var(--mw-color-canvas);
+	color: var(--mw-color-text);
+	text-rendering: optimizeLegibility;
+}
+
+/*
+ * SonicStream chrome: slim, quiet scrollbars across the whole app — the
+ * reference uses a thin #333 thumb on the near-black canvas; the token
+ * equivalent below adapts to the light theme automatically.
+ */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: color-mix(in srgb, var(--mw-color-text) 20%, transparent) transparent;
+}
+
+a {
+	text-underline-offset: 0.18em;
+}
+
+/* Solid accent ring, exactly the reference focus treatment. FIX-29: visible focus for all interactive. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible,
+summary:focus-visible {
+	outline: 2px solid var(--mw-color-accent, #1db954);
+	outline-offset: 2px;
+}
+
+/* Fallback for browsers without :focus-visible support */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline-offset: 2px;
+}
+
+/* Ensure custom components that remove outline provide alternative ring */
+.mw-site-header .mw-header-search .wp-block-search__input:focus-visible,
+.mw-header-search .mw-search-unified__input:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+	border-color: var(--mw-color-accent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 24%, transparent);
+}

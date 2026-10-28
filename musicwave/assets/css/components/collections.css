@@ -1,0 +1,852 @@
+/* =========================================================================
+ * Collection Tracklist (`music-wave/collection-list`) & Release Credits
+ * 1:1 grid-locked header + rows driven by `--mw-track-cols`, `--mw-track-cols-md`,
+ * and `--mw-track-cols-sm` with true container queries (`@container tracklist`)
+ * so every screen size and column width stays sub-pixel aligned.
+ * ====================================================================== */
+
+/* ---- Release Credits ---- */
+.mw-release-credits {
+	margin: var(--wp--preset--spacing--40) 0;
+	padding: var(--wp--preset--spacing--30);
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+	box-shadow: var(--mw-shadow-card);
+}
+
+.mw-release-credits h2,
+.mw-release-credits__heading {
+	margin: 0 0 0.85rem;
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+
+.mw-release-credits ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-release-credits li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.35rem 0.75rem;
+	padding: 0.7rem 0;
+	border-block-start: 1px solid color-mix(in srgb, var(--mw-color-border) 65%, transparent);
+}
+
+.mw-release-credits ul > li:first-child {
+	border-block-start: 0;
+}
+
+.mw-release-credits__role,
+.mw-release-credits__list span {
+	color: var(--mw-color-text-muted);
+	font-size: 0.84rem;
+}
+
+.mw-release-credits__list--grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr));
+	gap: 0.5rem var(--wp--preset--spacing--30);
+}
+
+.mw-release-credits__list--inline {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3rem 0;
+}
+
+.mw-release-credits__list--inline li {
+	display: inline-flex;
+	padding: 0.15rem 0;
+	border-block-start: 0;
+}
+
+.mw-release-credits__list--inline li + li::before {
+	margin: 0 0.65rem;
+	color: var(--mw-color-text-muted);
+	content: "·";
+}
+
+.mw-release-credits__groups {
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+}
+
+.mw-release-credits__role-heading {
+	margin: 0 0 0.25rem;
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.mw-release-credits__group ul > li:first-child {
+	border-block-start: 0;
+}
+
+/* ---- Collection Tracklist Root Container ---- */
+.mw-collection-list {
+	--mw-track-cols: 2.5rem minmax(0, 1fr) minmax(7.5rem, 0.52fr) 3.5rem auto;
+	--mw-track-cols-md: 2.5rem minmax(0, 1fr) minmax(6.5rem, 0.44fr) 3.35rem auto;
+	--mw-track-cols-sm: 2.25rem minmax(0, 1fr) 2.9rem auto;
+	/* Row box skin. Variants that want a bare list (compact, streaming
+	 * tracklist) simply flatten both values instead of re-declaring the row. */
+	--mw-row-surface: color-mix(in srgb, var(--mw-color-surface-raised) 52%, transparent);
+	--mw-row-outline: color-mix(in srgb, var(--mw-color-border) 46%, transparent);
+	container-type: inline-size;
+	container-name: tracklist;
+	margin: 0 0 var(--wp--preset--spacing--40);
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-collection-list ol,
+.mw-collection-list ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* ---- Header Bar (Title + Track Count + Total Runtime) ---- */
+.mw-collection-list__header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.65rem 1rem;
+	margin-block-end: 0.9rem;
+}
+
+.mw-collection-list h2,
+.mw-collection-list__heading {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--display, inherit);
+	font-size: clamp(1.18rem, 2.2vw, 1.45rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 1.2;
+}
+
+.mw-collection-list__summary {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.mw-collection-list__count,
+.mw-collection-list__total {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.24rem 0.65rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 80%, transparent);
+	border-radius: 999px;
+}
+
+.mw-collection-list__disc {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 1.25rem 0 0.55rem;
+	font-size: 0.875rem;
+	font-weight: 800;
+	color: var(--mw-color-text);
+}
+
+.mw-collection-list__disc:first-of-type {
+	margin-block-start: 0.25rem;
+}
+
+.mw-collection-list__disc-icon {
+	display: inline-grid;
+	place-items: center;
+	color: var(--mw-color-accent, #1db954);
+}
+
+/* ---- Shared 1:1 Subgrid Geometry Between Header & Every Row ---- */
+.mw-collection-list__grid-shell {
+	display: grid;
+	grid-template-columns: var(--mw-track-cols);
+	column-gap: clamp(1rem, 2.2vw, 1.65rem);
+	min-inline-size: 0;
+}
+
+.mw-collection-list__table-header,
+.mw-collection-list li.mw-collection-list__row {
+	display: grid;
+	grid-template-columns: var(--mw-track-cols);
+	align-items: center;
+	column-gap: clamp(1rem, 2.2vw, 1.65rem);
+	min-inline-size: 0;
+}
+
+.mw-collection-list__tracks {
+	grid-column: 1 / -1;
+	display: grid;
+	gap: 0.28rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	min-inline-size: 0;
+}
+
+@supports (grid-template-columns: subgrid) {
+	.mw-collection-list__grid-shell > .mw-collection-list__table-header {
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
+	}
+
+	.mw-collection-list__grid-shell > .mw-collection-list__tracks {
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
+	}
+
+	.mw-collection-list__grid-shell > .mw-collection-list__tracks > li.mw-collection-list__row {
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
+	}
+}
+
+.mw-collection-list__table-header {
+	padding: 0.55rem 0.9rem;
+	margin-block-end: 0.4rem;
+	border: 1px solid transparent;
+	border-block-end-color: color-mix(in srgb, var(--mw-color-border) 75%, transparent);
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	user-select: none;
+}
+
+.mw-collection-list li.mw-collection-list__row {
+	box-sizing: border-box;
+	min-block-size: 3.4rem;
+	padding: 0.62rem 0.9rem;
+	background: var(--mw-row-surface);
+	border: 1px solid var(--mw-row-outline);
+	border-radius: var(--mw-radius-md, 0.75rem);
+	transition:
+		background-color 160ms ease,
+		border-color 160ms ease,
+		box-shadow 160ms ease;
+}
+
+.mw-collection-list li.mw-collection-list__row:hover {
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 88%, var(--mw-color-text) 4%);
+	border-color: color-mix(in srgb, var(--mw-color-border) 60%, transparent);
+}
+
+.mw-collection-list li.mw-collection-list__row:focus-within {
+	background: color-mix(in srgb, var(--mw-color-accent, #1db954) 7%, var(--mw-color-surface-raised));
+	border-color: color-mix(in srgb, var(--mw-color-accent, #1db954) 28%, transparent);
+}
+
+/* Density modifiers (`comfortable` | `compact` | `cards`) */
+.mw-collection-list--density-compact {
+	--mw-row-surface: transparent;
+	--mw-row-outline: transparent;
+}
+
+.mw-collection-list--density-compact li.mw-collection-list__row {
+	min-block-size: 0;
+	padding: 0.35rem 0.65rem;
+}
+
+.mw-collection-list--density-compact .mw-collection-list__artwork {
+	inline-size: 2.1rem;
+	block-size: 2.1rem;
+	flex-basis: 2.1rem;
+}
+
+.mw-collection-list--density-cards .mw-collection-list__tracks {
+	gap: 0.5rem;
+}
+
+.mw-collection-list--density-cards li.mw-collection-list__row {
+	padding: 0.75rem 0.9rem;
+	background: color-mix(in srgb, var(--mw-color-surface) 92%, transparent);
+	border-color: var(--mw-color-border);
+	box-shadow: var(--mw-shadow-card);
+}
+
+/* Numbered streaming tracklist style variation */
+.mw-collection-list.mw-collection-list--tracklist {
+	--mw-row-surface: transparent;
+	--mw-row-outline: transparent;
+}
+
+.mw-collection-list.mw-collection-list--tracklist li.mw-collection-list__row {
+	border-radius: var(--mw-radius-sm, 0.55rem);
+	border-inline: 0;
+	border-block-start: 0;
+	border-block-end: 1px solid color-mix(in srgb, var(--mw-color-border) 48%, transparent);
+}
+
+.mw-collection-list.mw-collection-list--tracklist li.mw-collection-list__row:last-child {
+	border-block-end-color: transparent;
+}
+
+/* ---- Cell Alignment Rules (Identical for Header & Row Cells) ---- */
+.mw-collection-list__cell,
+.mw-collection-list__col {
+	min-inline-size: 0;
+}
+
+.mw-collection-list__col--lead,
+.mw-collection-list__lead {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
+	text-align: center;
+}
+
+.mw-collection-list__col--bpm,
+.mw-collection-list__bpm,
+.mw-collection-list__col--quality,
+.mw-collection-list__quality,
+.mw-collection-list__col--duration,
+.mw-collection-list__duration {
+	justify-self: end;
+	text-align: end;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.mw-collection-list__col--actions,
+.mw-collection-list__actions {
+	justify-self: end;
+	text-align: end;
+	padding-inline-start: 0.65rem;
+}
+
+/* ---- Lead Play Affordance & Equalizer ---- */
+.mw-collection-list__position {
+	display: inline-grid;
+	place-items: center;
+	min-inline-size: 1.5rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.85rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.mw-collection-list__lead-play {
+	position: relative;
+	display: inline-grid;
+	place-items: center;
+	inline-size: 2.1rem;
+	block-size: 2.1rem;
+	padding: 0;
+	border-radius: 50%;
+	cursor: pointer;
+	flex: 0 0 auto;
+	transition:
+		background-color 160ms ease,
+		color 160ms ease,
+		transform 160ms ease,
+		box-shadow 180ms ease;
+}
+
+.mw-collection-list__lead-play--hover {
+	color: var(--mw-color-text-muted);
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-collection-list__lead-play--hover .mw-collection-list__hover-icon {
+	display: none;
+}
+
+.mw-collection-list li.mw-collection-list__row:where(:hover, :focus-within) .mw-collection-list__lead-play--hover {
+	color: var(--mw-color-on-accent, #041f0e);
+	background: var(--mw-color-accent, #1db954);
+	box-shadow: 0 4px 14px color-mix(in srgb, var(--mw-color-accent, #1db954) 32%, transparent);
+}
+
+.mw-collection-list li.mw-collection-list__row:where(:hover, :focus-within) .mw-collection-list__lead-play--hover .mw-collection-list__position {
+	display: none;
+}
+
+.mw-collection-list li.mw-collection-list__row:where(:hover, :focus-within) .mw-collection-list__lead-play--hover .mw-collection-list__hover-icon {
+	display: inline-grid;
+	place-items: center;
+}
+
+.mw-collection-list__lead-play--button {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-text) 9%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 14%, transparent);
+}
+
+.mw-collection-list li.mw-collection-list__row:where(:hover, :focus-within) .mw-collection-list__lead-play--button,
+.mw-collection-list__lead-play--button:where(:hover, :focus-visible) {
+	color: var(--mw-color-on-accent, #041f0e);
+	background: var(--mw-color-accent, #1db954);
+	border-color: var(--mw-color-accent, #1db954);
+	transform: scale(1.04);
+}
+
+.mw-collection-list__lead-play .mw-equalizer,
+.mw-collection-list__lead-slot .mw-equalizer {
+	display: none;
+}
+
+.mw-collection-list__lead-slot {
+	display: inline-grid;
+	place-items: center;
+	min-inline-size: 1.5rem;
+}
+
+.mw-collection-list li[data-mw-playing],
+.mw-collection-list li.is-playing {
+	background: color-mix(in srgb, var(--mw-color-accent, #1db954) 10%, var(--mw-color-surface-raised));
+	border-color: color-mix(in srgb, var(--mw-color-accent, #1db954) 28%, transparent);
+}
+
+.mw-collection-list li[data-mw-playing] .mw-collection-list__lead-play > *:not(.mw-equalizer),
+.mw-collection-list li.is-playing .mw-collection-list__lead-play > *:not(.mw-equalizer),
+.mw-collection-list .mw-collection-list__lead-play[aria-pressed="true"] > *:not(.mw-equalizer),
+.mw-collection-list li[data-mw-playing] .mw-collection-list__lead-slot > .mw-collection-list__position,
+.mw-collection-list li.is-playing .mw-collection-list__lead-slot > .mw-collection-list__position {
+	display: none;
+}
+
+.mw-collection-list li[data-mw-playing] .mw-collection-list__lead-play .mw-equalizer,
+.mw-collection-list li.is-playing .mw-collection-list__lead-play .mw-equalizer,
+.mw-collection-list .mw-collection-list__lead-play[aria-pressed="true"] .mw-equalizer,
+.mw-collection-list li[data-mw-playing] .mw-collection-list__lead-slot > .mw-equalizer,
+.mw-collection-list li.is-playing .mw-collection-list__lead-slot > .mw-equalizer {
+	display: inline-flex;
+	color: var(--mw-color-accent, #1db954);
+}
+
+.mw-collection-list li[data-mw-playing] .mw-collection-list__title,
+.mw-collection-list li.is-playing .mw-collection-list__title {
+	color: var(--mw-color-accent, #1db954);
+}
+
+/* ---- Artwork, Track Title & Subtitle Metadata ---- */
+.mw-collection-list__main {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	min-inline-size: 0;
+}
+
+.mw-collection-list__artwork {
+	display: inline-grid;
+	place-items: center;
+	flex: 0 0 2.5rem;
+	inline-size: 2.5rem;
+	block-size: 2.5rem;
+	object-fit: cover;
+	overflow: hidden;
+	border-radius: var(--mw-radius-sm, 0.55rem);
+	color: var(--mw-color-accent, #1db954);
+	background:
+		radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--mw-color-accent, #1db954) 28%, transparent), transparent 65%),
+		var(--mw-color-surface-raised);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 70%, transparent);
+}
+
+.mw-collection-list__text {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	min-inline-size: 0;
+	flex: 1 1 auto;
+}
+
+.mw-collection-list__link {
+	display: inline-flex;
+	align-items: center;
+	min-inline-size: 0;
+	max-inline-size: 100%;
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-collection-list__title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 0.925rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.mw-collection-list__link:where(:hover, :focus-visible) .mw-collection-list__title {
+	color: var(--mw-color-accent, #1db954);
+}
+
+/* Subtitle artist shown automatically when standalone artist column is off or collapsed on narrow screens */
+.mw-collection-list__artist-inline {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 0.775rem;
+	color: var(--mw-color-text-muted);
+	line-height: 1.25;
+}
+
+.mw-collection-list--has-artist .mw-collection-list__artist-inline {
+	display: none;
+}
+
+.mw-collection-list__artist {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--mw-color-text-muted);
+	font-size: 0.825rem;
+}
+
+.mw-collection-list__artist a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-collection-list__artist a:where(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.mw-collection-list__bpm,
+.mw-collection-list__duration {
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+	font-weight: 600;
+}
+
+.mw-collection-list__badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.16rem 0.5rem;
+	font-size: 0.7rem;
+	font-weight: 700;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-text) 7%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 75%, transparent);
+	border-radius: 999px;
+}
+
+/* ---- Row Action Buttons (`icon` disc vs compact `button` pill) ---- */
+.mw-collection-list__actions {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.3rem;
+	min-inline-size: 0;
+	max-inline-size: 100%;
+}
+
+/* Every row trigger — play, queue, library, download — shares one 2.25rem
+ * height so the action cluster (including `LibraryButton`'s `sm` disc) aligns
+ * pixel-perfectly on a single baseline. */
+.mw-collection-list__action {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	gap: 0.35rem;
+	min-inline-size: 2.25rem;
+	block-size: 2.25rem;
+	padding: 0 0.7rem;
+	color: var(--mw-color-text-muted);
+	font-family: inherit;
+	font-size: 0.775rem;
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+	text-decoration: none;
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 10%, transparent);
+	border-radius: 999px;
+	cursor: pointer;
+	transition:
+		background-color 150ms ease,
+		border-color 150ms ease,
+		color 150ms ease,
+		transform 150ms ease;
+}
+
+.mw-collection-list__action--icon {
+	display: inline-grid;
+	place-items: center;
+	inline-size: 2.25rem;
+	padding: 0;
+}
+
+.mw-collection-list__action:where(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-accent, #1db954) 16%, var(--mw-color-surface-raised));
+	border-color: color-mix(in srgb, var(--mw-color-accent, #1db954) 45%, transparent);
+	transform: translateY(-1px);
+}
+
+.mw-collection-list__action:focus-visible {
+	outline: 2px solid var(--mw-color-accent, #1db954);
+	outline-offset: 2px;
+}
+
+.mw-collection-list__action--play:where(:hover, :focus-visible),
+.mw-collection-list__action--play[aria-pressed="true"] {
+	color: var(--mw-color-on-accent, #041f0e);
+	background: var(--mw-color-accent, #1db954);
+	border-color: var(--mw-color-accent, #1db954);
+}
+
+.mw-collection-list__action-icon {
+	display: inline-grid;
+	flex: 0 0 auto;
+	place-items: center;
+	line-height: 1;
+}
+
+.mw-collection-list__action-label:not(.screen-reader-text) {
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-collection-list__action[aria-busy="true"] {
+	cursor: progress;
+	opacity: 0.72;
+}
+
+.mw-collection-list__action.is-disabled,
+.mw-collection-list__action[aria-disabled="true"] {
+	cursor: default;
+	opacity: 0.55;
+}
+
+/* The shared `LibraryButton` disc joins the row cluster with the exact same
+ * surface, border, radius, and 2.25rem box as its siblings in both `icon` and
+ * `button` action styles. */
+.mw-collection-list__actions .mw-library-button.mw-collection-list__action {
+	min-block-size: 0;
+	min-height: 0;
+	block-size: 2.25rem;
+	inline-size: 2.25rem;
+	padding: 0;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 10%, transparent);
+	border-radius: 999px;
+}
+
+.mw-collection-list__actions .mw-library-button.mw-collection-list__action.mw-library-button--button {
+	inline-size: auto;
+	padding-inline: 0.85rem;
+}
+
+.mw-collection-list__actions .mw-library-button.mw-collection-list__action:where(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-accent, #1db954) 16%, var(--mw-color-surface-raised));
+	border-color: color-mix(in srgb, var(--mw-color-accent, #1db954) 45%, transparent);
+}
+
+.mw-collection-list__actions .mw-library-button.mw-collection-list__action.is-saved,
+.mw-collection-list__actions .mw-library-button.mw-collection-list__action[data-mw-library-state="in"] {
+	color: var(--mw-color-heart, #ff2d55);
+	background: color-mix(in srgb, var(--mw-color-heart, #ff2d55) 14%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-heart, #ff2d55) 42%, transparent);
+}
+
+.mw-collection-list__actions .mw-library-button.mw-collection-list__action .mw-library-button__icon svg,
+.mw-collection-list__actions .mw-library-button.mw-collection-list__action .mw-library-button__heart-svg {
+	inline-size: 1rem;
+	block-size: 1rem;
+}
+
+.mw-collection-list__quality-select {
+	width: auto;
+	min-width: 6.25rem;
+	max-width: 9.25rem;
+	height: 2.25rem;
+	min-height: 2.25rem;
+	padding-inline: 0.75rem;
+	font-family: inherit;
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: var(--mw-color-text);
+	background-color: color-mix(in srgb, var(--mw-color-surface-raised) 88%, var(--mw-color-text) 6%);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 85%, transparent);
+	border-radius: 999px;
+	cursor: pointer;
+	transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+}
+
+.mw-collection-list__quality-select:where(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+	border-color: color-mix(in srgb, var(--mw-color-accent, #1db954) 50%, transparent);
+}
+
+/* Desktop row action visibility (`always` vs `hover`) across frontend & editor canvas */
+@media (min-width: 48rem) {
+	.mw-collection-list.mw-collection-list--vis-hover .mw-collection-list__actions {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 150ms ease;
+	}
+
+	.mw-collection-list.mw-collection-list--vis-hover li.mw-collection-list__row:where(:hover, :focus-within) .mw-collection-list__actions,
+	.mw-collection-list.mw-collection-list--vis-hover li[data-mw-playing] .mw-collection-list__actions,
+	.mw-collection-list.mw-collection-list--vis-hover li.is-playing .mw-collection-list__actions {
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+
+/* ---- True Multi-Breakpoint Container & Mobile 2-Column Responsiveness ---- */
+@container tracklist (max-width: 50rem) {
+	.mw-collection-list__grid-shell,
+	.mw-collection-list__table-header,
+	.mw-collection-list li.mw-collection-list__row {
+		grid-template-columns: var(--mw-track-cols-md);
+		column-gap: 1rem;
+	}
+
+	@supports (grid-template-columns: subgrid) {
+		.mw-collection-list__grid-shell > .mw-collection-list__table-header,
+		.mw-collection-list__grid-shell > .mw-collection-list__tracks,
+		.mw-collection-list__grid-shell > .mw-collection-list__tracks > li.mw-collection-list__row {
+			grid-template-columns: subgrid;
+		}
+	}
+
+	.mw-collection-list__col--bpm,
+	.mw-collection-list__bpm,
+	.mw-collection-list__col--quality,
+	.mw-collection-list__quality {
+		display: none;
+	}
+}
+
+/*
+ * Labeled actions are an explicit author choice (`actionStyle: button`), so the
+ * style never degrades back into icon discs: a split icon+label pill stays a
+ * pill at every container width. The row absorbs the wider cluster by shrinking
+ * its text tracks (`--mw-track-cols-md`, which the card layout at 42rem then
+ * takes over from), and the cluster itself wraps on genuinely narrow rows.
+ */
+
+/*
+ * One source of truth for the stacked phone card: the container query owns the
+ * breakpoint, so a narrow tracklist inside a wide desktop column and a phone
+ * both collapse at the same measured width. The old duplicate viewport media
+ * query that re-declared these exact rules has been removed.
+ */
+@container tracklist (max-width: 42rem) {
+	.mw-collection-list__grid-shell {
+		display: block;
+	}
+
+	.mw-collection-list__table-header {
+		display: none;
+	}
+
+	.mw-collection-list__tracks,
+	.mw-collection-list__grid-shell > .mw-collection-list__tracks {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.55rem;
+	}
+
+	.mw-collection-list li.mw-collection-list__row,
+	.mw-collection-list__grid-shell > .mw-collection-list__tracks > li.mw-collection-list__row {
+		grid-column: auto;
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		column-gap: 0.75rem;
+		row-gap: 0.55rem;
+		padding: 0.7rem 0.8rem;
+		background: color-mix(in srgb, var(--mw-color-surface-raised) 74%, transparent);
+		border: 1px solid color-mix(in srgb, var(--mw-color-border) 58%, transparent);
+		border-radius: var(--mw-radius-md, 0.8rem);
+	}
+
+	.mw-collection-list.mw-collection-list--no-lead li.mw-collection-list__row,
+	.mw-collection-list.mw-collection-list--no-lead .mw-collection-list__grid-shell > .mw-collection-list__tracks > li.mw-collection-list__row {
+		grid-template-columns: minmax(0, 1fr) auto;
+	}
+
+	.mw-collection-list__col--artist,
+	.mw-collection-list__artist,
+	.mw-collection-list__col--bpm,
+	.mw-collection-list__bpm,
+	.mw-collection-list__col--quality,
+	.mw-collection-list__quality,
+	.mw-collection-list__col--duration,
+	.mw-collection-list__duration {
+		display: none;
+	}
+
+	.mw-collection-list--has-artist .mw-collection-list__artist-inline {
+		display: block;
+	}
+
+	.mw-collection-list__actions {
+		padding-inline-start: 0;
+		gap: 0.45rem;
+	}
+
+	.mw-collection-list li.mw-collection-list__row:has(.mw-collection-list__quality-select) .mw-collection-list__main {
+		grid-column: 2 / -1;
+	}
+
+	.mw-collection-list.mw-collection-list--no-lead li.mw-collection-list__row:has(.mw-collection-list__quality-select) .mw-collection-list__main {
+		grid-column: 1 / -1;
+	}
+
+	/*
+	 * A row that owns a quality selector gets the whole width for its action
+	 * cluster. The cluster is a *wrapping flex line*, not a 2-column grid: the
+	 * buttons and the `<select>` are siblings in DOM order, so a fixed grid put
+	 * the play/queue/library triggers into the select's cell and pushed the rest
+	 * onto stray rows. Flex keeps every trigger on one baseline, preserves the
+	 * DOM/focus order, and wraps only when the row is genuinely too narrow.
+	 */
+	.mw-collection-list li.mw-collection-list__row:has(.mw-collection-list__quality-select) .mw-collection-list__actions {
+		grid-column: 1 / -1;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: flex-start;
+		justify-self: stretch;
+		gap: 0.45rem;
+		padding-block-start: 0.55rem;
+		border-block-start: 1px solid color-mix(in srgb, var(--mw-color-border) 42%, transparent);
+	}
+
+	.mw-collection-list li.mw-collection-list__row:has(.mw-collection-list__quality-select) .mw-collection-list__quality-select {
+		flex: 0 1 auto;
+		inline-size: auto;
+		min-inline-size: 7rem;
+		max-inline-size: none;
+	}
+
+	.mw-collection-list__artwork {
+		flex-basis: 2.4rem;
+		inline-size: 2.4rem;
+		block-size: 2.4rem;
+	}
+}

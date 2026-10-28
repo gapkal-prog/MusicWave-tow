@@ -1,0 +1,79 @@
+/**
+ * Theme preference toggle.
+ *
+ * The button carries three inline SVG icons; the one matching the current
+ * preference (data-mw-theme-value="system|light|dark") is revealed so the
+ * script only has to swap an attribute. Sizing matches the header icon
+ * buttons (2.75rem circle, 44px touch target).
+ */
+
+.mw-theme-toggle,
+.nbp-theme-toggle-fallback {
+	position: relative;
+	display: inline-grid;
+	flex: 0 0 auto;
+	inline-size: 2.5rem;
+	block-size: 2.5rem;
+	padding: 0;
+	place-items: center;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 50%;
+	box-shadow: none;
+	font-size: 1.15rem;
+	line-height: 1;
+	cursor: pointer;
+	transition:
+		background-color var(--mw-speed-fast, 150ms) ease,
+		border-color var(--mw-speed-fast, 150ms) ease,
+		color var(--mw-speed-fast, 150ms) ease;
+}
+
+.mw-theme-toggle:hover,
+.mw-theme-toggle:focus-visible,
+.nbp-theme-toggle-fallback:hover,
+.nbp-theme-toggle-fallback:focus-visible {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: var(--mw-color-accent);
+}
+
+.mw-theme-toggle__icon,
+.nbp-theme-toggle-fallback .mw-theme-toggle__icon {
+	grid-area: 1 / 1;
+	inline-size: 1.25rem;
+	block-size: 1.25rem;
+	opacity: 0;
+	transform: scale(0.6) rotate(-90deg);
+	transition:
+		opacity var(--mw-speed-fast, 150ms) ease,
+		transform var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease);
+}
+
+.mw-theme-toggle[data-mw-theme-value="system"] .mw-theme-toggle__icon--system,
+.mw-theme-toggle[data-mw-theme-value="light"] .mw-theme-toggle__icon--light,
+.mw-theme-toggle[data-mw-theme-value="dark"] .mw-theme-toggle__icon--dark,
+.mw-theme-toggle:not([data-mw-theme-value]) .mw-theme-toggle__icon--system,
+.nbp-theme-toggle-fallback[data-mw-theme-value="system"] .mw-theme-toggle__icon--system,
+.nbp-theme-toggle-fallback[data-mw-theme-value="light"] .mw-theme-toggle__icon--light,
+.nbp-theme-toggle-fallback[data-mw-theme-value="dark"] .mw-theme-toggle__icon--dark,
+.nbp-theme-toggle-fallback:not([data-mw-theme-value]) .mw-theme-toggle__icon--system {
+	opacity: 1;
+	transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-theme-toggle,
+	.nbp-theme-toggle-fallback,
+	.mw-theme-toggle__icon {
+		transition: none;
+	}
+}
+
+@media (forced-colors: active) {
+	.mw-theme-toggle,
+	.nbp-theme-toggle-fallback {
+		border: 1px solid ButtonText;
+	}
+}

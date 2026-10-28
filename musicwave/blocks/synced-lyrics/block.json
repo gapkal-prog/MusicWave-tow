@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/synced-lyrics",
+  "title": "متن هم‌زمان MusicWave",
+  "category": "music-wave",
+  "description": "متن LRC انتشار را با خط فعال هم‌زمان با پخش‌کننده سراسری نشان می‌دهد. بدون جاوااسکریپت همهٔ خطوط خوانا می‌مانند.",
+  "keywords": [
+    "متن",
+    "ترانه",
+    "LRC",
+    "karaoke",
+    "lyrics"
+  ],
+  "textdomain": "musicwave",
+  "icon": "format-status",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "fallbackText": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {}
+}

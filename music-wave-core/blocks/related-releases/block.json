@@ -1,0 +1,148 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/related-releases",
+  "title": "انتشارهای مرتبط",
+  "category": "music-wave",
+  "description": "انتشارهای مرتبط MusicWave را نمایش می‌دهد.",
+  "keywords": [
+    "مشابه",
+    "همان هنرمند",
+    "ویترین"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "share",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 0
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "order": {
+      "type": "string",
+      "default": "DESC"
+    },
+    "sameArtistSection": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "similarSection": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "matchGenre": {
+      "type": "boolean",
+      "default": true
+    },
+    "matchMood": {
+      "type": "boolean",
+      "default": true
+    },
+    "matchType": {
+      "type": "boolean",
+      "default": true
+    },
+    "sameArtistHeading": {
+      "type": "string",
+      "default": ""
+    },
+    "similarHeading": {
+      "type": "string",
+      "default": ""
+    },
+    "showSectionLink": {
+      "type": "boolean",
+      "default": false
+    },
+    "sectionLinkLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    },
+    "columns": {
+      "type": "integer",
+      "default": 4
+    },
+    "imageShape": {
+      "type": "string",
+      "default": "square"
+    },
+    "showArtwork": {
+      "type": "boolean",
+      "default": true
+    },
+    "showArtist": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": false
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": false
+    },
+    "showPreview": {
+      "type": "boolean",
+      "default": true
+    },
+    "showAction": {
+      "type": "boolean",
+      "default": false
+    },
+    "actionLabel": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "layout": "grid",
+      "columns": 4,
+      "showArtwork": true,
+      "showPreview": true
+    }
+  }
+}

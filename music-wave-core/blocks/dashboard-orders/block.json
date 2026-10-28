@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-orders",
+  "title": "سفارش‌های حساب",
+  "category": "music-wave",
+  "description": "جدول سفارش‌ها – فشرده با نشان وضعیت، تعداد قابل تنظیم.",
+  "keywords": ["سفارش", "خرید", "حساب"],
+  "textdomain": "music-wave-core",
+  "icon": "list-view",
+  "attributes": {
+    "heading": { "type": "string", "default": "سفارش‌ها" },
+    "compact": { "type": "boolean", "default": true },
+    "perPage": { "type": "number", "default": 6 }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "color": { "background": true, "link": true, "text": true },
+    "spacing": { "blockGap": true, "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "example": {
+    "attributes": { "compact": true, "perPage": 6 }
+  }
+}

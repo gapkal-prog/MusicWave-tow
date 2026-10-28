@@ -1,0 +1,627 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "useRootPaddingAwareAlignments": true,
+    "layout": {
+      "contentSize": "100%",
+      "wideSize": "100%",
+      "allowEditing": true,
+      "allowCustomContentAndWideSize": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "dimensions": {
+      "minHeight": true
+    },
+    "position": {
+      "fixed": true,
+      "sticky": true
+    },
+    "shadow": {
+      "presets": [
+        {
+          "slug": "card",
+          "name": "کارت",
+          "shadow": "0 18px 50px rgb(0 0 0 / 24%)"
+        },
+        {
+          "slug": "floating",
+          "name": "پخش‌کننده شناور",
+          "shadow": "0 24px 70px rgb(0 0 0 / 40%)"
+        },
+        {
+          "slug": "subtle",
+          "name": "ظریف",
+          "shadow": "0 8px 24px rgb(0 0 0 / 12%)"
+        },
+        {
+          "slug": "elevated",
+          "name": "برجسته",
+          "shadow": "0 24px 48px rgb(0 0 0 / 18%)"
+        }
+      ]
+    },
+    "color": {
+      "defaultDuotone": false,
+      "defaultGradients": true,
+      "defaultPalette": false,
+      "custom": true,
+      "customGradient": true,
+      "customDuotone": false,
+      "link": true,
+      "gradients": [
+        {
+          "slug": "accent-wash",
+          "name": "گرادیان تأکیدی",
+          "gradient": "radial-gradient(circle at 15% 20%, rgba(29,185,84,0.35), transparent 55%), linear-gradient(180deg, #283040, #0b0d12)"
+        },
+        {
+          "slug": "accent-button",
+          "name": "دکمه تأکیدی",
+          "gradient": "linear-gradient(135deg, #1ed760, #17a34a)"
+        },
+        {
+          "slug": "editorial-rose",
+          "name": "رز تحریریه",
+          "gradient": "linear-gradient(135deg, #fa2d48, #a91267 55%, #341550)"
+        },
+        {
+          "slug": "midnight-radio",
+          "name": "رادیوی نیمه‌شب",
+          "gradient": "radial-gradient(circle at 75% 15%, rgba(124,58,237,0.55), transparent 42%), linear-gradient(145deg, #1f2937, #08090d)"
+        },
+        {
+          "slug": "sunset-glow",
+          "name": "درخشش غروب",
+          "gradient": "linear-gradient(135deg, #ff7a18 0%, #fa2d48 55%, #9a1b8f 100%)"
+        },
+        {
+          "slug": "midnight-ink",
+          "name": "جوهر نیمه‌شب",
+          "gradient": "linear-gradient(180deg, #111827, #0b0d12)"
+        }
+      ],
+      "palette": [
+        { "slug": "canvas", "name": "بوم", "color": "#0a0a0a" },
+        { "slug": "surface", "name": "سطح", "color": "#181818" },
+        { "slug": "surface-raised", "name": "سطح برجسته", "color": "#282828" },
+        { "slug": "text", "name": "متن", "color": "#f7f8fb" },
+        { "slug": "muted", "name": "متن کم‌رنگ", "color": "#a0a0a0" },
+        { "slug": "accent", "name": "رنگ تأکیدی", "color": "#1db954" },
+        { "slug": "accent-strong", "name": "رنگ تأکیدی پررنگ", "color": "#1ed760" },
+        { "slug": "editorial", "name": "رز تحریریه", "color": "#fa2d48" },
+        { "slug": "on-accent", "name": "روی رنگ تأکیدی", "color": "#052e16" }
+      ],
+      "duotone": [
+        {
+          "slug": "accent-on-canvas",
+          "colors": ["#0b0d12", "#1db954"],
+          "name": "تأکید روی بوم"
+        },
+        {
+          "slug": "editorial-on-canvas",
+          "colors": ["#090a0f", "#fa2d48"],
+          "name": "تحریریه روی بوم"
+        }
+      ]
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true,
+      "defaultSpacingSizes": false,
+      "spacingScale": { "steps": 0 },
+      "spacingSizes": [
+        { "slug": "10", "size": "clamp(0.5rem, 0.45rem + 0.2vw, 0.75rem)", "name": "خیلی کوچک" },
+        { "slug": "20", "size": "clamp(0.75rem, 0.7rem + 0.25vw, 1rem)", "name": "کوچک" },
+        { "slug": "30", "size": "clamp(1rem, 0.85rem + 0.7vw, 1.5rem)", "name": "متوسط" },
+        { "slug": "40", "size": "clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem)", "name": "بزرگ" },
+        { "slug": "50", "size": "clamp(2.5rem, 1.8rem + 3vw, 5rem)", "name": "خیلی بزرگ" },
+        { "slug": "60", "size": "clamp(3.5rem, 2.8rem + 3vw, 6.5rem)", "name": "بسیار بزرگ" }
+      ],
+      "units": ["px", "rem", "em", "%", "vw", "vh"]
+    },
+    "typography": {
+      "fluid": true,
+      "dropCap": false,
+      "defaultFontSizes": false,
+      "customFontSize": true,
+      "lineHeight": true,
+      "fontWeight": true,
+      "letterSpacing": true,
+      "textTransform": true,
+      "textDecoration": true,
+      "writingMode": false,
+      "fontFamilies": [
+        {
+          "slug": "system",
+          "name": "بدنه وزیرمتن",
+          "fontFamily": "'Vazirmatn', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif"
+        },
+        {
+          "slug": "serif",
+          "name": "سریف تحریریه",
+          "fontFamily": "Iowan Old Style, Baskerville, 'Times New Roman', serif"
+        },
+        {
+          "slug": "mono",
+          "name": "تک‌فاصله استودیو",
+          "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+        },
+        {
+          "slug": "display",
+          "name": "نمایشی وزیرمتن",
+          "fontFamily": "'Vazirmatn', 'Syne', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        }
+      ],
+      "fontSizes": [
+        { "slug": "x-small", "size": "0.75rem", "name": "خیلی کوچک" },
+        { "slug": "small", "size": "0.875rem", "name": "کوچک" },
+        { "slug": "medium", "size": "1rem", "name": "متوسط" },
+        { "slug": "large", "size": "clamp(1.25rem, 1.1rem + 0.7vw, 1.75rem)", "name": "بزرگ" },
+        { "slug": "x-large", "size": "clamp(2rem, 1.4rem + 2.8vw, 4.5rem)", "name": "نمایشی" },
+        { "slug": "xx-large", "size": "clamp(2.75rem, 1.8rem + 4vw, 5.5rem)", "name": "تیتر اصلی" }
+      ]
+    },
+    "custom": {
+      "scheme": {
+        "light": { "canvas": "#f7f7f8", "surface": "#ffffff", "surfaceRaised": "#eef0f2", "text": "#0f1115", "muted": "#5b6170", "accent": "#15803d", "accentStrong": "#166534", "editorial": "#be123c", "onAccent": "#ffffff" },
+        "dark": { "canvas": "#0a0a0a", "surface": "#181818", "surfaceRaised": "#282828", "text": "#f7f8fb", "muted": "#a0a0a0", "accent": "#1db954", "accentStrong": "#1ed760", "editorial": "#fa2d48", "onAccent": "#052e16" }
+      },
+      "radius": {
+        "small": "0.5rem",
+        "medium": "0.75rem",
+        "large": "1rem",
+        "xlarge": "1.5rem",
+        "pill": "999px"
+      },
+      "header": {
+        "contentSize": "var(--wp--style--global--wide-size, 100%)"
+      }
+    },
+    "blocks": {
+      "core/paragraph": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "letterSpacing": true, "textTransform": true, "textDecoration": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
+      },
+      "core/heading": {
+        "color": { "background": true, "text": true, "gradient": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "letterSpacing": true, "textTransform": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
+      },
+      "core/list": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true, "blockGap": true },
+        "typography": { "fontSize": true, "lineHeight": true }
+      },
+      "core/list-item": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true }
+      },
+      "core/quote": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "typography": { "fontSize": true, "lineHeight": true }
+      },
+      "core/separator": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "style": true, "width": true }
+      },
+      "core/image": {
+        "color": { "background": false },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true,
+        "dimensions": { "aspectRatio": true, "minHeight": true }
+      },
+      "core/gallery": {
+        "spacing": { "blockGap": true, "margin": true, "padding": true },
+        "border": { "radius": true }
+      },
+      "core/columns": {
+        "color": { "background": true, "gradient": true },
+        "spacing": { "blockGap": true, "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
+      },
+      "core/column": {
+        "color": { "background": true, "gradient": true },
+        "spacing": { "blockGap": true, "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "dimensions": { "minHeight": true, "aspectRatio": true },
+        "shadow": true,
+        "layout": true
+      },
+      "core/group": {
+        "color": { "background": true, "text": true, "gradient": true },
+        "spacing": { "blockGap": true, "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "dimensions": { "minHeight": true, "aspectRatio": true },
+        "position": { "sticky": true },
+        "shadow": true,
+        "layout": true
+      },
+      "core/buttons": {
+        "spacing": { "blockGap": true, "margin": true, "padding": true },
+        "layout": true
+      },
+      "core/button": {
+        "color": { "background": true, "text": true, "gradient": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "spacing": { "margin": true, "padding": true },
+        "shadow": true,
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "letterSpacing": true, "textTransform": true, "textDecoration": true }
+      },
+      "core/navigation": {
+        "color": { "background": true, "text": true, "gradient": true },
+        "spacing": { "blockGap": true, "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "textTransform": true }
+      },
+      "core/navigation-submenu": {
+        "color": { "background": true, "text": true }
+      },
+      "core/search": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true,
+        "typography": { "fontSize": true }
+      },
+      "core/query": {
+        "spacing": { "blockGap": true, "margin": true, "padding": true },
+        "layout": true
+      },
+      "core/query-pagination": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true }
+      },
+      "core/query-pagination-previous": {
+        "color": { "background": true, "text": true },
+        "border": { "radius": true }
+      },
+      "core/query-pagination-next": {
+        "color": { "background": true, "text": true },
+        "border": { "radius": true }
+      },
+      "core/post-template": {
+        "spacing": { "blockGap": true }
+      },
+      "core/post-title": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "letterSpacing": true, "textTransform": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true }
+      },
+      "core/post-excerpt": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "lineHeight": true }
+      },
+      "core/post-featured-image": {
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true,
+        "dimensions": { "aspectRatio": true }
+      },
+      "core/post-terms": {
+        "color": { "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true, "textTransform": true }
+      },
+      "core/site-title": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "letterSpacing": true, "textTransform": true }
+      },
+      "core/site-tagline": {
+        "color": { "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true }
+      },
+      "core/site-logo": {
+        "spacing": { "margin": true, "padding": true },
+        "border": { "radius": true, "width": true, "style": true, "color": true }
+      },
+      "core/social-links": {
+        "spacing": { "blockGap": true, "margin": true, "padding": true }
+      },
+      "core/social-link": {
+        "color": { "background": true }
+      },
+      "core/spacer": {
+        "spacing": { "margin": true, "padding": true }
+      },
+      "core/table": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "typography": { "fontSize": true }
+      },
+      "core/code": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "radius": true }
+      },
+      "music-wave/release-shelf": {
+        "color": { "background": true, "text": true, "gradient": true },
+        "spacing": { "margin": true, "padding": true, "blockGap": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "typography": { "fontSize": true, "lineHeight": true },
+        "shadow": true
+      },
+      "music-wave/release-slider": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true, "blockGap": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
+      },
+      "music-wave/theme-text": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true }
+      },
+      "music-wave/theme-toggle": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "radius": true }
+      },
+      "music-wave/synced-lyrics": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "lineHeight": true }
+      },
+      "music-wave/section-head": {
+        "color": { "background": true, "gradient": true },
+        "spacing": { "margin": true, "padding": true }
+      },
+      "music-wave/breadcrumb": {
+        "color": { "background": true, "text": true, "link": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true }
+      },
+      "musicwave/breadcrumb": {
+        "color": { "background": true, "text": true, "link": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true }
+      },
+      "musicwave/release-shelf": {
+        "color": { "background": true, "text": true, "gradient": true },
+        "spacing": { "margin": true, "padding": true, "blockGap": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "typography": { "fontSize": true, "lineHeight": true },
+        "shadow": true
+      },
+      "musicwave/release-slider": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true, "blockGap": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
+      },
+      "musicwave/theme-text": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "typography": { "fontSize": true, "fontWeight": true }
+      },
+      "musicwave/theme-toggle": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "radius": true }
+      },
+      "music-wave/header-search": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true,
+        "typography": { "fontSize": true }
+      },
+      "musicwave/header-search": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true,
+        "typography": { "fontSize": true }
+      },
+      "music-wave/rail-toggle": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true,
+        "typography": { "fontSize": true }
+      },
+      "musicwave/rail-toggle": {
+        "color": { "background": true, "text": true },
+        "spacing": { "margin": true, "padding": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true,
+        "typography": { "fontSize": true }
+      }
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|canvas",
+      "text": "var:preset|color|text"
+    },
+    "spacing": {
+      "blockGap": "var:preset|spacing|30",
+      "padding": {
+        "left": "var:preset|spacing|30",
+        "right": "var:preset|spacing|30"
+      }
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|system",
+      "fontSize": "var:preset|font-size|medium",
+      "lineHeight": "1.65",
+      "fontWeight": "400"
+    },
+    "elements": {
+      "button": {
+        "border": { "radius": "999px" },
+        "color": { "background": "var:preset|color|accent", "text": "var:preset|color|on-accent" },
+        "spacing": { "padding": { "top": "0.75rem", "right": "1.5rem", "bottom": "0.75rem", "left": "1.5rem" } },
+        "typography": { "fontWeight": "700" },
+        ":hover": {
+          "color": { "background": "var:preset|color|accent-strong", "text": "var:preset|color|on-accent" }
+        }
+      },
+      "heading": { "typography": { "fontFamily": "var:preset|font-family|display", "fontWeight": "800", "lineHeight": "1.05", "letterSpacing": "-0.02em" } },
+      "link": { "color": { "text": "var:preset|color|accent-strong" }, "typography": { "textDecoration": "none" }, ":hover": { "typography": { "textDecoration": "underline" } } },
+      "caption": { "color": { "text": "var:preset|color|muted" }, "typography": { "fontSize": "var:preset|font-size|small" } },
+      "cite": { "typography": { "fontSize": "var:preset|font-size|small", "fontStyle": "normal" }, "color": { "text": "var:preset|color|muted" } }
+    },
+    "blocks": {
+      "core/navigation": { "typography": { "fontWeight": "600" } },
+      "core/search": { "border": { "radius": "999px" } },
+      "core/post-featured-image": { "border": { "radius": "1rem" } },
+      "core/post-template": { "spacing": { "blockGap": "var:preset|spacing|30" } },
+      "core/paragraph": { "spacing": { "blockGap": "var:preset|spacing|20" } },
+      "core/separator": { "color": { "background": "var:preset|color|muted" } },
+      "core/quote": { "border": { "width": "3px", "color": "var:preset|color|accent" }, "spacing": { "padding": { "left": "var:preset|spacing|30" } } },
+      "core/group": {
+        "spacing": { "blockGap": "var:preset|spacing|30" }
+      },
+      "core/list": {
+        "spacing": { "blockGap": "var:preset|spacing|10" }
+      },
+      "music-wave/release-shelf": {
+        "spacing": { "blockGap": "var:preset|spacing|30" }
+      },
+      "music-wave/release-slider": {
+        "spacing": { "blockGap": "var:preset|spacing|30" }
+      },
+      "musicwave/release-shelf": {
+        "spacing": { "blockGap": "var:preset|spacing|30" }
+      },
+      "musicwave/release-slider": {
+        "spacing": { "blockGap": "var:preset|spacing|30" }
+      },
+      "music-wave/header-search": {
+        "spacing": { "blockGap": "var:preset|spacing|20" }
+      },
+      "musicwave/header-search": {
+        "spacing": { "blockGap": "var:preset|spacing|20" }
+      }
+    }
+  },
+  "templateParts": [
+    { "name": "header", "title": "سربرگ", "area": "header" },
+    { "name": "header-centered", "title": "سربرگ (وسط‌چین)", "area": "header" },
+    { "name": "header-minimal", "title": "سربرگ (ساده)", "area": "header" },
+    { "name": "header-stream", "title": "سربرگ (استریم)", "area": "header" },
+    { "name": "header-stream-end", "title": "سربرگ (استریم — ریل انتها)", "area": "header" },
+    { "name": "breadcrumb", "title": "مسیر راهنما (Breadcrumb)", "area": "uncategorized" },
+    { "name": "footer", "title": "پابرگ", "area": "footer" },
+    { "name": "footer-widgets", "title": "ابزارک‌های پابرگ", "area": "footer" },
+    { "name": "footer-simple", "title": "پابرگ (ساده)", "area": "footer" },
+    { "name": "sidebar", "title": "نوار کناری", "area": "uncategorized" },
+    { "name": "sidebar-shop", "title": "نوار کناری فروشگاه", "area": "uncategorized" },
+    { "name": "hero", "title": "بخش معرفی", "area": "uncategorized" }
+  ],
+  "customTemplates": [
+    {
+      "name": "page-no-sidebar",
+      "title": "برگه (بدون نوار کناری)",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-account",
+      "title": "حساب موسیقی",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-login",
+      "title": "ورود و ثبت‌نام",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-playlists",
+      "title": "فهرست‌های پخش عمومی",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-requests",
+      "title": "درخواست آهنگ و همکاری",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-request-song",
+      "title": "سفارش آهنگ اختصاصی",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-request-collab",
+      "title": "همکاری",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-stream",
+      "title": "صفحهٔ استریم (نوار کناری)",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-cart",
+      "title": "سبد خرید",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-checkout",
+      "title": "تسویه‌حساب",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-music-home",
+      "title": "صفحه سرمقاله موسیقی",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-browse",
+      "title": "مرور موسیقی",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-artists",
+      "title": "هنرمندان",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-genres",
+      "title": "سبک‌ها",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-with-sidebar",
+      "title": "برگه با نوار کناری",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-wide",
+      "title": "برگه (عریض)",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-landing",
+      "title": "صفحه فرود (بدون سربرگ/پابرگ)",
+      "postTypes": ["page"]
+    },
+    {
+      "name": "page-shop",
+      "title": "فروشگاه با نوار کناری",
+      "postTypes": ["page"]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "music-wave/section-head",
+	"title": "سرصفحهٔ بخش MusicWave",
+	"category": "music-wave",
+	"description": "سرصفحهٔ سرمقاله‌ای با پوستهٔ mw-section-head و سبک‌های وسط‌چین، ستونی و معکوس؛ بلوک‌های درونی جداگانه انتخاب و جابه‌جا می‌شوند. برای یک عنوان متنی ساده از بلوک «عنوان بخش» استفاده کنید.",
+	"textdomain": "musicwave",
+	"icon": "editor-insertmore",
+	"keywords": [
+		"سرصفحه",
+		"عنوان بخش",
+		"برچسب بالایی",
+		"سرمقاله‌ای"
+	],
+	"attributes": {
+		"sectionUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"sectionLinkLabel": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"color": {
+			"background": true,
+			"gradient": true,
+			"text": false,
+			"link": false
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": false
+		},
+		"typography": {
+			"fontSize": false,
+			"lineHeight": false
+		},
+		"interactivity": false
+	},
+	"example": {
+		"attributes": {
+			"align": "wide"
+		},
+		"innerBlocks": [
+			{
+				"name": "core/group",
+				"attributes": {
+					"className": "mw-section-head__text",
+					"layout": {
+						"type": "default"
+					}
+				},
+				"innerBlocks": [
+					{
+						"name": "core/paragraph",
+						"attributes": {
+							"className": "mw-eyebrow",
+							"content": "منتخب این هفته"
+						}
+					},
+					{
+						"name": "core/heading",
+						"attributes": {
+							"level": 2,
+							"content": "وینیل‌هایی که تازه گذاشته‌ایم"
+						}
+					},
+					{
+						"name": "core/paragraph",
+						"attributes": {
+							"content": "توضیح کوتاهی که بخش را برای شنونده معرفی می‌کند."
+						}
+					}
+				]
+			}
+		]
+	}
+}

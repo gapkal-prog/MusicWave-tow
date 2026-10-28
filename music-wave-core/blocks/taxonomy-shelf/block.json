@@ -1,0 +1,116 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/taxonomy-shelf",
+  "title": "ویترین طبقه‌بندی",
+  "category": "music-wave",
+  "description": "ژانرها، حال‌وهواها یا برچسب‌ها را به‌صورت کاشی‌های مرور قابل کلیک، همراه با تعداد انتشار، در شبکه، نوار یا فهرست نمایش می‌دهد.",
+  "keywords": [
+    "ژانرها",
+    "حال‌وهواها",
+    "برچسب‌ها",
+    "مرور",
+    "دسته‌ها",
+    "ویترین"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "tag",
+  "attributes": {
+    "taxonomy": {
+      "type": "string",
+      "default": "mw_genre"
+    },
+    "source": {
+      "type": "string",
+      "default": "all"
+    },
+    "termIds": {
+      "type": "string",
+      "default": ""
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "count"
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 8
+    },
+    "columns": {
+      "type": "integer",
+      "default": 4
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    },
+    "cardStyle": {
+      "type": "string",
+      "default": "colorful"
+    },
+    "showCount": {
+      "type": "boolean",
+      "default": true
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionLinkLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "مرور بر اساس حال‌وهوا",
+      "taxonomy": "mw_mood",
+      "layout": "scroll",
+      "cardStyle": "colorful",
+      "itemsToShow": 10
+    }
+  }
+}

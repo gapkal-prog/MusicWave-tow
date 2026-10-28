@@ -1,0 +1,809 @@
+.mw-hero {
+	position: relative;
+	overflow: hidden;
+	/*
+	 * SonicStream hero: a soft accent wash bleeding out of the top corner,
+	 * dissolving into the canvas — the album/artist page signature.
+	 */
+	background:
+		radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--mw-color-accent) 35%, transparent), transparent 48%),
+		radial-gradient(circle at 85% 85%, color-mix(in srgb, var(--mw-color-accent) 14%, transparent), transparent 52%),
+		var(--mw-color-canvas);
+}
+
+.mw-hero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--mw-color-canvas) 55%, transparent));
+	pointer-events: none;
+}
+
+.mw-hero > * {
+	position: relative;
+	z-index: 1;
+}
+
+
+/* -------------------------------------------------------------------------
+ * Release action bar — clean layout flex container that respects unified
+ * `.mw-action-button` sizes, shapes, icons, and variants everywhere.
+ * ------------------------------------------------------------------------- */
+.mw-release-actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+	margin-block: 0.35rem var(--wp--preset--spacing--40, 2.5rem);
+}
+
+.mw-release-actions .mw-playlist-picker {
+	flex-direction: row;
+	align-items: center;
+	gap: 0;
+}
+
+.mw-release-actions .mw-playlist-picker__trigger-count {
+	display: none;
+}
+
+.mw-release-actions .mw-preview-button.mw-preview-button--outline {
+	color: var(--mw-color-text);
+	background: transparent;
+	border: 1.5px solid var(--mw-color-accent, #1db954);
+	box-shadow: none;
+}
+
+.mw-release-actions .mw-preview-button.mw-preview-button--ghost {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 16%, transparent);
+	box-shadow: none;
+}
+
+/* Tablet (48–64rem): keep the two-column hero but rebalance the cover so
+ * the title never squeezes into a narrow strip beside a wide square. */
+@media (min-width: 48rem) and (max-width: 64rem) {
+	.mw-release-hero__inner.is-stacked-on-mobile .mw-release-hero__cover {
+		flex-basis: 30% !important;
+		max-width: 18rem;
+	}
+	.mw-release-hero__inner.is-stacked-on-mobile .mw-release-hero__info {
+		flex-basis: 70% !important;
+	}
+	.mw-release-hero__info .wp-block-post-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+	}
+}
+
+@media (max-width: 48rem) {
+	/* Full-bleed only on wide canvases; on phones the hero hugs the page
+	 * padding so nothing can exceed the viewport width, and the corner
+	 * radius follows the page edges. */
+	.mw-release-hero {
+		margin-inline: calc(var(--wp--style--root--padding-left, 1rem) * -1) calc(var(--wp--style--root--padding-right, 1rem) * -1);
+		padding: clamp(1rem, 4.5vw, 1.5rem) clamp(1rem, 4vw, 1.25rem) clamp(0.9rem, 3vw, 1.35rem);
+		border-radius: 0 0 var(--mw-radius-lg, 1.5rem) var(--mw-radius-lg, 1.5rem);
+	}
+
+	.mw-release-hero__inner {
+		gap: 1rem;
+	}
+
+	/* Stacked hero: a balanced square cover, centered copy, and a single
+	 * tidy action row instead of a cramped, edge-to-edge icon bar. */
+	.mw-release-hero__inner.is-stacked-on-mobile {
+		flex-direction: column;
+		align-items: center;
+		gap: clamp(0.85rem, 4vw, 1.15rem);
+		text-align: center;
+	}
+
+	.mw-release-hero__inner.is-stacked-on-mobile .mw-release-hero__info {
+		width: 100%;
+		align-items: stretch;
+		gap: 0.65rem;
+		text-align: center;
+	}
+
+	.mw-release-hero__inner.is-stacked-on-mobile .mw-release-hero__cover {
+		flex: 0 0 auto;
+		align-self: center;
+		width: clamp(9.5rem, 52vw, 13.5rem);
+		max-width: 13.5rem;
+	}
+
+	.mw-release-hero__cover .wp-block-column,
+	.mw-release-hero__inner.is-stacked-on-mobile > .wp-block-column {
+		flex-basis: 100% !important;
+	}
+
+	.mw-release-hero__cover-stack .wp-block-post-featured-image {
+		border-radius: var(--mw-radius-lg, 1.1rem);
+		box-shadow: 0 1rem 2.25rem rgb(0 0 0 / 42%);
+	}
+
+	.mw-release-hero__inner.is-stacked-on-mobile .mw-release-hero__info .wp-block-post-title {
+		max-inline-size: 22ch;
+		margin-inline: auto;
+		margin-block: 0;
+		font-size: clamp(1.6rem, 7.2vw, 2.35rem);
+		line-height: 1.18;
+		letter-spacing: -0.015em;
+		text-wrap: balance;
+	}
+
+	.mw-release-hero__info .mw-release-hero__overline {
+		justify-content: center;
+		gap: 0.35rem;
+	}
+
+	.mw-release-hero__info .mw-release-meta__facts--inline,
+	.mw-release-hero__info .mw-release-meta--compact {
+		justify-content: center;
+		font-size: 0.8125rem;
+	}
+
+	.mw-release-hero__info .mw-release-meta.mw-release-meta--compact .mw-release-meta__item + .mw-release-meta__item::before {
+		margin-inline: 0.4rem;
+	}
+
+	/* Action bar: the primary play leads, secondary discs wrap into a
+	 * balanced centered row with comfortable 48px touch targets. */
+	.mw-release-actions {
+		justify-content: center;
+		width: 100%;
+		gap: 0.65rem;
+		margin-block: 0.35rem var(--wp--preset--spacing--30, 1.5rem);
+	}
+
+	.mw-release-actions > * {
+		flex: 0 0 auto;
+	}
+
+	.mw-release-actions .mw-preview-button,
+	.mw-release-actions .mw-preview-player .mw-card-play {
+		width: 3rem;
+		height: 3rem;
+	}
+
+	.mw-release-actions .mw-share-button__status:not([hidden]) {
+		inset-inline-start: auto;
+		inset-inline-end: 0;
+		transform: none;
+	}
+}
+
+/* Very small phones: tighten the stacked hero one more step. */
+@media (max-width: 26rem) {
+	.mw-release-hero__inner.is-stacked-on-mobile .mw-release-hero__cover {
+		width: clamp(8.5rem, 48vw, 11rem);
+	}
+
+	.mw-release-hero__inner.is-stacked-on-mobile .mw-release-hero__info .wp-block-post-title {
+		font-size: clamp(1.45rem, 7.6vw, 1.9rem);
+	}
+
+	.mw-release-actions {
+		gap: 0.5rem;
+	}
+}
+
+.mw-release-card {
+	position: relative;
+	display: block;
+	flex-direction: column;
+	height: 100%;
+	padding: var(--wp--preset--spacing--40);
+	overflow: hidden;
+	background: var(--mw-color-surface, #16161a);
+	border: 1px solid var(--mw-color-border, rgb(247 248 251 / 10%));
+	border-radius: var(--mw-radius-lg, 1.1rem);
+	box-shadow: var(--mw-shadow-card, 0 14px 34px rgb(0 0 0 / 28%));
+	transition:
+		transform var(--mw-speed-base, 220ms) var(--mw-ease-out, ease),
+		border-color var(--mw-speed-base, 220ms) ease,
+		background-color var(--mw-speed-base, 220ms) ease,
+		box-shadow var(--mw-speed-base, 220ms) ease;
+}
+
+.mw-release-card:is(:hover, :focus-within) {
+	transform: translateY(-3px);
+	background: var(--mw-color-surface-raised);
+}
+
+.mw-release-card .wp-block-post-featured-image {
+	overflow: hidden;
+	margin: 0;
+}
+
+.mw-release-card .wp-block-post-featured-image img {
+	display: block;
+	transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mw-release-card:is(:hover, :focus-within) .wp-block-post-featured-image img {
+	transform: scale(1.04);
+}
+
+.mw-release-card .wp-block-post-title {
+	margin: 0;
+}
+
+.mw-release-card .wp-block-post-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-release-grid {
+	grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr)) !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* Search page                                                        */
+/* ------------------------------------------------------------------ */
+
+/* -------------------------------------------------------------------------
+ * Search hero — SonicStream pattern: display-size query title with a
+ * large quiet search pill right beneath, no boxed panel behind it.
+ * ------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
+/* Search page — professional, like Spotify/YouTube search results   */
+/* ------------------------------------------------------------------ */
+.mw-search-hero {
+	display: grid;
+	gap: clamp(0.85rem, 2vw, 1.35rem);
+	justify-items: start;
+	margin-block: 0 var(--wp--preset--spacing--40);
+	padding: clamp(1rem, 2.5vw, 1.5rem);
+	background:
+		radial-gradient(90% 80% at 18% 20%, color-mix(in srgb, var(--mw-color-accent) 8%, transparent), transparent 55%),
+		var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border-subtle);
+	border-radius: var(--mw-radius-lg);
+	box-shadow: var(--mw-shadow-card);
+}
+
+.mw-search-hero .wp-block-query-title {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+	font-size: clamp(1.85rem, 4.5vw, 3rem);
+	font-weight: 850;
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+}
+
+.mw-search-hero .wp-block-search {
+	width: min(42rem, 100%);
+	margin: 0;
+	position: relative;
+}
+
+.mw-search-hero .wp-block-search__inside-wrapper {
+	flex-wrap: nowrap;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	box-shadow: 0 1px 0 color-mix(in srgb, var(--mw-color-text) 4%, transparent) inset;
+	transition: border-color var(--mw-speed-fast, 150ms) ease, box-shadow var(--mw-speed-fast, 150ms) ease, background var(--mw-speed-fast) ease;
+}
+
+.mw-search-hero .wp-block-search__inside-wrapper:focus-within {
+	border-color: var(--mw-color-accent);
+	background: var(--mw-color-surface);
+	box-shadow: 0 0 0 3px var(--mw-color-accent-soft), 0 1px 0 color-mix(in srgb, var(--mw-color-text) 4%, transparent) inset;
+}
+
+.mw-search-hero .wp-block-search__input {
+	min-height: 3.25rem;
+	flex: 1 1 auto;
+	color: var(--mw-color-text);
+	background: transparent;
+	border: 0;
+	border-radius: 999px 0 0 999px;
+	outline: 0;
+	font-size: 1rem;
+	padding-inline-start: 1.15rem;
+}
+
+.mw-search-hero .wp-block-search__input::placeholder {
+	color: var(--mw-color-text-muted);
+}
+
+.mw-search-hero .wp-block-search__button {
+	flex: 0 0 auto;
+	inline-size: 2.75rem;
+	block-size: 2.75rem;
+	border-radius: 50%;
+	background: var(--mw-color-accent);
+	color: var(--mw-color-on-accent);
+	border: 0;
+	margin: 0.25rem;
+}
+
+.mw-search-page .mw-catalog-results {
+	margin-block: 0 1.25rem;
+}
+
+.mw-search-page .mw-release-grid {
+	margin-top: 0;
+	display: grid;
+	gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* Empty state — professional, centered, helpful */
+.mw-search-empty {
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+	justify-items: center;
+	margin-top: var(--wp--preset--spacing--40);
+	padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 3vw, 2rem);
+	text-align: center;
+	background:
+		radial-gradient(80% 60% at 50% 0%, color-mix(in srgb, var(--mw-color-accent) 8%, transparent), transparent 60%),
+		var(--mw-color-surface);
+	border: 1px dashed var(--mw-color-border);
+	border-radius: var(--mw-radius-xl);
+	box-shadow: var(--mw-shadow-card);
+	max-inline-size: 38rem;
+	margin-inline: auto;
+}
+
+.mw-search-empty p {
+	margin: 0;
+	max-inline-size: 32rem;
+	text-wrap: pretty;
+}
+
+.mw-search-empty .wp-block-search {
+	width: min(26rem, 100%);
+	margin-block-start: 0.5rem;
+}
+
+.mw-search-empty .wp-block-buttons {
+	margin-block-start: 0.5rem;
+}
+
+
+
+.mw-release-meta {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+	gap: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+}
+
+/* Primary default mode: compact, borderless, inline dot-separated metadata (`·`). */
+.mw-release-meta.mw-release-meta--compact {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.mw-release-meta.mw-release-meta--compact .mw-release-meta__item {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.3rem;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.mw-release-meta.mw-release-meta--compact .mw-release-meta__item + .mw-release-meta__item::before {
+	content: "·";
+	margin-inline: 0.55rem;
+	color: var(--mw-color-text-muted);
+	opacity: 0.72;
+	font-weight: 700;
+}
+
+.mw-release-meta.mw-release-meta--compact dt {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.mw-release-meta.mw-release-meta--compact dt::after {
+	content: ":";
+}
+
+.mw-release-meta.mw-release-meta--compact dd {
+	margin: 0;
+	color: var(--mw-color-text);
+	font-size: 0.875rem;
+	font-weight: 650;
+	unicode-bidi: plaintext;
+}
+
+
+/* Composite release page panel: structured facts grid / inline / stack. */
+.mw-release-meta--panel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--30);
+	margin: var(--wp--preset--spacing--30) 0 0;
+}
+
+.mw-release-meta__facts {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+	gap: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+	margin: 0;
+}
+
+/* Inline layout: one flowing row of label/value pairs. */
+.mw-release-meta__facts--inline {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	column-gap: var(--wp--preset--spacing--30);
+	row-gap: 0.5rem;
+}
+
+.mw-release-meta__facts--inline .mw-release-meta__item {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.45rem;
+}
+
+.mw-release-meta__facts--inline dd {
+	margin: 0;
+}
+
+/* Stacked layout: one bordered row per field. */
+.mw-release-meta__facts--stack {
+	grid-template-columns: 1fr;
+}
+
+.mw-release-meta__facts--stack .mw-release-meta__item {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 0.25rem 1.5rem;
+	padding-bottom: 0.65rem;
+	border-bottom: 1px solid var(--mw-color-border);
+}
+
+.mw-release-meta__facts--stack .mw-release-meta__item:last-child {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+.mw-release-meta__facts--stack dd {
+	margin: 0;
+	text-align: right;
+}
+
+.mw-release-meta__item {
+	min-width: 0;
+}
+
+.mw-release-meta dt {
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.mw-release-meta dd {
+	margin: 0.2rem 0 0;
+	font-weight: 650;
+	font-variant-numeric: tabular-nums;
+}
+
+.mw-release-meta dd a {
+	font-weight: 650;
+	text-decoration: none;
+}
+
+.mw-release-meta dd a:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* -------------------------------------------------------------------------
+ * Archive and search card system
+ * ------------------------------------------------------------------------- */
+.mw-release-card__media {
+	position: relative;
+	aspect-ratio: 1;
+	min-width: 0;
+	overflow: hidden;
+	border-radius: calc(var(--mw-radius-lg) - 0.35rem);
+	background:
+		radial-gradient(circle at 22% 18%, color-mix(in srgb, var(--mw-color-accent) 38%, transparent), transparent 55%),
+		linear-gradient(145deg, var(--mw-color-surface-raised), var(--mw-color-surface));
+}
+
+.mw-release-card__media::after {
+	content: "♫";
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	color: color-mix(in srgb, var(--mw-color-text) 72%, transparent);
+	font-size: clamp(2rem, 8vw, 4.5rem);
+	font-weight: 800;
+	pointer-events: none;
+}
+
+.mw-release-card__media .wp-block-post-featured-image {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+.mw-release-card__media .wp-block-post-featured-image a,
+.mw-release-card__media .wp-block-post-featured-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.mw-release-card__media .wp-block-post-featured-image img {
+	object-fit: cover;
+	transition: transform 360ms var(--mw-ease-out), filter 220ms ease;
+}
+
+.mw-release-card:hover .mw-release-card__media img,
+.mw-release-card:focus-within .mw-release-card__media img {
+	transform: scale(1.045);
+}
+
+.mw-release-card__body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	align-items: stretch;
+	gap: var(--wp--preset--spacing--20);
+	min-width: 0;
+	padding: var(--wp--preset--spacing--30);
+}
+
+.mw-release-card__body > * {
+	max-width: 100%;
+}
+
+.mw-release-card__body .wp-block-post-title {
+	margin: 0;
+	line-height: 1.3;
+}
+
+.mw-release-card__body .wp-block-post-title a {
+	display: -webkit-box;
+	overflow: hidden;
+	color: inherit;
+	text-decoration: none;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
+.mw-release-card__body .mw-release-meta--compact {
+	width: 100%;
+	margin: auto 0 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-release-card .wp-block-post-excerpt {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.875rem;
+	line-height: 1.65;
+}
+
+.mw-release-card .wp-block-post-excerpt__more-link {
+	font-weight: 700;
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.2em;
+}
+
+.mw-catalog-pagination {
+	align-items: center;
+	margin-block-start: var(--wp--preset--spacing--40);
+	padding-block-start: var(--wp--preset--spacing--30);
+	border-block-start: 1px solid var(--mw-color-border);
+}
+
+.mw-catalog-pagination a,
+.mw-catalog-pagination .page-numbers {
+	min-height: 2.5rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-inline: 0.8rem;
+	border-radius: 0.5rem;
+}
+
+.mw-catalog-pagination a:hover,
+.mw-catalog-pagination a:focus-visible {
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 10%, transparent);
+}
+
+.mw-catalog-empty {
+	margin-block-start: var(--wp--preset--spacing--40);
+	padding: clamp(2rem, 7vw, 5rem) var(--wp--preset--spacing--30);
+	text-align: center;
+	background: var(--mw-color-surface);
+	border: 1px dashed var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+}
+
+.mw-catalog-empty > * {
+	max-width: 38rem;
+	margin-inline: auto;
+}
+
+.mw-catalog-empty > :first-child {
+	margin-block-start: 0;
+}
+
+.mw-catalog-empty > :last-child {
+	margin-block-end: 0;
+}
+
+/* Artist toolbar: the SonicStream "Discography" section header row. */
+.mw-artist-toolbar {
+	margin-block: 0 var(--wp--preset--spacing--20);
+	color: var(--mw-color-text-muted);
+}
+
+.mw-artist-toolbar__title {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+	font-size: clamp(1.25rem, 3vw, 1.75rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+
+.mw-artist-toolbar p {
+	margin-block: 0;
+}
+
+@media (max-width: 42rem) {
+	.mw-release-card__body {
+		padding: var(--wp--preset--spacing--20);
+	}
+
+	.mw-catalog-pagination {
+		justify-content: center;
+		gap: 0.5rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-release-card,
+	.mw-release-card__media img {
+		transition: none;
+	}
+}
+
+.mw-release-card__overlay {
+	position: absolute;
+	z-index: 2;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--wp--preset--spacing--20);
+	background: linear-gradient(180deg, rgb(0 0 0 / 8%), rgb(0 0 0 / 48%));
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 180ms ease;
+}
+
+.mw-release-card__media:hover .mw-release-card__overlay,
+.mw-release-card__media:focus-within .mw-release-card__overlay,
+.mw-release-card__overlay:focus-within {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.mw-release-card__overlay .mw-preview-button {
+	box-shadow: 0 0.75rem 1.75rem rgb(0 0 0 / 32%);
+}
+
+/* Touch-first surfaces: card overlays and cover play triggers are always
+ * visible on phones, tablets, and coarse pointers; hover is only an
+ * enhancement for precise pointers with real hover capability. */
+@media (hover: none), (pointer: coarse), (max-width: 64rem) {
+	.mw-release-card__overlay {
+		opacity: 1;
+		background: linear-gradient(180deg, transparent 54%, rgb(0 0 0 / 42%));
+		pointer-events: auto;
+		align-items: flex-end;
+		justify-content: flex-start;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-release-card__overlay {
+		transition: none;
+	}
+}
+
+/* Ensure `.mw-hero-slide__play` renders identically on standalone release cards
+ * even when `hero-slider.css` is not enqueued on the page or in the Editor. */
+.mw-release-card .mw-hero-slide__play,
+button.mw-hero-slide__play {
+	z-index: 3;
+	display: inline-grid;
+	place-items: center;
+	width: 3rem;
+	height: 3rem;
+	margin: 0;
+	padding: 0;
+	color: #050a06;
+	background: var(--mw-color-accent, #1db954);
+	border: 0;
+	border-radius: 50%;
+	box-shadow: 0 10px 26px rgb(0 0 0 / 48%);
+	cursor: pointer;
+	transition:
+		opacity 180ms ease,
+		transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+		background-color 180ms ease;
+}
+
+.mw-release-card__media .mw-hero-slide__play {
+	position: absolute;
+	inset-block-end: 0.85rem;
+	inset-inline-end: 0.85rem;
+	opacity: 0;
+	transform: translateY(6px);
+}
+
+.mw-release-card .mw-hero-slide__play .mw-preview-button {
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+	padding: 0;
+	color: #050a06;
+	background: transparent;
+	border: 0;
+	border-radius: 50%;
+	box-shadow: none;
+}
+
+.mw-release-card:is(:hover, :focus-within) .mw-release-card__media .mw-hero-slide__play,
+.mw-release-card__media .mw-hero-slide__play:focus-within,
+.mw-release-card__media .mw-hero-slide__play:has([aria-pressed="true"]),
+.editor-styles-wrapper .mw-release-card__media .mw-hero-slide__play {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.mw-release-card .mw-hero-slide__play:hover {
+	transform: scale(1.07);
+	background: var(--mw-color-accent-strong, #1ed760);
+}
+
+@media (hover: none), (pointer: coarse), (max-width: 64rem) {
+	.mw-release-card__media .mw-hero-slide__play {
+		opacity: 1;
+		transform: none;
+	}
+}
+

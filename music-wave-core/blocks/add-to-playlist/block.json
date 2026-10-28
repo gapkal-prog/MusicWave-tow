@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/add-to-playlist",
+  "title": "افزودن به فهرست پخش",
+  "category": "music-wave",
+  "description": "انتشار فعلی را به یکی از فهرست‌های پخش شنونده اضافه می‌کند؛ با انتخابگر آیکون، حالت آیکونی یا متنی و اندازه قابل تنظیم.",
+  "keywords": [
+    "فهرست پخش",
+    "ذخیره",
+    "صف"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "plus-alt",
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": "icon"
+    },
+    "variant": {
+      "type": "string",
+      "default": "surface"
+    },
+    "size": {
+      "type": "string",
+      "default": "md"
+    },
+    "shape": {
+      "type": "string",
+      "default": "pill"
+    },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "buttonStyle": "icon",
+      "variant": "surface",
+      "icon": "list-plus"
+    }
+  }
+}

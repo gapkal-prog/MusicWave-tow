@@ -1,0 +1,139 @@
+/**
+ * Pagination — one shared pager for every paged index (artists first).
+ *
+ * Markup contract (server-rendered, see `ArtistShelfBlock::pager()`):
+ *   nav.mw-artists-shelf__pager
+ *     p.mw-artists-shelf__pager-status
+ *     ul.mw-pagination
+ *       li.mw-pagination__item > a|span.mw-pagination__link
+ *
+ * The list is a wrapping flex row, so the pager stays usable inside a narrow
+ * column, in the editor canvas, and on a phone without any width query.
+ */
+
+.mw-artists-shelf__pager {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1.25rem;
+	margin-block-start: clamp(1.25rem, 3vw, 2rem);
+	padding-block-start: clamp(0.9rem, 2vw, 1.25rem);
+	border-block-start: 1px solid var(--mw-color-border-subtle);
+	container-type: inline-size;
+}
+
+.mw-artists-shelf__pager-status {
+	flex: 1 1 auto;
+	min-inline-size: 12rem;
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8rem;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.01em;
+}
+
+.mw-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.35rem;
+	margin: 0;
+	margin-inline-start: auto;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-pagination__item {
+	display: flex;
+	margin: 0;
+	list-style: none;
+}
+
+.mw-pagination__link {
+	display: inline-grid;
+	place-items: center;
+	min-inline-size: 2.5rem;
+	min-block-size: 2.5rem;
+	padding-inline: 0.7rem;
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 82%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 70%, transparent);
+	border-radius: 999px;
+	font-size: 0.82rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	text-decoration: none;
+	transition:
+		color var(--mw-speed-fast) ease,
+		background-color var(--mw-speed-fast) ease,
+		border-color var(--mw-speed-fast) ease,
+		transform var(--mw-speed-fast) var(--mw-ease-out);
+}
+
+.mw-pagination__link:where(:hover, :focus-visible) {
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, var(--mw-color-surface-raised));
+	border-color: color-mix(in srgb, var(--mw-color-accent) 45%, transparent);
+	transform: translateY(-1px);
+}
+
+.mw-pagination__link:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+}
+
+.mw-pagination__link.is-current {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: var(--mw-color-accent);
+	box-shadow: var(--mw-shadow-glow);
+}
+
+.mw-pagination__link--prev,
+.mw-pagination__link--next {
+	padding-inline: 0.9rem;
+	font-size: 0.78rem;
+}
+
+.mw-pagination__ellipsis {
+	display: inline-grid;
+	place-items: center;
+	min-inline-size: 1.5rem;
+	min-block-size: 2.5rem;
+	color: var(--mw-color-text-muted);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+}
+
+/*
+ * Narrow containers (phone, sidebar, editor canvas at mobile width): the status
+ * line keeps its own row and the pager spreads across the full width, so the
+ * numbered chips never squeeze the «قبلی/بعدی» labels into unreadable text.
+ *
+ * Only *descendants* of the container are queried: an element is never its own
+ * container, which is why the stacking comes from `flex-wrap` + the status
+ * line's `flex-basis` above instead of a self-targeting `flex-direction` rule.
+ */
+@container (max-width: 26rem) {
+	.mw-pagination {
+		inline-size: 100%;
+		margin-inline-start: 0;
+		justify-content: space-between;
+	}
+
+	.mw-pagination__link {
+		min-inline-size: 2.25rem;
+		padding-inline: 0.55rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-pagination__link {
+		transition: none;
+	}
+
+	.mw-pagination__link:where(:hover, :focus-visible) {
+		transform: none;
+	}
+}

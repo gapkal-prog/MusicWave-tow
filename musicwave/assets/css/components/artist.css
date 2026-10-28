@@ -1,0 +1,405 @@
+/* =========================================================================
+ * Unified Artist Profile (`music-wave/artist-profile`)
+ * Layouts: `compact` | `list` | `card` | `spotlight`
+ * Styles: `editorial` | `minimal` | `glass`
+ * 1:1 parity between Site Editor preview and public pages. The avatar frame is
+ * rendered only for artists that really have a photo, so the card never shows a
+ * stand-in portrait, and both the frame and the layout it sits in stay fluid.
+ * ====================================================================== */
+
+.mw-artist-profile {
+	--artist-accent: var(--mw-artist-accent, var(--mw-color-accent, #1db954));
+	--artist-avatar-size: 6rem;
+	/* `imageShape` only flips this token; the frame owns size, ratio and radius
+	 * so the photo and the layout can never disagree. */
+	--artist-avatar-radius: 50%;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	min-inline-size: 0;
+	gap: clamp(1rem, 2.5vw, 1.65rem);
+	padding: clamp(1.1rem, 2.4vw, 1.65rem);
+	margin: 0;
+	background:
+		radial-gradient(120% 95% at 10% 10%, color-mix(in srgb, var(--artist-accent) 13%, transparent), transparent 58%),
+		var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-xl, 1.25rem);
+	box-shadow: var(--mw-shadow-card);
+	overflow: clip;
+	isolation: isolate;
+	transition:
+		border-color 200ms ease,
+		box-shadow 220ms ease,
+		transform 220ms ease;
+}
+
+.mw-artist-profile:where(:hover) {
+	border-color: color-mix(in srgb, var(--artist-accent) 32%, var(--mw-color-border));
+	box-shadow: var(--mw-shadow-floating);
+}
+
+/*
+ * Style Variations (`editorial` | `minimal` | `glass`) are the *skin* axis: they
+ * own background, border, radius and shadow, while the layouts below own
+ * geometry (flex rhythm, avatar size, gaps, type scale). Both axes write the
+ * same properties, so the skins are declared after every layout and responsive
+ * rule at the bottom of this file — nothing here can silently undo the skin the
+ * author picked. Consumers that decorate the card themselves (the release-hero
+ * chip, the spotlight tint) stand down while a skin is active; see those files.
+ */
+
+/* ---- Avatar Media & Monogram Fallback ---- */
+.mw-artist-profile__media {
+	position: relative;
+	flex: 0 0 var(--artist-avatar-size);
+	inline-size: var(--artist-avatar-size);
+	block-size: var(--artist-avatar-size);
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+	border-radius: var(--artist-avatar-radius);
+	background:
+		radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--artist-accent) 38%, transparent), transparent 65%),
+		var(--mw-color-surface-raised);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 12%, transparent);
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, var(--artist-accent) 20%, transparent),
+		0 10px 26px -8px rgb(0 0 0 / 0.32);
+	isolation: isolate;
+}
+
+.mw-artist-profile__avatar-link {
+	display: block;
+	inline-size: 100%;
+	block-size: 100%;
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-artist-profile__image {
+	display: block;
+	inline-size: 100%;
+	block-size: 100%;
+	max-inline-size: none;
+	object-fit: cover;
+	object-position: center;
+	border-radius: inherit;
+	transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mw-artist-profile:where(:hover) .mw-artist-profile__image {
+	transform: scale(1.04);
+}
+
+/* Avatar Shapes (`circle` | `rounded` | `square`) — one token, one owner. */
+.mw-artist-profile--shape-circle {
+	--artist-avatar-radius: 50%;
+}
+
+.mw-artist-profile--shape-rounded {
+	--artist-avatar-radius: var(--mw-radius-lg, 1rem);
+}
+
+.mw-artist-profile--shape-square {
+	--artist-avatar-radius: var(--mw-radius-xs, 0.35rem);
+}
+
+/* ---- Body, Typography & Actions ---- */
+.mw-artist-profile__body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+	flex: 1 1 auto;
+	min-inline-size: 0;
+}
+
+.mw-artist-profile__heading {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	min-inline-size: 0;
+}
+
+.mw-artist-profile__eyebrow {
+	display: inline-flex;
+	align-self: flex-start;
+	padding: 0.2rem 0.6rem;
+	font-size: 0.7rem;
+	font-weight: 800;
+	color: var(--artist-accent);
+	background: color-mix(in srgb, var(--artist-accent) 14%, transparent);
+	border-radius: 999px;
+}
+
+.mw-artist-profile__title-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.75rem;
+}
+
+.mw-artist-profile__name {
+	margin: 0;
+	font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+	font-weight: 800;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.mw-artist-profile__name a,
+.mw-artist-profile__title-link {
+	color: inherit;
+	text-decoration: none;
+	transition: color 160ms ease;
+}
+
+.mw-artist-profile__name a:where(:hover, :focus-visible),
+.mw-artist-profile__title-link:where(:hover, :focus-visible) {
+	color: var(--artist-accent);
+}
+
+.mw-artist-profile__count {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.22rem 0.65rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-text) 7%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 80%, transparent);
+	border-radius: 999px;
+}
+
+.mw-artist-profile__bio {
+	margin: 0;
+	font-size: 0.9rem;
+	line-height: 1.7;
+	color: color-mix(in srgb, var(--mw-color-text) 82%, var(--mw-color-text-muted));
+	max-inline-size: 54rem;
+}
+
+.mw-artist-profile__bio > :first-child {
+	margin-block-start: 0;
+}
+
+.mw-artist-profile__bio > :last-child {
+	margin-block-end: 0;
+}
+
+.mw-artist-profile__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.55rem;
+	margin-block-start: 0.15rem;
+}
+
+/* ---- Layout 1: `compact` (Inline Hero Chip) ---- */
+.mw-artist-profile--compact {
+	--artist-avatar-size: 2.5rem;
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	max-inline-size: 100%;
+	gap: 0.65rem;
+	padding-block: 0.35rem;
+	padding-inline: 0.35rem 0.55rem;
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 82%, transparent);
+	border-radius: 999px;
+	box-shadow: none;
+}
+
+.mw-artist-profile--compact .mw-artist-profile__body {
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.65rem;
+	flex: 0 1 auto;
+}
+
+.mw-artist-profile--compact .mw-artist-profile__name {
+	font-size: 0.9375rem;
+	font-weight: 700;
+}
+
+.mw-artist-profile--compact .mw-artist-profile__actions {
+	margin-block-start: 0;
+}
+
+/* ---- Layout 2: `list` (Balanced Side-by-Side Horizontal Card) ---- */
+.mw-artist-profile--list {
+	--artist-avatar-size: 5.5rem;
+	flex-direction: row;
+	align-items: center;
+}
+
+/* ---- Layout 3: `card` (Stacked Portrait Card) ---- */
+.mw-artist-profile--card {
+	--artist-avatar-size: 6.25rem;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: start;
+}
+
+.mw-artist-profile--card .mw-artist-profile__body {
+	inline-size: 100%;
+}
+
+/* ---- Layout 4: `spotlight` (Featured Artist Header Banner) ---- */
+.mw-artist-profile--spotlight {
+	--artist-avatar-size: 7.75rem;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.25rem, 3vw, 2.25rem);
+	background:
+		radial-gradient(95% 80% at 50% 0%, color-mix(in srgb, var(--artist-accent) 20%, transparent), transparent 62%),
+		var(--mw-color-surface);
+}
+
+.mw-artist-profile--spotlight .mw-artist-profile__heading,
+.mw-artist-profile--spotlight .mw-artist-profile__body {
+	align-items: center;
+}
+
+.mw-artist-profile--spotlight .mw-artist-profile__eyebrow {
+	align-self: center;
+}
+
+.mw-artist-profile--spotlight .mw-artist-profile__title-row,
+.mw-artist-profile--spotlight .mw-artist-profile__actions {
+	justify-content: center;
+}
+
+.mw-artist-profile--spotlight .mw-artist-profile__name {
+	font-size: clamp(1.55rem, 3.2vw, 2.25rem);
+}
+
+/* ---- Responsive Adaptation on Narrow Screens ----
+ * These stay viewport queries on purpose: the root is an `inline-flex` box in the
+ * `compact` layout (and inside the release-hero chip), so turning it into an
+ * `inline-size` query container would collapse its shrink-to-fit width to zero.
+ * Narrow containers degrade instead through `flex-wrap` plus `min-inline-size: 0`
+ * on the body, which pushes the text under the avatar rather than clipping it. */
+@media (max-width: 38rem) {
+	.mw-artist-profile {
+		gap: 0.85rem 1rem;
+		padding: 1rem;
+	}
+
+	.mw-artist-profile--list {
+		--artist-avatar-size: 4.5rem;
+		align-items: flex-start;
+	}
+
+	.mw-artist-profile--card {
+		--artist-avatar-size: 5.25rem;
+	}
+
+	.mw-artist-profile--spotlight {
+		--artist-avatar-size: 6.25rem;
+		padding: 1.4rem 1.1rem;
+	}
+
+	.mw-artist-profile__actions {
+		gap: 0.45rem;
+	}
+}
+
+/*
+ * Phones: a side-by-side `list` card leaves ~10rem for the biography once the
+ * avatar and the action cluster take their share, so the layout flips to the
+ * stacked `card` rhythm instead of clipping the text. `spotlight` just tightens
+ * its avatar; `compact` keeps its single-line chip identity.
+ */
+@media (max-width: 30rem) {
+	.mw-artist-profile--list {
+		--artist-avatar-size: 5.25rem;
+		flex-direction: column;
+		align-items: flex-start;
+		text-align: start;
+	}
+
+	.mw-artist-profile--list .mw-artist-profile__body {
+		inline-size: 100%;
+	}
+
+	.mw-artist-profile--card {
+		--artist-avatar-size: 4.75rem;
+	}
+
+	.mw-artist-profile--compact {
+		inline-size: 100%;
+		justify-content: flex-start;
+		border-radius: var(--mw-radius-lg, 1rem);
+	}
+
+	.mw-artist-profile--compact .mw-artist-profile__body {
+		flex: 1 1 auto;
+		min-inline-size: 0;
+	}
+
+	.mw-artist-profile--spotlight {
+		--artist-avatar-size: 5.5rem;
+	}
+
+	.mw-artist-profile__name {
+		font-size: clamp(1.15rem, 5.2vw, 1.45rem);
+		overflow-wrap: anywhere;
+	}
+
+	.mw-artist-profile__actions > * {
+		flex: 1 1 auto;
+		justify-content: center;
+	}
+
+	.mw-artist-profile--compact .mw-artist-profile__actions > * {
+		flex: 0 0 auto;
+	}
+}
+
+/* ---- Style Variations (`editorial` | `minimal` | `glass`) ----
+ * Declared last on purpose: these selectors rank equal to the layout rules
+ * (`.mw-artist-profile--spotlight` etc.) and to the responsive overrides above,
+ * so source order is what makes the author's skin survive in all four layout
+ * patterns — including the ones that bring their own surface (`compact` pill,
+ * `spotlight` banner). The doubled `.is-style-*` selector keeps the skin ahead
+ * of any single-class rule from another file as well.
+ * `editorial` — the framed card — needs no rule of its own: the base
+ * `.mw-artist-profile` box already *is* that look, so the class stays a marker
+ * instead of a second copy of the same declarations.
+ */
+
+.mw-artist-profile--minimal,
+.mw-artist-profile.is-style-minimal {
+	padding: 0.35rem 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.mw-artist-profile--minimal:where(:hover),
+.mw-artist-profile.is-style-minimal:where(:hover) {
+	box-shadow: none;
+}
+
+.mw-artist-profile--glass,
+.mw-artist-profile.is-style-glass {
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 68%, transparent);
+	-webkit-backdrop-filter: blur(18px) saturate(1.25);
+	backdrop-filter: blur(18px) saturate(1.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-artist-profile,
+	.mw-artist-profile__image {
+		transition: none;
+	}
+
+	.mw-artist-profile:where(:hover) .mw-artist-profile__image {
+		transform: none;
+	}
+}

@@ -1,0 +1,363 @@
+/* Secure downloads — unified with the open track-list & ActionButtonStyle language.
+ * Panel and inline share exact 1:1 grid geometry and synchronized button/quality sizes.
+ * The panel reflows on its own inline size via a `mw-download` container query, so it
+ * degrades by available width rather than by device class; compact mode stacks
+ * vertically on a viewport query because it has no panel container. */
+
+.mw-download-action {
+  display: grid;
+  gap: var(--wp--preset--spacing--20, 0.75rem);
+  margin: var(--wp--preset--spacing--40, 1.5rem) 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+/*
+ * The «دانلود این انتشار» box lives inside the content column, so its usable width
+ * follows the column rather than the viewport. Declaring it a query container lets
+ * every row reflow on the width it really gets — the same technique the tracklist
+ * uses. The compact inline variant is deliberately excluded: it is intrinsically
+ * sized, and inline-size containment would collapse it inside `max-content` parents.
+ */
+.mw-download-action:not(.mw-download-action--inline) {
+  container-type: inline-size;
+  container-name: mw-download;
+}
+
+.mw-download-action--panel {
+  padding: 1.15rem 1.25rem;
+  background: color-mix(in srgb, var(--mw-color-surface-raised) 68%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mw-color-border) 68%, transparent);
+  border-radius: var(--mw-radius-md, 0.9rem);
+}
+
+.mw-download-action:not(.mw-download-action--inline) > .mw-download-action__heading {
+  margin-bottom: 0.2rem;
+}
+.mw-download-action__heading { display: grid; gap: 0.25rem; }
+.mw-download-action__heading strong {
+  font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+.mw-download-action__heading span,
+.mw-download-status { color: var(--mw-color-text-muted); font-size: 0.875rem; }
+
+.mw-download-action__table-header {
+  display: none;
+  grid-template-columns: minmax(11rem, 1.45fr) minmax(9.5rem, 12.5rem) max-content;
+  column-gap: clamp(1rem, 2.2vw, 1.65rem);
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  margin-bottom: 0.15rem;
+  border-block-end: 1px solid color-mix(in srgb, var(--mw-color-border) 65%, transparent);
+  color: var(--mw-color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.mw-download-action__table-header span:nth-child(3) { justify-self: end; text-align: end; }
+@container mw-download (min-width: 44rem) {
+  .mw-download-action__table-header { display: grid; }
+}
+
+.mw-download-file-list { display: grid; gap: 0.45rem; overflow: hidden; background: transparent; border: 0; border-radius: 0; }
+.mw-download-file-row {
+  display: grid;
+  grid-template-columns: minmax(11rem, 1.45fr) minmax(9.5rem, 12.5rem) max-content;
+  align-items: center;
+  column-gap: clamp(1rem, 2.2vw, 1.65rem);
+  row-gap: 0.65rem;
+  padding: 0.78rem 0.9rem;
+  border-radius: var(--mw-radius-sm, 0.7rem);
+  border: 1px solid color-mix(in srgb, var(--mw-color-border) 42%, transparent);
+  background: color-mix(in srgb, var(--mw-color-surface) 78%, transparent);
+  transition: background-color var(--mw-speed-fast, 150ms) ease, border-color var(--mw-speed-fast, 150ms) ease;
+}
+.mw-download-file-row--no-quality { grid-template-columns: minmax(11rem, 1fr) max-content; }
+.mw-download-file-row:hover {
+  background: var(--mw-color-surface-raised);
+  border-color: color-mix(in srgb, var(--mw-color-border) 85%, transparent);
+}
+
+.mw-download-file-row__title { display: flex; min-width: 0; align-items: center; gap: 0.7rem; }
+.mw-download-file-row__title strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.92rem; font-weight: 600; }
+.mw-download-file-row__icon {
+  display: inline-grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: 0 0 2.2rem;
+  place-items: center;
+  color: var(--mw-color-accent-strong);
+  background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+  border-radius: 50%;
+  font-size: 1rem;
+}
+.mw-download-file-row__icon--wave svg { display: block; }
+
+/* Quality selector synchronized with ActionButtonStyle (`size`, `shape`, `variant`) */
+.mw-download-action__quality { display: grid; gap: 0.22rem; min-width: 0; color: var(--mw-color-text-muted); font-size: 0.72rem; font-weight: 600; }
+.mw-download-file,
+.mw-download-quality {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.42rem 0.9rem;
+  color: var(--mw-color-text);
+  background-color: var(--mw-color-surface-raised);
+  border: 1px solid color-mix(in srgb, var(--mw-color-border) 85%, transparent);
+  border-radius: var(--mw-radius-pill, 999px);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--mw-speed-fast, 150ms) ease, background-color var(--mw-speed-fast, 150ms) ease, box-shadow var(--mw-speed-fast, 150ms) ease;
+}
+.mw-download-quality--size-sm { min-height: 2rem; padding: 0.24rem 0.72rem; font-size: 0.78rem; }
+.mw-download-quality--size-md { min-height: 2.5rem; padding: 0.42rem 0.9rem; font-size: 0.85rem; }
+.mw-download-quality--size-lg { min-height: 3rem; padding: 0.6rem 1.1rem; font-size: 0.94rem; }
+.mw-download-quality--shape-pill { border-radius: var(--mw-radius-pill, 999px); }
+.mw-download-quality--shape-rounded { border-radius: var(--mw-radius-sm, 0.75rem); }
+.mw-download-quality--variant-accent { border-color: color-mix(in srgb, var(--mw-color-accent) 42%, var(--mw-color-border)); }
+.mw-download-quality--variant-outline { background-color: transparent; border-color: var(--mw-color-border); }
+.mw-download-quality--variant-ghost { background-color: color-mix(in srgb, var(--mw-color-text) 6%, transparent); border-color: transparent; }
+
+.mw-download-file:hover,
+.mw-download-quality:hover { border-color: color-mix(in srgb, var(--mw-color-accent) 52%, var(--mw-color-border)); }
+.mw-download-file:focus-visible,
+.mw-download-quality:focus-visible {
+  border-color: color-mix(in srgb, var(--mw-color-accent) 55%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 22%, transparent);
+  outline: none;
+}
+
+.mw-download-file-row__actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.55rem; flex-wrap: nowrap; }
+.mw-download-action .mw-download-button:hover:not(:disabled),
+.mw-download-action .mw-secure-play-button:hover:not(:disabled) { transform: translateY(-1px); }
+.mw-download-button__icon,
+.mw-secure-play-button__icon { display: inline-grid; place-items: center; font-size: 1rem; line-height: 1; }
+.mw-download-button__label,
+.mw-secure-play-button__label { display: inline-block; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+
+.mw-secure-play-button[aria-pressed="true"] {
+  color: var(--mw-color-on-accent, #041f0e);
+  border-color: var(--mw-color-accent);
+  background: var(--mw-color-accent);
+}
+.mw-download-file-row[data-mw-playing="true"] { background: color-mix(in srgb, var(--mw-color-accent) 9%, var(--mw-color-surface-raised)); }
+.mw-download-file-row[data-mw-playing="true"] .mw-download-file-row__title strong { color: var(--mw-color-accent-strong); }
+.mw-secure-play-button:disabled { cursor: not-allowed; opacity: 0.55; }
+.mw-download-button:disabled { cursor: wait; opacity: 0.55; }
+.mw-download-status { min-height: 1.2rem; }
+
+/* Compact mode (`حالت فشرده`): vertical grid stack for multiple files — never horizontal flex wrap across files */
+.mw-download-action--inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+}
+.mw-download-inline-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.55rem;
+}
+.mw-download-inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem 0.85rem;
+}
+.mw-download-inline:not(.mw-download-inline--stacked) {
+  grid-template-columns: max-content;
+}
+.mw-download-inline--stacked {
+  padding: 0.55rem 0.75rem;
+  background: color-mix(in srgb, var(--mw-color-surface-raised) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mw-color-border) 58%, transparent);
+  border-radius: var(--mw-radius-sm, 0.75rem);
+}
+.mw-download-inline__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--mw-color-text);
+}
+.mw-download-inline__controls {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+.mw-download-inline__controls .mw-download-quality { width: auto; min-width: 8.25rem; }
+.mw-download-action--inline .mw-download-status {
+  position: absolute;
+  z-index: 5;
+  min-height: 0;
+  margin: 0;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--mw-color-text);
+  background: var(--mw-color-surface-raised);
+  border: 1px solid var(--mw-color-border);
+  border-radius: var(--mw-radius-sm);
+  box-shadow: var(--mw-shadow-card);
+  pointer-events: none;
+}
+.mw-download-action--inline .mw-download-status:empty { display: none; }
+
+.mw-download-action__security {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: var(--wp--preset--spacing--20, 0.65rem) 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--mw-color-border);
+  color: var(--mw-color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.mw-download-action__security-icon { flex: 0 0 auto; margin-top: 0.18rem; color: var(--mw-color-accent-strong); }
+.mw-download-action__security-badge {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  padding: 0.14rem 0.58rem;
+  color: var(--mw-color-accent-strong);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+  border-radius: var(--mw-radius-pill);
+}
+
+.mw-download-action--signin {
+  margin: var(--wp--preset--spacing--30) 0;
+  padding: 0.95rem 1.1rem;
+  background: color-mix(in srgb, var(--mw-color-accent) 7%, var(--mw-color-surface-raised));
+  border: 1px solid var(--mw-color-border);
+  border-radius: var(--mw-radius-md);
+  box-shadow: var(--mw-shadow-sm);
+}
+.mw-download-action__signin { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; }
+.mw-download-action__signin-icon { flex: 0 0 auto; color: var(--mw-color-accent-strong); }
+.mw-download-action__signin-link { flex: 0 0 auto; margin-inline-start: auto; white-space: nowrap; }
+
+/*
+ * Panel row reflow is driven by the panel's own inline size (`mw-download`), so a
+ * narrow content column on a desktop screen degrades exactly like a phone does.
+ * Only the box's own padding stays viewport-based — a container cannot query itself.
+ */
+@media (max-width: 48rem) {
+  .mw-download-action--panel { padding: 0.95rem; }
+}
+
+@container mw-download (max-width: 44rem) {
+  .mw-download-action__table-header { display: none; }
+  .mw-download-file-row,
+  .mw-download-file-row--no-quality {
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+    column-gap: 0.75rem;
+    row-gap: 0.6rem;
+    padding: 0.75rem 0.85rem;
+  }
+  .mw-download-file-row:not(.mw-download-file-row--no-quality) .mw-download-file-row__title,
+  .mw-download-file-row--no-quality .mw-download-file-row__title {
+    grid-column: 1 / -1;
+  }
+  .mw-download-file-row:not(.mw-download-file-row--no-quality) .mw-download-action__quality {
+    grid-column: 1;
+    min-width: 0;
+  }
+  .mw-download-file-row:not(.mw-download-file-row--no-quality) .mw-download-file-row__actions {
+    grid-column: 2;
+    justify-content: flex-end;
+  }
+  .mw-download-file-row--no-quality .mw-download-file-row__actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+  .mw-download-action__security { flex-wrap: wrap; }
+  .mw-download-action__security-badge { margin-inline-start: 0; }
+}
+
+/* Compact (`حالت فشرده`) inline list: viewport-driven, it has no panel container. */
+@media (max-width: 48rem) {
+  .mw-download-inline--stacked {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+  .mw-download-inline__controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    justify-content: stretch;
+  }
+  .mw-download-inline__controls:not(:has(.mw-download-quality)) {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .mw-download-inline__controls .mw-download-quality {
+    width: 100%;
+    min-width: 0;
+    grid-column: 1;
+  }
+}
+
+/*
+ * «دانلود این انتشار» at phone width: the quality selector and the action cluster
+ * stop sharing a line, so nothing is squeezed into an unreadable width and the row
+ * keeps one predictable reading column.
+ */
+@container mw-download (max-width: 26rem) {
+  .mw-download-file-row,
+  .mw-download-file-row--no-quality,
+  .mw-download-file-row:not(.mw-download-file-row--no-quality) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.55rem;
+  }
+
+  .mw-download-file-row__title,
+  .mw-download-file-row:not(.mw-download-file-row--no-quality) .mw-download-file-row__title,
+  .mw-download-file-row--no-quality .mw-download-file-row__title {
+    grid-column: 1 / -1;
+  }
+
+  .mw-download-action__quality,
+  .mw-download-file-row:not(.mw-download-file-row--no-quality) .mw-download-action__quality {
+    grid-column: 1 / -1;
+  }
+
+  .mw-download-file-row__actions,
+  .mw-download-file-row:not(.mw-download-file-row--no-quality) .mw-download-file-row__actions,
+  .mw-download-file-row--no-quality .mw-download-file-row__actions {
+    grid-column: 1 / -1;
+    flex-wrap: wrap;
+    justify-content: stretch;
+    gap: 0.45rem;
+  }
+
+  .mw-download-file-row__actions > * {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    justify-content: center;
+  }
+
+  .mw-download-file-row__title strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

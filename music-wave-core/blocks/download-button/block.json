@@ -1,0 +1,124 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/download-button",
+  "title": "دانلود ایمن",
+  "category": "music-wave",
+  "description": "اقدامات دانلود مجاز را برای یک انتشار با انتخابگر آیکون، حالت فشرده یا پنل فایل‌ها و ظاهر یکپارچه نمایش می‌دهد.",
+  "keywords": [
+    "کیفیت",
+    "جریان",
+    "فایل‌ها",
+    "دانلود"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "download",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "compact": {
+      "type": "boolean",
+      "default": false
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": "button"
+    },
+    "variant": {
+      "type": "string",
+      "default": "accent"
+    },
+    "size": {
+      "type": "string",
+      "default": "md"
+    },
+    "shape": {
+      "type": "string",
+      "default": "pill"
+    },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "playIcon": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": "دانلود این انتشار"
+    },
+    "description": {
+      "type": "string",
+      "default": "یک فایل صوتی موجود را پخش کنید یا نسخه دلخواه خود را دانلود کنید."
+    },
+    "showHeading": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDescription": {
+      "type": "boolean",
+      "default": true
+    },
+    "showQuality": {
+      "type": "boolean",
+      "default": true
+    },
+    "showStream": {
+      "type": "boolean",
+      "default": true
+    },
+    "downloadLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "playLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "loginLabel": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "showQuality": true,
+      "showStream": true,
+      "icon": "download"
+    }
+  }
+}

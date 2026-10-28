@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/music-library",
+  "title": "کتابخانه شخصی موسیقی",
+  "category": "music-wave",
+  "description": "آهنگ‌ها، آلبوم‌ها، پادکست‌ها و هنرمندانی را که بازدیدکننده ذخیره کرده‌اند را نمایش می‌دهد.",
+  "keywords": [
+    "مورد علاقه",
+    "ذخیره‌شده",
+    "مجموعه"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "albums",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "کتابخانه موسیقی من"
+    },
+    "intro": {
+      "type": "string",
+      "default": ""
+    },
+    "showFilters": {
+      "type": "boolean",
+      "default": true
+    },
+    "showCounts": {
+      "type": "boolean",
+      "default": true
+    },
+    "layout": {
+      "type": "string",
+      "default": "list"
+    },
+    "columns": {
+      "type": "integer",
+      "default": 4
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 24
+    },
+    "showArtist": {
+      "type": "boolean",
+      "default": true
+    },
+    "showType": {
+      "type": "boolean",
+      "default": true
+    },
+    "showYear": {
+      "type": "boolean",
+      "default": false
+    },
+    "showRemove": {
+      "type": "boolean",
+      "default": true
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "layout": "list"
+    }
+  }
+}

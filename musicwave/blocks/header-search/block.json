@@ -1,0 +1,142 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/header-search",
+  "title": "جستجوی سربرگ MusicWave",
+  "category": "music-wave",
+  "description": "موتور جستجوی هوشمند سربرگ با کنترل مستقل چیدمان در دسکتاپ، تبلت و موبایل (فیلد خطی، فشرده، آیکون پاپ‌آپ یا نوار کشویی)، فیلتر آنی دسته‌بندی، جستجوهای اخیر، برچسب‌های سریع، جستجوی صوتی و میانبر صفحه‌کلید.",
+  "textdomain": "musicwave",
+  "icon": "search",
+  "keywords": [
+    "جستجو",
+    "search",
+    "سربرگ",
+    "پاپ‌آپ",
+    "پیشنهاد"
+  ],
+  "attributes": {
+    "variant": {
+      "type": "string",
+      "default": "inline"
+    },
+    "desktopMode": {
+      "type": "string",
+      "default": ""
+    },
+    "tabletMode": {
+      "type": "string",
+      "default": ""
+    },
+    "mobileMode": {
+      "type": "string",
+      "default": "popup"
+    },
+    "maxWidth": {
+      "type": "number",
+      "default": 480
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "جستجوی قطعه، هنرمند یا آلبوم…"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "جستجو"
+    },
+    "showLabel": {
+      "type": "boolean",
+      "default": false
+    },
+    "suggestLimit": {
+      "type": "number",
+      "default": 5
+    },
+    "enableShortcut": {
+      "type": "boolean",
+      "default": true
+    },
+    "showScopeTabs": {
+      "type": "boolean",
+      "default": true
+    },
+    "showRecentSearches": {
+      "type": "boolean",
+      "default": true
+    },
+    "quickTags": {
+      "type": "string",
+      "default": "تک‌آهنگ جدید، آلبوم، بی‌کلام، پادکست"
+    },
+    "showVoiceSearch": {
+      "type": "boolean",
+      "default": true
+    },
+    "showFooterHints": {
+      "type": "boolean",
+      "default": true
+    },
+    "styleVariant": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "inserter": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true,
+      "link": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "shadow": true,
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "dimensions": {
+      "minHeight": true
+    }
+  },
+  "styles": [
+    {
+      "name": "default",
+      "label": "کپسولی پیش‌فرض",
+      "isDefault": true
+    },
+    {
+      "name": "minimal",
+      "label": "حداقلی",
+      "isDefault": false
+    },
+    {
+      "name": "glass",
+      "label": "شیشه‌ای",
+      "isDefault": false
+    }
+  ],
+  "example": {
+    "attributes": {
+      "desktopMode": "bar",
+      "tabletMode": "compact",
+      "mobileMode": "popup",
+      "placeholder": "جستجوی قطعه، هنرمند یا آلبوم…",
+      "suggestLimit": 5
+    }
+  }
+}

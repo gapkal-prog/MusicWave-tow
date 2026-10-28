@@ -1,0 +1,20 @@
+parameters:
+    level: 5
+    treatPhpDocTypesAsCertain: false
+    tmpDir: .phpstan-cache/engine
+    parallel:
+        maximumNumberOfProcesses: 1
+    paths:
+        - music-wave-core
+        - music-wave-vip
+        - musicwave/functions.php
+        - musicwave/src
+        - musicwave/inc
+        - musicwave/patterns
+    scanFiles:
+        - musicwave/functions.php
+    bootstrapFiles:
+        - tools/phpstan-bootstrap.php
+    excludePaths:
+        analyse:
+            - vendor (?)

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/search-unified",
+  "title": "نتایج جستجوی یکپارچه",
+  "category": "music-wave",
+  "description": "نتایج جستجو را گروه‌بندی شده مثل باکس پیشنهاد (انتشار، هنرمند، سبک، محصول) نمایش می‌دهد.",
+  "keywords": ["جستجو", "search", "unified"],
+  "textdomain": "music-wave-core",
+  "icon": "search",
+  "attributes": {
+    "showArtists": {
+      "type": "boolean",
+      "default": true
+    },
+    "showReleases": {
+      "type": "boolean",
+      "default": true
+    },
+    "showProducts": {
+      "type": "boolean",
+      "default": true
+    },
+    "showGenres": {
+      "type": "boolean",
+      "default": true
+    },
+    "limitPerGroup": {
+      "type": "integer",
+      "default": 6
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "limitPerGroup": 4
+    }
+  }
+}

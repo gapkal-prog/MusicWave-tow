@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-addresses",
+  "title": "آدرس‌های حساب",
+  "category": "music-wave",
+  "description": "کارت‌های آدرس صورتحساب و حمل‌ونقل – فشرده، مینیمال، با دکمه ویرایش.",
+  "keywords": ["آدرس", "صورتحساب", "حمل", "حساب"],
+  "textdomain": "music-wave-core",
+  "icon": "location",
+  "attributes": {
+    "heading": { "type": "string", "default": "آدرس‌ها" },
+    "compact": { "type": "boolean", "default": true },
+    "showBilling": { "type": "boolean", "default": true },
+    "showShipping": { "type": "boolean", "default": true }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "color": { "background": true, "link": true, "text": true },
+    "spacing": { "blockGap": true, "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "example": {
+    "attributes": { "compact": true, "showBilling": true, "showShipping": true }
+  }
+}

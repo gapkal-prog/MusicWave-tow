@@ -1,0 +1,93 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "music-wave/breadcrumb",
+	"version": "1.0.0",
+	"title": "مسیر راهنما (Breadcrumb)",
+	"category": "music-wave",
+	"icon": "arrow-left-alt2",
+	"description": "مسیر سلسله‌مراتبی پویا برای انتشارها، هنرمندان، سبک‌ها، برگه‌ها و نتایج جست‌وجو؛ همراه با پیش‌نمایش نمونهٔ زنده در ویرایشگر سایت.",
+	"keywords": [
+		"مسیر راهنما",
+		"نان‌ریزه",
+		"breadcrumb",
+		"ناوبری",
+		"مسیر"
+	],
+	"textdomain": "musicwave",
+	"attributes": {
+		"showHome": {
+			"type": "boolean",
+			"default": true
+		},
+		"homeLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"showHomeIcon": {
+			"type": "boolean",
+			"default": true
+		},
+		"separator": {
+			"type": "string",
+			"enum": [ "chevron", "slash", "dot", "arrow", "pipe", "dash" ],
+			"default": "chevron"
+		},
+		"showCurrent": {
+			"type": "boolean",
+			"default": true
+		},
+		"showCatalogRoot": {
+			"type": "boolean",
+			"default": true
+		},
+		"hideOnFrontPage": {
+			"type": "boolean",
+			"default": true
+		},
+		"maxLength": {
+			"type": "number",
+			"default": 0
+		},
+		"ariaLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"previewSample": {
+			"type": "boolean",
+			"default": false
+		},
+		"styleVariant": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"color": {
+			"text": true,
+			"background": true,
+			"link": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"spacing": {
+			"margin": [ "top", "bottom" ],
+			"padding": true,
+			"blockGap": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"homeLabel": "خانه",
+			"showHomeIcon": true,
+			"separator": "chevron",
+			"showCurrent": true,
+			"showCatalogRoot": true,
+			"previewSample": true
+		}
+	}
+}

@@ -1,0 +1,2216 @@
+/**
+ * Playlist manager, playlist picker, and catalog autocomplete.
+ * Your playlists — distinct from Music Library (mw-music-library).
+ * Logical properties only + RTL + responsive + no-JS fallback.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Your playlists container — distinct from .mw-music-library           */
+/* ------------------------------------------------------------------ */
+
+.mw-playlists {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--30, 1.25rem);
+	padding: clamp(1rem, 3vw, 1.5rem);
+	border: 1px solid var(--mw-color-border, rgba(255, 255, 255, 0.12));
+	border-radius: var(--mw-radius-lg, 16px);
+	background:
+		radial-gradient(circle at 8% 12%, color-mix(in srgb, var(--mw-color-accent) 9%, transparent), transparent 42%),
+		linear-gradient(180deg, var(--mw-color-surface, rgba(255, 255, 255, 0.04)), var(--mw-color-surface-raised, rgba(255, 255, 255, 0.02)));
+	box-shadow: var(--mw-shadow-card, 0 18px 50px rgba(0,0,0,0.2));
+}
+
+/* Header — eyebrow visually distinct from .mw-music-library__header */
+.mw-playlists__header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--20, 1rem);
+	align-items: flex-start;
+	justify-content: space-between;
+	padding-block-end: var(--wp--preset--spacing--20, 0.75rem);
+	border-block-end: 1px solid var(--mw-color-border, rgba(255,255,255,0.08));
+}
+
+.mw-playlists__heading {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	min-width: min(32rem, 100%);
+}
+
+.mw-playlists__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	color: var(--mw-color-accent-strong, #1ed760);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+}
+
+.mw-playlists__eyebrow--guest {
+	color: var(--mw-color-text-muted);
+}
+
+.mw-playlists__eyebrow-icon {
+	display: grid;
+	place-items: center;
+	width: 1.35rem;
+	height: 1.35rem;
+	color: var(--mw-color-on-accent, #000);
+	background: var(--mw-color-accent, #1db954);
+	border-radius: 999px;
+	font-size: 0.7rem;
+	line-height: 1;
+}
+
+.mw-playlists__eyebrow-divider {
+	opacity: 0.45;
+}
+
+.mw-playlists__eyebrow-sub {
+	color: var(--mw-color-text-muted, #a9b0c0);
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: none;
+}
+
+.mw-playlists__title {
+	margin: 0;
+	font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+	line-height: 1.15;
+	letter-spacing: -0.02em;
+}
+
+.mw-playlists__intro {
+	max-width: 58ch;
+	margin: 0;
+	color: var(--mw-color-text-muted, #a9b0c0);
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+
+.mw-playlists__header-actions {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding-block-start: 0.25rem;
+}
+
+.mw-playlists__total {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.35rem;
+	padding-block: 0.35rem;
+	padding-inline: 0.9rem;
+	color: var(--mw-color-text);
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+	background: var(--mw-color-surface-raised, rgba(255,255,255,0.07));
+	border: 1px solid var(--mw-color-border, rgba(255,255,255,0.1));
+	border-radius: 999px;
+}
+
+.mw-playlists__total-label {
+	font-weight: 600;
+	opacity: 0.75;
+}
+
+.mw-playlists__guest {
+	display: grid;
+	gap: 0.75rem;
+	justify-items: start;
+	max-width: 38rem;
+}
+
+.mw-playlists__guest-text {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-playlists__guest-cta {
+	margin-block-start: 0.25rem;
+}
+
+/* Notices */
+.mw-playlists__notice {
+	margin: 0;
+	padding-block: 0.65rem;
+	padding-inline: 0.9rem;
+	border-inline-start: 3px solid var(--mw-color-accent, #6ee7b7);
+	border-radius: var(--mw-radius-sm, 8px);
+	background: color-mix(in srgb, var(--mw-color-accent) 9%, var(--mw-color-surface-raised));
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+}
+
+.mw-playlists__notice--error {
+	border-inline-start-color: var(--mw-color-danger, #f87171);
+	background: color-mix(in srgb, var(--mw-color-danger, #f87171) 10%, var(--mw-color-surface-raised));
+}
+
+/* Fallback toast (Play all without the global player): floats above content. */
+.mw-playlists__notice[data-mw-playlist-toast] {
+	position: fixed;
+	inset-inline-start: 50%;
+	bottom: max(1.25rem, env(safe-area-inset-bottom));
+	z-index: 120;
+	max-width: min(26rem, calc(100vw - 2rem));
+	padding-block: 0.7rem;
+	transform: translateX(-50%);
+	box-shadow: var(--mw-shadow-floating, 0 18px 40px rgb(0 0 0 / 30%));
+}
+
+.mw-playlists__notice[data-mw-playlist-toast]:empty {
+	display: none;
+}
+
+/* Empty state — distinct illustration from library empty */
+.mw-playlists__empty-state {
+	display: grid;
+	place-items: center;
+	gap: 0.5rem;
+	padding: clamp(1.5rem, 4vw, 2.5rem);
+	text-align: center;
+	border: 1px dashed var(--mw-color-border, rgba(255,255,255,0.14));
+	border-radius: var(--mw-radius-md, 12px);
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 70%, transparent);
+}
+
+.mw-playlists__empty-icon {
+	display: grid;
+	place-items: center;
+	width: 3rem;
+	height: 3rem;
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 35%, transparent);
+	border-radius: 50%;
+	font-size: 1.25rem;
+}
+
+.mw-playlists__empty {
+	margin: 0;
+	font-weight: 600;
+}
+
+.mw-playlists__empty-hint {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.875rem;
+}
+
+/* List */
+.mw-playlists__list,
+.mw-playlists__tracks {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-playlists__list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20, 1rem);
+}
+
+/* Card */
+.mw-playlists__item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+	padding: var(--wp--preset--spacing--20, 1rem);
+	border: 1px solid var(--mw-color-border, rgba(255, 255, 255, 0.12));
+	border-radius: var(--mw-radius-md, 12px);
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 92%, var(--mw-color-surface));
+	transition: border-color 180ms ease, transform 180ms var(--mw-ease-out, cubic-bezier(0.22,1,0.36,1)), box-shadow 180ms ease;
+}
+
+.mw-playlists__item:hover {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 35%, var(--mw-color-border));
+	box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+}
+
+.mw-playlists__card {
+	display: grid;
+	grid-template-columns: 5rem minmax(0, 1fr);
+	gap: 0.9rem;
+	align-items: center;
+}
+
+/* -------------------------------------------------------------------------
+ * Playlist artwork — fanned cover stack
+ *
+ * The server renders up to four `.mw-playlists__art-cell` children (cover
+ * image, initial fallback or empty pad) inside `.mw-playlists__art-grid`.
+ * Instead of a flat 2×2 mosaic the cells are layered like a hand of record
+ * sleeves: the first cover sits in front, the others peek out behind it with
+ * a slight rotation and offset. On hover/focus the fan opens a little.
+ * Everything is driven by custom properties so the account list, the public
+ * playlists block (square / landscape / portrait / circle) and the client
+ * side re-render share one implementation.
+ * ------------------------------------------------------------------------- */
+.mw-playlists__art {
+	flex: 0 0 auto;
+	container-type: inline-size;
+}
+
+.mw-playlists__art-grid {
+	--mw-fan-spread: 9%;
+	--mw-fan-tilt: 6deg;
+	--mw-fan-inset: 12%;
+	position: relative;
+	display: block;
+	aspect-ratio: 1;
+	inline-size: 100%;
+	block-size: auto;
+	isolation: isolate;
+	overflow: visible;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+}
+
+/* Soft accent halo behind the stack so it reads as one object. */
+.mw-playlists__art-cell {
+	position: absolute;
+	inset: var(--mw-fan-inset);
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	border-radius: var(--mw-radius-lg);
+	background: var(--mw-color-surface-raised);
+	box-shadow:
+		0 1px 0 color-mix(in srgb, #fff 18%, transparent) inset,
+		0 10px 24px rgb(0 0 0 / 32%);
+	transform-origin: 50% 100%;
+	transition:
+		transform 420ms var(--mw-ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+		box-shadow 420ms ease;
+	will-change: transform;
+}
+
+.mw-playlists__art-cell img {
+	inline-size: 100%;
+	block-size: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* Layer order: 1st cover in front, the rest fan out behind. */
+.mw-playlists__art-cell:nth-child(1) {
+	z-index: 4;
+	transform: translateY(0) rotate(0deg) scale(1);
+}
+
+.mw-playlists__art-cell:nth-child(2) {
+	z-index: 3;
+	transform: translate(calc(var(--mw-fan-spread) * -1), -4%) rotate(calc(var(--mw-fan-tilt) * -1)) scale(0.94);
+	filter: brightness(0.9);
+}
+
+.mw-playlists__art-cell:nth-child(3) {
+	z-index: 2;
+	transform: translate(var(--mw-fan-spread), -4%) rotate(var(--mw-fan-tilt)) scale(0.94);
+	filter: brightness(0.9);
+}
+
+.mw-playlists__art-cell:nth-child(4) {
+	z-index: 1;
+	transform: translateY(-9%) scale(0.86);
+	filter: brightness(0.78);
+}
+
+/* Fan open on interaction of the owning card/link. */
+:is(a, button, .mw-playlists__item, .mw-public-playlists__card, .mw-release-shelf__artwrap):is(:hover, :focus-visible, :focus-within) .mw-playlists__art-cell:nth-child(1) {
+	transform: translateY(2%) scale(1.02);
+	box-shadow:
+		0 1px 0 color-mix(in srgb, #fff 18%, transparent) inset,
+		0 16px 32px rgb(0 0 0 / 38%);
+}
+
+:is(a, button, .mw-playlists__item, .mw-public-playlists__card, .mw-release-shelf__artwrap):is(:hover, :focus-visible, :focus-within) .mw-playlists__art-cell:nth-child(2) {
+	transform: translate(calc(var(--mw-fan-spread) * -1.9), -7%) rotate(calc(var(--mw-fan-tilt) * -1.8)) scale(0.94);
+}
+
+:is(a, button, .mw-playlists__item, .mw-public-playlists__card, .mw-release-shelf__artwrap):is(:hover, :focus-visible, :focus-within) .mw-playlists__art-cell:nth-child(3) {
+	transform: translate(calc(var(--mw-fan-spread) * 1.9), -7%) rotate(calc(var(--mw-fan-tilt) * 1.8)) scale(0.94);
+}
+
+:is(a, button, .mw-playlists__item, .mw-public-playlists__card, .mw-release-shelf__artwrap):is(:hover, :focus-visible, :focus-within) .mw-playlists__art-cell:nth-child(4) {
+	transform: translateY(-14%) scale(0.88);
+}
+
+/* Fallback cover: initial on the term's own curated hue (or the accent when
+ * no genre is known) with a vinyl-like ring. The server tags the cell with
+ * the canonical .mw-term-hue-N class and --art reads the shared hue tokens,
+ * so one genre keeps its colour everywhere. */
+.mw-playlists__art-cell--fallback {
+	--art: linear-gradient(145deg, var(--mw-term-hue-strong), var(--mw-term-hue, var(--mw-color-accent, #1db954)));
+	color: var(--mw-color-on-accent, #fff);
+	font-weight: 800;
+	font-size: clamp(0.85rem, 34cqi, 1.6rem);
+	letter-spacing: -0.02em;
+	background:
+		radial-gradient(circle at 50% 50%, transparent 18%, color-mix(in srgb, #000 22%, transparent) 19%, transparent 21%),
+		var(--art);
+}
+
+/* Empty pads stay as subtle sleeves so short playlists still look stacked. */
+.mw-playlists__art-cell--empty {
+	background:
+		linear-gradient(160deg, color-mix(in srgb, var(--mw-color-text) 8%, var(--mw-color-surface)), color-mix(in srgb, var(--mw-color-text) 3%, var(--mw-color-surface)));
+	box-shadow: 0 6px 16px rgb(0 0 0 / 22%);
+}
+
+/* Empty playlist: single sleeve with a note glyph. */
+.mw-playlists__art-grid--empty {
+	display: grid;
+	place-items: center;
+}
+
+.mw-playlists__art-grid--empty::after {
+	content: "";
+	position: absolute;
+	inset: var(--mw-fan-inset);
+	border-radius: var(--mw-radius-lg);
+	background:
+		radial-gradient(circle at 50% 50%, transparent 18%, color-mix(in srgb, #000 18%, transparent) 19%, transparent 21%),
+		linear-gradient(145deg, color-mix(in srgb, var(--mw-color-accent) 55%, var(--mw-color-surface-raised)), var(--mw-color-surface));
+	box-shadow: 0 10px 24px rgb(0 0 0 / 30%);
+	z-index: 1;
+}
+
+.mw-playlists__art-placeholder {
+	position: relative;
+	z-index: 2;
+	color: var(--mw-color-text);
+	font-size: clamp(1.1rem, 34cqi, 1.9rem);
+	line-height: 1;
+	opacity: 0.92;
+}
+
+/* Wide/tall containers keep the fan proportional to the box. */
+.mw-playlists__art-grid--landscape,
+.mw-public-playlists__art--landscape .mw-playlists__art-grid {
+	aspect-ratio: 16 / 10;
+	--mw-fan-spread: 11%;
+	--mw-fan-inset: 8% 16%;
+}
+
+.mw-playlists__art-grid--portrait,
+.mw-public-playlists__art--portrait .mw-playlists__art-grid {
+	aspect-ratio: 4 / 5;
+	--mw-fan-inset: 14% 10%;
+}
+
+/* Circular shape: the front sleeve reads as a vinyl disc and the decorative
+ * back sleeve hides — a dark circle cannot read as a sleeve behind another. */
+.mw-public-playlists__art--circle .mw-playlists__art-grid,
+.mw-public-playlists__art--circle .mw-playlists__art-cell:first-child {
+	border-radius: 50%;
+}
+
+.mw-public-playlists__art--circle .mw-public-playlists__art-back {
+	display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-playlists__art-cell {
+		transition: none;
+	}
+}
+
+.mw-playlists__main {
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+	min-width: 0;
+}
+
+.mw-playlists__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.6rem 0.75rem;
+}
+
+.mw-playlists__name {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 800;
+	letter-spacing: -0.015em;
+	line-height: 1.2;
+	/* clamp to 2 lines */
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.mw-playlists__meta {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+	font-size: 0.8125rem;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-playlists__badge {
+	padding-block: 0.15rem;
+	padding-inline: 0.55rem;
+	border-radius: 999px;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	background: color-mix(in srgb, var(--mw-color-text) 7%, transparent);
+	border: 1px solid var(--mw-color-border);
+}
+
+.mw-playlists__badge--private {
+	color: var(--mw-color-text-muted);
+}
+
+.mw-playlists__badge--unlisted {
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 35%, var(--mw-color-border));
+}
+
+.mw-playlists__badge--public {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+.mw-playlists__count {
+	font-variant-numeric: tabular-nums;
+}
+
+/* Actions row: Play all + toggle */
+.mw-playlists__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.mw-playlists__play-all {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding-block: 0.55rem;
+	padding-inline: 1rem 0.85rem;
+	color: var(--mw-color-on-accent, #000);
+	font-size: 0.875rem;
+	font-weight: 800;
+	letter-spacing: 0.01em;
+	background: var(--mw-color-accent, #1db954);
+	border: 1px solid transparent;
+	border-radius: 999px;
+	cursor: pointer;
+	transition: transform 160ms var(--mw-ease-out), filter 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.mw-playlists__play-all:hover:not(:disabled) {
+	transform: translateY(-1px);
+	filter: brightness(1.06);
+}
+
+.mw-playlists__play-all:active:not(:disabled) {
+	transform: translateY(0);
+}
+
+.mw-playlists__play-all:disabled,
+.mw-playlists__play-all[aria-disabled="true"] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	box-shadow: none;
+	transform: none;
+}
+
+.mw-playlists__play-all:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--mw-color-accent) 50%, transparent);
+	outline-offset: 2px;
+}
+
+.mw-playlists__play-all.is-loading {
+	pointer-events: none;
+	opacity: 0.7;
+}
+
+.mw-playlists__play-icon {
+	font-size: 0.75rem;
+	line-height: 1;
+}
+
+.mw-playlists__play-count {
+	display: inline-grid;
+	place-items: center;
+	min-width: 1.5rem;
+	height: 1.5rem;
+	padding-inline: 0.35rem;
+	color: inherit;
+	font-size: 0.72rem;
+	background: rgba(255,255,255,0.22);
+	border-radius: 999px;
+}
+
+.mw-playlists__toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-inline-start: auto;
+	padding-block: 0.4rem;
+	padding-inline: 0.75rem;
+	color: var(--mw-color-text);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	text-decoration: none;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.mw-playlists__toggle:hover {
+	color: var(--mw-color-accent-strong);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 35%, var(--mw-color-border));
+	background: color-mix(in srgb, var(--mw-color-accent) 9%, var(--mw-color-surface-raised));
+}
+
+.mw-playlists__toggle:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+}
+
+.mw-playlists__toggle.is-loading {
+	pointer-events: none;
+	opacity: 0.65;
+}
+
+.mw-playlists__toggle.is-loading::before {
+	content: "";
+	width: 0.75rem;
+	height: 0.75rem;
+	border: 2px solid color-mix(in srgb, currentColor 35%, transparent);
+	border-top-color: currentColor;
+	border-radius: 50%;
+	animation: mw-playlist-spin 700ms linear infinite;
+}
+
+@keyframes mw-playlist-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* No-reload removals: fade the card or track row out before JS detaches it. */
+.mw-playlists__item.is-removing,
+.mw-playlists__track.is-removing {
+	opacity: 0;
+	transform: scale(0.97);
+	transition: opacity 180ms ease, transform 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-playlists__toggle.is-loading::before {
+		animation: none;
+	}
+}
+
+/* Settings / create */
+.mw-playlists__settings,
+.mw-playlists__create,
+.mw-playlist-picker__form {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.mw-playlists__settings,
+.mw-playlists__create {
+	padding-block-start: 0.6rem;
+	border-block-start: 1px solid var(--mw-color-border, rgba(255,255,255,0.07));
+}
+
+.mw-playlists__settings label,
+.mw-playlists__create label,
+.mw-playlist-picker__form label {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+}
+
+.mw-playlists__settings input[type="text"],
+.mw-playlists__settings select,
+.mw-playlists__create input[type="text"],
+.mw-playlist-picker__form input[type="text"],
+.mw-playlist-picker__form select,
+.mw-playlist-picker__create input[type="text"] {
+	min-height: 2.25rem;
+	padding-block: 0.35rem;
+	padding-inline: 0.65rem;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface, #151922);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 8px;
+}
+
+.mw-playlists__settings button,
+.mw-playlists__create button,
+.mw-playlist-picker__form button,
+.mw-playlist-picker__create button {
+	min-height: 2.25rem;
+	padding-inline: 1rem;
+	font-weight: 700;
+	border-radius: 999px;
+}
+
+.mw-playlists__delete {
+	margin-block-start: 0.25rem;
+}
+
+.mw-playlists__delete button {
+	color: var(--mw-color-danger, #f87171);
+	background: transparent;
+	border: 1px solid transparent;
+}
+
+.mw-playlists__delete button:hover {
+	background: color-mix(in srgb, var(--mw-color-danger, #f87171) 12%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-danger, #f87171) 35%, transparent);
+}
+
+.mw-playlists__share {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	margin: 0;
+	padding: 0.7rem 0.85rem;
+	font-size: 0.8125rem;
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 88%, transparent);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 10px;
+}
+
+.mw-playlists__share[hidden] {
+	display: none;
+}
+
+.mw-playlists__share-label {
+	font-weight: 700;
+	color: var(--mw-color-text);
+}
+
+.mw-playlists__share-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem;
+}
+
+.mw-playlists__share input {
+	flex: 1 1 14rem;
+	min-width: 0;
+	min-height: 2.15rem;
+	padding-inline: 0.65rem;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 8px;
+	font-family: ui-monospace, SFMono-Regular, monospace;
+	font-size: 0.78rem;
+	direction: ltr;
+	text-align: left;
+}
+
+.mw-playlists__share-copy,
+.mw-playlists__share-open {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 2.15rem;
+	padding-inline: 0.85rem;
+	border-radius: 999px;
+	font-size: 0.78125rem;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.mw-playlists__share-copy {
+	color: var(--mw-color-on-accent, #000);
+	background: var(--mw-color-accent);
+	border: 1px solid transparent;
+}
+
+.mw-playlists__share-copy:hover {
+	filter: brightness(1.06);
+}
+
+.mw-playlists__share-open {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+}
+
+.mw-playlists__share-open:hover {
+	color: var(--mw-color-accent-strong);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 40%, var(--mw-color-border));
+}
+
+.mw-playlists__share-hint {
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+	line-height: 1.5;
+}
+
+.mw-playlist-tracks {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-playlist-tracks__row {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	padding: 0.5rem 0.45rem;
+	border-block-end: 1px solid var(--mw-color-border-subtle, rgba(255, 255, 255, 0.06));
+	border-radius: 8px;
+	transition: background-color 140ms ease;
+}
+
+.mw-playlist-tracks__row:hover {
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 70%, transparent);
+}
+
+.mw-playlist-tracks__pos {
+	flex: 0 0 1.5rem;
+	text-align: center;
+	font-size: 0.8125rem;
+	font-variant-numeric: tabular-nums;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-playlist-tracks__thumb {
+	flex: 0 0 2.75rem;
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: 8px;
+	object-fit: cover;
+}
+
+.mw-playlist-tracks__info {
+	display: grid;
+	flex: 1 1 auto;
+	gap: 0.15rem;
+	min-width: 0;
+}
+
+.mw-playlist-tracks__title {
+	font-weight: 700;
+	color: var(--mw-color-text);
+	text-decoration: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-playlist-tracks__title:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-playlist-tracks__artists {
+	font-size: 0.78125rem;
+	color: var(--mw-color-text-muted);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-playlist-tracks__artists a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-playlist-tracks__artists a:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-playlist-tracks__controls {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-inline-start: auto;
+}
+
+.mw-playlist-tracks__play,
+.mw-playlist-tracks__move,
+.mw-playlist-tracks__remove {
+	display: grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	cursor: pointer;
+}
+
+.mw-playlist-tracks__play:hover {
+	color: var(--mw-color-on-accent, #000);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+.mw-playlists__tracks {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	padding-block-start: 0.5rem;
+}
+
+.mw-playlists__track {
+	display: grid;
+	grid-template-columns: 1.75rem 2.5rem minmax(0, 1fr) auto;
+	gap: 0.65rem;
+	align-items: center;
+	padding-block: 0.45rem;
+	padding-inline: 0.25rem;
+	border-block-end: 1px solid var(--mw-color-border-subtle, rgba(255, 255, 255, 0.06));
+	transition: background-color 140ms ease;
+}
+
+.mw-playlists__track:hover {
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 70%, transparent);
+}
+
+.mw-playlists__position {
+	text-align: end;
+	opacity: 0.55;
+	font-variant-numeric: tabular-nums;
+	font-size: 0.8125rem;
+}
+
+.mw-playlists__track-art {
+	width: 2.5rem;
+	height: 2.5rem;
+	object-fit: cover;
+	border-radius: 6px;
+	display: block;
+}
+
+.mw-playlists__track-art--fallback {
+	display: grid;
+	place-items: center;
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	font-weight: 800;
+	font-size: 0.85rem;
+}
+
+.mw-playlists__track-title {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-playlists__track-title a {
+	color: var(--mw-color-text);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.mw-playlists__track-title a:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-playlists__track-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	justify-content: flex-end;
+}
+
+.mw-playlists__action button {
+	padding-block: 0.3rem;
+	padding-inline: 0.6rem;
+	font-size: 0.78rem;
+	font-weight: 600;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	cursor: pointer;
+}
+
+.mw-playlists__action button:hover {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 35%, var(--mw-color-border));
+	color: var(--mw-color-accent-strong);
+}
+
+/* ------------------------------------------------------------------ */
+/* Add to playlist picker — popover distinct from library button      */
+/* ------------------------------------------------------------------ */
+
+.mw-playlist-picker {
+	position: relative;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+.mw-playlist-picker__trigger {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	min-height: 0;
+	padding: 0;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border: 1px solid transparent;
+	border-radius: 50%;
+	text-decoration: none;
+	cursor: pointer;
+	user-select: none;
+	transition: transform 180ms var(--mw-ease-out), background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.mw-playlist-picker__trigger:not(.mw-action-button):hover,
+.mw-playlist-picker__trigger[aria-expanded="true"] {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-text) 14%, transparent);
+}
+
+.mw-playlist-picker__trigger--guest {
+	background: transparent;
+	border-color: color-mix(in srgb, var(--mw-color-text) 18%, transparent);
+}
+
+.mw-playlist-picker__trigger--guest:hover {
+	color: var(--mw-color-text);
+	border-color: color-mix(in srgb, var(--mw-color-text) 36%, transparent);
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+}
+
+.mw-playlist-picker__trigger:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--mw-color-accent) 45%, transparent);
+	outline-offset: 2px;
+}
+
+.mw-playlist-picker__trigger-icon svg {
+	width: 1.25rem;
+	height: 1.25rem;
+	display: block;
+}
+
+.mw-playlist-picker__trigger-icon {
+	display: grid;
+	place-items: center;
+	width: 1.25rem;
+	height: 1.25rem;
+	color: inherit;
+	background: transparent;
+	line-height: 1;
+}
+
+.mw-playlist-picker__trigger-count {
+	display: grid;
+	place-items: center;
+	min-width: 1.35rem;
+	height: 1.35rem;
+	padding-inline: 0.25rem;
+	font-size: 0.72rem;
+	background: rgba(255,255,255,0.22);
+	border-radius: 999px;
+}
+
+/*
+ * The panel is anchored to the picker but sized against the *viewport*, never
+ * against a guessed container width: `100vw` minus a safe gutter is the only
+ * measurement that holds inside row clusters, cards and sidebars alike.
+ */
+.mw-playlist-picker__panel {
+	position: absolute;
+	inset-block-start: calc(100% + 0.5rem);
+	inset-inline-end: 0;
+	z-index: 30;
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+	inline-size: min(22rem, calc(100vw - 1.5rem));
+	max-inline-size: min(22rem, calc(100vw - 1.5rem));
+	max-block-size: min(28rem, 70dvh);
+	overflow: auto;
+	overscroll-behavior: contain;
+	padding: 0.75rem;
+	background: var(--mw-color-surface-raised, #1d2330);
+	border: 1px solid var(--mw-color-border, rgba(255,255,255,0.12));
+	border-radius: 16px;
+	box-shadow: var(--mw-shadow-floating, 0 24px 70px rgba(0,0,0,0.4));
+}
+
+.mw-playlist-picker__panel[hidden] {
+	display: none;
+}
+
+.mw-playlist-picker__panel-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding-block-end: 0.35rem;
+	border-block-end: 1px solid var(--mw-color-border);
+	font-size: 0.9rem;
+}
+
+.mw-playlist-picker__close {
+	display: grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	color: var(--mw-color-text-muted);
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: 999px;
+	cursor: pointer;
+	font-size: 1.25rem;
+	line-height: 1;
+}
+
+.mw-playlist-picker__close:hover {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border-color: var(--mw-color-border);
+}
+
+.mw-playlist-picker__hint {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.85rem;
+}
+
+.mw-playlist-picker__options {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	max-height: 16rem;
+	overflow: auto;
+	scrollbar-width: thin;
+}
+
+.mw-playlist-picker__option {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto auto;
+	gap: 0.5rem;
+	align-items: center;
+	width: 100%;
+	padding-block: 0.6rem;
+	padding-inline: 0.75rem;
+	color: var(--mw-color-text);
+	text-align: start;
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.mw-playlist-picker__option:hover {
+	background: color-mix(in srgb, var(--mw-color-accent) 10%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 22%, transparent);
+}
+
+.mw-playlist-picker__option.is-selected {
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 35%, transparent);
+}
+
+.mw-playlist-picker__option.is-adding {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.mw-playlist-picker__option-title {
+	font-weight: 700;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-playlist-picker__option-meta {
+	color: var(--mw-color-text-muted);
+	font-size: 0.78rem;
+	white-space: nowrap;
+}
+
+.mw-playlist-picker__option-check {
+	display: grid;
+	place-items: center;
+	width: 1.35rem;
+	height: 1.35rem;
+	color: transparent;
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	font-size: 0.7rem;
+}
+
+.mw-playlist-picker__option.is-selected .mw-playlist-picker__option-check {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+.mw-playlist-picker__divider {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.mw-playlist-picker__divider::before,
+.mw-playlist-picker__divider::after {
+	content: "";
+	flex: 1 1 auto;
+	height: 1px;
+	background: var(--mw-color-border);
+}
+
+.mw-playlist-picker__create {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+.mw-playlist-picker__create label {
+	font-size: 0.82rem;
+	font-weight: 700;
+}
+
+.mw-playlist-picker__create-row {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.mw-playlist-picker__create-row input {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.mw-playlist-picker__create button {
+	flex: 0 0 auto;
+	white-space: nowrap;
+	background: var(--mw-color-accent);
+	color: var(--mw-color-on-accent);
+	border-color: transparent;
+	border-radius: 999px;
+}
+
+.mw-playlist-picker__create button:hover {
+	filter: brightness(1.06);
+}
+
+.mw-playlist-picker__status {
+	min-height: 1.25rem;
+	font-size: 0.82rem;
+}
+
+.mw-playlist-picker__status.is-error {
+	color: var(--mw-color-danger, #f87171);
+}
+
+.mw-playlist-picker__status.is-success {
+	color: var(--mw-color-accent-strong);
+}
+
+/* Fallback form — visible when JS disabled, hidden when JS enhances */
+.mw-playlist-picker__fallback {
+	width: 100%;
+}
+
+.js .mw-playlist-picker__fallback {
+	display: none;
+}
+
+.mw-playlist-picker__fallback .mw-playlist-picker__form--fallback {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: end;
+}
+
+.mw-playlist-picker__fallback noscript {
+	display: none;
+}
+
+/* Legacy picker form keeps working without JS */
+.mw-playlist-picker__form--fallback label {
+	font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 40rem) {
+	.mw-playlists__card {
+		grid-template-columns: 4rem minmax(0, 1fr);
+		gap: 0.75rem;
+	}
+
+	.mw-playlists__art {
+		inline-size: 4rem;
+	}
+
+	.mw-playlists__header {
+		flex-direction: column;
+	}
+
+	.mw-playlists__track {
+		grid-template-columns: 1.5rem 2rem minmax(0, 1fr);
+	}
+
+	.mw-playlists__track-actions {
+		grid-column: 1 / -1;
+		justify-content: flex-start;
+		padding-inline-start: calc(1.5rem + 2rem + 0.65rem);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-playlists__item,
+	.mw-playlists__play-all,
+	.mw-playlist-picker__trigger {
+		transition: none;
+	}
+}
+
+ /* ------------------------------------------------------------------ */
+ /* Public / Community playlists — distinct from private mw-playlists  */
+ /* ------------------------------------------------------------------ */
+
+.mw-public-playlists {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--30, 1.25rem);
+	container-type: inline-size;
+}
+
+.mw-public-playlists__header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--20, 1rem);
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.mw-public-playlists__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	color: var(--mw-color-accent-strong, #1ed760);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+}
+
+.mw-public-playlists__eyebrow-icon {
+	display: grid;
+	place-items: center;
+	width: 1.35rem;
+	height: 1.35rem;
+	color: var(--mw-color-on-accent, #000);
+	background: var(--mw-color-accent, #1db954);
+	border-radius: 999px;
+	font-size: 0.65rem;
+}
+
+.mw-public-playlists__title {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+	font-size: clamp(1.5rem, 3vw, 2.25rem);
+	font-weight: 800;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+}
+
+.mw-public-playlists__intro {
+	max-width: 60ch;
+	margin: 0.35rem 0 0;
+	color: var(--mw-color-text-muted, #a9b0c0);
+	font-size: 0.92rem;
+	line-height: 1.5;
+}
+
+.mw-public-playlists__total {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.35rem 0.9rem;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+	background: var(--mw-color-surface-raised, rgba(255,255,255,0.07));
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+}
+
+/* See-all header link — mirrors .mw-release-shelf__more. */
+.mw-public-playlists__header-actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.mw-public-playlists__more {
+	align-items: center;
+	align-self: center;
+	color: var(--mw-color-accent-strong, #1ed760);
+	display: inline-flex;
+	flex: 0 0 auto;
+	font-size: 0.85rem;
+	font-weight: 700;
+	gap: 0.4rem;
+	text-decoration: none;
+}
+
+.mw-public-playlists__more span {
+	font-size: 1.1em;
+	transition: transform .2s ease;
+}
+
+.mw-public-playlists__more:is(:hover, :focus-visible) span {
+	transform: translateX(.2rem);
+}
+
+.mw-public-playlists__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: end;
+	padding: 0.75rem;
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 92%, var(--mw-color-surface));
+	border: 1px solid var(--mw-color-border);
+	border-radius: 12px;
+}
+
+.mw-public-playlists__toolbar input[type="search"] {
+	flex: 1 1 14rem;
+	min-height: 2.4rem;
+	padding-inline: 0.75rem;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface, #151922);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+}
+
+.mw-public-playlists__toolbar button {
+	min-height: 2.4rem;
+	padding-inline: 1.1rem;
+	font-weight: 800;
+	background: var(--mw-color-accent);
+	color: var(--mw-color-on-accent);
+	border: 1px solid transparent;
+	border-radius: 999px;
+	cursor: pointer;
+}
+
+.mw-public-playlists__toolbar button:hover {
+	filter: brightness(1.06);
+}
+
+.mw-public-playlists__reset {
+	align-self: center;
+	color: var(--mw-color-text-muted);
+	font-size: 0.85rem;
+	text-decoration: none;
+}
+
+.mw-public-playlists__reset:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+/* Grid system — shares the release-shelf tokens (--mw-shelf-columns) and
+ * container-query breakpoints so both components stay visually in sync. */
+.mw-public-playlists__grid {
+	--mw-shelf-columns: 3;
+	/* The reference grid: auto-fill fluid tracks whose width floor keeps a
+	 * whole card readable. Columns-* classes still win where an editor pins
+	 * an exact count; without one the grid is fully viewport-responsive. */
+	display: grid;
+	gap: clamp(1rem, 2vw, 1.25rem);
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+	align-items: start;
+}
+
+.mw-public-playlists__grid[class*="--columns-"] {
+	grid-template-columns: repeat(var(--mw-shelf-columns), minmax(0, 1fr));
+}
+
+.mw-public-playlists__grid--columns-2 { --mw-shelf-columns: 2; }
+.mw-public-playlists__grid--columns-3 { --mw-shelf-columns: 3; }
+.mw-public-playlists__grid--columns-4 { --mw-shelf-columns: 4; }
+.mw-public-playlists__grid--columns-5 { --mw-shelf-columns: 5; }
+.mw-public-playlists__grid--columns-6 { --mw-shelf-columns: 6; }
+
+/* Horizontal rail — mirrors .mw-release-shelf--scroll. */
+.mw-public-playlists__grid--scroll {
+	display: grid;
+	grid-auto-columns: clamp(12rem, 24vw, 16rem);
+	grid-auto-flow: column;
+	grid-template-columns: none;
+	overflow-x: auto;
+	padding-block-end: .75rem;
+	scroll-snap-type: inline mandatory;
+	scrollbar-color: color-mix(in srgb, currentColor 25%, transparent) transparent;
+}
+
+.mw-public-playlists__grid--scroll .mw-public-playlists__card {
+	scroll-snap-align: start;
+}
+
+.mw-public-playlists__grid--list { grid-template-columns: 1fr; }
+
+/* -------------------------------------------------------------------------
+ * Public playlist card — framed sleeve deck
+ *
+ * One card is one container: the artwork plate, headline, meta rail and
+ * action row all scale with the card's own width, so a 3-, 2- or 1-column
+ * grid keeps the same proportions everywhere. Wide cards fall into the
+ * horizontal "studio" arrangement (artwork plate beside the copy); narrow
+ * ones stack. Both layouts are the same markup. The sleeve sits on a padded
+ * plate inside one framed surface as a layered deck: the main cover in front,
+ * a dark glass duplicate of it peeking out behind. See
+ * PlaylistBlocks::public_card_markup().
+ * ---------------------------------------------------------------------- */
+.mw-public-playlists__card {
+	container-type: inline-size;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20);
+	padding: var(--wp--preset--spacing--30);
+	font-family: var(--mw-font-sans, "Vazirmatn", system-ui, sans-serif);
+	background:
+		radial-gradient(140% 120% at 100% 0%, color-mix(in srgb, var(--mw-color-text) 7%, transparent), transparent 58%),
+		linear-gradient(180deg, color-mix(in srgb, var(--mw-color-surface-raised) 96%, var(--mw-color-surface)), color-mix(in srgb, var(--mw-color-surface) 94%, black));
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+	transition:
+		border-color var(--mw-speed-fast, 140ms) ease,
+		transform var(--mw-speed-normal, 260ms) var(--mw-ease-out, ease),
+		box-shadow var(--mw-speed-normal, 260ms) ease;
+}
+
+/* Artwork plate: frames the layered sleeve deck and hosts the master stamp.
+ * The padding token is shared with the back sleeve so both layers stay
+ * aligned inside the plate. */
+.mw-public-playlists__art {
+	--mw-sleeve-lift-x: clamp(0rem, 2.6cqi, 0rem);
+	--mw-sleeve-lift-y: clamp(0.6rem, 2.2cqi, 0.7rem);
+	padding-bottom: 10px;
+	position: relative;
+}
+
+/* Back sleeve: the same main cover, darkened and blurred behind a glass
+ * ground, nudged up and right so only its edges read past the front sleeve.
+ * Purely decorative — it never sits above artwork, stamp or copy. */
+.mw-public-playlists__art-back {
+	position: absolute;
+	inset: var(--mw-sleeve-pad);
+	z-index: 0;
+	overflow: hidden;
+	border: 1px solid var(--mw-color-border-subtle);
+	margin: 4px;
+	border-radius: var(--mw-radius-lg, 1rem);
+	background: linear-gradient(155deg, color-mix(in srgb, var(--mw-color-text) 10%, var(--mw-color-surface-raised)), color-mix(in srgb, var(--mw-color-surface) 90%, black));
+	transform: translate(var(--mw-sleeve-lift-x), calc(var(--mw-sleeve-lift-y) * -1));
+	transition: transform var(--mw-speed-normal, 260ms) var(--mw-ease-out, ease);
+	pointer-events: none;
+}
+
+.mw-public-playlists__art-back img {
+	display: block;
+	inline-size: 100%;
+	block-size: 100%;
+	object-fit: cover;
+	/* Blur eats the edges; the scale keeps them covered. */
+	transform: scale(1.15);
+	filter: blur(8px) brightness(0.55) saturate(0.75);
+	opacity: 0.9;
+}
+
+/* Front sleeve: the main cover as one dominant layer — dark ground, hairline
+ * border, rounded corners — clipped by the grid box. Only the first cell of
+ * the shared cover stack is shown here; the rest stay in the markup for the
+ * surfaces that still fan (account list, release shelf). */
+.mw-public-playlists__art .mw-playlists__art-grid {
+	--mw-fan-inset: 0%;
+	z-index: 1;
+	overflow: hidden;
+	border: 1px solid var(--mw-color-border-subtle);
+	border-radius: var(--mw-radius-lg, 1rem);
+	background: linear-gradient(180deg, black, color-mix(in srgb, var(--mw-color-surface) 86%, black));
+	box-shadow: 0 10px 24px rgb(0 0 0 / 32%);
+}
+
+.mw-public-playlists__art .mw-playlists__art-cell:not(:first-child) {
+	display: none;
+}
+
+/* The front sleeve fills its box: no fan offset, tilt or own shadow — even
+ * while the card is hovered, since the shared fan rules target it too. */
+.mw-public-playlists__art .mw-playlists__art-cell:first-child,
+.mw-public-playlists__card:is(:hover, :focus-within) .mw-public-playlists__art .mw-playlists__art-cell:first-child {
+	inset: 0;
+	border-radius: 0;
+	transform: none;
+	filter: none;
+	box-shadow: none;
+}
+
+/* Deck depth: the glass layer lifts a little further on interaction. */
+.mw-public-playlists__card:is(:hover, :focus-within) .mw-public-playlists__art-back {
+	transform: translate(calc(var(--mw-sleeve-lift-x) * 1.5), calc(var(--mw-sleeve-lift-y) * -1.5));
+}
+
+/* MASTER stamp removed per spec – hidden for backward compat, clean minimal */
+.mw-public-playlists__stamp {
+	display: none !important;
+}
+
+
+.mw-public-playlists__grid--list .mw-public-playlists__art {
+	inline-size: 5rem;
+	flex: 0 0 auto;
+	--mw-sleeve-pad: 0.3rem;
+	--mw-sleeve-lift-x: 0.22rem;
+	--mw-sleeve-lift-y: 0.18rem;
+}
+
+.mw-public-playlists__grid--list .mw-public-playlists__stamp {
+	display: none;
+}
+
+/* A list row is a compact row: the actions hug their labels instead of
+ * stretching across the full width of the card. */
+.mw-public-playlists__grid--list .mw-public-playlists__actions {
+	margin-block-start: 0.35rem;
+}
+
+.mw-public-playlists__grid--list .mw-public-playlists__play {
+	flex: 0 0 auto;
+	max-inline-size: none;
+}
+
+.mw-public-playlists__grid--list .mw-public-playlists__art .mw-playlists__art-grid {
+	aspect-ratio: 1;
+}
+
+.mw-public-playlists__main {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 0.45rem;
+	min-inline-size: 0;
+}
+
+.mw-public-playlists__name {
+	margin: 0;
+	/* Reference headline: scales with the card container and reflows on
+	 * narrow cards instead of being clipped by the fixed clamp. */
+	font-family: var(--mw-font-display, "Vazirmatn", "Syne", sans-serif);
+	font-size: clamp(1.1rem, 5.4cqi, 1.5rem);
+	font-weight: 800;
+	line-height: 1.35;
+	letter-spacing: 0;
+	overflow-wrap: anywhere;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.mw-public-playlists__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 0.5rem;
+	align-items: center;
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: clamp(0.72rem, 3.4cqi, 0.82rem);
+	line-height: 1.6;
+}
+
+/* Author byline — reference treatment. */
+.mw-public-playlists__author {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	min-width: 0;
+	max-width: 14ch;
+	font-weight: 600;
+	color: var(--mw-color-text);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-public-playlists__dot {
+	opacity: 0.5;
+}
+
+/* Track-count pill — the meta rail leads with a tinted chip instead of
+ * plain text, matching the framed sleeve deck. */
+.mw-public-playlists__count {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	padding: 0.15rem 0.5rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--mw-color-accent-strong, var(--mw-color-accent));
+	background: var(--mw-color-accent-soft);
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 26%, transparent);
+	border-radius: var(--mw-radius-pill, 999px);
+}
+
+.mw-public-playlists__count-icon {
+	font-size: 0.9em;
+	line-height: 1;
+	opacity: 0.9;
+}
+
+/* Action row: primary play pill grows, secondary track-list toggle stays
+ * compact. `margin-block-start: auto` pins the row to the card's lower edge
+ * in both the stacked and the horizontal layout. */
+.mw-public-playlists__actions {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 0.5rem;
+	align-items: center;
+	margin-block-start: auto;
+	padding-block-start: 0.15rem;
+}
+
+/* 44px touch floors, per the accessibility budget. */
+.mw-public-playlists__play,
+.mw-public-playlists__toggle {
+	min-height: 2.75rem;
+	border-radius: var(--mw-radius-pill, 999px);
+	font-family: inherit;
+	font-size: clamp(0.78rem, 3.6cqi, 0.88rem);
+	font-weight: 800;
+	letter-spacing: 0;
+}
+
+/* Wide card: the reference "studio" arrangement — artwork plate beside the
+ * copy, primary action stretched along the bottom edge. */
+@container (min-width: 30rem) {
+	.mw-public-playlists__art {
+		flex: 0 0 clamp(9rem, 32cqi, 15rem);
+	}
+
+	.mw-public-playlists__main {
+		justify-content: space-between;
+		gap: 0.6rem;
+	}
+
+	/* The primary action leads the row but never eats the whole card. */
+	.mw-public-playlists__play {
+		max-inline-size: 22rem;
+	}
+}
+
+/* Very narrow card: stack the two actions so each keeps a comfortable tap
+ * target instead of squeezing the labels. */
+@container (max-width: 16rem) {
+	.mw-public-playlists__actions {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+.mw-public-playlists__play {
+	display: inline-flex;
+	flex: 1 1 auto;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
+	min-inline-size: 0;
+	padding: 0.5rem 0.95rem;
+	color: var(--mw-color-on-accent, #fff);
+	background: linear-gradient(180deg, color-mix(in srgb, var(--mw-color-accent) 92%, white), var(--mw-color-accent));
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 70%, transparent);
+	cursor: pointer;
+	box-shadow: var(--mw-shadow-glow);
+	transition: transform var(--mw-speed-fast, 140ms) var(--mw-ease-out, ease), filter var(--mw-speed-fast, 140ms) ease;
+}
+
+.mw-public-playlists__play > span:first-child {
+	flex: 0 0 auto;
+	font-size: 0.9em;
+	line-height: 1;
+}
+
+.mw-public-playlists__play:hover:not(:disabled) {
+	transform: translateY(-1px);
+	filter: brightness(1.06);
+}
+
+.mw-public-playlists__play:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+
+.mw-public-playlists__play-count {
+	display: inline-grid;
+	flex: 0 0 auto;
+	place-items: center;
+	min-inline-size: 1.4rem;
+	block-size: 1.4rem;
+	padding-inline: 0.3rem;
+	font-size: 0.7rem;
+	background: rgb(255 255 255 / 22%);
+	border-radius: var(--mw-radius-pill, 999px);
+}
+
+.mw-public-playlists__toggle {
+	appearance: none;
+	display: inline-flex;
+	flex: 0 1 auto;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+	padding: 0.5rem 0.9rem;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-strong, var(--mw-color-surface-raised));
+	border: 1px solid var(--mw-color-border);
+	cursor: pointer;
+	text-decoration: none;
+	transition:
+		color var(--mw-speed-fast, 140ms) ease,
+		border-color var(--mw-speed-fast, 140ms) ease,
+		background var(--mw-speed-fast, 140ms) ease;
+}
+
+/* Decorative track-list glyph. Kept in CSS so the label swap in
+ * assets/playlists.js can rewrite the link text without rebuilding it. */
+.mw-public-playlists__toggle::before {
+	content: "≡";
+	flex: 0 0 auto;
+	font-size: 0.95em;
+	line-height: 1;
+	opacity: 0.75;
+}
+
+.mw-public-playlists__toggle:hover {
+	color: var(--mw-color-accent-strong);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 32%, var(--mw-color-border));
+	background: color-mix(in srgb, var(--mw-color-accent-soft) 55%, var(--mw-color-surface-strong, var(--mw-color-surface-raised)));
+}
+
+.mw-public-playlists__panel[hidden] {
+	display: none;
+}
+
+.mw-public-playlists__tracks {
+	margin-block-start: 0.5rem;
+	padding-block-start: 0.5rem;
+	border-block-start: 1px solid var(--mw-color-border, rgba(255,255,255,0.07));
+}
+
+/* Open track list rows — art/fallback removed per spec, clean minimal */
+.mw-public-playlists__track {
+	display: grid;
+	grid-template-columns: 1.5rem minmax(0, 1fr) 2rem;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.5rem 0.35rem;
+	border-radius: 8px;
+}
+
+.mw-public-playlists__track .mw-public-playlists__track-title {
+	display: grid;
+	gap: 0.1rem;
+	line-height: 1.3;
+}
+
+.mw-public-playlists__track .mw-public-playlists__track-title a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+/* Artist appears as a sub-line under each track title. Displayed only
+ * when the server/JS row includes a filled span. */
+.mw-public-playlists__track-artist:empty {
+	display: none;
+}
+
+.mw-public-playlists__track:hover {
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 70%, transparent);
+}
+
+.mw-public-playlists__position {
+	text-align: end;
+	opacity: 0.55;
+	font-variant-numeric: tabular-nums;
+	font-size: 0.8rem;
+}
+
+/* Deprecated: track-art and fallback removed per spec – hidden for backward compat */
+.mw-public-playlists__track-art,
+.mw-public-playlists__track-fallback {
+	display: none !important;
+}
+
+.mw-public-playlists__track-title {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 600;
+	line-height: 1.45;
+}
+
+/* Artist rides under the title when the API provides it (JS rows add the
+ * span; PHP rows include it when known). */
+.mw-public-playlists__track-title .mw-public-playlists__track-artist {
+	display: block;
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+.mw-public-playlists__track-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-public-playlists__track-title a:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-public-playlists__track-play {
+	display: grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.mw-public-playlists__track-play:hover {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+.mw-public-playlists__empty {
+	padding: 2rem 1rem;
+	text-align: center;
+	color: var(--mw-color-text-muted);
+	border: 1px dashed var(--mw-color-border);
+	border-radius: 12px;
+}
+
+.mw-public-playlists__pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	align-items: center;
+	justify-content: center;
+	margin-block-start: 0.5rem;
+}
+
+.mw-public-playlists__page {
+	display: inline-grid;
+	place-items: center;
+	min-width: 2.2rem;
+	height: 2.2rem;
+	padding-inline: 0.5rem;
+	font-weight: 700;
+	text-decoration: none;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+}
+
+.mw-public-playlists__page:hover {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 35%, var(--mw-color-border));
+}
+
+.mw-public-playlists__page.is-active {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+/* Container-query responsive behavior — identical breakpoints to the
+ * release shelf (52rem caps at 3 columns, 34rem collapses to 2). */
+@container (max-width: 52rem) {
+	.mw-public-playlists__grid:not(.mw-public-playlists__grid--list):not(.mw-public-playlists__grid--scroll) {
+		grid-template-columns: repeat(min(3, var(--mw-shelf-columns)), minmax(0, 1fr));
+	}
+}
+@container (max-width: 48rem) {
+	.mw-playlist-picker__panel {
+		position: fixed;
+		inset-inline: 0.5rem;
+		inset-block-start: auto;
+		inset-block-end: calc(var(--mw-rail-tabbar-height, 0px) + 0.5rem + env(safe-area-inset-bottom, 0px));
+		inline-size: auto;
+		max-inline-size: none;
+		max-block-size: min(70dvh, 26rem);
+		z-index: 130;
+	}
+}
+
+@container (max-width: 34rem) {
+	.mw-public-playlists__grid:not(.mw-public-playlists__grid--list):not(.mw-public-playlists__grid--scroll) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.mw-public-playlists__grid--scroll {
+		grid-auto-columns: min(64vw, 13rem);
+		grid-template-columns: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-public-playlists__more span {
+		transition: none;
+	}
+
+	.mw-public-playlists__card,
+	.mw-public-playlists__play,
+	.mw-public-playlists__toggle,
+	.mw-public-playlists__art-back {
+		transition: none;
+	}
+
+	.mw-public-playlists__card:hover {
+		transform: none;
+	}
+}
+
+/* Minimal style variation (is-style-minimal) — borderless editorial surface
+ * for embedding the section inside page layouts that already provide chrome. */
+.mw-public-playlists--minimal {
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-public-playlists--minimal .mw-public-playlists__toolbar {
+	padding: 0.75rem 0;
+	background: transparent;
+	border: 0;
+}
+
+.mw-public-playlists--minimal .mw-public-playlists__card {
+	background: transparent;
+	border-color: transparent;
+	box-shadow: none;
+}
+
+.mw-public-playlists--minimal .mw-public-playlists__card:hover {
+	transform: none;
+	box-shadow: none;
+	border-color: color-mix(in srgb, var(--mw-color-accent) 26%, transparent);
+}
+
+ /* Skeleton & micro-interactions — simple, essential, fast */
+@keyframes mw-shimmer {
+	from { background-position: -200% 0; }
+	to { background-position: 200% 0; }
+}
+
+.mw-public-playlists__grid.is-loading,
+.mw-release-shelf__items.is-loading {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.mw-public-playlists__card.is-skeleton,
+.mw-release-shelf__item.is-skeleton {
+	background: linear-gradient(90deg, var(--mw-color-surface-raised) 25%, color-mix(in srgb, var(--mw-color-surface-raised) 85%, var(--mw-color-border)) 37%, var(--mw-color-surface-raised) 63%);
+	background-size: 400% 100%;
+	animation: mw-shimmer 1.4s ease infinite;
+	min-height: 14rem;
+	border-radius: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-public-playlists__card.is-skeleton,
+	.mw-release-shelf__item.is-skeleton {
+		animation: none;
+	}
+}
+
+/* Touch targets =44px & fluid text */
+.mw-public-playlists__name,
+.mw-public-playlists__title,
+.mw-release-shelf__body h3 {
+	text-wrap: balance;
+	overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------------ */
+/* Public playlist card refinement — Vazirmatn-aware type scale,       */
+/* deeper sleeve deck, freshly-created highlight, tighter meta.        */
+/* The type scale, meta rail and action pills now live with the card   */
+/* itself (see the framed sleeve deck above); only the shared font and */
+/* the open track list need extra rules here.                          */
+/* ------------------------------------------------------------------ */
+
+/* Freshly created / just-loaded card pulse (JS toggles .is-fresh). */
+@keyframes mw-pl-fresh {
+	from { border-color: color-mix(in srgb, var(--mw-color-accent) 70%, transparent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--mw-color-accent) 16%, transparent); }
+	to   { border-color: var(--mw-color-border); box-shadow: var(--mw-shadow-sm); }
+}
+
+.mw-public-playlists__card.is-fresh {
+	animation: mw-pl-fresh 1.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-public-playlists__card.is-fresh {
+		animation: none;
+	}
+}
+
+/* ------------------------------------------------------------------ */
+/* Public Shared Playlist Hero View                                   */
+/* ------------------------------------------------------------------ */
+.mw-shared-playlist {
+	display: grid;
+	gap: 1.25rem;
+	margin-block-end: 2rem;
+	padding: clamp(1.1rem, 3vw, 1.75rem);
+	background: linear-gradient(155deg, color-mix(in srgb, var(--mw-color-accent) 8%, var(--mw-color-surface)), var(--mw-color-surface));
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 28%, var(--mw-color-border));
+	border-radius: var(--mw-radius-lg, 1rem);
+	box-shadow: var(--mw-shadow-sm);
+}
+
+.mw-shared-playlist--denied {
+	text-align: center;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-shared-playlist__hero {
+	display: grid;
+	grid-template-columns: minmax(7.5rem, 11rem) minmax(0, 1fr);
+	align-items: center;
+	gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.mw-shared-playlist__body {
+	display: grid;
+	gap: 0.65rem;
+	min-width: 0;
+}
+
+.mw-shared-playlist__title {
+	margin: 0;
+	font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+	font-weight: 800;
+	line-height: 1.25;
+	color: var(--mw-color-text);
+}
+
+.mw-shared-playlist__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.55rem;
+	padding-block-start: 0.2rem;
+}
+
+.mw-shared-playlist__tracks {
+	padding-block-start: 1rem;
+	border-block-start: 1px solid var(--mw-color-border);
+}
+
+.mw-public-playlists__track[data-mw-playing='true'],
+.mw-playlists__track[data-mw-playing='true'] {
+	background: color-mix(in srgb, var(--mw-color-accent) 10%, transparent);
+	border-radius: var(--mw-radius-sm, 0.5rem);
+}
+
+.mw-public-playlists__track[data-mw-playing='true'] .mw-public-playlists__position,
+.mw-public-playlists__track[data-mw-playing='true'] .mw-public-playlists__track-play,
+.mw-playlists__track[data-mw-playing='true'] .mw-playlists__position,
+.mw-playlists__track[data-mw-playing='true'] .mw-playlists__track-play {
+	color: var(--mw-color-accent-strong, var(--mw-color-accent));
+}
+
+.mw-playlists__track-play {
+	display: inline-grid;
+	place-items: center;
+	inline-size: 2rem;
+	block-size: 2rem;
+	padding: 0;
+	background: transparent;
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	color: var(--mw-color-text);
+	cursor: pointer;
+	transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
+}
+
+.mw-playlists__track-play:hover {
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	border-color: var(--mw-color-accent);
+	color: var(--mw-color-accent-strong, var(--mw-color-accent));
+}
+
+@media (max-width: 38rem) {
+	.mw-shared-playlist__hero {
+		grid-template-columns: minmax(0, 1fr);
+		text-align: center;
+	}
+
+	.mw-shared-playlist__art {
+		max-inline-size: 9.5rem;
+		margin-inline: auto;
+	}
+
+	.mw-shared-playlist__actions,
+	.mw-shared-playlist .mw-public-playlists__meta {
+		justify-content: center;
+	}
+}
+

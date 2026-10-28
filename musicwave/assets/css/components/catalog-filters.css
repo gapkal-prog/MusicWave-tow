@@ -1,0 +1,286 @@
+/* Catalog filter toolbar rendered by music-wave/catalog-filters.
+ * Markup: form.mw-catalog-filters > .mw-catalog-suggest + label>select*
+ * (taxonomies) + label.mw-catalog-filters__sort>select +
+ * div.mw-catalog-filters__actions > button + a. */
+.mw-catalog-filters {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--wp--preset--spacing--20);
+	margin: var(--wp--preset--spacing--30) 0 var(--wp--preset--spacing--20);
+	padding: var(--wp--preset--spacing--20);
+	background: color-mix(in srgb, var(--mw-color-surface) 92%, transparent);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+	box-shadow: var(--mw-shadow-card);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+}
+
+.mw-catalog-filters input,
+.mw-catalog-filters select {
+	min-height: 2.75rem;
+	max-width: 100%;
+	padding: 0.5rem 0.9rem;
+	color: var(--mw-color-text);
+	font: inherit;
+	line-height: 1.4;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-pill);
+	transition: border-color var(--mw-speed-fast, 150ms) ease, box-shadow var(--mw-speed-fast, 150ms) ease;
+}
+
+
+.mw-catalog-filters input {
+	min-width: min(100%, 14rem);
+}
+
+.mw-catalog-filters input:focus-visible,
+.mw-catalog-filters select:focus-visible {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 55%, transparent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 22%, transparent);
+}
+
+.mw-catalog-filters button {
+	min-height: 2.75rem;
+	padding-inline: 1.15rem;
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-pill);
+	font: inherit;
+	font-weight: 750;
+	cursor: pointer;
+	transition: background-color var(--mw-speed-fast, 150ms) ease, box-shadow var(--mw-speed-fast, 150ms) ease;
+}
+
+.mw-catalog-filters button:hover:not(:disabled) {
+	background: var(--mw-color-accent-strong);
+	box-shadow: 0 0.5rem 1.25rem color-mix(in srgb, var(--mw-color-accent) 24%, transparent);
+}
+
+.mw-catalog-filters a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2.75rem;
+	padding-inline: 1rem;
+	color: var(--mw-color-text-muted);
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: var(--mw-radius-pill);
+}
+
+.mw-catalog-filters a:hover {
+	color: var(--mw-color-text);
+}
+
+/* Submit and reset travel as one unit so both looks can place them together:
+ * trailing in the toolbar, in a ruled footer in the stacked panel. */
+.mw-catalog-filters__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--wp--preset--spacing--20);
+	margin-inline-start: auto;
+}
+
+/* -------------------------------------------------------------------------
+ * Stacked variation
+ * A bordered filter panel instead of a toolbar: the search field leads on its
+ * own row, taxonomy and sort controls fill a responsive grid of squared,
+ * outlined fields, and the actions sit in a ruled footer. Every difference is
+ * structural, so the two looks stay distinguishable at any viewport width.
+ * ------------------------------------------------------------------------- */
+.mw-catalog-filters--stacked {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+	gap: var(--wp--preset--spacing--30);
+	padding: var(--wp--preset--spacing--40);
+	background: var(--mw-color-surface);
+	border-block-start: 2px solid var(--mw-color-accent);
+	border-radius: var(--mw-radius-md);
+	box-shadow: var(--mw-shadow-sm);
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+
+/* Search and the action footer always span the whole panel. */
+.mw-catalog-filters--stacked > .mw-catalog-suggest,
+.mw-catalog-filters--stacked > .mw-catalog-filters__actions {
+	grid-column: 1 / -1;
+}
+
+.mw-catalog-filters--stacked > label {
+	display: grid;
+	gap: 0.35rem;
+	min-width: 0;
+}
+
+.mw-catalog-filters--stacked input,
+.mw-catalog-filters--stacked select,
+.mw-catalog-filters--stacked button,
+.mw-catalog-filters--stacked a {
+	min-height: 3rem;
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-catalog-filters--stacked input,
+.mw-catalog-filters--stacked select {
+	width: 100%;
+	border-color: var(--mw-color-border-strong);
+}
+
+.mw-catalog-filters--stacked > .mw-catalog-filters__actions {
+	justify-content: space-between;
+	margin-inline-start: 0;
+	padding-block-start: var(--wp--preset--spacing--20);
+	border-block-start: 1px solid var(--mw-color-border);
+}
+
+.mw-catalog-filters--stacked > .mw-catalog-filters__actions button {
+	padding-inline: 1.75rem;
+}
+
+/* Instant filtering: dim the form while results load in place and run a
+ * SonicStream shimmer sweep across its surface. */
+.mw-catalog-filters[data-mw-busy="true"] {
+	position: relative;
+	overflow: hidden;
+	opacity: 0.65;
+	pointer-events: none;
+	transition: opacity 140ms ease;
+}
+
+.mw-catalog-filters[data-mw-busy="true"]::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		100deg,
+		transparent 30%,
+		color-mix(in srgb, var(--mw-color-text) 8%, transparent) 50%,
+		transparent 70%
+	);
+	transform: translateX(-100%);
+	animation: mw-shimmer 1.1s ease-in-out infinite;
+}
+
+/* RTL-aware shimmer direction: the sweep follows the reading direction. */
+html[dir="rtl"] .mw-catalog-filters[data-mw-busy="true"]::after {
+	transform: translateX(100%);
+	animation-name: mw-shimmer-rtl;
+}
+
+@keyframes mw-shimmer {
+	to {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes mw-shimmer-rtl {
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-catalog-filters[data-mw-busy="true"]::after {
+		animation: none;
+	}
+}
+
+.mw-catalog-filters button[disabled] {
+	cursor: wait;
+}
+
+/* Result summary + removable active-filter chips. */
+.mw-catalog-results {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--wp--preset--spacing--20);
+	margin: 0 0 var(--wp--preset--spacing--40);
+	color: var(--mw-color-text-muted);
+}
+
+.mw-catalog-results__count {
+	margin: 0;
+	font-weight: 650;
+}
+
+.mw-catalog-results__filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* -------------------------------------------------------------------------
+ * SonicStream filter chips
+ * Inactive chips sit on the raised surface; the active chip carries the
+ * accent with bold text, matching the reference search page.
+ * ------------------------------------------------------------------------- */
+.mw-catalog-results__filters a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2rem;
+	padding: 0.35rem 0.9rem;
+	color: color-mix(in srgb, var(--mw-color-text) 70%, transparent);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	text-decoration: none;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-pill);
+	cursor: pointer;
+	transition: color var(--mw-speed-fast, 150ms) var(--mw-ease-snap, ease), background-color var(--mw-speed-fast, 150ms) ease;
+}
+
+.mw-catalog-results__filters a:hover {
+	color: var(--mw-color-text);
+}
+
+.mw-catalog-results__filters a[aria-current="page"],
+.mw-catalog-results__filters a[aria-current="true"] {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	font-weight: 700;
+}
+
+@media (max-width: 42rem) {
+	/* The toolbar drops to one column but keeps its compact, borderless
+	 * controls, so it never collapses into the stacked panel's look. */
+	.mw-catalog-filters > label,
+	.mw-catalog-filters > .mw-catalog-suggest,
+	.mw-catalog-filters__actions {
+		flex: 1 1 100%;
+	}
+
+	.mw-catalog-filters__actions {
+		justify-content: space-between;
+		margin-inline-start: 0;
+	}
+
+	.mw-catalog-filters input,
+	.mw-catalog-filters select {
+		width: 100%;
+	}
+
+	.mw-catalog-filters--stacked {
+		grid-template-columns: 1fr;
+		padding: var(--wp--preset--spacing--30);
+	}
+
+	.mw-catalog-filters--stacked > .mw-catalog-filters__actions button {
+		flex: 1 1 auto;
+	}
+
+	.mw-catalog-results {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}

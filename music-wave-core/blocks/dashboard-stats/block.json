@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-stats",
+  "title": "آمار داشبورد",
+  "category": "music-wave",
+  "description": "نمایش آمار جمع‌وجور: دانلودهای موجود، علاقه‌مندی‌ها و هنرمندان دنبال‌شده.",
+  "keywords": ["آمار", "داشبورد", "کتابخانه"],
+  "textdomain": "music-wave-core",
+  "icon": "chart-bar",
+  "attributes": {
+    "showEntitled": {
+      "type": "boolean",
+      "default": true
+    },
+    "showSaved": {
+      "type": "boolean",
+      "default": true
+    },
+    "showArtists": {
+      "type": "boolean",
+      "default": true
+    },
+    "compact": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "showEntitled": true,
+      "showSaved": true,
+      "showArtists": true,
+      "compact": true
+    }
+  }
+}

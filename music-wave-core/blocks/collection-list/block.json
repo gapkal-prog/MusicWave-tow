@@ -1,0 +1,140 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/collection-list",
+  "title": "لیست قطعه مجموعه",
+  "category": "music-wave",
+  "description": "فهرست واکنش‌گرای قطعات آلبوم و مجموعه با ستون‌های هم‌تراز، دکمه پخش هوشمند، عملیات آیکونی یا متنی و تفکیک دیسک.",
+  "keywords": [
+    "قطعه‌ها",
+    "قسمت‌ها",
+    "دیسک",
+    "لیست پخش"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "playlist-audio",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "heading": {
+      "type": "string",
+      "default": "لیست قطعه"
+    },
+    "showHeading": {
+      "type": "boolean",
+      "default": true
+    },
+    "density": {
+      "type": "string",
+      "default": "comfortable"
+    },
+    "playIcon": {
+      "type": "string",
+      "default": ""
+    },
+    "downloadIcon": {
+      "type": "string",
+      "default": ""
+    },
+    "actionStyle": {
+      "type": "string",
+      "default": "icon"
+    },
+    "actionsVisibility": {
+      "type": "string",
+      "default": "always"
+    },
+    "showHeader": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPosition": {
+      "type": "boolean",
+      "default": true
+    },
+    "showArtwork": {
+      "type": "boolean",
+      "default": true
+    },
+    "showArtist": {
+      "type": "boolean",
+      "default": true
+    },
+    "showBpm": {
+      "type": "boolean",
+      "default": false
+    },
+    "showQuality": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDuration": {
+      "type": "boolean",
+      "default": true
+    },
+    "showTotalDuration": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPreview": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDownload": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDownloadQuality": {
+      "type": "boolean",
+      "default": true
+    },
+    "groupByDisc": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "showPosition": true,
+      "showArtwork": true,
+      "showArtist": true,
+      "showDuration": true,
+      "showPreview": true,
+      "showDownload": true,
+      "actionStyle": "icon"
+    }
+  }
+}

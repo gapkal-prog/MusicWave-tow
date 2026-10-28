@@ -1,0 +1,136 @@
+/*
+ * MusicWave curation hues — one palette for the whole site.
+ *
+ * Every shaded surface (term hero banner, taxonomy shelf tiles, artist
+ * cards, playlist fallback art, release taxonomy chips, …) reads the same
+ * curated hue off a single numbered token. The canonical `.mw-term-hue-N`
+ * modifier is derived from the term's own ID, so one genre carries its
+ * colour wherever it is shown, in any block, on any page — colours never
+ * depend on list position, sort order, or block implementation.
+ *
+ * Legacy per-surface modifiers (`.mw-hue-N`, `.mw-term-hero--hue-N`,
+ * `.mw-terms-shelf__tile--hue-N`) are kept as aliases so cached markup from
+ * older versions keeps working; new markup emits only the canonical class.
+ *
+ * Contrast contract (WCAG 2.1 AA):
+ *   - `--mw-term-hue-strong` darkens every hue by 72% black before the
+ *     gradient's light stop, so white ink (`--mw-term-hue-ink`) clears 4.5:1
+ *     on all eight hues in both colour schemes.
+ *   - Tint washes pair the hue with the canvas token and use the normal text
+ *     colour; chips keep the visible hue on a soft tint and darken it under
+ *     a light scheme.
+ * Use the recipes and tokens below — never raw palette literals — inside
+ * component stylesheets.
+ */
+
+:root {
+	/* 1 music green · 2 rose · 3 sunset · 4 ocean · 5 violet · 6 magenta · 7 mint · 8 gold */
+	--mw-hue-1: #1db954;
+	--mw-hue-2: #fa2d48;
+	--mw-hue-3: #e8933a;
+	--mw-hue-4: #4f7cf7;
+	--mw-hue-5: #a55ee8;
+	--mw-hue-6: #e14fb1;
+	--mw-hue-7: #14b8a6;
+	--mw-hue-8: #e5b868;
+
+	/* Neutral fallback: a term without a numbered hue falls back to the accent. */
+	--mw-hue-fallback: var(--mw-color-accent, #1db954);
+
+	/* Living consumer contract — components must read these, not the raw hue. */
+	--mw-term-hue: var(--mw-hue-fallback);
+	--mw-term-hue-ink: #fff;
+	--mw-term-hue-tint: color-mix(in srgb, var(--mw-term-hue) 22%, var(--mw-color-canvas));
+	--mw-term-hue-strong: color-mix(in srgb, var(--mw-term-hue) 72%, black);
+	--mw-term-hue-soft: color-mix(in srgb, var(--mw-term-hue) 16%, transparent);
+}
+
+/* Canonical numbered modifiers — one class per surface, any taxonomy. */
+.mw-term-hue-1,
+.mw-hue-1,
+.mw-term-hero--hue-1,
+.mw-terms-shelf__tile--hue-1 { --mw-term-hue: var(--mw-hue-1); }
+
+.mw-term-hue-2,
+.mw-hue-2,
+.mw-term-hero--hue-2,
+.mw-terms-shelf__tile--hue-2 { --mw-term-hue: var(--mw-hue-2); }
+
+.mw-term-hue-3,
+.mw-hue-3,
+.mw-term-hero--hue-3,
+.mw-terms-shelf__tile--hue-3 { --mw-term-hue: var(--mw-hue-3); }
+
+.mw-term-hue-4,
+.mw-hue-4,
+.mw-term-hero--hue-4,
+.mw-terms-shelf__tile--hue-4 { --mw-term-hue: var(--mw-hue-4); }
+
+.mw-term-hue-5,
+.mw-hue-5,
+.mw-term-hero--hue-5,
+.mw-terms-shelf__tile--hue-5 { --mw-term-hue: var(--mw-hue-5); }
+
+.mw-term-hue-6,
+.mw-hue-6,
+.mw-term-hero--hue-6,
+.mw-terms-shelf__tile--hue-6 { --mw-term-hue: var(--mw-hue-6); }
+
+.mw-term-hue-7,
+.mw-hue-7,
+.mw-term-hero--hue-7,
+.mw-terms-shelf__tile--hue-7 { --mw-term-hue: var(--mw-hue-7); }
+
+.mw-term-hue-8,
+.mw-hue-8,
+.mw-term-hero--hue-8,
+.mw-terms-shelf__tile--hue-8 { --mw-term-hue: var(--mw-hue-8); }
+
+/* ---- Shared term media shell ----
+ *
+ * Any surface that presents a term as a coloured panel (hero banner media,
+ * colourful shelf tiles, playlist fallback art, artist card tints) composes
+ * `.mw-term-media` with `.mw-term-hue-N`. The shell owns the fallback
+ * gradient recipe, the ink colour, and image handling; surface stylesheets
+ * only size and position their own element. Hero media keeps its BEM class
+ * (`mw-term-hero__media`) for layout; the shell applies on top. */
+
+.mw-term-media {
+	background:
+		radial-gradient(circle at 22% 18%, color-mix(in srgb, var(--mw-term-hue, var(--mw-color-accent)) 45%, transparent), transparent 55%),
+		linear-gradient(135deg, var(--mw-term-hue-strong), var(--mw-term-hue, var(--mw-color-accent)));
+	color: var(--mw-term-hue-ink, #fff);
+}
+
+.mw-term-media img {
+	display: block;
+	block-size: 100%;
+	inline-size: 100%;
+	object-fit: cover;
+}
+
+/* ---- Consumer recipes (any element can tint itself without re-hashing) ---- */
+
+.mw-hue-tint {
+	color: var(--mw-color-text);
+	background: var(--mw-term-hue-tint);
+}
+
+.mw-hue-strong {
+	color: var(--mw-term-hue-ink, var(--mw-color-on-accent, #fff));
+	background: linear-gradient(135deg, var(--mw-term-hue-strong), var(--mw-term-hue));
+}
+
+.mw-hue-chip {
+	color: var(--mw-term-hue);
+	background: var(--mw-term-hue-soft);
+	border: 1px solid color-mix(in srgb, var(--mw-term-hue) 35%, transparent);
+}
+
+/* Under a light scheme the lighter hues (gold, orange) need a darker ink
+ * to keep chip text above 4.5:1 on the soft tint. */
+@media (prefers-color-scheme: light) {
+	.mw-hue-chip {
+		color: color-mix(in srgb, var(--mw-term-hue) 55%, black);
+	}
+}

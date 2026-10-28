@@ -1,0 +1,296 @@
+/**
+ * Authentication page — bundled `page-login` template.
+ *
+ * Minimal, token-driven card for the `[music_wave_auth]` panel: sign-in and
+ * sign-up share one visual system, every state is server-rendered, and the
+ * whole card stays readable in both color schemes and at 320px width.
+ */
+
+.mw-auth-page {
+	display: grid;
+	place-items: center;
+	min-block-size: min(72vh, 44rem);
+	padding-block: clamp(1.75rem, 5vw, 3.5rem);
+	background:
+		radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--mw-color-accent) 14%, transparent), transparent 42%),
+		var(--mw-color-canvas, transparent);
+}
+
+.mw-auth-page__inner {
+	inline-size: 100%;
+	max-inline-size: 28rem;
+}
+
+/* ---- Card ---------------------------------------------------------------- */
+.mw-auth {
+	inline-size: 100%;
+}
+
+.mw-auth__card {
+	display: grid;
+	gap: clamp(1rem, 3vw, 1.35rem);
+	padding: clamp(1.35rem, 4vw, 2rem);
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg, 1.25rem);
+	box-shadow: var(--mw-shadow-floating);
+}
+
+.mw-auth__head {
+	display: grid;
+	gap: 0.35rem;
+}
+
+.mw-auth__eyebrow {
+	color: var(--mw-color-accent);
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.mw-auth__title {
+	margin: 0;
+	font-size: clamp(1.4rem, 4vw, 1.75rem);
+	font-weight: 800;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+	text-wrap: balance;
+}
+
+.mw-auth__lede {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.875rem;
+	line-height: 1.75;
+}
+
+/* ---- Panel switch -------------------------------------------------------- */
+.mw-auth__switch {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr;
+	gap: 0.25rem;
+	padding: 0.25rem;
+	background: var(--mw-color-surface-strong, var(--mw-color-surface-raised));
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+}
+
+.mw-auth__switch-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-block-size: 2.25rem;
+	padding-inline: 0.9rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.84rem;
+	font-weight: 700;
+	text-decoration: none;
+	border-radius: 999px;
+	transition: color 150ms ease, background-color 150ms ease;
+}
+
+.mw-auth__switch-link.is-active,
+.mw-auth__switch-link[aria-current='page'] {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+}
+
+.mw-auth__switch-link:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+}
+
+/* ---- Form --------------------------------------------------------------- */
+.mw-auth__form {
+	display: grid;
+	gap: 0.9rem;
+}
+
+.mw-auth__field {
+	display: grid;
+	gap: 0.35rem;
+}
+
+.mw-auth__label {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.15rem;
+	color: var(--mw-color-text);
+	font-size: 0.8125rem;
+	font-weight: 650;
+}
+
+.mw-auth__required {
+	color: var(--mw-color-danger);
+}
+
+.mw-auth__input {
+	inline-size: 100%;
+	min-block-size: 2.85rem;
+	padding-inline: 0.9rem;
+	color: var(--mw-color-text);
+	font: inherit;
+	font-size: 1rem;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md, 0.75rem);
+	transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.mw-auth__input::placeholder {
+	color: var(--mw-color-text-muted);
+}
+
+.mw-auth__input:hover {
+	border-color: var(--mw-color-border-strong);
+}
+
+.mw-auth__input:focus {
+	outline: none;
+	border-color: var(--mw-color-accent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 26%, transparent);
+}
+
+/* Keep autofilled fields on the theme surface instead of the browser yellow. */
+.mw-auth__input:-webkit-autofill {
+	-webkit-text-fill-color: var(--mw-color-text);
+	box-shadow: 0 0 0 100px var(--mw-color-surface-raised) inset;
+}
+
+.mw-auth__hint {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+	line-height: 1.6;
+}
+
+.mw-auth__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem 0.75rem;
+}
+
+.mw-auth__check {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+	line-height: 1.6;
+	cursor: pointer;
+}
+
+.mw-auth__check--stacked {
+	align-items: flex-start;
+}
+
+.mw-auth__check input {
+	flex: 0 0 auto;
+	inline-size: 1.05rem;
+	block-size: 1.05rem;
+	margin-block-start: 0.15rem;
+	accent-color: var(--mw-color-accent);
+}
+
+.mw-auth__check:focus-within {
+	color: var(--mw-color-text);
+}
+
+.mw-auth__link {
+	color: var(--mw-color-accent);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	text-decoration: none;
+	text-underline-offset: 0.2em;
+}
+
+.mw-auth__link:hover {
+	text-decoration: underline;
+}
+
+.mw-auth__link:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+	border-radius: 0.25rem;
+}
+
+.mw-auth__submit {
+	margin-block-start: 0.15rem;
+}
+
+.mw-auth__actions {
+	display: grid;
+	gap: 0.85rem;
+	justify-items: center;
+}
+
+/* ---- Notices ------------------------------------------------------------- */
+.mw-auth__notice {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.6rem;
+	padding: 0.7rem 0.85rem;
+	font-size: 0.8125rem;
+	line-height: 1.7;
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md, 0.75rem);
+}
+
+.mw-auth__notice p {
+	margin: 0;
+}
+
+.mw-auth__notice-icon {
+	display: inline-grid;
+	flex: 0 0 auto;
+	place-items: center;
+	inline-size: 1.15rem;
+	block-size: 1.15rem;
+	margin-block-start: 0.15rem;
+	font-size: 0.75rem;
+	font-weight: 800;
+	border-radius: 50%;
+}
+
+.mw-auth__notice--error {
+	color: var(--mw-color-danger);
+	background: color-mix(in srgb, var(--mw-color-danger) 12%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-danger) 38%, transparent);
+}
+
+.mw-auth__notice--error .mw-auth__notice-icon {
+	color: var(--mw-color-surface);
+	background: var(--mw-color-danger);
+}
+
+.mw-auth__notice--success {
+	color: var(--mw-color-success);
+	background: color-mix(in srgb, var(--mw-color-success) 12%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-success) 34%, transparent);
+}
+
+.mw-auth__notice--success .mw-auth__notice-icon {
+	color: var(--mw-color-surface);
+	background: var(--mw-color-success);
+}
+
+/* ---- Honeypot & motion --------------------------------------------------- */
+.mw-auth__trap {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+	clip-path: inset(50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-auth__switch-link,
+	.mw-auth__input {
+		transition: none;
+	}
+}

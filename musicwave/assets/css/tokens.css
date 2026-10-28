@@ -1,0 +1,293 @@
+/**
+ * MusicWave design tokens — v2 (WAVE look).
+ * Colour flow: theme.json palette → --wp--preset--color--* → --mw-color-*.
+ * Light/dark switching remaps presets (unchanged architecture).
+ */
+
+@font-face {
+	font-family: "Vazirmatn";
+	src: url("../fonts/Vazirmatn-Variable.woff2") format("woff2 supports variations"),
+		url("../fonts/Vazirmatn-Variable.woff2") format("woff2-variations");
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F, U+2010-2011;
+}
+
+@font-face {
+	font-family: "Plus Jakarta Sans";
+	src: url("../fonts/PlusJakartaSans-Variable.woff2") format("woff2 supports variations"),
+		url("../fonts/PlusJakartaSans-Variable.woff2") format("woff2-variations");
+	font-weight: 200 800;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "Syne";
+	src: url("../fonts/Syne-Variable.woff2") format("woff2 supports variations"),
+		url("../fonts/Syne-Variable.woff2") format("woff2-variations");
+	font-weight: 400 800;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+	color-scheme: dark light;
+
+	/* Typography (Persian first, Latin display second). */
+	--mw-font-sans: "Vazirmatn", "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	--mw-font-display: "Vazirmatn", "Syne", system-ui, sans-serif;
+	--mw-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+	/* Live palette → semantic tokens (deep-obsidian defaults). */
+	--mw-color-canvas: var(--wp--preset--color--canvas, #0b0b0d);
+	--mw-color-surface: var(--wp--preset--color--surface, #131316);
+	--mw-color-surface-raised: var(--wp--preset--color--surface-raised, #1c1c21);
+	--mw-color-text: var(--wp--preset--color--text, #f4f5f7);
+	--mw-color-text-muted: var(--wp--preset--color--muted, #8e919b);
+	--mw-color-text-subtle: color-mix(in srgb, var(--mw-color-text-muted) 70%, transparent);
+	--mw-color-border: color-mix(in srgb, var(--mw-color-text) 10%, transparent);
+	--mw-color-border-strong: color-mix(in srgb, var(--mw-color-text) 18%, transparent);
+	--mw-color-border-subtle: color-mix(in srgb, var(--mw-color-text) 5%, transparent);
+	--mw-color-accent: var(--wp--preset--color--accent, #d91b38);
+	--mw-color-accent-strong: var(--wp--preset--color--accent-strong, #c91833);
+	--mw-color-accent-soft: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	--mw-color-accent-glow: color-mix(in srgb, var(--mw-color-accent) 40%, transparent);
+	--mw-color-on-accent: var(--wp--preset--color--on-accent, #ffffff);
+	--mw-color-surface-hover: color-mix(in srgb, var(--mw-color-text) 7%, transparent);
+	--mw-color-surface-strong: color-mix(in srgb, var(--mw-color-surface-raised) 82%, black);
+	--mw-color-heart: #ff2d55;
+	--mw-color-danger: #f87171;
+	--mw-color-success: #22c55e;
+	--mw-color-gold: #e5b868;
+	--mw-color-on-gold: #241a05;
+
+	/* Elevation: layered, soft, plus a 1px hairline. */
+	--mw-glass-specular: inset 0 1px 0 color-mix(in srgb, var(--mw-color-text) 7%, transparent);
+	--mw-shadow-sm: 0 1px 2px rgb(0 0 0 / 30%), 0 0 0 1px var(--mw-color-border-subtle);
+	--mw-shadow-card: var(--wp--preset--shadow--card, 0 12px 32px -8px rgb(0 0 0 / 55%), 0 0 0 1px var(--mw-color-border-subtle));
+	--mw-shadow-floating: var(--wp--preset--shadow--floating, 0 24px 56px -12px rgb(0 0 0 / 70%), 0 0 0 1px var(--mw-color-border));
+	--mw-shadow-lift: 0 1.5rem 3rem rgb(0 0 0 / 35%);
+	--mw-shadow-glow: 0 8px 28px -8px var(--mw-color-accent-glow);
+
+	/* Scheme sources (theme.json settings.custom.scheme; literals = defaults). */
+	--mw-scheme-light-canvas: var(--wp--custom--scheme--light--canvas, #f6f6f8);
+	--mw-scheme-light-surface: var(--wp--custom--scheme--light--surface, #ffffff);
+	--mw-scheme-light-surface-raised: var(--wp--custom--scheme--light--surface-raised, #eeeff3);
+	--mw-scheme-light-text: var(--wp--custom--scheme--light--text, #101114);
+	--mw-scheme-light-muted: var(--wp--custom--scheme--light--muted, #5d6270);
+	--mw-scheme-light-accent: var(--wp--custom--scheme--light--accent, #c91833);
+	--mw-scheme-light-accent-strong: var(--wp--custom--scheme--light--accent-strong, #9f1239);
+	--mw-scheme-light-editorial: var(--wp--custom--scheme--light--editorial, #b43408);
+	--mw-scheme-light-on-accent: var(--wp--custom--scheme--light--on-accent, #ffffff);
+	--mw-scheme-dark-canvas: var(--wp--custom--scheme--dark--canvas, #0b0b0d);
+	--mw-scheme-dark-surface: var(--wp--custom--scheme--dark--surface, #131316);
+	--mw-scheme-dark-surface-raised: var(--wp--custom--scheme--dark--surface-raised, #1c1c21);
+	--mw-scheme-dark-text: var(--wp--custom--scheme--dark--text, #f4f5f7);
+	--mw-scheme-dark-muted: var(--wp--custom--scheme--dark--muted, #8e919b);
+	--mw-scheme-dark-accent: var(--wp--custom--scheme--dark--accent, #d91b38);
+	--mw-scheme-dark-accent-strong: var(--wp--custom--scheme--dark--accent-strong, #ff4a62);
+	--mw-scheme-dark-editorial: var(--wp--custom--scheme--dark--editorial, #ff8a3d);
+	--mw-scheme-dark-on-accent: var(--wp--custom--scheme--dark--on-accent, #ffffff);
+
+	--mw-light-shadow-card: 0 12px 32px -8px rgb(20 24 35 / 12%), 0 0 0 1px rgb(20 24 35 / 6%);
+	--mw-light-shadow-floating: 0 24px 56px -12px rgb(20 24 35 / 18%), 0 0 0 1px rgb(20 24 35 / 8%);
+
+	/* Shape */
+	--mw-radius-xs: 0.375rem;
+	--mw-radius-sm: 0.55rem;
+	--mw-radius-md: 0.8rem;
+	--mw-radius-lg: 1.1rem;
+	--mw-radius-xl: 1.6rem;
+	--mw-radius-pill: 999px;
+
+	/* Motion */
+	--mw-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--mw-ease-snap: cubic-bezier(0.4, 0, 0.2, 1);
+	--mw-ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
+	--mw-speed-fast: 140ms;
+	--mw-speed-normal: 260ms;
+	--mw-speed-slow: 520ms;
+
+	/* Fluid type & space (unchanged names). */
+	--mw-fluid-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+	--mw-fluid-sm: clamp(0.875rem, 0.82rem + 0.25vw, 1rem);
+	--mw-fluid-md: clamp(1rem, 0.92rem + 0.4vw, 1.25rem);
+	--mw-fluid-lg: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+	--mw-fluid-xl: clamp(1.5rem, 1.2rem + 1.4vw, 2.35rem);
+	--mw-space-xs: clamp(0.5rem, 0.45rem + 0.2vw, 0.75rem);
+	--mw-space-sm: clamp(0.75rem, 0.65rem + 0.4vw, 1rem);
+	--mw-space-md: clamp(1rem, 0.85rem + 0.6vw, 1.5rem);
+	--mw-space-lg: clamp(1.5rem, 1.2rem + 1vw, 2.5rem);
+
+	/* Fixed chrome */
+	--mw-admin-bar-height: var(--wp-admin--admin-bar--height, 0px);
+	--mw-admin-bar-offset: var(--mw-admin-bar-height);
+	--mw-header-height: 4.25rem;
+	--mw-topbar-height: 3.75rem;
+	--mw-sticky-offset: var(--mw-admin-bar-offset);
+	--mw-player-offset: 0px;
+
+	/* Stream rail */
+	--mw-rail-width: 0px;
+	--mw-rail-width-collapsed: 4.75rem;
+	--mw-rail-width-expanded: 14.5rem;
+	--mw-rail-tabbar-height: calc(3.9rem + env(safe-area-inset-bottom, 0px));
+	--mw-rail-active: var(--mw-color-accent);
+	--mw-rail-on-active: var(--mw-color-on-accent);
+	--mw-rail-icon-size: 1.2rem;
+
+	/* Gradients */
+	--mw-gradient-hero: linear-gradient(
+		180deg,
+		color-mix(in srgb, var(--mw-color-accent) 30%, transparent) 0%,
+		color-mix(in srgb, var(--mw-color-canvas) 92%, transparent) 42%,
+		var(--mw-color-canvas) 100%
+	);
+	--mw-gradient-progress: linear-gradient(90deg, var(--mw-color-accent), var(--mw-color-accent-strong));
+	--mw-gradient-upsell: linear-gradient(
+		135deg,
+		color-mix(in srgb, var(--mw-color-accent) 22%, transparent),
+		color-mix(in srgb, var(--mw-color-accent) 4%, transparent)
+	);
+	--mw-gradient-glass: linear-gradient(
+		135deg,
+		color-mix(in srgb, var(--mw-color-text) 5%, transparent),
+		color-mix(in srgb, var(--mw-color-text) 1%, transparent)
+	);
+
+	/* Editorial × Vinyl layer (kept for editorial.css / vinyl.css). */
+	--mw-color-editorial: var(--wp--preset--color--editorial, #ff8a3d);
+	--mw-color-editorial-soft: color-mix(in srgb, var(--mw-color-editorial) 18%, transparent);
+	--mw-color-editorial-line: color-mix(in srgb, var(--mw-color-editorial) 42%, transparent);
+	--mw-color-vinyl: color-mix(in srgb, var(--mw-color-text) 7%, var(--mw-color-canvas));
+	--mw-color-vinyl-deep: color-mix(in srgb, var(--mw-color-vinyl) 70%, black);
+	--mw-color-vinyl-groove: color-mix(in srgb, var(--mw-color-text) 11%, transparent);
+	--mw-color-vinyl-label: var(--mw-color-editorial);
+	--mw-color-glass: color-mix(in srgb, var(--mw-color-surface) 74%, transparent);
+	--mw-color-glass-border: color-mix(in srgb, var(--mw-color-text) 12%, transparent);
+	--mw-gradient-editorial: linear-gradient(115deg, var(--mw-color-editorial), var(--mw-color-accent));
+	--mw-eyebrow-tracking: 0.16em;
+}
+
+@media screen and (max-width: 600px) {
+	:root { --mw-admin-bar-offset: 0px; }
+}
+
+@media (max-width: 36rem) {
+	:root { --mw-header-height: 3.75rem; --mw-topbar-height: 3.5rem; }
+}
+
+/* ---------- Scheme states (same logic as before) ---------- */
+
+html[data-mw-scheme="light"],
+html[data-mw-theme="light"] {
+	color-scheme: light;
+	--mw-color-danger: #b91c1c;
+	--mw-color-border: color-mix(in srgb, var(--mw-color-text) 12%, transparent);
+	--mw-color-border-strong: color-mix(in srgb, var(--mw-color-text) 22%, transparent);
+	--mw-color-surface-strong: color-mix(in srgb, var(--mw-color-surface-raised) 92%, black);
+	--mw-glass-specular: inset 0 1px 0 rgb(255 255 255 / 80%);
+	--mw-shadow-sm: 0 1px 2px rgb(20 24 35 / 8%), 0 0 0 1px rgb(20 24 35 / 6%);
+	--mw-shadow-card: var(--mw-light-shadow-card);
+	--mw-shadow-floating: var(--mw-light-shadow-floating);
+	--mw-shadow-lift: 0 1.25rem 2.5rem rgb(20 24 35 / 16%);
+	--mw-color-glass: color-mix(in srgb, var(--mw-color-surface) 84%, transparent);
+	--mw-color-vinyl: color-mix(in srgb, var(--mw-color-text) 5%, var(--mw-color-surface-raised));
+	--mw-color-vinyl-deep: color-mix(in srgb, var(--mw-color-vinyl) 88%, black);
+	--mw-gradient-hero: linear-gradient(180deg, color-mix(in srgb, var(--mw-color-accent) 12%, transparent) 0%, color-mix(in srgb, var(--mw-color-canvas) 96%, transparent) 42%, var(--mw-color-canvas) 100%);
+}
+
+html[data-mw-theme="light"][data-mw-scheme="dark"] {
+	--wp--preset--color--canvas: var(--mw-scheme-light-canvas);
+	--wp--preset--color--surface: var(--mw-scheme-light-surface);
+	--wp--preset--color--surface-raised: var(--mw-scheme-light-surface-raised);
+	--wp--preset--color--text: var(--mw-scheme-light-text);
+	--wp--preset--color--muted: var(--mw-scheme-light-muted);
+	--wp--preset--color--accent: var(--mw-scheme-light-accent);
+	--wp--preset--color--accent-strong: var(--mw-scheme-light-accent-strong);
+	--wp--preset--color--editorial: var(--mw-scheme-light-editorial);
+	--wp--preset--color--on-accent: var(--mw-scheme-light-on-accent);
+}
+
+html[data-mw-theme="dark"] {
+	color-scheme: dark;
+	--mw-color-danger: #f87171;
+	--mw-color-border: color-mix(in srgb, var(--mw-color-text) 10%, transparent);
+	--mw-color-border-strong: color-mix(in srgb, var(--mw-color-text) 18%, transparent);
+	--mw-color-surface-strong: color-mix(in srgb, var(--mw-color-surface-raised) 82%, black);
+	--mw-glass-specular: inset 0 1px 0 color-mix(in srgb, var(--mw-color-text) 7%, transparent);
+	--mw-shadow-sm: 0 1px 2px rgb(0 0 0 / 30%), 0 0 0 1px var(--mw-color-border-subtle);
+	--mw-shadow-card: var(--wp--preset--shadow--card, 0 12px 32px -8px rgb(0 0 0 / 55%), 0 0 0 1px var(--mw-color-border-subtle));
+	--mw-shadow-floating: var(--wp--preset--shadow--floating, 0 24px 56px -12px rgb(0 0 0 / 70%), 0 0 0 1px var(--mw-color-border));
+	--mw-gradient-hero: linear-gradient(180deg, color-mix(in srgb, var(--mw-color-accent) 30%, transparent) 0%, color-mix(in srgb, var(--mw-color-canvas) 92%, transparent) 42%, var(--mw-color-canvas) 100%);
+}
+
+html[data-mw-theme="dark"][data-mw-scheme="light"] {
+	--wp--preset--color--canvas: var(--mw-scheme-dark-canvas);
+	--wp--preset--color--surface: var(--mw-scheme-dark-surface);
+	--wp--preset--color--surface-raised: var(--mw-scheme-dark-surface-raised);
+	--wp--preset--color--text: var(--mw-scheme-dark-text);
+	--wp--preset--color--muted: var(--mw-scheme-dark-muted);
+	--wp--preset--color--accent: var(--mw-scheme-dark-accent);
+	--wp--preset--color--accent-strong: var(--mw-scheme-dark-accent-strong);
+	--wp--preset--color--editorial: var(--mw-scheme-dark-editorial);
+	--wp--preset--color--on-accent: var(--mw-scheme-dark-on-accent);
+}
+
+@media (prefers-color-scheme: light) {
+	html:not([data-mw-theme]) {
+		color-scheme: light;
+		--mw-color-danger: #b91c1c;
+		--mw-color-border: color-mix(in srgb, var(--mw-color-text) 12%, transparent);
+		--mw-color-border-strong: color-mix(in srgb, var(--mw-color-text) 22%, transparent);
+		--mw-color-surface-strong: color-mix(in srgb, var(--mw-color-surface-raised) 92%, black);
+		--mw-glass-specular: inset 0 1px 0 rgb(255 255 255 / 80%);
+		--mw-shadow-sm: 0 1px 2px rgb(20 24 35 / 8%), 0 0 0 1px rgb(20 24 35 / 6%);
+		--mw-shadow-card: var(--mw-light-shadow-card);
+		--mw-shadow-floating: var(--mw-light-shadow-floating);
+		--mw-shadow-lift: 0 1.25rem 2.5rem rgb(20 24 35 / 16%);
+		--mw-color-glass: color-mix(in srgb, var(--mw-color-surface) 84%, transparent);
+		--mw-color-vinyl: color-mix(in srgb, var(--mw-color-text) 5%, var(--mw-color-surface-raised));
+		--mw-color-vinyl-deep: color-mix(in srgb, var(--mw-color-vinyl) 88%, black);
+		--mw-gradient-hero: linear-gradient(180deg, color-mix(in srgb, var(--mw-color-accent) 12%, transparent) 0%, color-mix(in srgb, var(--mw-color-canvas) 96%, transparent) 42%, var(--mw-color-canvas) 100%);
+	}
+	html:not([data-mw-theme])[data-mw-scheme="dark"] {
+		--wp--preset--color--canvas: var(--mw-scheme-light-canvas);
+		--wp--preset--color--surface: var(--mw-scheme-light-surface);
+		--wp--preset--color--surface-raised: var(--mw-scheme-light-surface-raised);
+		--wp--preset--color--text: var(--mw-scheme-light-text);
+		--wp--preset--color--muted: var(--mw-scheme-light-muted);
+		--wp--preset--color--accent: var(--mw-scheme-light-accent);
+		--wp--preset--color--accent-strong: var(--mw-scheme-light-accent-strong);
+		--wp--preset--color--editorial: var(--mw-scheme-light-editorial);
+		--wp--preset--color--on-accent: var(--mw-scheme-light-on-accent);
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	html:not([data-mw-theme]) {
+		color-scheme: dark;
+		--mw-color-danger: #f87171;
+		--mw-color-border: color-mix(in srgb, var(--mw-color-text) 10%, transparent);
+		--mw-color-border-strong: color-mix(in srgb, var(--mw-color-text) 18%, transparent);
+		--mw-color-surface-strong: color-mix(in srgb, var(--mw-color-surface-raised) 82%, black);
+		--mw-shadow-card: var(--wp--preset--shadow--card, 0 12px 32px -8px rgb(0 0 0 / 55%), 0 0 0 1px var(--mw-color-border-subtle));
+		--mw-shadow-floating: var(--wp--preset--shadow--floating, 0 24px 56px -12px rgb(0 0 0 / 70%), 0 0 0 1px var(--mw-color-border));
+		--mw-gradient-hero: linear-gradient(180deg, color-mix(in srgb, var(--mw-color-accent) 30%, transparent) 0%, color-mix(in srgb, var(--mw-color-canvas) 92%, transparent) 42%, var(--mw-color-canvas) 100%);
+	}
+	html:not([data-mw-theme])[data-mw-scheme="light"] {
+		--wp--preset--color--canvas: var(--mw-scheme-dark-canvas);
+		--wp--preset--color--surface: var(--mw-scheme-dark-surface);
+		--wp--preset--color--surface-raised: var(--mw-scheme-dark-surface-raised);
+		--wp--preset--color--text: var(--mw-scheme-dark-text);
+		--wp--preset--color--muted: var(--mw-scheme-dark-muted);
+		--wp--preset--color--accent: var(--mw-scheme-dark-accent);
+		--wp--preset--color--accent-strong: var(--mw-scheme-dark-accent-strong);
+		--wp--preset--color--editorial: var(--mw-scheme-dark-editorial);
+		--wp--preset--color--on-accent: var(--mw-scheme-dark-on-accent);
+	}
+}

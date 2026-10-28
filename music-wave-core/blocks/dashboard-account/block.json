@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-account",
+  "title": "جزئیات و ویرایش حساب",
+  "category": "music-wave",
+  "description": "بلوک یکپارچه جزئیات و ویرایش حساب کاربری – نام، ایمیل، رمز عبور و آواتار با حالت فشرده مدرن، قابل ویرایش در ویرایشگر سایت.",
+  "keywords": ["حساب", "پروفایل", "کاربر", "ویرایش", "رمز عبور"],
+  "textdomain": "music-wave-core",
+  "icon": "id",
+  "attributes": {
+    "heading": { "type": "string", "default": "جزئیات و ویرایش حساب" },
+    "compact": { "type": "boolean", "default": true },
+    "showAvatar": { "type": "boolean", "default": false },
+    "showNotices": { "type": "boolean", "default": true },
+    "description": { "type": "string", "default": "" }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "color": { "background": true, "link": true, "text": true },
+    "spacing": { "blockGap": true, "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "example": {
+    "attributes": { "compact": true }
+  }
+}

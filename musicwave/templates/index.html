@@ -1,0 +1,13 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"align":"wide","className":"mw-app-shell","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|50"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide mw-app-shell" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:group {"tagName":"main","className":"mw-generic-archive","layout":{"type":"constrained"}} -->
+<main class="wp-block-group mw-generic-archive"><!-- wp:template-part {"slug":"breadcrumb","tagName":"div"} /-->
+<!-- wp:group {"className":"mw-page-heading","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-page-heading"><!-- wp:paragraph {"textColor":"accent-strong","fontSize":"small"} -->
+<p class="has-accent-strong-color has-text-color has-small-font-size">داستان‌ها و اخبار</p>
+<!-- /wp:paragraph --><!-- wp:query-title {"type":"archive","showPrefix":false} /--></div>
+<!-- /wp:group --><!-- wp:query {"queryId":1,"query":{"perPage":12,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"align":"wide"} -->
+<div class="wp-block-query alignwide"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} --><!-- wp:group {"className":"mw-surface","style":{"spacing":{"padding":{"top":"var:preset|spacing|20","right":"var:preset|spacing|20","bottom":"var:preset|spacing|20","left":"var:preset|spacing|20"}}}} --><div class="wp-block-group mw-surface" style="padding-top:var(--wp--preset--spacing--20);padding-right:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--20)"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"1","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|20"}}}} /--><!-- wp:post-title {"isLink":true,"fontSize":"large"} /--><!-- wp:post-excerpt {"moreText":""} /--></div><!-- /wp:group --><!-- /wp:post-template --><!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} --><!-- wp:query-pagination-previous /--><!-- wp:query-pagination-numbers /--><!-- wp:query-pagination-next /--><!-- /wp:query-pagination --><!-- wp:query-no-results --><!-- wp:paragraph --><p>موسیقی‌ای پیدا نشد.</p><!-- /wp:paragraph --><!-- /wp:query-no-results --></div>
+<!-- /wp:query --></main><!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

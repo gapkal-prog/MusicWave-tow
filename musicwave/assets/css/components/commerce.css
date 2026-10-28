@@ -1,0 +1,204 @@
+.mw-shop-page .wc-block-components-product-sale-badge,
+.mw-shop-page .wc-block-grid__product-onsale {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-pill);
+}
+
+.mw-shop-page .wc-block-components-product-price,
+.mw-shop-page .wc-block-grid__product-price {
+	color: var(--mw-color-text);
+	font-weight: 750;
+}
+
+.mw-shop-page .wc-block-components-product-button,
+.mw-shop-page .wc-block-grid__product-add-to-cart {
+	margin-top: auto;
+}
+
+/*
+ * SonicStream commerce: WC form fields and buttons follow the shared pill
+ * vocabulary — rounded controls on raised surfaces, accent fill on the
+ * primary action — so shop routes read like the rest of the app.
+ */
+.mw-shop-page .wc-block-components-text-input input,
+.mw-shop-page .wc-block-components-select .wc-block-components-select__input,
+.mw-shop-page .wc-block-components-select .wc-block-components-select__button {
+	background: var(--mw-color-surface-raised);
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-pill);
+}
+
+.mw-shop-page .wc-block-components-text-input input:focus,
+.mw-shop-page .wc-block-components-select .wc-block-components-select__button:focus {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 55%, transparent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 22%, transparent);
+	outline: none;
+}
+
+.mw-shop-page .wc-block-components-button {
+	border-radius: var(--mw-radius-pill);
+	font-weight: 700;
+}
+
+.mw-shop-page .wc-block-components-button:not(.is-link).is-primary {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+}
+
+.mw-shop-page .wc-block-components-button:not(.is-link).is-primary:hover:not(:disabled) {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent-strong);
+}
+
+.mw-shop-page .wc-block-components-chip {
+	background: var(--mw-color-surface-raised);
+	border-radius: var(--mw-radius-pill);
+}
+
+.mw-product-hero {
+	background:
+		radial-gradient(circle at 80% 10%, color-mix(in srgb, var(--mw-color-accent) 20%, transparent), transparent 38%),
+		var(--mw-color-surface);
+	margin-block-end: var(--wp--preset--spacing--40);
+}
+
+.mw-shop-page :is(.wc-block-cart, .wc-block-checkout, .woocommerce-MyAccount-content) {
+	background: color-mix(in srgb, var(--mw-color-surface) 88%, transparent);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+	padding: clamp(1rem, 3vw, 2rem);
+}
+
+/* ===================================================================
+ * Phase 2: Simplified checkout for virtual subscription only
+ * =================================================================== */
+
+/* Body classes added by CheckoutCustomizer when cart contains only virtual subscription – full billing address removal */
+.mw-checkout--virtual-only .wc-block-checkout__shipping-fields,
+.mw-checkout--virtual-only .wc-block-checkout__shipping-method,
+.mw-checkout--virtual-only .wc-block-checkout__pickup-options,
+.mw-checkout--virtual-only .wc-block-components-shipping-rates-control,
+.mw-checkout--virtual-only .wc-block-checkout__shipping-option,
+.mw-checkout--virtual-only .wc-block-components-totals-shipping,
+.mw-checkout--virtual-only .wc-block-checkout__billing-fields,
+.mw-checkout--virtual-only .wp-block-woocommerce-checkout-billing-address-block,
+.mw-checkout--virtual-only .wc-block-checkout__shipping-fields,
+.mw-checkout--virtual-only .wp-block-woocommerce-checkout-shipping-address-block,
+.mw-checkout--virtual-only .wp-block-woocommerce-checkout-shipping-methods-block {
+	display: none !important;
+}
+
+/* Classic checkout: fully hide billing address ("آدرس صورتحساب") for virtual-only */
+.mw-checkout--virtual-only .woocommerce-billing-fields,
+.mw-checkout--virtual-only .woocommerce-billing-fields h3,
+.mw-checkout--virtual-only .woocommerce-shipping-fields,
+.mw-checkout--no-billing-address .woocommerce-billing-fields,
+.mw-checkout--no-billing-address .woocommerce-billing-fields h3 {
+	display: none !important;
+}
+
+/* Keep only contact/email visible in classic – if theme separates billing */
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row,
+.mw-checkout--no-billing-address .woocommerce-billing-fields__field-wrapper .form-row {
+	display: none !important;
+}
+.mw-checkout--virtual-only #billing_email_field,
+.mw-checkout--virtual-only #billing_first_name_field,
+.mw-checkout--virtual-only #billing_last_name_field {
+	display: block !important;
+}
+
+/* Hide hidden billing fields marked by PHP */
+.mw-checkout--virtual-only .mw-hidden-billing-field,
+.mw-checkout--simplified .mw-hidden-billing-field {
+	display: none !important;
+}
+
+/* Fallback for :has() – hide all billing address rows */
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_company),
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_address_1),
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_address_2),
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_city),
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_state),
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_postcode),
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_country),
+.mw-checkout--virtual-only .woocommerce-billing-fields__field-wrapper .form-row:has(#billing_phone) {
+	display: none !important;
+}
+
+/* Minimal checkout styling – compact, modern */
+.mw-checkout--simplified .wc-block-checkout {
+	--wc-block-checkout-max-width: 48rem;
+}
+
+.mw-checkout--simplified .wc-block-checkout__main {
+	gap: var(--wp--preset--spacing--20);
+}
+
+.mw-checkout--simplified .wc-block-components-title {
+	font-size: 1.125rem;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+
+.mw-checkout--simplified .wc-block-checkout__contact-fields,
+.mw-checkout--simplified .wc-block-checkout__billing-fields {
+	padding: 1.25rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+}
+
+/* Hide order notes for virtual subscription */
+.mw-checkout--virtual-only .wc-block-checkout__additional-information,
+.mw-checkout--virtual-only .woocommerce-additional-fields {
+	display: none !important;
+}
+
+/* Make email field prominent */
+.mw-checkout--virtual-only .wc-block-components-text-input#email,
+.mw-checkout--virtual-only #billing_email_field {
+	order: -1;
+}
+
+.mw-checkout--virtual-only .wc-block-checkout__payment-method {
+	border-top: 1px solid var(--mw-color-border);
+	padding-top: var(--wp--preset--spacing--20);
+	margin-top: var(--wp--preset--spacing--20);
+}
+
+/* ===================================================================
+ * Thank-you page – hide order number & billing address per user request
+ * Default template (page-checkout.html) + virtual-only minimal mode
+ * =================================================================== */
+body.woocommerce-order-received .woocommerce-order-overview,
+body.mw-thankyou--virtual-only .woocommerce-order-overview {
+	display: none !important;
+}
+body.woocommerce-order-received .woocommerce-order-overview__order,
+body.mw-thankyou--virtual-only .woocommerce-order-overview__order {
+	display: none !important;
+}
+body.woocommerce-order-received .woocommerce-customer-details--billing,
+body.mw-thankyou--virtual-only .woocommerce-customer-details--billing,
+body.woocommerce-order-received .woocommerce-customer-details .col2-set .col-1,
+body.mw-thankyou--virtual-only .woocommerce-customer-details .col2-set .col-1 {
+	display: none !important;
+}
+/* If only billing was present, hide whole customer-details when billing hidden and shipping not needed */
+body.mw-thankyou--virtual-only .woocommerce-customer-details,
+body.woocommerce-order-received.mw-thankyou--subscription-only .woocommerce-customer-details {
+	display: none !important;
+}
+body.mw-thankyou--virtual-only .mw-thankyou-minimal {
+	max-width: 640px;
+	margin: 2.5rem auto;
+	padding: 2rem;
+	border-radius: 1rem;
+	background: var(--wp--preset--color--base, #fff);
+	border: 1px solid var(--wp--preset--color--border, #e5e7eb);
+	text-align: center;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}

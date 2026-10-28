@@ -1,0 +1,1549 @@
+/* ===================================================================
+ * MusicWave Account Dashboard – Modern Minimal Compact Design
+ * Phase 4: Professional, accessible, Site-Editor customizable
+ * =================================================================== */
+
+/* Base */
+.mw-account-library,
+.mw-music-library,
+.mw-dashboard-subscription {
+	margin: var(--wp--preset--spacing--30) 0;
+	padding: var(--wp--preset--spacing--20);
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+}
+
+/* Dashboard root */
+.mw-user-dashboard {
+	display: grid;
+	gap: 1.25rem;
+	margin-inline: auto;
+}
+
+.mw-user-dashboard--guest .mw-user-dashboard__welcome {
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+/* Welcome – compact, modern */
+.mw-user-dashboard__welcome,
+.mw-user-dashboard__welcome--vip,
+.mw-user-dashboard__welcome--standard {
+	display: flex;
+	gap: 1rem;
+	align-items: flex-start;
+	padding: 1.25rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+}
+
+.mw-user-dashboard__welcome--vip {
+	border-color: color-mix(in srgb, #ffb700 35%, var(--mw-color-border));
+	background:
+		radial-gradient(circle at 85% 15%, color-mix(in srgb, #ffb700 14%, transparent), transparent 40%),
+		var(--mw-color-surface);
+}
+
+.mw-user-dashboard__welcome h2 {
+	margin: 0.15rem 0 0.25rem;
+	font-size: clamp(1.25rem, 3vw, 1.75rem);
+	font-weight: 800;
+	letter-spacing: -0.015em;
+	line-height: 1.15;
+}
+
+.mw-user-dashboard__welcome p {
+	max-width: 56ch;
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.mw-user-dashboard__eyebrow {
+	color: var(--mw-color-accent-strong);
+	font-size: 0.6875rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.mw-user-dashboard__welcome--vip .mw-user-dashboard__eyebrow {
+	color: #8a5d00;
+}
+
+/* Avatar + VIP badge */
+.mw-user-dashboard__avatar-wrap {
+	position: relative;
+	flex: 0 0 auto;
+	display: grid;
+	place-items: center;
+}
+
+.mw-user-dashboard__avatar {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	border: 2px solid var(--mw-color-surface);
+	box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+}
+
+.mw-user-dashboard__welcome--vip .mw-user-dashboard__avatar {
+	border-color: color-mix(in srgb, #ffb700 60%, var(--mw-color-surface));
+}
+
+.mw-user-dashboard__vip-badge {
+	position: absolute;
+	inset-block-end: -0.35rem;
+	inset-inline-end: -0.35rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.75rem;
+	height: 1.125rem;
+	padding: 0 0.35rem;
+	color: #1a1a1a;
+	font-size: 0.625rem;
+	font-weight: 900;
+	letter-spacing: 0.05em;
+	background: linear-gradient(135deg, #ffd700, #ffb700);
+	border: 1.5px solid var(--mw-color-surface);
+	border-radius: 999px;
+	box-shadow: 0 2px 8px rgb(0 0 0 / 18%);
+}
+
+.mw-user-dashboard__welcome-main {
+	display: grid;
+	gap: 0.5rem;
+	min-width: 0;
+	flex: 1;
+}
+
+/* Subscription meta – real data */
+.mw-user-dashboard__subscription-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem 0.625rem;
+	align-items: center;
+	margin-top: 0.35rem;
+	font-size: 0.75rem;
+}
+
+.mw-user-dashboard__subscription-level {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	padding: 0.2rem 0.5rem;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 28%, var(--mw-color-border));
+	border-radius: 999px;
+	font-size: 0.6875rem;
+}
+
+.mw-user-dashboard__subscription-dot {
+	width: 0.375rem;
+	height: 0.375rem;
+	background: var(--mw-color-accent);
+	border-radius: 50%;
+}
+
+.mw-user-dashboard__subscription-meta--standard .mw-user-dashboard__subscription-level {
+	color: var(--mw-color-text-muted);
+	background: var(--mw-color-surface-raised);
+	border-color: var(--mw-color-border);
+}
+
+.mw-user-dashboard__subscription-expiry,
+.mw-user-dashboard__subscription-remaining {
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+}
+
+.mw-user-dashboard__subscription-remaining {
+	padding: 0.1rem 0.4rem;
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border-radius: 999px;
+}
+
+/* Renewal – appears after 90% */
+.mw-user-dashboard__renewal {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+	margin-top: 0.625rem;
+	padding: 0.625rem 0.75rem;
+	background: color-mix(in srgb, #ffb700 10%, transparent);
+	border: 1px solid color-mix(in srgb, #ffb700 30%, var(--mw-color-border));
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-user-dashboard__renewal-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.4rem 0.75rem;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	border-radius: 999px;
+}
+
+.mw-user-dashboard__renewal small {
+	color: var(--mw-color-text-muted);
+	font-size: 0.6875rem;
+}
+
+/* Stats – compact bar */
+.mw-user-dashboard__stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.625rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-user-dashboard__stats--compact {
+	gap: 0.5rem;
+}
+
+.mw-user-dashboard__stats li {
+	flex: 1 1 8rem;
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	padding: 0.75rem 0.875rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-user-dashboard__stats strong {
+	font-size: 1.125rem;
+	font-weight: 800;
+	color: var(--mw-color-text);
+	line-height: 1;
+}
+
+.mw-user-dashboard__stats span {
+	color: var(--mw-color-text-muted);
+	font-size: 0.6875rem;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+}
+
+/* Tabs – minimal, scrollable, accessible */
+.mw-user-dashboard__tabs {
+	display: flex;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	border-bottom: 1px solid var(--mw-color-border);
+}
+
+.mw-user-dashboard__tabs::-webkit-scrollbar {
+	display: none;
+}
+
+.mw-user-dashboard__tab {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.625rem 0.875rem;
+	color: var(--mw-color-text-muted);
+	font: inherit;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	white-space: nowrap;
+	background: transparent;
+	border: 1px solid transparent;
+	border-bottom: 2px solid transparent;
+	border-radius: var(--mw-radius-sm) var(--mw-radius-sm) 0 0;
+	cursor: pointer;
+	text-decoration: none;
+	transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+.mw-user-dashboard__tab > span {
+	display: grid;
+	place-items: center;
+	width: 1.5rem;
+	height: 1.5rem;
+	font-size: 0.875rem;
+	background: var(--mw-color-surface-raised);
+	border-radius: 50%;
+}
+
+.mw-user-dashboard__tab small {
+	display: none; /* compact: hide description, keep accessible via aria-label */
+}
+
+.mw-user-dashboard__tab:hover {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+}
+
+.mw-user-dashboard__tab.is-active {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-accent) 10%, transparent);
+	border-color: var(--mw-color-border);
+	border-bottom-color: var(--mw-color-accent);
+}
+
+.mw-user-dashboard__tab.is-active > span {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+}
+
+.mw-user-dashboard__tab:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+}
+
+.mw-user-dashboard__tab--logout {
+	margin-inline-start: auto;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-user-dashboard__tab--logout:hover {
+	color: #a33;
+	background: color-mix(in srgb, #c0392b 8%, transparent);
+	border-bottom-color: transparent;
+}
+
+/* Panels */
+.mw-user-dashboard__panels {
+	display: grid;
+	gap: 1rem;
+}
+
+.mw-user-dashboard__panel {
+	padding: 1.25rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+}
+
+.mw-user-dashboard__panel.is-open {
+	animation: mw-dashboard-reveal 200ms var(--mw-ease-out);
+}
+
+@keyframes mw-dashboard-reveal {
+	from { opacity: 0; transform: translateY(4px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.mw-user-dashboard__panel-title {
+	margin: 0 0 0.875rem;
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	padding-bottom: 0.625rem;
+	border-bottom: 1px solid var(--mw-color-border);
+}
+
+.mw-user-dashboard__panel-content {
+	display: grid;
+	gap: 1rem;
+	font-size: 0.875rem;
+}
+
+.mw-user-dashboard__empty-panel {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.875rem;
+}
+
+/* Stacked variation */
+.mw-user-dashboard--stacked .mw-user-dashboard__tabs {
+	flex-wrap: wrap;
+	border-bottom: none;
+	gap: 0.5rem;
+}
+
+.mw-user-dashboard--stacked .mw-user-dashboard__tab {
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+}
+
+.mw-user-dashboard--stacked .mw-user-dashboard__panel[hidden] {
+	display: block;
+}
+
+.mw-user-dashboard--stacked .mw-user-dashboard__panel {
+	border-inline-start: 3px solid var(--mw-color-accent);
+}
+
+/* Membership */
+.mw-membership__levels,
+.mw-membership__levels--detailed {
+	display: grid;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-membership__level {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.25rem 0.6rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 30%, var(--mw-color-border));
+	border-radius: 999px;
+}
+
+.mw-membership__level--active,
+.mw-membership__level--detailed {
+	display: grid;
+	gap: 0.375rem;
+	padding: 0.75rem 0.875rem;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-sm);
+	text-transform: none;
+	font-weight: 500;
+	letter-spacing: 0;
+}
+
+/* Legacy alias – new markup uses --active, old --detailed kept for BC */
+.mw-membership__level--detailed {
+	/* deprecated – use --active */
+}
+
+.mw-membership__level-main {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem 0.625rem;
+	align-items: center;
+}
+
+.mw-membership__level-name {
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+}
+
+.mw-membership__level-expiry,
+.mw-membership__level-remaining {
+	font-size: 0.75rem;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-membership__level-remaining {
+	padding: 0.1rem 0.35rem;
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border-radius: 999px;
+}
+
+.mw-membership__level-progress {
+	height: 0.25rem;
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border-radius: 999px;
+	overflow: hidden;
+}
+
+.mw-membership__level-progress-bar {
+	height: 100%;
+	background: linear-gradient(90deg, var(--mw-color-accent), #ffb700);
+}
+
+.mw-membership__level-order {
+	display: none !important;
+	/* Order number hidden per privacy requirement – no "سفارش #..." */
+	font-size: 0.6875rem;
+	color: var(--mw-color-accent-strong);
+	text-decoration: none;
+}
+
+.mw-membership__level-order:hover {
+	text-decoration: underline;
+}
+
+.mw-membership__level--lifetime {
+	border-color: color-mix(in srgb, #ffb700 35%, var(--mw-color-border));
+	background: color-mix(in srgb, #ffb700 10%, var(--mw-color-surface-raised));
+}
+
+.mw-membership__level--stacked {
+	border-style: dashed;
+}
+
+.mw-membership__level--renewal-needed {
+	border-color: color-mix(in srgb, #ff3b30 40%, var(--mw-color-border));
+}
+
+.mw-membership__level-expiry--lifetime {
+	color: var(--mw-color-accent-strong);
+	font-weight: 700;
+}
+
+.mw-membership__level-stacked-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.1rem 0.4rem;
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: #fff;
+	background: linear-gradient(90deg, var(--mw-color-accent), #ffb700);
+	border-radius: 999px;
+}
+
+.mw-membership__level-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem 0.625rem;
+	font-size: 0.6875rem;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-membership__level-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+	margin-top: 0.25rem;
+}
+
+.mw-membership__level-extend {
+	padding: 0.25rem 0.6rem;
+	font-size: 0.75rem;
+	border-radius: 999px;
+}
+
+.mw-membership__level-reserve {
+	font-size: 0.6875rem;
+	color: var(--mw-color-text-muted);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.mw-membership__level-reserve:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-membership__notice {
+	margin: 0 0 0.875rem;
+	padding: 0.625rem 0.875rem;
+	font-size: 0.8125rem;
+	background: color-mix(in srgb, var(--mw-color-accent) 10%, transparent);
+	border-inline-start: 2px solid var(--mw-color-accent-strong);
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-membership__empty {
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+}
+
+.mw-membership__plans {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(32%, 1fr));
+	gap: 0.875rem;
+	margin: 1rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-membership__plan {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 1.05rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md, 0.75rem);
+	transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.mw-membership__plan:hover {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 42%, var(--mw-color-border));
+	transform: translateY(-2px);
+}
+
+.mw-membership__plan--featured {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 32%, var(--mw-color-border));
+	background: linear-gradient(180deg, color-mix(in srgb, var(--mw-color-accent) 5%, var(--mw-color-surface)), var(--mw-color-surface));
+}
+
+.mw-membership__plan--active {
+	border-color: color-mix(in srgb, #ffb700 45%, var(--mw-color-border));
+	background: linear-gradient(180deg, color-mix(in srgb, #ffb700 6%, var(--mw-color-surface)), var(--mw-color-surface));
+}
+
+.mw-membership__plan-details {
+	display: grid;
+	gap: 0.625rem;
+}
+
+.mw-membership__plan-head {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.65rem;
+}
+
+.mw-membership__plan-icon {
+	display: inline-grid;
+	place-items: center;
+	flex: 0 0 2.25rem;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: var(--mw-radius-sm);
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, var(--mw-color-surface-raised));
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 24%, var(--mw-color-border));
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-membership__plan-title-wrap {
+	display: grid;
+	gap: 0.25rem;
+	min-width: 0;
+}
+
+.mw-membership__plan-details strong {
+	font-size: 0.9375rem;
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+.mw-membership__plan-title-link {
+	color: var(--mw-color-text);
+	text-decoration: none;
+}
+
+.mw-membership__plan-title-link:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-membership__plan-tags {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.35rem;
+}
+
+.mw-membership__plan-duration,
+.mw-membership__plan-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.1rem 0.45rem;
+	border-radius: 999px;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	color: var(--mw-color-text-muted);
+	font-size: 0.72rem;
+	font-weight: 600;
+}
+
+.mw-membership__plan-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.1rem 0.5rem;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	color: var(--mw-color-accent-strong);
+	font-size: 0.6875rem;
+	font-weight: 700;
+}
+
+.mw-membership__plan-badge--active {
+	background: color-mix(in srgb, #ffb700 18%, transparent);
+	color: var(--mw-color-text);
+}
+
+.mw-membership__plan-badge--sale {
+	background: color-mix(in srgb, #16a34a 16%, transparent);
+	color: var(--mw-color-text);
+}
+
+.mw-membership__plan-pricing {
+	padding-top: 0.125rem;
+}
+
+.mw-membership__plan-price {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.4rem;
+	font-size: 1rem;
+	font-weight: 800;
+	color: var(--mw-color-text);
+}
+
+.mw-membership__plan-price del {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-membership__plan-price ins {
+	text-decoration: none;
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-membership__plan-desc {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+	line-height: 1.6;
+}
+
+.mw-membership__plan-features {
+	display: grid;
+	gap: 0.375rem;
+	margin: 0.125rem 0 0;
+	padding: 0.625rem 0 0;
+	border-top: 1px solid var(--mw-color-border);
+	list-style: none;
+}
+
+.mw-membership__plan-features li {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.4rem;
+	font-size: 0.78125rem;
+	line-height: 1.5;
+	color: var(--mw-color-text);
+}
+
+.mw-membership__plan-check {
+	display: inline-grid;
+	place-items: center;
+	flex: 0 0 1rem;
+	margin-top: 0.15rem;
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-membership__plan-status {
+	margin: 0;
+	padding: 0.45rem 0.625rem;
+	border-radius: var(--mw-radius-sm);
+	background: color-mix(in srgb, var(--mw-color-accent) 8%, var(--mw-color-surface-raised));
+	color: var(--mw-color-text);
+	font-size: 0.75rem;
+	line-height: 1.5;
+}
+
+.mw-membership__plan-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding-top: 0.5rem;
+	border-top: 1px solid color-mix(in srgb, var(--mw-color-border) 70%, transparent);
+}
+
+.mw-membership__buy {
+	align-self: flex-start;
+	padding: 0.45rem 0.9rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	border-radius: 999px;
+}
+
+.mw-membership__plan-link {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--mw-color-text-muted);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.mw-membership__plan-link:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-product-vip-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0 0 0.75rem;
+}
+
+.mw-product-vip-lead {
+	margin: 0 0 0.875rem;
+	color: var(--mw-color-text-muted);
+	line-height: 1.65;
+}
+
+.mw-product-details-panel {
+	display: grid;
+	gap: 1.5rem;
+	margin-top: var(--wp--preset--spacing--30, 1.5rem);
+	padding: var(--wp--preset--spacing--40, 2rem);
+}
+
+.mw-product-details-panel__heading {
+	margin: 0 0 0.75rem;
+	font-size: 1.125rem;
+	font-weight: 700;
+}
+
+.mw-product-details-panel__prose p {
+	margin: 0 0 0.75rem;
+	line-height: 1.75;
+	color: var(--mw-color-text);
+}
+
+.mw-product-details-panel__prose ul {
+	display: grid;
+	gap: 0.4rem;
+	margin: 0.5rem 0 0;
+	padding-inline-start: 1.25rem;
+}
+
+.mw-product-details-panel__plans {
+	padding-top: 1.25rem;
+	border-top: 1px solid var(--mw-color-border);
+}
+
+/* New granular blocks */
+.mw-dashboard-welcome,
+.mw-dashboard-stats,
+.mw-dashboard-subscription {
+	display: grid;
+	gap: 0.875rem;
+}
+
+.mw-dashboard-subscription__heading {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+.mw-dashboard-subscription--vip {
+	border-color: color-mix(in srgb, #ffb700 30%, var(--mw-color-border));
+}
+
+.mw-dashboard-subscription__renewal {
+	margin-top: 0.75rem;
+}
+
+/* WooCommerce tables inside dashboard */
+.mw-user-dashboard__panel-content .woocommerce-orders-table,
+.mw-user-dashboard__panel-content .woocommerce-MyAccount-downloads-table,
+.mw-user-dashboard__panel-content .woocommerce_table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.8125rem;
+}
+
+.mw-user-dashboard__panel-content .woocommerce-orders-table th,
+.mw-user-dashboard__panel-content .woocommerce-orders-table td {
+	padding: 0.5rem;
+	text-align: start;
+	border-bottom: 1px solid var(--mw-color-border);
+}
+
+.mw-user-dashboard__addresses {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+	gap: 1rem;
+	align-items: start;
+}
+
+.mw-user-dashboard__address {
+	padding: 1rem;
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-sm);
+	background: var(--mw-color-surface);
+}
+
+.mw-user-dashboard__address h4 {
+	margin: 0 0 0.75rem;
+	font-size: 0.875rem;
+}
+
+/* Library */
+.mw-account-library__intro,
+.mw-music-library__intro {
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+	margin: 0.25rem 0 0;
+}
+
+.mw-account-library__items,
+.mw-music-library__items {
+	display: grid;
+	gap: 0.75rem;
+	margin: 1rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-account-library__item,
+.mw-music-library__item {
+	display: grid;
+	grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.75rem;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-account-library__image,
+.mw-music-library__image {
+	width: 3.5rem;
+	height: 3.5rem;
+	object-fit: cover;
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-account-library__details,
+.mw-music-library__details {
+	display: grid;
+	gap: 0.2rem;
+	min-width: 0;
+}
+
+.mw-account-library__details span,
+.mw-music-library__details span {
+	color: var(--mw-color-text-muted);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.mw-account-library__details a,
+.mw-music-library__details a {
+	color: var(--mw-color-text);
+	text-decoration: none;
+	font-size: 0.875rem;
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-account-library__details a:hover,
+.mw-music-library__details a:hover {
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-account-library__actions {
+	display: flex;
+	gap: 0.375rem;
+	align-items: center;
+}
+
+/* Music library specific */
+.mw-music-library__header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.mw-music-library__header h2 {
+	margin: 0;
+	font-size: 1rem;
+}
+
+.mw-music-library__tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	margin-top: 0.75rem;
+}
+
+.mw-music-library__tab {
+	display: inline-flex;
+	gap: 0.3rem;
+	align-items: center;
+	padding: 0.35rem 0.75rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	text-decoration: none;
+	color: var(--mw-color-text);
+}
+
+.mw-music-library__tab.is-active {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: var(--mw-color-accent);
+}
+
+.mw-music-library__items--grid {
+	grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+}
+
+.mw-music-library__items--grid .mw-music-library__item {
+	grid-template-columns: 1fr;
+	gap: 0.5rem;
+}
+
+.mw-music-library__items--grid .mw-music-library__art {
+	width: 100%;
+	aspect-ratio: 1;
+}
+
+.mw-music-library__placeholder {
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	background: var(--mw-color-accent);
+	color: var(--mw-color-on-accent);
+	font-weight: 800;
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-music-library__item--artist .mw-music-library__image,
+.mw-music-library__item--artist .mw-music-library__placeholder {
+	border-radius: 50%;
+}
+
+.mw-music-library__meta {
+	display: flex;
+	gap: 0.3rem;
+	flex-wrap: wrap;
+}
+
+.mw-music-library__badge {
+	padding: 0.1rem 0.4rem;
+	font-size: 0.625rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, transparent);
+	border-radius: 999px;
+}
+
+/* Order details */
+.mw-order-subscription-details {
+	margin: 1.5rem 0;
+	padding: 1rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-order-subscription-details h3 {
+	margin: 0 0 0.625rem;
+	font-size: 0.9375rem;
+}
+
+.mw-order-subscription-badge {
+	display: inline-flex;
+	padding: 0.15rem 0.5rem;
+	font-size: 0.625rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+}
+
+.mw-order-subscription-badge--active {
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 28%, var(--mw-color-border));
+}
+
+/* Responsive */
+@media (max-width: 40rem) {
+	.mw-user-dashboard__welcome {
+		flex-direction: column;
+	}
+	.mw-user-dashboard__tabs {
+		gap: 0.25rem;
+	}
+	.mw-user-dashboard__tab {
+		padding: 0.5rem 0.625rem;
+		font-size: 0.75rem;
+	}
+	.mw-account-library__item,
+	.mw-music-library__item {
+		grid-template-columns: 2.75rem minmax(0, 1fr);
+	}
+	.mw-account-library__image,
+	.mw-music-library__image {
+		width: 2.75rem;
+		height: 2.75rem;
+	}
+	.mw-account-library__actions {
+		grid-column: 1 / -1;
+	}
+	.mw-user-dashboard__stats {
+		flex-direction: column;
+	}
+	.mw-user-dashboard__stats li {
+		flex: 1 1 auto;
+	}
+	.mw-membership__plans {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-user-dashboard__panel.is-open,
+	.mw-order-subscription-details {
+		animation: none;
+	}
+}
+
+/* Accessibility */
+.mw-user-dashboard__panel-content a:focus-visible,
+.mw-membership__buy:focus-visible,
+.mw-user-dashboard__renewal-button:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+}
+
+/* Library remove button */
+.mw-library-remove {
+	width: 1.75rem;
+	height: 1.75rem;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	border: 1px solid transparent;
+	background: transparent;
+	color: var(--mw-color-text-muted);
+	cursor: pointer;
+}
+
+.mw-library-remove:hover {
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	color: var(--mw-color-text);
+}
+
+/* Music library guest */
+.mw-music-library--guest {
+	text-align: center;
+	padding: 1.5rem;
+}
+
+.mw-music-library__guest {
+	display: grid;
+	gap: 0.625rem;
+	justify-items: center;
+	max-width: 36rem;
+	margin: 0 auto;
+}
+
+.mw-music-library__eyebrow {
+	font-size: 0.6875rem;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--mw-color-accent-strong);
+}
+
+/* ===================================================================
+ * Modern Account Editing – compact, minimal, accessible
+ * =================================================================== */
+
+/* Shared card base for all new granular blocks */
+.mw-dashboard-account,
+.mw-dashboard-addresses,
+.mw-dashboard-payment,
+.mw-dashboard-orders,
+.mw-dashboard-downloads,
+.mw-dashboard-edit {
+	padding: 1.25rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+	display: grid;
+	gap: 0.9rem;
+}
+
+.mw-dashboard-account--compact,
+.mw-dashboard-addresses--compact,
+.mw-dashboard-payment--compact,
+.mw-dashboard-orders--compact,
+.mw-dashboard-downloads--compact,
+.mw-dashboard-edit--compact {
+	padding: 1rem;
+	border-radius: 16px;
+}
+
+.mw-dashboard-account__heading,
+.mw-dashboard-addresses__heading,
+.mw-dashboard-payment__heading,
+.mw-dashboard-orders__heading,
+.mw-dashboard-downloads__heading,
+.mw-dashboard-edit__heading {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 750;
+	letter-spacing: -0.015em;
+	line-height: 1.25;
+}
+
+.mw-dashboard-account__desc,
+.mw-dashboard-edit__desc {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	max-width: 56ch;
+}
+
+/* Avatar in account block */
+.mw-dashboard-account__avatar {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-top: 0.25rem;
+}
+.mw-dashboard-account__avatar-img {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	border: 2px solid var(--mw-color-surface);
+	box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+}
+
+/* Forms – modern minimal */
+.mw-dashboard-account__form .woocommerce-EditAccountForm,
+.mw-dashboard-edit__form .woocommerce-EditAccountForm,
+.woocommerce-EditAccountForm {
+	display: grid;
+	gap: 1rem;
+}
+
+.woocommerce-EditAccountForm .form-row {
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 0.4rem;
+}
+
+.woocommerce-EditAccountForm label {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--mw-color-text);
+	letter-spacing: 0.01em;
+}
+
+.woocommerce-EditAccountForm input.input-text,
+.woocommerce-address-fields input.input-text,
+.woocommerce-billing-fields input.input-text,
+.mw-input {
+	width: -webkit-fill-available;
+	padding: 0.8em 1em;
+	font: inherit;
+	font-size: 0.875rem;
+	line-height: 1.4;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised, #fff);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 85%, transparent);
+	border-radius: 12px;
+	transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.woocommerce-EditAccountForm input.input-text::placeholder,
+.mw-input::placeholder {
+	color: var(--mw-color-text-muted);
+	opacity: 0.7;
+}
+
+.woocommerce-EditAccountForm input.input-text:focus,
+.woocommerce-address-fields input.input-text:focus,
+.mw-input:focus {
+	outline: none;
+	border-color: color-mix(in srgb, var(--mw-color-accent) 55%, var(--mw-color-border));
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 18%, transparent);
+	background: var(--mw-color-surface);
+}
+
+.woocommerce-EditAccountForm .form-row-wide {
+	grid-column: 1 / -1;
+}
+.woocommerce-EditAccountForm .form-row-first,
+.woocommerce-EditAccountForm .form-row-last {
+	display: grid;
+}
+@media (min-width: 48rem) {
+	.woocommerce-EditAccountForm {
+		grid-template-columns: 1fr 1fr;
+	}
+	.woocommerce-EditAccountForm .form-row-wide,
+	.woocommerce-EditAccountForm fieldset {
+		grid-column: 1 / -1;
+	}
+}
+
+/* Fieldset – password change */
+.woocommerce-EditAccountForm fieldset {
+	border: 1px solid var(--mw-color-border);
+	border-radius: 12px;
+	padding: 1rem;
+	margin: 0.25rem 0 0;
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 96%, transparent);
+}
+.woocommerce-EditAccountForm fieldset legend {
+	font-size: 0.875rem;
+	font-weight: 700;
+	padding: 0 0.5em;
+	color: var(--mw-color-text);
+}
+
+/* Submit button */
+.woocommerce-EditAccountForm button[type="submit"],
+.woocommerce-address-fields button[type="submit"] {
+	justify-self: start;
+	padding: 0.7em 1.25em;
+	font-size: 0.875rem;
+	font-weight: 700;
+	border-radius: 999px;
+	border: 1px solid transparent;
+	background: var(--mw-color-accent);
+	color: var(--mw-color-on-accent);
+	cursor: pointer;
+	transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+}
+.woocommerce-EditAccountForm button[type="submit"]:hover,
+.woocommerce-address-fields button[type="submit"]:hover {
+	filter: brightness(1.05);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px color-mix(in srgb, var(--mw-color-accent) 28%, transparent);
+}
+.woocommerce-EditAccountForm button[type="submit"]:active {
+	transform: translateY(0);
+}
+
+/* Addresses – compact cards */
+.mw-dashboard-addresses__grid {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.mw-dashboard-addresses__card {
+	padding: 1.1rem;
+	border: 1px solid var(--mw-color-border);
+	border-radius: 14px;
+	background: color-mix(in srgb, var(--mw-color-surface) 96%, var(--mw-color-text) 4%);
+	display: grid;
+	gap: 0.75rem;
+	transition: border-color 150ms ease, transform 150ms ease;
+}
+.mw-dashboard-addresses__card:hover {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 24%, var(--mw-color-border));
+	transform: translateY(-1px);
+}
+.mw-dashboard-addresses__card-title {
+	margin: 0;
+	font-size: 0.875rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+.mw-dashboard-addresses__address {
+	font-style: normal;
+	line-height: 1.6;
+	color: var(--mw-color-text);
+	font-size: 0.875rem;
+}
+.mw-dashboard-addresses__empty {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+}
+.mw-dashboard-addresses__edit {
+	align-self: start;
+	font-size: 0.8125rem;
+	padding: 0.45em 0.9em;
+	border-radius: 999px;
+}
+
+/* Payment methods – modern list */
+.mw-dashboard-payment__inner .woocommerce-PaymentMethods {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	gap: 0.75rem;
+}
+.mw-dashboard-payment__inner .woocommerce-PaymentMethod {
+	padding: 0.9rem;
+	border: 1px solid var(--mw-color-border);
+	border-radius: 12px;
+	background: var(--mw-color-surface-raised);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+	justify-content: space-between;
+}
+.mw-dashboard-payment__inner .woocommerce-PaymentMethod:hover {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 22%, var(--mw-color-border));
+}
+.mw-dashboard-payment__inner .woocommerce-PaymentMethods .button {
+	font-size: 0.75rem;
+	padding: 0.4em 0.8em;
+	border-radius: 999px;
+}
+
+/* Orders – compact table with badges */
+.mw-dashboard-orders--compact .woocommerce-orders-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 0.8125rem;
+	overflow: hidden;
+	border-radius: 12px;
+	border: 1px solid var(--mw-color-border);
+}
+.mw-dashboard-orders--compact .woocommerce-orders-table th {
+	background: var(--mw-color-surface-raised);
+	font-weight: 700;
+	font-size: 0.75rem;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: var(--mw-color-text-muted);
+	padding: 0.7em 0.9em;
+	text-align: start;
+}
+.mw-dashboard-orders--compact .woocommerce-orders-table td {
+	padding: 0.7em 0.9em;
+	border-top: 1px solid color-mix(in srgb, var(--mw-color-border) 80%, transparent);
+}
+.mw-dashboard-orders--compact .woocommerce-orders-table tr:hover td {
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 85%, transparent);
+}
+.mw-dashboard-orders--compact .woocommerce-orders-table .woocommerce-orders-table__cell-order-status {
+	font-weight: 600;
+}
+.mw-dashboard-orders--compact .woocommerce-orders-table .woocommerce-orders-table__cell-order-status .nobr {
+	display: inline-flex;
+	padding: 0.15em 0.55em;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-accent) 20%, var(--mw-color-border));
+	font-size: 0.75rem;
+}
+
+/* Downloads */
+.mw-dashboard-downloads__inner .woocommerce-table--downloads {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 1px solid var(--mw-color-border);
+	border-radius: 12px;
+	overflow: hidden;
+	font-size: 0.8125rem;
+}
+.mw-dashboard-downloads__inner .woocommerce-table--downloads th {
+	background: var(--mw-color-surface-raised);
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--mw-color-text-muted);
+	padding: 0.7em 0.9em;
+	text-align: start;
+}
+.mw-dashboard-downloads__inner .woocommerce-table--downloads td {
+	padding: 0.7em 0.9em;
+	border-top: 1px solid color-mix(in srgb, var(--mw-color-border) 80%, transparent);
+}
+
+/* Edit account – card with subtle shadow */
+.mw-dashboard-edit--compact .woocommerce-EditAccountForm {
+	background: var(--mw-color-surface);
+	border: 1px solid color-mix(in srgb, var(--mw-color-border) 90%, transparent);
+	border-radius: 16px;
+	padding: 1.25rem;
+	box-shadow: 0 1px 2px rgb(0 0 0 / 4%), 0 4px 16px rgb(0 0 0 / 4%);
+}
+
+/* Notices inside account blocks */
+.mw-dashboard-account .woocommerce-message,
+.mw-dashboard-account .woocommerce-error,
+.mw-dashboard-edit .woocommerce-message,
+.mw-dashboard-edit .woocommerce-error,
+.mw-dashboard-addresses .woocommerce-message,
+.mw-dashboard-addresses .woocommerce-error {
+	padding: 0.75em 1em;
+	border-radius: 12px;
+	font-size: 0.8125rem;
+	margin: 0 0 1em;
+	border: 1px solid var(--mw-color-border);
+}
+.mw-dashboard-account .woocommerce-message,
+.mw-dashboard-edit .woocommerce-message {
+	background: color-mix(in srgb, var(--mw-color-accent) 10%, var(--mw-color-surface));
+	border-color: color-mix(in srgb, var(--mw-color-accent) 24%, var(--mw-color-border));
+}
+.mw-dashboard-account .woocommerce-error,
+.mw-dashboard-edit .woocommerce-error {
+	background: color-mix(in srgb, #ff3b30 8%, var(--mw-color-surface));
+	border-color: color-mix(in srgb, #ff3b30 28%, var(--mw-color-border));
+	color: #a33;
+}
+
+/* Compact field – floating hint */
+.mw-field--compact {
+	position: relative;
+}
+.mw-field--optional .optional {
+	font-weight: 400;
+	color: var(--mw-color-text-muted);
+	font-size: 0.75em;
+}
+
+/* Editor placeholder */
+.mw-block-editor-empty[data-mw-empty-block*="dashboard"] {
+	padding: 1rem;
+	border: 1px dashed var(--mw-color-border);
+	border-radius: 12px;
+	background: var(--mw-color-surface-raised);
+}
+
+/* Release meta action row & personal library button theme tokens */
+.mw-release-meta__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-block-start: 0.75rem;
+}
+
+.mw-library-button {
+	--mw-color-heart: #ff2d55;
+}
+
+/* Responsive tweaks for new blocks */
+@media (max-width: 40rem) {
+	.mw-dashboard-account,
+	.mw-dashboard-addresses,
+	.mw-dashboard-payment,
+	.mw-dashboard-orders,
+	.mw-dashboard-downloads,
+	.mw-dashboard-edit {
+		padding: 0.9rem;
+	}
+	.mw-dashboard-addresses__grid {
+		grid-template-columns: 1fr;
+	}
+	.woocommerce-EditAccountForm {
+		grid-template-columns: 1fr;
+	}
+}
+
+
+

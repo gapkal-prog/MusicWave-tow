@@ -1,0 +1,236 @@
+/* ================================================================
+   Search unified — like mw-catalog-suggest__list but for search page
+   Grouped: releases by type (track, album, podcast, etc), artists, genres, products
+   Professional like Spotify/YouTube search results page
+   ================================================================ */
+
+.mw-search-unified {
+	--search-radius: var(--mw-radius-lg, 1rem);
+	margin-block: 0 var(--wp--preset--spacing--40);
+}
+
+.mw-search-unified__groups {
+	display: grid;
+	gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Group */
+.mw-search-unified__group {
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border-subtle);
+	border-radius: var(--search-radius);
+	box-shadow: var(--mw-shadow-card);
+	overflow: clip;
+	transition: box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.mw-search-unified__group:where(:hover) {
+	border-color: var(--mw-color-border);
+	box-shadow: var(--mw-shadow-floating);
+}
+
+.mw-search-unified__group-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	padding: 0.85rem 1.1rem;
+	background:
+		radial-gradient(80% 60% at 18% 20%, color-mix(in srgb, var(--mw-color-accent) 8%, transparent), transparent 60%),
+		color-mix(in srgb, var(--mw-color-surface) 80%, transparent);
+	border-block-end: 1px solid var(--mw-color-border-subtle);
+}
+
+.mw-search-unified__group-title {
+	margin: 0;
+	font-size: 0.95rem;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	color: var(--mw-color-text);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.mw-search-unified__group-title::before {
+	content: "";
+	inline-size: 3px;
+	block-size: 1.1em;
+	background: var(--mw-color-accent);
+	border-radius: 999px;
+}
+
+.mw-search-unified__group-count {
+	flex: 0 0 auto;
+	min-inline-size: 1.5rem;
+	block-size: 1.5rem;
+	display: grid;
+	place-items: center;
+	padding: 0 0.4rem;
+	font-size: 0.7rem;
+	font-weight: 800;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border-subtle);
+	border-radius: 999px;
+	color: var(--mw-color-text-muted);
+}
+
+/* List — like catalog-suggest__list */
+.mw-search-unified__list {
+	margin: 0;
+	padding: 0.5rem;
+	list-style: none;
+	display: grid;
+	gap: 0.25rem;
+}
+
+.mw-search-unified__item {
+	border-radius: var(--mw-radius-md);
+	border: 1px solid transparent;
+	transition: background 180ms ease, border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.mw-search-unified__item:where(:hover) {
+	background: color-mix(in srgb, var(--mw-color-accent) 8%, var(--mw-color-surface-raised));
+	border-color: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	transform: translateX(2px);
+	box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.mw-search-unified__link {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+	padding: 0.7rem 0.85rem;
+	text-decoration: none;
+	color: inherit;
+	min-block-size: 3.25rem;
+}
+
+.mw-search-unified__icon,
+.mw-search-unified__thumb {
+	flex: 0 0 auto;
+	inline-size: 2.5rem;
+	block-size: 2.5rem;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border-subtle);
+	font-size: 1rem;
+	line-height: 1;
+	overflow: clip;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-search-unified__icon .mw-search-unified__icon-svg {
+	inline-size: 1.2rem;
+	block-size: 1.2rem;
+	display: block;
+}
+
+.mw-search-unified__thumb img {
+	inline-size: 100%;
+	block-size: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.mw-search-unified__item--release .mw-search-unified__icon {
+	background: color-mix(in srgb, var(--mw-color-accent) 12%, var(--mw-color-surface-raised));
+	border-color: color-mix(in srgb, var(--mw-color-accent) 18%, transparent);
+}
+
+.mw-search-unified__item--artist .mw-search-unified__icon {
+	background: color-mix(in srgb, #8b5cf6 12%, var(--mw-color-surface-raised));
+}
+
+.mw-search-unified__item--product .mw-search-unified__icon {
+	background: color-mix(in srgb, #10b981 12%, var(--mw-color-surface-raised));
+}
+
+.mw-search-unified__item--podcast_show .mw-search-unified__icon,
+.mw-search-unified__item--podcast_episode .mw-search-unified__icon {
+	background: color-mix(in srgb, #f59e0b 14%, var(--mw-color-surface-raised));
+}
+
+.mw-search-unified__label {
+	flex: 1 1 auto;
+	min-inline-size: 0;
+	font-size: 0.95rem;
+	font-weight: 600;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.mw-search-unified__type {
+	flex: 0 0 auto;
+	padding: 0.2rem 0.5rem;
+	font-size: 0.62rem;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-text) 5%, transparent);
+	border: 1px solid var(--mw-color-border-subtle);
+	border-radius: var(--mw-radius-pill);
+	line-height: 1;
+}
+
+.mw-search-unified__item:where(:hover) .mw-search-unified__type {
+	color: var(--mw-color-accent);
+	background: var(--mw-color-accent-soft);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 18%, transparent);
+}
+
+/* Specific release type colors */
+.mw-search-unified__group--album .mw-search-unified__group-header {
+	background:
+		radial-gradient(80% 60% at 18% 20%, color-mix(in srgb, #8b5cf6 10%, transparent), transparent 60%),
+		var(--mw-color-surface);
+}
+
+.mw-search-unified__group--podcast_show .mw-search-unified__group-header,
+.mw-search-unified__group--podcast_episode .mw-search-unified__group-header {
+	background:
+		radial-gradient(80% 60% at 18% 20%, color-mix(in srgb, #f59e0b 10%, transparent), transparent 60%),
+		var(--mw-color-surface);
+}
+
+.mw-search-unified__group--track .mw-search-unified__group-header {
+	background:
+		radial-gradient(80% 60% at 18% 20%, color-mix(in srgb, var(--mw-color-accent) 10%, transparent), transparent 60%),
+		var(--mw-color-surface);
+}
+
+/* Responsive */
+@media (max-width: 48rem) {
+	.mw-search-unified__list {
+		padding: 0.35rem;
+	}
+
+	.mw-search-unified__link {
+		padding: 0.6rem 0.7rem;
+		gap: 0.7rem;
+	}
+
+	.mw-search-unified__icon,
+	.mw-search-unified__thumb {
+		inline-size: 2.2rem;
+		block-size: 2.2rem;
+		font-size: 0.9rem;
+	}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	.mw-search-unified__group,
+	.mw-search-unified__item {
+		transition: none;
+	}
+
+	.mw-search-unified__item:where(:hover) {
+		transform: none;
+	}
+}

@@ -1,0 +1,1136 @@
+/**
+ * MusicWave stream rail + top bar (WAVE look) — parts/header-stream.html
+ * Professional, block-controlled header: brand via site-logo/site-title,
+ * search via music-wave/header-search, theme toggle via music-wave/theme-toggle,
+ * rail toggle via music-wave/rail-toggle, bottom bar via navigation mw-rail__tabbar.
+ * No Customizer data attributes – all visibility controlled by blocks in Site Editor.
+ */
+
+/* ---------- Shared chrome ---------- */
+
+.mw-nav-icon {
+	display: inline-grid;
+	flex: 0 0 auto;
+	place-items: center;
+	inline-size: var(--mw-rail-icon-size, 1.2rem);
+	block-size: var(--mw-rail-icon-size, 1.2rem);
+	color: currentColor;
+	transition: transform var(--mw-speed-fast) var(--mw-ease-bounce), color var(--mw-speed-fast) ease;
+}
+
+.mw-nav-avatar,
+.mw-nav-avatar__img {
+	inline-size: 100%;
+	block-size: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+/* Horizontal header nav: icons only when the nav opts in (.mw-icon-nav). */
+.mw-site-nav:not(.mw-icon-nav) .mw-nav-icon {
+	display: none;
+}
+
+.mw-site-nav.mw-icon-nav .wp-block-navigation-item__content {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+/* VIP button (any header). */
+.mw-topbar-vip {
+	flex: 0 0 auto;
+	margin: 0;
+}
+
+.mw-btn-vip .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	min-block-size: 2.4rem;
+	padding: 0 1rem 0 0.85rem;
+	color: var(--mw-color-on-accent);
+	background: linear-gradient(135deg, var(--mw-color-accent-strong), var(--mw-color-accent));
+	border: 0;
+	border-radius: var(--mw-radius-md, 12px);
+	box-shadow: var(--mw-shadow-glow), var(--mw-glass-specular);
+	font-size: 0.82rem;
+	font-weight: 800;
+	line-height: 1;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: transform var(--mw-speed-fast) var(--mw-ease-bounce), box-shadow var(--mw-speed-fast) ease, filter var(--mw-speed-fast) ease;
+}
+
+.mw-btn-vip .wp-block-button__link::before {
+	content: "";
+	inline-size: 1rem;
+	block-size: 1rem;
+	background: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='m4 8 4 4 4-6 4 6 4-4-1.5 10h-13z'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='m4 8 4 4 4-6 4 6 4-4-1.5 10h-13z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.mw-btn-vip .wp-block-button__link:hover,
+.mw-btn-vip .wp-block-button__link:focus-visible {
+	transform: translateY(-1px);
+	filter: brightness(1.06);
+	box-shadow: 0 10px 32px -6px var(--mw-color-accent-glow), var(--mw-glass-specular);
+}
+
+/* Account cluster: round icon buttons (bell + avatar). */
+.mw-stream-account .wp-block-navigation__container {
+	gap: 0.4rem;
+}
+
+.mw-stream-account .wp-block-navigation-item__content {
+	position: relative;
+	display: inline-grid;
+	place-items: center;
+	box-sizing: border-box;
+	inline-size: 2.5rem;
+	block-size: 2.5rem;
+	padding: 0;
+	color: var(--mw-color-text-muted);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 50%;
+	box-shadow: var(--mw-glass-specular);
+	transition: background-color var(--mw-speed-fast) ease, color var(--mw-speed-fast) ease, border-color var(--mw-speed-fast) ease, transform var(--mw-speed-fast) var(--mw-ease-bounce);
+}
+
+.mw-stream-account .wp-block-navigation-item__label {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.mw-stream-account .wp-block-navigation-item__content:hover,
+.mw-stream-account .wp-block-navigation-item__content:focus-visible {
+	color: var(--mw-color-text);
+	border-color: var(--mw-color-border-strong);
+	transform: translateY(-1px);
+}
+
+.mw-stream-account .wp-block-navigation-item__content:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+}
+
+.mw-stream-account .mw-stream-account__item .wp-block-navigation-item__content {
+	padding: 0;
+	overflow: hidden;
+	border-color: var(--mw-color-border-strong);
+}
+
+.mw-stream-account .mw-stream-account__item .mw-nav-avatar {
+	inline-size: 100%;
+	block-size: 100%;
+}
+
+.mw-stream-account .current-menu-item > .wp-block-navigation-item__content {
+	color: var(--mw-color-accent);
+	border-color: var(--mw-color-accent);
+	box-shadow: 0 0 0 2px var(--mw-color-accent-soft);
+}
+
+/* ---------- Rail: items ---------- */
+
+.mw-site-header--stream {
+	background: transparent;
+	border-block-end: 0;
+}
+
+.mw-rail {
+	box-sizing: border-box;
+	color: var(--mw-color-text);
+	background: var(--mw-color-canvas);
+	font-family: var(--mw-font-sans);
+}
+
+.mw-rail .wp-block-navigation,
+.mw-rail .wp-block-navigation__container,
+.mw-rail .wp-block-navigation-item {
+	inline-size: 100%;
+	min-inline-size: 0;
+}
+
+.mw-rail .wp-block-navigation__container {
+	gap: 0.15rem;
+}
+
+.mw-rail .wp-block-navigation-item__content {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	box-sizing: border-box;
+	inline-size: 100%;
+	min-block-size: 2.5rem;
+	padding: 0.5rem 0.75rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.88rem;
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: none;
+	border-radius: var(--mw-radius-sm);
+	transition: background-color var(--mw-speed-fast) ease, color var(--mw-speed-fast) ease;
+}
+
+.mw-rail .wp-block-navigation-item__label {
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-rail .wp-block-navigation-item__content:hover,
+.mw-rail .wp-block-navigation-item__content:focus-visible {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-hover);
+}
+
+.mw-rail .wp-block-navigation-item__content:hover .mw-nav-icon {
+	transform: scale(1.12);
+}
+
+.mw-rail .wp-block-navigation-item__content:focus-visible {
+	outline: 2px solid var(--mw-rail-active);
+	outline-offset: 2px;
+}
+
+.mw-rail .current-menu-item > .wp-block-navigation-item__content,
+.mw-rail .wp-block-navigation-item__content[aria-current="page"] {
+	color: var(--mw-rail-active);
+	background: color-mix(in srgb, var(--mw-rail-active) 14%, transparent);
+	font-weight: 700;
+}
+
+.mw-rail .current-menu-item > .wp-block-navigation-item__content::after,
+.mw-rail .wp-block-navigation-item__content[aria-current="page"]::after {
+	content: "";
+	position: absolute;
+	inset-block: 0.55rem;
+	inset-inline-start: 0;
+	inline-size: 0.2rem;
+	background: var(--mw-rail-active);
+	border-radius: var(--mw-radius-pill);
+	box-shadow: 0 0 10px var(--mw-color-accent-glow);
+}
+
+/* Brand row: `mw-rail__brand` groups site-logo + site-title (+ a `brand`
+ * variant toggle when the admin chooses that placement). */
+.mw-rail__brand {
+	inline-size: 100%;
+	min-block-size: 2.75rem;
+	padding-inline: 0.35rem;
+}
+
+.mw-rail__brand .wp-block-site-logo img {
+	inline-size: 2.1rem;
+	block-size: 2.1rem;
+	object-fit: cover;
+	border-radius: var(--mw-radius-xs);
+	box-shadow: var(--mw-shadow-sm);
+}
+
+.mw-rail__brand .wp-block-site-title {
+	flex: 1 1 auto;
+	margin: 0;
+}
+
+.mw-rail__brand .wp-block-site-title a {
+	display: block;
+	max-inline-size: 11ch;
+	overflow: hidden;
+	color: var(--mw-color-text);
+	font-family: var(--mw-font-display);
+	font-size: 1.15rem;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-rail__toggle {
+	display: inline-grid;
+	flex: 0 0 auto;
+	place-items: center;
+	inline-size: 2.25rem;
+	block-size: 2.25rem;
+	margin-inline-start: auto;
+	padding: 0;
+	color: var(--mw-color-text-muted);
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-sm);
+	cursor: pointer;
+	transition: background-color var(--mw-speed-fast) ease, color var(--mw-speed-fast) ease, transform var(--mw-speed-fast) ease;
+}
+
+/*
+ * Placement contract (`music-wave/rail-toggle`):
+ * - `brand` lives in the rail's brand row and pushes itself to the row end.
+ * - `bar` lives in the top bar, so it keeps its DOM order instead of floating
+ *   to the far end of the flex row (the template decides where it sits).
+ */
+.mw-rail__toggle--bar {
+	margin-inline-start: 0;
+}
+
+.mw-rail__toggle-label {
+	margin-inline-start: 0.5rem;
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+
+.mw-rail__toggle:has(.mw-rail__toggle-label),
+.mw-rail__toggle--has-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	inline-size: auto;
+	padding-inline: 0.6rem;
+}
+
+.mw-rail__toggle--no-icon.mw-rail__toggle--has-label .mw-rail__toggle-label {
+	margin-inline-start: 0;
+}
+
+.mw-rail__toggle--no-icon:not(.mw-rail__toggle--has-label) {
+	/* Fallback never happens (PHP forces icon), but keep square for safety */
+	inline-size: 2.25rem;
+}
+
+.mw-rail__toggle:hover,
+.mw-rail__toggle:focus-visible {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-hover);
+}
+
+.mw-rail__toggle:focus-visible {
+	outline: 2px solid var(--mw-rail-active);
+	outline-offset: 2px;
+}
+
+.mw-rail__toggle svg {
+	inline-size: 1.2rem;
+	block-size: 1.2rem;
+}
+
+/* Icon variants for rail toggle – block-controlled */
+.mw-rail__toggle--icon-menu svg,
+.mw-rail__toggle--icon-chevron svg,
+.mw-rail__toggle--icon-dots svg {
+	transition: transform var(--mw-speed-fast) ease;
+}
+
+.mw-rail__user {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	inline-size: 100%;
+	margin-block-start: 0.5rem;
+	padding: 0.5rem;
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+	box-shadow: var(--mw-glass-specular);
+}
+
+.mw-rail__user-link {
+	display: flex;
+	flex: 1 1 auto;
+	align-items: center;
+	gap: 0.6rem;
+	min-inline-size: 0;
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-rail__avatar {
+	flex: 0 0 auto;
+	inline-size: 2.25rem;
+	block-size: 2.25rem;
+	object-fit: cover;
+	border-radius: 50%;
+	box-shadow: 0 0 0 2px var(--mw-color-border);
+}
+
+.mw-rail__avatar--icon {
+	display: grid;
+	place-items: center;
+	padding: 0.5rem;
+	color: var(--mw-color-text-muted);
+	background: var(--mw-color-surface-raised);
+}
+
+.mw-rail__user-text {
+	display: grid;
+	gap: 0.15rem;
+	min-inline-size: 0;
+}
+
+.mw-rail__user-name {
+	overflow: hidden;
+	font-size: 0.8rem;
+	font-weight: 800;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-rail__user-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.66rem;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.mw-rail__user-dot {
+	inline-size: 0.4rem;
+	block-size: 0.4rem;
+	background: var(--mw-color-success);
+	border-radius: 50%;
+	box-shadow: 0 0 6px var(--mw-color-success);
+}
+
+.mw-rail__user-out {
+	display: inline-grid;
+	flex: 0 0 auto;
+	place-items: center;
+	inline-size: 1.9rem;
+	block-size: 1.9rem;
+	color: var(--mw-color-text-muted);
+	border-radius: var(--mw-radius-xs);
+	transition: color var(--mw-speed-fast) ease, background-color var(--mw-speed-fast) ease;
+}
+
+.mw-rail__user-out svg {
+	inline-size: 1rem;
+	block-size: 1rem;
+}
+
+.mw-rail__user-out:hover {
+	color: var(--mw-color-danger);
+	background: var(--mw-color-surface-hover);
+}
+
+/* ---------- Top bar ---------- */
+
+.mw-stream-topbar {
+	position: relative;
+	z-index: 1;
+	background: color-mix(in srgb, var(--mw-color-canvas) 86%, transparent);
+	backdrop-filter: blur(18px) saturate(1.3);
+	-webkit-backdrop-filter: blur(18px) saturate(1.3);
+	border-block-end: 1px solid var(--mw-color-border-subtle);
+}
+
+.mw-stream-topbar .mw-site-header__inner {
+	min-block-size: var(--mw-topbar-height);
+	gap: 0.75rem;
+	padding-block: 0.5rem;
+}
+
+/* Header search block in top bar – unified */
+.mw-stream-topbar .mw-header-search-block {
+	flex: 1 1 auto;
+	min-inline-size: 0;
+	max-inline-size: 36rem;
+	margin: 0;
+}
+
+.mw-stream-topbar .mw-header-actions {
+	flex: 0 0 auto;
+	gap: 0.5rem;
+}
+
+/*
+ * Row rhythm: the brand anchors the inline start — next to a start-side toggle
+ * in `header-stream`, alone at the start in `header-stream-end` — and the free
+ * space is absorbed right after it, so search + actions always ride the inline
+ * end. The layout therefore holds whether the toggle opens or closes the row.
+ */
+.mw-stream-topbar .mw-site-header__inner > .mw-brand {
+	margin-inline-end: auto;
+}
+
+/* ---------- Desktop: fixed, collapsible rail ---------- */
+
+@media (min-width: 64rem) {
+	html:has(.mw-site-header--stream) {
+		--mw-rail-width: var(--mw-rail-width-expanded);
+	}
+
+	html[data-mw-rail="collapsed"]:has(.mw-site-header--stream) {
+		--mw-rail-width: var(--mw-rail-width-collapsed);
+	}
+
+	html:has(.mw-site-header--stream) .wp-site-blocks {
+		margin-inline-start: var(--mw-rail-width);
+		transition: margin var(--mw-speed-normal) var(--mw-ease-out);
+	}
+
+	html:has(.mw-site-header--stream) .mw-global-player {
+		inset-inline-start: var(--mw-rail-width);
+		inline-size: min(72rem, calc(100% - var(--mw-rail-width) - 2 * max(1rem, env(safe-area-inset-left, 0px))));
+	}
+
+	.mw-rail {
+		position: fixed;
+		inset-block-start: var(--mw-admin-bar-offset);
+		inset-inline-start: 0;
+		z-index: 70;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		inline-size: var(--mw-rail-width);
+		block-size: calc(100dvh - var(--mw-admin-bar-offset));
+		padding: 0.85rem 0.7rem;
+		overflow: hidden auto;
+		overscroll-behavior: contain;
+		scrollbar-width: thin;
+		border-inline-end: 1px solid var(--mw-color-border-subtle);
+		transition: inline-size var(--mw-speed-normal) var(--mw-ease-out);
+	}
+
+	.mw-rail__brand {
+		margin-block-end: 0.5rem;
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail {
+		padding-inline: 0.6rem;
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail__brand {
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		padding-inline: 0;
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail__brand .wp-block-site-title,
+	html[data-mw-rail="collapsed"] .mw-rail .wp-block-navigation-item__label,
+	html[data-mw-rail="collapsed"] .mw-rail__user-text,
+	html[data-mw-rail="collapsed"] .mw-rail__user-out {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		border: 0;
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail__toggle {
+		margin-inline-start: 0;
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail .wp-block-navigation-item__content {
+		justify-content: center;
+		padding-inline: 0;
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail .current-menu-item > .wp-block-navigation-item__content,
+	html[data-mw-rail="collapsed"] .mw-rail .wp-block-navigation-item__content[aria-current="page"] {
+		color: var(--mw-rail-on-active);
+		background: var(--mw-rail-active);
+		box-shadow: var(--mw-shadow-glow);
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail .current-menu-item > .wp-block-navigation-item__content::after,
+	html[data-mw-rail="collapsed"] .mw-rail .wp-block-navigation-item__content[aria-current="page"]::after {
+		display: none;
+	}
+
+	html[data-mw-rail="collapsed"] .mw-rail__user {
+		justify-content: center;
+		padding: 0.35rem;
+		background: transparent;
+		border-color: transparent;
+		box-shadow: none;
+	}
+
+	/* The rail already carries the brand, so the top bar must not repeat it.
+	 * Three classes are load-bearing here: core's `.wp-block-group.is-layout-flex`
+	 * (two classes) would otherwise re-show the brand at this width. */
+	.mw-site-header .mw-stream-topbar .mw-stream-topbar__brand {
+		display: none;
+	}
+
+	.mw-stream-topbar {
+		position: sticky;
+		inset-block-start: var(--mw-admin-bar-offset);
+		z-index: 60;
+	}
+
+	.mw-site-header--stream-end .mw-rail {
+		inset-inline-start: auto;
+		inset-inline-end: 0;
+		border-inline-end: 0;
+		border-inline-start: 1px solid var(--mw-color-border-subtle);
+	}
+
+	html:has(.mw-site-header--stream-end) .wp-site-blocks {
+		margin-inline-start: 0;
+		margin-inline-end: var(--mw-rail-width);
+	}
+
+	html:has(.mw-site-header--stream-end) .mw-global-player {
+		inset-inline-start: max(1rem, env(safe-area-inset-left, 0px));
+		inset-inline-end: var(--mw-rail-width);
+		inline-size: min(72rem, calc(100% - var(--mw-rail-width) - 2 * max(1rem, env(safe-area-inset-left, 0px))));
+	}
+}
+
+/* ---------- Small screens – drawer + bottom bar always ---------- */
+
+@media (max-width: 63.99rem) {
+	.mw-stream-topbar {
+		position: sticky;
+		inset-block-start: var(--mw-admin-bar-offset, 0px);
+		z-index: 60;
+	}
+
+	.mw-stream-topbar .mw-site-header__inner {
+		gap: 0.45rem;
+		padding-block: 0.4rem;
+		padding-inline: 0.7rem;
+	}
+
+	.mw-stream-topbar .mw-header-search-block {
+		max-inline-size: none;
+		flex: 1 1 auto;
+		min-inline-size: 0;
+	}
+
+	.mw-stream-topbar .mw-header-actions {
+		gap: 0.3rem;
+	}
+
+	/* The default chrome keeps logo + site title at every width; only an
+	 * explicit admin edit (removing the block) may hide them. The brand may
+	 * shrink (the title ellipsizes) but never collapses to nothing. */
+	.mw-stream-topbar__brand {
+		display: flex;
+		flex: 0 1 auto;
+		min-inline-size: 0;
+	}
+
+	.mw-stream-topbar .mw-brand .wp-block-site-title {
+		min-inline-size: 0;
+	}
+
+	.mw-stream-topbar .mw-brand .wp-block-site-title a {
+		max-inline-size: 12ch;
+	}
+
+	.mw-stream-topbar .mw-brand .wp-block-site-logo {
+		flex: 0 0 auto;
+	}
+
+	/* Page offset for player + bottom bar */
+	html:has(.mw-site-header) .wp-site-blocks {
+		padding-block-end: calc(var(--mw-player-offset, 0px) + var(--mw-rail-tabbar-height) + 1rem);
+	}
+
+	/* Docks above the bottom bar; when the bar is off (`--mw-rail-tabbar-height`
+	 * collapses to 0) the player sticks to the bottom edge, keeping only the
+	 * device safe-area inset so a home indicator never covers the controls. */
+	.mw-global-player {
+		inset-block-end: max(var(--mw-rail-tabbar-height), env(safe-area-inset-bottom, 0px));
+	}
+
+	/* Rail as drawer on mobile – always */
+	.mw-rail__backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 110;
+		display: block;
+		background: rgb(0 0 0 / 55%);
+		backdrop-filter: blur(3px);
+		-webkit-backdrop-filter: blur(3px);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity var(--mw-speed-normal) ease;
+	}
+
+	html[data-mw-rail-open="1"] .mw-rail__backdrop {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.mw-rail {
+		position: fixed;
+		inset: 0 auto 0 0;
+		z-index: 120;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+		gap: 0.15rem;
+		inline-size: min(21rem, 88vw);
+		block-size: 100dvh;
+		min-block-size: 0;
+		padding: max(0.75rem, env(safe-area-inset-top, 0px)) 0.9rem max(1rem, env(safe-area-inset-bottom, 0px));
+		overflow: auto;
+		overscroll-behavior: contain;
+		background: color-mix(in srgb, var(--mw-color-surface) 97%, transparent);
+		border: 0;
+		border-inline-end: 1px solid var(--mw-color-border-strong);
+		border-radius: 0;
+		box-shadow: 1.5rem 0 3rem rgb(0 0 0 / 22%);
+		transform: translateX(-108%);
+		visibility: hidden;
+		pointer-events: none;
+		transition: transform var(--mw-speed-normal) var(--mw-ease-out), visibility var(--mw-speed-normal) linear;
+	}
+
+	html[dir="rtl"] .mw-rail {
+		inset: 0 0 0 auto;
+		border-inline-end: 0;
+		border-inline-start: 1px solid var(--mw-color-border-strong);
+		transform: translateX(108%);
+	}
+
+	html[data-mw-rail-open="1"] .mw-rail {
+		transform: none;
+		visibility: visible;
+		pointer-events: auto;
+	}
+
+	.mw-rail__brand {
+		display: flex;
+	}
+
+	.mw-rail__nav--vault {
+		display: block;
+	}
+
+	.mw-rail .wp-block-navigation__container {
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.mw-rail .wp-block-navigation-item {
+		flex: 0 0 auto;
+	}
+
+	.mw-rail .wp-block-navigation-item__content {
+		position: relative;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 0.85rem;
+		min-block-size: 3rem;
+		padding: 0.6rem 0.85rem;
+		color: var(--mw-color-text-muted);
+		font-size: 0.98rem;
+		font-weight: 600;
+		text-align: start;
+		border-radius: var(--mw-radius-md);
+		transition: background-color var(--mw-speed-fast) ease, color var(--mw-speed-fast) ease;
+	}
+
+	.mw-rail .wp-block-navigation-item__content:active {
+		background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	}
+
+	.mw-rail .mw-nav-icon {
+		inline-size: 1.35rem;
+		block-size: 1.35rem;
+		padding: 0.35rem;
+		border-radius: var(--mw-radius-sm);
+		box-sizing: content-box;
+	}
+
+	.mw-rail__brand {
+		position: sticky;
+		inset-block-start: 0;
+		z-index: 1;
+		margin-block-end: 0.75rem;
+		padding-block-end: 0.85rem;
+		background: linear-gradient(var(--mw-color-surface) 72%, transparent);
+	}
+
+	.mw-rail .current-menu-item > .wp-block-navigation-item__content {
+		color: var(--mw-color-text);
+		background: color-mix(in srgb, var(--mw-rail-active) 14%, transparent);
+		font-weight: 700;
+	}
+
+	.mw-rail .current-menu-item > .wp-block-navigation-item__content .mw-nav-icon {
+		color: #fff;
+		background: var(--mw-rail-active);
+	}
+
+	.mw-rail .current-menu-item > .wp-block-navigation-item__content::after {
+		inset-block: 0.55rem;
+		inset-inline: 0 auto;
+		inline-size: 0.2rem;
+		block-size: auto;
+	}
+
+	/* The rail is an off-canvas drawer here, so a toggle *inside* it would be
+	 * unreachable: the top-bar placement is the only live one below 64rem. */
+	.mw-rail__toggle--brand {
+		display: none;
+	}
+
+	.mw-rail__toggle--bar {
+		display: inline-grid;
+		border-color: var(--mw-color-border);
+		background: var(--mw-color-surface-raised);
+	}
+}
+
+/* ---------- Mobile bottom bar – Customizer-controlled ---------- */
+
+/*
+ * ONE skin, two activations. Every visual rule lives on `.mw-rail__tabbar`
+ * itself so the front-end bar, the bar injected into simple headers, and the
+ * Site Editor canvas all paint the exact same component: the editor only has to
+ * switch `display` on (see editor.css) instead of re-declaring a look-alike.
+ *
+ * `display` is deliberately *not* part of the skin. The bar is a real
+ * navigation block, so WordPress stamps `is-layout-flex` on it and the
+ * generated global stylesheet ships `body .is-layout-flex { display: flex }` —
+ * a (0, 1, 1) rule that any single-class `display: none` here would lose to,
+ * which painted the bar in page flow on every screen. The lock right after the
+ * skin states the same declaration with two classes (0, 2, 0), so "hidden" wins
+ * on every width and only the activations further down bring the bar back.
+ */
+.mw-rail__tabbar {
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	box-sizing: border-box;
+	block-size: var(--mw-rail-tabbar-height);
+	margin: 0;
+	padding-block: 0.3rem;
+	padding-inline: max(0.3rem, env(safe-area-inset-left, 0px)) max(0.3rem, env(safe-area-inset-right, 0px));
+	padding-block-end: calc(0.3rem + env(safe-area-inset-bottom, 0px));
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-canvas) 84%, transparent);
+	backdrop-filter: blur(20px) saturate(1.5);
+	-webkit-backdrop-filter: blur(20px) saturate(1.5);
+	border: 0;
+	border-block-start: 1px solid var(--mw-color-border-subtle);
+	box-shadow: 0 -0.6rem 1.6rem -1.2rem rgb(0 0 0 / 45%), inset 0 1px 0 0 color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+}
+
+/* Visibility lock: outranks the generated `body .is-layout-flex` rule, so the
+ * bar stays out of the document flow until an activation below turns it on. */
+.mw-rail__tabbar.mw-rail__nav--primary {
+	display: none;
+}
+
+/* Nested navigation (a menu rendered inside the bar) never re-docks itself. */
+.mw-rail__tabbar .mw-rail__tabbar {
+	position: static;
+	inset: auto;
+	z-index: auto;
+	flex: 1 1 auto;
+	block-size: auto;
+	padding: 0;
+	background: transparent;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-rail__tabbar .wp-block-navigation__container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: stretch;
+	gap: 0.15rem;
+	inline-size: 100%;
+	min-block-size: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-rail__tabbar .wp-block-navigation-item {
+	display: flex;
+	flex: 1 1 0;
+	min-inline-size: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.mw-rail__tabbar .wp-block-navigation-item__content {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.3rem;
+	box-sizing: border-box;
+	inline-size: 100%;
+	block-size: 100%;
+	min-block-size: 3.25rem;
+	padding: 0.35rem 0.3rem;
+	color: var(--mw-color-text-muted);
+	background: transparent;
+	border: 0;
+	border-radius: var(--mw-radius-md);
+	font-family: inherit;
+	font-size: 0.64rem;
+	font-weight: 700;
+	line-height: 1.1;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background-color var(--mw-speed-fast) ease, color var(--mw-speed-fast) ease;
+}
+
+.mw-rail__tabbar .wp-block-navigation-item__label {
+	max-inline-size: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-rail__tabbar .mw-nav-icon {
+	inline-size: 1.3rem;
+	block-size: 1.3rem;
+	color: currentColor;
+	opacity: 0.9;
+	transition: transform var(--mw-speed-fast) var(--mw-ease-bounce), opacity var(--mw-speed-fast) ease;
+}
+
+.mw-rail__tabbar .wp-block-navigation-item__content:hover,
+.mw-rail__tabbar .wp-block-navigation-item__content:focus-visible {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-hover);
+}
+
+.mw-rail__tabbar .wp-block-navigation-item__content:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: -2px;
+}
+
+.mw-rail__tabbar .current-menu-item > .wp-block-navigation-item__content,
+.mw-rail__tabbar .wp-block-navigation-item__content[aria-current="page"] {
+	color: var(--mw-color-accent);
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	font-weight: 800;
+}
+
+.mw-rail__tabbar .current-menu-item > .wp-block-navigation-item__content::after,
+.mw-rail__tabbar .wp-block-navigation-item__content[aria-current="page"]::after {
+	content: "";
+	position: absolute;
+	inset-block: auto 0.2rem;
+	inset-inline: 0;
+	inline-size: 0.3rem;
+	block-size: 0.3rem;
+	margin-inline: auto;
+	background: var(--mw-color-accent);
+	border-radius: 50%;
+	box-shadow: 0 0 10px var(--mw-color-accent-glow);
+}
+
+/*
+ * Phone top bar (< 30rem): one row has to hold the toggle, the brand, the search
+ * trigger, the account disc and the VIP CTA. The brand shrinks (its title
+ * ellipsizes, the logo never collapses) and the VIP CTA keeps its crown while
+ * the label folds away — its accessible name is the untouched link text, so
+ * screen readers still hear «ارتقا به VIP». Nothing is hidden by width alone.
+ */
+@media (max-width: 30rem) {
+	.mw-stream-topbar .mw-brand .wp-block-site-title a {
+		max-inline-size: 9ch;
+	}
+
+	.mw-topbar-vip .wp-block-button__link {
+		inline-size: 2.4rem;
+		min-inline-size: 2.4rem;
+		padding: 0;
+		gap: 0;
+		justify-content: center;
+		font-size: 0;
+	}
+
+	.mw-topbar-vip .wp-block-button__link::before {
+		inline-size: 1.15rem;
+		block-size: 1.15rem;
+	}
+}
+
+/*
+ * Bottom-bar scope (Customizer `musicwave_chrome_tabbar`).
+ *
+ * The bar height token doubles as the reserved page padding and the offset the
+ * global player docks above, so collapsing it to 0 is all it takes to make the
+ * layout behave exactly as if the bar had never existed: the player drops to
+ * the bottom edge and `layout` padding shrinks with it.
+ *
+ * Three rules cover the three ways the bar can be absent, and they are the
+ * whole truth about it — no consumer has to know the scope:
+ *
+ *  1. switch off                 -> `data-mw-tabbar="off"`
+ *  2. `mobile`, above its window -> tablet band and up
+ *  3. every scope at desktop     -> the bar cannot paint there at all
+ *
+ * The third one matters beyond the bar itself: consumers that read the token
+ * with a fallback (`playlists.css`, inside a *container* query) key off their
+ * container, not the viewport, so leaving the token set at desktop width would
+ * reserve phone-only space in a narrow desktop panel.
+ */
+html[data-mw-tabbar="off"] {
+	--mw-rail-tabbar-height: 0px;
+}
+
+@media (min-width: 48rem) {
+	html[data-mw-tabbar="mobile"] {
+		--mw-rail-tabbar-height: 0px;
+	}
+}
+
+@media (min-width: 64rem) {
+	html[data-mw-tabbar] {
+		--mw-rail-tabbar-height: 0px;
+	}
+}
+
+/* Icon-only bar (label setting off) keeps the 44px+ touch target. */
+html[data-mw-tabbar-labels="0"] .mw-rail__tabbar .wp-block-navigation-item__label {
+	display: none;
+}
+
+html[data-mw-tabbar-labels="0"] .mw-rail__tabbar .wp-block-navigation-item__content {
+	gap: 0;
+}
+
+/*
+ * Bottom-edge placement for everything that only exists below the desktop
+ * breakpoint. Nothing here decides visibility: `display` lives in the two
+ * activations below, so this block can stay about geometry and stacking.
+ *
+ * `:where()` holds the `position`/`inset`/`z-index` trio at the specificity of
+ * the bare class, which is what keeps the nested-navigation reset above in
+ * charge of a menu rendered *inside* the bar.
+ */
+@media screen and (max-width: 63.99rem) {
+	:where(html[data-mw-tabbar="mobile"], html[data-mw-tabbar="both"]) .mw-rail__tabbar {
+		position: fixed;
+		inset-inline: 0;
+		inset-block-end: 0;
+		z-index: 95;
+	}
+
+	html[data-mw-mobile-chrome="tabs"] .mw-rail {
+		display: none;
+	}
+
+	html[data-mw-mobile-chrome="drawer"] .mw-rail,
+	html[data-mw-mobile-chrome="both"] .mw-rail {
+		position: fixed;
+		inset-block: 0;
+		z-index: 120;
+	}
+
+	html[data-mw-mobile-chrome="tabs"] .mw-rail__tabbar,
+	html[data-mw-mobile-chrome="both"] .mw-rail__tabbar {
+		position: fixed;
+		inset-inline: 0;
+		inset-block-end: 0;
+		z-index: 95;
+	}
+
+	html[data-mw-mobile-chrome="tabs"] .mw-global-player,
+	html[data-mw-mobile-chrome="both"] .mw-global-player {
+		inset-block-end: var(--mw-rail-tabbar-height);
+	}
+}
+
+/*
+ * Front-end activations: the only rules that paint the bar.
+ *
+ * Two facts are stated once each instead of being spread over a
+ * "hide here, show there" pair — that pairing is what let the generated
+ * `body .is-layout-flex` rule settle the argument.
+ *
+ *  - Scope owns the width window. `mobile` is phone-only and `both` reaches
+ *    through the tablet band, matching `SiteHeaderManager::tabbar_choices()`,
+ *    so there is exactly one activation per window.
+ *  - `:not([data-mw-mobile-chrome="drawer"])` lets an explicit drawer-only
+ *    chrome win: an admin who asked for the hamburger keeps the hamburger even
+ *    when a filter forces that chrome while the scope still says otherwise.
+ *
+ * Both activations repeat the lock's compound class (so they out-rank it) and
+ * are `screen`-gated, which keeps the bar out of print for free. `off` matches
+ * neither window, so it stays hidden by the lock alone.
+ */
+@media screen and (max-width: 47.99rem) {
+	html[data-mw-tabbar="mobile"]:not([data-mw-mobile-chrome="drawer"]) .mw-rail__tabbar.mw-rail__nav--primary,
+	html[data-mw-tabbar="both"]:not([data-mw-mobile-chrome="drawer"]) .mw-rail__tabbar.mw-rail__nav--primary {
+		display: flex;
+	}
+}
+
+@media screen and (min-width: 48rem) and (max-width: 63.99rem) {
+	html[data-mw-tabbar="both"]:not([data-mw-mobile-chrome="drawer"]) .mw-rail__tabbar.mw-rail__nav--primary {
+		display: flex;
+	}
+}
+
+/*
+ * ---------- Editor canvas ----------
+ *
+ * The bar is a real `core/navigation` block inside every header part, so the
+ * canvas has to show it at *any* canvas width — including desktop widths where
+ * the front-end activations keep it hidden. The compound class mirrors them so
+ * this rule out-ranks the visibility lock (and the generated layout rule behind
+ * it) instead of fighting it. Only activation belongs here: the look is the
+ * shared `.mw-rail__tabbar` skin above, and `editor.css` owns the canvas
+ * placement (last row of both rail headers, sticky bottom elsewhere).
+ */
+.editor-styles-wrapper .mw-rail__tabbar.mw-rail__nav--primary,
+.block-editor-block-preview__content .mw-rail__tabbar.mw-rail__nav--primary {
+	position: static;
+	inset: auto;
+	z-index: auto;
+	display: flex;
+	inline-size: 100%;
+	block-size: auto;
+	min-block-size: 3.5rem;
+}
+
+/* ---------- Reduced motion & print ---------- */
+@media print {
+	/*
+	 * `html body` in front of every selector: these blocks are flex/constrained
+	 * layouts too, so the generated stylesheet ships `body .is-layout-flex` and
+	 * `body .is-layout-block` — (0, 1, 1) rules a bare class can never beat.
+	 */
+	html body .mw-rail,
+	html body .mw-stream-topbar,
+	html body .mw-rail__tabbar {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-rail,
+	html:has(.mw-site-header--stream) .wp-site-blocks,
+	.mw-rail .wp-block-navigation-item__content,
+	.mw-nav-icon,
+	.mw-rail__toggle,
+	.mw-rail__backdrop {
+		transition: none;
+	}
+}

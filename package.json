@@ -1,0 +1,28 @@
+{
+	"name": "musicwave",
+	"version": "0.9.0",
+	"private": true,
+	"description": "Development tooling for the MusicWave WordPress theme and companion plugins.",
+	"license": "GPL-2.0-or-later",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"lint:js": "wp-scripts lint-js music-wave-core/assets music-wave-vip/assets musicwave/assets",
+		"lint:js:fix": "wp-scripts lint-js music-wave-core/assets music-wave-vip/assets musicwave/assets --fix",
+		"build": "npm run lint:js",
+		"screenshot:theme": "node tools/capture-theme-screenshot.js",
+		"test:e2e": "playwright test --config tests/e2e/playwright.config.js",
+		"test:e2e:headed": "playwright test --config tests/e2e/playwright.config.js --headed",
+		"test:unit": "node tests/editor-lanes.js && node tests/editor-contracts.js"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.45.0",
+		"@wordpress/e2e-test-utils-playwright": "^1.5.0",
+		"@wordpress/scripts": "^28.6.0",
+		"jsdom": "^20.0.3"
+	},
+	"overrides": {
+		"typescript": "^5.6.3"
+	}
+}

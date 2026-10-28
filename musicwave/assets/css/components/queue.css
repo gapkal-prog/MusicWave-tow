@@ -1,0 +1,396 @@
+/* ================================================================
+   Playback queue block
+   States: guest | empty | list (rows with reorder/remove actions)
+   Every control is a plain form post; logical properties only.
+   ================================================================ */
+
+.mw-playback-queue {
+	margin-block: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+}
+
+/* ---- Header ---- */
+.mw-playback-queue__header {
+	align-items: center;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+	margin-block-end: 1rem;
+}
+
+.mw-playback-queue__title {
+	font-size: clamp(1.35rem, 3vw, 2rem);
+	letter-spacing: -.025em;
+	line-height: 1.15;
+	margin: 0;
+}
+
+.mw-playback-queue__count {
+	background: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 14%, transparent);
+	border-radius: 999px;
+	color: var(--wp--preset--color--accent, #1db954);
+	font-size: .8125rem;
+	font-weight: 800;
+	padding: .25rem .8rem;
+}
+
+/* ---- Notices (post/redirect/get live region) ---- */
+.mw-playback-queue__notice {
+	border-inline-start: 3px solid var(--wp--preset--color--accent, #1db954);
+	font-size: .875rem;
+	padding-block: .35rem;
+	padding-inline-start: .75rem;
+}
+
+.mw-playback-queue__notice--error {
+	border-inline-start-color: var(--wp--preset--color--editorial, #fa2d48);
+	color: var(--wp--preset--color--editorial, #fa2d48);
+}
+
+/* ---- Preference controls ---- */
+.mw-playback-queue__controls {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: .6rem;
+	margin-block-end: .9rem;
+}
+
+.mw-playback-queue__controls form {
+	align-items: center;
+	display: flex;
+	gap: .4rem;
+}
+
+.mw-playback-queue__controls select,
+.mw-playback-queue__controls button {
+	font-size: .8125rem;
+}
+
+/* Play-all sits before shuffle inside `.mw-queue`; standalone `.mw-action-button` uses `block-styles.css`. */
+.mw-play-all-button,
+.mw-shuffle-button:not(.mw-action-button) {
+	align-items: center;
+	background: var(--wp--preset--color--accent, #1db954);
+	border: 1px solid transparent;
+	border-radius: 999px;
+	color: #fff;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: .8125rem;
+	font-weight: 800;
+	gap: .4rem;
+	letter-spacing: -.01em;
+	line-height: 1;
+	min-block-size: 2.2rem;
+	padding: .45rem 1rem;
+	transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease, opacity 160ms ease;
+}
+
+.mw-play-all-button:hover,
+.mw-shuffle-button:not(.mw-action-button):hover {
+	transform: translateY(-1px);
+}
+
+.mw-play-all-button:active,
+.mw-shuffle-button:not(.mw-action-button):active {
+	transform: translateY(0);
+}
+
+.mw-play-all-button:focus-visible,
+.mw-shuffle-button:not(.mw-action-button):focus-visible {
+	outline: 2px solid color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 45%, transparent);
+	outline-offset: 2px;
+}
+
+.mw-shuffle-button[aria-pressed='true'] {
+	background: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 16%, transparent);
+	border-color: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 40%, transparent);
+	color: var(--wp--preset--color--accent, #1db954);
+}
+
+.mw-shuffle-button:not(.mw-action-button)[aria-pressed='false'] {
+	background: var(--wp--preset--color--contrast, #111);
+	border-color: color-mix(in srgb, currentColor 12%, transparent);
+	color: var(--wp--preset--color--base, #fff);
+}
+
+.mw-play-all-button.is-busy,
+.mw-shuffle-button.is-busy {
+	opacity: .7;
+	pointer-events: none;
+}
+
+/* ---- Repeat segmented control — professional, no-refresh, auto-save */
+.mw-queue-repeat-form {
+	gap: 0.5rem;
+}
+
+.mw-queue-repeat-segmented {
+	display: inline-flex;
+	background: color-mix(in srgb, currentColor 6%, transparent);
+	border: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+	border-radius: 999px;
+	padding: 0.2rem;
+	gap: 0.2rem;
+}
+
+.mw-queue-repeat-option {
+	background: transparent;
+	border: 0;
+	border-radius: 999px;
+	color: var(--mw-color-text-muted, #a0a0a0);
+	cursor: pointer;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	line-height: 1;
+	min-block-size: 2rem;
+	padding: 0.4rem 0.85rem;
+	transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.mw-queue-repeat-option:hover {
+	color: var(--wp--preset--color--contrast, currentColor);
+	background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.mw-queue-repeat-option.is-active,
+.mw-queue-repeat-option[aria-pressed='true'],
+.mw-queue-repeat-option.is-active:hover,
+.mw-queue-repeat-option[aria-pressed='true']:hover {
+	background: var(--wp--preset--color--contrast, #111);
+	color: var(--wp--preset--color--base, #fff);
+	box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+}
+
+.mw-queue-repeat-option:focus-visible {
+	outline: 2px solid color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 45%, transparent);
+	outline-offset: 2px;
+}
+
+/* Fallback select hidden when JS is available – progressive enhancement */
+.mw-queue-repeat-fallback {
+	display: inline-block;
+}
+
+.js .mw-queue-repeat-fallback,
+.mw-queue-repeat-form.js-enhanced .mw-queue-repeat-fallback {
+	display: none;
+}
+
+.mw-queue-repeat-save {
+	background: transparent;
+	border: 1px solid var(--mw-color-border, rgb(255 255 255 / 14%));
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-size: 0.8125rem;
+	padding: 0.4rem 0.9rem;
+}
+
+.js .mw-queue-repeat-save,
+.mw-queue-repeat-form.js-enhanced .mw-queue-repeat-save {
+	display: none;
+}
+
+.mw-playback-queue__empty {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	margin: 0;
+}
+
+/* ---- Queue rows ---- */
+.mw-playback-queue__list {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.mw-playback-queue__item {
+	align-items: center;
+	border-block-end: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+	display: grid;
+	gap: clamp(.65rem, 2vw, 1rem);
+	grid-template-columns: auto 3rem minmax(0, 1fr) auto;
+	padding-block: .55rem;
+}
+
+.mw-playback-queue__position {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	font-size: .875rem;
+	font-weight: 700;
+	min-inline-size: 1.4em;
+	text-align: center;
+}
+
+.mw-playback-queue__art {
+	aspect-ratio: 1;
+	background: color-mix(in srgb, currentColor 7%, transparent);
+	border-radius: .45rem;
+	display: block;
+	overflow: hidden;
+	inline-size: 100%;
+}
+
+.mw-playback-queue__image {
+	block-size: 100%;
+	inline-size: 100%;
+	object-fit: cover;
+}
+
+.mw-playback-queue__initial {
+	align-items: center;
+	color: var(--mw-color-text, #fff);
+	display: flex;
+	font-size: 1.1rem;
+	font-weight: 800;
+	block-size: 100%;
+	justify-content: center;
+}
+
+.mw-playback-queue__body {
+	display: grid;
+	gap: .1rem;
+	min-inline-size: 0;
+}
+
+.mw-playback-queue__name {
+	font-size: .95rem;
+	line-height: 1.25;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-playback-queue__name a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-playback-queue__name a:is(:hover, :focus-visible) {
+	color: var(--wp--preset--color--accent, #1db954);
+}
+
+.mw-playback-queue__artist {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	font-size: .8125rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* ---- Row action buttons ---- */
+.mw-playback-queue__actions {
+	align-items: center;
+	display: flex;
+	gap: .3rem;
+}
+
+.mw-playback-queue__actions button {
+	background: transparent;
+	border: 1px solid var(--mw-color-border, rgb(255 255 255 / 14%));
+	border-radius: .5rem;
+	cursor: pointer;
+	font-size: .95rem;
+	inline-size: 2.1rem;
+	line-height: 1;
+	min-block-size: 2.1rem;
+	padding: 0;
+}
+
+.mw-playback-queue__actions button:is(:hover, :focus-visible) {
+	border-color: var(--wp--preset--color--accent, #1db954);
+	color: var(--wp--preset--color--accent, #1db954);
+}
+
+.mw-playback-queue__actions .mw-playback-queue__remove:is(:hover, :focus-visible) {
+	border-color: var(--wp--preset--color--editorial, #fa2d48);
+	color: var(--wp--preset--color--editorial, #fa2d48);
+}
+
+/* ---- Clear form ---- */
+.mw-playback-queue__clear {
+	margin-block-start: .75rem;
+}
+
+.mw-playback-queue__clear button {
+	background: transparent;
+	border: 1px solid var(--mw-color-border, rgb(255 255 255 / 14%));
+	border-radius: .5rem;
+	cursor: pointer;
+	font-size: .8125rem;
+	padding: .4rem .9rem;
+}
+
+.mw-playback-queue__clear button:is(:hover, :focus-visible) {
+	border-color: var(--wp--preset--color--editorial, #fa2d48);
+	color: var(--wp--preset--color--editorial, #fa2d48);
+}
+
+/* ---- Guest / panel states ---- */
+.mw-playback-queue__panel {
+	align-items: center;
+	background: color-mix(in srgb, currentColor 5%, transparent);
+	border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+	border-radius: var(--mw-radius-lg, 1rem);
+	display: flex;
+	flex-wrap: wrap;
+	gap: clamp(.75rem, 2vw, 1.25rem);
+	padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.mw-playback-queue__panel-icon {
+	align-items: center;
+	background: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 14%, transparent);
+	block-size: 3rem;
+	border-radius: 50%;
+	color: var(--wp--preset--color--accent, #1db954);
+	display: inline-flex;
+	flex: 0 0 auto;
+	font-size: 1.25rem;
+	inline-size: 3rem;
+	justify-content: center;
+}
+
+.mw-playback-queue__guest-text {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	margin: .25rem 0 0;
+}
+
+@media (max-width: 34rem) {
+	.mw-playback-queue__item {
+		grid-template-columns: auto minmax(0, 1fr) auto;
+	}
+
+	.mw-playback-queue__position {
+		display: none;
+	}
+}
+
+/* ---- Add-to-queue control (release pages) ---- */
+.mw-add-to-queue {
+	display: inline-block;
+}
+
+.mw-add-to-queue--guest .wp-element-button {
+	font-size: .875rem;
+}
+
+.mw-add-to-queue--queued .mw-add-to-queue__in {
+	align-items: center;
+	background: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 12%, transparent);
+	border-radius: 999px;
+	color: var(--wp--preset--color--accent, #1db954);
+	display: inline-flex;
+	font-size: .875rem;
+	font-weight: 700;
+	gap: .35rem;
+	padding: .5rem 1.1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-playback-queue__actions button,
+	.mw-add-to-queue {
+		transition: none;
+	}
+}

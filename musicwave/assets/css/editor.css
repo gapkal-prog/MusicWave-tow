@@ -1,0 +1,316 @@
+/**
+ * Editor-only styles for the block and site editors.
+ *
+ * These rules improve usability of the Music sidebar template part inside
+ * the editors without changing the public front-end appearance.
+ */
+
+.editor-styles-wrapper .mw-sidebar .wp-block-navigation__fallback .wp-block-navigation-link > .wp-block-navigation-item__content {
+	/* Keep the sidebar usable in the editor even before the user saves
+	 * their own navigation menu: the navigation fallback list mirrors
+	 * the spacing of regular menu items. Use a flat selector so the editor
+	 * also works on WordPress versions without CSS nesting support. */
+	display: block;
+	padding: 0.6rem 0.75rem;
+	border-radius: var(--mw-radius-sm);
+}
+
+.editor-styles-wrapper .mw-app-shell--with-sidebar > .wp-block-columns {
+	align-items: flex-start;
+}
+
+.editor-styles-wrapper .mw-app-shell--with-sidebar > .wp-block-columns > .wp-block-column {
+	min-width: 0;
+}
+
+/* The app-shell grid only applies when the shell actually contains a
+ * sidebar (see layout.css); keep a tiny optical fallback for browsers
+ * without :has() support when previewing older editor iframes. */
+@supports not (selector(:has(> *))) {
+	.editor-styles-wrapper .mw-app-shell:empty {
+		display: block;
+	}
+}
+
+/*
+ * Stream chrome in the Site Editor.
+ *
+ * The canvas mirrors the public header one-to-one: the rail keeps the
+ * inline-start (or inline-end) edge beside the top bar, and the bottom bar gets
+ * its own full-width row underneath both so it is always the last thing in the
+ * header — exactly where the front end docks it. No look-alike styles: the bar
+ * is the same `.mw-rail__tabbar` component the front end renders.
+ */
+.editor-styles-wrapper .mw-site-header--stream > .block-editor-inner-blocks {
+	display: contents;
+}
+
+.editor-styles-wrapper .mw-site-header--stream,
+.editor-styles-wrapper .mw-site-header--stream > .block-editor-inner-blocks > .block-editor-block-list__layout,
+.editor-styles-wrapper .mw-site-header--stream.is-layout-flow {
+	display: grid;
+	grid-template-columns: minmax(14.5rem, 16.5rem) minmax(0, 1fr);
+	grid-template-rows: minmax(20rem, auto) auto;
+	align-items: stretch;
+}
+
+.editor-styles-wrapper .mw-site-header--stream-end,
+.editor-styles-wrapper .mw-site-header--stream-end > .block-editor-inner-blocks > .block-editor-block-list__layout,
+.editor-styles-wrapper .mw-site-header--stream-end.is-layout-flow {
+	grid-template-columns: minmax(0, 1fr) minmax(14.5rem, 16.5rem);
+}
+
+.editor-styles-wrapper .mw-site-header--stream .mw-rail {
+	position: relative;
+	inset: auto;
+	z-index: auto;
+	grid-column: 1;
+	grid-row: 1;
+	inline-size: 100%;
+	min-inline-size: 14.5rem;
+	block-size: auto;
+	min-block-size: 20rem;
+	padding: 0.75rem;
+	overflow: auto;
+	border: 0;
+	border-inline-end: 1px solid var(--mw-color-border);
+	background: var(--mw-color-surface);
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+
+.editor-styles-wrapper .mw-site-header--stream-end .mw-rail {
+	grid-column: 2;
+	border-inline-end: 0;
+	border-inline-start: 1px solid var(--mw-color-border);
+}
+
+.editor-styles-wrapper .mw-site-header--stream .mw-stream-topbar {
+	grid-column: 2;
+	grid-row: 1;
+	min-inline-size: 0;
+}
+
+.editor-styles-wrapper .mw-site-header--stream-end .mw-stream-topbar {
+	grid-column: 1;
+}
+
+.editor-styles-wrapper .mw-site-header--stream .mw-rail__tabbar,
+.editor-styles-wrapper .mw-site-header--stream-end .mw-rail__tabbar {
+	grid-column: 1 / -1;
+	grid-row: 2;
+	border-block-start: 1px solid var(--mw-color-border);
+	border-radius: 0;
+}
+
+.editor-styles-wrapper .mw-site-header--stream .mw-rail .wp-block-navigation__container {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	gap: 0.25rem;
+	inline-size: 100%;
+}
+
+.editor-styles-wrapper .mw-site-header--stream .mw-rail .wp-block-navigation-item {
+	inline-size: 100%;
+	flex: 0 0 auto;
+}
+
+.editor-styles-wrapper .mw-site-header--stream .mw-rail .wp-block-navigation-item__content {
+	flex-direction: row;
+	min-block-size: 2.5rem;
+	padding: 0.45rem 0.7rem;
+	font-size: 0.9rem;
+}
+
+/*
+ * Bottom bar in the canvas.
+ *
+ * The front-end activations only paint the bar inside the scope's width window,
+ * so the canvas has to switch it on explicitly — otherwise editors could not see
+ * or select the navigation they are supposed to edit. The selector carries the
+ * same compound class the front end uses, which is what out-ranks the
+ * visibility lock in `rail.css` (and the generated layout rule behind it) rather
+ * than tying with it. Everything else (skin, item rhythm, 44px targets) comes
+ * from the one shared `.mw-rail__tabbar` component, so the canvas and the site
+ * paint the same bar.
+ *
+ * `sticky` + `inset-block-end` is the honest preview of `position: fixed` inside
+ * an iframe canvas: the bar stays at the bottom edge of what is on screen and
+ * still occupies its own row in the header, so nothing overlaps what is above.
+ */
+.editor-styles-wrapper .mw-rail__tabbar.mw-rail__nav--primary {
+	display: flex;
+	position: sticky;
+	inset-block-end: 0;
+	inset-inline: 0;
+	z-index: 5;
+	block-size: auto;
+}
+
+/* Brand rows keep the front-end swap: the rail carries the brand on desktop,
+ * the top bar carries it below 64rem. Forcing both visible in the canvas made
+ * the preview show a logo + title the live site never renders at that width. */
+
+html .editor-styles-wrapper .wp-site-blocks {
+	margin-inline-start: 0;
+	padding-block-end: 0;
+}
+
+/* Dynamic block wrapper inside the Site Editor iframe */
+.editor-styles-wrapper .mw-block-editor-shell {
+	min-inline-size: 0;
+}
+
+.editor-styles-wrapper .mw-block-editor-shell a {
+	pointer-events: none;
+}
+
+/* 1:1 Site/Block Editor flex alignment for `.wp-block-group.mw-release-actions` */
+.editor-styles-wrapper .mw-release-actions,
+.editor-styles-wrapper .mw-release-actions.is-layout-flex,
+.editor-styles-wrapper .mw-release-actions > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.65rem;
+}
+
+.editor-styles-wrapper .mw-release-actions > *,
+.editor-styles-wrapper .mw-release-actions .mw-block-editor-shell,
+.editor-styles-wrapper .mw-release-actions .mw-block-editor-shell > .components-disabled,
+.editor-styles-wrapper .mw-release-actions .mw-playlist-picker {
+	display: inline-flex;
+	align-items: center;
+	margin-block: 0 !important;
+	vertical-align: middle;
+}
+
+.editor-styles-wrapper .mw-release-actions .mw-download-action--inline:not(.mw-download-action--multi) {
+	display: inline-grid;
+	margin-block: 0 !important;
+	vertical-align: middle;
+}
+
+/* Section head more link – left side per spec, visible in editor canvas */
+.editor-styles-wrapper .mw-section-head__more {
+	align-items: center;
+	background: color-mix(in srgb, currentColor 6%, transparent);
+	border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	border-radius: 999px;
+	color: inherit;
+	display: inline-flex;
+	font-size: .875rem;
+	font-weight: 700;
+	gap: .35rem;
+	line-height: 1;
+	margin-inline-start: auto;
+	padding: .55rem 1rem;
+	text-decoration: none;
+}
+
+.editor-styles-wrapper .mw-section-head__more:hover {
+	background: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 14%, transparent);
+	border-color: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 30%, transparent);
+	color: var(--wp--preset--color--accent, #1db954);
+}
+
+/* Artists shelf – size modifiers visible in editor canvas */
+.editor-styles-wrapper .mw-artists-shelf--size-thumbnail .mw-artists-shelf__avatar { --avatar-size: min(100%, 6.5rem); }
+.editor-styles-wrapper .mw-artists-shelf--size-medium .mw-artists-shelf__avatar { --avatar-size: min(100%, 9rem); }
+.editor-styles-wrapper .mw-artists-shelf--size-large .mw-artists-shelf__avatar { --avatar-size: min(100%, 11rem); }
+.editor-styles-wrapper .mw-artists-shelf--size-full .mw-artists-shelf__avatar { --avatar-size: min(100%, 14rem); }
+
+/* Artists shelf – style variations distinct in editor */
+.editor-styles-wrapper .mw-artists-shelf.is-style-minimal .mw-artists-shelf__avatar,
+.editor-styles-wrapper .mw-release-shelf--minimal .mw-artists-shelf__avatar { box-shadow: none; border: 1px solid var(--mw-color-border-subtle); }
+.editor-styles-wrapper .mw-artists-shelf.is-style-editorial .mw-artists-shelf__name { font-family: var(--mw-font-display, 'Syne', sans-serif); font-size: 1.15rem; font-weight: 900; text-transform: uppercase; }
+.editor-styles-wrapper .mw-artists-shelf.is-style-glass .mw-artists-shelf__avatar { backdrop-filter: blur(18px) saturate(1.2); background: color-mix(in srgb, var(--mw-color-surface) 62%, transparent); }
+
+/*
+ * Site Editor phone/tablet canvas.
+ *
+ * Below 64rem the front end turns the rail into an off-canvas drawer and keeps
+ * logo + site title in the top bar. The canvas cannot render an off-canvas
+ * drawer (it would be unreachable), so the rail is shown *as the open drawer*:
+ * full-width, vertical, under the top bar — the same content the admin sees
+ * when the drawer opens — and the bottom bar closes the header in DOM order.
+ */
+@media (max-width: 63.99rem) {
+	.editor-styles-wrapper .mw-site-header--stream > .block-editor-inner-blocks {
+		display: block;
+	}
+
+	.editor-styles-wrapper .mw-site-header--stream,
+	.editor-styles-wrapper .mw-site-header--stream > .block-editor-inner-blocks > .block-editor-block-list__layout,
+	.editor-styles-wrapper .mw-site-header--stream.is-layout-flow,
+	.editor-styles-wrapper .mw-site-header--stream-end,
+	.editor-styles-wrapper .mw-site-header--stream-end > .block-editor-inner-blocks > .block-editor-block-list__layout,
+	.editor-styles-wrapper .mw-site-header--stream-end.is-layout-flow {
+		display: flex;
+		flex-direction: column;
+		grid-template-columns: none;
+		grid-template-rows: none;
+		min-block-size: 0;
+	}
+
+	.editor-styles-wrapper .mw-site-header--stream .mw-stream-topbar,
+	.editor-styles-wrapper .mw-site-header--stream-end .mw-stream-topbar {
+		order: 1;
+	}
+
+	.editor-styles-wrapper .mw-site-header--stream .mw-rail,
+	.editor-styles-wrapper .mw-site-header--stream-end .mw-rail {
+		order: 2;
+		grid-column: auto;
+		grid-row: auto;
+		inline-size: 100%;
+		min-inline-size: 0;
+		min-block-size: 0;
+		padding: 0.75rem;
+		overflow: visible;
+		border: 0;
+		border-block-start: 1px solid var(--mw-color-border);
+		/* The front end parks the rail off-canvas as a closed drawer; the canvas
+		 * shows it open, so none of the drawer's hidden/translated state applies. */
+		position: relative;
+		inset: auto;
+		transform: none;
+		visibility: visible;
+		pointer-events: auto;
+		box-shadow: none;
+	}
+
+	.editor-styles-wrapper .mw-site-header--stream-end .mw-rail {
+		border-inline-start: 0;
+	}
+
+	.editor-styles-wrapper .mw-site-header--stream .mw-rail__tabbar,
+	.editor-styles-wrapper .mw-site-header--stream-end .mw-rail__tabbar {
+		order: 3;
+		grid-column: auto;
+		grid-row: auto;
+		position: sticky;
+		inset-block-end: 0;
+	}
+
+	/* The drawer keeps its vertical rhythm in the canvas; converting it to a
+	 * horizontal strip made the phone preview look like a different component. */
+	.editor-styles-wrapper .mw-site-header--stream .mw-rail .wp-block-navigation__container {
+		overflow-x: visible;
+	}
+
+	.editor-styles-wrapper .mw-site-header--stream .mw-rail .wp-block-navigation-item {
+		flex: 0 0 auto;
+		inline-size: 100%;
+		min-inline-size: 0;
+	}
+
+	.editor-styles-wrapper .mw-site-header--stream .mw-rail .wp-block-navigation-item__content {
+		flex-direction: row;
+		justify-content: flex-start;
+		min-block-size: 2.75rem;
+		padding: 0.55rem 0.7rem;
+		font-size: 0.92rem;
+	}
+}

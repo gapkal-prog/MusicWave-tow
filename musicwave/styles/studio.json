@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Studio",
+  "settings": {
+    "custom": {
+      "scheme": {
+        "light": { "canvas": "#f8f6f1", "surface": "#ffffff", "surfaceRaised": "#efebe2", "text": "#171512", "muted": "#625d54", "accent": "#a16207", "accentStrong": "#854d0e", "editorial": "#be123c", "onAccent": "#ffffff" },
+        "dark": { "canvas": "#101112", "surface": "#191b1e", "surfaceRaised": "#24272c", "text": "#f3f1ed", "muted": "#b7b6b1", "accent": "#e2ad2e", "accentStrong": "#ffe08a", "editorial": "#ff4d6d", "onAccent": "#1a1400" }
+      }
+    },
+    "color": {
+      "palette": [
+        { "slug": "canvas", "name": "Canvas", "color": "#101112" },
+        { "slug": "surface", "name": "Surface", "color": "#191b1e" },
+        { "slug": "surface-raised", "name": "Raised surface", "color": "#24272c" },
+        { "slug": "text", "name": "Text", "color": "#f3f1ed" },
+        { "slug": "muted", "name": "Muted text", "color": "#b7b6b1" },
+        { "slug": "accent", "name": "Accent", "color": "#e2ad2e" },
+        { "slug": "accent-strong", "name": "Accent strong", "color": "#ffe08a" },
+        { "slug": "editorial", "name": "Editorial rose", "color": "#ff4d6d" },
+        { "slug": "on-accent", "name": "On accent", "color": "#1a1400" }
+      ],
+      "gradients": [
+        { "slug": "accent-wash", "name": "Accent wash", "gradient": "radial-gradient(circle at 16% 18%, rgba(226,173,46,0.22), transparent 56%), linear-gradient(180deg, #1d1e20, #101112)" },
+        { "slug": "midnight-radio", "name": "Midnight radio", "gradient": "linear-gradient(145deg, #24272c, #0f1012)" }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|canvas",
+      "text": "var:preset|color|text"
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|mono"
+    },
+    "elements": {
+      "button": {
+        "border": { "radius": "999px" },
+        "color": { "background": "var:preset|color|accent", "text": "var:preset|color|on-accent" },
+        "typography": { "fontWeight": "700", "letterSpacing": "0.02em", "textTransform": "uppercase" }
+      },
+      "heading": { "typography": { "fontFamily": "var:preset|font-family|mono", "fontWeight": "700", "letterSpacing": "-0.01em" } },
+      "link": { "color": { "text": "var:preset|color|accent-strong" } }
+    }
+  }
+}

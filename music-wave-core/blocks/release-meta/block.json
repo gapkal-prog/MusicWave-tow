@@ -1,0 +1,119 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/release-meta",
+  "title": "فرادادهٔ انتشار",
+  "category": "music-wave",
+  "description": "نمایش یکپارچه و مینیمال فراداده‌های انتشار (هنرمند، تاریخ انتشار، مدت زمان، تمپو، گام موسیقی، سبک، برچسب و شماره کاتالوگ) به صورت خطی فشرده با جداکننده نقطه (·) یا جدول ساختارمند.",
+  "keywords": [
+    "شماره کاتالوگ",
+    "تمپو",
+    "مدت زمان",
+    "تاریخ انتشار",
+    "کلید موسیقی",
+    "جزئیات"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "list-view",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "compact": {
+      "type": "boolean",
+      "default": true
+    },
+    "showCatalogNumber": {
+      "type": "boolean",
+      "default": true
+    },
+    "showReleaseDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDuration": {
+      "type": "boolean",
+      "default": true
+    },
+    "showBpm": {
+      "type": "boolean",
+      "default": true
+    },
+    "showKey": {
+      "type": "boolean",
+      "default": true
+    },
+    "showArtist": {
+      "type": "boolean",
+      "default": true
+    },
+    "showGenre": {
+      "type": "boolean",
+      "default": true
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    },
+    "showLabels": {
+      "type": "boolean",
+      "default": true
+    },
+    "showMood": {
+      "type": "boolean",
+      "default": false
+    },
+    "showLabel": {
+      "type": "boolean",
+      "default": false
+    },
+    "showReleaseType": {
+      "type": "boolean",
+      "default": false
+    },
+    "fullSpecs": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "compact": true,
+      "showReleaseDate": true,
+      "showDuration": true,
+      "showBpm": true
+    }
+  }
+}

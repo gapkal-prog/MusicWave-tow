@@ -1,0 +1,45 @@
+{
+	"extends": [ "plugin:@wordpress/eslint-plugin/recommended" ],
+	"parserOptions": {
+		"ecmaVersion": 2021,
+		"sourceType": "script"
+	},
+	"env": {
+		"browser": true,
+		"jquery": true,
+		"es2021": true
+	},
+	"globals": {
+		"wp": "readonly",
+		"tinymce": "readonly",
+		"musicWaveDynamicBlocks": "readonly",
+		"musicWaveDownload": "readonly",
+		"musicWaveCatalogFilters": "readonly",
+		"musicWavePreviewPlayer": "readonly",
+		"musicWaveArtistTerm": "readonly",
+		"musicWaveLibrary": "readonly",
+		"musicWaveMetadataLookup": "readonly",
+		"musicwaveSlider": "readonly",
+		"musicwaveThemePreference": "readonly",
+		"musicwavePresentationBlocks": "readonly"
+	},
+	"rules": {
+		"camelcase": "off",
+		"no-var": "off",
+		"prefer-const": "off",
+		"prefer-arrow-callback": "off",
+		"vars-on-top": "off",
+		"no-shadow": "off",
+		"jsdoc/require-jsdoc": "off",
+		"jsdoc/require-param": "off",
+		"jsdoc/require-param-description": "off",
+		"jsdoc/require-returns": "off",
+		"jsdoc/check-tag-names": "off",
+		"jsdoc/valid-types": "off",
+		"jsdoc/no-undefined-types": "off",
+		"@wordpress/i18n-text-domain": "off",
+		"@wordpress/no-unsafe-wp-apis": "off",
+		"import/no-unresolved": "off",
+		"react/react-in-jsx-scope": "off"
+	}
+}

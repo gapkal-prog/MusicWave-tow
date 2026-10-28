@@ -1,0 +1,294 @@
+/**
+ * Catalog autocomplete — `music-wave-catalog-suggest`.
+ *
+ * One stylesheet for every surface that upgrades a plain field into a suggestion
+ * box: the header search bar, its popup, the catalog filter bar and the search
+ * page. `music-wave-core/assets/catalog-suggest.js` owns the DOM contract, so
+ * these selectors are the single source of truth for the look:
+ *
+ *   .mw-catalog-suggest                     wrapper (positioning + state classes)
+ *   __list                                  the listbox panel
+ *   __group / __group-title / __group-count type section header
+ *   __option (+ --{type})                   one suggestion
+ *   __icon / __icon-svg                     type glyph
+ *   __option-main / __type                  label + type chip
+ *   __loading / __spinner                   pending state
+ *   __empty … __empty-btn                   empty (404) state
+ *
+ * Surfaces retune it through the local tokens below instead of overriding the
+ * rules, which is what keeps the header bar, the popup and the filter bar
+ * looking like the same component.
+ */
+
+.mw-catalog-suggest {
+	--mwc-bg: var(--mw-color-surface-raised, #14161c);
+	--mwc-border: var(--mw-color-border, rgb(247 248 251 / 20%));
+	--mwc-radius: var(--mw-radius-md, 0.75rem);
+	--mwc-shadow: 0 1.1rem 2.75rem -1.1rem rgb(0 0 0 / 55%);
+	--mwc-accent: var(--mw-color-accent, #1db954);
+	--mwc-muted: var(--mw-color-text-muted, #a0a0a0);
+	--mwc-panel-gap: 0.4rem;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-inline-size: 0;
+}
+
+/* ---------- Panel ---------- */
+
+.mw-catalog-suggest__list {
+	position: absolute;
+	inset-block-start: calc(100% + var(--mwc-panel-gap));
+	inset-inline: 0;
+	z-index: 20;
+	margin: 0;
+	padding: 0.3rem;
+	max-block-size: min(22rem, 60vh);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	list-style: none;
+	border: 1px solid var(--mwc-border);
+	border-radius: var(--mwc-radius);
+	background: var(--mwc-bg);
+	box-shadow: var(--mwc-shadow);
+	backdrop-filter: blur(18px) saturate(1.2);
+	-webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+
+.mw-catalog-suggest__list:not([hidden]) {
+	animation: mwc-panel-in 160ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes mwc-panel-in {
+	from {
+		opacity: 0;
+		transform: translateY(-0.25rem);
+	}
+
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* ---------- Type section header ---------- */
+
+.mw-catalog-suggest__group {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	margin: 0.15rem 0 0;
+	padding: 0.3rem 0.55rem;
+	color: var(--mwc-muted);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.mw-catalog-suggest__group-count {
+	display: inline-grid;
+	place-items: center;
+	min-inline-size: 1.15rem;
+	block-size: 1.15rem;
+	padding-inline: 0.3rem;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--mw-color-text, #fff) 9%, transparent);
+	color: var(--mwc-muted);
+	font-size: 0.625rem;
+	font-weight: 700;
+}
+
+/* ---------- Option ---------- */
+
+.mw-catalog-suggest__option {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.6rem;
+	padding-block: 0.45rem;
+	padding-inline: 0.5rem;
+	border-radius: var(--mw-radius-sm, 0.5rem);
+	cursor: pointer;
+	transition: background-color 140ms ease;
+}
+
+.mw-catalog-suggest__option.is-active,
+.mw-catalog-suggest__option:hover {
+	background: color-mix(in srgb, var(--mwc-accent) 14%, transparent);
+}
+
+.mw-catalog-suggest__icon {
+	display: inline-grid;
+	place-items: center;
+	inline-size: 1.9rem;
+	block-size: 1.9rem;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--mw-color-text, #fff) 6%, transparent);
+	color: var(--mwc-muted);
+	transition: color 140ms ease, background-color 140ms ease;
+}
+
+.mw-catalog-suggest__icon-svg {
+	inline-size: 1.05rem;
+	block-size: 1.05rem;
+}
+
+.mw-catalog-suggest__option.is-active .mw-catalog-suggest__icon,
+.mw-catalog-suggest__option:hover .mw-catalog-suggest__icon {
+	background: color-mix(in srgb, var(--mwc-accent) 18%, transparent);
+	color: var(--mwc-accent);
+}
+
+.mw-catalog-suggest__option-main {
+	min-inline-size: 0;
+	overflow: hidden;
+	color: var(--mw-color-text, #fff);
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-catalog-suggest__type {
+	flex: none;
+	padding-block: 0.15rem;
+	padding-inline: 0.45rem;
+	border: 1px solid var(--mwc-border);
+	border-radius: 999px;
+	color: var(--mwc-muted);
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+/* ---------- Pending state ---------- */
+
+.mw-catalog-suggest__loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding-block: 1.1rem;
+	color: var(--mwc-muted);
+	font-size: 0.8125rem;
+}
+
+.mw-catalog-suggest__spinner {
+	inline-size: 1rem;
+	block-size: 1rem;
+	border: 2px solid color-mix(in srgb, var(--mw-color-text, #fff) 18%, transparent);
+	border-block-start-color: var(--mwc-accent);
+	border-radius: 50%;
+	animation: mwc-spin 700ms linear infinite;
+}
+
+@keyframes mwc-spin {
+	to {
+		transform: rotate(1turn);
+	}
+}
+
+/* ---------- Empty (no results) state ---------- */
+
+.mw-catalog-suggest__empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-block: 1.5rem 1.4rem;
+	padding-inline: 1rem;
+	text-align: center;
+}
+
+.mw-catalog-suggest__empty-icon {
+	display: inline-grid;
+	place-items: center;
+	inline-size: 2.75rem;
+	block-size: 2.75rem;
+	margin-block-end: 0.6rem;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--mw-color-text, #fff) 6%, transparent);
+	color: var(--mwc-muted);
+}
+
+.mw-catalog-suggest__empty-icon .mw-catalog-suggest__icon-svg {
+	inline-size: 1.35rem;
+	block-size: 1.35rem;
+}
+
+.mw-catalog-suggest__empty-title {
+	color: var(--mw-color-text, #fff);
+	font-size: 0.9375rem;
+	font-weight: 700;
+}
+
+.mw-catalog-suggest__empty-desc {
+	margin-block-start: 0.3rem;
+	max-inline-size: 30ch;
+	color: var(--mwc-muted);
+	font-size: 0.8125rem;
+	line-height: 1.65;
+	overflow-wrap: anywhere;
+}
+
+.mw-catalog-suggest__empty-actions {
+	margin-block-start: 0.9rem;
+}
+
+.mw-catalog-suggest__empty-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding-block: 0.45rem;
+	padding-inline: 0.95rem;
+	border: 1px solid color-mix(in srgb, var(--mwc-accent) 42%, transparent);
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--mwc-accent) 14%, transparent);
+	color: var(--mwc-accent);
+	font: inherit;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.mw-catalog-suggest__empty-btn:where(:hover, :focus-visible) {
+	border-color: color-mix(in srgb, var(--mwc-accent) 60%, transparent);
+	background: color-mix(in srgb, var(--mwc-accent) 26%, transparent);
+	transform: translateY(-1px);
+}
+
+.mw-catalog-suggest__empty-btn:focus-visible {
+	outline: 2px solid var(--mwc-accent);
+	outline-offset: 2px;
+}
+
+/* ---------- Narrow surfaces ---------- */
+
+@media (max-width: 30rem) {
+	.mw-catalog-suggest__list {
+		max-block-size: min(18rem, 55vh);
+	}
+
+	.mw-catalog-suggest__option {
+		gap: 0.5rem;
+	}
+
+	.mw-catalog-suggest__type {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-catalog-suggest__list:not([hidden]) {
+		animation: none;
+	}
+
+	.mw-catalog-suggest__option,
+	.mw-catalog-suggest__icon,
+	.mw-catalog-suggest__empty-btn {
+		transition: none;
+	}
+}

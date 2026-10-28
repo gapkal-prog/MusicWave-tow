@@ -1,0 +1,73 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/release-credits",
+  "title": "عوامل انتشار",
+  "category": "music-wave",
+  "description": "عوامل و نقش‌های انتشار را نشان می‌دهد.",
+  "keywords": [
+    "نقش‌ها",
+    "تهیه‌کنندگان"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "id",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "heading": {
+      "type": "string",
+      "default": "اعتبارات"
+    },
+    "showRole": {
+      "type": "boolean",
+      "default": true
+    },
+    "groupByRole": {
+      "type": "boolean",
+      "default": false
+    },
+    "layout": {
+      "type": "string",
+      "default": "list"
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "layout": "list",
+      "showRole": true
+    }
+  }
+}

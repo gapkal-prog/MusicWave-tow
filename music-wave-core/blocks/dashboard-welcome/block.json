@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-welcome",
+  "title": "خوش‌آمدگویی داشبورد",
+  "category": "music-wave",
+  "description": "بخش خوش‌آمدگویی حساب با آواتار، نشان VIP، وضعیت اشتراک واقعی و دکمه تمدید پس از ۹۰٪ اعتبار.",
+  "keywords": ["داشبورد", "پروفایل", "VIP", "اشتراک", "خوش آمدید"],
+  "textdomain": "music-wave-core",
+  "icon": "admin-users",
+  "attributes": {
+    "showAvatar": {
+      "type": "boolean",
+      "default": true
+    },
+    "showVipBadge": {
+      "type": "boolean",
+      "default": true
+    },
+    "showSubscriptionMeta": {
+      "type": "boolean",
+      "default": true
+    },
+    "showRenewal": {
+      "type": "boolean",
+      "default": true
+    },
+    "introText": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "showAvatar": true,
+      "showVipBadge": true,
+      "showSubscriptionMeta": true,
+      "showRenewal": true
+    }
+  }
+}

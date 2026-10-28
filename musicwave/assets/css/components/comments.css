@@ -1,0 +1,552 @@
+/* -------------------------------------------------------------------------
+ * Comments — core/comments, core/comment-template, core/post-comments-form
+ *
+ * Used by single-mw_release.html (listener discussion under a release).
+ * Every color comes from the scheme tokens so the block reads correctly in
+ * both light and dark palettes; layout uses logical properties for RTL.
+ * The markup is WordPress core's: .wp-block-comments, .wp-block-comment-template,
+ * .comment-respond / #commentform (comment_form()), .comment-reply-link.
+ * ------------------------------------------------------------------------- */
+
+.wp-block-comments {
+	margin-block: var(--wp--preset--spacing--50, 3rem) 0;
+	padding-block-start: var(--wp--preset--spacing--40, 2rem);
+	border-block-start: 1px solid var(--mw-color-border);
+	container-type: inline-size;
+}
+
+/* Section header: title + live count, aligned on one row. */
+.mw-release-comments__header {
+	gap: 0.5rem 1rem;
+	margin-block-end: var(--wp--preset--spacing--30, 1.5rem);
+}
+
+.mw-release-comments__heading {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+	font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+
+.mw-release-comments__count {
+	margin: 0;
+	padding: 0.3rem 0.85rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+	font-weight: 700;
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border-radius: var(--mw-radius-pill, 999px);
+}
+
+/* -------------------------------------------------------------------------
+ * Comment list
+ * ------------------------------------------------------------------------- */
+.wp-block-comment-template {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wp-block-comment-template li {
+	margin: 0;
+	padding: 0;
+}
+
+.wp-block-comment-template li + li {
+	margin-block-start: 0.75rem;
+}
+
+/* Threaded replies: indented rail, capped so deep threads stay readable. */
+.wp-block-comment-template ol {
+	margin: 0.75rem 0 0;
+	padding: 0 0 0 0;
+	padding-inline-start: clamp(1rem, 4cqi, 2.75rem);
+	list-style: none;
+	border-inline-start: 2px solid color-mix(in srgb, var(--mw-color-accent) 35%, transparent);
+}
+
+.wp-block-comment-template ol ol ol {
+	padding-inline-start: 0.75rem;
+}
+
+.mw-comment {
+	position: relative;
+	display: grid;
+	gap: 0.65rem;
+	padding: clamp(0.9rem, 2.5cqi, 1.25rem) clamp(0.9rem, 3cqi, 1.5rem);
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md, 0.75rem);
+	transition: border-color var(--mw-speed-fast, 150ms) ease;
+}
+
+.mw-comment:hover,
+.mw-comment:focus-within {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 40%, var(--mw-color-border));
+}
+
+/* Post author’s own replies get an accent tint so listeners spot them. */
+.wp-block-comment-template li.bypostauthor > .mw-comment {
+	background: color-mix(in srgb, var(--mw-color-accent) 7%, var(--mw-color-surface));
+	border-color: color-mix(in srgb, var(--mw-color-accent) 45%, var(--mw-color-border));
+}
+
+.mw-comment__meta {
+	gap: 0.75rem;
+	min-width: 0;
+}
+
+.mw-comment__avatar {
+	flex: 0 0 auto;
+	line-height: 0;
+}
+
+.mw-comment__avatar img {
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: 50%;
+	background: var(--mw-color-surface-raised);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--mw-color-accent) 30%, transparent);
+	object-fit: cover;
+}
+
+.mw-comment__byline {
+	display: grid;
+	gap: 0.1rem;
+	min-width: 0;
+}
+
+.mw-comment__author {
+	margin: 0;
+	font-size: 0.95rem;
+	font-weight: 700;
+	line-height: 1.3;
+	overflow-wrap: anywhere;
+}
+
+.mw-comment__author a {
+	color: var(--mw-color-text);
+	text-decoration: none;
+}
+
+.mw-comment__author a:hover,
+.mw-comment__author a:focus-visible {
+	color: var(--mw-color-accent-strong);
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.mw-comment__date {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.78rem;
+}
+
+.mw-comment__date a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-comment__date a:hover,
+.mw-comment__date a:focus-visible {
+	color: var(--mw-color-text);
+	text-decoration: underline;
+}
+
+.mw-comment__content {
+	font-size: 0.95rem;
+	line-height: 1.7;
+	overflow-wrap: anywhere;
+}
+
+.mw-comment__content > :first-child {
+	margin-block-start: 0;
+}
+
+.mw-comment__content > :last-child {
+	margin-block-end: 0;
+}
+
+.mw-comment__content p {
+	margin-block: 0 0.6em;
+}
+
+.mw-comment__content a {
+	color: var(--mw-color-accent-strong);
+	text-underline-offset: 0.18em;
+}
+
+.mw-comment__content blockquote {
+	margin: 0.75rem 0;
+	padding-inline-start: 1rem;
+	color: var(--mw-color-text-muted);
+	border-inline-start: 3px solid var(--mw-color-border-strong, var(--mw-color-border));
+}
+
+.mw-comment__content pre,
+.mw-comment__content code {
+	font-size: 0.85em;
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-comment__content pre {
+	padding: 0.75rem 1rem;
+	overflow-x: auto;
+}
+
+.mw-comment__content code {
+	padding: 0.1em 0.35em;
+}
+
+/* Moderation notice printed by core for pending comments. */
+.mw-comment__content .comment-awaiting-moderation {
+	display: inline-block;
+	margin-block-end: 0.5rem;
+	padding: 0.25rem 0.7rem;
+	color: var(--mw-color-text);
+	font-size: 0.78rem;
+	font-weight: 600;
+	background: color-mix(in srgb, var(--mw-color-accent) 16%, transparent);
+	border-radius: var(--mw-radius-pill, 999px);
+}
+
+.mw-comment__actions {
+	gap: 0.35rem 0.75rem;
+}
+
+.mw-comment__actions a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2rem;
+	padding: 0 0.85rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.78rem;
+	font-weight: 700;
+	text-decoration: none;
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border-radius: var(--mw-radius-pill, 999px);
+	transition:
+		color var(--mw-speed-fast, 150ms) ease,
+		background-color var(--mw-speed-fast, 150ms) ease;
+}
+
+.mw-comment__actions a:hover,
+.mw-comment__actions a:focus-visible {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+}
+
+.mw-comment__actions a:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--mw-color-accent) 45%, transparent);
+	outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------
+ * Pagination
+ * ------------------------------------------------------------------------- */
+.mw-release-comments__pagination {
+	gap: 0.5rem 1rem;
+	margin-block: var(--wp--preset--spacing--30, 1.5rem) 0;
+	font-size: 0.875rem;
+}
+
+.mw-release-comments__pagination a,
+.mw-release-comments__pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.25rem;
+	min-height: 2.25rem;
+	padding: 0 0.7rem;
+	color: var(--mw-color-text);
+	font-weight: 600;
+	text-decoration: none;
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-pill, 999px);
+}
+
+.mw-release-comments__pagination a:hover,
+.mw-release-comments__pagination a:focus-visible {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+.mw-release-comments__pagination .page-numbers.current {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+.mw-release-comments__pagination .page-numbers.dots {
+	border: 0;
+	color: var(--mw-color-text-muted);
+}
+
+.mw-release-comments__pagination .wp-block-comments-pagination-numbers {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+/* -------------------------------------------------------------------------
+ * Comment form (comment_form() markup inside core/post-comments-form)
+ * ------------------------------------------------------------------------- */
+.wp-block-post-comments-form {
+	margin-block-start: var(--wp--preset--spacing--40, 2rem);
+}
+
+.wp-block-post-comments-form .comment-respond {
+	padding: clamp(1rem, 3cqi, 1.75rem);
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg, 1.25rem);
+}
+
+.wp-block-post-comments-form .comment-reply-title {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.5rem 1rem;
+	margin: 0 0 0.35rem;
+	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+	font-size: 1.2rem;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+
+.wp-block-post-comments-form .comment-reply-title small {
+	font-family: var(--wp--preset--font-family--body, inherit);
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0;
+}
+
+.wp-block-post-comments-form #cancel-comment-reply-link {
+	color: var(--mw-color-text-muted);
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.wp-block-post-comments-form .comment-notes,
+.wp-block-post-comments-form .logged-in-as,
+.wp-block-post-comments-form .must-log-in {
+	margin: 0 0 1rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.85rem;
+	line-height: 1.6;
+}
+
+.wp-block-post-comments-form .logged-in-as a,
+.wp-block-post-comments-form .must-log-in a {
+	color: var(--mw-color-accent-strong);
+}
+
+.wp-block-post-comments-form .required {
+	color: var(--mw-color-danger, #ff6b6b);
+}
+
+.wp-block-post-comments-form .required-field-message {
+	display: block;
+	margin-block-start: 0.25rem;
+}
+
+/* Two-column identity fields on wider containers, single column on phones. */
+.wp-block-post-comments-form #commentform {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.85rem 1rem;
+}
+
+.wp-block-post-comments-form #commentform > * {
+	margin: 0;
+	min-width: 0;
+}
+
+.wp-block-post-comments-form .comment-notes,
+.wp-block-post-comments-form .logged-in-as,
+.wp-block-post-comments-form .must-log-in,
+.wp-block-post-comments-form .comment-form-comment,
+.wp-block-post-comments-form .comment-form-url,
+.wp-block-post-comments-form .comment-form-cookies-consent,
+.wp-block-post-comments-form .form-submit {
+	grid-column: 1 / -1;
+}
+
+.wp-block-post-comments-form .comment-form-comment,
+.wp-block-post-comments-form .comment-form-author,
+.wp-block-post-comments-form .comment-form-email,
+.wp-block-post-comments-form .comment-form-url {
+	display: grid;
+	gap: 0.35rem;
+}
+
+.wp-block-post-comments-form label {
+	color: var(--mw-color-text-muted);
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+}
+
+.wp-block-post-comments-form input[type="text"],
+.wp-block-post-comments-form input[type="email"],
+.wp-block-post-comments-form input[type="url"],
+.wp-block-post-comments-form textarea {
+	width: 100%;
+	min-height: 2.9rem;
+	padding: 0.65rem 0.95rem;
+	color: var(--mw-color-text);
+	font: inherit;
+	font-size: 0.95rem;
+	background: var(--mw-color-canvas);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-md, 0.75rem);
+	transition:
+		border-color var(--mw-speed-fast, 150ms) ease,
+		box-shadow var(--mw-speed-fast, 150ms) ease;
+}
+
+.wp-block-post-comments-form textarea {
+	min-height: 8.5rem;
+	resize: vertical;
+	line-height: 1.6;
+}
+
+.wp-block-post-comments-form input::placeholder,
+.wp-block-post-comments-form textarea::placeholder {
+	color: color-mix(in srgb, var(--mw-color-text-muted) 80%, transparent);
+}
+
+.wp-block-post-comments-form input[type="text"]:focus-visible,
+.wp-block-post-comments-form input[type="email"]:focus-visible,
+.wp-block-post-comments-form input[type="url"]:focus-visible,
+.wp-block-post-comments-form textarea:focus-visible {
+	border-color: var(--mw-color-accent);
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 28%, transparent);
+}
+
+.wp-block-post-comments-form .comment-form-cookies-consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.6rem;
+}
+
+.wp-block-post-comments-form .comment-form-cookies-consent input {
+	flex: 0 0 auto;
+	width: 1.1rem;
+	height: 1.1rem;
+	margin: 0.15rem 0 0;
+	accent-color: var(--mw-color-accent);
+}
+
+.wp-block-post-comments-form .comment-form-cookies-consent label {
+	font-weight: 500;
+	line-height: 1.5;
+	text-transform: none;
+}
+
+/* Submit: the theme's pill button, full width on phones. */
+.wp-block-post-comments-form .form-submit {
+	display: flex;
+	justify-content: flex-start;
+	margin-block-start: 0.25rem;
+}
+
+.wp-block-post-comments-form .form-submit .submit,
+.wp-block-post-comments-form .form-submit .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 3rem;
+	padding: 0.75rem 1.75rem;
+	color: var(--mw-color-on-accent);
+	font: inherit;
+	font-size: 0.95rem;
+	font-weight: 800;
+	background: var(--mw-color-accent);
+	border: 0;
+	border-radius: var(--mw-radius-pill, 999px);
+	box-shadow: 0 10px 26px color-mix(in srgb, var(--mw-color-accent) 32%, transparent);
+	cursor: pointer;
+	transition:
+		background-color var(--mw-speed-fast, 150ms) ease,
+		scale var(--mw-speed-fast, 150ms) var(--mw-ease-snap, ease);
+}
+
+.wp-block-post-comments-form .form-submit .submit:hover,
+.wp-block-post-comments-form .form-submit .wp-block-button__link:hover {
+	background: var(--mw-color-accent-strong);
+	scale: 1.02;
+}
+
+.wp-block-post-comments-form .form-submit .submit:focus-visible,
+.wp-block-post-comments-form .form-submit .wp-block-button__link:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--mw-color-accent) 45%, transparent);
+	outline-offset: 2px;
+}
+
+/* Closed discussions: the single-line notice printed by core. */
+.wp-block-post-comments-form .no-comments,
+.wp-block-comments .no-comments {
+	margin: var(--wp--preset--spacing--30, 1.5rem) 0 0;
+	padding: 0.85rem 1rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.875rem;
+	text-align: center;
+	background: var(--mw-color-surface);
+	border: 1px dashed var(--mw-color-border);
+	border-radius: var(--mw-radius-md, 0.75rem);
+}
+
+/* -------------------------------------------------------------------------
+ * Responsive
+ * ------------------------------------------------------------------------- */
+@container (max-width: 34rem) {
+	.wp-block-post-comments-form #commentform {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.wp-block-post-comments-form .form-submit .submit,
+	.wp-block-post-comments-form .form-submit .wp-block-button__link {
+		width: 100%;
+	}
+
+	.mw-comment__avatar img {
+		width: 2.25rem;
+		height: 2.25rem;
+	}
+
+	.mw-comment__actions a {
+		min-height: 2.5rem;
+	}
+
+	.mw-release-comments__pagination {
+		justify-content: center;
+	}
+}
+
+@media (max-width: 34rem) {
+	/* Fallback for browsers without container queries. */
+	.wp-block-post-comments-form #commentform {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-comment,
+	.mw-comment__actions a,
+	.wp-block-post-comments-form input,
+	.wp-block-post-comments-form textarea,
+	.wp-block-post-comments-form .form-submit .submit,
+	.wp-block-post-comments-form .form-submit .wp-block-button__link {
+		transition: none;
+	}
+
+	.wp-block-post-comments-form .form-submit .submit:hover,
+	.wp-block-post-comments-form .form-submit .wp-block-button__link:hover {
+		scale: 1;
+	}
+}

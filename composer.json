@@ -1,0 +1,56 @@
+{
+  "name": "manacore/musicwave",
+  "description": "Development tooling for the MusicWave WordPress theme and companion plugins.",
+  "type": "project",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "php-stubs/woocommerce-stubs": "^11.0",
+    "php-stubs/wordpress-stubs": "^6.6",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpstan/phpstan": "^1.12 || ^2.1",
+    "squizlabs/php_codesniffer": "^3.10",
+    "wp-coding-standards/wpcs": "^3.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "check:syntax": "@php tools/check-syntax.php",
+    "check:nul-bytes": "@php tools/check-nul-bytes.php",
+    "check:strict-types": "@php tools/check-strict-types.php",
+    "check:abspath": "@php tools/check-abspath.php",
+    "check:phpcs": "phpcs --standard=phpcs.xml music-wave-core music-wave-vip musicwave",
+    "check:phpstan": "phpstan analyse --configuration=phpstan.neon --memory-limit=-1 --debug --no-progress",
+    "check:site-editor": "@php tools/check-site-editor.php",
+    "check:js": "@php tools/check-js.php",
+    "make-pot": "@php tools/generate-pot.php",
+    "make-script-json": "@php tools/generate-script-json.php",
+    "make-mo": "@php tools/generate-mo.php",
+    "sync-po": "@php tools/sync-po.php",
+    "make-translations": [
+      "@make-pot",
+      "@sync-po",
+      "@make-mo",
+      "@make-script-json"
+    ],
+    "check:script-translations": "@php tools/check-script-translations.php",
+    "check:translations": "@php tools/check-translation-coverage.php",
+    "test": [
+      "@php tests/run.php",
+      "@php tests/metadata.php",
+      "@php tests/feed-regression.php",
+      "@php tests/protected-asset-storage.php",
+      "@php tests/card-markup.php",
+      "@php tests/template-integrity.php",
+      "@php tests/wordpress-runtime-audit.php"
+    ]
+  }
+}

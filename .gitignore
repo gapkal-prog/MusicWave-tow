@@ -1,0 +1,24 @@
+/vendor/
+/node_modules/
+/test-results/
+/playwright-report/
+/.phpcs-cache
+/.phpstan-cache/
+/.staging/
+/.kilo/
+/.zcode/
+/build/
+/dist/
+/outputs/
+*.log
+.DS_Store
+Thumbs.db
+
+# Local debug captures and saved-page exports — never ship in the repo.
+/acc*.html
+/cart*.html
+/guest.html
+/co.html
+/Screenshot*.html
+/Screenshot *.png
+/*.mhtml

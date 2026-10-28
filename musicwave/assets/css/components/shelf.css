@@ -1,0 +1,747 @@
+.mw-release-shelf {
+	--mw-shelf-columns: 4;
+	container-type: inline-size;
+	content-visibility: auto;
+	contain-intrinsic-size: 1px 600px;
+}
+
+.mw-release-shelf--scroll {
+	position: relative;
+	content-visibility: visible;
+	contain-intrinsic-size: none;
+}
+
+.mw-release-shelf--columns-2 { --mw-shelf-columns: 2; }
+.mw-release-shelf--columns-3 { --mw-shelf-columns: 3; }
+.mw-release-shelf--columns-4 { --mw-shelf-columns: 4; }
+.mw-release-shelf--columns-5 { --mw-shelf-columns: 5; }
+.mw-release-shelf--columns-6 { --mw-shelf-columns: 6; }
+
+.mw-release-shelf__header {
+	align-items: end;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+	margin-block-end: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.mw-release-shelf__header > span {
+	color: var(--wp--preset--color--accent, #1db954);
+	display: block;
+	font-size: .75rem;
+	font-weight: 750;
+	letter-spacing: .09em;
+	margin-block-end: .35rem;
+	text-transform: uppercase;
+}
+
+.mw-release-shelf__header h2 {
+	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+	font-size: clamp(1.5rem, 3.3vw, 2.35rem);
+	font-weight: 800;
+	letter-spacing: -.02em;
+	line-height: 1.08;
+	margin: 0;
+}
+
+.mw-release-shelf__header p {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	margin: .6rem 0 0;
+}
+
+.mw-release-shelf__more {
+	align-items: center;
+	color: var(--mw-color-text-muted, #a0a0a0);
+	display: inline-flex;
+	flex: 0 0 auto;
+	font-size: .875rem;
+	font-weight: 700;
+	gap: .4rem;
+	text-decoration: none;
+	transition: color var(--mw-speed-fast, 150ms) var(--mw-ease-snap, ease);
+}
+
+.mw-release-shelf__more:is(:hover, :focus-visible) {
+	color: var(--mw-color-text, #fff);
+}
+
+.mw-release-shelf__more span {
+	font-size: 1.1em;
+	transition: transform .2s ease;
+}
+
+.mw-release-shelf__more:is(:hover, :focus-visible) span {
+	transform: translateX(.2rem);
+}
+
+.mw-release-shelf__items {
+	display: grid;
+	gap: clamp(1rem, 2vw, 1.5rem);
+	grid-template-columns: repeat(var(--mw-shelf-columns), minmax(0, 1fr));
+}
+
+.mw-release-shelf__item {
+	min-width: 0;
+}
+
+/*
+ * SonicStream card pattern: the whole card lifts on hover and tints the
+ * surface, so the play overlay below belongs to a clearly interactive tile.
+ */
+.mw-release-shelf__item > .mw-release-card,
+.mw-release-shelf__item > .wp-block-post {
+	background: transparent;
+	border: 0;
+	border-radius: var(--mw-radius-md, .75rem);
+	padding: .75rem;
+	transition:
+		background-color var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease),
+		transform var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease);
+}
+
+.mw-release-shelf__item:is(:hover, :focus-within) > .mw-release-card,
+.mw-release-shelf__item:is(:hover, :focus-within) > .wp-block-post {
+	background: var(--mw-color-surface, #181818);
+	transform: translateY(-.25rem);
+}
+
+.mw-release-shelf__artwrap {
+	display: block;
+	position: relative;
+}
+
+/*
+ * Shape contract for release artwork.
+ *
+ * One frame, two tokens: `--mw-art-ratio` decides the box the cover is cropped
+ * into and `--mw-art-radius` decides its outline. Every `imageShape` value only
+ * flips those two tokens, so the cover, the monogram placeholder and the play
+ * overlay can never disagree with each other — the earlier per-shape overrides
+ * left square boxes with round images (and images that overflowed the frame)
+ * whenever a style variation re-declared one of the two properties.
+ */
+.mw-release-shelf__art {
+	--mw-art-ratio: 1;
+	--mw-art-radius: var(--mw-radius-lg, 1rem);
+	aspect-ratio: var(--mw-art-ratio);
+	background: color-mix(in srgb, currentColor 7%, transparent);
+	border-radius: var(--mw-art-radius);
+	box-shadow: 0 .75rem 2rem rgb(0 0 0 / 16%);
+	display: block;
+	overflow: hidden;
+	position: relative;
+}
+
+.mw-release-shelf__art--square { --mw-art-ratio: 1; }
+.mw-release-shelf__art--landscape { --mw-art-ratio: 16 / 10; }
+.mw-release-shelf__art--portrait { --mw-art-ratio: 4 / 5; }
+.mw-release-shelf__art--circle {
+	--mw-art-ratio: 1;
+	--mw-art-radius: 50%;
+}
+
+.mw-release-shelf__image {
+	block-size: 100%;
+	inline-size: 100%;
+	max-inline-size: none;
+	object-fit: cover;
+	object-position: center;
+	border-radius: inherit;
+	transition: transform .35s ease;
+}
+
+/* Circular covers are cropped to a disc, so a corner-anchored play button would
+ * float outside the artwork. Centre it on the disc's bottom arc instead. */
+.mw-release-shelf__artwrap:has(> .mw-release-shelf__art--circle) .mw-release-shelf__play {
+	inset-inline: 0;
+	inset-block-end: .5rem;
+	margin-inline: auto;
+}
+
+.mw-release-shelf__play {
+	align-items: center;
+	background: var(--mw-color-on-accent, #052e16);
+	block-size: 2.75rem;
+	border: 0;
+	border-radius: 50%;
+	cursor: pointer;
+	display: flex;
+	inset-block-end: .75rem;
+	inset-inline-end: .75rem;
+	justify-content: center;
+	opacity: 0;
+	padding: 0;
+	position: absolute;
+	transform: translateY(.5rem);
+	transition:
+		opacity var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease),
+		transform var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease),
+		background-color var(--mw-speed-fast, 150ms) ease,
+		scale var(--mw-speed-fast, 150ms) var(--mw-ease-snap, ease);
+	inline-size: 2.75rem;
+}
+
+.mw-release-shelf__play:hover {
+	background: var(--mw-color-accent-strong, #1ed760);
+}
+
+.mw-release-shelf__placeholder {
+	border-radius: inherit;
+	align-items: center;
+	background:
+		radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--mw-color-accent, #1db954) 50%, transparent), transparent 45%),
+		var(--mw-color-surface-raised, #282828);
+	color: var(--mw-color-text, #fff);
+	display: flex;
+	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
+	font-size: clamp(2rem, 8vw, 4rem);
+	font-weight: 800;
+	height: 100%;
+	justify-content: center;
+	width: 100%;
+}
+
+.mw-release-shelf__art:is(:hover, :focus-visible) .mw-release-shelf__image {
+	transform: scale(1.035);
+}
+
+.mw-release-shelf__artwrap:is(:hover, :focus-within) .mw-release-shelf__play,
+.mw-release-shelf__play:focus-visible {
+	opacity: 1;
+	transform: none;
+}
+
+/* Touch-first surfaces (phones, tablets, coarse pointers): the artwork play
+ * trigger is permanently visible and never waits for a hover state that those
+ * devices cannot produce. Width is capped at 64rem so tablets that still
+ * report `hover: hover` (trackpad iPadOS) get the same static treatment. */
+@media (hover: none), (pointer: coarse), (max-width: 64rem) {
+	.mw-release-shelf__artwrap .mw-release-shelf__play {
+		opacity: 1;
+		transform: none;
+	}
+
+	.mw-release-shelf__play:hover {
+		scale: 1;
+	}
+}
+
+.mw-release-shelf__body {
+	display: grid;
+	gap: .2rem;
+	padding-block-start: .75rem;
+}
+
+.mw-release-shelf__body h3 {
+	font-size: .9375rem;
+	font-weight: 600;
+	line-height: 1.3;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	unicode-bidi: plaintext;
+}
+
+.mw-release-shelf__body h3 a {
+	color: inherit;
+	text-decoration: none;
+	unicode-bidi: plaintext;
+}
+
+.mw-release-shelf__body h3 a:hover {
+	text-decoration: underline;
+}
+
+.mw-release-shelf__artist,
+.mw-release-shelf__body time,
+.mw-release-shelf__body p {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	font-size: .8125rem;
+	margin: 0;
+	unicode-bidi: plaintext;
+}
+
+.mw-release-shelf__artist[dir="auto"],
+.mw-release-shelf__body h3[dir="auto"] {
+	unicode-bidi: plaintext;
+}
+
+.mw-release-shelf__action {
+	color: var(--mw-color-accent, #1db954);
+	font-size: .8125rem;
+	font-weight: 700;
+	margin-block-start: .35rem;
+	text-decoration: none;
+	width: fit-content;
+}
+
+.mw-release-shelf--scroll .mw-release-shelf__items {
+	display: grid;
+	grid-auto-columns: clamp(10rem, 22vw, 15rem);
+	grid-auto-flow: column;
+	grid-template-columns: none;
+	overflow-x: auto;
+	padding-block-end: .75rem;
+	scroll-snap-type: inline mandatory;
+	scrollbar-color: color-mix(in srgb, currentColor 25%, transparent) transparent;
+}
+
+.mw-release-shelf--scroll .mw-release-shelf__item {
+	scroll-snap-align: start;
+}
+
+/*
+ * SonicStream scroll shelf: floating prev/next arrows anchored to the
+ * section edges, vertically centered over the card row. The slider handler
+ * (slider.js) measures the row in logical (direction-aware) pixels and
+ * toggles `disabled` at the edges plus `.mw-release-shelf--scrollable` when
+ * the row actually overflows; arrows fade in on hover/focus for pointer
+ * devices and stay visible on touch devices while enabled.
+ */
+.mw-release-shelf__nav {
+	display: contents;
+}
+
+.mw-release-shelf__nav-button {
+	position: absolute;
+	top: 50%;
+	z-index: 4;
+	display: inline-grid;
+	inline-size: 2.75rem;
+	block-size: 2.75rem;
+	padding: 0;
+	place-items: center;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border-strong, var(--mw-color-border));
+	border-radius: 50%;
+	box-shadow: var(--mw-shadow-floating, var(--mw-shadow-card));
+	line-height: 1;
+	cursor: pointer;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-50%);
+	transition:
+		opacity var(--mw-speed-fast, 150ms) var(--mw-ease-snap, ease),
+		background-color var(--mw-speed-fast, 150ms) ease,
+		border-color var(--mw-speed-fast, 150ms) ease,
+		scale var(--mw-speed-fast, 150ms) var(--mw-ease-snap, ease);
+}
+
+.mw-release-shelf__nav-button svg {
+	display: block;
+	inline-size: 1.25rem;
+	block-size: 1.25rem;
+}
+
+/* Chevrons point along the reading direction. */
+html[dir="rtl"] .mw-release-shelf__nav-button svg {
+	transform: scaleX(-1);
+}
+
+.mw-release-shelf__nav-button[data-mw-shelf-previous] {
+	inset-inline-start: 0.5rem;
+}
+
+.mw-release-shelf__nav-button[data-mw-shelf-next] {
+	inset-inline-end: 0.5rem;
+}
+
+.mw-release-shelf--scrollable .mw-release-shelf__nav-button:not([disabled]) {
+	opacity: 0.9;
+	pointer-events: auto;
+}
+
+.mw-release-shelf--scroll:is(:hover, :focus-within) .mw-release-shelf__nav-button:not([disabled]) {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.mw-release-shelf__nav-button:hover:not(:disabled) {
+	background: var(--mw-color-surface-strong);
+	border-color: var(--mw-color-accent);
+	scale: 1.06;
+}
+
+.mw-release-shelf__nav-button:focus-visible {
+	outline: 3px solid var(--mw-color-accent-strong);
+	outline-offset: 2px;
+	opacity: 1;
+}
+
+.mw-release-shelf__nav-button[disabled] {
+	opacity: 0 !important;
+	pointer-events: none;
+}
+
+@media (hover: none) {
+	/* Touch devices: enabled arrows stay visible without a hover state. */
+	.mw-release-shelf--scrollable .mw-release-shelf__nav-button:not([disabled]) {
+		opacity: 1;
+	}
+}
+
+@media (max-width: 34rem) {
+	.mw-release-shelf__nav-button {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-release-shelf__nav-button {
+		transition: none;
+	}
+
+	.mw-release-shelf__nav-button:hover:not(:disabled) {
+		scale: 1;
+	}
+}
+
+.mw-release-shelf--list .mw-release-shelf__items {
+	grid-template-columns: 1fr;
+}
+
+.mw-release-shelf--list .mw-release-shelf__item {
+	align-items: center;
+	border-block-end: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 4rem minmax(0, 1fr);
+	padding-block: .65rem;
+}
+
+.mw-release-shelf--list .mw-release-shelf__artwrap {
+	grid-row: 1;
+}
+
+.mw-release-shelf--list .mw-release-shelf__art {
+	border-radius: .65rem;
+}
+
+.mw-release-shelf--list .mw-release-shelf__body {
+	padding: 0;
+}
+
+@container (max-width: 52rem) {
+	.mw-release-shelf--grid .mw-release-shelf__items {
+		grid-template-columns: repeat(min(3, var(--mw-shelf-columns)), minmax(0, 1fr));
+	}
+}
+
+@container (max-width: 34rem) {
+	.mw-release-shelf--grid .mw-release-shelf__items {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.mw-release-shelf--scroll .mw-release-shelf__items {
+		grid-auto-columns: min(64vw, 12rem);
+		grid-template-columns: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-release-shelf__image,
+	.mw-release-shelf__play,
+	.mw-release-shelf__more span,
+	.mw-release-shelf__nav-button {
+		transition: none;
+	}
+}
+
+/* -------------------------------------------------------------------------
+ * Editorial feature layout (Cover-style)
+ * ---------------------------------------------------------------------- */
+
+.mw-release-shelf--feature {
+	position: relative;
+}
+
+.mw-feature {
+	display: grid;
+	gap: clamp(1.5rem, 3vw, 2.5rem);
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 52rem) {
+	.mw-feature {
+		grid-template-columns: minmax(0, 1fr) minmax(0, var(--mw-feature-side-width, 340px));
+	}
+}
+
+/* Hero cover */
+.mw-feature__hero {
+	background: var(--mw-color-vinyl-deep, #0b0d13);
+	border-radius: var(--mw-radius-lg, 1rem);
+	overflow: hidden;
+	position: relative;
+	min-height: clamp(20rem, 40vw, 28rem);
+	display: flex;
+	align-items: flex-end;
+	color: #fff;
+}
+
+.mw-feature__art {
+	position: absolute;
+	inset: 0;
+}
+
+.mw-feature__art-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.mw-feature__scrim {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: linear-gradient(
+		to top,
+		rgba(6, 8, 15, min(0.98, calc(var(--mw-feature-overlay, 0.5) * 1.35))) 0%,
+		rgba(6, 8, 15, min(0.94, calc(var(--mw-feature-overlay, 0.5) * 0.85))) 48%,
+		rgba(6, 8, 15, min(0.88, calc(var(--mw-feature-overlay, 0.5) * 0.52))) 100%
+	);
+}
+
+.mw-feature__content {
+	position: relative;
+	padding: clamp(1.5rem, 4vw, 3rem);
+	z-index: 1;
+	width: 100%;
+}
+
+.mw-feature__eyebrow {
+	color: var(--mw-color-accent, #1db954);
+	display: block;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	margin-block-end: 0.5rem;
+	text-transform: uppercase;
+}
+
+.mw-feature__title {
+	font-size: clamp(1.75rem, 4vw, 3rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	line-height: 1.1;
+	margin: 0 0 0.5rem;
+}
+
+.mw-feature__title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-feature__artist {
+	color: var(--mw-feature-text-color, rgba(255, 255, 255, 0.82));
+	display: block;
+	font-size: 1.125rem;
+	margin-block-end: 1rem;
+}
+
+.mw-feature__excerpt {
+	color: var(--mw-feature-text-color, rgba(255, 255, 255, 0.72));
+	font-size: 0.9375rem;
+	line-height: 1.6;
+	margin: 0 0 1.25rem;
+	max-width: 34rem;
+}
+
+.mw-feature__cta {
+	align-items: center;
+	background: var(--mw-cta-bg, var(--mw-color-accent, #1db954));
+	border: 2px solid transparent;
+	border-radius: 0.5rem;
+	color: var(--mw-cta-color, #fff);
+	display: inline-flex;
+	font-size: 0.875rem;
+	font-weight: 700;
+	gap: 0.4rem;
+	padding: 0.65rem 1.25rem;
+	text-decoration: none;
+	transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.mw-feature__cta--outline {
+	background: transparent;
+	border-color: var(--mw-cta-bg, var(--mw-color-accent, #1db954));
+	color: var(--mw-cta-color, var(--mw-color-accent, #1db954));
+}
+
+.mw-feature__cta--ghost {
+	background: transparent;
+	color: var(--mw-cta-color, #fff);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.mw-feature__cta:hover {
+	opacity: 0.88;
+	transform: translateY(-1px);
+}
+
+.mw-feature__cta span {
+	font-size: 1.1em;
+}
+
+.mw-feature__views {
+	background: rgba(255, 255, 255, 0.12);
+	border-radius: 9999px;
+	color: rgba(255, 255, 255, 0.85);
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 600;
+	margin-block-start: 0.25rem;
+	padding: 0.2rem 0.75rem;
+}
+
+/* Side list */
+.mw-feature__aside {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.mw-feature__aside-title {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	margin: 0 0 0.5rem;
+	text-transform: uppercase;
+}
+
+.mw-feature__side-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.mw-feature__side-item {
+	align-items: center;
+	display: grid;
+	gap: 0.75rem;
+	grid-template-columns: auto auto 1fr;
+}
+
+.mw-feature__rank {
+	color: var(--mw-color-accent, #1db954);
+	font-size: 0.8125rem;
+	font-weight: 800;
+	min-width: 1.2em;
+	text-align: center;
+}
+
+.mw-feature__side-art {
+	border-radius: 0.4rem;
+	display: block;
+	height: 3rem;
+	overflow: hidden;
+	width: 3rem;
+}
+
+.mw-feature__side-img {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.mw-feature__side-title {
+	color: inherit;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	line-height: 1.3;
+	text-decoration: none;
+}
+
+.mw-feature__side-views {
+	display: block;
+	font-size: 0.75rem;
+	/* The side list sits on the page canvas, not on the hero scrim, so it
+	 * follows the scheme-aware muted token instead of a fixed white. */
+	color: var(--mw-color-text-muted, rgba(255, 255, 255, 0.5));
+	margin-block-start: 0.2rem;
+}
+
+.mw-feature__more {
+	align-items: center;
+	color: var(--mw-color-accent, #1db954);
+	display: inline-flex;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	gap: 0.35rem;
+	margin-block-start: 0.5rem;
+	text-decoration: none;
+}
+
+.mw-feature__more span {
+	font-size: 1.1em;
+}
+
+ /* -------------------------------------------------------------------------
+  * Community playlist shelf — reuses shelf grid but with playlist art
+  * ---------------------------------------------------------------------- */
+
+.mw-release-shelf--playlists .mw-release-shelf__header span {
+	color: var(--mw-color-accent-strong, #1ed760);
+}
+
+/*
+ * Playlist artwork uses the shared fanned cover stack from playlists.css
+ * (`.mw-playlists__art-grid`); the shelf only un-clips its art frame so the
+ * tilted sleeves can extend past the square and keeps the shape modifiers.
+ */
+.mw-release-shelf__art--playlist {
+	overflow: visible;
+	background: transparent;
+	box-shadow: none;
+	container-type: inline-size;
+}
+
+.mw-release-shelf__art--playlist .mw-playlists__art-grid {
+	position: absolute;
+	inset: 0;
+	block-size: 100%;
+	aspect-ratio: auto;
+}
+
+/* The fan animates whole sleeves; skip the flat-cover zoom on their images. */
+.mw-release-shelf__art--playlist:is(:hover, :focus-visible) .mw-release-shelf__image {
+	transform: none;
+}
+
+/* Shape modifiers must land on the stack itself: the stack declares its own
+ * fan defaults, so values set on the link would lose to them. */
+.mw-release-shelf__art--playlist.mw-release-shelf__art--landscape .mw-playlists__art-grid {
+	--mw-fan-spread: 11%;
+	--mw-fan-inset: 8% 16%;
+}
+
+.mw-release-shelf__art--playlist.mw-release-shelf__art--portrait .mw-playlists__art-grid {
+	--mw-fan-inset: 14% 10%;
+}
+
+.mw-release-shelf__item--playlist .mw-release-shelf__body h3 {
+	font-size: 0.98rem;
+}
+
+.mw-release-shelf__count {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--mw-color-text-muted, #a0a0a0);
+	font-size: 0.8rem;
+	margin-block-start: 0.15rem;
+}
+
+.mw-release-shelf__play--playlist {
+	background: var(--mw-color-accent, #1db954);
+}
+
+.mw-release-shelf--playlists .mw-release-shelf__items {
+	gap: clamp(1rem, 2vw, 1.35rem);
+}

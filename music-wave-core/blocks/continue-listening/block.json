@@ -1,0 +1,123 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/continue-listening",
+  "title": "به گوش‌دادن ادامه دهید",
+  "category": "music-wave",
+  "description": "به هر شنونده انتشارهای اخیراً پخش‌شده و در دست اجرا خود را نشان می‌دهد، با انتخاب اول رضایت برای بازدیدکنندگانی که سابقهٔ گوش‌دادن را فعال نکرده‌اند.",
+  "keywords": [
+    "ادامه",
+    "اخیراً پخش‌شده",
+    "تاریخ",
+    "سابقه",
+    "گوش‌دادن"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "controls-back",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "به گوش دادن ادامه دهید"
+    },
+    "intro": {
+      "type": "string",
+      "default": ""
+    },
+    "source": {
+      "type": "string",
+      "default": "continue"
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 8
+    },
+    "columns": {
+      "type": "integer",
+      "default": 4
+    },
+    "layout": {
+      "type": "string",
+      "default": "scroll"
+    },
+    "imageShape": {
+      "type": "string",
+      "default": "square"
+    },
+    "showArtwork": {
+      "type": "boolean",
+      "default": true
+    },
+    "showArtist": {
+      "type": "boolean",
+      "default": true
+    },
+    "showWhen": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPreview": {
+      "type": "boolean",
+      "default": true
+    },
+    "sectionUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionLinkLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "guestMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "consentMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "consentButtonLabel": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "fontWeight": true,
+      "textTransform": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "ادامهٔ پخش",
+      "layout": "scroll",
+      "columns": 4
+    }
+  }
+}

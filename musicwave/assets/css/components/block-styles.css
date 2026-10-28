@@ -1,0 +1,421 @@
+/* =========================================================================
+ * MusicWave Unified Action Button System & Curated Block Variations
+ * Loaded on BOTH public frontend and Block / Site Editor for 1:1 visual parity.
+ * ====================================================================== */
+
+/* ---- Unified `.mw-action-button` Architecture (`ActionButtonStyle.php`) ---- */
+.mw-action-button {
+	--mw-btn-h: 2.75rem;
+	--mw-btn-px: 1.15rem;
+	--mw-btn-fs: 0.875rem;
+	--mw-btn-radius: 999px;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	height: 2.75rem;
+	min-height: 2.75rem;
+	block-size: var(--mw-btn-h);
+	min-block-size: var(--mw-btn-h);
+	padding-block: 0;
+	padding-inline: var(--mw-btn-px);
+	font-family: inherit;
+	font-size: var(--mw-btn-fs);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.01em;
+	white-space: nowrap;
+	text-decoration: none;
+	border-radius: var(--mw-btn-radius);
+	cursor: pointer;
+	user-select: none;
+	vertical-align: middle;
+	transition:
+		transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+		background-color 180ms ease,
+		border-color 180ms ease,
+		color 180ms ease,
+		box-shadow 200ms ease;
+}
+
+/* Sizes (`sm` | `md` | `lg`) */
+.mw-action-button.mw-action-button--sm {
+	--mw-btn-h: 2.25rem;
+	--mw-btn-px: 0.9rem;
+	--mw-btn-fs: 0.8125rem;
+	height: 2.25rem;
+	min-height: 2.25rem;
+}
+
+.mw-action-button.mw-action-button--md {
+	--mw-btn-h: 2.75rem;
+	--mw-btn-px: 1.15rem;
+	--mw-btn-fs: 0.875rem;
+	height: 2.75rem;
+	min-height: 2.75rem;
+}
+
+.mw-action-button.mw-action-button--lg {
+	--mw-btn-h: 3.25rem;
+	--mw-btn-px: 1.45rem;
+	--mw-btn-fs: 0.9375rem;
+	height: 3.25rem;
+	min-height: 3.25rem;
+}
+
+/* Shapes (`pill` | `rounded`) */
+.mw-action-button.mw-action-button--pill {
+	--mw-btn-radius: 999px;
+	border-radius: 999px;
+}
+
+.mw-action-button.mw-action-button--rounded {
+	--mw-btn-radius: var(--mw-radius-md, 0.75rem);
+	border-radius: var(--mw-radius-md, 0.75rem);
+}
+
+/* Display Modes (`icon` vs `button` vs `block`) */
+.mw-action-button.mw-action-button--icon {
+	display: inline-grid;
+	place-items: center;
+	width: 2.75rem;
+	min-width: 2.75rem;
+	inline-size: var(--mw-btn-h);
+	min-inline-size: var(--mw-btn-h);
+	block-size: var(--mw-btn-h);
+	min-block-size: var(--mw-btn-h);
+	padding: 0;
+	flex: 0 0 auto;
+}
+
+.mw-action-button.mw-action-button--sm.mw-action-button--icon {
+	width: 2.25rem;
+	min-width: 2.25rem;
+}
+
+.mw-action-button.mw-action-button--lg.mw-action-button--icon {
+	width: 3.25rem;
+	min-width: 3.25rem;
+}
+
+/* Artist follow SVG state transition inside theme button system */
+.mw-library-button__follow-svg .mw-library-button__follow-check {
+	display: none;
+}
+
+.mw-library-button[data-mw-library-state="in"] .mw-library-button__follow-svg .mw-library-button__follow-plus,
+.mw-library-button.is-saved .mw-library-button__follow-svg .mw-library-button__follow-plus {
+	display: none;
+}
+
+.mw-library-button[data-mw-library-state="in"] .mw-library-button__follow-svg .mw-library-button__follow-check,
+.mw-library-button.is-saved .mw-library-button__follow-svg .mw-library-button__follow-check {
+	display: inline;
+}
+
+.mw-action-button.mw-action-button--button {
+	display: inline-flex;
+	width: auto;
+	inline-size: auto;
+	padding-inline: var(--mw-btn-px);
+}
+
+.mw-action-button.mw-action-button--block {
+	display: flex;
+	width: 100%;
+	inline-size: 100%;
+	padding-inline: var(--mw-btn-px);
+}
+
+/* Variants (`accent` | `surface` | `outline` | `ghost`) */
+.mw-action-button.mw-action-button--accent {
+	color: var(--mw-color-on-accent, #041f0e);
+	background: var(--mw-color-accent, #1db954);
+	border: 1px solid var(--mw-color-accent, #1db954);
+}
+
+.mw-action-button.mw-action-button--accent:where(:hover, :focus-visible) {
+	color: var(--mw-color-on-accent, #041f0e);
+	background: color-mix(in srgb, var(--mw-color-accent, #1db954) 88%, #fff 12%);
+	border-color: color-mix(in srgb, var(--mw-color-accent, #1db954) 88%, #fff 12%);
+	box-shadow: 0 10px 26px color-mix(in srgb, var(--mw-color-accent, #1db954) 40%, transparent);
+	transform: translateY(-1px);
+}
+
+.mw-action-button.mw-action-button--surface {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 88%, var(--mw-color-text) 6%);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 14%, transparent);
+	box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+}
+
+.mw-action-button.mw-action-button--surface:where(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-surface-raised) 76%, var(--mw-color-accent, #1db954) 12%);
+	border-color: color-mix(in srgb, var(--mw-color-accent, #1db954) 48%, var(--mw-color-border));
+	transform: translateY(-1px);
+}
+
+.mw-action-button.mw-action-button--outline {
+	color: var(--mw-color-text);
+	background: transparent;
+	border: 1.5px solid color-mix(in srgb, var(--mw-color-accent, #1db954) 55%, var(--mw-color-border));
+	box-shadow: none;
+}
+
+.mw-action-button.mw-action-button--outline:where(:hover, :focus-visible) {
+	color: var(--mw-color-on-accent, #041f0e);
+	background: var(--mw-color-accent, #1db954);
+	border-color: var(--mw-color-accent, #1db954);
+	transform: translateY(-1px);
+}
+
+.mw-action-button.mw-action-button--ghost {
+	color: var(--mw-color-text-muted);
+	background: transparent;
+	border: 1px solid transparent;
+	box-shadow: none;
+}
+
+.mw-action-button.mw-action-button--ghost:where(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-text) 9%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-text) 14%, transparent);
+}
+
+.mw-action-button:active {
+	transform: scale(0.96);
+}
+
+.mw-action-button:focus-visible {
+	outline: 2px solid var(--mw-color-accent, #1db954);
+	outline-offset: 2px;
+}
+
+/* Unified crisp vector SVG sizing & optical alignment inside action buttons */
+.mw-action-button svg {
+	display: block;
+	flex: 0 0 auto;
+}
+
+.mw-action-button__icon,
+.mw-preview-button__icon,
+.mw-share-button__icon,
+.mw-shuffle-button__icon,
+.mw-library-button__icon,
+.mw-playlist-picker__trigger-icon,
+.mw-add-to-queue__icon,
+.mw-download-button__icon {
+	display: inline-grid;
+	place-items: center;
+	flex: 0 0 auto;
+	line-height: 1;
+}
+
+/* Active playback & saved library states */
+.mw-action-button[aria-pressed="true"]:not(.mw-library-button) {
+	box-shadow:
+		0 0 0 3px color-mix(in srgb, var(--mw-color-accent, #1db954) 26%, transparent),
+		0 8px 24px color-mix(in srgb, var(--mw-color-accent, #1db954) 32%, transparent);
+}
+
+.mw-library-button[data-mw-library-state="in"],
+.mw-library-button.is-saved {
+	color: var(--mw-color-heart, #ff2d55);
+	background: color-mix(in srgb, var(--mw-color-heart, #ff2d55) 14%, var(--mw-color-surface));
+	border-color: color-mix(in srgb, var(--mw-color-heart, #ff2d55) 36%, transparent);
+}
+
+.mw-library-button[data-mw-library-state="in"] .mw-library-button__heart-svg,
+.mw-library-button.is-saved .mw-library-button__heart-svg {
+	fill: currentColor;
+	stroke: currentColor;
+}
+
+.mw-library-button--heart.is-pop .mw-library-button__icon {
+	animation: mw-heart-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes mw-heart-pop {
+	0% { transform: scale(1); }
+	30% { transform: scale(1.35); }
+	55% { transform: scale(0.92); }
+	80% { transform: scale(1.08); }
+	100% { transform: scale(1); }
+}
+
+/* Global share status toast & busy state across all placements */
+.mw-share-button__status:not([hidden]) {
+	position: absolute;
+	inset-block-start: calc(100% + 0.5rem);
+	inset-inline-start: 50%;
+	transform: translateX(-50%);
+	z-index: 12;
+	inline-size: max-content;
+	max-inline-size: min(18rem, 92vw);
+	padding: 0.4rem 0.75rem;
+	color: var(--mw-color-text);
+	font-size: 0.8rem;
+	font-weight: 600;
+	white-space: nowrap;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	box-shadow: var(--mw-shadow-floating, 0 16px 40px rgb(0 0 0 / 0.22));
+}
+
+.mw-shuffle-button.is-loading,
+.mw-share-button[aria-busy="true"] {
+	opacity: 0.7;
+	pointer-events: none;
+}
+
+/* Block style variations for `music-wave/preview-player` */
+.mw-preview-button--outline {
+	color: var(--mw-color-text);
+	background: transparent;
+	border: 1.5px solid var(--mw-color-accent, #1db954);
+	box-shadow: none;
+}
+
+.mw-preview-button--ghost {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 16%, transparent);
+	box-shadow: none;
+}
+
+.mw-preview-button--block {
+	display: flex;
+	inline-size: 100%;
+}
+
+/* Standalone wrappers keep clean inline flow without unwanted margins */
+.mw-share-button-wrap,
+.mw-shuffle-button-wrap,
+.mw-library-button-wrap,
+.mw-add-to-queue,
+.mw-download-button {
+	position: relative;
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.mw-download-button__list {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-download-button__item {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+/* Core WordPress buttons polish across templates */
+.wp-block-button__link,
+.wp-element-button:not(.mw-action-button):not(.wp-block-search__button) {
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	transition:
+		transform 160ms ease,
+		background-color 180ms ease,
+		border-color 180ms ease,
+		box-shadow 180ms ease;
+}
+
+.wp-block-button__link:hover,
+.wp-element-button:not(.mw-action-button):not(.wp-block-search__button):hover {
+	transform: translateY(-1px);
+}
+
+.wp-block-button.is-style-mw-pill .wp-block-button__link {
+	border-radius: 999px;
+}
+
+.wp-block-button.is-style-mw-outline-accent .wp-block-button__link {
+	background: transparent;
+	color: var(--wp--preset--color--accent, #1db954);
+	border: 1.5px solid var(--wp--preset--color--accent, #1db954);
+}
+
+.wp-block-button.is-style-mw-outline-accent .wp-block-button__link:hover {
+	background: var(--wp--preset--color--accent, #1db954);
+	color: var(--wp--preset--color--on-accent, #052e16);
+}
+
+/* Group — surface cards */
+.wp-block-group.is-style-mw-surface,
+.is-style-mw-surface {
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+	box-shadow: var(--mw-shadow-card);
+	padding: var(--wp--preset--spacing--30);
+}
+
+.wp-block-group.is-style-mw-surface-raised,
+.is-style-mw-surface-raised {
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+	box-shadow: var(--mw-shadow-floating);
+}
+
+.wp-block-group.is-style-mw-header-wide,
+.mw-site-header .wp-block-group.mw-site-header__inner.is-style-mw-header-wide,
+.is-style-mw-header-wide .mw-site-header__inner {
+	max-width: var(--wp--style--global--wide-size, 1440px);
+	width: 100%;
+	margin-inline: auto;
+}
+
+/* Columns tight gap */
+.wp-block-columns.is-style-mw-tight-gap {
+	gap: var(--wp--preset--spacing--20) !important;
+}
+
+/* Separator accent */
+.wp-block-separator.is-style-mw-accent {
+	background: var(--wp--preset--color--accent, #1db954);
+	height: 3px;
+	border: 0;
+	opacity: 1;
+}
+
+/* Images rounded / circle */
+.wp-block-image.is-style-mw-rounded img {
+	border-radius: var(--mw-radius-md);
+}
+
+.wp-block-image.is-style-mw-circle img {
+	border-radius: 50%;
+}
+
+/* Checklist */
+.wp-block-list.is-style-mw-checklist {
+	list-style: none;
+	padding-left: 0;
+}
+
+.wp-block-list.is-style-mw-checklist li {
+	position: relative;
+	padding-left: 1.6rem;
+}
+
+.wp-block-list.is-style-mw-checklist li::before {
+	content: "✓";
+	position: absolute;
+	left: 0;
+	color: var(--wp--preset--color--accent, #1db954);
+	font-weight: 800;
+}

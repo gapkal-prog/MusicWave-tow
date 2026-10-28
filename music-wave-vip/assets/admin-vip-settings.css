@@ -1,0 +1,352 @@
+/* MusicWave VIP Admin — Unified 4-Tab Control Center & Protected Delivery Studio */
+.mwvip-header {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	padding: 18px 20px;
+	border-radius: 6px;
+	margin-bottom: 16px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+}
+
+.mwvip-header h1 {
+	margin: 0;
+	font-size: 22px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.mwvip-badge {
+	background: #2271b1;
+	color: #fff;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 11px;
+	letter-spacing: 0.04em;
+}
+
+.mwvip-header p {
+	margin: 4px 0 0;
+	color: #50575e;
+	max-width: 600px;
+}
+
+.mwvip-tabs {
+	border-bottom: 1px solid #ccd0d4;
+	margin-bottom: 0;
+	display: flex;
+	gap: 2px;
+	flex-wrap: wrap;
+}
+
+.mwvip-tabs button {
+	background: none;
+	border: 1px solid transparent;
+	border-bottom: none;
+	padding: 10px 16px;
+	cursor: pointer;
+	font-weight: 600;
+	color: #50575e;
+	border-radius: 4px 4px 0 0;
+}
+
+.mwvip-tabs button.active {
+	background: #fff;
+	border-color: #ccd0d4;
+	color: #1d2327;
+}
+
+.mwvip-panel {
+	display: none;
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-top: none;
+	padding: 20px;
+	border-radius: 0 0 6px 6px;
+}
+
+.mwvip-panel.active {
+	display: block;
+}
+
+.mwvip-example {
+	margin-top: 8px;
+}
+
+.mwvip-example code {
+	display: block;
+	background: #f6f7f7;
+	padding: 6px 8px;
+	border-radius: 4px;
+	margin: 6px 0;
+	font-size: 12px;
+	white-space: pre-wrap;
+}
+
+.mwvip-example em {
+	font-size: 12px;
+	color: #50575e;
+}
+
+.mwvip-tooltip {
+	cursor: help;
+}
+
+.mwvip-module-control:disabled {
+	opacity: 0.65;
+}
+
+.mwvip-related {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.mwvip-related a.button {
+	align-self: flex-start;
+}
+
+.mwvip-product-table {
+	margin-top: 10px;
+	max-width: 780px;
+}
+
+.form-table th {
+	vertical-align: top;
+	padding-top: 18px;
+	width: 220px;
+}
+
+.mwvip-quicklinks {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.mwvip-section-intro {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	padding: 12px 16px;
+	margin-bottom: 16px;
+}
+
+.mwvip-section-intro--blue {
+	border-inline-start: 4px solid #2271b1;
+}
+
+.mwvip-section-intro--green {
+	border-inline-start: 4px solid #00a32a;
+}
+
+.mwvip-section-intro p {
+	margin: 0 0 8px;
+}
+
+.mwvip-section-intro p.muted {
+	margin: 0;
+	color: #50575e;
+}
+
+.mwvip-danger-box {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	padding: 14px 16px;
+	border-radius: 4px;
+	max-width: 1000px;
+	margin-top: 16px;
+	border-inline-start: 4px solid #d63638;
+}
+
+.mwvip-danger-box h4 {
+	margin: 0 0 8px;
+	color: #d63638;
+}
+
+.mwvip-info-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 16px;
+	max-width: 1000px;
+	margin-top: 16px;
+}
+
+.mwvip-info-card {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	padding: 14px 16px;
+	border-radius: 4px;
+}
+
+.mwvip-info-card h4 {
+	margin: 0 0 8px;
+}
+
+.mwvip-plans-box,
+.mwvip-delivery-box {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 6px;
+	padding: 16px;
+	max-width: 1000px;
+	margin-bottom: 16px;
+}
+
+.mwvip-plans-box h3 {
+	margin-top: 0;
+}
+
+.mwvip-delivery-box__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.mwvip-health-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.mwvip-status-pill {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 12px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.mwvip-status-pill.is-ok {
+	background: #dcfce7;
+	color: #166534;
+}
+
+.mwvip-status-pill.is-warn {
+	background: #fef3c7;
+	color: #92400e;
+}
+
+.mwvip-checks-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+	gap: 8px;
+	margin: 12px 0;
+}
+
+.mwvip-check-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-radius: 6px;
+	border: 1px solid #dcdcde;
+	font-size: 12.5px;
+}
+
+.mwvip-check-item.is-ok {
+	background: #f0fdf4;
+	border-color: #bbf7d0;
+	color: #14532d;
+}
+
+.mwvip-check-item.is-fail {
+	background: #fef2f2;
+	border-color: #fecaca;
+	color: #7f1d1d;
+}
+
+.mwvip-check-item__dot {
+	font-weight: 700;
+}
+
+.mwvip-health-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 10px 12px;
+	background: #f6f7f7;
+	border-radius: 6px;
+	font-size: 13px;
+}
+
+.mwvip-inline-feedback {
+	margin: 8px 0 0;
+	font-size: 12.5px;
+	color: #1d4ed8;
+}
+
+.mwvip-vault-upload {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.mwvip-vault-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+	margin: 12px 0;
+}
+
+.mwvip-vault-row-actions {
+	white-space: nowrap;
+}
+
+.mwvip-secret-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.mwvip-code-snippet {
+	margin: 8px 0 0;
+	padding: 10px 12px;
+	background: #1e293b;
+	color: #f8fafc;
+	border-radius: 6px;
+	font-size: 12px;
+	direction: ltr;
+	text-align: left;
+	overflow-x: auto;
+	max-width: 560px;
+}
+
+.mwvip-sample-url {
+	display: block;
+	padding: 8px 10px;
+	direction: ltr;
+	text-align: left;
+	word-break: break-all;
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+}
+
+.mwvip-event {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 11.5px;
+	font-weight: 600;
+	background: #dcfce7;
+	color: #166534;
+}
+
+.mwvip-event--order_revoke,
+.mwvip-event--manual_revoke,
+.mwvip-event--expired {
+	background: #fef2f2;
+	color: #991b1b;
+}

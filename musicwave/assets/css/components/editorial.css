@@ -1,0 +1,866 @@
+/*
+ * MusicWave editorial vocabulary.
+ *
+ * The SonicStream layer (shelf, catalog, player) owns playback; this file owns
+ * *editorial* chrome: magazine kickers, section rules, chip rails, spec strips,
+ * and liner notes. Every rule is token driven (assets/css/tokens.css) so the six
+ * style variations and both schemes keep working, and every selector is
+ * prefixed `mw-` so merchants can compose the same surfaces from the block
+ * editor without touching code. Each vocabulary class is emitted by at least
+ * one renderer or bundled pattern — see `musicwave/patterns/section-faq.php`
+ * for the disclosure list shared with the request pages, and the
+ * `musicwave/patterns/demo-*.php` packs for the intro and section-head
+ * vocabulary in use.
+ *
+ * Block style variations that borrow this vocabulary live here too, keyed to
+ * the modifier classes emitted by the renderers (for example
+ * `.mw-release-shelf--editorial`). Selectors use two classes so they win over
+ * the base component rules regardless of stylesheet order.
+ *
+ * RTL: logical properties only. Motion: every animation is listed in the
+ * `prefers-reduced-motion` block at the end of the file.
+ */
+
+/* -------------------------------------------------------------------------
+ * 1. Kicker / eyebrow
+ * ---------------------------------------------------------------------- */
+
+.mw-eyebrow {
+	align-items: center;
+	color: var(--mw-color-editorial, #fa2d48);
+	display: inline-flex;
+	font-size: 0.6875rem;
+	font-weight: 800;
+	gap: 0.45rem;
+	letter-spacing: var(--mw-eyebrow-tracking, 0.16em);
+	line-height: 1;
+	text-transform: uppercase;
+}
+
+.mw-eyebrow::before {
+	animation: mw-eyebrow-pulse 2.6s var(--mw-ease-out, ease) infinite;
+	background: currentColor;
+	block-size: 0.4rem;
+	border-radius: 50%;
+	content: "";
+	inline-size: 0.4rem;
+}
+
+.mw-eyebrow--accent {
+	color: var(--mw-color-accent, #1db954);
+}
+
+@keyframes mw-eyebrow-pulse {
+	0%,
+	100% {
+		box-shadow: 0 0 0 0 var(--mw-color-editorial-soft, rgb(250 45 72 / 18%));
+	}
+
+	55% {
+		box-shadow: 0 0 0 0.4rem transparent;
+	}
+}
+
+/* -------------------------------------------------------------------------
+ * 2. Section head — the editorial header used by patterns and hero sections
+ * ---------------------------------------------------------------------- */
+
+.mw-section-head {
+	align-items: end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.25rem;
+	justify-content: space-between;
+	margin-block-end: clamp(1rem, 2.4vw, 1.75rem);
+}
+
+.mw-section-head__text {
+	display: grid;
+	gap: 0.4rem;
+	max-inline-size: 46rem;
+	min-inline-size: 0;
+}
+
+.mw-section-head__more {
+	align-items: center;
+	background: color-mix(in srgb, currentColor 6%, transparent);
+	border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	border-radius: 999px;
+	color: inherit;
+	display: inline-flex;
+	font-size: .875rem;
+	font-weight: 700;
+	gap: .35rem;
+	letter-spacing: -.01em;
+	line-height: 1;
+	margin-inline-start: auto;
+	padding: .55rem 1rem;
+	text-decoration: none;
+	transition: background 160ms ease, border-color 160ms ease, transform 160ms ease, color 160ms ease;
+}
+
+.mw-section-head__more:hover,
+.mw-section-head__more:focus-visible {
+	background: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 14%, transparent);
+	border-color: color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 30%, transparent);
+	color: var(--wp--preset--color--accent, #1db954);
+	transform: translateY(-1px);
+}
+
+.mw-section-head__more:active {
+	transform: translateY(0);
+}
+
+.mw-section-head__more:focus-visible {
+	outline: 2px solid color-mix(in srgb, var(--wp--preset--color--accent, #1db954) 40%, transparent);
+	outline-offset: 2px;
+}
+
+/* RTL: arrow direction already handled by logical properties, but keep visual */
+[dir='rtl'] .mw-section-head__more span {
+	transform: scaleX(-1);
+	display: inline-block;
+}
+
+.mw-section-head h2 {
+	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
+	font-size: clamp(1.55rem, 3.2vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: -0.025em;
+	line-height: 1.06;
+	margin: 0;
+}
+
+.mw-section-head p {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	margin: 0;
+	max-inline-size: 42rem;
+}
+
+/* Gradient hairline that ties the header to the editorial accent. */
+.mw-section-head__rule {
+	background: var(--mw-gradient-editorial, linear-gradient(115deg, #fa2d48, #1db954));
+	block-size: 2px;
+	border-radius: 999px;
+	inline-size: 4.25rem;
+	order: 3;
+}
+
+/*
+ * Two spellings, one declaration set.
+ *
+ * PHP-rendered headers emit the BEM modifier (mw-section-head--center), while
+ * the Site Editor's Styles panel writes is-style-<slug> onto a stored
+ * music-wave/section-head block. Both are listed here so the static container
+ * and the rendered component cannot drift; the slugs come from
+ * musicwave_section_head_styles() in functions.php.
+ *
+ * All rules use logical properties, so RTL mirrors them for free.
+ */
+.mw-section-head--center,
+.mw-section-head.is-style-center {
+	justify-content: center;
+	text-align: center;
+}
+
+.mw-section-head--center .mw-section-head__text,
+.mw-section-head.is-style-center .mw-section-head__text {
+	justify-items: center;
+	margin-inline: auto;
+}
+
+.mw-section-head--center .mw-section-head__rule,
+.mw-section-head.is-style-center .mw-section-head__rule {
+	margin-inline: auto;
+}
+
+.mw-section-head--stack,
+.mw-section-head.is-style-stack {
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+/* Section head on a filled/spotlight surface flips to light-on-dark tokens. */
+.mw-section-head--invert h2,
+.mw-section-head--invert p,
+.mw-section-head.is-style-invert h2,
+.mw-section-head.is-style-invert p {
+	color: #fff;
+}
+
+.mw-section-head--invert p,
+.mw-section-head.is-style-invert p {
+	opacity: 0.75;
+}
+
+/* -------------------------------------------------------------------------
+ * 3. Shelf variations — editorial / minimal (vinyl lives in vinyl.css)
+ * ---------------------------------------------------------------------- */
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__header {
+	max-width: none;
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__header > span {
+	align-items: center;
+	color: var(--mw-color-editorial, #fa2d48);
+	display: inline-flex;
+	font-size: 0.6875rem;
+	gap: 0.45rem;
+	letter-spacing: var(--mw-eyebrow-tracking, 0.16em);
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__header > span::after {
+	background: var(--mw-gradient-editorial, linear-gradient(115deg, #fa2d48, #1db954));
+	block-size: 2px;
+	border-radius: 999px;
+	content: "";
+	inline-size: 3rem;
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__item {
+	background: var(--mw-color-glass, rgb(24 24 24 / 74%));
+	border: 1px solid var(--mw-color-glass-border, rgb(247 248 251 / 12%));
+	border-radius: var(--mw-radius-lg, 1rem);
+	overflow: hidden;
+	padding: 0.75rem;
+	position: relative;
+	transition:
+		border-color var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease),
+		box-shadow var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease),
+		transform var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease);
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__item::before {
+	background: var(--mw-gradient-editorial, linear-gradient(115deg, #fa2d48, #1db954));
+	block-size: 2px;
+	content: "";
+	inline-size: 100%;
+	inset-block-start: 0;
+	inset-inline-start: 0;
+	opacity: 0;
+	position: absolute;
+	transition: opacity var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease);
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__item:is(:hover, :focus-within) {
+	border-color: var(--mw-color-editorial-line, rgb(250 45 72 / 42%));
+	box-shadow: var(--mw-shadow-lift, 0 1.5rem 3rem rgb(0 0 0 / 30%));
+	transform: translateY(-0.35rem);
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__item:is(:hover, :focus-within)::before {
+	opacity: 1;
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__art {
+	border-radius: var(--mw-radius-md, 0.75rem);
+	box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 22%);
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__body h3 {
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	margin-block-start: 0.15rem;
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__body h3 a {
+	background-image: var(--mw-gradient-editorial, linear-gradient(115deg, #fa2d48, #1db954));
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	background-size: 0 2px;
+	transition: background-size var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease);
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__item:is(:hover, :focus-within) .mw-release-shelf__body h3 a {
+	background-size: 100% 2px;
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__action {
+	align-items: center;
+	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
+	border-radius: 999px;
+	display: inline-flex;
+	font-size: 0.75rem;
+	font-weight: 700;
+	gap: 0.35rem;
+	margin-block-start: 0.5rem;
+	padding: 0.4rem 0.85rem;
+	text-decoration: none;
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__action::after {
+	content: "→";
+	transition: transform var(--mw-speed-fast, 150ms) var(--mw-ease-snap, ease);
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__action:is(:hover, :focus-visible) {
+	background: var(--mw-color-editorial, #fa2d48);
+	color: #fff;
+}
+
+.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__action:is(:hover, :focus-visible)::after {
+	transform: translateX(0.2rem);
+}
+
+/* Minimal: no card surface at all — rules and typography carry the rhythm. */
+.mw-release-shelf.mw-release-shelf--minimal .mw-release-shelf__item {
+	background: transparent;
+	border: 0;
+	border-block-end: 1px solid var(--mw-color-border-subtle, rgb(247 248 251 / 6%));
+	border-radius: 0;
+	padding-block: 0.85rem;
+}
+
+.mw-release-shelf.mw-release-shelf--minimal .mw-release-shelf__item:is(:hover, :focus-within) {
+	background: transparent;
+	transform: none;
+}
+
+.mw-release-shelf.mw-release-shelf--minimal .mw-release-shelf__item:is(:hover, :focus-within) .mw-release-shelf__body h3 a {
+	color: var(--mw-color-editorial, #fa2d48);
+}
+
+.mw-release-shelf.mw-release-shelf--minimal .mw-release-shelf__art {
+	border-radius: var(--mw-radius-sm, 0.5rem);
+	box-shadow: none;
+}
+
+.mw-release-shelf.mw-release-shelf--minimal .mw-release-shelf__body h3 {
+	font-size: 0.9375rem;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+}
+
+.mw-release-shelf.mw-release-shelf--minimal .mw-release-shelf__artist {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	display: block;
+	font-size: 0.75rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+/* Feature layout ("ویژه‌نامه"): the editorial look reaches the hero card so a
+   variation is never a no-op just because the block renders its feature
+   layout instead of the card grid. */
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--editorial .mw-feature__hero {
+	border-radius: var(--mw-radius-xl, 1.5rem);
+	box-shadow: var(--mw-shadow-lift, 0 1.5rem 3rem rgb(0 0 0 / 30%));
+}
+
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--editorial .mw-feature__eyebrow {
+	align-items: center;
+	color: var(--mw-color-editorial, #fa2d48);
+	display: inline-flex;
+	gap: 0.45rem;
+	letter-spacing: var(--mw-eyebrow-tracking, 0.16em);
+}
+
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--editorial .mw-feature__eyebrow::after {
+	background: var(--mw-gradient-editorial, linear-gradient(115deg, #fa2d48, #1db954));
+	block-size: 2px;
+	border-radius: 999px;
+	content: "";
+	inline-size: 3rem;
+}
+
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--editorial .mw-feature__title {
+	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+}
+
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--editorial .mw-feature__aside {
+	border-inline-start: 1px solid var(--mw-color-editorial-line, rgb(250 45 72 / 42%));
+	padding-inline-start: clamp(0.85rem, 2vw, 1.5rem);
+}
+
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--minimal .mw-feature__hero {
+	border-radius: var(--mw-radius-sm, 0.5rem);
+}
+
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--minimal .mw-feature__title,
+.mw-release-shelf.mw-release-shelf--feature.mw-release-shelf--minimal .mw-feature__aside-title {
+	text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------------
+ * 4. Slider variations — cinema / editorial
+ *
+ * Two surfaces consume these slugs:
+ *   • music-wave/release-slider   → `.mw-release-slider--cinema|editorial`
+ *   • shelf block in slider layout → the shelf's own variation class, which
+ *     is why the hero-slide tweaks below stay scoped to `--slider`.
+ * ---------------------------------------------------------------------- */
+
+/* Cinema: artwork fills the frame and the copy rides on the scrim. */
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__slide {
+	position: relative;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__artwrap {
+	border-radius: var(--mw-radius-xl, 1.5rem);
+	overflow: hidden;
+}
+
+.mw-release-slider.mw-release-slider--cinema.mw-release-slider--shape-circle .mw-release-slider__artwrap,
+.mw-release-slider.is-style-cinema.mw-release-slider--shape-circle .mw-release-slider__artwrap {
+	border-radius: 999px;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__artwrap::after {
+	background: linear-gradient(
+		180deg,
+		rgba(6, 8, 15, min(0.85, calc(var(--mw-feature-overlay, 0.55) * 0.4))) 0%,
+		color-mix(in srgb, var(--mw-color-canvas, #0a0a0a) min(98%, calc(40% + var(--mw-feature-overlay, 0.55) * 58%)), transparent) 100%
+	);
+	content: "";
+	inset: 0;
+	pointer-events: none;
+	position: absolute;
+	z-index: 1;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__play {
+	inset-block-start: auto;
+	inset-block-end: 0.85rem;
+	inset-inline-end: 0.85rem;
+	z-index: 3;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__body {
+	background: none;
+	inset-block-end: clamp(0.9rem, 3vw, 1.75rem);
+	inset-inline: clamp(0.9rem, 3vw, 1.75rem);
+	padding: 0;
+	position: absolute;
+	z-index: 2;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__body h3 {
+	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
+	font-size: clamp(1.25rem, 3.4vw, 2.15rem);
+	letter-spacing: -0.02em;
+	line-height: 1.05;
+	text-transform: uppercase;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__body p {
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+	overflow: hidden;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__artist {
+	color: var(--mw-color-text, #f7f8fb);
+	font-size: 0.75rem;
+	letter-spacing: 0.12em;
+	opacity: 0.85;
+	text-transform: uppercase;
+}
+
+/* Editorial: the card stays in flow; a magazine rule anchors the copy. */
+.mw-release-slider.mw-release-slider--editorial .mw-release-slider__art:not(.mw-release-slider__art--circle),
+.mw-release-slider.is-style-editorial .mw-release-slider__art:not(.mw-release-slider__art--circle) {
+	border-radius: var(--mw-radius-sm, 0.5rem);
+}
+
+.mw-release-slider.mw-release-slider--editorial .mw-release-slider__body {
+	border-inline-start: 3px solid var(--mw-color-editorial, #fa2d48);
+	padding-inline-start: clamp(0.75rem, 1.6vw, 1.15rem);
+}
+
+.mw-release-slider.mw-release-slider--editorial .mw-release-slider__body h3 {
+	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
+	letter-spacing: -0.01em;
+	text-transform: uppercase;
+}
+
+.mw-release-slider.mw-release-slider--cinema .mw-release-slider__eyebrow,
+.mw-release-slider.mw-release-slider--editorial .mw-release-slider__eyebrow {
+	color: var(--mw-color-editorial, #fa2d48);
+	letter-spacing: var(--mw-eyebrow-tracking, 0.16em);
+}
+
+/* Shelf in slider layout: the editorial variation turns the copy block into a
+   captioned column instead of a floating card body. */
+.mw-release-shelf.mw-release-shelf--slider.mw-release-shelf--editorial .mw-hero-slide__content {
+	border-inline-start: 3px solid var(--mw-color-editorial, #fa2d48);
+	padding-inline-start: clamp(0.9rem, 2vw, 1.5rem);
+}
+
+/* -------------------------------------------------------------------------
+ * 5. Core block variations — stamp, editorial results, spotlight
+ *
+ * The plugin renderers add one modifier class; every rule below is scoped
+ * with the component class, so removing the style in the block editor
+ * restores the base look untouched.
+ * ---------------------------------------------------------------------- */
+
+/* release-meta → stamp: letterpress key/value rows without card chrome. */
+.mw-release-meta.mw-release-meta--stamp {
+	background: none;
+	border: 0;
+	border-block-start: 2px solid var(--mw-color-editorial, #fa2d48);
+	border-radius: 0;
+	box-shadow: none;
+	gap: 0;
+	padding: clamp(0.6rem, 1.4vw, 1rem) 0 0;
+}
+
+.mw-release-meta.mw-release-meta--stamp .mw-release-meta__facts {
+	grid-template-columns: 1fr;
+}
+
+.mw-release-meta.mw-release-meta--stamp .mw-release-meta__item {
+	align-items: baseline;
+	border-block-end: 1px solid var(--mw-color-border-subtle, rgb(247 248 251 / 6%));
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+	padding-block: 0.5rem;
+}
+
+.mw-release-meta.mw-release-meta--stamp .mw-release-meta__item:last-child {
+	border-block-end: 0;
+}
+
+.mw-release-meta.mw-release-meta--stamp dt {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: var(--mw-eyebrow-tracking, 0.16em);
+	text-transform: uppercase;
+}
+
+.mw-release-meta.mw-release-meta--stamp dd {
+	font-variant-numeric: tabular-nums;
+	margin: 0;
+	text-align: end;
+}
+
+/* catalog-results → editorial: a magazine summary line under a hairline. */
+.mw-catalog-results.mw-catalog-results--editorial {
+	border-block-end: 1px solid var(--mw-color-border-subtle, rgb(247 248 251 / 6%));
+	padding-block-end: 0.75rem;
+}
+
+.mw-catalog-results.mw-catalog-results--editorial .mw-catalog-results__count {
+	color: var(--mw-color-text, #f7f8fb);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: var(--mw-eyebrow-tracking, 0.16em);
+	text-transform: uppercase;
+}
+
+.mw-catalog-results.mw-catalog-results--editorial .mw-catalog-results__filters a {
+	background: none;
+	border-radius: 0;
+	color: var(--mw-color-editorial, #fa2d48);
+	font-size: 0.75rem;
+	letter-spacing: 0.08em;
+	padding: 0.2rem 0;
+	text-transform: uppercase;
+	text-underline-offset: 0.28em;
+}
+
+.mw-catalog-results.mw-catalog-results--editorial .mw-catalog-results__filters a:is(:hover, :focus-visible) {
+	text-decoration: underline;
+}
+
+.mw-catalog-results.mw-catalog-results--editorial .mw-catalog-results__filters a[aria-current="page"],
+.mw-catalog-results.mw-catalog-results--editorial .mw-catalog-results__filters a[aria-current="true"] {
+	background: none;
+	border-block-end: 2px solid var(--mw-color-editorial, #fa2d48);
+	color: var(--mw-color-text, #f7f8fb);
+	font-weight: 700;
+}
+
+/* related-releases → editorial / vinyl: the inner shelf carries the look, the
+   root only adds the section rhythm (and a record-store rule for vinyl). */
+.mw-related-releases.mw-related-releases--editorial > .mw-related-releases__section + .mw-related-releases__section,
+.mw-related-releases.mw-related-releases--vinyl > .mw-related-releases__section + .mw-related-releases__section {
+	border-block-start: 1px solid var(--mw-color-border-subtle, rgb(247 248 251 / 6%));
+	padding-block-start: clamp(1.25rem, 3vw, 2rem);
+}
+
+.mw-related-releases.mw-related-releases--editorial .mw-related-releases__section-header h2,
+.mw-related-releases.mw-related-releases--vinyl .mw-related-releases__section-header h2 {
+	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
+	letter-spacing: -0.01em;
+	text-transform: uppercase;
+}
+
+.mw-related-releases.mw-related-releases--vinyl > .mw-related-releases__section {
+	border-inline-start: 1px solid var(--mw-color-editorial-line, rgb(250 45 72 / 42%));
+	padding-inline-start: clamp(0.85rem, 2vw, 1.5rem);
+}
+
+/* artist-profile spotlight — editorial context only: add editorial tint & display type.
+ * The tint is the *framed* look, so it stands down for the `minimal` and `glass`
+ * card styles: those own their own surface, and this rule would otherwise paint
+ * over them from a file that loads later. */
+.mw-artist-profile.mw-artist-profile--spotlight:not(.mw-artist-profile--minimal):not(.mw-artist-profile--glass) {
+	background:
+		radial-gradient(circle at 18% 14%, var(--mw-color-editorial-soft, rgb(250 45 72 / 18%)), transparent 56%),
+		var(--mw-color-surface, #181818);
+}
+
+.mw-artist-profile.mw-artist-profile--spotlight .mw-artist-profile__name {
+	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
+	text-transform: uppercase;
+}
+
+.mw-artist-profile.mw-artist-profile--spotlight .mw-artist-profile__count {
+	color: var(--mw-color-editorial, #fa2d48);
+}
+
+/* -------------------------------------------------------------------------
+ * 6. Home-page hero, showcase chrome and value props
+ *
+ * The home page composes its opening surfaces from core blocks that carry
+ * these wrapper classes. This section owns structure only — box rhythm,
+ * badges, and the search panel. Every colour is inherited from the active
+ * palette (`mw-surface`, `mw-muted`, and the design tokens), so no surface
+ * here invents a colour of its own and each of the six style variations and
+ * both colour schemes keep working. Every property is logical (RTL-safe).
+ * ---------------------------------------------------------------------- */
+
+/* Trust badges under the hero actions. */
+.mw-home-hero__copy {
+	flex: 1 1 22rem;
+	min-width: 0;
+}
+
+.mw-service-callout__copy {
+	flex: 1 1 24rem;
+	min-width: 0;
+}
+
+.mw-hero-trust__item {
+	align-items: center;
+	background: var(--mw-color-glass, rgb(24 24 24 / 74%));
+	border: 1px solid var(--mw-color-glass-border, rgb(247 248 251 / 12%));
+	border-radius: var(--mw-radius-pill, 999px);
+	color: var(--mw-color-text-muted, #a0a0a0);
+	display: inline-flex;
+	font-size: 0.75rem;
+	font-weight: 600;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0.45rem 0.9rem;
+}
+
+.mw-hero-trust__item::before,
+.mw-hero-trust__dot {
+	background: var(--mw-color-accent, #fa2d48);
+	block-size: 0.4rem;
+	border-radius: 50%;
+	box-shadow: 0 0 0 3px var(--mw-color-accent-soft, rgb(250 45 72 / 14%));
+	content: "";
+	flex: 0 0 auto;
+	inline-size: 0.4rem;
+}
+
+/* The hero search panel: a raised card that makes search feel primary. */
+.mw-hero-search-panel {
+	background: var(--mw-color-surface-raised, #1c1c21);
+	border: 1px solid var(--mw-color-border, rgb(247 248 251 / 10%));
+	border-radius: var(--mw-radius-lg, 1.1rem);
+	box-shadow: var(--mw-shadow-sm, 0 1px 2px rgb(0 0 0 / 30%));
+	display: grid;
+	flex: 0 1 26rem;
+	gap: 0.6rem;
+	min-width: 0;
+	padding: clamp(1.1rem, 2.4vw, 1.75rem);
+}
+
+.mw-hero-search-panel__label {
+	color: var(--mw-color-text, #f7f8fb);
+	font-size: 0.8125rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	margin: 0;
+}
+
+.mw-hero-search-panel__hint {
+	margin: 0;
+}
+
+/* Reuse the pill search chrome the search page uses. */
+.mw-home-hero .mw-hero-search {
+	width: 100%;
+}
+
+.mw-home-hero .mw-hero-search .wp-block-search__inside-wrapper {
+	background: var(--mw-color-surface-raised, #1c1c21);
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-pill, 999px);
+	flex-wrap: nowrap;
+	transition:
+		border-color var(--mw-speed-fast, 150ms) ease,
+		box-shadow var(--mw-speed-fast, 150ms) ease;
+}
+
+
+.mw-home-hero .mw-hero-search .wp-block-search__input {
+	background: transparent;
+	border: 0;
+	color: var(--mw-color-text, #f7f8fb);
+	min-height: 3.25rem;
+}
+
+@media (max-width: 47.99em) {
+	.mw-home-hero {
+		padding-top: var(--wp--preset--spacing--40, 2rem);
+	}
+
+	.mw-hero-trust {
+		display: none;
+	}
+}
+
+/* Closing call to action: the surface utility owns the box, this keeps the
+   panel rhythm and the reassuring footnote rule. */
+.mw-service-callout .mw-callout-note {
+	border-block-start: 1px solid var(--mw-color-border-subtle, rgb(247 248 251 / 6%));
+	color: var(--mw-color-text-muted, #a0a0a0);
+	margin: 0;
+	padding-block-start: 1rem;
+}
+
+.mw-service-callout .mw-eyebrow {
+	margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+ * 7. FAQ accordion — the disclosure list shared by the section pattern and
+ *     the request pages. Built on core/details, so every question stays an
+ *     editable `summary` and every answer a real paragraph.
+ * ---------------------------------------------------------------------- */
+
+.mw-faq {
+	margin: 0;
+}
+
+/* Rows carry the hairline, not the wrapper: the same markup also sits under a
+   heading on the request pages, where a top border would float above the text. */
+.mw-faq > details {
+	border-block-end: 1px solid var(--mw-color-border, rgb(247 248 251 / 12%));
+}
+
+.mw-faq > :is(h2, h3) {
+	margin-block: 0 var(--wp--preset--spacing--20, 1rem);
+}
+
+.mw-faq > details > summary {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
+	font-size: 1.0625rem;
+	font-weight: 700;
+	gap: 1rem;
+	justify-content: space-between;
+	letter-spacing: -0.01em;
+	list-style: none;
+	padding-block: 1rem;
+}
+
+.mw-faq > details > summary::-webkit-details-marker {
+	display: none;
+}
+
+/* The plus chip is the only affordance added on top of core: it rotates into a
+   cross when the row opens, so the open state reads without an icon font. */
+.mw-faq > details > summary::after {
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+	border-radius: 50%;
+	block-size: 1.5rem;
+	content: "+";
+	display: grid;
+	flex: none;
+	font-size: 1.05rem;
+	font-weight: 700;
+	inline-size: 1.5rem;
+	line-height: 1;
+	place-items: center;
+	transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.mw-faq > details[open] > summary::after {
+	background: color-mix(in srgb, var(--mw-color-accent) 26%, transparent);
+	transform: rotate(45deg);
+}
+
+.mw-faq > details > summary:focus-visible {
+	border-radius: var(--mw-radius-sm);
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 3px;
+}
+
+.mw-faq details p {
+	margin: 0;
+	max-inline-size: 68ch;
+	padding-block-end: 1rem;
+}
+
+/* -------------------------------------------------------------------------
+ * 8. Motion budget
+ * ---------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-eyebrow::before {
+		animation: none;
+	}
+
+	.mw-catalog-results__filters a,
+	.mw-faq > details > summary::after,
+	.mw-release-shelf__action,
+	.mw-release-shelf__body h3 a,
+	.mw-release-shelf__item {
+		transition: none;
+	}
+
+	.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__item:is(:hover, :focus-within) {
+		transform: none;
+	}
+}
+
+/* -------------------------------------------------------------------------
+ * 9. Demo packs
+ *
+ * The `demo-*.php` patterns introduce three classes of their own. They are
+ * deliberately few: every pack already composes live renderers and core
+ * blocks, so the only styling it needs is the intro chrome, the badge and a
+ * container that keeps two adjacent panels side by side until the viewport
+ * gets too narrow.
+ * ---------------------------------------------------------------------- */
+
+/* The intro strip opens each pack with a magazine rule instead of a card, so
+   the demo header never reads as one more surface in the stack. */
+.mw-demo__intro {
+	border-inline-start: 3px solid var(--mw-color-editorial, #fa2d48);
+	padding-inline-start: var(--wp--preset--spacing--30);
+}
+
+.mw-demo__badge {
+	background: var(--mw-color-accent-soft);
+	border-radius: 999px;
+	color: var(--mw-color-accent);
+	display: inline-block;
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	margin: 0;
+	padding: 0.25rem 0.65rem;
+}
+
+/* Same auto-fit idiom as `.mw-release-grid` (components/catalog.css): core
+   prints a container query for the group layout, so the collapse needs
+   `!important` to win regardless of stylesheet order. */
+.mw-demo__grid {
+	align-items: start;
+	grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr)) !important;
+}

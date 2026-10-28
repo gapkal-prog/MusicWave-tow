@@ -1,0 +1,112 @@
+/* ================================================================
+   Taxonomy shelf block (genres, moods, labels)
+   Layouts: grid | horizontal rail | list rows
+   Tiles: colorful (curated hue cycle) | plain (quiet surface)
+   Reuses the shared .mw-release-shelf chrome; logical properties
+   only, so every variant is RTL-safe.
+   ================================================================ */
+
+.mw-terms-shelf__tile {
+	align-items: flex-end;
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-md, 1rem);
+	display: flex;
+	flex-direction: column;
+	gap: .15rem;
+	justify-content: flex-end;
+	min-block-size: clamp(7rem, 14vw, 9.5rem);
+	padding: clamp(1rem, 2.5vw, 1.5rem);
+	position: relative;
+	text-decoration: none;
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.mw-terms-shelf__tile:is(:hover, :focus-visible) {
+	box-shadow: 0 .75rem 2rem rgb(0 0 0 / 22%);
+	transform: translateY(-2px);
+}
+
+.mw-terms-shelf__name {
+	font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+	font-weight: 800;
+	letter-spacing: -.02em;
+	line-height: 1.15;
+}
+
+.mw-terms-shelf__count {
+	font-size: .8125rem;
+	opacity: .82;
+}
+
+/* ---- Colorful curated hues ----
+ * The tile composes the shared `.mw-term-media` recipe from hues.css with
+ * its canonical `.mw-term-hue-N` modifier (derived from the term's own ID),
+ * so one genre keeps the same colour in the hero, the shelf, and anywhere
+ * else the palette reappears — no per-row cycling. The recipe's darkened
+ * stop keeps white ink legible on every hue, in both colour schemes. The
+ * legacy `.mw-terms-shelf__tile--hue-N` selectors below stay mapped (as
+ * does the hue alias in hues.css) so cached markup from older versions
+ * keeps a colourful tile instead of falling back to the accent. */
+/* stylelint-disable no-duplicate-selectors */
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-1 {
+	background:
+		radial-gradient(circle at 18% 12%, color-mix(in srgb, #fff 14%, transparent), transparent 42%),
+		linear-gradient(135deg, color-mix(in srgb, var(--mw-term-hue, var(--mw-hue-1)) 74%, black), var(--mw-term-hue, var(--mw-hue-1)));
+}
+
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-2,
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-3,
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-4,
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-5,
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-6,
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-7,
+.mw-terms-shelf__tile--style-colorful.mw-terms-shelf__tile--hue-8 {
+	background:
+		radial-gradient(circle at 18% 12%, color-mix(in srgb, #fff 14%, transparent), transparent 42%),
+		linear-gradient(135deg, color-mix(in srgb, var(--mw-term-hue, var(--mw-color-accent)) 74%, black), var(--mw-term-hue, var(--mw-color-accent)));
+}
+/* stylelint-enable no-duplicate-selectors */
+
+/* ---- Plain quiet surface ---- */
+.mw-terms-shelf__tile--style-plain {
+	background: var(--mw-color-surface-raised, #1d2330);
+	border-color: var(--mw-color-border, rgb(255 255 255 / 12%));
+	min-block-size: auto;
+}
+
+/* ---- List rows layout ---- */
+.mw-release-shelf--list .mw-release-shelf__items {
+	grid-template-columns: 1fr;
+	gap: .35rem;
+}
+
+.mw-release-shelf--list .mw-terms-shelf__tile {
+	align-items: center;
+	flex-direction: row;
+	gap: .75rem;
+	justify-content: space-between;
+	min-block-size: 0;
+	padding: .8rem 1rem;
+}
+
+.mw-release-shelf--list .mw-terms-shelf__name {
+	font-size: 1rem;
+}
+
+.mw-release-shelf--list .mw-terms-shelf__tile::after {
+	content: "\2192";
+	font-size: 1.1em;
+	opacity: .7;
+}
+
+/* ---- Empty state ---- */
+.mw-terms-shelf__empty {
+	color: var(--mw-color-text-muted, #a0a0a0);
+	margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-terms-shelf__tile {
+		transition: none;
+	}
+}

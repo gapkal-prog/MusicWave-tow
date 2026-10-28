@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/preview-player",
+  "title": "پخش‌کننده پیش‌نمایش",
+  "category": "music-wave",
+  "description": "دکمه پخش هوشمند انتشار با تشخیص خودکار تک‌آهنگ یا آلبوم، حالت آیکونی یا متنی و آیکون سفارشی.",
+  "keywords": [
+    "صوتی",
+    "پخش",
+    "گوش کن",
+    "آیکون"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "controls-play",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": "icon"
+    },
+    "variant": {
+      "type": "string",
+      "default": "accent"
+    },
+    "size": {
+      "type": "string",
+      "default": "lg"
+    },
+    "shape": {
+      "type": "string",
+      "default": "pill"
+    },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    },
+    "showIcon": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "buttonStyle": "icon",
+      "variant": "accent",
+      "size": "lg",
+      "icon": "play-filled"
+    }
+  }
+}

@@ -1,0 +1,489 @@
+/**
+ * MusicWave layout — site shell, sidebar, and page headings
+ *
+ * Token-driven, logical properties and container queries. Navigation chrome
+ * lives in components/navigation.css.
+ */
+
+.wp-site-blocks {
+	min-height: 100vh;
+	/* Keep the last content above the global player bar while a track is loaded. */
+	padding-block-end: var(--mw-player-offset, 0px);
+}
+
+/* Layout is inline-safe: the sticky header, overlays, and fixed player never
+ * create a horizontal scrollbar on narrow devices. */
+html,
+body {
+	overflow-x: clip;
+}
+
+/* App shell — sidebar + main.
+ *
+ * The :has() rules support an administrator who inserts the Sidebar template
+ * part directly into the shell. The bundled two-column page templates use the
+ * explicit modifier below because their sidebar is intentionally nested inside
+ * core/columns; this avoids relying on DOM shape or browser-specific heuristics.
+ */
+.mw-app-shell:not(:has(> .mw-sidebar)) {
+	display: block;
+}
+
+.mw-app-shell:has(> .mw-sidebar) {
+	display: grid;
+	grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
+	gap: clamp(1.25rem, 3vw, 3.5rem);
+	align-items: start;
+}
+
+.mw-app-shell--with-sidebar {
+	display: block;
+}
+
+.mw-app-shell--with-sidebar > .wp-block-columns {
+	align-items: start;
+}
+
+.mw-app-shell--with-sidebar > .wp-block-columns > .wp-block-column {
+	min-width: 0;
+}
+
+.mw-app-shell > main {
+	min-width: 0;
+}
+
+/*
+ * A sidebar that renders nothing must not reserve a column.
+ *
+ * The Sidebar template part removes itself when the MusicWave widget area is
+ * empty (see musicwave_inject_sidebar_widgets()), which leaves the column that
+ * hosted it without a single element. Collapsing those columns hands the space
+ * back to the content column — core gives the remaining column `flex-grow: 1`,
+ * so it runs full width instead of leaving an empty 32% gutter.
+ */
+.mw-sidebar-column:not(:has(*)),
+.mw-release-stage__aside:not(:has(*)) {
+	display: none;
+}
+
+.mw-sidebar {
+	position: sticky;
+	/* Sits below the admin bar and, when enabled, the sticky header. */
+	top: calc(var(--mw-sticky-offset, 0px) + var(--wp--preset--spacing--30, 1.5rem));
+	max-block-size: calc(100dvh - var(--mw-sticky-offset, 0px) - var(--mw-player-offset, 0px) - var(--wp--preset--spacing--30, 1.5rem) * 2);
+	display: grid;
+	align-content: start;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	gap: var(--wp--preset--spacing--30);
+	padding: var(--wp--preset--spacing--20);
+	background: color-mix(in srgb, var(--mw-color-surface) 72%, transparent);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+}
+
+/* A titled group of widgets. The name is scope neutral on purpose: the sidebar
+ * renders it through TemplateManager, and the widget panel pattern composes it
+ * in main content, where .mw-sidebar's sticky scroll box would be wrong. */
+.mw-widget-section {
+	display: grid;
+	gap: 0.75rem;
+}
+
+.mw-widget-section > h2,
+.mw-widget-section > h3 {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.72rem !important;
+	font-weight: 800;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-navigation__container {
+	inline-size: 100%;
+	gap: 0.25rem;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-navigation-item {
+	inline-size: 100%;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-navigation-item__content {
+	display: block;
+	inline-size: 100%;
+	padding: 0.6rem 0.75rem;
+	color: var(--mw-color-text);
+	border-radius: var(--mw-radius-sm);
+	text-decoration: none;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-navigation-item__content:hover,
+:is(.mw-sidebar, .mw-widget-area) .current-menu-item > .wp-block-navigation-item__content {
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-accent) 15%, transparent);
+}
+
+/*
+ * Category list in a widget column speaks the same visual language as the nav
+ * items above: flat rows, one accent wash on hover, RTL-safe paddings.
+ */
+:is(.mw-sidebar, .mw-widget-area) .wp-block-categories {
+	margin: 0;
+	padding-inline-start: 0;
+	list-style: none;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-categories ul {
+	margin: 0;
+	padding-inline-start: 0.85rem;
+	list-style: none;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-categories li {
+	margin: 0;
+	padding: 0.6rem 0.75rem;
+	border-radius: var(--mw-radius-sm);
+	transition: background-color 160ms ease;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-categories li:hover {
+	background: color-mix(in srgb, var(--mw-color-accent) 15%, transparent);
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-categories a {
+	color: var(--mw-color-text);
+	text-decoration: none;
+}
+
+:is(.mw-sidebar, .mw-widget-area) .wp-block-categories a:hover {
+	color: var(--mw-color-text);
+}
+
+/* Footer shell */
+.mw-site-footer {
+	border-block-start: 1px solid var(--mw-color-border);
+}
+
+.mw-release-page,
+.mw-release-archive {
+	container-type: inline-size;
+}
+
+.mw-page-heading {
+	display: grid;
+	gap: 0.5rem;
+	margin-block-end: var(--wp--preset--spacing--30);
+}
+
+.mw-page-heading > * {
+	margin: 0;
+}
+
+.mw-content-page {
+	min-width: 0;
+}
+
+.mw-content-page > .wp-block-post-featured-image {
+	margin-block: var(--wp--preset--spacing--30);
+}
+
+.mw-post-byline,
+.mw-post-taxonomy {
+	gap: 0.5rem 1rem;
+	color: var(--mw-color-text-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.mw-not-found > .mw-surface {
+	background:
+		radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--mw-color-accent) 24%, transparent), transparent 36%),
+		var(--mw-color-surface);
+}
+
+.mw-browse-categories {
+	margin-block: var(--wp--preset--spacing--40);
+}
+
+.mw-category-tile {
+	min-height: 13rem;
+	overflow: hidden;
+	border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	border-radius: var(--mw-radius-lg);
+	transition: transform var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease), box-shadow var(--mw-speed-normal, 300ms) ease;
+}
+
+/* SonicStream genre tile: the card lifts on hover like the reference tiles. */
+.mw-category-tile:is(:hover, :focus-within) {
+	transform: translateY(-0.25rem);
+	box-shadow: var(--mw-shadow-card);
+}
+
+/* Gradient spectrum for un-styled tiles, echoing the reference genre grid
+ * (Pop red, Rock blue, Hip-Hop amber, Electronic green, Classical violet).
+ * Editor-chosen gradients or colors in the pattern markup win. */
+.mw-browse-categories .mw-category-tile:not(.has-background):nth-child(5n + 1) {
+	background: linear-gradient(135deg, #e13300, #e8115b);
+}
+
+.mw-browse-categories .mw-category-tile:not(.has-background):nth-child(5n + 2) {
+	background: linear-gradient(135deg, #1e3264, #283593);
+}
+
+.mw-browse-categories .mw-category-tile:not(.has-background):nth-child(5n + 3) {
+	background: linear-gradient(135deg, #ba5d07, #e8a000);
+}
+
+.mw-browse-categories .mw-category-tile:not(.has-background):nth-child(5n + 4) {
+	background: linear-gradient(135deg, #0d73ec, #1db954);
+}
+
+.mw-browse-categories .mw-category-tile:not(.has-background):nth-child(5n + 5) {
+	background: linear-gradient(135deg, #503750, #8b5cf6);
+}
+
+.mw-category-tile > * {
+	margin-block: 0 0.5rem;
+}
+
+.mw-footer-widgets {
+	background: color-mix(in srgb, var(--mw-color-surface) 88%, var(--mw-color-canvas));
+	border-block-start: 1px solid var(--mw-color-border);
+	border-block-end: 1px solid var(--mw-color-border);
+}
+
+.mw-footer-widgets .wp-block-column {
+	min-width: 0;
+}
+
+.mw-footer-widgets h3 {
+	margin-block: 0 0.75rem;
+}
+
+.mw-widget {
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+}
+
+.mw-widget h3 {
+	margin: 0;
+}
+
+.mw-widget-section--widgets:empty,
+.mw-widget-section--widgets:not(:has(*)) {
+	display: none;
+}
+
+/* Editor-only affordance: explains where the sidebar is actually filled from
+ * while the registered widget area still has no blocks assigned. */
+.mw-widget-section--empty-hint {
+	gap: 0;
+}
+
+.mw-sidebar .mw-sidebar__hint {
+	margin: 0;
+	padding: 0.85rem 0.95rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.78rem;
+	line-height: 1.7;
+	background: color-mix(in srgb, var(--mw-color-text) 4%, transparent);
+	border: 1px dashed var(--mw-color-border);
+	border-radius: var(--mw-radius-md, 0.75rem);
+}
+
+.mw-sidebar__widgets,
+.mw-sidebar .widget,
+.mw-sidebar .mw-widget {
+	display: grid;
+	gap: 0.65rem;
+}
+
+.mw-sidebar .widget {
+	margin: 0;
+	padding-block-end: 0.85rem;
+	border-block-end: 1px solid var(--mw-color-border);
+}
+
+.mw-sidebar .widgettitle,
+.mw-sidebar .widget h2,
+.mw-sidebar .widget h3 {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.mw-sidebar .mw-release-shelf,
+.mw-sidebar .mw-artists-shelf,
+.mw-sidebar .mw-terms-shelf {
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-sidebar .mw-release-shelf__header,
+.mw-sidebar .mw-artists-shelf .mw-release-shelf__header {
+	display: none;
+}
+
+.mw-sidebar .mw-release-shelf--list .mw-release-shelf__items {
+	display: grid;
+	gap: 0.45rem;
+}
+
+.mw-sidebar .mw-release-shelf--list .mw-release-shelf__item,
+.mw-sidebar .mw-release-shelf--list .mw-artists-shelf__item {
+	display: grid;
+	grid-template-columns: 2.5rem minmax(0, 1fr);
+	gap: 0.65rem;
+	align-items: center;
+	padding: 0.35rem 0.4rem;
+	border-radius: var(--mw-radius-sm);
+}
+
+.mw-sidebar .mw-release-shelf--list .mw-release-shelf__item:hover,
+.mw-sidebar .mw-release-shelf--list .mw-artists-shelf__item:hover {
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+}
+
+.mw-sidebar .mw-release-shelf__art,
+.mw-sidebar .mw-release-shelf__art img,
+.mw-sidebar .mw-artists-shelf__avatar,
+.mw-sidebar .mw-artists-shelf__avatar img {
+	inline-size: 2.5rem;
+	block-size: 2.5rem;
+	border-radius: 0.45rem;
+	object-fit: cover;
+}
+
+.mw-sidebar .mw-artists-shelf__avatar,
+.mw-sidebar .mw-artists-shelf__avatar img {
+	border-radius: 50%;
+}
+
+.mw-sidebar .mw-release-shelf__body h3,
+.mw-sidebar .mw-artists-shelf__name {
+	margin: 0;
+	font-size: 0.85rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.mw-sidebar .mw-release-shelf__artist,
+.mw-sidebar .mw-artists-shelf__count {
+	color: var(--mw-color-text-muted);
+	font-size: 0.75rem;
+}
+
+.mw-sidebar .mw-release-shelf__action,
+.mw-sidebar .mw-release-shelf__nav {
+	display: none;
+}
+
+.mw-sidebar .mw-terms-shelf__tile {
+	min-height: 0;
+	padding: 0.45rem 0.65rem;
+	font-size: 0.82rem;
+}
+
+/* Streaming-grade dark/light adaptive search bar inside sidebar & widget cards */
+.mw-sidebar .wp-block-search .wp-block-search__inside-wrapper,
+.mw-sidebar-widget .wp-block-search .wp-block-search__inside-wrapper {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.25rem;
+	padding-inline-start: 0.9rem;
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.mw-sidebar .wp-block-search .wp-block-search__inside-wrapper:focus-within,
+.mw-sidebar-widget .wp-block-search .wp-block-search__inside-wrapper:focus-within {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 65%, transparent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--mw-color-accent) 18%, transparent);
+}
+
+.mw-sidebar .wp-block-search .wp-block-search__input,
+.mw-sidebar-widget .wp-block-search .wp-block-search__input {
+	flex: 1 1 auto;
+	min-inline-size: 0;
+	min-height: 2.25rem;
+	padding: 0.25rem 0;
+	color: var(--mw-color-text);
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	font: inherit;
+	font-size: 0.875rem;
+	outline: none;
+}
+
+.mw-sidebar .wp-block-search .wp-block-search__input::placeholder,
+.mw-sidebar-widget .wp-block-search .wp-block-search__input::placeholder {
+	color: var(--mw-color-text-muted);
+	opacity: 0.85;
+}
+
+.mw-sidebar .wp-block-search .wp-block-search__button,
+.mw-sidebar-widget .wp-block-search .wp-block-search__button {
+	display: inline-grid;
+	place-items: center;
+	flex: 0 0 2.25rem;
+	inline-size: 2.25rem;
+	block-size: 2.25rem;
+	margin: 0;
+	padding: 0;
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border: 0;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.mw-sidebar .wp-block-search .wp-block-search__button:not(.has-icon),
+.mw-sidebar-widget .wp-block-search .wp-block-search__button:not(.has-icon) {
+	flex-basis: auto;
+	inline-size: auto;
+	padding-inline: 0.9rem;
+	border-radius: 999px;
+	font-size: 0.8rem;
+	font-weight: 700;
+}
+
+.mw-sidebar .wp-block-search .wp-block-search__button:hover,
+.mw-sidebar-widget .wp-block-search .wp-block-search__button:hover {
+	background: var(--mw-color-accent-strong);
+	transform: scale(1.04);
+}
+
+.mw-release-stage__aside .mw-sidebar {
+	position: static;
+	max-block-size: none;
+	overflow: visible;
+	padding: clamp(1rem, 2.4vw, 1.5rem);
+}
+
+/* Responsive shell */
+@media (max-width: 48rem) {
+	.mw-app-shell:has(> .mw-sidebar) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.mw-app-shell--with-sidebar > .wp-block-columns > .wp-block-column {
+		flex-basis: 100% !important;
+	}
+
+	.mw-sidebar {
+		position: static;
+		order: 2;
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"core": "WordPress/WordPress#6.8",
+	"phpVersion": "8.2",
+	"plugins": [
+		"./music-wave-core",
+		"./music-wave-vip"
+	],
+	"themes": [
+		"./musicwave"
+	],
+	"mappings": {
+		"wp-content/mw-tools": "./tools"
+	},
+	"config": {
+		"WP_DEBUG": true,
+		"WP_DEBUG_LOG": true,
+		"SCRIPT_DEBUG": true
+	},
+	"env": {
+		"tests": {
+			"config": {
+				"WP_DEBUG": true
+			}
+		}
+	}
+}

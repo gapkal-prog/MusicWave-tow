@@ -1,0 +1,130 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/public-playlists",
+  "title": "فهرست پخش عمومی",
+  "category": "music-wave",
+  "description": "فهرست‌های پخش عمومی جامعه را مرور و پخش کنید. بازدیدکنندگان می‌توانند هر فهرست پخش عمومی را با یک کلیک جست‌وجو، فیلتر و پخش کنند.",
+  "keywords": [
+    "فهرست پخش",
+    "جامعه",
+    "عمومی",
+    "سرپرستی"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "groups",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": "فهرست‌های پخش انجمن"
+    },
+    "intro": {
+      "type": "string",
+      "default": ""
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 12
+    },
+    "columns": {
+      "type": "integer",
+      "default": 3
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    },
+    "orderby": {
+      "type": "string",
+      "default": "updated_at"
+    },
+    "imageShape": {
+      "type": "string",
+      "default": "square"
+    },
+    "showSearch": {
+      "type": "boolean",
+      "default": true
+    },
+    "showCount": {
+      "type": "boolean",
+      "default": true
+    },
+    "searchPlaceholder": {
+      "type": "string",
+      "default": ""
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "showArt": {
+      "type": "boolean",
+      "default": true
+    },
+    "showAuthor": {
+      "type": "boolean",
+      "default": true
+    },
+    "showUpdated": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPlayButton": {
+      "type": "boolean",
+      "default": true
+    },
+    "showToggle": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "sectionUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionLinkLabel": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "layout": "grid"
+    }
+  }
+}

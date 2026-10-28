@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/theme-text",
+  "title": "متن قالب MusicWave",
+  "category": "music-wave",
+  "description": "متن ترجمه‌شده برای قالب‌های MusicWave. کلید، رشتهٔ متناسب با زبان را انتخاب می‌کند.",
+  "textdomain": "musicwave",
+  "icon": "editor-textcolor",
+  "keywords": [
+    "متن",
+    "ترجمه",
+    "قالب"
+  ],
+  "attributes": {
+    "key": {
+      "type": "string",
+      "default": ""
+    },
+    "tagName": {
+      "type": "string",
+      "default": "p"
+    }
+  },
+  "supports": {
+    "inserter": false,
+    "interactivity": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradient": true,
+      "link": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "fontWeight": true,
+      "lineHeight": true,
+      "letterSpacing": true,
+      "textTransform": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "shadow": true
+  },
+  "example": {
+    "attributes": {
+      "key": "latest_releases",
+      "tagName": "h2"
+    }
+  }
+}

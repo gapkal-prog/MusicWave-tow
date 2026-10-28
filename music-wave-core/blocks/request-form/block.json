@@ -1,0 +1,94 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/request-form",
+  "title": "فرم درخواست آهنگ و همکاری",
+  "category": "music-wave",
+  "description": "فرم تخصصی و ماژولار سفارش آهنگ اختصاصی و پیشنهاد همکاری برای خواننده‌ها، برندها و مخاطبان؛ بدون نیاز به جاوااسکریپت کار می‌کند و با هر چیدمان دلخواه گوتنبرگ ترکیب می‌شود.",
+  "keywords": [
+    "درخواست",
+    "همکاری",
+    "سفارش آهنگ",
+    "collaboration",
+    "request",
+    "تماس",
+    "آهنگ اختصاصی"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "microphone",
+  "attributes": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "both",
+        "song",
+        "collab"
+      ],
+      "default": "both"
+    },
+    "defaultType": {
+      "type": "string",
+      "default": ""
+    },
+    "showRoles": {
+      "type": "boolean",
+      "default": true
+    },
+    "defaultRole": {
+      "type": "string",
+      "default": ""
+    },
+    "showBudget": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDeadline": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPhone": {
+      "type": "boolean",
+      "default": true
+    },
+    "showLinks": {
+      "type": "boolean",
+      "default": true
+    },
+    "submitLabel": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "mode": "both"
+    }
+  }
+}

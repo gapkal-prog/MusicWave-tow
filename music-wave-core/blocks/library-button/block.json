@@ -1,0 +1,101 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/library-button",
+  "title": "دکمه افزودن به کتابخانه",
+  "category": "music-wave",
+  "description": "به بازدیدکنندگان اجازه می‌دهد انتشاری را ذخیره کنند، در علاقه‌مندی‌ها نگه دارند، پیش‌ذخیره کنند یا هنرمندی را دنبال کنند؛ با انتخابگر آیکون و ظاهر یکپارچه.",
+  "keywords": [
+    "ذخیره",
+    "دنبال‌کردن",
+    "مورد علاقه",
+    "قلب"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "heart",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "itemType": {
+      "type": "string",
+      "default": "release"
+    },
+    "termId": {
+      "type": "integer",
+      "default": 0
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    },
+    "addedLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": "heart"
+    },
+    "variant": {
+      "type": "string",
+      "default": "surface"
+    },
+    "size": {
+      "type": "string",
+      "default": "md"
+    },
+    "shape": {
+      "type": "string",
+      "default": "pill"
+    },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "compact": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "buttonStyle": "heart",
+      "variant": "surface",
+      "icon": "heart",
+      "compact": false
+    }
+  }
+}

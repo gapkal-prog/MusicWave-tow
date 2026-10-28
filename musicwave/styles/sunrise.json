@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Sunrise",
+  "settings": {
+    "custom": {
+      "scheme": {
+        "light": { "canvas": "#fff8f0", "surface": "#ffffff", "surfaceRaised": "#fff1e0", "text": "#1f1a17", "muted": "#685a50", "accent": "#c43e0c", "accentStrong": "#a43006", "editorial": "#b80d2d", "onAccent": "#ffffff" },
+        "dark": { "canvas": "#17110e", "surface": "#221a15", "surfaceRaised": "#2f241d", "text": "#fbf3ec", "muted": "#b8a79a", "accent": "#ff7a45", "accentStrong": "#ff9a6b", "editorial": "#fb7185", "onAccent": "#2a1206" }
+      }
+    },
+    "color": {
+      "palette": [
+        { "slug": "canvas", "name": "Canvas", "color": "#fff8f0" },
+        { "slug": "surface", "name": "Surface", "color": "#ffffff" },
+        { "slug": "surface-raised", "name": "Raised surface", "color": "#fff1e0" },
+        { "slug": "text", "name": "Text", "color": "#1f1a17" },
+        { "slug": "muted", "name": "Muted text", "color": "#685a50" },
+        { "slug": "accent", "name": "Accent", "color": "#c43e0c" },
+        { "slug": "accent-strong", "name": "Accent strong", "color": "#a43006" },
+        { "slug": "editorial", "name": "Editorial rose", "color": "#b80d2d" },
+        { "slug": "on-accent", "name": "On accent", "color": "#ffffff" }
+      ],
+      "gradients": [
+        { "slug": "accent-wash", "name": "Accent wash", "gradient": "linear-gradient(135deg, #ff6b35 0%, #ffb627 55%, #ffd166 100%)" },
+        { "slug": "sunset-glow", "name": "Sunset glow", "gradient": "linear-gradient(135deg, #ff7a18, #fa2d48 55%, #9a1b8f)" }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|canvas",
+      "text": "var:preset|color|text"
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|display"
+    },
+    "elements": {
+      "button": {
+        "border": { "radius": "999px" },
+        "color": { "background": "var:preset|color|accent", "text": "var:preset|color|on-accent" }
+      },
+      "heading": { "typography": { "fontWeight": "800", "letterSpacing": "-0.03em" } },
+      "link": { "color": { "text": "var:preset|color|accent-strong" } }
+    }
+  }
+}

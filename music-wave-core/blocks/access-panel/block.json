@@ -1,0 +1,94 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/access-panel",
+  "title": "پنل دسترسی آزاد",
+  "category": "music-wave",
+  "description": "وضعیت دسترسی انتشار فعلی و اقدامات را نشان می‌دهد.",
+  "keywords": [
+    "خرید",
+    "عضویت",
+    "محدود"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "lock",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "layout": {
+      "type": "string",
+      "default": "banner"
+    },
+    "showWhenGranted": {
+      "type": "boolean",
+      "default": true
+    },
+    "grantedMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "restrictedMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "purchaseMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "purchaseCtaLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "membershipMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "membershipCtaLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "membershipCtaUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "layout": "banner",
+      "showWhenGranted": true
+    }
+  }
+}

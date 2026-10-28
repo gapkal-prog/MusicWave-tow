@@ -1,0 +1,79 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"align":"wide","className":"mw-app-shell","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|50"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide mw-app-shell" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:group {"tagName":"main","className":"mw-release-page","layout":{"type":"constrained"}} -->
+<main class="wp-block-group mw-release-page"><!-- wp:template-part {"slug":"breadcrumb","tagName":"div"} /-->
+<!-- wp:group {"align":"wide","metadata":{"name":"معرفی انتشار"},"className":"mw-release-hero","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide mw-release-hero"><!-- wp:columns {"verticalAlignment":"center","align":"wide","isStackedOnMobile":true,"className":"mw-release-hero__inner"} -->
+<div class="wp-block-columns alignwide are-vertically-aligned-center is-stacked-on-mobile mw-release-hero__inner"><!-- wp:column {"width":"34%","className":"mw-release-hero__cover"} -->
+<div class="wp-block-column mw-release-hero__cover" style="flex-basis:34%"><!-- wp:group {"className":"mw-release-hero__cover-stack","layout":{"type":"default"}} -->
+<div class="wp-block-group mw-release-hero__cover-stack"><!-- wp:post-featured-image {"aspectRatio":"1"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+<!-- wp:column {"width":"66%","className":"mw-release-hero__info"} -->
+<div class="wp-block-column mw-release-hero__info" style="flex-basis:66%"><!-- wp:group {"className":"mw-release-hero__overline","layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group mw-release-hero__overline"><!-- wp:post-terms {"term":"mw_release_type","separator":"","className":"mw-release-hero__chip mw-release-hero__chip--type","fontSize":"small"} /-->
+<!-- wp:post-terms {"term":"mw_genre","separator":"","className":"mw-release-hero__chip mw-release-hero__chip--genre","fontSize":"small"} /-->
+<!-- wp:post-terms {"term":"mw_mood","separator":"","className":"mw-release-hero__chip mw-release-hero__chip--mood","fontSize":"small"} /-->
+<!-- wp:post-terms {"term":"mw_label","separator":"","className":"mw-release-hero__chip mw-release-hero__chip--label","fontSize":"small"} /--></div>
+<!-- /wp:group -->
+<!-- wp:post-title {"level":1,"fontSize":"xx-large"} /-->
+<!-- wp:music-wave/artist-profile {"layout":"list","showImage":true,"showTitle":true,"showBio":false,"showLink":false,"imageShape":"circle","imageSize":"thumbnail","showReleaseCount":true,"showLibraryButton":true,"className":"mw-release-hero__artist"} /-->
+<!-- wp:group {"metadata":{"name":"جزئیات انتشار MusicWave"},"className":"mw-release-hero__specs","layout":{"type":"flex","flexWrap":"wrap"}} -->
+<div class="wp-block-group mw-release-hero__specs"><!-- wp:music-wave/release-meta {"compact":true,"layout":"grid","showLabels":true,"showArtist":false,"showGenre":false,"showMood":false,"showLabel":false,"showReleaseType":false,"fullSpecs":true,"metadata":{"name":"جزئیات انتشار MusicWave"}} /--></div>
+<!-- /wp:group -->
+<!-- wp:group {"metadata":{"name":"دکمه‌های پخش و کتابخانه"},"className":"mw-release-actions","layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group mw-release-actions"><!-- wp:music-wave/preview-player {"showIcon":true} /-->
+<!-- wp:music-wave/shuffle-button /-->
+<!-- wp:music-wave/library-button {"buttonStyle":"heart"} /-->
+<!-- wp:music-wave/add-to-playlist /-->
+<!-- wp:music-wave/share-button /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->
+<!-- wp:columns {"align":"wide","className":"mw-release-stage","isStackedOnMobile":true} -->
+<div class="wp-block-columns alignwide is-stacked-on-mobile mw-release-stage"><!-- wp:column {"width":"66%","className":"mw-release-stage__primary"} -->
+<div class="wp-block-column mw-release-stage__primary" style="flex-basis:66%"><!-- wp:music-wave/collection-list {"showTotalDuration":true,"showArtwork":true,"className":"is-style-tracklist"} /-->
+<!-- wp:music-wave/download-button /-->
+<!-- wp:music-wave/synced-lyrics /-->
+<!-- wp:post-content {"layout":{"type":"constrained"}} /--></div>
+<!-- /wp:column -->
+<!-- wp:column {"width":"34%","className":"mw-release-stage__aside"} -->
+<div class="wp-block-column mw-release-stage__aside" style="flex-basis:34%"><!-- wp:template-part {"slug":"sidebar","tagName":"aside"} /-->
+<!-- wp:music-wave/release-credits {"layout":"list","showRole":true} /--></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+<!-- wp:music-wave/related-releases {"align":"wide","sameArtistHeading":"بیشتر از این هنرمند","showExcerpt":false,"layout":"scroll"} /-->
+<!-- wp:comments {"className":"mw-release-comments"} -->
+<div class="wp-block-comments mw-release-comments"><!-- wp:group {"className":"mw-release-comments__header","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+<div class="wp-block-group mw-release-comments__header"><!-- wp:heading {"level":2,"className":"mw-release-comments__heading"} -->
+<h2 class="wp-block-heading mw-release-comments__heading">دیدگاه شنوندگان</h2>
+<!-- /wp:heading -->
+<!-- wp:comments-title {"level":3,"showPostTitle":false,"className":"mw-release-comments__count"} /--></div>
+<!-- /wp:group -->
+<!-- wp:comment-template -->
+<!-- wp:group {"className":"mw-comment","layout":{"type":"default"}} -->
+<div class="wp-block-group mw-comment"><!-- wp:group {"className":"mw-comment__meta","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group mw-comment__meta"><!-- wp:avatar {"size":44,"className":"mw-comment__avatar"} /-->
+<!-- wp:group {"className":"mw-comment__byline","layout":{"type":"default"}} -->
+<div class="wp-block-group mw-comment__byline"><!-- wp:comment-author-name {"className":"mw-comment__author"} /-->
+<!-- wp:comment-date {"className":"mw-comment__date"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- wp:comment-content {"className":"mw-comment__content"} /-->
+<!-- wp:group {"className":"mw-comment__actions","layout":{"type":"flex","flexWrap":"wrap"}} -->
+<div class="wp-block-group mw-comment__actions"><!-- wp:comment-reply-link {"className":"mw-comment__reply"} /-->
+<!-- wp:comment-edit-link {"className":"mw-comment__edit"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:comment-template -->
+<!-- wp:comments-pagination {"paginationArrow":"chevron","className":"mw-release-comments__pagination","layout":{"type":"flex","justifyContent":"space-between"}} -->
+<!-- wp:comments-pagination-previous /-->
+<!-- wp:comments-pagination-numbers /-->
+<!-- wp:comments-pagination-next /-->
+<!-- /wp:comments-pagination -->
+<!-- wp:post-comments-form {"className":"mw-release-comments__form"} /--></div>
+<!-- /wp:comments --></main>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

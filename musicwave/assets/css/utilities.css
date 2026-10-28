@@ -1,0 +1,56 @@
+.mw-muted {
+	color: var(--mw-color-text-muted);
+}
+
+/*
+ * Surface box.
+ *
+ * The `mw-surface` class is the raw counterpart of the `core/group`
+ * `is-style-mw-surface` block variation: bundled patterns and templates stamp it
+ * directly onto a group to get the card box without the editor style, and the
+ * component chrome (`.mw-home-hero`, `.mw-service-callout`) documents that "the
+ * surface utility owns the box". Utilities load before every component sheet, so
+ * a component that owns its own box (`.mw-release-card`, `.mw-product-hero`)
+ * still wins with equal specificity.
+ */
+.mw-surface {
+	background: var(--mw-color-surface);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+	box-shadow: var(--mw-shadow-card);
+	padding: var(--wp--preset--spacing--30);
+}
+
+/*
+ * Play ⇄ pause glyph swap.
+ *
+ * `ActionButtonStyle::play_toggle_icon()` prints both vectors inside one
+ * `.mw-icon-swap` box; the two halves share a single grid cell so the control
+ * never reflows between states. The pressed state is owned by the shared
+ * preview runtime (`aria-pressed="true"`) and mirrored on list rows through
+ * `[data-mw-playing]`, which keeps the swap correct for script-less renders,
+ * editor previews, and every action style (icon disc or labeled pill).
+ */
+.mw-icon-swap {
+	display: inline-grid;
+	place-items: center;
+	line-height: 0;
+}
+
+.mw-icon-swap > * {
+	grid-area: 1 / 1;
+	display: inline-grid;
+	place-items: center;
+}
+
+.mw-icon-swap__pause {
+	display: none;
+}
+
+:is([aria-pressed="true"], [data-mw-playing], .is-playing) .mw-icon-swap__play {
+	display: none;
+}
+
+:is([aria-pressed="true"], [data-mw-playing], .is-playing) .mw-icon-swap__pause {
+	display: inline-grid;
+}

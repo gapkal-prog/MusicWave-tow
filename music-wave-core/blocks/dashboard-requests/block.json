@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-requests",
+  "title": "پیگیری درخواست‌ها",
+  "category": "music-wave",
+  "description": "فهرست درخواست‌های آهنگ و همکاری کاربر با وضعیت، شماره پیگیری و تاریخ. قابل تنظیم در ویرایشگر سایت.",
+  "keywords": ["درخواست", "پیگیری", "همکاری", "آهنگ"],
+  "textdomain": "music-wave-core",
+  "icon": "email",
+  "attributes": {
+    "heading": { "type": "string", "default": "پیگیری درخواست‌ها" },
+    "compact": { "type": "boolean", "default": true },
+    "perPage": { "type": "number", "default": 6 },
+    "showStatus": { "type": "boolean", "default": true },
+    "showReference": { "type": "boolean", "default": true }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "color": { "background": true, "link": true, "text": true },
+    "spacing": { "blockGap": true, "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "example": {
+    "attributes": { "compact": true, "perPage": 6 }
+  }
+}

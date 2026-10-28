@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/add-to-queue",
+  "title": "افزودن به صف",
+  "category": "music-wave",
+  "description": "انتشار فعلی یا سنجاق‌شده را به صف پخش شنونده اضافه می‌کند — بعد از قطعهٔ فعلی یا در پایان صف — با انتخابگر آیکون و ظاهر یکپارچه.",
+  "keywords": [
+    "صف",
+    "پخش بعدی",
+    "اضافه کردن",
+    "پخش‌کننده"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "controls-play",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "position": {
+      "type": "string",
+      "default": "next"
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": "button"
+    },
+    "variant": {
+      "type": "string",
+      "default": "surface"
+    },
+    "size": {
+      "type": "string",
+      "default": "md"
+    },
+    "shape": {
+      "type": "string",
+      "default": "pill"
+    },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "position": "next",
+      "buttonStyle": "button",
+      "icon": "queue"
+    }
+  }
+}

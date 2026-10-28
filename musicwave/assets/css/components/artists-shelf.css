@@ -1,0 +1,434 @@
+/* ================================================================
+   Artists shelf — interesting, editorial, modern
+   More dramatic than before: gradient accents, hover lift, editorial names
+   ================================================================ */
+
+.mw-artists-shelf__item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0;
+	text-align: center;
+	transition: transform 260ms var(--mw-ease-out), filter 200ms ease;
+	position: relative;
+}
+
+.mw-artists-shelf__item:where(:hover)::before {
+	opacity: 1;
+}
+
+.mw-artists-shelf__avatar {
+	--avatar-size: min(100%, 11rem);
+	position: relative;
+	align-self: center;
+	aspect-ratio: 1;
+	inline-size: var(--avatar-size);
+	block-size: auto;
+	display: flex;
+	overflow: clip;
+	background:
+		radial-gradient(circle at 28% 20%, color-mix(in srgb, var(--mw-term-hue, var(--mw-color-accent)) 42%, transparent), transparent 55%),
+		var(--mw-color-surface-raised);
+	box-shadow:
+		0 0.75rem 1.75rem rgb(0 0 0 / 18%),
+		0 0 0 1px var(--mw-color-border-subtle),
+		0 0 0 0 color-mix(in srgb, var(--mw-term-hue, var(--mw-color-accent)) 0%, transparent);
+	transition: box-shadow 300ms var(--mw-ease-out), transform 300ms var(--mw-ease-out);
+	isolation: isolate;
+}
+
+.mw-artists-shelf__avatar::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgb(0 0 0 / 0.12), transparent 50%);
+	opacity: 0;
+	transition: opacity 300ms ease;
+	pointer-events: none;
+}
+
+.mw-artists-shelf__avatar:where(:hover, :focus-visible) {
+	box-shadow:
+		0 1.25rem 2.75rem rgb(0 0 0 / 24%),
+		0 0 0 1px color-mix(in srgb, var(--mw-term-hue, var(--mw-color-accent)) 22%, transparent),
+		0 0 0 6px color-mix(in srgb, var(--mw-term-hue, var(--mw-color-accent)) 10%, transparent);
+	transform: scale(1.02);
+}
+
+.mw-artists-shelf__avatar:where(:hover, :focus-visible)::after {
+	opacity: 1;
+}
+
+.mw-artists-shelf__avatar--circle { border-radius: 50%; }
+/* `square` is a legacy saved value: the inspector only offers circle/rounded,
+ * and both rounded spellings resolve to the same radius. */
+.mw-artists-shelf__avatar--rounded,
+.mw-artists-shelf__avatar--square { border-radius: var(--mw-radius-xl); }
+
+/* Image size modifiers – make imageSize attribute visually effective */
+.mw-artists-shelf--size-thumbnail .mw-artists-shelf__avatar { --avatar-size: min(100%, 6.5rem); }
+.mw-artists-shelf--size-medium .mw-artists-shelf__avatar { --avatar-size: min(100%, 9rem); }
+.mw-artists-shelf--size-large .mw-artists-shelf__avatar { --avatar-size: min(100%, 11rem); }
+.mw-artists-shelf--size-full .mw-artists-shelf__avatar { --avatar-size: min(100%, 14rem); }
+
+/* Keep list layout compact regardless of size */
+.mw-release-shelf--list.mw-artists-shelf--size-thumbnail .mw-artists-shelf__avatar { --avatar-size: 2.75rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-medium .mw-artists-shelf__avatar { --avatar-size: 3.5rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-large .mw-artists-shelf__avatar { --avatar-size: 4.25rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-full .mw-artists-shelf__avatar { --avatar-size: 5rem; }
+
+.mw-artists-shelf__image,
+.mw-artists-shelf__initial {
+	inline-size: 100%;
+	block-size: 100%;
+	max-inline-size: none;
+	object-fit: cover;
+	object-position: center;
+	border-radius: inherit;
+	transition: transform 700ms var(--mw-ease-out);
+}
+
+.mw-artists-shelf__initial {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: clamp(2.2rem, 5.5vw, 3.25rem);
+	font-weight: 900;
+	letter-spacing: -0.04em;
+	color: var(--mw-color-text);
+	background:
+		radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--mw-term-hue, var(--mw-color-accent)) 28%, transparent), transparent 60%),
+		transparent;
+}
+
+.mw-artists-shelf__avatar:where(:hover, :focus-visible) .mw-artists-shelf__image,
+.mw-artists-shelf__avatar:where(:hover, :focus-visible) .mw-artists-shelf__initial {
+	transform: scale(1.08) rotate(0.4deg);
+}
+
+.mw-artists-shelf__body {
+	display: grid;
+	gap: 0.28rem;
+	padding-block-start: 1rem;
+	inline-size: 100%;
+	min-inline-size: 0;
+	position: relative;
+	z-index: 1;
+}
+
+.mw-artists-shelf__name {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 800;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.mw-artists-shelf__name a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 180ms ease;
+	position: relative;
+}
+
+.mw-artists-shelf__name a::after {
+	content: "";
+	position: absolute;
+	inset-inline-start: 0;
+	inset-block-end: -2px;
+	inline-size: 0;
+	block-size: 2px;
+	background: var(--mw-color-accent);
+	border-radius: 999px;
+	transition: inline-size 260ms var(--mw-ease-out);
+}
+
+.mw-artists-shelf__name a:where(:hover, :focus-visible) {
+	color: var(--mw-color-accent);
+}
+
+.mw-artists-shelf__name a:where(:hover, :focus-visible)::after {
+	inline-size: 100%;
+}
+
+.mw-artists-shelf__count {
+	margin: 0;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--mw-color-text-muted);
+	line-height: 1.2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.25rem;
+}
+
+.mw-artists-shelf__count::before {
+	content: "♪";
+	font-size: 0.7rem;
+	opacity: 0.7;
+}
+
+.mw-artists-shelf__bio {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: clip;
+	margin: 0.2rem 0 0;
+	font-size: 0.8125rem;
+	line-height: 1.55;
+	color: color-mix(in srgb, var(--mw-color-text) 70%, var(--mw-color-text-muted));
+	text-wrap: pretty;
+}
+
+.mw-artists-shelf__follow {
+	display: flex;
+	justify-content: center;
+	margin-block-start: 0.65rem;
+}
+
+/* Compact list layout — editorial */
+.mw-release-shelf--list .mw-artists-shelf__item {
+	flex-direction: row;
+	align-items: center;
+	gap: clamp(0.85rem, 2.2vw, 1.35rem);
+	inline-size: 100%;
+	padding: 0.85rem 0;
+	text-align: start;
+	border-block-end: 1px solid var(--mw-color-border-subtle);
+	transform: none;
+}
+
+.mw-release-shelf--list .mw-artists-shelf__item::before {
+	display: none;
+}
+
+.mw-release-shelf--list .mw-artists-shelf__item:where(:hover) {
+	transform: none;
+	background: color-mix(in srgb, var(--mw-color-text) 3%, transparent);
+	border-radius: var(--mw-radius-md);
+	padding-inline: 0.65rem;
+	margin-inline: -0.65rem;
+}
+
+.mw-release-shelf--list .mw-artists-shelf__avatar {
+	--avatar-size: 3.75rem;
+	flex: 0 0 auto;
+	box-shadow: var(--mw-shadow-card);
+}
+
+.mw-release-shelf--list .mw-artists-shelf__body {
+	padding: 0;
+	flex: 1 1 auto;
+	justify-items: start;
+	gap: 0.15rem;
+}
+
+.mw-release-shelf--list .mw-artists-shelf__follow {
+	margin-block-start: 0;
+	flex: 0 0 auto;
+}
+
+.mw-release-shelf--list .mw-artists-shelf__initial {
+	font-size: 1.35rem;
+}
+
+/* Scroll layout tweaks — more interesting spacing */
+.mw-release-shelf--scroll .mw-artists-shelf__item {
+	inline-size: 10rem;
+	flex: 0 0 auto;
+}
+
+/* Style variations — distinct, editorial-grade */
+.mw-release-shelf.is-style-minimal .mw-artists-shelf__avatar,
+.mw-release-shelf--minimal .mw-artists-shelf__avatar,
+.mw-artists-shelf.is-style-minimal .mw-artists-shelf__avatar,
+.mw-artists-shelf--minimal .mw-artists-shelf__avatar {
+	box-shadow: none;
+	border: 1px solid var(--mw-color-border-subtle);
+	background: var(--mw-color-surface);
+}
+
+.mw-release-shelf.is-style-minimal .mw-artists-shelf__item:where(:hover),
+.mw-release-shelf--minimal .mw-artists-shelf__item:where(:hover),
+.mw-artists-shelf.is-style-minimal .mw-artists-shelf__item:where(:hover),
+.mw-artists-shelf--minimal .mw-artists-shelf__item:where(:hover) {
+	transform: translateY(-2px);
+}
+
+.mw-release-shelf.is-style-minimal .mw-artists-shelf__item::before,
+.mw-release-shelf--minimal .mw-artists-shelf__item::before,
+.mw-artists-shelf.is-style-minimal .mw-artists-shelf__item::before,
+.mw-artists-shelf--minimal .mw-artists-shelf__item::before {
+	display: none;
+}
+
+.mw-release-shelf.is-style-editorial .mw-artists-shelf__item,
+.mw-release-shelf--editorial .mw-artists-shelf__item,
+.mw-artists-shelf.is-style-editorial .mw-artists-shelf__item,
+.mw-artists-shelf--editorial .mw-artists-shelf__item {
+	background: var(--mw-color-glass, rgb(24 24 24 / 74%));
+	border: 1px solid var(--mw-color-glass-border, rgb(247 248 251 / 12%));
+	border-radius: var(--mw-radius-lg, 1rem);
+	overflow: hidden;
+	padding: 0.9rem 0.75rem;
+	transition:
+		border-color var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease),
+		box-shadow var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease),
+		transform var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease);
+}
+
+.mw-release-shelf.is-style-editorial .mw-artists-shelf__item::before,
+.mw-release-shelf--editorial .mw-artists-shelf__item::before,
+.mw-artists-shelf.is-style-editorial .mw-artists-shelf__item::before,
+.mw-artists-shelf--editorial .mw-artists-shelf__item::before {
+	background: var(--mw-gradient-editorial, linear-gradient(115deg, #fa2d48, #1db954));
+	block-size: 2px;
+	border-radius: 0;
+	content: "";
+	inline-size: 100%;
+	inset: 0 auto auto 0;
+	opacity: 0;
+	position: absolute;
+	transition: opacity var(--mw-speed-normal, 300ms) var(--mw-ease-snap, ease);
+}
+
+.mw-release-shelf.is-style-editorial .mw-artists-shelf__item:is(:hover, :focus-within),
+.mw-release-shelf--editorial .mw-artists-shelf__item:is(:hover, :focus-within),
+.mw-artists-shelf.is-style-editorial .mw-artists-shelf__item:is(:hover, :focus-within),
+.mw-artists-shelf--editorial .mw-artists-shelf__item:is(:hover, :focus-within) {
+	border-color: var(--mw-color-editorial-line, rgb(250 45 72 / 42%));
+	box-shadow: var(--mw-shadow-lift, 0 1.5rem 3rem rgb(0 0 0 / 30%));
+	transform: translateY(-0.35rem);
+}
+
+.mw-release-shelf.is-style-editorial .mw-artists-shelf__item:is(:hover, :focus-within)::before,
+.mw-release-shelf--editorial .mw-artists-shelf__item:is(:hover, :focus-within)::before,
+.mw-artists-shelf.is-style-editorial .mw-artists-shelf__item:is(:hover, :focus-within)::before,
+.mw-artists-shelf--editorial .mw-artists-shelf__item:is(:hover, :focus-within)::before {
+	opacity: 1;
+}
+
+.mw-release-shelf.is-style-editorial .mw-artists-shelf__name,
+.mw-release-shelf--editorial .mw-artists-shelf__name,
+.mw-artists-shelf.is-style-editorial .mw-artists-shelf__name,
+.mw-artists-shelf--editorial .mw-artists-shelf__name {
+	font-family: var(--mw-font-display, 'Syne', sans-serif);
+	letter-spacing: -0.02em;
+	font-size: 1.0625rem;
+	font-weight: 800;
+}
+
+.mw-release-shelf.is-style-editorial .mw-artists-shelf__avatar,
+.mw-release-shelf--editorial .mw-artists-shelf__avatar,
+.mw-artists-shelf.is-style-editorial .mw-artists-shelf__avatar,
+.mw-artists-shelf--editorial .mw-artists-shelf__avatar {
+	box-shadow: 0 0 0 1px var(--mw-color-border-subtle), 0 0.5rem 1.5rem rgb(0 0 0 / 22%);
+}
+
+.mw-release-shelf.is-style-editorial .mw-artists-shelf__count,
+.mw-release-shelf--editorial .mw-artists-shelf__count,
+.mw-artists-shelf.is-style-editorial .mw-artists-shelf__count,
+.mw-artists-shelf--editorial .mw-artists-shelf__count {
+	font-size: .68rem;
+	letter-spacing: .08em;
+}
+
+.mw-release-shelf.is-style-glass .mw-artists-shelf__item,
+.mw-release-shelf--glass .mw-artists-shelf__item,
+.mw-artists-shelf.is-style-glass .mw-artists-shelf__item,
+.mw-artists-shelf--glass .mw-artists-shelf__item {
+	background:
+		linear-gradient(165deg, color-mix(in srgb, var(--mw-color-text) 7%, transparent) 0%, color-mix(in srgb, var(--mw-color-surface) 78%, transparent) 100%);
+	backdrop-filter: blur(20px) saturate(1.25);
+	-webkit-backdrop-filter: blur(20px) saturate(1.25);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 12%, transparent);
+	border-radius: var(--mw-radius-xl, 1.25rem);
+	padding: 1rem 0.85rem;
+	box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 22%), inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent);
+	transition:
+		border-color var(--mw-speed-normal, 300ms) ease,
+		box-shadow var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease),
+		transform var(--mw-speed-normal, 300ms) var(--mw-ease-out, ease);
+}
+
+.mw-release-shelf.is-style-glass .mw-artists-shelf__item:is(:hover, :focus-within),
+.mw-release-shelf--glass .mw-artists-shelf__item:is(:hover, :focus-within),
+.mw-artists-shelf.is-style-glass .mw-artists-shelf__item:is(:hover, :focus-within),
+.mw-artists-shelf--glass .mw-artists-shelf__item:is(:hover, :focus-within) {
+	border-color: color-mix(in srgb, var(--mw-color-accent) 42%, transparent);
+	box-shadow: 0 1.4rem 3rem rgb(0 0 0 / 30%), inset 0 1px 0 color-mix(in srgb, #fff 16%, transparent);
+	transform: translateY(-0.3rem);
+}
+
+.mw-release-shelf.is-style-glass .mw-artists-shelf__item::before,
+.mw-release-shelf--glass .mw-artists-shelf__item::before,
+.mw-artists-shelf.is-style-glass .mw-artists-shelf__item::before,
+.mw-artists-shelf--glass .mw-artists-shelf__item::before {
+	inset: 0;
+	border-radius: inherit;
+	background: radial-gradient(85% 55% at 50% 0%, color-mix(in srgb, var(--mw-color-accent) 16%, transparent), transparent 72%);
+	opacity: 0.85;
+}
+
+.mw-release-shelf.is-style-glass .mw-artists-shelf__avatar,
+.mw-release-shelf--glass .mw-artists-shelf__avatar,
+.mw-artists-shelf.is-style-glass .mw-artists-shelf__avatar,
+.mw-artists-shelf--glass .mw-artists-shelf__avatar {
+	box-shadow: 0 0.75rem 1.75rem rgb(0 0 0 / 24%), 0 0 0 2px color-mix(in srgb, #fff 12%, transparent);
+}
+
+.mw-release-shelf.is-style-glass .mw-artists-shelf__name a::after,
+.mw-release-shelf--glass .mw-artists-shelf__name a::after,
+.mw-artists-shelf.is-style-glass .mw-artists-shelf__name a::after,
+.mw-artists-shelf--glass .mw-artists-shelf__name a::after {
+	background: linear-gradient(90deg, var(--mw-color-accent), color-mix(in srgb, var(--mw-color-accent) 40%, transparent));
+}
+
+/* Empty */
+.mw-artists-shelf__empty {
+	margin: 0;
+	padding: 2.5rem 1.25rem;
+	text-align: center;
+	color: var(--mw-color-text-muted);
+	background:
+		radial-gradient(80% 60% at 50% 0%, color-mix(in srgb, var(--mw-color-accent) 8%, transparent), transparent 60%),
+		var(--mw-color-surface);
+	border: 1px dashed var(--mw-color-border);
+	border-radius: var(--mw-radius-lg);
+}
+
+/* Responsive */
+@media (max-width: 48rem) {
+	.mw-release-shelf--scroll .mw-artists-shelf__item {
+		inline-size: 8.5rem;
+	}
+}
+
+@media (max-width: 36rem) {
+	.mw-release-shelf--list .mw-artists-shelf__item {
+		grid-template-columns: 3.5rem minmax(0, 1fr);
+		display: grid;
+	}
+
+	.mw-release-shelf--list .mw-artists-shelf__follow {
+		grid-column: 2;
+		justify-content: start;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-artists-shelf__item,
+	.mw-artists-shelf__image,
+	.mw-artists-shelf__initial,
+	.mw-artists-shelf__avatar,
+	.mw-artists-shelf__name a::after {
+		transition: none;
+	}
+
+	.mw-artists-shelf__item:where(:hover) {
+		transform: none;
+	}
+}

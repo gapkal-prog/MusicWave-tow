@@ -1,0 +1,73 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/membership-panel",
+  "title": "عضویت و طرح‌ها",
+  "category": "music-wave",
+  "description": "سطوح عضویت فعال مشتری را با انقضا و محصولات طرح VIP قابل خرید نشان می‌دهد.",
+  "keywords": [
+    "عضویت",
+    "vip",
+    "طرح‌ها",
+    "اشتراک"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "awards",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "showActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPlans": {
+      "type": "boolean",
+      "default": true
+    },
+    "showBuyButtons": {
+      "type": "boolean",
+      "default": true
+    },
+    "emptyText": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "عضویت",
+      "showActive": true,
+      "showPlans": true,
+      "showBuyButtons": true
+    }
+  }
+}

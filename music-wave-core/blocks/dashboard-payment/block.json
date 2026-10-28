@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-payment",
+  "title": "روش‌های پرداخت",
+  "category": "music-wave",
+  "description": "فهرست روش‌های پرداخت ذخیره‌شده – طراحی مینیمال فشرده.",
+  "keywords": ["پرداخت", "کارت", "حساب"],
+  "textdomain": "music-wave-core",
+  "icon": "money-alt",
+  "attributes": {
+    "heading": { "type": "string", "default": "روش‌های پرداخت" },
+    "compact": { "type": "boolean", "default": true }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "color": { "background": true, "link": true, "text": true },
+    "spacing": { "blockGap": true, "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "example": {
+    "attributes": { "compact": true }
+  }
+}

@@ -1,0 +1,2613 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: musicwave\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: musicwave\n"
+
+#: src/Blocks/ShelfAndSliderRenderer.php:702
+#, php-format
+msgid "%d قطعه"
+msgid_plural "%d قطعه"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Templates/TemplateManager.php:595
+#, php-format
+msgid "%d مورد سفارشی‌سازی قالب MusicWave به زباله‌دان منتقل شد. فایل‌های معتبر قالب اکنون فعال هستند."
+msgstr ""
+
+#: /blocks/synced-lyrics/block.json
+msgid "LRC"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:613 src/Blocks/ChromeBlocksRenderer.php:651
+msgid "Live Sync Lyrics"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:35 src/Blocks/BlockRegistry.php:68
+msgid "MusicWave"
+msgstr ""
+
+#: /blocks/breadcrumb/block.json
+msgid "breadcrumb"
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "dark"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "drawer"
+msgstr ""
+
+#: /blocks/synced-lyrics/block.json
+msgid "karaoke"
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "light"
+msgstr ""
+
+#: /blocks/synced-lyrics/block.json
+msgid "lyrics"
+msgstr ""
+
+#: /blocks/header-search/block.json
+msgid "search"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "sidebar"
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "theme"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "toggle"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:272 src/Blocks/BlockRegistry.php:282
+msgid "u{0639}u{0631}u{0636} u{0647}u{062F}u{0631}: u{062A}u{0645}u{0627}u{0645}u{0639}u{0631}u{0636}"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:267 src/Blocks/BlockRegistry.php:277
+msgid "u{0639}u{0631}u{0636} u{0647}u{062F}u{0631}: u{06AF}u{0633}u{062A}u{0631}u{062F}u{0647}"
+msgstr ""
+
+#: assets/editor-blocks.js:417
+msgid "«نوار بالا» در همهٔ عرض‌ها دیده می‌شود (ریل دسکتاپ + کشوی موبایل) و در الگوهای پیش‌فرض استفاده شده است. «داخل برند» دکمه را کنار لوگو در خودِ ریل می‌گذارد و فقط در دسکتاپ دیده می‌شود. برای هر سربرگ فقط یک نمونه بگذارید."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:56
+msgid "آخرین انتشارها"
+msgstr ""
+
+#: assets/editor-blocks.js:969
+msgid "آخرین جستجوهای هر بازدیدکننده فقط در مرورگر خودش ذخیره میشود."
+msgstr ""
+
+#: patterns/home-showcase-rail.php:34 src/Blocks/BreadcrumbRenderer.php:254 src/Routing/RouteManager.php:129
+msgid "آلبوم‌ها"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:283
+msgid "آهنگ و آلبوم"
+msgstr ""
+
+#: patterns/section-faq.php:54
+msgid "آیا شنیدن بدون حساب کاربری ممکن است؟"
+msgstr ""
+
+#: assets/editor-blocks.js:443
+msgid "آیکون"
+msgstr ""
+
+#: assets/editor-blocks.js:444
+msgid "آیکون دکمه را انتخاب کنید. در ویرایشگر و سایت به صورت زنده نمایش داده می‌شود."
+msgstr ""
+
+#: assets/editor-blocks.js:467
+msgid "آیکون دکمه را نمایش یا پنهان کنید. وقتی خاموش باشد فقط متن (اگر فعال باشد) نمایش داده می‌شود."
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "آیکون منو"
+msgstr ""
+
+#: assets/editor-blocks.js:505
+msgid "آیکون‌های منو"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:236
+msgid "ابزارک‌های سربرگ MusicWave"
+msgstr ""
+
+#: theme.json
+msgid "ابزارک‌های پابرگ"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:226
+msgid "ابزارک‌های پابرگ MusicWave"
+msgstr ""
+
+#: assets/editor-blocks.js:1149
+msgid "اختیاری. با نامک نوع انتشار مانند album، single، ep، podcast_show یا podcast_episode فیلتر کنید. برای نمایش همه انواع، خالی بگذارید. این موارد در MusicWave → انواع انتشار قرار دارند."
+msgstr ""
+
+#: assets/editor-blocks.js:1164
+msgid "اختیاری. برای تعیین ترتیب دقیق، شناسه انتشارها را با کاما جدا کرده و وارد کنید (مثلاً ۱۲، ۴۵، ۷۸). با بردن نشانگر روی عنوان انتشار در MusicWave → انتشارها، شناسه را در پیش‌نمایش پیوند ببینید. این گزینه همه فیلترهای دیگر را نادیده می‌گیرد."
+msgstr ""
+
+#: assets/editor-blocks.js:1768
+msgid "اختیاری. فقط فهرست‌های پخش عمومی را نمایش بده که عنوانشان با این متن مطابقت دارد."
+msgstr ""
+
+#: assets/editor-blocks.js:1137
+msgid "اختیاری. نامک را از فهرست هنرمندان / سبک‌ها / حال‌وهواها در وردپرس → MusicWave کپی کنید. اگر خالی بگذارید، همهٔ موارد نمایش داده می‌شوند. نمونه: pop یا lo-fi."
+msgstr ""
+
+#: src/Templates/TemplateManager.php:238
+msgid "اختیاری: ناحیه کوچک ابزارک برای سربرگ (مثلاً اعلان یا تغییر زبان). بلوک‌ها را از نمایش → ابزارک‌ها یا مستقیماً در بخش قالب سربرگ اضافه کنید."
+msgstr ""
+
+#: src/Routing/RouteManager.php:109
+msgid "ارتقا به VIP"
+msgstr ""
+
+#: patterns/section-faq.php:43
+msgid "از برگهٔ درخواستها استفاده کنید؛ هر پیشنهاد پس از بررسی در کاتالوگ قرار میگیرد."
+msgstr ""
+
+#: patterns/section-faq.php:61
+msgid "از صفحهٔ حساب خود، هر زمان و بدون پرسش اضافه."
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:68
+msgid "از کجا شروع کنیم؟"
+msgstr ""
+
+#: patterns/demo-artists-directory.php:28
+msgid "از یک ردیف سریع تا فهرست کامل صفحهبهصفحه؛ هر سه حالت از یک بلوک ساخته شدهاند و میتوانید هرکدام را نگه دارید."
+msgstr ""
+
+#: assets/editor-blocks.js:1552
+msgid "استاندارد (۴ ستون دسکتاپ)"
+msgstr ""
+
+#: assets/editor-blocks.js:30
+msgid "استفاده از تنظیمات کلی"
+msgstr ""
+
+#: assets/editor-blocks.js:1945
+msgid "استفاده از فیلد توضیحات"
+msgstr ""
+
+#: src/Assets/AssetManager.php:438
+msgid "استفاده از پوسته تیره"
+msgstr ""
+
+#: src/Assets/AssetManager.php:437
+msgid "استفاده از پوسته روشن"
+msgstr ""
+
+#: src/Assets/AssetManager.php:436 src/Blocks/ChromeBlocksRenderer.php:93
+msgid "استفاده از پوسته سیستم"
+msgstr ""
+
+#: assets/editor-blocks.js:1938
+msgid "استفاده از چکیده"
+msgstr ""
+
+#: patterns/demo-account-studio.php:32
+msgid "استودیوی شخصی شما در یک نگاه"
+msgstr ""
+
+#: src/Assets/AssetManager.php:358
+#, php-format
+msgid "اسلاید %1$d از %2$d"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:1112
+#, php-format
+msgid "اسلاید %1$d: %2$s"
+msgstr ""
+
+#: src/Assets/AssetManager.php:354 src/Blocks/ShelfAndSliderRenderer.php:1133
+msgid "اسلاید بعدی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:100
+msgid "اسلاید تمام‌قاب با تیتر بزرگ و پردهٔ تیره‌تر."
+msgstr ""
+
+#: src/Assets/AssetManager.php:353 src/Blocks/ShelfAndSliderRenderer.php:1132
+msgid "اسلاید قبلی"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:1158 /blocks/release-shelf/block.json /blocks/release-slider/block.json
+msgid "اسلایدر"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:1145
+msgid "اسلایدر انتشارها"
+msgstr ""
+
+#: /blocks/release-slider/block.json
+msgid "اسلایدر انتشارهای MusicWave"
+msgstr ""
+
+#: assets/editor-blocks.js:1810
+msgid "اسلایدر هیرو"
+msgstr ""
+
+#: /blocks/release-slider/block.json
+msgid "اسلایدر واکنش‌گرا و دسترس‌پذیر برای انتشارهای منتخب یا جدید. از طریق ویرایشگر سایت و تنظیمات کلی اسلایدر کاملاً قابل سفارشی‌سازی است."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:641
+msgid "اسکرول خودکار"
+msgstr ""
+
+#: patterns/demo-account-commerce.php:28
+msgid "اشتراک فعال، طرحهای عضویت، تاریخچهٔ سفارش، دانلودهای مجاز، آدرس و روش پرداخت؛ هر بخش یک بلوک جداگانه و قابل ویرایش."
+msgstr ""
+
+#: assets/editor-blocks.js:39
+msgid "افقی (۱۶:۱۰)"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:453
+msgid "الکترونیک"
+msgstr ""
+
+#: assets/editor-blocks.js:1055
+msgid "امروز (۲۴ ساعت اخیر)"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:357
+msgid "انتخاب"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:500
+msgid "انتشار MusicWave"
+msgstr ""
+
+#: assets/editor-blocks.js:2514
+msgid "انتشار یا آلبوم نمونه برای پیش‌نمایش"
+msgstr ""
+
+#: assets/editor-blocks.js:1673 src/Blocks/BreadcrumbRenderer.php:248 /blocks/release-shelf/block.json /blocks/release-slider/block.json
+msgid "انتشارها"
+msgstr ""
+
+#: assets/editor-blocks.js:1715
+msgid "انتشارها برای نمایش"
+msgstr ""
+
+#: patterns/home-hero.php:29
+msgid "انتشارها، هنرمندان، آلبوم‌ها و دانلودهای اختصاصی را در تجربه‌ای یکپارچه کشف کنید."
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:554
+msgid "انتشارهای بعدی"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:979
+msgid "انتشارهای بیشتر"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:554
+msgid "انتشارهای قبلی"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:551
+msgid "انتشارهای منتخب"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:54 patterns/demo-release-showcase.php:72 patterns/release-grid.php:43
+msgid "انتشاری پیدا نشد"
+msgstr ""
+
+#: assets/editor-blocks.js:2040
+msgid "اندازه فونت عنوان (پیکسل، ۰ = پیش‌فرض)"
+msgstr ""
+
+#: assets/editor-blocks.js:1544
+msgid "اندازه کارت‌ها"
+msgstr ""
+
+#: assets/editor-blocks.js:393
+msgid "این بلوک سه ناحیه ابزارک فوتر را نمایش می‌دهد. برای ویرایش مستقیم و ماژولار در ویرایشگر سایت، می‌توانید مستقیماً بلوک «ستون‌ها» وردپرس را با بلوک‌های فهرست، پیوند و متن ترکیب کنید."
+msgstr ""
+
+#: assets/editor-blocks.js:1015
+msgid "این دو گزینه فقط پیشنمایش داخل ویرایشگر را تغییر میدهند و هیچ اثری روی سایت ندارند."
+msgstr ""
+
+#: assets/editor-blocks.js:905
+msgid "این متن روی دکمه دیده نمیشود و فقط به عنوان برچسب دسترسپذیری استفاده میشود."
+msgstr ""
+
+#: src/Templates/TemplateManager.php:340
+msgid "این ناحیه از «نمایش → ابزارک‌ها» با کشیدن هر بلوک یا ابزارک پر می‌شود؛ تا زمانی که ابزارکی اختصاص ندهید، نوار کناری در سایت به‌طور خودکار پنهان می‌ماند."
+msgstr ""
+
+#: src/Templates/TemplateManager.php:603
+msgid "این کار انتشارها، صفحات، منوها، رسانه‌ها، تنظیمات افزونه یا سبک‌های کلی را حذف نمی‌کند."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:58
+msgid "اینجا چیزی در حال پخش نیست."
+msgstr ""
+
+#: patterns/home-showcase-rail.php:26
+msgid "با تب‌ها بین تازه‌ترین اضافه‌شده‌ها و پرسنشنیده‌ترین‌ها جابه‌جا شوید."
+msgstr ""
+
+#: assets/editor-blocks.js:952
+msgid "با زدن Ctrl+K در هر جای سایت، پنجره جستجو باز میشود."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:121
+msgid "باز و بستهٔ منو"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:530 src/Blocks/ShelfAndSliderRenderer.php:699 src/Blocks/ShelfAndSliderRenderer.php:808 src/Blocks/ShelfAndSliderRenderer.php:1031
+#, php-format
+msgid "باز کردن %s"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:783 src/Blocks/ShelfAndSliderRenderer.php:900 src/Blocks/ShelfAndSliderRenderer.php:1018
+msgid "باز کردن انتشار"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "باز کردن منو"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:244
+msgid "باز کردن پنجره جستجوی سریع"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:523 src/Blocks/ShelfAndSliderRenderer.php:923
+msgid "بازدیدها"
+msgstr ""
+
+#: assets/editor-blocks.js:1043
+msgid "بازهٔ زمانی انتشار"
+msgstr ""
+
+#: src/Assets/AssetManager.php:426
+msgid "بازکردن منو"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:622
+msgid "بازیابی فایل‌های معتبر قالب"
+msgstr ""
+
+#: patterns/section-faq.php:55
+msgid "بخش بزرگی از کاتالوگ آزاد است؛ فهرست پخش شخصی و دانلود به حساب کاربری نیاز دارد."
+msgstr ""
+
+#: theme.json
+msgid "بخش معرفی"
+msgstr ""
+
+#: theme.json
+msgid "بدنه وزیرمتن"
+msgstr ""
+
+#: src/Assets/AssetManager.php:76
+msgid "بدون افزونه، صفحات تک‌ریلیز و بلوک‌های کاتالوگ کار نمی‌کنند."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:94
+msgid "بدون سطح کارت؛ فقط خطوط و تایپوگرافی. مناسب چیدمان‌های فهرستی."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:118
+msgid "بدون قاب و پس‌زمینه؛ فقط مسیر تایپوگرافیک تمیز."
+msgstr ""
+
+#: assets/editor-blocks.js:1952
+msgid "بدون متن بدنه"
+msgstr ""
+
+#: patterns/music-service-callout.php:45
+msgid "بدون نیاز به نصب؛ در هر دستگاهی با حساب کاربری خود ادامه دهید."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:136
+msgid "بدون کارت و سایه، تایپوگرافی تمیز."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:608
+#, php-format
+msgid "برای «%s» هنوز متن ترانه یا زمان‌بندی LRC ثبت نشده است؛ در نمای عمومی نمایش داده نمی‌شود."
+msgstr ""
+
+#: assets/editor-blocks.js:207
+msgid "برای استفاده از برچسب پیش‌فرض ترجمه‌شده («خانه»)، خالی بگذارید."
+msgstr ""
+
+#: assets/editor-blocks.js:2106
+msgid "برای استفاده از رنگ تأکیدی قالب، خالی بگذارید."
+msgstr ""
+
+#: assets/editor-blocks.js:2118
+msgid "برای استفاده از مقدار پیش‌فرض قالب، خالی بگذارید."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:609
+msgid "برای این انتشار هنوز متن ترانه یا زمان‌بندی LRC ثبت نشده است؛ در نمای عمومی نمایش داده نمی‌شود."
+msgstr ""
+
+#: assets/editor-blocks.js:511
+msgid "برای تغییر آیکون هر پیوند منو (خانه، مرور، قطعه‌ها، هنرمندان، فروشگاه، درخواست‌ها و…): بلوک Navigation یا Navigation Link را انتخاب کنید → در ستون تنظیمات → پیشرفته → کلاس CSS اضافی، یک کلاس mw-icon-* اضافه کنید. مثلاً: mw-icon-home، mw-icon-browse، mw-icon-tracks، mw-icon-artists، mw-icon-charts، mw-icon-radio (درخواست‌ها)، mw-icon-library، mw-icon-playlists، mw-icon-genres، mw-icon-albums، mw-icon-podcasts، mw-icon-search، mw-icon-account، mw-icon-settings. اگر کلاسی ندهید، آیکون به صورت خودکار از روی برچسب فارسی/انگلیسی تشخیص داده می‌شود (خانه، مرور، قطعه‌ها، هنرمندان، فروشگاه و…)."
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:550
+msgid "برای شما"
+msgstr ""
+
+#: assets/editor-blocks.js:2374
+msgid "برای نمایش پیش‌نمایش زنده، انتشار منتشرشده اضافه کنید یا تنظیمات بلوک را بررسی کنید."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:643
+msgid "برای پرش، روی خط بزنید"
+msgstr ""
+
+#: patterns/home-showcase-rail.php:34
+msgid "برترین"
+msgstr ""
+
+#: theme.json
+msgid "برجسته"
+msgstr ""
+
+#: assets/editor-blocks.js:1129
+msgid "برچسب"
+msgstr ""
+
+#: assets/editor-blocks.js:1906
+msgid "برچسب اقدام"
+msgstr ""
+
+#: assets/editor-blocks.js:1423 assets/editor-blocks.js:1686 assets/editor-blocks.js:2656 /blocks/section-head/block.json
+msgid "برچسب بالایی"
+msgstr ""
+
+#: assets/editor-blocks.js:293
+msgid "برچسب دسترس‌پذیری (ARIA)"
+msgstr ""
+
+#: assets/editor-blocks.js:2073
+msgid "برچسب دکمه"
+msgstr ""
+
+#: assets/editor-blocks.js:204
+msgid "برچسب صفحه اصلی"
+msgstr ""
+
+#: assets/editor-blocks.js:2231
+msgid "برچسب مشاهده همه"
+msgstr ""
+
+#: assets/editor-blocks.js:2724
+msgid "برچسب پیوند"
+msgstr ""
+
+#: assets/editor-blocks.js:1486
+msgid "برچسب پیوند مشاهده همه"
+msgstr ""
+
+#: assets/editor-blocks.js:915
+msgid "برچسبهای پیشنهادی سریع (جداشده با کاما)"
+msgstr ""
+
+#: theme.json
+msgid "برگه (بدون نوار کناری)"
+msgstr ""
+
+#: theme.json
+msgid "برگه (عریض)"
+msgstr ""
+
+#: theme.json
+msgid "برگه با نوار کناری"
+msgstr ""
+
+#: patterns/demo-release-showcase.php:33
+msgid "برگهٔ انتشار، همهٔ امکانات"
+msgstr ""
+
+#: theme.json
+msgid "بزرگ"
+msgstr ""
+
+#: assets/editor-blocks.js:1559
+msgid "بزرگ (۳ ستون دسکتاپ)"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:646
+msgid "بزرگ‌تر کردن متن"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:358
+msgid "بستن"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:371
+msgid "بستن جستجو"
+msgstr ""
+
+#: theme.json
+msgid "بسیار بزرگ"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:452
+msgid "بعدی"
+msgstr ""
+
+#: assets/editor-blocks.js:1794
+msgid "بنتو (چیدمان موزاییکی)"
+msgstr ""
+
+#: src/Navigation/NavigationIconService.php:234
+msgid "به ما بپیوندید"
+msgstr ""
+
+#: assets/editor-blocks.js:1741
+msgid "به‌تازگی به‌روزرسانی‌شده"
+msgstr ""
+
+#: theme.json
+msgid "بوم"
+msgstr ""
+
+#: src/Assets/AssetManager.php:366
+msgid "بیشتر بخوانید"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:455
+msgid "بیکلام"
+msgstr ""
+
+#: theme.json
+msgid "تأکید روی بوم"
+msgstr ""
+
+#: assets/editor-blocks.js:1084
+msgid "تاریخ انتشار"
+msgstr ""
+
+#: assets/editor-blocks.js:1088
+msgid "تاریخ ویرایش"
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "تاریک"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:155
+msgid "تایپوگرافی شاخص و کنتراست مجله‌ای."
+msgstr ""
+
+#: assets/editor-blocks.js:656
+msgid "تبلت"
+msgstr ""
+
+#: assets/editor-blocks.js:550
+msgid "تبلت — ۷۶۸ تا ۱۰۲۳ پیکسل"
+msgstr ""
+
+#: assets/editor-blocks.js:960
+msgid "تبهای تفکیک محدوده (همه / آهنگ / هنرمند / پلیلیست)"
+msgstr ""
+
+#: assets/editor-blocks.js:1295
+msgid "تب‌های شناسایی‌شده: "
+msgstr ""
+
+#: assets/editor-blocks.js:1229
+msgid "تب‌های فیلتر (Today / Week / سبک)"
+msgstr ""
+
+#: assets/editor-blocks.js:1509 assets/editor-blocks.js:1843
+msgid "تحریریه"
+msgstr ""
+
+#: theme.json
+msgid "تحریریه روی بوم"
+msgstr ""
+
+#: /blocks/synced-lyrics/block.json
+msgid "ترانه"
+msgstr ""
+
+#: /blocks/theme-text/block.json
+msgid "ترجمه"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:61 theme.json
+msgid "تسویه‌حساب"
+msgstr ""
+
+#: assets/editor-blocks.js:1092
+msgid "تصادفی"
+msgstr ""
+
+#: assets/editor-blocks.js:1441
+msgid "تعداد انتشارهای بارگذاری‌شده"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:608
+#, php-format
+msgid "تعداد سفارشی‌سازی‌های ذخیره‌شده قالب: %d"
+msgstr ""
+
+#: assets/editor-blocks.js:937
+msgid "تعداد نتیجههایی که هنگام تایپ، زیر فیلد جستجو پیشنهاد میشود."
+msgstr ""
+
+#: assets/editor-blocks.js:936
+msgid "تعداد پیشنهادهای زنده"
+msgstr ""
+
+#: assets/editor-blocks.js:1233
+msgid "تعریف تب‌های فیلتر پویا"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:356 src/Templates/TemplateManager.php:357 src/Templates/TemplateManager.php:588
+msgid "تعمیر قالب MusicWave"
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "تغییر پوسته"
+msgstr ""
+
+#: assets/editor-blocks.js:1217
+msgid "تفکیک نوع انتشار (تک‌آهنگ / آلبوم)"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:923
+msgid "تمام‌عرض"
+msgstr ""
+
+#: assets/editor-blocks.js:2149
+msgid "تنظیمات اسلایدر هیرو"
+msgstr ""
+
+#: assets/editor-blocks.js:325
+msgid "تنظیمات متن پویا"
+msgstr ""
+
+#: assets/editor-blocks.js:193
+msgid "تنظیمات مسیر راهنما"
+msgstr ""
+
+#: assets/editor-blocks.js:2665
+msgid "توضیح کوتاه بخش"
+msgstr ""
+
+#: assets/editor-blocks.js:1704
+msgid "توضیحات"
+msgstr ""
+
+#: assets/editor-blocks.js:1607
+msgid "توقف هنگام قرارگیری نشانگر یا تمرکز"
+msgstr ""
+
+#: assets/editor-blocks.js:1604
+msgid "تکرار"
+msgstr ""
+
+#: patterns/home-showcase-rail.php:34
+msgid "تک‌آهنگ‌ها"
+msgstr ""
+
+#: theme.json
+msgid "تک‌فاصله استودیو"
+msgstr ""
+
+#: assets/editor-blocks.js:360
+msgid "تگ HTML خروجی"
+msgstr ""
+
+#: theme.json
+msgid "تیتر اصلی"
+msgstr ""
+
+#: assets/editor-blocks.js:1961 assets/editor-blocks.js:2153
+msgid "تیرگی لایه رویی"
+msgstr ""
+
+#: assets/editor-blocks.js:1572
+msgid "تیرگی لایه رویی (سبک سینمایی)"
+msgstr ""
+
+#: patterns/demo-community-requests.php:28
+msgid "جامعه"
+msgstr ""
+
+#: assets/editor-blocks.js:416
+msgid "جای دکمه"
+msgstr ""
+
+#: assets/editor-blocks.js:223
+msgid "جداکننده مسیر"
+msgstr ""
+
+#: patterns/home-showcase-rail.php:34
+msgid "جدیدترین"
+msgstr ""
+
+#: assets/editor-blocks.js:1209
+msgid "جدیدترین / پربازدید / تصادفی"
+msgstr ""
+
+#: patterns/home-showcase-rail.php:25
+msgid "جدیدترین و برترین انتشارها"
+msgstr ""
+
+#: assets/editor-blocks.js:1748
+msgid "جدیدترین‌ها در ابتدا"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:200 /blocks/header-search/block.json
+msgid "جستجو"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:329
+msgid "جستجوهای اخیر"
+msgstr ""
+
+#: assets/editor-blocks.js:891 src/Blocks/ChromeBlocksRenderer.php:195
+msgid "جستجوی آهنگ، هنرمند یا آلبوم…"
+msgstr ""
+
+#: /blocks/header-search/block.json
+msgid "جستجوی سربرگ MusicWave"
+msgstr ""
+
+#: assets/editor-blocks.js:787
+msgid "جستجوی سربرگ در سه اندازه صفحه (دسکتاپ، تبلت و موبایل) جداگانه نمایش داده میشود. یک پیشتنظیم انتخاب کنید و بعد در صورت نیاز هر اندازه را پایینتر دقیق کنید."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:247
+msgid "جستجوی صوتی"
+msgstr ""
+
+#: assets/editor-blocks.js:977
+msgid "جستجوی صوتی فارسی و انگلیسی"
+msgstr ""
+
+#: assets/editor-blocks.js:932
+msgid "جستجوی هوشمند"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:368
+msgid "جستجوی هوشمند کاتالوگ"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:33
+msgid "جستوجو، هنرمند، سبک، حالوهوا، نوع و مرتبسازی؛ نتیجه بلافاصله در شبکهٔ پایین بهروز میشود."
+msgstr ""
+
+#: patterns/home-hero.php:62 src/Blocks/BreadcrumbRenderer.php:215
+msgid "جست‌وجو"
+msgstr ""
+
+#: patterns/home-hero.php:65
+msgid "جست‌وجوی فوری در کل کاتالوگ"
+msgstr ""
+
+#: src/Assets/AssetManager.php:425
+msgid "جمع‌کردن منو"
+msgstr ""
+
+#: assets/editor-blocks.js:1103
+msgid "جهت"
+msgstr ""
+
+#: theme.json
+msgid "جوهر نیمه‌شب"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:112
+msgid "حاشیه‌های خلوت بدون قاب و سایهٔ کارت."
+msgstr ""
+
+#: assets/editor-blocks.js:1124
+msgid "حال‌وهوا"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:93 src/Blocks/BlockRegistry.php:111 src/Blocks/BlockRegistry.php:117 src/Blocks/BlockRegistry.php:135 src/Blocks/BlockRegistry.php:150 src/Blocks/BlockRegistry.php:164
+msgid "حداقلی"
+msgstr ""
+
+#: assets/editor-blocks.js:277
+msgid "حداکثر طول عنوان آیتم‌ها (۰ = نامحدود)"
+msgstr ""
+
+#: assets/editor-blocks.js:824
+msgid "حداکثر عرض نوار جستجو در دسکتاپ (پیکسل)"
+msgstr ""
+
+#: assets/editor-blocks.js:1284
+msgid "حذف تب‌ها"
+msgstr ""
+
+#: theme.json
+msgid "حساب موسیقی"
+msgstr ""
+
+#: src/Routing/RouteManager.php:94
+msgid "حساب کاربری"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:62
+msgid "حساب کاربری من"
+msgstr ""
+
+#: patterns/demo-account-commerce.php:28
+msgid "حساب کاربری، بخش خرید"
+msgstr ""
+
+#: patterns/demo-account-studio.php:32
+msgid "حساب کاربری، چیدمان متفاوت"
+msgstr ""
+
+#: assets/editor-blocks.js:919
+msgid "خالی بگذارید تا به شکل خودکار از محبوبترین ژانرهای سایت پر شود؛ برای پنهان کردن عبارت off را بنویسید."
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:214
+msgid "خاموش (بدون نوار پایین)"
+msgstr ""
+
+#: assets/editor-blocks.js:205 src/Blocks/BreadcrumbRenderer.php:275 src/Header/SiteHeaderManager.php:316 src/Navigation/NavigationIconService.php:175 src/Routing/RouteManager.php:59
+msgid "خانه"
+msgstr ""
+
+#: src/Navigation/NavigationIconService.php:246
+msgid "خروج"
+msgstr ""
+
+#: src/Navigation/NavigationIconService.php:246
+msgid "خروج از حساب"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:292
+msgid "خط تأکیدی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:252
+msgid "خط تأکیدی خطی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:130
+msgid "خط تأکیدی عمودی در ابتدای مسیر راهنما."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:140
+msgid "خط تأکیدی عمودی و سلسلهمراتب مجلهای."
+msgstr ""
+
+#: assets/editor-blocks.js:247
+msgid "خط تیره (—)"
+msgstr ""
+
+#: assets/editor-blocks.js:243
+msgid "خط عمودی (|)"
+msgstr ""
+
+#: assets/editor-blocks.js:231
+msgid "خط مورب (/)"
+msgstr ""
+
+#: assets/editor-blocks.js:2386
+msgid "خطا در دریافت پیش‌نمایش از سرور وردپرس."
+msgstr ""
+
+#: assets/editor-blocks.js:2092
+msgid "خطی"
+msgstr ""
+
+#: assets/editor-blocks.js:2521
+msgid "خودکار (محتوای واقعی فعلی سایت)"
+msgstr ""
+
+#: patterns/demo-account-studio.php:32
+msgid "خوشآمد، آمار شنیدن، ادامهٔ پخش، صف پخش و کتابخانهٔ شخصی؛ هر بخش یک بلوک مستقل که میتوانید جابهجا کنید یا حذف کنید."
+msgstr ""
+
+#: theme.json
+msgid "خیلی بزرگ"
+msgstr ""
+
+#: theme.json
+msgid "خیلی کوچک"
+msgstr ""
+
+#: assets/editor-blocks.js:431
+msgid "داخل برند ریل (فقط دسکتاپ)"
+msgstr ""
+
+#: patterns/home-hero.php:48
+msgid "دانلود امن با کیفیت اصلی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:302
+msgid "دایره"
+msgstr ""
+
+#: assets/editor-blocks.js:41
+msgid "دایره‌ای"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:575 src/Blocks/ShelfAndSliderRenderer.php:843
+msgid "در این بازه یا دسته هنوز انتشاری ثبت نشده است."
+msgstr ""
+
+#: src/Templates/TemplateManager.php:228
+msgid "در بخش قالب «ابزارک‌های پابرگ» نمایش داده می‌شود (نمایش → ویرایشگر → بخش‌های قالب → ابزارک‌های پابرگ). هر بلوک یا ابزارک قدیمی را بکشید و رها کنید؛ رنگ‌ها از سبک‌های کلی پیروی می‌کنند."
+msgstr ""
+
+#: src/Templates/TemplateManager.php:233
+msgid "در بخش قالب «نوار کناری فروشگاه» نمایش داده می‌شود (بخش‌های قالب → نوار کناری فروشگاه). از فیلترها و دسته‌بندی‌های ووکامرس یا هر بلوکی استفاده کنید."
+msgstr ""
+
+#: src/Templates/TemplateManager.php:223
+msgid "در بخش قالب «نوار کناری» نمایش داده می‌شود (نمایش → ویرایشگر → بخش‌های قالب → نوار کناری). هر بلوک یا ابزارک قدیمی را اینجا اضافه کنید. همه‌چیز بدون نیاز به کدنویسی از رابط بصری قابل ویرایش است."
+msgstr ""
+
+#: assets/editor-blocks.js:1695
+msgid "در صورت پر بودن نمایش داده می‌شود؛ یا خالی بگذارید و بلوک عنوان بخش را بالای ویترین قرار دهید."
+msgstr ""
+
+#: assets/editor-blocks.js:1236
+msgid "در هر خط یک تب بنویسید به شکل «عنوان تب|فرمان فیلتر». حداقل ۲ خط معتبر وارد کنید تا نوار تب‌ها نمایش داده شود و کاربران بدون رفرش صفحه بین تب‌ها جابه‌جا شوند."
+msgstr ""
+
+#: assets/editor-blocks.js:303
+msgid "در ویرایشگر سایت، «نمونه مسیر راهنما (Breadcrumb)» به‌صورت زنده نمایش داده می‌شود تا هر تغییر سبک، جداکننده، رنگ و فاصله بلافاصله قابل مشاهده باشد. در سایت واقعی، مسیر دقیق هر انتشار، هنرمند، سبک، برگه یا جست‌وجو به‌طور خودکار جایگزین و با اسکیمای سئو هماهنگ می‌شود."
+msgstr ""
+
+#: theme.json
+msgid "درخشش غروب"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:507 theme.json
+msgid "درخواست آهنگ و همکاری"
+msgstr ""
+
+#: patterns/demo-community-requests.php:31
+msgid "درخواست موسیقی تازه"
+msgstr ""
+
+#: src/Routing/RouteManager.php:87
+msgid "درخواست‌ها"
+msgstr ""
+
+#: assets/editor-blocks.js:655
+msgid "دسکتاپ"
+msgstr ""
+
+#: assets/editor-blocks.js:532
+msgid "دسکتاپ — از ۱۰۲۴ پیکسل به بالا"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:37
+msgid "دموهای MusicWave"
+msgstr ""
+
+#: /patterns/demo-account-studio.php
+msgid "دموی استودیوی حساب کاربری"
+msgstr ""
+
+#: /patterns/demo-release-showcase.php
+msgid "دموی برگهٔ کامل انتشار"
+msgstr ""
+
+#: /patterns/demo-community-requests.php
+msgid "دموی جامعه و درخواستها"
+msgstr ""
+
+#: /patterns/demo-account-commerce.php
+msgid "دموی خرید و عضویت حساب کاربری"
+msgstr ""
+
+#: /patterns/demo-artists-directory.php
+msgid "دموی فهرست هنرمندان"
+msgstr ""
+
+#: src/Patterns/DemoComposer.php:49
+msgid "دموی قابلیتها"
+msgstr ""
+
+#: /patterns/demo-discovery-browse.php
+msgid "دموی مرور و کشف کاتالوگ"
+msgstr ""
+
+#: patterns/home-hero.php:59
+msgid "دنبال قطعه، هنرمند یا آلبوم بگردید"
+msgstr ""
+
+#: src/Assets/AssetManager.php:375
+msgid "دنبال کردن پخش"
+msgstr ""
+
+#: assets/editor-blocks.js:579
+msgid "دکمه آیکون + نوار کشویی بازشونده"
+msgstr ""
+
+#: assets/editor-blocks.js:572
+msgid "دکمه آیکون + پاپآپ شناور (پیشنهادی)"
+msgstr ""
+
+#: assets/editor-blocks.js:543 assets/editor-blocks.js:557
+msgid "دکمه آیکون + پنجره پاپآپ"
+msgstr ""
+
+#: assets/editor-blocks.js:621
+msgid "دکمه آیکون + پنجره پاپآپ در همه اندازهها (کمترین فضا)"
+msgstr ""
+
+#: theme.json
+msgid "دکمه تأکیدی"
+msgstr ""
+
+#: assets/editor-blocks.js:2069
+msgid "دکمه فراخوان اقدام"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "دکمهٔ باز/بسته کردن ریل در دسکتاپ و کشو در موبایل. یک نمونه در هر سربرگ کافی است: «نوار بالا» همیشه دیده می‌شود، «داخل برند» فقط در دسکتاپ. آیکون، برچسب و رنگ را از تنظیمات بلوک تغییر دهید."
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "دکمهٔ تغییر پوسته (روشن/تیره/سیستم). قابل حذف/جابه‌جایی در ویرایشگر سایت. کلاس nbp-theme-toggle-fallback همیشه در نوار بالا موجود است."
+msgstr ""
+
+#: assets/editor-blocks.js:414
+msgid "دکمهٔ منو"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "دکمهٔ منوی کناری"
+msgstr ""
+
+#: theme.json
+msgid "رادیوی نیمه‌شب"
+msgstr ""
+
+#: assets/editor-blocks.js:1308
+msgid "راهنمای کامل فرمان‌های قابل استفاده:"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:28
+msgid "ردیف سبکها و حالوهواها، نوار فیلتر، خلاصهٔ نتایج، شبکهٔ انتشارها با صفحهبندی و یک ردیف پیشنهادی — همه در یک برگه."
+msgstr ""
+
+#: theme.json
+msgid "رز تحریریه"
+msgstr ""
+
+#: assets/editor-blocks.js:1599
+msgid "رفتار اسلایدر"
+msgstr ""
+
+#: src/Assets/AssetManager.php:356 src/Blocks/ShelfAndSliderRenderer.php:1139
+#, php-format
+msgid "رفتن به اسلاید %d"
+msgstr ""
+
+#: src/Assets/AssetManager.php:343
+#, php-format
+msgid "رفتن به گروه اسلاید %d"
+msgstr ""
+
+#: theme.json
+msgid "رنگ تأکیدی"
+msgstr ""
+
+#: theme.json
+msgid "رنگ تأکیدی پررنگ"
+msgstr ""
+
+#: assets/editor-blocks.js:2028
+msgid "رنگ عنوان"
+msgstr ""
+
+#: assets/editor-blocks.js:2052
+msgid "رنگ متن بدنه"
+msgstr ""
+
+#: assets/editor-blocks.js:2117
+msgid "رنگ متن دکمه"
+msgstr ""
+
+#: assets/editor-blocks.js:2053
+msgid "رنگ نام هنرمند و متن توضیح روی کارت معرفی (مثلاً #e2e8f0)."
+msgstr ""
+
+#: assets/editor-blocks.js:849
+msgid "رنگ، قلم و فاصلهها را از زبانه «شیوهنامهها» تنظیم کنید؛ این گزینه فقط قالب ظاهری فیلد را عوض میکند."
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "روشن"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:868
+msgid "روشن: نوار پایین به همهٔ سربرگ‌ها اضافه می‌شود و در ویرایشگر سایت قابل ویرایش است. خاموش: نوار حذف می‌شود و پخش‌کنندهٔ سراسری به لبهٔ پایین صفحه می‌چسبد."
+msgstr ""
+
+#: theme.json
+msgid "روی رنگ تأکیدی"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "ریل"
+msgstr ""
+
+#: theme.json
+msgid "سبد خرید"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:60
+msgid "سبد خرید شما"
+msgstr ""
+
+#: assets/editor-blocks.js:1123
+msgid "سبک"
+msgstr ""
+
+#: assets/editor-blocks.js:2084
+msgid "سبک دکمه"
+msgstr ""
+
+#: assets/editor-blocks.js:848 assets/editor-blocks.js:1501 assets/editor-blocks.js:1835
+msgid "سبک نمایش"
+msgstr ""
+
+#: src/Routing/RouteManager.php:143 theme.json
+msgid "سبک‌ها"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:230
+msgid "ستونی"
+msgstr ""
+
+#: assets/editor-blocks.js:387
+msgid "ستون‌های ابزارک فوتر"
+msgstr ""
+
+#: assets/editor-blocks.js:1867
+msgid "ستون‌های دسکتاپ"
+msgstr ""
+
+#: /blocks/header-search/block.json theme.json
+msgid "سربرگ"
+msgstr ""
+
+#: theme.json
+msgid "سربرگ (استریم — ریل انتها)"
+msgstr ""
+
+#: theme.json
+msgid "سربرگ (استریم)"
+msgstr ""
+
+#: theme.json
+msgid "سربرگ (ساده)"
+msgstr ""
+
+#: theme.json
+msgid "سربرگ (وسط‌چین)"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:806
+msgid "سربرگ MusicWave"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:104
+msgid "سربرگ استریم (ریل انتها)"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:103
+msgid "سربرگ استریم (ریل شروع اینلاین)"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:100
+msgid "سربرگ ساده (افقی)"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:151
+msgid "سربرگ ساده بدون پس‌زمینه سنگین."
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:825
+msgid "سربرگ سراسری"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:101
+msgid "سربرگ وسط‌چین"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:102
+msgid "سربرگ کمینه"
+msgstr ""
+
+#: /blocks/section-head/block.json
+msgid "سرصفحه"
+msgstr ""
+
+#: /blocks/section-head/block.json
+msgid "سرصفحهٔ بخش MusicWave"
+msgstr ""
+
+#: /blocks/section-head/block.json
+msgid "سرصفحهٔ سرمقاله‌ای با پوستهٔ mw-section-head و سبک‌های وسط‌چین، ستونی و معکوس؛ بلوک‌های درونی جداگانه انتخاب و جابه‌جا می‌شوند. برای یک عنوان متنی ساده از بلوک «عنوان بخش» استفاده کنید."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:139
+msgid "سرمقالهای"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:85 src/Blocks/BlockRegistry.php:103 src/Blocks/BlockRegistry.php:129 src/Blocks/BlockRegistry.php:154 /blocks/section-head/block.json
+msgid "سرمقاله‌ای"
+msgstr ""
+
+#: theme.json
+msgid "سریف تحریریه"
+msgstr ""
+
+#: theme.json
+msgid "سطح"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:262 theme.json
+msgid "سطح برجسته"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:145
+msgid "سطح شیشه‌ای مات با حاشیه ظریف."
+msgstr ""
+
+#: patterns/demo-community-requests.php:31
+msgid "سفارش"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:508 theme.json
+msgid "سفارش آهنگ اختصاصی"
+msgstr ""
+
+#: patterns/demo-account-commerce.php:37
+msgid "سفارشها و دانلودها"
+msgstr ""
+
+#: assets/editor-blocks.js:794
+msgid "سفارشی — تنظیم دستی هر اندازه"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:602
+msgid "سفارشی‌سازی‌های ویرایشگر سایت در پایگاه داده ذخیره می‌شوند و بر فایل‌های به‌روزشده قالب اولویت دارند. فقط زمانی از این ابزار استفاده کنید که قالب MusicWave بخش قالبی ناموجود یا محتوای بلوک نامعتبر گزارش کند."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:454
+msgid "سنتی و تلفیقی"
+msgstr ""
+
+#: assets/editor-blocks.js:1513 src/Blocks/BlockRegistry.php:99
+msgid "سینمایی"
+msgstr ""
+
+#: /blocks/release-shelf/block.json
+msgid "شبکه"
+msgstr ""
+
+#: assets/editor-blocks.js:1790
+msgid "شبکه واکنش‌گرا"
+msgstr ""
+
+#: /patterns/release-grid.php
+msgid "شبکهٔ انتشارها (حلقهٔ پرس‌وجو)"
+msgstr ""
+
+#: assets/editor-blocks.js:1576
+msgid "شدت سایه‌روشن روی تصویر در حالت نمایش «سینمایی» (۰ تا ۱۰۰)."
+msgstr ""
+
+#: patterns/music-service-callout.php:35
+msgid "شروع شنیدن"
+msgstr ""
+
+#: assets/editor-blocks.js:333
+msgid "شعار سایت (Tagline)"
+msgstr ""
+
+#: assets/editor-blocks.js:2129
+msgid "شعاع گوشه دکمه (پیکسل)"
+msgstr ""
+
+#: assets/editor-blocks.js:2096
+msgid "شفاف"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:636
+msgid "شما اجازه تعمیر قالب‌ها را ندارید."
+msgstr ""
+
+#: assets/editor-blocks.js:1922
+msgid "شناسه انتشار منتخب (۰ = اولین نتیجه)"
+msgstr ""
+
+#: assets/editor-blocks.js:1163
+msgid "شناسه انتشارهای منتخب"
+msgstr ""
+
+#: patterns/music-service-callout.php:19
+msgid "شنیدن حرفه‌ای"
+msgstr ""
+
+#: assets/editor-blocks.js:1532 assets/editor-blocks.js:1878
+msgid "شکل تصویر"
+msgstr ""
+
+#: assets/editor-blocks.js:868
+msgid "شیشهای (Glass)"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:125 src/Blocks/BlockRegistry.php:144 src/Blocks/BlockRegistry.php:158 src/Blocks/BlockRegistry.php:168
+msgid "شیشه‌ای"
+msgstr ""
+
+#: patterns/home-hero.php:21
+msgid "صدای شما، به‌زیبایی سازمان‌یافته"
+msgstr ""
+
+#: assets/editor-blocks.js:1107
+msgid "صعودی"
+msgstr ""
+
+#: theme.json
+msgid "صفحه سرمقاله موسیقی"
+msgstr ""
+
+#: theme.json
+msgid "صفحه فرود (بدون سربرگ/پابرگ)"
+msgstr ""
+
+#: src/Blocks/BreadcrumbRenderer.php:221
+msgid "صفحه پیدا نشد (۴۰۴)"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:1142
+msgid "صفحهبندی اسلایدر"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:510 theme.json
+msgid "صفحهٔ استریم (نوار کناری)"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:555
+msgid "صفحه‌بندی اسلایدر"
+msgstr ""
+
+#: assets/editor-blocks.js:844
+msgid "ظاهر بلوک"
+msgstr ""
+
+#: theme.json
+msgid "ظریف"
+msgstr ""
+
+#: assets/editor-blocks.js:828
+msgid "عرض بیشینه فیلد جستجو در حالت «نوار جستجوی کامل»؛ برای نوار باریکتر عدد کوچکتری بگذارید."
+msgstr ""
+
+#: assets/editor-blocks.js:1994
+msgid "عرض ستون کناری (پیکسل)"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:848
+msgid "عرض سربرگ"
+msgstr ""
+
+#: src/Navigation/NavigationIconService.php:238
+msgid "عضو"
+msgstr ""
+
+#: patterns/section-faq.php:60
+msgid "عضویت را چطور لغو کنم؟"
+msgstr ""
+
+#: patterns/demo-account-commerce.php:28
+msgid "عضویت، سفارش و دانلود در یک برگه"
+msgstr ""
+
+#: patterns/music-service-callout.php:29
+msgid "عضویت‌ها، انتشارهای اختصاصی، دانلودها یا یک فهرست پخش منتخب را با این فراخوان قابل ویرایش برجسته کنید."
+msgstr ""
+
+#: assets/editor-blocks.js:40
+msgid "عمودی (۴:۵)"
+msgstr ""
+
+#: assets/editor-blocks.js:1091 assets/editor-blocks.js:1430 assets/editor-blocks.js:1693 assets/editor-blocks.js:1755 assets/editor-blocks.js:2581
+msgid "عنوان"
+msgstr ""
+
+#: assets/editor-blocks.js:2018
+msgid "عنوان بالای فهرست کناری در چیدمان ویژه‌نامه. برای پیش‌فرض («منتخب‌های بعدی») خالی بگذارید."
+msgstr ""
+
+#: assets/editor-blocks.js:2661 /blocks/section-head/block.json
+msgid "عنوان بخش"
+msgstr ""
+
+#: assets/editor-blocks.js:2012
+msgid "عنوان بخش معرفی"
+msgstr ""
+
+#: assets/editor-blocks.js:2016
+msgid "عنوان فهرست کناری"
+msgstr ""
+
+#: assets/editor-blocks.js:1432
+msgid "عنوان و برچسب را خالی بگذارید و بلوک عنوان بخش را بالای اسلایدر قرار دهید."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:108
+msgid "غلاف آلبوم با صفحهٔ بیرون‌زننده هنگام قرارگیری نشانگر."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:90
+msgid "غلاف آلبوم با صفحهٔ بیرون‌زننده که هنگام هاور از غلاف خارج می‌شود."
+msgstr ""
+
+#: assets/editor-blocks.js:34
+msgid "غیرفعال"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:287
+msgid "فاصله کم"
+msgstr ""
+
+#: assets/editor-blocks.js:2178
+msgid "فاصلهٔ تعویض اسلایدها (میلی‌ثانیه)"
+msgstr ""
+
+#: assets/editor-blocks.js:1612
+msgid "فاصلهٔ پخش خودکار (میلی‌ثانیه)"
+msgstr ""
+
+#: /patterns/music-service-callout.php
+msgid "فراخوان سرویس موسیقی"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:340 src/Routing/RouteManager.php:72
+msgid "فروشگاه"
+msgstr ""
+
+#: theme.json
+msgid "فروشگاه با نوار کناری"
+msgstr ""
+
+#: assets/editor-blocks.js:1548
+msgid "فشرده (۵ ستون دسکتاپ)"
+msgstr ""
+
+#: assets/editor-blocks.js:33
+msgid "فعال"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:215
+msgid "فقط موبایل (تا ۴۸rem)"
+msgstr ""
+
+#: assets/editor-blocks.js:454
+msgid "فلش"
+msgstr ""
+
+#: assets/editor-blocks.js:227
+msgid "فلش زاویه‌دار (‹ / ›)"
+msgstr ""
+
+#: assets/editor-blocks.js:1609
+msgid "فلش‌های پیمایش"
+msgstr ""
+
+#: patterns/demo-artists-directory.php:33
+msgid "فهرست الفبایی"
+msgstr ""
+
+#: assets/editor-blocks.js:1802
+msgid "فهرست جمع‌وجور"
+msgstr ""
+
+#: patterns/demo-account-studio.php:43
+msgid "فهرست شخصی با فیلتر، شمارش و امکان حذف؛ همان کتابخانهٔ حساب کاربری، اینبار بهصورت یک فهرست کامل."
+msgstr ""
+
+#: patterns/demo-artists-directory.php:28
+msgid "فهرست هنرمندان"
+msgstr ""
+
+#: /blocks/release-shelf/block.json
+msgid "فهرست پخش"
+msgstr ""
+
+#: patterns/demo-community-requests.php:28
+msgid "فهرستهای پخش عمومی و درخواستهای سفارش"
+msgstr ""
+
+#: patterns/demo-community-requests.php:28
+msgid "فهرستهایی که شنوندگان ساختهاند، و فرمی که کار تازه را به سایت میآورد؛ هر دو در یک برگه و هر دو قابل ویرایش."
+msgstr ""
+
+#: src/Routing/RouteManager.php:80
+msgid "فهرست‌های پخش"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:633
+msgid "فهرست‌های پخش اجتماعی"
+msgstr ""
+
+#: assets/editor-blocks.js:1714
+msgid "فهرست‌های پخش برای نمایش"
+msgstr ""
+
+#: assets/editor-blocks.js:1677 src/Templates/TemplateManager.php:506 theme.json
+msgid "فهرست‌های پخش عمومی"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:417
+msgid "فیلتر بازه و سبک"
+msgstr ""
+
+#: assets/editor-blocks.js:1764
+msgid "فیلتر جست‌وجوی فهرست پخش"
+msgstr ""
+
+#: assets/editor-blocks.js:1114
+msgid "فیلتر طبقه‌بندی"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:33
+msgid "فیلترها"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:57 patterns/demo-release-showcase.php:75 patterns/release-grid.php:46
+msgid "فیلترها را تغییر دهید یا کاتالوگ کامل را مرور کنید."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:165
+msgid "فیلد بدون سطح؛ فقط خط زیر."
+msgstr ""
+
+#: assets/editor-blocks.js:586
+msgid "فیلد فشرده داخل سربرگ"
+msgstr ""
+
+#: assets/editor-blocks.js:553
+msgid "فیلد فشرده هوشمند (پیشنهادی)"
+msgstr ""
+
+#: assets/editor-blocks.js:539
+msgid "فیلد فشرده که با کلیک باز میشود"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:159
+msgid "قاب شیشه‌ای مات روی تصویر بایگانی."
+msgstr ""
+
+#: /blocks/theme-text/block.json
+msgid "قالب"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:451
+msgid "قبلی"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:63
+msgid "قدرت‌گرفته از MusicWave."
+msgstr ""
+
+#: patterns/home-hero.php:25
+msgid "قطعه بعدی موردعلاقه‌تان را پیدا کنید."
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:328 src/Routing/RouteManager.php:123
+msgid "قطعه‌ها"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:716
+msgid "قفسه فهرست‌های پخش"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:842
+msgid "قفسه موسیقی"
+msgstr ""
+
+#: assets/editor-blocks.js:1063
+msgid "ماه اخیر (۳۰ روز گذشته)"
+msgstr ""
+
+#: /blocks/synced-lyrics/block.json /blocks/theme-text/block.json theme.json
+msgid "متن"
+msgstr ""
+
+#: /blocks/synced-lyrics/block.json
+msgid "متن LRC انتشار را با خط فعال هم‌زمان با پخش‌کننده سراسری نشان می‌دهد. بدون جاوااسکریپت همهٔ خطوط خوانا می‌مانند."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:649
+msgid "متن از کاتالوگ همین انتشار · هم‌زمان با پخش‌کننده سراسری"
+msgstr ""
+
+#: assets/editor-blocks.js:1934
+msgid "متن بخش منتخب"
+msgstr ""
+
+#: /blocks/theme-text/block.json
+msgid "متن ترجمه‌شده برای قالب‌های MusicWave. کلید، رشتهٔ متناسب با زبان را انتخاب می‌کند."
+msgstr ""
+
+#: assets/editor-blocks.js:2590
+msgid "متن جایگزین (اگر متای LRC خالی باشد)"
+msgstr ""
+
+#: assets/editor-blocks.js:491
+msgid "متن دکمه"
+msgstr ""
+
+#: assets/editor-blocks.js:481
+msgid "متن دکمه را کنار آیکون نمایش دهید. برای دکمه‌های فقط آیکون خاموش بگذارید."
+msgstr ""
+
+#: assets/editor-blocks.js:890
+msgid "متن راهنمای داخل فیلد"
+msgstr ""
+
+#: /blocks/theme-text/block.json
+msgid "متن قالب MusicWave"
+msgstr ""
+
+#: assets/editor-blocks.js:337
+msgid "متن معرفی فوتر (درباره ما)"
+msgstr ""
+
+#: assets/editor-blocks.js:2577
+msgid "متن هم‌زمان"
+msgstr ""
+
+#: /blocks/synced-lyrics/block.json
+msgid "متن هم‌زمان MusicWave"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:603 src/Blocks/ChromeBlocksRenderer.php:626
+msgid "متن هم‌زمان با آهنگ"
+msgstr ""
+
+#: theme.json
+msgid "متن کم‌رنگ"
+msgstr ""
+
+#: assets/editor-blocks.js:344
+msgid "متن کپی‌رایت فوتر (همراه سال جاری)"
+msgstr ""
+
+#: assets/editor-blocks.js:886
+msgid "متنها و برچسبها"
+msgstr ""
+
+#: theme.json
+msgid "متوسط"
+msgstr ""
+
+#: assets/editor-blocks.js:1153
+msgid "مثلاً album، single، podcast_show"
+msgstr ""
+
+#: assets/editor-blocks.js:1141
+msgid "مثلاً pop، lo-fi، hip-hop"
+msgstr ""
+
+#: assets/editor-blocks.js:1168
+msgid "مثلاً ۱۲، ۴۵، ۷۸"
+msgstr ""
+
+#: assets/editor-blocks.js:1419
+msgid "محتوای اسلایدر"
+msgstr ""
+
+#: assets/editor-blocks.js:1661
+msgid "محتوای ویترین"
+msgstr ""
+
+#: assets/editor-blocks.js:1044
+msgid "محدود کردن انتشارها به بازهٔ زمانی مشخص (مثلاً داغ‌ترین‌های امروز یا هفته اخیر)."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:307
+msgid "محدوده جستجو"
+msgstr ""
+
+#: src/Navigation/NavigationIconService.php:238
+msgid "مدیر سایت"
+msgstr ""
+
+#: assets/editor-blocks.js:38
+msgid "مربع (۱:۱)"
+msgstr ""
+
+#: assets/editor-blocks.js:1076
+msgid "مرتب‌سازی بر اساس"
+msgstr ""
+
+#: assets/editor-blocks.js:1732
+msgid "مرتب‌سازی فهرست‌های پخش بر اساس"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:322 src/Routing/RouteManager.php:64
+msgid "مرور"
+msgstr ""
+
+#: /patterns/genre-mood-browse.php
+msgid "مرور سبک‌ها و حال‌وهواها"
+msgstr ""
+
+#: theme.json
+msgid "مرور موسیقی"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:28 patterns/home-hero.php:38
+msgid "مرور کاتالوگ"
+msgstr ""
+
+#: /blocks/breadcrumb/block.json
+msgid "مسیر"
+msgstr ""
+
+#: assets/editor-blocks.js:294 src/Blocks/BreadcrumbRenderer.php:134 /blocks/breadcrumb/block.json
+msgid "مسیر راهنما"
+msgstr ""
+
+#: /blocks/breadcrumb/block.json theme.json
+msgid "مسیر راهنما (Breadcrumb)"
+msgstr ""
+
+#: /blocks/breadcrumb/block.json
+msgid "مسیر سلسله‌مراتبی پویا برای انتشارها، هنرمندان، سبک‌ها، برگه‌ها و نتایج جست‌وجو؛ همراه با پیش‌نمایش نمونهٔ زنده در ویرایشگر سایت."
+msgstr ""
+
+#: patterns/music-service-callout.php:39
+msgid "مشاهده عضویت‌ها"
+msgstr ""
+
+#: assets/editor-blocks.js:1487 assets/editor-blocks.js:2725 patterns/home-showcase-rail.php:36 src/Blocks/ShelfAndSliderRenderer.php:94 src/Blocks/ShelfAndSliderRenderer.php:558 src/Blocks/ShelfAndSliderRenderer.php:770
+msgid "مشاهده همه"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:631
+msgid "مشاهدهٔ همهٔ فهرست‌های پخش"
+msgstr ""
+
+#: patterns/demo-release-showcase.php:33
+msgid "مشخصات فنی، دسترسی، پخش پیشنمایش، صف پخش، فهرست قطعه، دانلود، متن همگام، اعتبارات و انتشارهای مرتبط؛ همه روی یک برگه و همه قابل ویرایش."
+msgstr ""
+
+#: /patterns/home-hero.php
+msgid "معرفی کشف موسیقی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:231
+msgid "معکوس (روی سطح رنگی)"
+msgstr ""
+
+#: assets/editor-blocks.js:351
+msgid "مقادیر سفارشی این متن‌ها از بخش سفارشی‌سازی پوسته یا تنظیمات عمومی وردپرس خوانده می‌شوند."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:59
+msgid "ممکن است صفحه جابه‌جا شده باشد. کاتالوگ را جست‌وجو کنید."
+msgstr ""
+
+#: assets/editor-blocks.js:329
+msgid "منبع متن قالب"
+msgstr ""
+
+#: assets/editor-blocks.js:1665
+msgid "منبع محتوا"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:36 /blocks/release-slider/block.json
+msgid "منتخب"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:634
+msgid "منتخب شنوندگان"
+msgstr ""
+
+#: assets/editor-blocks.js:2017
+msgid "منتخب‌های بعدی"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "منو"
+msgstr ""
+
+#: assets/editor-blocks.js:451
+msgid "منو (همبرگری)"
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "منوی کناری"
+msgstr ""
+
+#: src/Assets/AssetManager.php:341
+msgid "موارد بعدی"
+msgstr ""
+
+#: src/Assets/AssetManager.php:340
+msgid "موارد قبلی"
+msgstr ""
+
+#: assets/editor-blocks.js:657
+msgid "موبایل"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:216
+msgid "موبایل و تبلت (تا ۶۴rem)"
+msgstr ""
+
+#: assets/editor-blocks.js:569
+msgid "موبایل — کمتر از ۷۶۸ پیکسل"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:191
+msgid "موبایل: سربرگ + نوار پایین"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:190
+msgid "موبایل: سربرگ ساده + منوی کناری"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:192
+msgid "موبایل: منوی کناری + نوار پایین"
+msgstr ""
+
+#: /blocks/header-search/block.json
+msgid "موتور جستجوی هوشمند سربرگ با کنترل مستقل چیدمان در دسکتاپ، تبلت و موبایل (فیلد خطی، فشرده، آیکون پاپ‌آپ یا نوار کشویی)، فیلتر آنی دسته‌بندی، جستجوهای اخیر، برچسب‌های سریع، جستجوی صوتی و میانبر صفحه‌کلید."
+msgstr ""
+
+#: /blocks/release-shelf/block.json /blocks/release-slider/block.json
+msgid "موسیقی"
+msgstr ""
+
+#: patterns/demo-community-requests.php:31
+msgid "موسیقی اختصاصی، همکاری روی پروژه یا درخواست قطعه؛ فرم زیر درخواست را مستقیم به تیم میرساند."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:57
+msgid "موسیقی‌ای پیدا نشد."
+msgstr ""
+
+#: assets/editor-blocks.js:951
+msgid "میانبر سریع صفحهکلید (Ctrl+K و /)"
+msgstr ""
+
+#: assets/editor-blocks.js:1962
+msgid "میزان تیرگی سایه‌روشن روی تصویر کاور اصلی (۰ = شفاف کامل، ۱۰۰ = حداکثر تیرگی)."
+msgstr ""
+
+#: assets/editor-blocks.js:864 assets/editor-blocks.js:1517 assets/editor-blocks.js:1851
+msgid "مینیمال"
+msgstr ""
+
+#: assets/editor-blocks.js:901
+msgid "نام دکمه (برای صفحهخوانها و پنجره پاپآپ)"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:369
+msgid "نام قطعه، خواننده، آلبوم یا حال‌وهوا را بنویسید"
+msgstr ""
+
+#: patterns/home-hero.php:62
+msgid "نام قطعه، هنرمند یا آلبوم…"
+msgstr ""
+
+#: assets/editor-blocks.js:1136
+msgid "نامک عبارت"
+msgstr ""
+
+#: /blocks/breadcrumb/block.json
+msgid "نان‌ریزه"
+msgstr ""
+
+#: /blocks/breadcrumb/block.json
+msgid "ناوبری"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:371
+msgid "ناوبری پایین"
+msgstr ""
+
+#: assets/editor-blocks.js:1077
+msgid "نحوه مرتب‌سازی انتشارها پیش از نمایش."
+msgstr ""
+
+#: assets/editor-blocks.js:1106
+msgid "نزولی"
+msgstr ""
+
+#: assets/editor-blocks.js:1533
+msgid "نسبت تصویر و قاب کاور هر اسلاید را در پیش‌نمایش و سایت تعیین می‌کند."
+msgstr ""
+
+#: assets/editor-blocks.js:455
+msgid "نقاط"
+msgstr ""
+
+#: assets/editor-blocks.js:1610
+msgid "نقاط صفحه‌بندی"
+msgstr ""
+
+#: assets/editor-blocks.js:239
+msgid "نقطه (•)"
+msgstr ""
+
+#: assets/editor-blocks.js:197
+msgid "نمایش آیتم خانه"
+msgstr ""
+
+#: assets/editor-blocks.js:466
+msgid "نمایش آیکون"
+msgstr ""
+
+#: assets/editor-blocks.js:216
+msgid "نمایش آیکون خانه"
+msgstr ""
+
+#: assets/editor-blocks.js:1602
+msgid "نمایش اسلایدر"
+msgstr ""
+
+#: /blocks/release-shelf/block.json
+msgid "نمایش انتشارها بهصورت شبکهای، ویترین افقی، فهرست جمعوجور، ویژهنامه سرمقاله یا اسلایدر هیرو. بین انتشارها و فهرستهای پخش عمومی جامعه جابهجا شوید. چیدمان، رنگها و فاصلهها در ویرایشگر سایت قابل ویرایش هستند."
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:886
+msgid "نمایش برچسب کنار آیکون‌های نوار پایین"
+msgstr ""
+
+#: assets/editor-blocks.js:1464 assets/editor-blocks.js:1893
+msgid "نمایش تاریخ"
+msgstr ""
+
+#: assets/editor-blocks.js:968
+msgid "نمایش تاریخچه جستجوهای اخیر کاربر"
+msgstr ""
+
+#: assets/editor-blocks.js:1886
+msgid "نمایش تصویر"
+msgstr ""
+
+#: assets/editor-blocks.js:1471 assets/editor-blocks.js:1987
+msgid "نمایش تعداد بازدید"
+msgstr ""
+
+#: assets/editor-blocks.js:256
+msgid "نمایش ریشه کاتالوگ (انتشارها)"
+msgstr ""
+
+#: assets/editor-blocks.js:1980
+msgid "نمایش شماره رتبه"
+msgstr ""
+
+#: assets/editor-blocks.js:270
+msgid "نمایش عنوان صفحه فعلی"
+msgstr ""
+
+#: assets/editor-blocks.js:2196
+msgid "نمایش فلش‌ها"
+msgstr ""
+
+#: assets/editor-blocks.js:480
+msgid "نمایش متن دکمه"
+msgstr ""
+
+#: assets/editor-blocks.js:2206
+msgid "نمایش نقاط صفحه‌بندی"
+msgstr ""
+
+#: assets/editor-blocks.js:1457 assets/editor-blocks.js:1891
+msgid "نمایش هنرمند"
+msgstr ""
+
+#: assets/editor-blocks.js:1011
+msgid "نمایش پنجره پاپآپ باز در پیشنمایش"
+msgstr ""
+
+#: assets/editor-blocks.js:1901
+msgid "نمایش پیوند اقدام"
+msgstr ""
+
+#: assets/editor-blocks.js:1896
+msgid "نمایش چکیده"
+msgstr ""
+
+#: assets/editor-blocks.js:1450
+msgid "نمایش چکیده‌ها"
+msgstr ""
+
+#: assets/editor-blocks.js:1889
+msgid "نمایش کنترل پخش"
+msgstr ""
+
+#: theme.json
+msgid "نمایشی"
+msgstr ""
+
+#: theme.json
+msgid "نمایشی وزیرمتن"
+msgstr ""
+
+#: src/Blocks/BreadcrumbRenderer.php:259
+msgid "نمونه مسیر راهنما (Breadcrumb)"
+msgstr ""
+
+#: assets/editor-blocks.js:2507
+msgid "نمونه پیش‌نمایش در ویرایشگر"
+msgstr ""
+
+#: assets/editor-blocks.js:424
+msgid "نوار بالا (همیشه دیده می‌شود)"
+msgstr ""
+
+#: assets/editor-blocks.js:560
+msgid "نوار جستجوی کامل"
+msgstr ""
+
+#: assets/editor-blocks.js:535
+msgid "نوار جستجوی کامل (پیشنهادی)"
+msgstr ""
+
+#: assets/editor-blocks.js:612
+msgid "نوار جستجوی کامل در همه اندازهها"
+msgstr ""
+
+#: assets/editor-blocks.js:633
+msgid "نوار دسکتاپ، فیلد فشرده در تبلت و موبایل"
+msgstr ""
+
+#: assets/editor-blocks.js:982
+msgid "نوار راهنمای کلیدهای میانبر در فوتر"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:867
+msgid "نوار پایین (تبلت و موبایل)"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:370
+msgid "نوار پایین موبایل"
+msgstr ""
+
+#: theme.json
+msgid "نوار کناری"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:221
+msgid "نوار کناری MusicWave"
+msgstr ""
+
+#: theme.json
+msgid "نوار کناری فروشگاه"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:231
+msgid "نوار کناری فروشگاه MusicWave"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:122
+msgid "نوار کپسولی جمع‌وجور روی سطح کارت."
+msgstr ""
+
+#: assets/editor-blocks.js:1126
+msgid "نوع انتشار"
+msgstr ""
+
+#: assets/editor-blocks.js:1148
+msgid "نوع انتشار (نامک)"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:828
+#, php-format
+msgid "هر سربرگ یا بخش سربرگی که در ویرایشگر سایت می‌سازید اینجا فهرست می‌شود. <a href=\"%s\">همین سربرگ را در ویرایشگر سایت ویرایش کنید</a>."
+msgstr ""
+
+#: assets/editor-blocks.js:1059
+msgid "هفته اخیر (۷ روز گذشته)"
+msgstr ""
+
+#: assets/editor-blocks.js:492
+msgid "هم به عنوان متن روی دکمه و هم به عنوان توضیح صفحه‌خوان استفاده می‌شود."
+msgstr ""
+
+#: patterns/demo-artists-directory.php:33
+msgid "همان فهرست، اینبار صفحهبهصفحه و با امکان دنبال کردن؛ برای کاتالوگهای بزرگ مناسبتر است."
+msgstr ""
+
+#: /blocks/rail-toggle/block.json
+msgid "همبرگری"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:278
+msgid "همه"
+msgstr ""
+
+#: patterns/demo-account-studio.php:43
+msgid "همهٔ آنچه ذخیره کردهاید"
+msgstr ""
+
+#: assets/editor-blocks.js:1121
+msgid "همهٔ انتشارها"
+msgstr ""
+
+#: patterns/section-faq.php:49
+msgid "همهٔ انتشارها در دو نسخهٔ ۲۴ بیت ارائه میشوند: ۴۸ و ۹۶ کیلوهرتز."
+msgstr ""
+
+#: assets/editor-blocks.js:1051
+msgid "همهٔ زمان‌ها (بدون محدودیت)"
+msgstr ""
+
+#: patterns/demo-artists-directory.php:33
+msgid "همهٔ هنرمندان"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:509 theme.json
+msgid "همکاری"
+msgstr ""
+
+#: src/Assets/AssetManager.php:376
+msgid "همگام با پخش"
+msgstr ""
+
+#: assets/editor-blocks.js:2074
+msgid "همین الان گوش دهید"
+msgstr ""
+
+#: assets/editor-blocks.js:1122
+msgid "هنرمند"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:289 src/Header/SiteHeaderManager.php:334 src/Routing/RouteManager.php:135 theme.json
+msgid "هنرمندان"
+msgstr ""
+
+#: patterns/demo-artists-directory.php:28
+msgid "هنرمندان را پیدا کنید و دنبال کنید"
+msgstr ""
+
+#: /blocks/release-shelf/block.json
+msgid "هیرو"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:625
+msgid "هیچ سفارشی‌سازی ذخیره‌شده‌ای پیدا نشد. وردپرس در حال حاضر از فایل‌های قالب بسته استفاده می‌کند."
+msgstr ""
+
+#: src/Navigation/NavigationIconService.php:233
+msgid "ورود / ثبت‌نام"
+msgstr ""
+
+#: src/Routing/RouteManager.php:116 theme.json
+msgid "ورود و ثبت‌نام"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:229
+msgid "وسط‌چین"
+msgstr ""
+
+#: /blocks/release-shelf/block.json
+msgid "ویترین"
+msgstr ""
+
+#: assets/editor-blocks.js:1798
+msgid "ویترین افقی"
+msgstr ""
+
+#: /patterns/home-showcase-rail.php
+msgid "ویترین افقی با فیلتر"
+msgstr ""
+
+#: patterns/home-showcase-rail.php:24 /blocks/release-shelf/block.json
+msgid "ویترین انتشارهای MusicWave"
+msgstr ""
+
+#: assets/editor-blocks.js:1666
+msgid "ویترین را بین انتشارهای کاتالوگ و فهرست‌های پخش عمومی جامعه جابه‌جا کنید."
+msgstr ""
+
+#: assets/editor-blocks.js:1115
+msgid "ویترین یا اسلایدر را به یک طبقه‌بندی محدود کنید، یا روی «همهٔ انتشارها» بگذارید."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:38
+msgid "ویترینهای MusicWave"
+msgstr ""
+
+#: assets/editor-blocks.js:1847 src/Blocks/BlockRegistry.php:89 src/Blocks/BlockRegistry.php:107
+msgid "وینیل"
+msgstr ""
+
+#: assets/editor-blocks.js:1806 assets/editor-blocks.js:1918
+msgid "ویژه‌نامه سرمقاله"
+msgstr ""
+
+#: theme.json
+msgid "پابرگ"
+msgstr ""
+
+#: theme.json
+msgid "پابرگ (ساده)"
+msgstr ""
+
+#: src/Routing/RouteManager.php:151
+msgid "پادکست‌ها"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:452
+msgid "پاپ"
+msgstr ""
+
+#: /blocks/header-search/block.json
+msgid "پاپ‌آپ"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:169
+msgid "پاپ‌آپ شیشه‌ای با بلور بیشتر."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:258 src/Blocks/ChromeBlocksRenderer.php:319
+msgid "پاک کردن متن جستجو"
+msgstr ""
+
+#: assets/editor-blocks.js:163 src/Blocks/ChromeBlocksRenderer.php:330
+msgid "پاک‌سازی"
+msgstr ""
+
+#: patterns/home-hero.php:44
+msgid "پخش آنی و بدون نصب"
+msgstr ""
+
+#: assets/editor-blocks.js:1603
+msgid "پخش خودکار"
+msgstr ""
+
+#: assets/editor-blocks.js:2168
+msgid "پخش خودکار اسلایدها"
+msgstr ""
+
+#: src/Blocks/ShelfAndSliderRenderer.php:696
+#, php-format
+msgid "پخش همه قطعه‌های %s"
+msgstr ""
+
+#: theme.json
+msgid "پخش‌کننده شناور"
+msgstr ""
+
+#: assets/editor-blocks.js:1094
+msgid "پربازدیدترین"
+msgstr ""
+
+#: patterns/demo-account-commerce.php:37
+msgid "پرداخت"
+msgstr ""
+
+#: patterns/section-faq.php:31
+msgid "پرسشهای پرتکرار"
+msgstr ""
+
+#: /patterns/section-faq.php
+msgid "پرسشهای پرتکرار بخش"
+msgstr ""
+
+#: assets/editor-blocks.js:1039
+msgid "پرس‌وجو و فیلتر"
+msgstr ""
+
+#: assets/editor-blocks.js:1728
+msgid "پرس‌وجوی فهرست پخش"
+msgstr ""
+
+#: src/Templates/TemplateManager.php:182
+msgid "پرش به محتوا"
+msgstr ""
+
+#: assets/editor-blocks.js:2088
+msgid "پرشدگی یکدست"
+msgstr ""
+
+#: assets/editor-blocks.js:1198
+msgid "پریست زمانی (امروز / هفته / ماه / همه)"
+msgstr ""
+
+#: assets/editor-blocks.js:2105
+msgid "پس‌زمینه دکمه"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:126
+msgid "پس‌زمینهٔ نیمه‌شفاف با بلور ظریف."
+msgstr ""
+
+#: patterns/home-hero.php:52
+msgid "پشتیبانی از هنرمندان مستقل"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:294
+msgid "پلی‌لیست"
+msgstr ""
+
+#: assets/editor-blocks.js:562 assets/editor-blocks.js:590
+msgid "پنهان در این اندازه"
+msgstr ""
+
+#: assets/editor-blocks.js:645
+msgid "پنهان کردن جستجو در موبایل"
+msgstr ""
+
+#: assets/editor-blocks.js:263
+msgid "پنهان کردن در صفحه اصلی سایت"
+msgstr ""
+
+#: assets/editor-blocks.js:1995
+msgid "پهنای ستون فهرست کناری در نمایش دسکتاپ (بین ۲۰۰ تا ۵۶۰ پیکسل)."
+msgstr ""
+
+#: /blocks/theme-toggle/block.json
+msgid "پوسته"
+msgstr ""
+
+#: src/Assets/AssetManager.php:82
+#, php-format
+msgid "پوستهٔ MusicWave به MusicWave Core نسخهٔ %1$s یا بالاتر نیاز دارد؛ نسخهٔ نصب‌شده %2$s است."
+msgstr ""
+
+#: src/Assets/AssetManager.php:76
+msgid "پوستهٔ MusicWave به افزونهٔ MusicWave Core نیاز دارد."
+msgstr ""
+
+#: patterns/section-faq.php:27
+msgid "پیش از شروع"
+msgstr ""
+
+#: assets/editor-blocks.js:786
+msgid "پیشتنظیم آماده"
+msgstr ""
+
+#: assets/editor-blocks.js:988
+msgid "پیشنمایش ویرایشگر"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:68 /blocks/header-search/block.json
+msgid "پیشنهاد"
+msgstr ""
+
+#: assets/editor-blocks.js:600
+msgid "پیشنهاد MusicWave — نوار کامل دسکتاپ، فشرده تبلت، پاپآپ موبایل"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:348
+msgid "پیشنهادهای سریع"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:849
+msgid "پیش‌فرض همهٔ سربرگ‌ها. هر سربرگ می‌تواند در ویرایشگر سایت استایل عرض خودش را داشته باشد."
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:356
+msgid "پیمایش"
+msgstr ""
+
+#: assets/editor-blocks.js:2220 assets/editor-blocks.js:2712
+msgid "پیوند بخش"
+msgstr ""
+
+#: assets/editor-blocks.js:1478
+msgid "پیوند بخش (مشاهده همه)"
+msgstr ""
+
+#: assets/editor-blocks.js:2224
+msgid "پیوند مشاهده همه"
+msgstr ""
+
+#: assets/editor-blocks.js:2716
+msgid "پیوند مشاهده همه (سمت چپ)"
+msgstr ""
+
+#: assets/editor-blocks.js:235
+msgid "پیکان (← / →)"
+msgstr ""
+
+#: assets/editor-blocks.js:457
+msgid "پیکان بازگشت"
+msgstr ""
+
+#: patterns/demo-account-commerce.php:37
+msgid "پیگیری سفارش، فایلهای آمادهٔ دانلود و اطلاعات پرداخت، همه در یک قالب یکدست."
+msgstr ""
+
+#: /blocks/release-slider/block.json
+msgid "چرخان"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:307
+msgid "چک‌لیست"
+msgstr ""
+
+#: patterns/section-faq.php:42
+msgid "چگونه یک انتشار را پیشنهاد بدهم؟"
+msgstr ""
+
+#: assets/editor-blocks.js:1786
+msgid "چیدمان"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:808
+msgid "چیدمان سربرگ (برند، منو، جست‌وجو، تغییر پوسته، حساب، آیکون‌ها) را در ویرایشگر سایت → بخش‌های قالب ویرایش کنید. این بخش فقط تصمیم‌های سراسری را می‌گیرد: کدام سربرگ فعال باشد، عرض آن، و نوار پایین موبایل/تبلت."
+msgstr ""
+
+#: assets/editor-blocks.js:782
+msgid "چیدمان نوار جستجو"
+msgstr ""
+
+#: assets/editor-blocks.js:1497 assets/editor-blocks.js:1782
+msgid "چیدمان و تصویر"
+msgstr ""
+
+#: /blocks/release-shelf/block.json
+msgid "کاتالوگ"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:33
+msgid "کاتالوگ را دقیق کنید"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:28
+msgid "کاتالوگ را مرور کنید، نه فقط تماشا"
+msgstr ""
+
+#: theme.json
+msgid "کارت"
+msgstr ""
+
+#: /patterns/release-card.php
+msgid "کارت انتشار"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:257
+msgid "کارت سطحی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:86
+msgid "کارت مجله‌ای با خط تأکیدی، سطح شیشه‌ای و تیتر درشت."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:104
+msgid "کارت مجله‌ای با خط تأکیدی، سطح شیشه‌ای و تیتر نمایشی."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:39
+msgid "کارتهای MusicWave"
+msgstr ""
+
+#: patterns/demo-account-studio.php:43
+msgid "کتابخانه"
+msgstr ""
+
+#: patterns/music-service-callout.php:25
+msgid "کتابخانه‌ای مطابق سلیقه خود بسازید."
+msgstr ""
+
+#: assets/editor-blocks.js:2029
+msgid "کد هگز (مثلاً #ffffff) یا انتخاب مستقیم از پالت رنگ."
+msgstr ""
+
+#: patterns/home-hero.php:34
+msgid "کشف موسیقی"
+msgstr ""
+
+#: src/Assets/AssetManager.php:367
+msgid "کمتر"
+msgstr ""
+
+#: patterns/section-faq.php:35
+msgid "کوتاهترین پاسخها به پرسشهایی که بیشتر از همه پرسیده میشود."
+msgstr ""
+
+#: theme.json
+msgid "کوچک"
+msgstr ""
+
+#: src/Blocks/ChromeBlocksRenderer.php:645
+msgid "کوچک‌تر کردن متن"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:121
+msgid "کپسولی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:247
+msgid "کپسولی (MusicWave)"
+msgstr ""
+
+#: assets/editor-blocks.js:860
+msgid "کپسولی پیشفرض"
+msgstr ""
+
+#: patterns/section-faq.php:48
+msgid "کیفیت فایلها چه اندازه است؟"
+msgstr ""
+
+#: theme.json
+msgid "گرادیان تأکیدی"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:297
+msgid "گرد"
+msgstr ""
+
+#: src/Assets/AssetManager.php:345
+#, php-format
+msgid "گروه اسلاید %1$d از %2$d"
+msgstr ""
+
+#: src/Header/SiteHeaderManager.php:922
+msgid "گسترده"
+msgstr ""
+
+#: patterns/demo-release-showcase.php:33
+msgid "یک انتشار، با تمام قابلیتهایش"
+msgstr ""
+
+#: patterns/demo-discovery-browse.php:68
+msgid "یک ردیف کوتاه از انتشارهای تصادفی برای کسانی که هنوز تصمیم نگرفتهاند."
+msgstr ""
+
+#: assets/editor-blocks.js:1067
+msgid "یک سال اخیر"
+msgstr ""
+
+#: assets/editor-blocks.js:1318
+msgid "• بازه زمانی: امروز|period:today ، هفته|period:week ، ماه|period:month ، سال|period:year"
+msgstr ""
+
+#: assets/editor-blocks.js:1334
+msgid "• سبک یا هنرمند: پاپ|taxonomy:mw_genre:pop یا سنتی|taxonomy:mw_mood:chill"
+msgstr ""
+
+#: assets/editor-blocks.js:1326
+msgid "• مرتب‌سازی: جدیدترین|orderBy:date ، پربازدید|orderBy:views ، تصادفی|orderBy:rand"
+msgstr ""
+
+#: assets/editor-blocks.js:1342
+msgid "• نوع انتشار و ترکیب هم‌زمان با + : داغ‌ترین هفته|period:week+orderBy:views+type:single"
+msgstr ""
+
+#: assets/editor-blocks.js:1313
+msgid "• همه موارد بدون فیلتر: همه|all"
+msgstr ""
+

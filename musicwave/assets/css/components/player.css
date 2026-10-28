@@ -1,0 +1,32 @@
+/* =========================================================================
+ * Standalone Release Playback Trigger (`music-wave/preview-player`)
+ * Zero-clutter inline trigger: crisp circular icon disc (`icon` mode) or
+ * cohesive pill action button (`button` mode), scaling cleanly on all screens.
+ * ====================================================================== */
+.mw-preview-player {
+	display: inline-flex;
+	align-items: center;
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.mw-preview-player .mw-preview-button {
+	flex: 0 0 auto;
+}
+
+.mw-preview-player--icon .mw-preview-button svg {
+	transform: translateX(0.5px);
+}
+
+[dir="rtl"] .mw-preview-player--icon .mw-preview-button svg {
+	transform: translateX(-0.5px);
+}
+
+.mw-preview-player audio {
+	display: block;
+	width: 100%;
+}

@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/playback-queue",
+  "title": "صف پخش",
+  "category": "music-wave",
+  "description": "صف پخش پایدار شنوندهٔ واردشده با کنترل‌های مرتب‌سازی مجدد، حذف، پاک‌کردن، پخش تصادفی و تکرار؛ بدون نیاز به JavaScript.",
+  "keywords": [
+    "صف",
+    "بعدی",
+    "پخش‌کننده",
+    "کلیک",
+    "تکرار"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "playlist-audio",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "showArtwork": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPosition": {
+      "type": "boolean",
+      "default": true
+    },
+    "showArtist": {
+      "type": "boolean",
+      "default": true
+    },
+    "showControls": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPlayAll": {
+      "type": "boolean",
+      "default": true
+    },
+    "showShuffle": {
+      "type": "boolean",
+      "default": true
+    },
+    "showRepeat": {
+      "type": "boolean",
+      "default": true
+    },
+    "playAllLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "shuffleLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "showClear": {
+      "type": "boolean",
+      "default": true
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "بعدی"
+    }
+  }
+}

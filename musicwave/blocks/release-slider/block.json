@@ -1,0 +1,172 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/release-slider",
+  "title": "اسلایدر انتشارهای MusicWave",
+  "category": "music-wave",
+  "description": "اسلایدر واکنش‌گرا و دسترس‌پذیر برای انتشارهای منتخب یا جدید. از طریق ویرایشگر سایت و تنظیمات کلی اسلایدر کاملاً قابل سفارشی‌سازی است.",
+  "keywords": [
+    "اسلایدر",
+    "چرخان",
+    "انتشارها",
+    "منتخب",
+    "موسیقی"
+  ],
+  "textdomain": "musicwave",
+  "icon": "slides",
+  "attributes": {
+    "enabled": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "styleVariant": {
+      "type": "string",
+      "default": ""
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "order": {
+      "type": "string",
+      "default": "DESC"
+    },
+    "taxonomy": {
+      "type": "string",
+      "default": ""
+    },
+    "termSlug": {
+      "type": "string",
+      "default": ""
+    },
+    "releaseIds": {
+      "type": "string",
+      "default": ""
+    },
+		"contentType": {
+			"type": "string",
+			"default": ""
+		},
+		"datePeriod": {
+			"type": "string",
+			"enum": [ "", "all", "today", "day", "week", "7d", "month", "30d", "year" ],
+			"default": ""
+		},
+    "itemsToShow": {
+      "type": "integer",
+      "default": 0
+    },
+    "autoplay": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "interval": {
+      "type": "integer",
+      "default": 0
+    },
+    "loop": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "pauseOnHover": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "showArrows": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "showDots": {
+      "type": "string",
+      "default": "inherit"
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": false
+    },
+    "showArtist": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": false
+    },
+    "showViews": {
+      "type": "boolean",
+      "default": false
+    },
+    "sectionUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionLinkLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "imageShape": {
+      "type": "string",
+      "default": "square"
+    },
+    "imageSize": {
+      "type": "string",
+      "default": "medium"
+    },
+    "overlay": {
+      "type": "integer",
+      "default": 55
+    },
+    "filterTabs": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradient": true,
+      "link": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "dimensions": {
+      "minHeight": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "shadow": true,
+    "interactivity": false
+  },
+  "example": {
+    "attributes": {
+      "eyebrow": "ساخته‌شده برای شما",
+      "title": "انتشارهای منتخب",
+      "itemsToShow": 6
+    }
+  }
+}

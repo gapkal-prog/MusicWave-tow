@@ -1,0 +1,165 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/artists-shelf",
+  "title": "ویترین هنرمندان",
+  "category": "music-wave",
+  "description": "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با دکمه‌های دنبال‌کردن و تعداد انتشار نمایش می‌دهد. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای.",
+  "keywords": [
+    "هنرمندان",
+    "خواننده‌ها",
+    "ویترین",
+    "شبکه",
+    "دنبال‌کردن"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "admin-users",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    },
+    "source": {
+      "type": "string",
+      "default": "all"
+    },
+    "termSlug": {
+      "type": "string",
+      "default": ""
+    },
+    "artistIds": {
+      "type": "string",
+      "default": ""
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "count"
+    },
+    "order": {
+      "type": "string",
+      "default": "DESC"
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 8
+    },
+    "pagination": {
+      "type": "boolean",
+      "default": false
+    },
+    "perPage": {
+      "type": "integer",
+      "default": 12
+    },
+    "columns": {
+      "type": "integer",
+      "default": 4
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    },
+    "imageShape": {
+      "type": "string",
+      "default": "circle"
+    },
+    "imageSize": {
+      "type": "string",
+      "default": "medium"
+    },
+    "showImage": {
+      "type": "boolean",
+      "default": true
+    },
+    "showName": {
+      "type": "boolean",
+      "default": true
+    },
+    "showBio": {
+      "type": "boolean",
+      "default": false
+    },
+    "showReleaseCount": {
+      "type": "boolean",
+      "default": true
+    },
+    "showFollowButton": {
+      "type": "boolean",
+      "default": true
+    },
+    "bioLength": {
+      "type": "integer",
+      "default": 20
+    },
+    "sectionUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionLinkLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "shadow": true
+  },
+  "styles": [
+    {
+      "name": "minimal",
+      "label": "حداقلی"
+    },
+    {
+      "name": "editorial",
+      "label": "سرمقاله‌ای"
+    },
+    {
+      "name": "glass",
+      "label": "شیشه‌ای"
+    }
+  ],
+  "example": {
+    "attributes": {
+      "heading": "هنرمندان محبوب",
+      "layout": "scroll",
+      "itemsToShow": 8,
+      "imageShape": "circle"
+    }
+  }
+}

@@ -1,0 +1,431 @@
+.mw-release-slider {
+	--mw-slider-gap: clamp(0.9rem, 2vw, 1.5rem);
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+	min-width: 0;
+	margin-block: var(--wp--preset--spacing--40);
+}
+
+.mw-release-slider__header {
+	display: flex;
+	gap: 1rem;
+	align-items: end;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.mw-release-slider__tools {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.mw-release-slider__more {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.85rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.mw-release-slider__more:is(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+}
+
+.mw-release-slider--size-small .mw-release-slider__track {
+	grid-auto-columns: minmax(10rem, calc((100% - (var(--mw-slider-gap) * 4)) / 5));
+}
+
+.mw-release-slider--size-large .mw-release-slider__track {
+	grid-auto-columns: minmax(16rem, calc((100% - (var(--mw-slider-gap) * 2)) / 3));
+}
+
+.mw-filter-tabs {
+	display: inline-flex;
+	flex-wrap: wrap;
+	margin-bottom: var(--wp--preset--spacing--30);
+	gap: 0.4rem;
+}
+
+.mw-filter-tabs__tab {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: 2rem;
+	padding: 0.25rem 0.85rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-decoration: none;
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border: 1px solid transparent;
+	border-radius: 999px;
+	transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.mw-filter-tabs__tab:where(:hover, :focus-visible) {
+	color: var(--mw-color-text);
+	border-color: var(--mw-color-border);
+}
+
+.mw-filter-tabs__tab.is-active,
+.mw-filter-tabs__tab[aria-current="true"] {
+	color: var(--mw-color-on-accent, #fff);
+	background: var(--mw-color-accent, #fa2d65);
+	border-color: transparent;
+}
+
+.mw-filter-tabs__empty {
+	margin: 0;
+	padding: 1.5rem 1.25rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.9rem;
+	text-align: center;
+	background: color-mix(in srgb, var(--mw-color-surface) 72%, transparent);
+	border: 1px dashed var(--mw-color-border);
+	border-radius: var(--mw-radius-md);
+}
+
+.is-switching-tab .mw-release-shelf__items,
+.is-switching-tab .mw-release-slider__viewport {
+	opacity: 0.55;
+	transition: opacity 150ms ease;
+}
+
+.mw-release-slider__header h2 {
+	margin: 0.2rem 0 0;
+	font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.mw-release-slider__eyebrow {
+	color: var(--mw-color-accent-strong);
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.mw-release-slider__arrows {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.mw-release-slider__arrows button {
+	display: grid;
+	width: 2.75rem;
+	height: 2.75rem;
+	padding: 0;
+	place-items: center;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.mw-release-slider__arrows button:hover:not(:disabled) {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border-color: transparent;
+}
+
+.mw-release-slider__arrows button:disabled {
+	opacity: 0.38;
+	cursor: not-allowed;
+}
+
+.mw-release-slider__viewport {
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	scroll-snap-type: x mandatory;
+	overscroll-behavior-inline: contain;
+}
+
+html[dir="rtl"] .mw-release-slider__viewport {
+	direction: ltr;
+}
+
+html[dir="rtl"] .mw-release-slider__slide {
+	direction: rtl;
+	text-align: right;
+}
+
+.mw-release-slider__viewport::-webkit-scrollbar {
+	display: none;
+}
+
+.mw-release-slider__track {
+	display: grid;
+	grid-auto-columns: minmax(13rem, calc((100% - (var(--mw-slider-gap) * 3)) / 4));
+	grid-auto-flow: column;
+	gap: var(--mw-slider-gap);
+}
+
+.mw-release-slider__slide {
+	min-width: 0;
+	padding: 0.65rem;
+	background: color-mix(in srgb, var(--mw-color-surface) 88%, transparent);
+	border: 1px solid transparent;
+	border-radius: var(--mw-radius-md);
+	scroll-snap-align: start;
+	transition: background-color 180ms ease, border-color 180ms ease, transform 220ms var(--mw-ease-out);
+}
+
+.mw-release-slider__slide:hover {
+	background: var(--mw-color-surface-raised);
+	border-color: var(--mw-color-border);
+}
+
+.mw-release-slider__artwrap {
+	position: relative;
+	display: block;
+}
+
+/* Same shape contract as the shelf: the frame owns ratio + radius, the media
+ * only ever fills it (`object-fit: cover`), so switching `imageShape` can never
+ * letterbox, stretch or un-square the cover. */
+.mw-release-slider__art {
+	--mw-art-ratio: 1;
+	--mw-art-radius: calc(var(--mw-radius-md) - 0.25rem);
+	position: relative;
+	display: block;
+	overflow: hidden;
+	aspect-ratio: var(--mw-art-ratio);
+	background: var(--mw-color-surface-raised);
+	border-radius: var(--mw-art-radius);
+}
+
+.mw-release-slider__image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-inline-size: none;
+	object-fit: cover;
+	object-position: center;
+	border-radius: inherit;
+	transition: transform 360ms var(--mw-ease-out);
+}
+
+.mw-release-slider__placeholder {
+	display: grid;
+	width: 100%;
+	height: 100%;
+	place-items: center;
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-raised);
+	font-size: clamp(2rem, 8vw, 4rem);
+	font-weight: 800;
+	border-radius: inherit;
+}
+
+.mw-release-slider__slide:hover .mw-release-slider__image {
+	transform: scale(1.045);
+}
+
+.mw-release-slider__play {
+	position: absolute;
+	inset-inline-end: 0.8rem;
+	inset-block-end: 0.8rem;
+	display: grid;
+	width: 3rem;
+	height: 3rem;
+	padding: 0;
+	place-items: center;
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border: 0;
+	border-radius: 50%;
+	box-shadow: 0 12px 30px rgb(0 0 0 / 35%);
+	cursor: pointer;
+	opacity: 0;
+	transform: translateY(0.65rem);
+	transition: opacity 180ms ease, transform 220ms var(--mw-ease-out);
+}
+
+.mw-release-slider__slide:hover .mw-release-slider__play,
+.mw-release-slider__artwrap:focus-within .mw-release-slider__play,
+.mw-release-slider__play:focus-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.mw-release-slider__body {
+	display: grid;
+	gap: 0.2rem;
+	padding: 0.85rem 0.25rem 0.35rem;
+}
+
+.mw-release-slider__body h3 {
+	overflow: hidden;
+	margin: 0;
+	font-size: 1rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mw-release-slider__body h3 a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mw-release-slider__body > span,
+.mw-release-slider__body > p {
+	margin: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.875rem;
+}
+
+.mw-release-slider__dots {
+	display: flex;
+	gap: 0.4rem;
+	justify-content: center;
+	min-height: 0.6rem;
+}
+
+.mw-release-slider__dots button {
+	width: 0.5rem;
+	height: 0.5rem;
+	padding: 0;
+	background: color-mix(in srgb, var(--mw-color-text) 25%, transparent);
+	border: 0;
+	border-radius: 999px;
+	cursor: pointer;
+	transition: width 180ms ease, background-color 180ms ease;
+}
+
+.mw-release-slider__dots button[aria-current="true"] {
+	width: 1.5rem;
+	background: var(--mw-color-accent-strong);
+}
+
+@media (max-width: 64rem) {
+	.mw-release-slider__track {
+		grid-auto-columns: minmax(12rem, calc((100% - (var(--mw-slider-gap) * 2)) / 3));
+	}
+}
+
+@media (max-width: 44rem) {
+	.mw-release-slider__track {
+		grid-auto-columns: minmax(11rem, calc((100% - var(--mw-slider-gap)) / 2));
+	}
+}
+
+@media (max-width: 30rem) {
+	.mw-release-slider__track {
+		grid-auto-columns: 82%;
+	}
+
+	.mw-release-slider__arrows {
+		display: none;
+	}
+
+	.mw-release-slider__play {
+		width: 2.6rem;
+		height: 2.6rem;
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* Minimal look: unframed strip without card chrome */
+.mw-release-slider.is-style-minimal .mw-release-slider__slide,
+.mw-release-slider--minimal .mw-release-slider__slide {
+	background: transparent;
+	border: 0;
+	border-block-end: 1px solid var(--mw-color-border-subtle, rgb(247 248 251 / 8%));
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0 0 0.75rem;
+}
+
+.mw-release-slider.is-style-minimal .mw-release-slider__art,
+.mw-release-slider--minimal .mw-release-slider__art {
+	border-radius: var(--mw-radius-sm, 0.5rem);
+	box-shadow: none;
+}
+
+.mw-release-slider.is-style-glass .mw-release-slider__slide,
+.mw-release-slider--glass .mw-release-slider__slide {
+	background: color-mix(in srgb, var(--mw-color-surface) 72%, transparent);
+	backdrop-filter: blur(18px) saturate(1.2);
+	-webkit-backdrop-filter: blur(18px) saturate(1.2);
+	border: 1px solid color-mix(in srgb, var(--mw-color-text) 12%, transparent);
+	box-shadow: 0 1rem 2.25rem rgb(0 0 0 / 22%);
+}
+
+/* Vinyl look on `music-wave/release-slider`: peeking record disc behind sleeve */
+.mw-release-slider.is-style-vinyl .mw-release-slider__artwrap,
+.mw-release-slider--vinyl .mw-release-slider__artwrap {
+	position: relative;
+	padding-inline-end: 1.15rem;
+}
+
+.mw-release-slider.is-style-vinyl .mw-release-slider__artwrap::before,
+.mw-release-slider--vinyl .mw-release-slider__artwrap::before {
+	content: "";
+	position: absolute;
+	inset-block: 6%;
+	inset-inline-end: 0;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background:
+		radial-gradient(circle, var(--mw-color-accent, #1db954) 0 16%, #111 17% 22%, transparent 23%),
+		repeating-radial-gradient(circle, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 4px),
+		#141519;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+	transition: transform 260ms ease;
+	z-index: 0;
+}
+
+.mw-release-slider.is-style-vinyl .mw-release-slider__art,
+.mw-release-slider--vinyl .mw-release-slider__art {
+	position: relative;
+	z-index: 1;
+}
+
+.mw-release-slider.is-style-vinyl .mw-release-slider__slide:where(:hover, :focus-within) .mw-release-slider__artwrap::before,
+.mw-release-slider--vinyl .mw-release-slider__slide:where(:hover, :focus-within) .mw-release-slider__artwrap::before {
+	transform: translateX(0.45rem) rotate(14deg);
+}
+
+html[dir="rtl"] .mw-release-slider.is-style-vinyl .mw-release-slider__slide:where(:hover, :focus-within) .mw-release-slider__artwrap::before,
+html[dir="rtl"] .mw-release-slider--vinyl .mw-release-slider__slide:where(:hover, :focus-within) .mw-release-slider__artwrap::before {
+	transform: translateX(-0.45rem) rotate(-14deg);
+}
+
+/* Authoritative `imageShape` modifiers — placed after style variations so the
+ * explicit user shape always wins the cascade. Each value only flips the two
+ * frame tokens (`wide` is kept as a legacy alias of `landscape`). */
+.mw-release-slider.mw-release-slider--shape-square .mw-release-slider__art,
+.mw-release-slider__art.mw-release-slider__art--square {
+	--mw-art-ratio: 1;
+}
+
+.mw-release-slider.mw-release-slider--shape-wide .mw-release-slider__art,
+.mw-release-slider.mw-release-slider--shape-landscape .mw-release-slider__art,
+.mw-release-slider__art.mw-release-slider__art--wide,
+.mw-release-slider__art.mw-release-slider__art--landscape {
+	--mw-art-ratio: 16 / 10;
+}
+
+.mw-release-slider.mw-release-slider--shape-portrait .mw-release-slider__art,
+.mw-release-slider__art.mw-release-slider__art--portrait {
+	--mw-art-ratio: 4 / 5;
+}
+
+.mw-release-slider.mw-release-slider--shape-circle .mw-release-slider__art,
+.mw-release-slider__art.mw-release-slider__art--circle {
+	--mw-art-ratio: 1;
+	--mw-art-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-release-slider__viewport {
+		scroll-behavior: auto;
+	}
+}

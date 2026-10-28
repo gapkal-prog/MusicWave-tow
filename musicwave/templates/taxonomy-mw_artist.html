@@ -1,0 +1,47 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"align":"wide","className":"mw-app-shell","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|50"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide mw-app-shell" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:group {"tagName":"main","className":"mw-release-archive mw-artist-page","layout":{"type":"constrained"}} -->
+<main class="wp-block-group mw-release-archive mw-artist-page"><!-- wp:template-part {"slug":"breadcrumb","tagName":"div"} /-->
+<!-- wp:music-wave/term-hero {"align":"wide","layout":"banner","size":"tall","showEyebrow":true,"showDescription":true,"showCount":true,"showFollowButton":true} /-->
+<!-- wp:group {"className":"mw-artist-toolbar","layout":{"type":"flex","justifyContent":"space-between","alignItems":"center","flexWrap":"wrap"}} -->
+<div class="wp-block-group mw-artist-toolbar"><!-- wp:heading {"level":2,"fontSize":"large","className":"mw-artist-toolbar__title"} -->
+<h2 class="wp-block-heading has-large-font-size mw-artist-toolbar__title">دیسکوگرافی</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"textColor":"muted","fontSize":"small"} -->
+<p class="has-muted-color has-text-color has-small-font-size">انتشارهای این هنرمند را مرور کنید.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- wp:music-wave/catalog-filters {"align":"wide","showSearch":true,"showArtistFilter":false,"showGenreFilter":true,"showMoodFilter":true,"showTypeFilter":true,"showSort":true,"showReset":true} /-->
+<!-- wp:music-wave/catalog-results {"align":"wide","showCount":true,"showChips":true} /-->
+<!-- wp:query {"align":"wide","queryId":31,"query":{"inherit":true}} -->
+<div class="wp-block-query alignwide"><!-- wp:post-template {"className":"mw-release-grid","layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"className":"mw-release-card mw-surface","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-release-card mw-surface"><!-- wp:group {"className":"mw-release-card__media","layout":{"type":"default"}} -->
+<div class="wp-block-group mw-release-card__media"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"1"} /-->
+<!-- wp:music-wave/preview-player {"buttonStyle":"icon","variant":"accent","size":"md","className":"mw-hero-slide__play"} /--></div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"mw-release-card__body","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-release-card__body"><!-- wp:post-title {"isLink":true,"fontSize":"medium"} /-->
+<!-- wp:music-wave/release-meta /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+<!-- wp:query-no-results -->
+<!-- wp:group {"className":"mw-catalog-empty mw-artist-empty","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-catalog-empty mw-artist-empty"><!-- wp:paragraph {"fontSize":"large"} -->
+<p class="has-large-font-size">انتشاری برای این ترکیب پیدا نشد.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"textColor":"muted"} -->
+<p class="has-muted-color has-text-color">فیلترها را تغییر دهید یا کاتالوگ را بدون فیلتر مرور کنید.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- /wp:query-no-results -->
+<!-- wp:query-pagination {"className":"mw-catalog-pagination","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+<!-- wp:query-pagination-previous /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination --></div>
+<!-- /wp:query --></main>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

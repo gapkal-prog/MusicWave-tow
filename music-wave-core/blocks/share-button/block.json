@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/share-button",
+  "title": "اشتراک‌گذاری انتشار",
+  "category": "music-wave",
+  "description": "دکمه اشتراک‌گذاری بومی برای انتشار فعلی با Web Share API و کپی پیوند؛ با انتخابگر آیکون و ظاهر یکپارچه.",
+  "keywords": [
+    "اشتراک",
+    "share",
+    "پیوند"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "share",
+  "attributes": {
+    "releaseId": {
+      "type": "integer",
+      "default": 0
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": "icon"
+    },
+    "variant": {
+      "type": "string",
+      "default": "surface"
+    },
+    "size": {
+      "type": "string",
+      "default": "md"
+    },
+    "shape": {
+      "type": "string",
+      "default": "pill"
+    },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "anchor": true,
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "buttonStyle": "icon",
+      "variant": "surface",
+      "icon": "share"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/dashboard-downloads",
+  "title": "دانلودهای حساب",
+  "category": "music-wave",
+  "description": "فهرست دانلودهای قابل دسترس – فشرده و مینیمال.",
+  "keywords": ["دانلود", "فایل", "حساب"],
+  "textdomain": "music-wave-core",
+  "icon": "download",
+  "attributes": {
+    "heading": { "type": "string", "default": "دانلودها" },
+    "compact": { "type": "boolean", "default": true }
+  },
+  "supports": {
+    "anchor": true,
+    "align": ["wide", "full"],
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "color": { "background": true, "link": true, "text": true },
+    "spacing": { "blockGap": true, "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "example": {
+    "attributes": { "compact": true }
+  }
+}

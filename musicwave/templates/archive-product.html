@@ -1,0 +1,11 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"align":"wide","className":"mw-app-shell","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|50"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide mw-app-shell" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:group {"tagName":"main","className":"mw-shop-page","layout":{"type":"constrained"}} -->
+<main class="wp-block-group mw-shop-page"><!-- wp:template-part {"slug":"breadcrumb","tagName":"div"} /-->
+<!-- wp:group {"className":"mw-page-heading","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-page-heading"><!-- wp:paragraph {"textColor":"accent-strong","fontSize":"small"} -->
+<p class="has-accent-strong-color has-text-color has-small-font-size">فروشگاه موسیقی</p>
+<!-- /wp:paragraph --><!-- wp:query-title {"type":"archive","showPrefix":false} /--></div><!-- /wp:group -->
+<!-- wp:woocommerce/product-collection {"queryId":20,"query":{"perPage":12,"pages":0,"offset":0,"postType":"product","order":"desc","orderBy":"date","inherit":true},"displayLayout":{"type":"flex","columns":3},"align":"wide"} --><div class="wp-block-woocommerce-product-collection alignwide"><!-- wp:woocommerce/product-template --><!-- wp:group {"className":"mw-release-card mw-surface","layout":{"type":"constrained"}} --><div class="wp-block-group mw-release-card mw-surface"><!-- wp:woocommerce/product-image {"isDescendentOfQueryLoop":true,"aspectRatio":"1"} /--><!-- wp:woocommerce/product-title {"isDescendentOfQueryLoop":true,"level":3,"fontSize":"large"} /--><!-- wp:woocommerce/product-price {"isDescendentOfQueryLoop":true} /--><!-- wp:woocommerce/product-button {"isDescendentOfQueryLoop":true} /--></div><!-- /wp:group --><!-- /wp:woocommerce/product-template --><!-- wp:query-pagination --><!-- wp:query-pagination-previous /--><!-- wp:query-pagination-numbers /--><!-- wp:query-pagination-next /--><!-- /wp:query-pagination --></div><!-- /wp:woocommerce/product-collection --></main><!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
