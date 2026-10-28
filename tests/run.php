@@ -146,9 +146,14 @@ final class WP_Error {
 	/** @var string */
 	private $message;
 
-	public function __construct( string $code = '', string $message = '' ) {
+	/** @var mixed */
+	private $data;
+
+	/** @param mixed $data */
+	public function __construct( string $code = '', string $message = '', $data = '' ) {
 		$this->code    = $code;
 		$this->message = $message;
+		$this->data    = $data;
 	}
 
 	public function get_error_code(): string {
@@ -157,6 +162,11 @@ final class WP_Error {
 
 	public function get_error_message(): string {
 		return $this->message;
+	}
+
+	/** @return mixed */
+	public function get_error_data() {
+		return $this->data;
 	}
 }
 
@@ -427,7 +437,16 @@ final class wpdb { // phpcs:ignore
 					position INTEGER NOT NULL DEFAULT 0,
 					updated_at INTEGER NOT NULL DEFAULT 0,
 					PRIMARY KEY (user_id, release_id, event)
-				)'
+				);
+				 CREATE TABLE wp_mw_vip_assets (
+					asset_key TEXT PRIMARY KEY,
+					path_hash TEXT UNIQUE NOT NULL,
+					relative_path TEXT NOT NULL,
+					file_size INTEGER NOT NULL DEFAULT 0,
+					checksum TEXT NOT NULL DEFAULT "",
+					mime TEXT NOT NULL DEFAULT "",
+					registered_at INTEGER NOT NULL DEFAULT 0
+				);'
 			);
 		}
 		return $this->sqlite;
@@ -438,9 +457,91 @@ final class wpdb { // phpcs:ignore
 			return null;
 		}
 		if ( false !== stripos( $sql, 'SHOW TABLES LIKE' ) ) {
+			if ( 1 === preg_match( "/SHOW TABLES LIKE\s+'([^']+)'/i", $sql, $m ) ) {
+				$stmt = $this->pdo()->prepare( "SELECT name FROM sqlite_master WHERE type='table' AND name = :name" );
+				$stmt->execute( array( ':name' => str_replace( '\\', '', $m[1] ) ) );
+				$found = $stmt->fetchColumn();
+				return false !== $found ? (string) $found : null;
+			}
 			return $this->prefix . 'mw_user_activity';
 		}
 		return $this->pdo()->query( $sql )->fetchColumn();
+	}
+
+	/**
+	 * @param mixed $output Output format constant.
+	 * @return array<string, mixed>|null
+	 */
+	public function get_row( string $sql, $output = OBJECT ) {
+		unset( $output );
+		if ( ! $this->mw_enable_activity_table ) {
+			return null;
+		}
+		$stmt = $this->pdo()->query( $sql );
+		if ( false === $stmt ) {
+			return null;
+		}
+		$row = $stmt->fetch( \PDO::FETCH_ASSOC );
+		return is_array( $row ) ? $row : null;
+	}
+
+	/** @return array<int, string> */
+	public function get_col( string $sql ): array {
+		if ( ! $this->mw_enable_activity_table ) {
+			return array();
+		}
+		$stmt = $this->pdo()->query( $sql );
+		if ( false === $stmt ) {
+			return array();
+		}
+		return array_map( 'strval', $stmt->fetchAll( \PDO::FETCH_COLUMN, 0 ) );
+	}
+
+	/**
+	 * @param array<string, mixed> $data Column values.
+	 * @return int|false
+	 */
+	public function insert( string $table, array $data ) {
+		if ( ! $this->mw_enable_activity_table || empty( $data ) ) {
+			return false;
+		}
+		$cols = array_keys( $data );
+		$ph   = array_map(
+			static function ( string $c ): string {
+				return ':' . $c;
+			},
+			$cols
+		);
+		$stmt = $this->pdo()->prepare( 'INSERT INTO ' . $table . ' (' . implode( ', ', $cols ) . ') VALUES (' . implode( ', ', $ph ) . ')' );
+		$bind = array();
+		foreach ( $data as $k => $v ) {
+			$bind[ ':' . $k ] = $v;
+		}
+		return $stmt->execute( $bind ) ? 1 : false;
+	}
+
+	/**
+	 * @param array<string, mixed> $data  Updated column values.
+	 * @param array<string, mixed> $where Filter column values.
+	 * @return int|false
+	 */
+	public function update( string $table, array $data, array $where ) {
+		if ( ! $this->mw_enable_activity_table || empty( $data ) || empty( $where ) ) {
+			return false;
+		}
+		$sets  = array();
+		$whs   = array();
+		$binds = array();
+		foreach ( $data as $k => $v ) {
+			$sets[]               = $k . ' = :s_' . $k;
+			$binds[ ':s_' . $k ] = $v;
+		}
+		foreach ( $where as $k => $v ) {
+			$whs[]               = $k . ' = :w_' . $k;
+			$binds[ ':w_' . $k ] = $v;
+		}
+		$stmt = $this->pdo()->prepare( 'UPDATE ' . $table . ' SET ' . implode( ', ', $sets ) . ' WHERE ' . implode( ' AND ', $whs ) );
+		return $stmt->execute( $binds ) ? $stmt->rowCount() : false;
 	}
 
 	public function query( string $sql ) {
@@ -1171,6 +1272,11 @@ function get_transient( string $key ) {
 function set_transient( string $key, $value, int $expiration = 0 ): bool {
 	unset( $expiration );
 	$GLOBALS['mw_test_transients'][ $key ] = $value;
+	return true;
+}
+
+function delete_transient( string $key ): bool {
+	unset( $GLOBALS['mw_test_transients'][ $key ] );
 	return true;
 }
 
@@ -4580,9 +4686,18 @@ $mw_expected_oop_symbols = array(
 	ManaCore\MusicWave\Core\Blocks\Release\RelatedReleasesRenderer::class,
 	ManaCore\MusicWave\Core\Access\AccessModePolicy::class,
 	ManaCore\MusicWave\Core\Access\AccessCtaResolver::class,
+	ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy::class,
+	ManaCore\MusicWave\Core\Downloads\DirectLinkUrlValidator::class,
+	ManaCore\MusicWave\Core\Downloads\DirectLinkAsset::class,
+	ManaCore\MusicWave\Core\Downloads\DirectLinkPermission::class,
+	ManaCore\MusicWave\Core\Downloads\RedirectResponse::class,
+	ManaCore\MusicWave\Core\Downloads\DirectLinkProvider::class,
+	ManaCore\MusicWave\Core\Downloads\DeliveryRouter::class,
+	ManaCore\MusicWave\Core\Support\DeliveryCapabilities::class,
 	ManaCore\MusicWave\Core\Support\FrontendRuntime::class,
 	// VIP SRP checkout, plan catalog, single-product presenter & WordPress user management services.
 	ManaCore\MusicWave\Vip\Delivery\ProtectedDeliveryDiagnostics::class,
+	ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::class,
 	ManaCore\MusicWave\Vip\Checkout\SubscriptionOrderInspector::class,
 	ManaCore\MusicWave\Vip\Checkout\DirectCheckoutHandler::class,
 	ManaCore\MusicWave\Vip\Checkout\VirtualCheckoutSimplifier::class,

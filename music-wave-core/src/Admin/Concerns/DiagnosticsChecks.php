@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace ManaCore\MusicWave\Core\Admin\Concerns;
 
 use ManaCore\MusicWave\Core\Migrations\MigrationRunner;
+use ManaCore\MusicWave\Core\Support\DeliveryCapabilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -32,7 +33,8 @@ final class DiagnosticsChecks {
 		$theme_name     = (string) $theme->get( 'Name' );
 		$woo_ready      = class_exists( 'WooCommerce' );
 		$vip_active     = defined( 'MUSIC_WAVE_VIP_FILE' );
-		$provider_ready = (bool) has_filter( 'music_wave_download_provider' );
+		$delivery_caps  = DeliveryCapabilities::describe();
+		$provider_ready = $delivery_caps['has_protected_provider'];
 		$permalinks     = '' !== (string) get_option( 'permalink_structure', '' );
 		$cron_disabled  = defined( 'DISABLE_WP_CRON' ) && constant( 'DISABLE_WP_CRON' );
 
@@ -90,14 +92,14 @@ final class DiagnosticsChecks {
 				'action_label' => __( 'نصب WooCommerce', 'music-wave-core' ),
 			),
 			array(
-				'label'        => __( 'تحویل حفاظت‌شده', 'music-wave-core' ),
+				'label'        => __( 'تحویل حفاظت‌شده و پیوند مستقیم', 'music-wave-core' ),
 				'passed'       => $provider_ready,
 				'severity'     => 'recommended',
 				'detail'       => $provider_ready
-					? __( 'یک ارائه‌دهنده دارایی‌های حفاظت‌شده غیرشفاف را پس از تصویب بررسی‌های دسترسی، پخش می‌کند.', 'music-wave-core' )
+					? $delivery_caps['detail']
 					: ( $vip_active
-						? __( 'MusicWave VIP فعال است اما هنوز ارائه‌دهنده تحویل ثبت نشده است. برای فعال کردن دانلودهای حفاظت‌شده، تنظیمات تحویل VIP را ذخیره کنید.', 'music-wave-core' )
-						: __( 'پیش از اختصاص دارایی‌های دانلود حفاظت‌شده به انتشارها، MusicWave VIP را فعال کنید.', 'music-wave-core' ) ),
+						? __( 'MusicWave VIP فعال است اما هنوز ارائه‌دهنده تحویل ثبت نشده است؛ تحویل مستقیم HTTPS (direct:) فعال است اما برای فایل‌های حفاظت‌شده (vip:) تنظیمات VIP را ذخیره کنید.', 'music-wave-core' )
+						: $delivery_caps['detail'] ),
 				'action_url'   => $provider_ready ? '' : ( $vip_active ? admin_url( 'edit.php?post_type=mw_release&page=music-wave-vip' ) : admin_url( 'plugins.php' ) ),
 				'action_label' => $vip_active ? __( 'تنظیمات MusicWave VIP', 'music-wave-core' ) : __( 'باز کردن صفحهٔ افزونه‌ها', 'music-wave-core' ),
 			),

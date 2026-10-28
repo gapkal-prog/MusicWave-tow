@@ -51,6 +51,7 @@ if ( ! function_exists( 'music_wave_vip_uninstall_site' ) ) {
 		}
 
 		delete_option( 'music_wave_vip_settings' );
+		delete_option( 'music_wave_vip_remote_keyring' );
 		delete_option( 'music_wave_vip_protected_root' );
 		delete_option( 'music_wave_vip_audit_log' );
 

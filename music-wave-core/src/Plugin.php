@@ -143,20 +143,26 @@ final class Plugin {
 		$policy = new AccessPolicyEngine( $releases, $purchase_checker, $membership_provider, $manual_provider );
 		// Membership gating is a monetization layer: when no membership module
 		// (e.g. MusicWave VIP) is active, the configured absent-behavior decides
-		// whether membership releases stay usable (default) or deny closed.
+		// whether membership releases stay usable ('allow'), deny closed ('deny'),
+		// or open all membership/hybrid releases ('open_download').
 		add_filter(
 			'music_wave_membership_absent_behavior',
 			static function ( $behavior ): string {
-				$setting = \ManaCore\MusicWave\Core\Support\Settings::get( 'membership_absent_behavior' );
+				$setting = (string) \ManaCore\MusicWave\Core\Support\Settings::get( 'membership_absent_behavior' );
 
-				return in_array( $setting, array( 'allow', 'deny' ), true ) ? $setting : $behavior;
+				return in_array( $setting, \ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy::allowed_modes(), true )
+					? $setting
+					: ( is_scalar( $behavior ) ? (string) $behavior : \ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy::DEFAULT_MODE );
 			}
 		);
 		( new \ManaCore\MusicWave\Core\Support\SettingsFilters() )->register();
-		$download_provider = apply_filters( 'music_wave_download_provider', new NullDownloadProvider() );
-		if ( ! $download_provider instanceof \ManaCore\MusicWave\Core\Downloads\DownloadProvider ) {
-			$download_provider = new NullDownloadProvider();
+		$external_provider = apply_filters( 'music_wave_download_provider', new NullDownloadProvider() );
+		if ( ! $external_provider instanceof \ManaCore\MusicWave\Core\Downloads\DownloadProvider ) {
+			$external_provider = new NullDownloadProvider();
 		}
+		$download_provider = $external_provider instanceof \ManaCore\MusicWave\Core\Downloads\DeliveryRouter
+			? $external_provider
+			: new \ManaCore\MusicWave\Core\Downloads\DeliveryRouter( $external_provider, new \ManaCore\MusicWave\Core\Downloads\DirectLinkProvider() );
 		// Dedicated salt scheme (review finding S4): the download-token secret
 		// derives from its own wp_salt() scheme instead of 'auth', isolating its
 		// blast radius from cookie/nonce secrets. Sites may pin it independently

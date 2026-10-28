@@ -22,7 +22,7 @@ msgstr[1] "%d tracks"
 msgid "%d مورد سفارشی‌سازی قالب MusicWave به زباله‌دان منتقل شد. فایل‌های معتبر قالب اکنون فعال هستند."
 msgstr "%d customized MusicWave template records were moved to the Trash. The validated theme files are active again."
 
-#: /blocks/synced-lyrics/block.json
+#: blocks/synced-lyrics/block.json
 msgid "LRC"
 msgstr "LRC"
 
@@ -34,43 +34,43 @@ msgstr "Live Sync Lyrics"
 msgid "MusicWave"
 msgstr "MusicWave"
 
-#: /blocks/breadcrumb/block.json
+#: blocks/breadcrumb/block.json
 msgid "breadcrumb"
 msgstr "breadcrumb"
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "dark"
 msgstr "dark"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "drawer"
 msgstr "drawer"
 
-#: /blocks/synced-lyrics/block.json
+#: blocks/synced-lyrics/block.json
 msgid "karaoke"
 msgstr "karaoke"
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "light"
 msgstr "light"
 
-#: /blocks/synced-lyrics/block.json
+#: blocks/synced-lyrics/block.json
 msgid "lyrics"
 msgstr "lyrics"
 
-#: /blocks/header-search/block.json
+#: blocks/header-search/block.json
 msgid "search"
 msgstr "search"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "sidebar"
 msgstr "sidebar"
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "theme"
 msgstr "theme"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "toggle"
 msgstr "toggle"
 
@@ -118,7 +118,7 @@ msgstr "Choose the button icon. Previewed live in both the Site Editor and the f
 msgid "آیکون دکمه را نمایش یا پنهان کنید. وقتی خاموش باشد فقط متن (اگر فعال باشد) نمایش داده می‌شود."
 msgstr "Show or hide the button icon. When off, only the label text (if enabled) is displayed."
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "آیکون منو"
 msgstr "Menu icon"
 
@@ -174,6 +174,7 @@ msgstr "From your account page, any time, with no extra questions."
 msgid "از کجا شروع کنیم؟"
 msgstr "Where should we start?"
 
+#: patterns/demo-artists-directory.php:28
 msgid "از یک ردیف سریع تا فهرست کامل صفحهبهصفحه؛ هر سه حالت از یک بلوک ساخته شدهاند و میتوانید هرکدام را نگه دارید."
 msgstr "From a quick rail to a full page-by-page directory; all three shapes come from one block, and you can keep whichever you need."
 
@@ -231,7 +232,7 @@ msgstr "Full-frame slide with an oversized title and a darker scrim."
 msgid "اسلاید قبلی"
 msgstr "Previous slide"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1158 /blocks/release-shelf/block.json /blocks/release-slider/block.json
+#: src/Blocks/ShelfAndSliderRenderer.php:1158 blocks/release-shelf/block.json blocks/release-slider/block.json
 msgid "اسلایدر"
 msgstr "Slider"
 
@@ -239,7 +240,7 @@ msgstr "Slider"
 msgid "اسلایدر انتشارها"
 msgstr "Release slider"
 
-#: /blocks/release-slider/block.json
+#: blocks/release-slider/block.json
 msgid "اسلایدر انتشارهای MusicWave"
 msgstr "MusicWave release slider"
 
@@ -247,7 +248,7 @@ msgstr "MusicWave release slider"
 msgid "اسلایدر هیرو"
 msgstr "Hero slider"
 
-#: /blocks/release-slider/block.json
+#: blocks/release-slider/block.json
 msgid "اسلایدر واکنش‌گرا و دسترس‌پذیر برای انتشارهای منتخب یا جدید. از طریق ویرایشگر سایت و تنظیمات کلی اسلایدر کاملاً قابل سفارشی‌سازی است."
 msgstr "A responsive, accessible slider for featured or recent releases. Fully customizable via Site Editor and global slider settings."
 
@@ -283,7 +284,7 @@ msgstr "MusicWave release"
 msgid "انتشار یا آلبوم نمونه برای پیش‌نمایش"
 msgstr "Sample release or album for preview"
 
-#: assets/editor-blocks.js:1673 src/Blocks/BreadcrumbRenderer.php:248 /blocks/release-shelf/block.json /blocks/release-slider/block.json
+#: assets/editor-blocks.js:1673 src/Blocks/BreadcrumbRenderer.php:248 blocks/release-shelf/block.json blocks/release-slider/block.json
 msgid "انتشارها"
 msgstr "Releases"
 
@@ -368,7 +369,7 @@ msgstr "Open %s"
 msgid "باز کردن انتشار"
 msgstr "Open release"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "باز کردن منو"
 msgstr "Open menu"
 
@@ -481,7 +482,7 @@ msgstr "Label"
 msgid "برچسب اقدام"
 msgstr "Action label"
 
-#: assets/editor-blocks.js:1423 assets/editor-blocks.js:1686 assets/editor-blocks.js:2656 /blocks/section-head/block.json
+#: assets/editor-blocks.js:1423 assets/editor-blocks.js:1686 assets/editor-blocks.js:2656 blocks/section-head/block.json
 msgid "برچسب بالایی"
 msgstr "Eyebrow"
 
@@ -593,7 +594,7 @@ msgstr "Published date"
 msgid "تاریخ ویرایش"
 msgstr "Modified date"
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "تاریک"
 msgstr "Dark"
 
@@ -629,11 +630,11 @@ msgstr "Editorial"
 msgid "تحریریه روی بوم"
 msgstr "Editorial on canvas"
 
-#: /blocks/synced-lyrics/block.json
+#: blocks/synced-lyrics/block.json
 msgid "ترانه"
 msgstr "song"
 
-#: /blocks/theme-text/block.json
+#: blocks/theme-text/block.json
 msgid "ترجمه"
 msgstr "Translation"
 
@@ -670,7 +671,7 @@ msgstr "Dynamic filter tabs definition"
 msgid "تعمیر قالب MusicWave"
 msgstr "MusicWave template repair"
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "تغییر پوسته"
 msgstr "Theme toggle"
 
@@ -762,7 +763,7 @@ msgstr "Newest and top releases"
 msgid "جدیدترین‌ها در ابتدا"
 msgstr "Newest first"
 
-#: src/Blocks/ChromeBlocksRenderer.php:200 /blocks/header-search/block.json
+#: src/Blocks/ChromeBlocksRenderer.php:200 blocks/header-search/block.json
 msgid "جستجو"
 msgstr "Search"
 
@@ -774,7 +775,7 @@ msgstr "Recent searches"
 msgid "جستجوی آهنگ، هنرمند یا آلبوم…"
 msgstr "Search tracks, artists, or albums…"
 
-#: /blocks/header-search/block.json
+#: blocks/header-search/block.json
 msgid "جستجوی سربرگ MusicWave"
 msgstr "MusicWave Header Search"
 
@@ -1010,31 +1011,31 @@ msgstr "Desktop — 1024 pixels and up"
 msgid "دموهای MusicWave"
 msgstr "MusicWave demos"
 
-#: /patterns/demo-account-studio.php
+#: patterns/demo-account-studio.php
 msgid "دموی استودیوی حساب کاربری"
 msgstr "Account studio demo"
 
-#: /patterns/demo-release-showcase.php
+#: patterns/demo-release-showcase.php
 msgid "دموی برگهٔ کامل انتشار"
 msgstr "Full release page demo"
 
-#: /patterns/demo-community-requests.php
+#: patterns/demo-community-requests.php
 msgid "دموی جامعه و درخواستها"
 msgstr "Community and requests demo"
 
-#: /patterns/demo-account-commerce.php
+#: patterns/demo-account-commerce.php
 msgid "دموی خرید و عضویت حساب کاربری"
 msgstr "Account purchase and membership demo"
 
-#: /patterns/demo-artists-directory.php
+#: patterns/demo-artists-directory.php
 msgid "دموی فهرست هنرمندان"
 msgstr "Artists directory demo"
 
-#: src/Patterns/DemoComposer.php:49
+#: src/Patterns/DemoComposer.php:45
 msgid "دموی قابلیتها"
 msgstr "Feature demo"
 
-#: /patterns/demo-discovery-browse.php
+#: patterns/demo-discovery-browse.php
 msgid "دموی مرور و کشف کاتالوگ"
 msgstr "Catalog browse and discovery demo"
 
@@ -1070,11 +1071,11 @@ msgstr "Accent button"
 msgid "دکمه فراخوان اقدام"
 msgstr "Call-to-action button"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "دکمهٔ باز/بسته کردن ریل در دسکتاپ و کشو در موبایل. یک نمونه در هر سربرگ کافی است: «نوار بالا» همیشه دیده می‌شود، «داخل برند» فقط در دسکتاپ. آیکون، برچسب و رنگ را از تنظیمات بلوک تغییر دهید."
 msgstr "Button that collapses the rail on desktop and opens the drawer on mobile. One instance per header is enough: «Top bar» is always visible, «Inside the rail brand» only on desktop. Change the icon, label and colours from the block settings."
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "دکمهٔ تغییر پوسته (روشن/تیره/سیستم). قابل حذف/جابه‌جایی در ویرایشگر سایت. کلاس nbp-theme-toggle-fallback همیشه در نوار بالا موجود است."
 msgstr "Theme switcher button (light/dark/system), movable in the Site Editor with nbp-theme-toggle-fallback support in the top bar."
 
@@ -1082,7 +1083,7 @@ msgstr "Theme switcher button (light/dark/system), movable in the Site Editor wi
 msgid "دکمهٔ منو"
 msgstr "Menu button"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "دکمهٔ منوی کناری"
 msgstr "Side rail toggle"
 
@@ -1144,7 +1145,7 @@ msgstr "Artist and summary text color inside the hero card (e.g. #e2e8f0)."
 msgid "رنگ، قلم و فاصلهها را از زبانه «شیوهنامهها» تنظیم کنید؛ این گزینه فقط قالب ظاهری فیلد را عوض میکند."
 msgstr "Set colours, fonts and spacing from the Styles tab; this option only changes the look of the field."
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "روشن"
 msgstr "Light"
 
@@ -1156,7 +1157,7 @@ msgstr "On: the bottom bar is added to every header and stays editable in the Si
 msgid "روی رنگ تأکیدی"
 msgstr "On accent"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "ریل"
 msgstr "Rail"
 
@@ -1196,7 +1197,7 @@ msgstr "Footer widget columns"
 msgid "ستون‌های دسکتاپ"
 msgstr "Desktop columns"
 
-#: /blocks/header-search/block.json theme.json
+#: blocks/header-search/block.json theme.json
 msgid "سربرگ"
 msgstr "Header"
 
@@ -1248,15 +1249,15 @@ msgstr "Centered header"
 msgid "سربرگ کمینه"
 msgstr "Minimal header"
 
-#: /blocks/section-head/block.json
+#: blocks/section-head/block.json
 msgid "سرصفحه"
 msgstr "section head"
 
-#: /blocks/section-head/block.json
+#: blocks/section-head/block.json
 msgid "سرصفحهٔ بخش MusicWave"
 msgstr "MusicWave section head"
 
-#: /blocks/section-head/block.json
+#: blocks/section-head/block.json
 msgid "سرصفحهٔ سرمقاله‌ای با پوستهٔ mw-section-head و سبک‌های وسط‌چین، ستونی و معکوس؛ بلوک‌های درونی جداگانه انتخاب و جابه‌جا می‌شوند. برای یک عنوان متنی ساده از بلوک «عنوان بخش» استفاده کنید."
 msgstr "Editorial section header with the mw-section-head shell and centered, split, and inverted styles; inner blocks select and move independently. For a plain text title, use the Heading block."
 
@@ -1264,7 +1265,7 @@ msgstr "Editorial section header with the mw-section-head shell and centered, sp
 msgid "سرمقالهای"
 msgstr "Editorial"
 
-#: src/Blocks/BlockRegistry.php:85 src/Blocks/BlockRegistry.php:103 src/Blocks/BlockRegistry.php:129 src/Blocks/BlockRegistry.php:154 /blocks/section-head/block.json
+#: src/Blocks/BlockRegistry.php:85 src/Blocks/BlockRegistry.php:103 src/Blocks/BlockRegistry.php:129 src/Blocks/BlockRegistry.php:154 blocks/section-head/block.json
 msgid "سرمقاله‌ای"
 msgstr "Editorial"
 
@@ -1312,7 +1313,7 @@ msgstr "Traditional & fusion"
 msgid "سینمایی"
 msgstr "Cinema"
 
-#: /blocks/release-shelf/block.json
+#: blocks/release-shelf/block.json
 msgid "شبکه"
 msgstr "Grid"
 
@@ -1320,7 +1321,7 @@ msgstr "Grid"
 msgid "شبکه واکنش‌گرا"
 msgstr "Responsive grid"
 
-#: /patterns/release-grid.php
+#: patterns/release-grid.php
 msgid "شبکهٔ انتشارها (حلقهٔ پرس‌وجو)"
 msgstr "Release grid (Query Loop)"
 
@@ -1452,7 +1453,7 @@ msgstr "Title"
 msgid "عنوان بالای فهرست کناری در چیدمان ویژه‌نامه. برای پیش‌فرض («منتخب‌های بعدی») خالی بگذارید."
 msgstr "Heading displayed above the side release list in Feature layout. Leave empty for default (\"Up Next\")."
 
-#: assets/editor-blocks.js:2661 /blocks/section-head/block.json
+#: assets/editor-blocks.js:2661 blocks/section-head/block.json
 msgid "عنوان بخش"
 msgstr "Section heading"
 
@@ -1492,7 +1493,7 @@ msgstr "Slide interval (milliseconds)"
 msgid "فاصلهٔ پخش خودکار (میلی‌ثانیه)"
 msgstr "Autoplay interval (milliseconds)"
 
-#: /patterns/music-service-callout.php
+#: patterns/music-service-callout.php
 msgid "فراخوان سرویس موسیقی"
 msgstr "Music service callout"
 
@@ -1544,7 +1545,7 @@ msgstr "Your personal list with filters, counts and removal; the same account li
 msgid "فهرست هنرمندان"
 msgstr "Artists directory"
 
-#: /blocks/release-shelf/block.json
+#: blocks/release-shelf/block.json
 msgid "فهرست پخش"
 msgstr "Playlist"
 
@@ -1612,7 +1613,7 @@ msgstr "Compact field that opens on click"
 msgid "قاب شیشه‌ای مات روی تصویر بایگانی."
 msgstr "Frosted glass frame over the archive image."
 
-#: /blocks/theme-text/block.json
+#: blocks/theme-text/block.json
 msgid "قالب"
 msgstr "Template"
 
@@ -1644,11 +1645,11 @@ msgstr "Music Shelf"
 msgid "ماه اخیر (۳۰ روز گذشته)"
 msgstr "This Month (last 30 days)"
 
-#: /blocks/synced-lyrics/block.json /blocks/theme-text/block.json theme.json
+#: blocks/synced-lyrics/block.json blocks/theme-text/block.json theme.json
 msgid "متن"
 msgstr "Text"
 
-#: /blocks/synced-lyrics/block.json
+#: blocks/synced-lyrics/block.json
 msgid "متن LRC انتشار را با خط فعال هم‌زمان با پخش‌کننده سراسری نشان می‌دهد. بدون جاوااسکریپت همهٔ خطوط خوانا می‌مانند."
 msgstr "Shows the release’s LRC lyrics with the active line synced to the global player. Without JavaScript every line stays readable."
 
@@ -1660,7 +1661,7 @@ msgstr "Lyrics from this release’s catalog · synced with the global player"
 msgid "متن بخش منتخب"
 msgstr "Featured body"
 
-#: /blocks/theme-text/block.json
+#: blocks/theme-text/block.json
 msgid "متن ترجمه‌شده برای قالب‌های MusicWave. کلید، رشتهٔ متناسب با زبان را انتخاب می‌کند."
 msgstr "Translated template text for MusicWave templates. The key selects a language-aware string."
 
@@ -1680,7 +1681,7 @@ msgstr "Show label text next to the icon. Turn off for icon-only buttons."
 msgid "متن راهنمای داخل فیلد"
 msgstr "Placeholder text inside the field"
 
-#: /blocks/theme-text/block.json
+#: blocks/theme-text/block.json
 msgid "متن قالب MusicWave"
 msgstr "MusicWave template text"
 
@@ -1692,7 +1693,7 @@ msgstr "Footer about copy"
 msgid "متن هم‌زمان"
 msgstr "Synced lyrics"
 
-#: /blocks/synced-lyrics/block.json
+#: blocks/synced-lyrics/block.json
 msgid "متن هم‌زمان MusicWave"
 msgstr "MusicWave synced lyrics"
 
@@ -1764,7 +1765,7 @@ msgstr "Order playlists by"
 msgid "مرور"
 msgstr "Browse"
 
-#: /patterns/genre-mood-browse.php
+#: patterns/genre-mood-browse.php
 msgid "مرور سبک‌ها و حال‌وهواها"
 msgstr "Browse genres and moods"
 
@@ -1776,19 +1777,19 @@ msgstr "Browse music"
 msgid "مرور کاتالوگ"
 msgstr "Browse catalog"
 
-#: /blocks/breadcrumb/block.json
+#: blocks/breadcrumb/block.json
 msgid "مسیر"
 msgstr "breadcrumb"
 
-#: assets/editor-blocks.js:294 src/Blocks/BreadcrumbRenderer.php:134 /blocks/breadcrumb/block.json
+#: assets/editor-blocks.js:294 src/Blocks/BreadcrumbRenderer.php:134 blocks/breadcrumb/block.json
 msgid "مسیر راهنما"
 msgstr "Breadcrumb"
 
-#: /blocks/breadcrumb/block.json theme.json
+#: blocks/breadcrumb/block.json theme.json
 msgid "مسیر راهنما (Breadcrumb)"
 msgstr "Breadcrumb Trail"
 
-#: /blocks/breadcrumb/block.json
+#: blocks/breadcrumb/block.json
 msgid "مسیر سلسله‌مراتبی پویا برای انتشارها، هنرمندان، سبک‌ها، برگه‌ها و نتایج جست‌وجو؛ همراه با پیش‌نمایش نمونهٔ زنده در ویرایشگر سایت."
 msgstr "Dynamic hierarchical breadcrumb navigation for releases, artists, genres, pages, and search results, with live preview inside the Site Editor."
 
@@ -1808,7 +1809,7 @@ msgstr "See all playlists"
 msgid "مشخصات فنی، دسترسی، پخش پیشنمایش، صف پخش، فهرست قطعه، دانلود، متن همگام، اعتبارات و انتشارهای مرتبط؛ همه روی یک برگه و همه قابل ویرایش."
 msgstr "Specs, access, preview playback, the play queue, the tracklist, downloads, synced lyrics, credits and related releases; all on one page and all editable."
 
-#: /patterns/home-hero.php
+#: patterns/home-hero.php
 msgid "معرفی کشف موسیقی"
 msgstr "Music discovery hero"
 
@@ -1832,7 +1833,7 @@ msgstr "Theme text source"
 msgid "منبع محتوا"
 msgstr "Content source"
 
-#: src/Blocks/BlockRegistry.php:36 /blocks/release-slider/block.json
+#: src/Blocks/BlockRegistry.php:36 blocks/release-slider/block.json
 msgid "منتخب"
 msgstr "Featured"
 
@@ -1844,7 +1845,7 @@ msgstr "Curated by listeners"
 msgid "منتخب‌های بعدی"
 msgstr "Up Next"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "منو"
 msgstr "Menu"
 
@@ -1852,7 +1853,7 @@ msgstr "Menu"
 msgid "منو (همبرگری)"
 msgstr "Menu (hamburger)"
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "منوی کناری"
 msgstr "Side rail"
 
@@ -1888,11 +1889,11 @@ msgstr "Mobile: simple header + drawer"
 msgid "موبایل: منوی کناری + نوار پایین"
 msgstr "Mobile: side menu + bottom bar"
 
-#: /blocks/header-search/block.json
+#: blocks/header-search/block.json
 msgid "موتور جستجوی هوشمند سربرگ با کنترل مستقل چیدمان در دسکتاپ، تبلت و موبایل (فیلد خطی، فشرده، آیکون پاپ‌آپ یا نوار کشویی)، فیلتر آنی دسته‌بندی، جستجوهای اخیر، برچسب‌های سریع، جستجوی صوتی و میانبر صفحه‌کلید."
 msgstr "Smart header search engine with independent desktop, tablet, and mobile layouts (inline bar, compact field, icon popup modal, or expandable bar), live scope filters, recent searches, quick tags, voice search, and keyboard shortcuts."
 
-#: /blocks/release-shelf/block.json /blocks/release-slider/block.json
+#: blocks/release-shelf/block.json blocks/release-slider/block.json
 msgid "موسیقی"
 msgstr "Music"
 
@@ -1932,11 +1933,11 @@ msgstr "Track, artist, or album name…"
 msgid "نامک عبارت"
 msgstr "Term slug"
 
-#: /blocks/breadcrumb/block.json
+#: blocks/breadcrumb/block.json
 msgid "نان‌ریزه"
 msgstr "breadcrumbs"
 
-#: /blocks/breadcrumb/block.json
+#: blocks/breadcrumb/block.json
 msgid "ناوبری"
 msgstr "navigation"
 
@@ -1984,7 +1985,7 @@ msgstr "Show home icon"
 msgid "نمایش اسلایدر"
 msgstr "Slider visibility"
 
-#: /blocks/release-shelf/block.json
+#: blocks/release-shelf/block.json
 msgid "نمایش انتشارها بهصورت شبکهای، ویترین افقی، فهرست جمعوجور، ویژهنامه سرمقاله یا اسلایدر هیرو. بین انتشارها و فهرستهای پخش عمومی جامعه جابهجا شوید. چیدمان، رنگها و فاصلهها در ویرایشگر سایت قابل ویرایش هستند."
 msgstr "Display releases as a grid, horizontal showcase, compact list, editorial feature, or hero slider. Switch between releases and the community's public playlists. Layout, colors, and spacing are editable in the Site Editor."
 
@@ -2145,10 +2146,11 @@ msgstr "This Week (last 7 days)"
 msgid "هم به عنوان متن روی دکمه و هم به عنوان توضیح صفحه‌خوان استفاده می‌شود."
 msgstr "Used both as the visible button text and as the screen-reader label."
 
+#: patterns/demo-artists-directory.php:33
 msgid "همان فهرست، اینبار صفحهبهصفحه و با امکان دنبال کردن؛ برای کاتالوگهای بزرگ مناسبتر است."
 msgstr "The same directory, this time page by page with follow buttons; a better fit for large catalogs."
 
-#: /blocks/rail-toggle/block.json
+#: blocks/rail-toggle/block.json
 msgid "همبرگری"
 msgstr "Hamburger"
 
@@ -2200,7 +2202,7 @@ msgstr "Artists"
 msgid "هنرمندان را پیدا کنید و دنبال کنید"
 msgstr "Find artists and follow them"
 
-#: /blocks/release-shelf/block.json
+#: blocks/release-shelf/block.json
 msgid "هیرو"
 msgstr "Hero"
 
@@ -2220,7 +2222,7 @@ msgstr "Sign in & registration"
 msgid "وسط‌چین"
 msgstr "Centered"
 
-#: /blocks/release-shelf/block.json
+#: blocks/release-shelf/block.json
 msgid "ویترین"
 msgstr "Shelf"
 
@@ -2228,11 +2230,11 @@ msgstr "Shelf"
 msgid "ویترین افقی"
 msgstr "Horizontal shelf"
 
-#: /patterns/home-showcase-rail.php
+#: patterns/home-showcase-rail.php
 msgid "ویترین افقی با فیلتر"
 msgstr "Filtered horizontal shelf"
 
-#: patterns/home-showcase-rail.php:24 /blocks/release-shelf/block.json
+#: patterns/home-showcase-rail.php:24 blocks/release-shelf/block.json
 msgid "ویترین انتشارهای MusicWave"
 msgstr "MusicWave release shelf"
 
@@ -2272,7 +2274,7 @@ msgstr "Podcasts"
 msgid "پاپ"
 msgstr "Pop"
 
-#: /blocks/header-search/block.json
+#: blocks/header-search/block.json
 msgid "پاپ‌آپ"
 msgstr "Popup"
 
@@ -2321,7 +2323,7 @@ msgstr "Payment"
 msgid "پرسشهای پرتکرار"
 msgstr "Frequently asked questions"
 
-#: /patterns/section-faq.php
+#: patterns/section-faq.php
 msgid "پرسشهای پرتکرار بخش"
 msgstr "Section FAQ"
 
@@ -2377,7 +2379,7 @@ msgstr "Hide on site front page"
 msgid "پهنای ستون فهرست کناری در نمایش دسکتاپ (بین ۲۰۰ تا ۵۶۰ پیکسل)."
 msgstr "Desktop width of the side release list column (200px to 560px)."
 
-#: /blocks/theme-toggle/block.json
+#: blocks/theme-toggle/block.json
 msgid "پوسته"
 msgstr "Theme"
 
@@ -2402,7 +2404,7 @@ msgstr "Ready preset"
 msgid "پیشنمایش ویرایشگر"
 msgstr "Editor preview"
 
-#: patterns/demo-discovery-browse.php:68 /blocks/header-search/block.json
+#: patterns/demo-discovery-browse.php:68 blocks/header-search/block.json
 msgid "پیشنهاد"
 msgstr "Suggestion"
 
@@ -2450,7 +2452,7 @@ msgstr "Back arrow"
 msgid "پیگیری سفارش، فایلهای آمادهٔ دانلود و اطلاعات پرداخت، همه در یک قالب یکدست."
 msgstr "Order tracking, downloadable files and payment details, all in one consistent layout."
 
-#: /blocks/release-slider/block.json
+#: blocks/release-slider/block.json
 msgid "چرخان"
 msgstr "Carousel"
 
@@ -2478,7 +2480,7 @@ msgstr "Search bar layout"
 msgid "چیدمان و تصویر"
 msgstr "Layout and artwork"
 
-#: /blocks/release-shelf/block.json
+#: blocks/release-shelf/block.json
 msgid "کاتالوگ"
 msgstr "Catalog"
 
@@ -2494,7 +2496,7 @@ msgstr "Browse the catalog, not just look at it"
 msgid "کارت"
 msgstr "Card"
 
-#: /patterns/release-card.php
+#: patterns/release-card.php
 msgid "کارت انتشار"
 msgstr "Release card"
 

@@ -414,4 +414,430 @@ foreach ( is_dir( $mw_dl_tmp_dir ) ? ( scandir( $mw_dl_tmp_dir ) ?: array() ) : 
 }
 @rmdir( $mw_dl_tmp_dir );
 
+// =============================================================================
+// 7. Upgrade Matrix (T1–T24): MembershipAbsencePolicy, Scheme-Based DirectLink
+//    Delivery, SSRF/Redirect Hardening, Streamability, Keyring Rotation,
+//    Smart Admin UX, Persistent DB Quotas, SQL Mode Counts & Benchmarks
+// =============================================================================
+
+// --- T1–T6 & B-NEW-7/8: MembershipAbsencePolicy (`allow` / `deny` / `open_download`) ---
+unset( $GLOBALS['mw_test_filters']['music_wave_membership_absent_behavior'] );
+$mw_t_absent_rel_mem    = 9601;
+$mw_t_absent_rel_hybrid = 9602;
+$mw_t_absent_rel_paid   = 9603;
+$mw_t_absent_rel_rest   = 9604;
+$mw_t_absent_rel_login  = 9605;
+foreach ( array( $mw_t_absent_rel_mem, $mw_t_absent_rel_hybrid, $mw_t_absent_rel_paid, $mw_t_absent_rel_rest, $mw_t_absent_rel_login ) as $mw_tid ) {
+	$GLOBALS['mw_test_types'][ $mw_tid ]    = 'mw_release';
+	$GLOBALS['mw_test_statuses'][ $mw_tid ] = 'publish';
+	$GLOBALS['mw_test_posts'][ $mw_tid ]    = (object) array( 'ID' => $mw_tid, 'post_type' => 'mw_release', 'post_status' => 'publish', 'post_title' => 'Release ' . $mw_tid );
+}
+$GLOBALS['mw_test_meta'][ $mw_t_absent_rel_mem ]    = array( 'mw_access_mode' => 'membership', 'mw_membership_levels' => array( 'mw_vip' ) );
+$GLOBALS['mw_test_meta'][ $mw_t_absent_rel_hybrid ] = array( 'mw_access_mode' => 'purchase_or_membership', 'mw_product_ids' => array( 8801 ), 'mw_membership_levels' => array( 'mw_vip' ) );
+$GLOBALS['mw_test_meta'][ $mw_t_absent_rel_paid ]   = array( 'mw_access_mode' => 'purchase', 'mw_product_ids' => array( 8801 ) );
+$GLOBALS['mw_test_meta'][ $mw_t_absent_rel_rest ]   = array( 'mw_access_mode' => 'restricted' );
+$GLOBALS['mw_test_meta'][ $mw_t_absent_rel_login ]  = array( 'mw_access_mode' => 'logged_in' );
+
+// B-NEW-7: MetaDefinition must preserve `logged_in` mode during schema sanitization.
+mw_assert_same( 'logged_in', $mw_suite_schema->get( 'mw_access_mode' )->sanitize( 'logged_in' ), 'B-NEW-7: MetaDefinition must preserve logged_in access mode.' );
+
+$mw_t_absent_engine = new AccessPolicyEngine( $mw_suite_repo, new PurchaseChecker( $mw_suite_repo ), null );
+$mw_t_guest         = new AccessSubject( 0 );
+
+// T1 & T4: Default `allow` stored in settings (without external filter hook — B-NEW-8 verification).
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ] = array( 'membership_absent_behavior' => 'allow' );
+$mw_dec_t1 = $mw_t_absent_engine->decide( $mw_t_absent_rel_mem, $mw_t_guest );
+$mw_dec_t4 = $mw_t_absent_engine->decide( $mw_t_absent_rel_hybrid, $mw_t_guest );
+mw_assert_same( true, $mw_dec_t1->is_allowed() && 'membership_provider_absent' === $mw_dec_t1->reason(), 'T1: membership + allow must allow with reason membership_provider_absent.' );
+mw_assert_same( false, $mw_dec_t4->is_allowed(), 'T4: purchase_or_membership with product under allow must preserve purchase gate.' );
+mw_assert_same( 'purchase_required', $mw_dec_t4->reason(), 'T4: purchase_or_membership with product under allow must return purchase_required.' );
+
+// T2: `deny` stored directly in CoreSettings::OPTION (B-NEW-8: no external filter registered!).
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ] = array( 'membership_absent_behavior' => 'deny' );
+$mw_dec_t2 = $mw_t_absent_engine->decide( $mw_t_absent_rel_mem, $mw_t_guest );
+mw_assert_same( false, $mw_dec_t2->is_allowed(), 'T2 & B-NEW-8: membership + stored deny setting must deny without needing manual filter.' );
+mw_assert_same( 'membership_provider_absent', $mw_dec_t2->reason(), 'T2: membership + deny must return membership_provider_absent.' );
+
+// T3, T5, T6: `open_download` stored directly in CoreSettings::OPTION.
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ] = CoreSettings::sanitize( array( 'membership_absent_behavior' => 'open_download' ) );
+mw_assert_same( 'open_download', $GLOBALS['mw_test_options'][ CoreSettings::OPTION ]['membership_absent_behavior'], 'Settings::sanitize must accept open_download.' );
+$mw_dec_t3 = $mw_t_absent_engine->decide( $mw_t_absent_rel_mem, $mw_t_guest );
+$mw_dec_t5 = $mw_t_absent_engine->decide( $mw_t_absent_rel_hybrid, $mw_t_guest );
+mw_assert_same( true, $mw_dec_t3->is_allowed() && 'membership_absent_open_download' === $mw_dec_t3->reason(), 'T3: membership + open_download must allow with membership_absent_open_download.' );
+mw_assert_same( true, $mw_dec_t5->is_allowed() && 'membership_absent_open_download' === $mw_dec_t5->reason(), 'T5: purchase_or_membership + open_download must open download even when product is linked.' );
+mw_assert_same( false, $mw_t_absent_engine->decide( $mw_t_absent_rel_paid, $mw_t_guest )->is_allowed(), 'T6a: open_download must NEVER open purchase-only releases.' );
+mw_assert_same( false, $mw_t_absent_engine->decide( $mw_t_absent_rel_rest, $mw_t_guest )->is_allowed(), 'T6b: open_download must NEVER open restricted releases.' );
+mw_assert_same( false, $mw_t_absent_engine->decide( $mw_t_absent_rel_login, $mw_t_guest )->is_allowed(), 'T6c: open_download must NEVER bypass logged_in requirement for guests.' );
+
+// --- T7–T14: DirectLinkUrlValidator, DeliveryRouter, DirectLinkProvider, Streamability & Quotas ---
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ] = array(
+	'membership_absent_behavior' => 'open_download',
+	'download_token_ttl'         => 300,
+	'stream_token_ttl'           => 900,
+	'download_daily_quota'       => 2,
+	'direct_link_allowed_hosts'  => "cdn.example.com\n*.r2.dev",
+);
+
+// T10 & T11: Validator SSRF, scheme, credentials, fragments, IPv6-mapped, NAT64, CGNAT, numeric IP & allowlist checks.
+$mw_bad_urls = array(
+	'http://cdn.example.com/song.mp3',
+	'javascript:alert(1)',
+	'file:///etc/passwd',
+	'https://user:pass@cdn.example.com/song.mp3',
+	'https://cdn.example.com/song.mp3#frag',
+	'https://localhost/song.mp3',
+	'https://127.0.0.1/song.mp3',
+	'https://169.254.169.254/latest/meta-data',
+	'https://100.64.0.1/song.mp3',
+	'https://[::ffff:127.0.0.1]/song.mp3',
+	'https://[64:ff9b::7f00:1]/song.mp3',
+	'https://0x7f000001/song.mp3',
+	'https://2130706433/song.mp3',
+	'https://evil.example.org/song.mp3',
+	'https://r2.dev/song.mp3',
+);
+foreach ( $mw_bad_urls as $mw_bad_url ) {
+	mw_assert_same( false, \ManaCore\MusicWave\Core\Downloads\DirectLinkUrlValidator::validate( $mw_bad_url )['valid'], 'T10/T11: Malicious or unallowed direct URL must be rejected: ' . $mw_bad_url );
+}
+mw_assert_same( '', $mw_suite_schema->get( 'mw_download_asset_id' )->sanitize( 'DIRECT:http://cdn.example.com/song.mp3' ), 'T10: Uppercase DIRECT:http:// bypass must be rejected by MetaDefinition.' );
+mw_assert_same(
+	'direct:https://media.r2.dev/releases/track-01.flac',
+	\ManaCore\MusicWave\Core\Downloads\DirectLinkAsset::sanitize_asset_id( 'https://media.r2.dev/releases/track-01.flac' ),
+	'T11: Wildcard allowlist *.r2.dev must accept subdomain media.r2.dev.'
+);
+
+// T7, T8, T9, T12, T14: Mixed release (`direct:` + `vip:`) routed through DeliveryRouter WITHOUT VIP active (`NullDownloadProvider`).
+$mw_t_direct_rel = 9610;
+$GLOBALS['mw_test_types'][ $mw_t_direct_rel ]    = 'mw_release';
+$GLOBALS['mw_test_statuses'][ $mw_t_direct_rel ] = 'publish';
+$GLOBALS['mw_test_posts'][ $mw_t_direct_rel ]    = (object) array( 'ID' => $mw_t_direct_rel, 'post_type' => 'mw_release', 'post_status' => 'publish', 'post_title' => 'تک‌آهنگ مستقیم' );
+$GLOBALS['mw_test_meta'][ $mw_t_direct_rel ]     = array(
+	'mw_access_mode'     => 'membership',
+	'mw_download_assets' => array(
+		array(
+			'key'       => 'direct-lossless',
+			'label'     => 'FLAC Direct',
+			'asset_id'  => 'direct:https://cdn.example.com/vault/stream-endpoint?id=77',
+			'format'    => 'flac',
+			'file_name' => 'track-77.flac',
+		),
+		array(
+			'key'      => 'vip-only',
+			'label'    => 'VIP Vault WAV',
+			'asset_id' => 'vip:0123456789abcdef0123456789abcdef',
+			'format'   => 'wav',
+		),
+	),
+);
+
+mw_assert_same(
+	true,
+	\ManaCore\MusicWave\Core\Downloads\ReleaseDownloadCatalog::is_asset_streamable( $GLOBALS['mw_test_meta'][ $mw_t_direct_rel ]['mw_download_assets'][0] ),
+	'T12: Extensionless direct: URL with explicit streamable format=flac must be recognized as streamable.'
+);
+
+$mw_router_no_vip   = new \ManaCore\MusicWave\Core\Downloads\DeliveryRouter(
+	new \ManaCore\MusicWave\Core\Downloads\NullDownloadProvider(),
+	new \ManaCore\MusicWave\Core\Downloads\DirectLinkProvider()
+);
+$mw_direct_tokens   = new DownloadTokenService( '0123456789abcdef0123456789abcdef0123456789abcdef' );
+$mw_direct_resolver = new DownloadResolver(
+	$mw_suite_repo,
+	$mw_t_absent_engine,
+	$mw_direct_tokens,
+	new TransientReplayStore(),
+	$mw_router_no_vip
+);
+$mw_direct_routes   = new DownloadRoutes(
+	$mw_direct_resolver,
+	new DownloadRateLimiter( 50, 60 )
+);
+
+$GLOBALS['mw_test_current_user'] = 701;
+\ManaCore\MusicWave\Core\Downloads\RedirectResponse::reset_last_redirect();
+
+// T7: Issue & deliver `direct-lossless` without VIP active -> 302 redirect via RedirectResponse!
+$mw_d_issue_resp = $mw_direct_routes->issue( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'quality' => 'direct-lossless' ) ) );
+mw_assert_same( true, $mw_d_issue_resp instanceof WP_REST_Response && 200 === $mw_d_issue_resp->get_status(), 'T7: Direct asset must issue 200 ticket even when VIP provider is absent and membership_absent_behavior=open_download.' );
+$mw_d_ticket     = $mw_d_issue_resp->get_data();
+$mw_d_deliv_resp = $mw_direct_routes->download( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'token' => $mw_d_ticket['token'], 'nonce' => $mw_d_ticket['nonce'] ) ) );
+mw_assert_same( true, $mw_d_deliv_resp instanceof WP_REST_Response && 204 === $mw_d_deliv_resp->get_status(), 'T7: Direct asset delivery in test harness must succeed.' );
+$mw_last_redir   = \ManaCore\MusicWave\Core\Downloads\RedirectResponse::last_redirect();
+mw_assert_same( 'https://cdn.example.com/vault/stream-endpoint?id=77', is_array( $mw_last_redir ) ? $mw_last_redir['url'] : '', 'T7: DirectLinkProvider must redirect to exact validated HTTPS URL.' );
+mw_assert_same( 'no-referrer', is_array( $mw_last_redir ) ? ( $mw_last_redir['headers']['Referrer-Policy'] ?? '' ) : '', 'T7: RedirectResponse must send Referrer-Policy: no-referrer.' );
+mw_assert_same( 'nosniff', is_array( $mw_last_redir ) ? ( $mw_last_redir['headers']['X-Content-Type-Options'] ?? '' ) : '', 'T7b: RedirectResponse must send X-Content-Type-Options: nosniff.' );
+
+// T8: Replay of the same one-time ticket must be denied (`403`).
+$mw_d_replay_resp = $mw_direct_routes->download( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'token' => $mw_d_ticket['token'], 'nonce' => $mw_d_ticket['nonce'] ) ) );
+mw_assert_same( true, $mw_d_replay_resp instanceof WP_Error && 403 === ( $mw_d_replay_resp->get_error_data()['status'] ?? 0 ), 'T8: Replaying a consumed direct-link ticket must fail with 403.' );
+
+// T9: Sibling `vip:` asset on the SAME release without VIP active must return 503 `provider_unavailable` at BOTH issue and download time.
+$mw_vip_issue_resp = $mw_direct_routes->issue( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'quality' => 'vip-only' ) ) );
+mw_assert_same( true, $mw_vip_issue_resp instanceof WP_Error && 503 === ( $mw_vip_issue_resp->get_error_data()['status'] ?? 0 ), 'T9a: Protected vip: asset without VIP provider must fail closed with HTTP 503 at issue time.' );
+$mw_vip_dl_nonce   = wp_create_nonce( 'music_wave_download_' . $mw_t_direct_rel );
+$mw_pre_issued_vip = $mw_direct_tokens->issue( $mw_t_direct_rel, 701, 300, $mw_vip_dl_nonce, 'vip-only', 'download' );
+$mw_vip_deliv_resp = $mw_direct_routes->download( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'token' => $mw_pre_issued_vip, 'nonce' => $mw_vip_dl_nonce ) ) );
+mw_assert_same( true, $mw_vip_deliv_resp instanceof WP_Error && 503 === ( $mw_vip_deliv_resp->get_error_data()['status'] ?? 0 ), 'T9b: Protected vip: asset without VIP provider must also fail closed with HTTP 503 at download time.' );
+
+// T12: Stream issuance & delivery on extensionless `direct:` URL with `format=flac` must succeed.
+\ManaCore\MusicWave\Core\Downloads\RedirectResponse::reset_last_redirect();
+$mw_s_issue_resp = $mw_direct_routes->issue( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'quality' => 'direct-lossless', 'purpose' => 'stream' ) ) );
+mw_assert_same( true, $mw_s_issue_resp instanceof WP_REST_Response && 200 === $mw_s_issue_resp->get_status(), 'T12: Stream ticket issuance must succeed for direct: asset with format=flac.' );
+$mw_s_ticket     = $mw_s_issue_resp->get_data();
+$mw_s_deliv_resp = $mw_direct_routes->stream( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'token' => $mw_s_ticket['token'], 'nonce' => $mw_s_ticket['nonce'] ) ) );
+mw_assert_same( true, $mw_s_deliv_resp instanceof WP_REST_Response && 204 === $mw_s_deliv_resp->get_status(), 'T12: Stream delivery must redirect cleanly via DirectLinkProvider.' );
+
+// T14: Persistent DB daily quota survives transient eviction (`download_daily_quota = 2`).
+$mw_d2_issue  = $mw_direct_routes->issue( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'quality' => 'direct-lossless' ) ) );
+$mw_d2_ticket = $mw_d2_issue->get_data();
+$mw_d2_deliv  = $mw_direct_routes->download( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'token' => $mw_d2_ticket['token'], 'nonce' => $mw_d2_ticket['nonce'] ) ) );
+mw_assert_same( true, $mw_d2_deliv instanceof WP_REST_Response && 204 === $mw_d2_deliv->get_status(), 'T14: Second download within daily quota=2 must succeed.' );
+
+// Flush all transients to simulate object-cache eviction; DB option `mw_dl_quota_*` must still enforce quota=2!
+$GLOBALS['mw_test_transients'] = array();
+$mw_d3_issue                   = $mw_direct_routes->issue( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'quality' => 'direct-lossless' ) ) );
+$mw_d3_ticket                  = $mw_d3_issue->get_data();
+$mw_d3_deliv                   = $mw_direct_routes->download( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'token' => $mw_d3_ticket['token'], 'nonce' => $mw_d3_ticket['nonce'] ) ) );
+mw_assert_same( true, $mw_d3_deliv instanceof WP_Error && 'mw_download_quota_exceeded' === $mw_d3_deliv->get_error_code(), 'T14: Persistent DB quota must block 3rd download even after transient cache flush.' );
+
+// T11b: Runtime allowlist revocation blocks already-saved `direct:` URL at BOTH issue and delivery time (`403`).
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ]['download_daily_quota'] = 0;
+$mw_pre_rev_issue  = $mw_direct_routes->issue( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'quality' => 'direct-lossless' ) ) );
+$mw_pre_rev_ticket = $mw_pre_rev_issue->get_data();
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ]['direct_link_allowed_hosts'] = 'other-cdn.example.com';
+$mw_rev_issue      = $mw_direct_routes->issue( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'quality' => 'direct-lossless' ) ) );
+mw_assert_same( true, $mw_rev_issue instanceof WP_Error && 403 === ( $mw_rev_issue->get_error_data()['status'] ?? 0 ), 'T11b-issue: Revoking host from direct_link_allowed_hosts must block new ticket issuance with 403.' );
+$mw_rev_deliv      = $mw_direct_routes->download( new WP_REST_Request( array( 'id' => $mw_t_direct_rel, 'token' => $mw_pre_rev_ticket['token'], 'nonce' => $mw_pre_rev_ticket['nonce'] ) ) );
+mw_assert_same( true, $mw_rev_deliv instanceof WP_Error && 403 === ( $mw_rev_deliv->get_error_data()['status'] ?? 0 ), 'T11b-deliver: Revoking host from direct_link_allowed_hosts must also block pre-issued tickets with 403.' );
+
+// T13: DirectLinkPermission & DownloadAssetRoutes authoring gates (`403` unauthorized, `400` bad URL, `200` unchanged relabel).
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ]['direct_link_allowed_hosts'] = 'cdn.example.com';
+$mw_asset_routes = new \ManaCore\MusicWave\Core\Downloads\DownloadAssetRoutes( $mw_suite_repo );
+$mw_prev_test_caps                   = $GLOBALS['mw_test_capabilities'] ?? array();
+$GLOBALS['mw_test_current_user']     = 702;
+$GLOBALS['mw_test_capabilities']     = array( 'edit_posts', 'edit_post' );
+$mw_unauth_direct_save               = $mw_asset_routes->update(
+	new WP_REST_Request(
+		array(
+			'id'     => $mw_t_direct_rel,
+			'assets' => array(
+				array(
+					'key'      => 'new-direct',
+					'label'    => 'MP3 320',
+					'asset_id' => 'direct:https://cdn.example.com/new-song.mp3',
+				),
+			),
+		)
+	)
+);
+mw_assert_same( true, $mw_unauth_direct_save instanceof WP_Error && 403 === ( $mw_unauth_direct_save->get_error_data()['status'] ?? 0 ), 'T13a: User without manage_mw_protected_assets must get 403 when assigning a new direct: URL.' );
+
+$mw_relabel_unchanged = $mw_asset_routes->update(
+	new WP_REST_Request(
+		array(
+			'id'     => $mw_t_direct_rel,
+			'assets' => array(
+				array(
+					'key'       => 'direct-lossless',
+					'label'     => 'FLAC 24-bit Master',
+					'asset_id'  => 'direct:https://cdn.example.com/vault/stream-endpoint?id=77',
+					'format'    => 'flac',
+					'file_name' => 'track-77.flac',
+				),
+			),
+		)
+	)
+);
+mw_assert_same( true, $mw_relabel_unchanged instanceof WP_REST_Response && 200 === $mw_relabel_unchanged->get_status(), 'T13b: Editor relabeling an unchanged existing direct: asset must succeed with 200.' );
+
+$GLOBALS['mw_test_capabilities'] = array( 'edit_posts', 'edit_post', 'manage_mw_protected_assets' );
+$mw_bad_direct_save              = $mw_asset_routes->update(
+	new WP_REST_Request(
+		array(
+			'id'     => $mw_t_direct_rel,
+			'assets' => array(
+				array(
+					'key'      => 'bad-http',
+					'label'    => 'Insecure HTTP',
+					'asset_id' => 'direct:http://cdn.example.com/plain.mp3',
+				),
+			),
+		)
+	)
+);
+mw_assert_same( true, $mw_bad_direct_save instanceof WP_Error && 400 === ( $mw_bad_direct_save->get_error_data()['status'] ?? 0 ), 'T13c: Authorized admin submitting invalid direct:http:// URL must receive 400 validation error.' );
+
+// --- T15–T19: RemoteRedirectProvider `vip:<hash>` / `local:` Resolution & Keyring Rotation ---
+$wpdb->mw_enable_activity_table = true;
+$wpdb->query(
+	'CREATE TABLE IF NOT EXISTS wp_mw_vip_assets (
+		asset_key TEXT PRIMARY KEY,
+		path_hash TEXT UNIQUE NOT NULL,
+		relative_path TEXT NOT NULL,
+		file_size INTEGER NOT NULL DEFAULT 0,
+		checksum TEXT NOT NULL DEFAULT "",
+		mime TEXT NOT NULL DEFAULT "",
+		registered_at INTEGER NOT NULL DEFAULT 0
+	)'
+);
+$mw_reg_tmp                     = sys_get_temp_dir() . '/mw-vip-remote-reg-' . uniqid();
+@mkdir( $mw_reg_tmp, 0755, true );
+file_put_contents( $mw_reg_tmp . '/song name.flac', 'FLACDATA' );
+$mw_remote_storage = new ProtectedAssetStorage();
+$mw_reg_vip_id     = (string) $mw_remote_storage->registry()->register( 'albums/2026/song name.flac', $mw_reg_tmp . '/song name.flac' );
+mw_assert_same( true, 0 === strpos( $mw_reg_vip_id, 'vip:' ), 'ProtectedAssetRegistry::register must return opaque vip:<32hex> identifier.' );
+
+// T18: Multi-key rotation in RemoteSigningKeyring (`active` + `retired`, `autoload=false`, `hash_equals`).
+\ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::clear_all();
+$mw_secret_v1 = str_repeat( 'a1', 20 ); // 40 chars
+$mw_secret_v2 = str_repeat( 'b2', 20 ); // 40 chars
+$mw_saved_k1  = VipSettingsPage::sanitize_settings(
+	array(
+		'delivery_provider'     => 'remote_redirect',
+		'remote_base_url'       => 'https://cdn.example.com/protected',
+		'remote_path_prefix'    => 'audio',
+		'remote_signing_secret' => $mw_secret_v1,
+		'remote_key_id'         => 'k2026v1',
+	)
+);
+mw_assert_same( '', $mw_saved_k1['remote_signing_secret'], 'T18a: Autoloaded music_wave_vip_settings option must NOT store raw remote_signing_secret once saved into keyring.' );
+$GLOBALS['mw_test_options'][ VipSettings::OPTION ] = $mw_saved_k1;
+mw_assert_same( $mw_secret_v1, VipSettings::all()['remote_signing_secret'], 'T18b: VipSettings::all() must transparently resolve active secret from non-autoloaded keyring.' );
+
+$mw_remote_v1 = \ManaCore\MusicWave\Vip\ProviderFactory::download_provider( $mw_remote_storage );
+mw_assert_same( true, $mw_remote_v1 instanceof \ManaCore\MusicWave\Vip\RemoteRedirectProvider, 'ProviderFactory must construct RemoteRedirectProvider with registry.' );
+$mw_sample_claims = new DownloadTokenClaims( $mw_t_direct_rel, 701, time() + 120, 'tok-rem-1', 'nonce-rem-1', 'vip-only', 'download' );
+
+// T15: Registered `vip:<32hex>` resolves to `albums/2026/song%20name.flac` with ZERO `vip%3A`!
+$mw_url_v1 = $mw_remote_v1->create_url( $mw_reg_vip_id, $mw_sample_claims, false );
+mw_assert_same( true, 0 === strpos( $mw_url_v1, 'https://cdn.example.com/protected/audio/albums/2026/song%20name.flac?' ), 'T15: RemoteRedirectProvider must map vip:<hash> to registered relative_path.' );
+mw_assert_same( false, strpos( $mw_url_v1, 'vip%3A' ), 'T15: RemoteRedirectProvider must NEVER emit vip%3A in signed URLs.' );
+
+// T16 & T17: Unknown `vip:` fails closed (`''`), `local:` strips prefix cleanly.
+mw_assert_same( '', $mw_remote_v1->create_url( 'vip:ffffffffffffffffffffffffffffffff', $mw_sample_claims, false ), 'T16: Unregistered vip:<hash> must fail closed with empty URL.' );
+mw_assert_same( '', $mw_remote_v1->create_url( 'direct:https://cdn.example.com/a.mp3', $mw_sample_claims, false ), 'T16b: direct: scheme passed directly to RemoteRedirectProvider must fail closed.' );
+$mw_local_stripped_url = $mw_remote_v1->create_url( 'local:singles/track-02.mp3', $mw_sample_claims, false );
+mw_assert_same( true, 0 === strpos( $mw_local_stripped_url, 'https://cdn.example.com/protected/audio/singles/track-02.mp3?' ) && false === strpos( $mw_local_stripped_url, 'local%3A' ), 'T17: RemoteRedirectProvider must strip local: prefix cleanly.' );
+
+// T18c: Rotate to v2 key (`k2026v2`) while keeping `k2026v1` retired; BOTH v1 and v2 URLs must verify until retired keys are purged!
+$mw_saved_k2 = VipSettingsPage::sanitize_settings(
+	array(
+		'delivery_provider'     => 'remote_redirect',
+		'remote_base_url'       => 'https://cdn.example.com/protected',
+		'remote_path_prefix'    => 'audio',
+		'remote_signing_secret' => $mw_secret_v2,
+		'remote_key_id'         => 'k2026v2',
+	)
+);
+$GLOBALS['mw_test_options'][ VipSettings::OPTION ] = $mw_saved_k2;
+$mw_remote_v2 = new \ManaCore\MusicWave\Vip\RemoteRedirectProvider( VipSettings::all(), $mw_remote_storage->registry() );
+$mw_url_v2    = $mw_remote_v2->create_url( $mw_reg_vip_id, $mw_sample_claims, false );
+
+$mw_parse_signed = static function ( string $signed ): array {
+	$parts = explode( '?', $signed, 2 );
+	$query = array();
+	parse_str( $parts[1] ?? '', $query );
+	return array(
+		'unsigned'  => $parts[0],
+		'expires'   => (int) ( $query['expires'] ?? 0 ),
+		'signature' => (string) ( $query['signature'] ?? '' ),
+		'mode'      => (string) ( $query['mode'] ?? '' ),
+		'kid'       => (string) ( $query['kid'] ?? '' ),
+	);
+};
+$mw_p1 = $mw_parse_signed( $mw_url_v1 );
+$mw_p2 = $mw_parse_signed( $mw_url_v2 );
+mw_assert_same( true, \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::verify_signature( $mw_p2['unsigned'], $mw_p2['expires'], $mw_p2['mode'], $mw_p2['signature'], $mw_p2['kid'] ), 'T18c: Active rotated key k2026v2 signature must verify.' );
+mw_assert_same( true, \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::verify_signature( $mw_p1['unsigned'], $mw_p1['expires'], $mw_p1['mode'], $mw_p1['signature'], $mw_p1['kid'] ), 'T18d: Retired key k2026v1 signature must remain verifiable during rotation grace period.' );
+mw_assert_same( false, \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::verify_signature( $mw_p2['unsigned'], $mw_p2['expires'], 'stream', $mw_p2['signature'], $mw_p2['kid'] ), 'T18e: Tampering with mode parameter must fail HMAC verification.' );
+\ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::purge_retired_keys();
+mw_assert_same( false, \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::verify_signature( $mw_p1['unsigned'], $mw_p1['expires'], $mw_p1['mode'], $mw_p1['signature'], $mw_p1['kid'] ), 'T18f: Purging retired keys must immediately revoke old key k2026v1.' );
+
+@unlink( $mw_reg_tmp . '/song name.flac' );
+@rmdir( $mw_reg_tmp );
+
+// --- T21–T24: DeliveryCapabilities, Admin Link Integrity, SQL Mode Counts & Benchmark ---
+unset( $GLOBALS['mw_test_filters']['music_wave_download_provider'] );
+$mw_caps_direct = \ManaCore\MusicWave\Core\Support\DeliveryCapabilities::describe( new \ManaCore\MusicWave\Core\Downloads\NullDownloadProvider() );
+mw_assert_same( 'direct_only', $mw_caps_direct['mode'], 'T21a: DeliveryCapabilities must report direct_only when no protected provider is active.' );
+mw_assert_same( false, $mw_caps_direct['has_protected_provider'], 'T21b: has_protected_provider must be false in direct_only mode.' );
+mw_assert_same( true, $mw_caps_direct['supports_direct_links'], 'T21c: supports_direct_links must always be true in Core.' );
+
+$mw_vip_settings_src = (string) file_get_contents( dirname( __DIR__ ) . '/music-wave-vip/src/SettingsPage.php' );
+mw_assert_same( false, strpos( $mw_vip_settings_src, 'page=music-wave-bulk-access' ), 'T22: Dead music-wave-bulk-access link must be completely removed from VIP SettingsPage.' );
+mw_assert_same( true, false !== strpos( $mw_vip_settings_src, 'page=music-wave-settings&tab=access' ), 'T22b: VIP SettingsPage must point bulk access button to page=music-wave-settings&tab=access.' );
+
+// T23: DatabaseReplayStore cleanup batching + BulkAccessManager cached mode_counts().
+$wpdb->mw_enable_activity_table = true;
+$wpdb->posts                    = 'wp_posts';
+$wpdb->postmeta                 = 'wp_postmeta';
+$wpdb->options                  = 'wp_options';
+$wpdb->query( 'CREATE TABLE IF NOT EXISTS wp_posts (ID INTEGER PRIMARY KEY, post_type TEXT, post_status TEXT)' );
+$wpdb->query( 'DELETE FROM wp_posts' );
+$wpdb->query( 'DELETE FROM wp_postmeta' );
+$wpdb->query( "INSERT INTO wp_posts (ID, post_type, post_status) VALUES (1, 'mw_release', 'publish'), (2, 'mw_release', 'publish'), (3, 'mw_release', 'draft')" );
+$wpdb->query( "INSERT INTO wp_postmeta (post_id, meta_key, meta_value) VALUES (1, 'mw_access_mode', 'membership'), (2, 'mw_access_mode', 'purchase_or_membership')" );
+BulkAccessManager::invalidate_counts_cache();
+$mw_bulk_mgr    = new BulkAccessManager( $mw_suite_repo, $mw_suite_mapper );
+$mw_sql_counts  = $mw_bulk_mgr->mode_counts();
+mw_assert_same( 1, $mw_sql_counts['membership'], 'T23a: SQL mode_counts() must count membership release accurately.' );
+mw_assert_same( 1, $mw_sql_counts['purchase_or_membership'], 'T23b: SQL mode_counts() must count purchase_or_membership release accurately.' );
+mw_assert_same( 1, $mw_sql_counts['public'], 'T23c: SQL mode_counts() must default release without mw_access_mode row to public.' );
+mw_assert_same( true, is_array( get_transient( BulkAccessManager::COUNTS_TRANSIENT ) ), 'T23d: mode_counts() must cache result in transient.' );
+BulkAccessManager::invalidate_counts_cache();
+mw_assert_same( false, get_transient( BulkAccessManager::COUNTS_TRANSIENT ), 'T23e: invalidate_counts_cache() must clear cached mode counts.' );
+
+$wpdb->query( 'DELETE FROM wp_options' );
+$wpdb->query( "INSERT INTO wp_options (option_name, option_value) VALUES ('mw_dl_quota_old_20200101', '3'), ('mw_dl_quota_keep_" . gmdate( 'Ymd' ) . "', '1')" );
+$GLOBALS['mw_test_options']['mw_dl_quota_old_20200101']               = 3;
+$GLOBALS['mw_test_options'][ 'mw_dl_quota_keep_' . gmdate( 'Ymd' ) ] = 1;
+( new \ManaCore\MusicWave\Core\Downloads\DatabaseReplayStore() )->cleanup();
+mw_assert_same( false, isset( $GLOBALS['mw_test_options']['mw_dl_quota_old_20200101'] ), 'T14b: DatabaseReplayStore::cleanup() must purge stale daily quota options from previous days.' );
+mw_assert_same( true, isset( $GLOBALS['mw_test_options'][ 'mw_dl_quota_keep_' . gmdate( 'Ymd' ) ] ), 'T14c: DatabaseReplayStore::cleanup() must preserve today quota option.' );
+
+// T24: Performance micro-benchmark (1,000 iterations of validator + access policy + router capability check).
+$mw_bench_start = microtime( true );
+for ( $mw_i = 0; $mw_i < 1000; ++$mw_i ) {
+	\ManaCore\MusicWave\Core\Downloads\DirectLinkUrlValidator::validate( 'https://cdn.example.com/audio/track-' . $mw_i . '.flac', array( 'cdn.example.com', '*.r2.dev' ) );
+	$mw_t_absent_engine->decide( $mw_t_absent_rel_hybrid, $mw_t_guest );
+	$mw_router_no_vip->can_deliver_asset( 'direct:https://cdn.example.com/audio/track-' . $mw_i . '.flac' );
+}
+$mw_bench_ms = ( microtime( true ) - $mw_bench_start ) * 1000.0;
+mw_assert_same( true, $mw_bench_ms < 2000.0, 'T24: 1,000 combined validator + policy + router iterations must complete well under 2,000ms (actual: ' . round( $mw_bench_ms, 2 ) . 'ms).' );
+
+// Final cleanup of Section 7 test state.
+\ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::clear_all();
+\ManaCore\MusicWave\Core\Downloads\RedirectResponse::reset_last_redirect();
+$wpdb->query( 'DROP TABLE IF EXISTS wp_posts' );
+$wpdb->query(
+	'CREATE TABLE IF NOT EXISTS wp_mw_user_activity (
+		user_id INTEGER NOT NULL,
+		release_id INTEGER NOT NULL,
+		event TEXT NOT NULL,
+		position INTEGER NOT NULL DEFAULT 0,
+		updated_at INTEGER NOT NULL DEFAULT 0,
+		PRIMARY KEY (user_id, release_id, event)
+	)'
+);
+unset( $wpdb->posts );
+$wpdb->mw_enable_activity_table                     = $mw_prev_wpdb_enabled;
+$GLOBALS['mw_test_current_user']                    = 0;
+$GLOBALS['mw_test_capabilities']                    = $mw_prev_test_caps;
+$GLOBALS['mw_test_options'][ CoreSettings::OPTION ] = array();
+$GLOBALS['mw_test_options'][ VipSettings::OPTION ]  = array();
+unset(
+	$GLOBALS['mw_test_posts'][ $mw_t_absent_rel_mem ],
+	$GLOBALS['mw_test_posts'][ $mw_t_absent_rel_hybrid ],
+	$GLOBALS['mw_test_posts'][ $mw_t_absent_rel_paid ],
+	$GLOBALS['mw_test_posts'][ $mw_t_absent_rel_rest ],
+	$GLOBALS['mw_test_posts'][ $mw_t_absent_rel_login ],
+	$GLOBALS['mw_test_posts'][ $mw_t_direct_rel ],
+	$GLOBALS['mw_test_types'][ $mw_t_absent_rel_mem ],
+	$GLOBALS['mw_test_types'][ $mw_t_absent_rel_hybrid ],
+	$GLOBALS['mw_test_types'][ $mw_t_absent_rel_paid ],
+	$GLOBALS['mw_test_types'][ $mw_t_absent_rel_rest ],
+	$GLOBALS['mw_test_types'][ $mw_t_absent_rel_login ],
+	$GLOBALS['mw_test_types'][ $mw_t_direct_rel ]
+);
+
 echo "VIP, Access & Protected Delivery suite OK.\n";

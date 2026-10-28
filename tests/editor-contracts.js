@@ -654,6 +654,15 @@ async function metadataUI( endpoint, plain, fail = false ) {
 ( async () => {
 	editorContracts();
 	actionButtonsSearchArtistAndTracklistContracts();
+	const editorSource = read( 'music-wave-core/assets/editor.js' );
+	assert.equal(
+		editorSource.includes( 'validateDirectHttpsUrl' ) &&
+			editorSource.includes( 'directAllowedHosts' ) &&
+			editorSource.includes( "value: 'direct'" ) &&
+			editorSource.includes( "value: 'protected'" ),
+		true,
+		'Release editor must expose protected vs direct HTTPS delivery selector and live directAllowedHosts validation.'
+	);
 	await metadataUI(
 		'https://example.test/sub/wp-json/music-wave/v1/metadata-lookup',
 		false

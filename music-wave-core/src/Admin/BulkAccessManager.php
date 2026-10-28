@@ -25,9 +25,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class BulkAccessManager {
-	private const BATCH_SIZE = 200;
-	private const JOB_KEY    = 'music_wave_bulk_access_job_';
-	private const NOTICE_KEY = 'music_wave_bulk_access_notice_';
+	public const COUNTS_TRANSIENT = 'mw_bulk_access_mode_counts';
+	private const BATCH_SIZE      = 200;
+	private const JOB_KEY         = 'music_wave_bulk_access_job_';
+	private const NOTICE_KEY      = 'music_wave_bulk_access_notice_';
 
 	/** @var ReleaseRepository */
 	private $releases;
@@ -47,6 +48,26 @@ final class BulkAccessManager {
 		add_action( 'admin_post_music_wave_bulk_access_start', array( $this, 'start' ) );
 		add_action( 'admin_post_music_wave_bulk_access_continue', array( $this, 'continue_job' ) );
 		add_action( 'admin_post_music_wave_bulk_access_cancel', array( $this, 'cancel' ) );
+		add_action( 'save_post_' . ReleasePostType::KEY, array( self::class, 'invalidate_counts_cache' ) );
+		add_action( 'deleted_post', array( self::class, 'invalidate_counts_cache_for_post' ) );
+		add_action( 'trashed_post', array( self::class, 'invalidate_counts_cache_for_post' ) );
+		add_action( 'untrashed_post', array( self::class, 'invalidate_counts_cache_for_post' ) );
+	}
+
+	public static function invalidate_counts_cache(): void {
+		if ( function_exists( 'delete_transient' ) ) {
+			delete_transient( self::COUNTS_TRANSIENT );
+		}
+	}
+
+	/**
+	 * @param int $post_id Post ID being deleted, trashed, or restored.
+	 */
+	public static function invalidate_counts_cache_for_post( $post_id ): void {
+		$id = absint( $post_id );
+		if ( $id < 1 || ReleasePostType::KEY === get_post_type( $id ) ) {
+			self::invalidate_counts_cache();
+		}
 	}
 
 	public function start(): void {
@@ -113,9 +134,79 @@ final class BulkAccessManager {
 	/**
 	 * Count catalog releases grouped by canonical access mode for live admin preview.
 	 *
+	 * Uses a 5-minute transient cache invalidated on release mutations and a single
+	 * aggregated SQL `GROUP BY` query (`O(1)` DB round-trips regardless of catalog size),
+	 * with a seamless `WP_Query` fallback for non-SQL unit test harnesses.
+	 *
+	 * @param bool $force_refresh Bypass transient cache when true.
 	 * @return array<string, int>
 	 */
-	public function mode_counts(): array {
+	public function mode_counts( bool $force_refresh = false ): array {
+		if ( ! $force_refresh ) {
+			$cached = get_transient( self::COUNTS_TRANSIENT );
+			if ( is_array( $cached ) ) {
+				$normalized = array_fill_keys( AccessModePolicy::keys(), 0 );
+				foreach ( $normalized as $mode => $zero ) {
+					unset( $zero );
+					if ( isset( $cached[ $mode ] ) ) {
+						$normalized[ $mode ] = max( 0, (int) $cached[ $mode ] );
+					}
+				}
+				return $normalized;
+			}
+		}
+
+		$counts = $this->sql_mode_counts();
+		if ( null === $counts ) {
+			$counts = $this->fallback_mode_counts();
+		}
+
+		$ttl = defined( 'MINUTE_IN_SECONDS' ) ? 5 * MINUTE_IN_SECONDS : 300;
+		set_transient( self::COUNTS_TRANSIENT, $counts, $ttl );
+
+		return $counts;
+	}
+
+	/**
+	 * @return array<string, int>|null
+	 */
+	private function sql_mode_counts(): ?array {
+		global $wpdb;
+		if ( ! isset( $wpdb ) || ! is_object( $wpdb ) || empty( $wpdb->posts ) || empty( $wpdb->postmeta ) || ! method_exists( $wpdb, 'get_results' ) || ! method_exists( $wpdb, 'prepare' ) ) {
+			return null;
+		}
+
+		$sql  = $wpdb->prepare(
+			"SELECT COALESCE(NULLIF(pm.meta_value, ''), 'public') AS raw_mode, COUNT(DISTINCT p.ID) AS total
+			FROM {$wpdb->posts} p
+			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = %s
+			WHERE p.post_type = %s
+			  AND p.post_status IN ('publish', 'draft', 'pending', 'private', 'future')
+			GROUP BY COALESCE(NULLIF(pm.meta_value, ''), 'public')", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			'mw_access_mode',
+			ReleasePostType::KEY
+		);
+		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared
+		if ( ! is_array( $rows ) ) {
+			return null;
+		}
+
+		$counts = array_fill_keys( AccessModePolicy::keys(), 0 );
+		foreach ( $rows as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+			$mode             = AccessModePolicy::sanitize_mode( isset( $row['raw_mode'] ) ? (string) $row['raw_mode'] : 'public', 'public' );
+			$counts[ $mode ] += isset( $row['total'] ) ? max( 0, (int) $row['total'] ) : 0;
+		}
+
+		return $counts;
+	}
+
+	/**
+	 * @return array<string, int>
+	 */
+	private function fallback_mode_counts(): array {
 		$counts = array_fill_keys( AccessModePolicy::keys(), 0 );
 		$page   = 1;
 		do {
@@ -220,6 +311,7 @@ final class BulkAccessManager {
 			$this->set_notice( $message, 'success', false );
 		}
 
+		self::invalidate_counts_cache();
 		$this->redirect();
 	}
 

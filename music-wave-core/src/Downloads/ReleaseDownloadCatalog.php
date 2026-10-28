@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class ReleaseDownloadCatalog {
-	public const STREAMABLE_FORMATS = array( 'mp3', 'm4a', 'aac', 'ogg', 'wav', 'flac' );
+	public const STREAMABLE_FORMATS = array( 'mp3', 'm4a', 'aac', 'ogg', 'oga', 'opus', 'wav', 'flac' );
 
 	/** @var ReleaseRepository */
 	private $releases;
@@ -30,14 +30,28 @@ final class ReleaseDownloadCatalog {
 	}
 
 	/**
-	 * Single source of truth for whether a protected download variant can stream in browser audio.
+	 * Single source of truth for whether a download variant can stream in browser audio.
+	 *
+	 * Handles `direct:<https-url>?query` by inspecting the URL path rather than
+	 * the raw query-bearing string.
 	 *
 	 * @param array<string, mixed> $asset Stored or legacy-normalized asset entry.
 	 */
 	public static function is_asset_streamable( array $asset ): bool {
 		$format = isset( $asset['format'] ) && is_scalar( $asset['format'] ) ? sanitize_key( strtolower( (string) $asset['format'] ) ) : '';
+		if ( '' === $format && isset( $asset['file_name'] ) && is_scalar( $asset['file_name'] ) ) {
+			$file_ext = pathinfo( (string) $asset['file_name'], PATHINFO_EXTENSION );
+			$format   = '' !== $file_ext ? sanitize_key( strtolower( $file_ext ) ) : '';
+		}
 		if ( '' === $format && isset( $asset['asset_id'] ) && is_scalar( $asset['asset_id'] ) ) {
-			$ext    = pathinfo( (string) $asset['asset_id'], PATHINFO_EXTENSION );
+			$raw_id = trim( (string) $asset['asset_id'] );
+			if ( DirectLinkAsset::has_direct_scheme( $raw_id ) ) {
+				$direct_url = DirectLinkAsset::extract_url( $raw_id );
+				$url_path   = function_exists( 'wp_parse_url' ) ? wp_parse_url( $direct_url, PHP_URL_PATH ) : parse_url( $direct_url, PHP_URL_PATH ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
+				$ext        = is_string( $url_path ) && '' !== $url_path ? pathinfo( $url_path, PATHINFO_EXTENSION ) : '';
+			} else {
+				$ext = pathinfo( $raw_id, PATHINFO_EXTENSION );
+			}
 			$format = '' !== $ext ? sanitize_key( strtolower( $ext ) ) : '';
 		}
 

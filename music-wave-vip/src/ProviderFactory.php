@@ -21,7 +21,7 @@ final class ProviderFactory {
 	public static function download_provider( ProtectedAssetStorage $storage ): DownloadProvider {
 		$config   = VipSettings::all();
 		$provider = 'remote_redirect' === $config['delivery_provider']
-			? new RemoteRedirectProvider( $config )
+			? new RemoteRedirectProvider( $config, $storage->registry() )
 			: new ProtectedFileProvider( $storage );
 
 		$provider = apply_filters( 'music_wave_vip_download_provider', $provider, $config, $storage );

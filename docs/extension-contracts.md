@@ -30,6 +30,10 @@ inventory of public extension points, their stability level, and the deprecation
 | `music_wave_manage_asset_caps` | filter | Primitive capabilities mapped to `manage_mw_protected_assets` (default `manage_options`). |
 | `music_wave_download_event` | action | `(string $event, int $release_id, int $user_id, array $context)` — structured, PII-free audit stream. Context added in 0.9.x (additive). Persisting integrations own retention/export/erasure. |
 | `music_wave_download_rate_limit` / `music_wave_download_rate_window` | filter | Token-issue rate limit tuning. |
+| `music_wave_membership_absent_behavior` | filter | `(string $mode)` — override behavior when no membership provider is registered (`allow` default, `open_download`, or `deny`; ADR 0005). |
+| `music_wave_direct_link_allowed_hosts` | filter | `(array $hosts)` — normalized host/wildcard allowlist enforced on `direct:https://...` assets at both save and delivery time. |
+| `music_wave_direct_link_url_allowed` | filter | `(bool $allowed, string $sanitized_url, string $host)` — custom policy gate for `direct:` URLs after built-in HTTPS/SSRF checks pass. |
+| `music_wave_direct_link_capability` | filter | `(string $capability, int $release_id, int $user_id)` — capability required to add/modify `direct:` download URLs (default `manage_mw_protected_assets`). |
 | `music_wave_download_daily_quota` | filter | Per-user daily delivery quota; `0` disables (default). |
 
 ## VIP delivery (stable)

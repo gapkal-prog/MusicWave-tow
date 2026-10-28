@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Core\Schema;
 
+use ManaCore\MusicWave\Core\Access\AccessModePolicy;
+use ManaCore\MusicWave\Core\Downloads\DirectLinkAsset;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -138,14 +141,15 @@ final class MetaDefinition {
 				return $this->sanitize_credits( $value );
 			case 'mw_collection_items':
 				return $this->sanitize_collection_items( $value );
+			case 'mw_download_asset_id':
+				return is_scalar( $value ) ? $this->sanitize_asset_identifier( (string) $value ) : '';
 			case 'mw_download_assets':
 				return $this->sanitize_download_assets( $value );
 			case 'mw_access_mode':
 				if ( ! is_scalar( $value ) ) {
 					return 'restricted';
 				}
-				$value = sanitize_key( (string) $value );
-				return in_array( $value, array( 'public', 'purchase', 'membership', 'purchase_or_membership', 'restricted' ), true ) ? $value : 'restricted';
+				return AccessModePolicy::sanitize_mode( (string) $value, 'restricted' );
 			default:
 				if ( ! is_scalar( $value ) ) {
 					return $this->default;
@@ -293,9 +297,8 @@ final class MetaDefinition {
 
 			$key      = substr( sanitize_key( (string) $asset['key'] ), 0, 40 );
 			$label    = substr( sanitize_text_field( (string) $asset['label'] ), 0, 80 );
-			$asset_id = sanitize_text_field( (string) $asset['asset_id'] );
-			$scheme   = wp_parse_url( $asset_id, PHP_URL_SCHEME );
-			if ( '' === $key || '' === $label || '' === $asset_id || isset( $keys[ $key ] ) || in_array( strtolower( (string) $scheme ), array( 'http', 'https' ), true ) ) {
+			$asset_id = $this->sanitize_asset_identifier( (string) $asset['asset_id'] );
+			if ( '' === $key || '' === $label || '' === $asset_id || isset( $keys[ $key ] ) ) {
 				continue;
 			}
 
@@ -337,5 +340,48 @@ final class MetaDefinition {
 		}
 
 		return $assets;
+	}
+
+	/**
+	 * Normalize a single download asset identifier:
+	 * - `direct:<https-url>` is validated via `DirectLinkAsset::sanitize_asset_id()`
+	 * - Raw URLs (`http://`, `https://`, `javascript:`, `data:`, `file:`, etc.) are rejected
+	 * - `local:` and relative opaque paths reject `..` traversal segments
+	 */
+	private function sanitize_asset_identifier( string $raw ): string {
+		$trimmed = trim( $raw );
+		if ( '' === $trimmed || 1 === preg_match( '/[\x00-\x1F\x7F]/', $trimmed ) ) {
+			return '';
+		}
+
+		if ( DirectLinkAsset::has_direct_scheme( $trimmed ) ) {
+			return DirectLinkAsset::sanitize_asset_id( $trimmed );
+		}
+
+		$cleaned = sanitize_text_field( $trimmed );
+		if ( '' === $cleaned || 1 === preg_match( '/^[a-z][a-z0-9+.-]*:\/\//i', $cleaned ) ) {
+			return '';
+		}
+
+		if ( 1 === preg_match( '/^([a-z][a-z0-9+.-]*):/i', $cleaned, $scheme_match ) ) {
+			$scheme          = strtolower( $scheme_match[1] );
+			$allowed_schemes = apply_filters( 'music_wave_allowed_asset_schemes', array( 'local', 'vip', 'direct' ) );
+			$allowed_schemes = is_array( $allowed_schemes ) ? array_map( 'strtolower', array_map( 'strval', $allowed_schemes ) ) : array( 'local', 'vip', 'direct' );
+			if ( ! in_array( $scheme, $allowed_schemes, true ) ) {
+				return '';
+			}
+		}
+
+		$check_path = 0 === strpos( $cleaned, 'local:' ) ? substr( $cleaned, 6 ) : $cleaned;
+		if ( false !== strpos( $check_path, '\\' ) ) {
+			return '';
+		}
+		foreach ( explode( '/', $check_path ) as $segment ) {
+			if ( '..' === $segment ) {
+				return '';
+			}
+		}
+
+		return $cleaned;
 	}
 }

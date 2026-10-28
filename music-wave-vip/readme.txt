@@ -4,7 +4,7 @@ Tags: music, membership, downloads, protected-files, woocommerce
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,11 +28,11 @@ MusicWave VIP extends MusicWave Core with secure delivery and membership.
 * **Expiry**: hourly cron + login hook, 15-min cooldown on admin/login, reverts to standard when expired, order view shows subscription details.
 * **Uninstall**: opt-in setting `delete_data_on_uninstall` default OFF in Advanced tab, self-contained `uninstall.php` with `WP_UNINSTALL_PLUGIN` guard, drops `mw_vip_assets`, deletes options `music_wave_vip_*`, transients, user meta `mw_vip_plan_grants`, cron, role `mw_vip`, caps. Never deletes releases/terms/media/protected files. Multisite aware via `get_sites` + `switch_to_blog`.
 
-Requires MusicWave Core 0.11.0+ and MusicWave theme. Works without WooCommerce (role/filter sources only).
+Requires MusicWave Core 0.16.0+ and MusicWave theme. Works without WooCommerce (role/filter sources only).
 
 == Installation ==
 
-1. Activate MusicWave Core 0.11.0+ before this plugin.
+1. Activate MusicWave Core 0.16.0+ before this plugin.
 2. Activate MusicWave VIP.
 3. Set `MUSIC_WAVE_VIP_PROTECTED_ROOT` in `wp-config.php` (constant overrides UI) or configure Settings → MusicWave VIP → Delivery.
 4. Ensure protected directory exists, readable/writable, outside public WordPress root. For subdirectory installs, auto-detected sibling folder is rejected if still web-accessible — use absolute path like `/var/private/musicwave`.
@@ -81,6 +81,11 @@ Use `tests/download-e2e.php` (planned FIX-42): guest → 403, subscriber without
 5. My Orders column “اشتراک” with badge and view-order subscription details box.
 
 == Changelog ==
+
+= 0.5.2 =
+* Fix: `RemoteRedirectProvider` now injects `ProtectedAssetRegistry` via `ProviderFactory`, resolves `vip:<32hex>` inventory identifiers to their registered `relative_path`, strips `local:` prefixes, fails closed on unknown `vip:` or traversal paths, never leaks `vip%3A`/`local%3A` into signed URLs, and shares Core's hardened `RedirectResponse`.
+* Security: `RemoteSigningKeyring` stores remote HMAC signing keys in a non-autoloaded option (`music_wave_vip_remote_keyring`, `autoload=no`), gives highest priority to `MUSIC_WAVE_VIP_REMOTE_SECRET` in `wp-config.php`, and supports zero-downtime multi-key rotation (`active` / `retired`) with constant-time `hash_equals()` verification.
+* UX & Compatibility: membership & plan controls stay unlocked for pre-configuration while the master VIP switch is off, fixed the bulk-access link (`page=music-wave-settings&tab=access`), and updated `MIN_CORE_VERSION` to `0.16.0`.
 
 = 0.5.1 =
 * Compatibility: the protected-asset uploader detects MIME types through a single helper that no longer calls `finfo_close()` (deprecated in PHP 8.5); behaviour is unchanged on PHP 7.4–8.4.

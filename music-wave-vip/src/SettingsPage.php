@@ -164,7 +164,11 @@ final class SettingsPage {
 		$controls_unlocked = ! empty( $value['mwvip_controls_unlocked'] );
 		$active_tab        = isset( $value['mwvip_active_tab'] ) ? sanitize_key( (string) $value['mwvip_active_tab'] ) : '';
 		$clear_secret      = ! empty( $value['clear_remote_signing_secret'] );
-		unset( $value['mwvip_full_form'], $value['mwvip_controls_unlocked'], $value['mwvip_active_tab'], $value['clear_remote_signing_secret'] );
+		$purge_retired     = ! empty( $value['purge_retired_remote_keys'] );
+		$submitted_secret  = isset( $value['remote_signing_secret'] ) && is_scalar( $value['remote_signing_secret'] )
+			? trim( (string) $value['remote_signing_secret'] )
+			: '';
+		unset( $value['mwvip_full_form'], $value['mwvip_controls_unlocked'], $value['mwvip_active_tab'], $value['clear_remote_signing_secret'], $value['purge_retired_remote_keys'] );
 
 		if ( $full_form ) {
 			$module_was_enabled      = 'disabled' !== (string) $current['module_enabled'];
@@ -185,8 +189,40 @@ final class SettingsPage {
 
 		$settings = VipSettings::sanitize( $value );
 		if ( $clear_secret ) {
+			\ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::clear_all();
 			$settings['remote_signing_secret'] = '';
+		} elseif ( '' !== $submitted_secret && ! \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::has_constant_secret() ) {
+			$raw_stored   = get_option( VipSettings::OPTION, array() );
+			$legacy_sec   = is_array( $raw_stored ) && isset( $raw_stored['remote_signing_secret'] ) && is_scalar( $raw_stored['remote_signing_secret'] )
+				? (string) $raw_stored['remote_signing_secret']
+				: '';
+			$legacy_kid   = is_array( $raw_stored ) && isset( $raw_stored['remote_key_id'] ) && is_scalar( $raw_stored['remote_key_id'] )
+				? (string) $raw_stored['remote_key_id']
+				: '';
+			$assigned_kid = \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::store_active_key(
+				$submitted_secret,
+				(string) $settings['remote_key_id'],
+				! $purge_retired,
+				$legacy_sec,
+				$legacy_kid
+			);
+			if ( '' !== $assigned_kid && '' === (string) $settings['remote_key_id'] ) {
+				$settings['remote_key_id'] = $assigned_kid;
+			}
+			// Do not duplicate the secret into the autoloaded option row.
+			$settings['remote_signing_secret'] = '';
+		} elseif ( ! \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::has_constant_secret() ) {
+			// If a keyring active key is already stored in non-autoloaded storage, keep autoloaded option clean.
+			$keyring_state = \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::load();
+			if ( '' !== $keyring_state['active_kid'] ) {
+				$settings['remote_signing_secret'] = '';
+			}
 		}
+		if ( $purge_retired ) {
+			\ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::purge_retired_keys();
+		}
+		$effective_key    = \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::resolve_active_key( $settings );
+		$effective_secret = $effective_key['secret'];
 
 		$root = (string) $settings['protected_root'];
 		if ( '' !== $root ) {
@@ -204,7 +240,7 @@ final class SettingsPage {
 			}
 		}
 
-		if ( 'remote_redirect' === $settings['delivery_provider'] && ( '' === $settings['remote_base_url'] || '' === $settings['remote_signing_secret'] ) ) {
+		if ( 'remote_redirect' === $settings['delivery_provider'] && ( '' === $settings['remote_base_url'] || '' === $effective_secret ) ) {
 			add_settings_error(
 				VipSettings::OPTION,
 				'remote_incomplete',
@@ -212,7 +248,7 @@ final class SettingsPage {
 				'warning'
 			);
 		}
-		if ( '' !== (string) $settings['remote_signing_secret'] && strlen( (string) $settings['remote_signing_secret'] ) < 32 ) {
+		if ( '' !== $effective_secret && strlen( $effective_secret ) < 32 ) {
 			add_settings_error(
 				VipSettings::OPTION,
 				'weak_secret',
@@ -254,7 +290,7 @@ final class SettingsPage {
 	}
 
 	private function membership_controls_disabled(): bool {
-		return 'disabled' === (string) VipSettings::all()['module_enabled'];
+		return false;
 	}
 
 	public function delivery_access_field(): void {
@@ -419,17 +455,34 @@ final class SettingsPage {
 	}
 
 	public function remote_signing_secret_field(): void {
-		$value = (string) VipSettings::all()['remote_signing_secret'];
-		$has   = '' !== $value;
+		$settings    = VipSettings::all();
+		$summary     = \ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring::public_summary( $settings );
+		$from_const  = 'constant' === $summary['source'];
+		$has         = $summary['has_secret'];
+		$placeholder = $from_const
+			? __( 'از ثابت MUSIC_WAVE_VIP_REMOTE_SECRET در wp-config.php خوانده می‌شود', 'music-wave-vip' )
+			: ( $has ? __( 'راز ذخیره‌شده — برای چرخش امن کلید جدید وارد کنید یا خالی بگذارید', 'music-wave-vip' ) : __( 'ایجاد با دکمهٔ «ایجاد» یا openssl rand -hex 32', 'music-wave-vip' ) );
 		echo '<div class="mwvip-secret-row">';
-		echo '<input class="regular-text code" type="password" autocomplete="new-password" id="mwvip-remote-secret" name="' . esc_attr( VipSettings::OPTION ) . '[remote_signing_secret]" value="" placeholder="' . esc_attr( $has ? __( 'راز ذخیره‌شده — برای حفظ آن خالی بگذارید', 'music-wave-vip' ) : __( 'ایجاد با دکمهٔ «ایجاد» یا openssl rand -hex 32', 'music-wave-vip' ) ) . '" style="min-width:360px;">';
-		echo '<button type="button" class="button" id="mwvip-toggle-secret" aria-label="' . esc_attr__( 'نمایش/پنهان‌کردن راز', 'music-wave-vip' ) . '"><span class="dashicons dashicons-visibility"></span></button>';
-		echo '<button type="button" class="button" id="mwvip-gen-secret">' . esc_html__( 'ایجاد کلید امن ۶۴ کاراکتری', 'music-wave-vip' ) . '</button>';
+		echo '<input class="regular-text code" type="password" autocomplete="new-password" id="mwvip-remote-secret" name="' . esc_attr( VipSettings::OPTION ) . '[remote_signing_secret]" value="" placeholder="' . esc_attr( $placeholder ) . '" ' . disabled( $from_const, true, false ) . ' style="min-width:360px;">';
+		echo '<button type="button" class="button" id="mwvip-toggle-secret" ' . disabled( $from_const, true, false ) . ' aria-label="' . esc_attr__( 'نمایش/پنهان‌کردن راز', 'music-wave-vip' ) . '"><span class="dashicons dashicons-visibility"></span></button>';
+		echo '<button type="button" class="button" id="mwvip-gen-secret" ' . disabled( $from_const, true, false ) . '>' . esc_html__( 'ایجاد کلید امن ۶۴ کاراکتری', 'music-wave-vip' ) . '</button>';
 		echo '</div>';
-		if ( $has ) {
-			echo '<p><label><input type="checkbox" name="' . esc_attr( VipSettings::OPTION ) . '[clear_remote_signing_secret]" value="1"> ' . esc_html__( 'پاک‌سازی راز امضای ذخیره‌شده', 'music-wave-vip' ) . '</label></p>';
+		if ( $from_const ) {
+			echo '<p class="description" style="color:#00a32a;"><span class="dashicons dashicons-lock"></span> ' . esc_html__( 'راز امضا با ثابت MUSIC_WAVE_VIP_REMOTE_SECRET در wp-config.php قفل شده است (امن‌ترین حالت — خارج از پایگاه داده).', 'music-wave-vip' ) . '</p>';
+		} elseif ( $has ) {
+			echo '<p class="description">' . esc_html__( 'راز در گزینهٔ غیرخودکار (autoload=no) ذخیره می‌شود. ذخیرهٔ کلید جدید به‌طور خودکار کلید قبلی را در وضعیت بازنشسته (retired) نگه می‌دارد تا لینک‌های در حال دانلود قطع نشوند.', 'music-wave-vip' ) . '</p>';
+			if ( ! empty( $summary['retired_kids'] ) ) {
+				echo '<p><label><input type="checkbox" name="' . esc_attr( VipSettings::OPTION ) . '[purge_retired_remote_keys]" value="1"> ' . esc_html(
+					sprintf(
+						/* translators: %s: comma-separated retired key IDs. */
+						__( 'حذف کلیدهای بازنشسته پس از همگام‌سازی CDN (%s)', 'music-wave-vip' ),
+						implode( ', ', $summary['retired_kids'] )
+					)
+				) . '</label></p>';
+			}
+			echo '<p><label><input type="checkbox" name="' . esc_attr( VipSettings::OPTION ) . '[clear_remote_signing_secret]" value="1"> ' . esc_html__( 'پاک‌سازی کامل همهٔ کلیدهای امضای ذخیره‌شده', 'music-wave-vip' ) . '</label></p>';
 		}
-		if ( $has && strlen( $value ) < 32 ) {
+		if ( $has && ! $summary['secret_strong'] ) {
 			echo '<p style="color:#d63638;"><span class="dashicons dashicons-warning"></span> ' . esc_html__( 'رمز فعلی کوتاه‌تر از ۳۲ کاراکتر است. تا ذخیرهٔ رمز قوی‌تر، نشانی امضاشده صادر نمی‌شود.', 'music-wave-vip' ) . '</p>';
 		}
 	}
@@ -525,7 +578,7 @@ final class SettingsPage {
 		echo '<form action="options.php" method="post" id="mwvip-form">';
 		settings_fields( self::OPTION_GROUP );
 		echo '<input type="hidden" name="' . esc_attr( VipSettings::OPTION ) . '[mwvip_full_form]" value="1">';
-		echo '<input type="hidden" name="' . esc_attr( VipSettings::OPTION ) . '[mwvip_controls_unlocked]" value="' . ( $module_on ? '1' : '0' ) . '" data-mwvip-controls-unlocked>';
+		echo '<input type="hidden" name="' . esc_attr( VipSettings::OPTION ) . '[mwvip_controls_unlocked]" value="1" data-mwvip-controls-unlocked>';
 
 		$this->render_general_panel();
 		$this->render_delivery_panel( $settings, $remote_active, $diagnostics );
@@ -737,9 +790,7 @@ final class SettingsPage {
 	private function render_membership_panel( bool $module_on ): void {
 		echo '<div class="mwvip-panel" id="mwvip-panel-membership" role="tabpanel" aria-labelledby="mwvip-tab-membership" data-panel="membership">';
 		echo '<h2 style="margin-top:0;">' . esc_html__( 'عضویت و مجوز دسترسی', 'music-wave-vip' ) . '</h2>';
-		if ( ! $module_on ) {
-			echo '<div class="notice notice-info inline" id="mwvip-membership-note" style="margin:0 0 16px;"><p><span class="dashicons dashicons-hidden" style="color:#2271b1;vertical-align:middle;"></span> ' . esc_html__( 'اعمال قوانین خاموش است؛ با روشن کردن کلید اصلی در تب «عمومی» این گزینه‌ها بلافاصله برای ویرایش باز می‌شوند.', 'music-wave-vip' ) . '</p></div>';
-		}
+		echo '<div class="notice notice-info inline" id="mwvip-membership-note" style="margin:0 0 16px;' . ( $module_on ? 'display:none;' : '' ) . '"><p><span class="dashicons dashicons-info-outline" style="color:#2271b1;vertical-align:middle;"></span> ' . esc_html__( 'اعمال قوانین VIP در حال حاضر خاموش است؛ تمام کنترل‌های زیر برای پیش‌پیکربندی طرح‌ها و منابع عضویت باز هستند و تغییرات شما ذخیره می‌شود، اما تا روشن کردن کلید اصلی در تب «عمومی» قفل عضویت روی سایت اعمال نخواهد شد.', 'music-wave-vip' ) . '</p></div>';
 		$this->render_plans_manager();
 		$this->membership_section();
 		echo '<table class="form-table" role="presentation">';
@@ -802,7 +853,7 @@ final class SettingsPage {
 		echo '<a class="button" href="' . esc_url( admin_url( 'edit.php?post_type=mw_release&page=music-wave-settings&tab=content' ) ) . '"><span class="dashicons dashicons-album"></span> ' . esc_html__( 'پیش‌فرض‌های انتشار جدید و سطح‌های عضویت پیش‌فرض', 'music-wave-vip' ) . '</a>';
 		echo '<a class="button" href="' . esc_url( admin_url( 'edit.php?post_type=mw_release&page=music-wave-settings&tab=access' ) ) . '"><span class="dashicons dashicons-lock"></span> ' . esc_html__( 'پیام‌های دسترسی (شامل خرید یا عضویت) و رفتار ماژول عضویت', 'music-wave-vip' ) . '</a>';
 		echo '<a class="button" href="' . esc_url( admin_url( 'edit.php?post_type=mw_release&page=music-wave-settings&tab=delivery' ) ) . '"><span class="dashicons dashicons-shield"></span> ' . esc_html__( 'محدودیت نرخ دانلود، سهمیهٔ روزانه و TTL توکن‌ها', 'music-wave-vip' ) . '</a>';
-		echo '<a class="button" href="' . esc_url( admin_url( 'edit.php?post_type=mw_release&page=music-wave-bulk-access' ) ) . '"><span class="dashicons dashicons-forms"></span> ' . esc_html__( 'مدیریت حالت دسترسی انبوه کاتالوگ', 'music-wave-vip' ) . '</a>';
+		echo '<a class="button" href="' . esc_url( admin_url( 'edit.php?post_type=mw_release&page=music-wave-settings&tab=access' ) ) . '"><span class="dashicons dashicons-forms"></span> ' . esc_html__( 'مدیریت حالت دسترسی انبوه کاتالوگ', 'music-wave-vip' ) . '</a>';
 		echo '</div></div></div></div>';
 	}
 

@@ -563,14 +563,8 @@
 			moduleToggle.addEventListener( 'change', function () {
 				const enabled = Boolean( moduleToggle.checked );
 				if ( unlockedInput ) {
-					unlockedInput.value = enabled ? '1' : '0';
+					unlockedInput.value = '1';
 				}
-				Array.prototype.forEach.call(
-					document.querySelectorAll( '.mwvip-module-control' ),
-					function ( ctrl ) {
-						ctrl.disabled = ! enabled;
-					}
-				);
 				const note = document.getElementById( 'mwvip-membership-note' );
 				if ( note ) {
 					note.style.display = enabled ? 'none' : '';

@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace ManaCore\MusicWave\Core\Support;
 
 use ManaCore\MusicWave\Core\Access\AccessModePolicy;
+use ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy;
+use ManaCore\MusicWave\Core\Downloads\DirectLinkUrlValidator;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -62,6 +64,7 @@ final class Settings {
 			'download_rate_limit'            => 30,
 			'download_rate_window'           => 60,
 			'download_daily_quota'           => 0,
+			'direct_link_allowed_hosts'      => '',
 			'discovery_rate_limit'           => 60,
 			'discovery_rate_window'          => 60,
 			'discovery_cache_ttl'            => 300,
@@ -190,7 +193,7 @@ final class Settings {
 		$result['json_ld_mode'] = in_array( $json_ld_mode, array( 'auto', 'enabled', 'disabled' ), true ) ? $json_ld_mode : $defaults['json_ld_mode'];
 
 		$absent_behavior                      = isset( $value['membership_absent_behavior'] ) && is_scalar( $value['membership_absent_behavior'] ) ? sanitize_key( (string) $value['membership_absent_behavior'] ) : '';
-		$result['membership_absent_behavior'] = in_array( $absent_behavior, array( 'allow', 'deny' ), true ) ? $absent_behavior : $defaults['membership_absent_behavior'];
+		$result['membership_absent_behavior'] = MembershipAbsencePolicy::sanitize_mode( $absent_behavior, (string) $defaults['membership_absent_behavior'] );
 
 		foreach ( array( 'purchase_message', 'purchase_cta_label', 'membership_message', 'membership_cta_label', 'purchase_or_membership_message', 'login_required_message', 'restricted_message', 'access_granted_message' ) as $key ) {
 			$result[ $key ] = isset( $value[ $key ] ) && is_scalar( $value[ $key ] ) ? sanitize_text_field( (string) $value[ $key ] ) : '';
@@ -217,6 +220,11 @@ final class Settings {
 
 		$download_daily_quota           = isset( $value['download_daily_quota'] ) ? absint( $value['download_daily_quota'] ) : 0;
 		$result['download_daily_quota'] = $download_daily_quota <= 10000 ? $download_daily_quota : $defaults['download_daily_quota'];
+
+		$raw_direct_hosts                    = isset( $value['direct_link_allowed_hosts'] ) && is_scalar( $value['direct_link_allowed_hosts'] ) ? (string) $value['direct_link_allowed_hosts'] : '';
+		$split_direct_hosts                  = '' !== trim( $raw_direct_hosts ) ? preg_split( '/[\r\n,\s]+/', $raw_direct_hosts ) : array();
+		$direct_host_parts                   = is_array( $split_direct_hosts ) ? $split_direct_hosts : array();
+		$result['direct_link_allowed_hosts'] = implode( "\n", DirectLinkUrlValidator::normalize_host_list( $direct_host_parts ) );
 
 		$discovery_rate_limit           = isset( $value['discovery_rate_limit'] ) ? absint( $value['discovery_rate_limit'] ) : 0;
 		$result['discovery_rate_limit'] = $discovery_rate_limit >= 1 && $discovery_rate_limit <= 1000 ? $discovery_rate_limit : $defaults['discovery_rate_limit'];

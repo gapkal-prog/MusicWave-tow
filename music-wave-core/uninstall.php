@@ -32,6 +32,7 @@ $core_tables = array(
 
 $core_crons = array(
 	'music_wave_daily_cleanup',
+	'music_wave_replay_cleanup',
 	'music_wave_hourly_view_sync',
 	'music_wave_playlist_cleanup',
 	'music_wave_listening_cleanup',
@@ -86,9 +87,9 @@ if ( ! function_exists( 'music_wave_core_uninstall_site' ) ) {
 		delete_option( 'music_wave_download_secret' );
 		delete_option( 'music_wave_schema_version' );
 
-		// Preserve VIP options when VIP data retention is active; delete Core options only (`music_wave_settings`, `music_wave_schema_version`, `music_wave_request_*`, etc.).
+		// Preserve VIP options when VIP data retention is active; delete Core options, ticket fallbacks, and daily quota buckets.
 		if ( isset( $wpdb->options ) ) {
-			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'music_wave_%' AND option_name NOT LIKE 'music_wave_vip%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( option_name LIKE 'music_wave_%' AND option_name NOT LIKE 'music_wave_vip%' ) OR option_name LIKE 'mw_dl_quota_%' OR option_name LIKE 'mw_ticket_%' OR option_name LIKE 'mw_download_replay_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 			// Delete Core transients (excluding `mwvip_` which belongs to MusicWave VIP).
 			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_music_wave_%' OR option_name LIKE '_transient_timeout_music_wave_%' OR option_name LIKE '_transient_mw_%' OR option_name LIKE '_transient_timeout_mw_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery

@@ -94,11 +94,20 @@ final class DownloadAssetRoutes {
 	 * @return WP_REST_Response
 	 */
 	public function index( WP_REST_Request $request ): WP_REST_Response {
-		return new WP_REST_Response( array( 'items' => $this->assets( absint( $request->get_param( 'id' ) ) ) ), 200 );
+		$release_id = absint( $request->get_param( 'id' ) );
+
+		return new WP_REST_Response(
+			array(
+				'items'                => $this->assets( $release_id ),
+				'direct_links_allowed' => DirectLinkPermission::can_manage( $release_id ),
+				'direct_allowed_hosts' => DirectLinkUrlValidator::configured_allowed_hosts(),
+			),
+			200
+		);
 	}
 
 	/**
-	 * Validate and persist opaque provider variants.
+	 * Validate and persist opaque provider variants and controlled `direct:` HTTPS links.
 	 *
 	 * @param WP_REST_Request $request Route request.
 	 * @return WP_REST_Response|WP_Error
@@ -107,6 +116,11 @@ final class DownloadAssetRoutes {
 		$assets = $request->get_param( 'assets' );
 		if ( ! is_array( $assets ) ) {
 			return new WP_Error( 'mw_download_assets_invalid', __( 'کیفیت‌های دانلود باید یک آرایه باشد.', 'music-wave-core' ), array( 'status' => 400 ) );
+		}
+
+		$validation_error = $this->validate_submitted_assets( $assets );
+		if ( null !== $validation_error ) {
+			return $validation_error;
 		}
 
 		// Normalize before anything else so authorization and persistence both
@@ -122,7 +136,86 @@ final class DownloadAssetRoutes {
 		$this->releases->update( $release_id, 'mw_download_assets', $assets );
 		$this->releases->delete( $release_id, 'mw_download_asset_id' );
 
-		return new WP_REST_Response( array( 'items' => $this->assets( $release_id ) ), 200 );
+		return new WP_REST_Response(
+			array(
+				'items'                => $this->assets( $release_id ),
+				'direct_links_allowed' => DirectLinkPermission::can_manage( $release_id ),
+				'direct_allowed_hosts' => DirectLinkUrlValidator::configured_allowed_hosts(),
+			),
+			200
+		);
+	}
+
+	/**
+	 * Validate raw submitted asset payloads and return explicit 400 errors for
+	 * malformed `direct:` URLs, raw public URLs, or path traversal attempts.
+	 *
+	 * @param array<int, mixed> $assets Submitted asset entries.
+	 * @return WP_Error|null
+	 */
+	private function validate_submitted_assets( array $assets ): ?WP_Error {
+		foreach ( $assets as $asset ) {
+			if ( ! is_array( $asset ) ) {
+				continue;
+			}
+
+			$delivery_type = isset( $asset['delivery_type'] ) && is_scalar( $asset['delivery_type'] )
+				? sanitize_key( (string) $asset['delivery_type'] )
+				: '';
+			$direct_url    = isset( $asset['direct_url'] ) && is_scalar( $asset['direct_url'] )
+				? trim( (string) $asset['direct_url'] )
+				: '';
+			$raw_id        = isset( $asset['asset_id'] ) && is_scalar( $asset['asset_id'] )
+				? trim( (string) $asset['asset_id'] )
+				: '';
+
+			if ( 'direct' === $delivery_type || '' !== $direct_url || DirectLinkAsset::has_direct_scheme( $raw_id ) ) {
+				$candidate  = '' !== $direct_url ? $direct_url : DirectLinkAsset::extract_url( $raw_id );
+				$validation = DirectLinkAsset::validate( $candidate );
+				if ( ! $validation['valid'] ) {
+					return new WP_Error(
+						'mw_invalid_direct_url',
+						$validation['message'],
+						array(
+							'status'     => 400,
+							'error_code' => $validation['error_code'],
+						)
+					);
+				}
+				continue;
+			}
+
+			if ( '' === $raw_id ) {
+				continue;
+			}
+
+			if ( 1 === preg_match( '/^https?:\/\//i', $raw_id ) ) {
+				return new WP_Error(
+					'mw_raw_public_url_forbidden',
+					__( 'نشانی عمومی خام پذیرفته نمی‌شود؛ برای لینک مستقیم کنترل‌شده گزینهٔ «لینک مستقیم HTTPS» (پیشوند direct:) را انتخاب کنید.', 'music-wave-core' ),
+					array( 'status' => 400 )
+				);
+			}
+
+			if ( 1 === preg_match( '/^[a-z][a-z0-9+.-]*:\/\//i', $raw_id ) || 1 === preg_match( '/^(?:javascript|data|file|ftp|php|phar):/i', $raw_id ) ) {
+				return new WP_Error(
+					'mw_invalid_download_asset',
+					__( 'طرح‌وارهٔ شناسهٔ دارایی دانلود مجاز نیست.', 'music-wave-core' ),
+					array( 'status' => 400 )
+				);
+			}
+
+			$check_path = 0 === strpos( $raw_id, 'local:' ) ? substr( $raw_id, 6 ) : $raw_id;
+			if ( false !== strpos( $check_path, '\\' ) || in_array( '..', explode( '/', $check_path ), true ) ) {
+				return new WP_Error(
+					'mw_invalid_download_asset',
+					__( 'مسیر دارایی دانلود حاوی اجزای غیرمجاز است.', 'music-wave-core' ),
+					array( 'status' => 400 )
+				);
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -145,6 +238,20 @@ final class DownloadAssetRoutes {
 			}
 			$asset_id = sanitize_text_field( (string) $asset['asset_id'] );
 			if ( '' === $asset_id || in_array( $asset_id, $existing, true ) ) {
+				continue;
+			}
+
+			if ( DirectLinkAsset::has_direct_scheme( $asset_id ) ) {
+				if ( ! DirectLinkPermission::can_manage( $release_id ) && ! current_user_can( 'manage_options' ) ) {
+					return new WP_Error(
+						'mw_direct_link_forbidden',
+						__( 'شما مجوز ثبت یا تغییر لینک مستقیم HTTPS را ندارید.', 'music-wave-core' ),
+						array(
+							'status'   => 403,
+							'asset_id' => $asset_id,
+						)
+					);
+				}
 				continue;
 			}
 
@@ -233,13 +340,35 @@ final class DownloadAssetRoutes {
 		$result = array();
 
 		foreach ( $assets as $asset ) {
-			if ( ! is_array( $asset ) || empty( $asset['key'] ) || empty( $asset['label'] ) || empty( $asset['asset_id'] ) ) {
+			if ( ! is_array( $asset ) || empty( $asset['key'] ) || empty( $asset['label'] ) ) {
 				continue;
 			}
+
+			$delivery_type = isset( $asset['delivery_type'] ) && is_scalar( $asset['delivery_type'] )
+				? sanitize_key( (string) $asset['delivery_type'] )
+				: '';
+			$direct_url    = isset( $asset['direct_url'] ) && is_scalar( $asset['direct_url'] )
+				? trim( (string) $asset['direct_url'] )
+				: '';
+			$raw_id        = isset( $asset['asset_id'] ) && is_scalar( $asset['asset_id'] )
+				? trim( (string) $asset['asset_id'] )
+				: '';
+
+			if ( 'direct' === $delivery_type || '' !== $direct_url || DirectLinkAsset::has_direct_scheme( $raw_id ) ) {
+				$candidate     = '' !== $direct_url ? $direct_url : DirectLinkAsset::extract_url( $raw_id );
+				$normalized_id = DirectLinkAsset::sanitize_asset_id( $candidate );
+			} else {
+				$normalized_id = sanitize_text_field( $raw_id );
+			}
+
+			if ( '' === $normalized_id ) {
+				continue;
+			}
+
 			$normalized = array(
 				'key'      => sanitize_key( (string) $asset['key'] ),
 				'label'    => sanitize_text_field( (string) $asset['label'] ),
-				'asset_id' => sanitize_text_field( (string) $asset['asset_id'] ),
+				'asset_id' => $normalized_id,
 			);
 			$format     = isset( $asset['format'] ) ? sanitize_key( strtolower( (string) $asset['format'] ) ) : '';
 			$file_name  = isset( $asset['file_name'] ) ? sanitize_file_name( (string) $asset['file_name'] ) : '';

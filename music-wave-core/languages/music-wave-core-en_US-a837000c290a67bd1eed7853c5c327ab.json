@@ -190,8 +190,8 @@
             "MusicWave VIP را فعال کنید و قبل از فعال کردن دانلودهای خصوصی، یک پوشهٔ حفاظت‌شده تنظیم کنید.": [
                 "Activate MusicWave VIP and set a protected directory before enabling private downloads."
             ],
-            "MusicWave VIP فعال است اما هنوز ارائه‌دهنده تحویل ثبت نشده است. برای فعال کردن دانلودهای حفاظت‌شده، تنظیمات تحویل VIP را ذخیره کنید.": [
-                "MusicWave VIP is active but no delivery provider is registered yet. Save the VIP delivery settings to enable protected downloads."
+            "MusicWave VIP فعال است اما هنوز ارائه‌دهنده تحویل ثبت نشده است؛ تحویل مستقیم HTTPS (direct:) فعال است اما برای فایل‌های حفاظت‌شده (vip:) تنظیمات VIP را ذخیره کنید.": [
+                "MusicWave VIP is active but no protected delivery provider is registered yet; direct HTTPS delivery (direct:) is active, but save VIP settings to serve protected files (vip:)."
             ],
             "MusicWave از پیوندهای ثابت زیبا استفاده می‌کند": [
                 "MusicWave uses pretty permalinks"
@@ -228,6 +228,9 @@
             ],
             "VIP": [
                 "VIP"
+            ],
+            "VIP امضاشده": [
+                "VIP Signed"
             ],
             "VIP حفاظت‌شده": [
                 "VIP protected"
@@ -466,17 +469,14 @@
             "ارائه دهندگان ناموفق: %s. قطعی ارائه‌دهنده و اعتبارنامه‌های بد در اینجا گزارش می‌شوند به‌جای اینکه در سکوت به‌عنوان «بدون نتیجه» تلقی شوند.": [
                 "Failing providers: %s. Provider outages and bad credentials are reported here instead of being silently treated as “no results”."
             ],
-            "ارائه‌دهنده تحویل حفاظت‌شده MusicWave اختیاری است اما در دسترس نیست": [
-                "MusicWave protected delivery provider is optional but unavailable"
+            "ارائه‌دهنده تحویل امن سفارشی + لینک مستقیم HTTPS": [
+                "Custom Secure Delivery Provider + Direct HTTPS Links"
             ],
             "ارائه‌دهنده تحویل حفاظت‌شده MusicWave در دسترس است": [
                 "MusicWave protected delivery provider is available"
             ],
             "ارائه‌دهنده عضویت": [
                 "Membership provider"
-            ],
-            "ارائه‌دهنده می‌تواند دارایی‌های حفاظت‌شده غیرشفاف را پس از تصویب بررسی‌های دسترسی، پخش کند.": [
-                "A provider can stream opaque protected assets after access checks pass."
             ],
             "ارتفاع بنر": [
                 "Banner height"
@@ -532,6 +532,12 @@
             "از صف حذف شد.": [
                 "Removed from the queue."
             ],
+            "از طریق ارائه‌دهنده تحویل امن و بلیت‌های یک‌بارمصرف تحویل داده می‌شود. نشانی مستقیم فایل در صفحه نمایش داده نمی‌شود.": [
+                "Delivered through a secure delivery provider and one-time tickets. Direct file URLs are never exposed on the page."
+            ],
+            "از طریق تیکت یک‌بارمصرف کوتاه‌عمر با بررسی دسترسی، محدودیت نرخ و تغییرمسیر ایمن HTTPS تحویل داده می‌شود.": [
+                "Delivered via a short-lived one-time ticket with entitlement checks, rate limiting, and hardened HTTPS redirect."
+            ],
             "از طریق پیوندهای امضاشده و منقضی‌شده تحویل داده می‌شود. نشانی مستقیم فایل هرگز در معرض دید قرار نمی‌گیرد.": [
                 "Delivered through signed, expiring links. Direct file URLs are never exposed."
             ],
@@ -547,8 +553,8 @@
             "از کروم اشتراک‌گذاری قفسه استفادهٔ مجدد می‌کند، بنابراین با قفسه‌های دیگر مطابقت دارد.": [
                 "Reuses the shared release-shelf chrome, so it matches every other shelf."
             ],
-            "از یک شناسهٔ غیرشفاف مانند local:album/track.flac استفاده کنید. نشانی‌های عمومی مجاز نیستند.": [
-                "Use an opaque ID such as local:album/track.flac. Public URLs are blocked."
+            "از یک شناسهٔ غیرشفاف مانند vip:… یا local:album/track.flac استفاده کنید. نشانی‌های عمومی خام مجاز نیستند.": [
+                "Use an opaque identifier such as vip:… or local:album/track.flac. Raw public URLs are not allowed."
             ],
             "استاندارد": [
                 "Standard"
@@ -559,8 +565,17 @@
             "استاندارد متعادل (MD)": [
                 "Balanced standard (MD)"
             ],
+            "استفاده از localhost، شبکه داخلی یا آدرس‌های IP خصوصی/رزروشده مجاز نیست.": [
+                "Localhost, internal networks, and private or reserved IP addresses are not permitted."
+            ],
+            "استفاده از اطلاعات کاربری یا #fragment در نشانی فایل دانلودی مجاز نیست.": [
+                "Credentials or #fragment components are not allowed in downloadable file URLs."
+            ],
             "استفاده از این فایل مدت زمان": [
                 "Use this file duration"
+            ],
+            "استفاده از بخش #fragment در نشانی فایل دانلودی مجاز نیست.": [
+                "URL #fragment components are not allowed in downloadable file URLs."
             ],
             "استفاده از تصویر هنرمند": [
                 "Use artist image"
@@ -900,6 +915,9 @@
             "انتشارهای ذخیره‌شده و فایل‌های حفاظت‌شده کاربر.": [
                 "Saved releases and unlocked protected downloads."
             ],
+            "انتشارهای صرفاً عضویتی بدون افزونه VIP باز می‌مانند، اما در حالت دوگانه «خرید یا اشتراک» اگر محصول WooCommerce متصل باشد مسیر خرید تکی الزامی می‌ماند.": [
+                "Membership-only releases remain open without a VIP add-on, while dual Purchase or Membership releases keep their single-purchase gate when a WooCommerce product is linked."
+            ],
             "انتشارهای مرتبط": [
                 "Related releases"
             ],
@@ -1103,6 +1121,9 @@
             ],
             "بارگذاری یک کیفیت": [
                 "Upload a quality"
+            ],
+            "باز شدن دانلود برای تمام حالت‌های اشتراکی و ترکیبی (بدون ویرایش انتشارها)": [
+                "Open downloads for all membership and hybrid releases (without editing release posts)"
             ],
             "باز کردن %s": [
                 "Open %s"
@@ -1620,6 +1641,9 @@
             "تا زمان تغییر از پیش‌فرض جهانی استفاده می‌کند.": [
                 "Uses the global default until changed."
             ],
+            "تا زمان فعال‌شدن یک ماژول عضویت، دسترسی عضویتی قفل می‌ماند و فقط خریداران محصول متصل دسترسی دارند.": [
+                "Membership access stays locked until a membership module is activated; only buyers of a linked product retain access."
+            ],
             "تاریخ": [
                 "history"
             ],
@@ -1665,20 +1689,47 @@
             "تحریریه": [
                 "Editorial"
             ],
-            "تحویل حفاظت‌شده": [
-                "Protected delivery"
+            "تحویل امضاشده": [
+                "Signed Delivery"
             ],
             "تحویل حفاظت‌شده و طرح‌های VIP": [
                 "Protected Delivery & VIP Plans"
             ],
+            "تحویل حفاظت‌شده و مستقیم": [
+                "Protected & Direct Delivery"
+            ],
+            "تحویل حفاظت‌شده و پیوند مستقیم": [
+                "Protected & Direct Link Delivery"
+            ],
             "تحویل حفاظت‌شدهٔ MusicWave پیکربندی‌شده است": [
                 "MusicWave protected delivery is configured"
+            ],
+            "تحویل راه‌دور امضاشده HMAC در MusicWave VIP (همراه با پشتیبانی لینک مستقیم HTTPS در هسته) فعال است.": [
+                "MusicWave VIP HMAC-signed remote delivery is active alongside Core direct HTTPS link delivery."
+            ],
+            "تحویل لینک مستقیم HTTPS در هسته فعال است؛ برای فایل‌های خصوصی (`vip:` / `local:`) افزونه MusicWave VIP مورد نیاز است.": [
+                "Core direct HTTPS link delivery is active; MusicWave VIP is required for private vault assets (`vip:` / `local:`)."
+            ],
+            "تحویل لینک مستقیم HTTPS کنترل‌شده در هسته (بدون مخزن خصوصی VIP)": [
+                "Core Controlled Direct HTTPS Delivery (without VIP private vault)"
             ],
             "تحویل و حریم خصوصی": [
                 "Delivery & privacy"
             ],
             "تحویل و حریم خصوصی — طول عمر توکن دانلود، محدودیت سرعت، سهمیه‌های تحویل، حافظهٔ نهان و نگه‌داری سابقهٔ شنیداری.": [
                 "Delivery & Privacy — download token TTL, rate limiting, daily quotas, cache TTL, and listening history retention."
+            ],
+            "تحویل پوشه خصوصی MusicWave VIP (همراه با پشتیبانی لینک مستقیم HTTPS در هسته) فعال است.": [
+                "MusicWave VIP private directory delivery is active alongside Core direct HTTPS link delivery."
+            ],
+            "تحویل پیوند مستقیم HTTPS فعال است؛ ارائه‌دهنده حفاظت‌شده اختیاری در دسترس نیست": [
+                "Direct HTTPS link delivery is active; optional protected delivery provider is unavailable"
+            ],
+            "تحویل کنترل‌شده": [
+                "Controlled Delivery"
+            ],
+            "تذکر امنیتی: مجوز دسترسی و سهمیه توسط هسته MusicWave بررسی می‌شود، اما محافظت مخزن خصوصی VIP روی سرور مقصد اعمال نمی‌شود.": [
+                "Security notice: entitlement and quotas are enforced by MusicWave Core, but VIP private-vault origin protection does not apply to external direct URLs."
             ],
             "تراکم و چیدمان ردیف‌ها": [
                 "Row density & layout"
@@ -1775,6 +1826,9 @@
             ],
             "تغییر وضعیت به «%s»": [
                 "Change status to “%s”"
+            ],
+            "تغییرمسیر راه‌دور امضاشده HMAC (MusicWave VIP) + لینک مستقیم HTTPS": [
+                "HMAC-Signed Remote Redirect (MusicWave VIP) + Direct HTTPS Links"
             ],
             "تلفن": [
                 "Phone"
@@ -2250,8 +2304,14 @@
             "حساب کاربری": [
                 "account"
             ],
+            "حفاظت‌شده توسط MusicWave VIP: فایل‌ها از پوشه‌ای حفاظت‌شده و از طریق پیوندهای امضاشده و زمان‌دار تحویل داده می‌شوند. نشانی مستقیم فایل هرگز نمایش داده نمی‌شود.": [
+                "Protected by MusicWave VIP: files are served from a private vault through short-lived signed tickets. Direct file URLs are never exposed."
+            ],
             "حفاظت‌شده توسط MusicWave VIP: فایل‌ها از پوشه‌ای حفاظت‌شده و از طریق پیوندهای امضاشده و زمان‌دار پخش می‌شوند. نشانی مستقیم فایل هرگز نمایش داده نمی‌شود.": [
                 "Protected by MusicWave VIP: files stream from a protected directory through signed, expiring links. Direct file URLs are never exposed."
+            ],
+            "حفاظت‌شده توسط MusicWave VIP: فایل‌ها با پیوند راه‌دور امضاشده HMAC و کوتاه‌مدت تحویل داده می‌شوند.": [
+                "Protected by MusicWave VIP: files are delivered through short-lived HMAC-signed remote URLs."
             ],
             "حقوق شما": [
                 "Your Rights"
@@ -2379,8 +2439,14 @@
             "داشبورد موسیقی کاربر": [
                 "User music dashboard"
             ],
+            "دامنه این لینک در فهرست دامنه‌های مجاز تنظیمات تحویل MusicWave قرار ندارد.": [
+                "This URL hostname is not in the allowed direct-link hostnames configured in MusicWave delivery settings."
+            ],
             "دانلود": [
                 "Download"
+            ],
+            "دانلود آزاد کامل محتوای عضویتی (Open Download)": [
+                "Open Download for Membership Content"
             ],
             "دانلود استاندارد": [
                 "Standard download"
@@ -2406,11 +2472,14 @@
             "دانلودهای امن و محدودیت نرخ": [
                 "Protected Downloads & Rate Limiting"
             ],
-            "دانلودهای ایمن": [
-                "Secure downloads"
+            "دانلودهای ایمن و مسیریابی تحویل": [
+                "Secure Downloads & Delivery Routing"
             ],
             "دانلودهای حساب": [
                 "Account Downloads"
+            ],
+            "دانلودهای حفاظت‌شده VIP در حال حاضر در دسترس نیستند.": [
+                "VIP protected downloads are currently unavailable."
             ],
             "دانلودهای حفاظت‌شده VIP در حال حاضر در دسترس نیستند. ماژول VIP غیرفعال است یا ذخیره‌سازی آن پیکربندی‌نشده است. لطفاً با مدیر سایت تماس بگیرید یا در صورت وجود از یک گزینهٔ مبتنی بر خرید استفاده کنید.": [
                 "VIP protected downloads are currently unavailable. The VIP module is disabled or its storage is not configured. Please contact the site administrator or use a purchase-based option if available."
@@ -2520,8 +2589,11 @@
             "در مدت کوتاهی چند درخواست فرستاده‌اید. لطفاً کمی بعد دوباره تلاش کنید.": [
                 "You have sent several requests in a short time. Please try again a little later."
             ],
-            "در هر خط یک کیفیت: quality-key | برچسب مشتری | شناسهٔ opaque دارایی ارائه‌دهنده. نمونه: mp3-320 | MP3 320 kbps | local:downloads/track-320.mp3": [
-                "One quality per line: quality-key | customer label | opaque provider asset ID. Example: mp3-320 | MP3 320 kbps | local:downloads/track-320.mp3"
+            "در هر خط یک دامنه (مانند cdn.example.com یا *.example.com). خالی گذاشتن به معنای پذیرش هر میزبان عمومی HTTPS معتبر است (نشانی‌های داخلی، localhost و IPهای خصوصی همیشه مسدود می‌شوند). توجه: تغییرمسیر 302 نشانی نهایی را به مرورگر کاربر مجاز نشان می‌دهد؛ برای فایل‌های پولی حساس از تحویل حفاظت‌شده VIP استفاده کنید.": [
+                "Enter one hostname pattern per line (for example cdn.example.com or *.example.com). Leave blank to allow any valid public HTTPS host (localhost, internal hosts, and private IPs are always blocked). Note: a 302 redirect reveals the final target URL to authorized browsers; use MusicWave VIP protected delivery for sensitive paid masters."
+            ],
+            "در هر خط یک کیفیت: quality-key | برچسب مشتری | شناسهٔ دارایی. برای مخزن VIP از vip:... یا local:... و برای لینک مستقیم کنترل‌شده از direct:https://cdn.example.com/track.mp3 استفاده کنید (توجه: در حالت direct: محافظت سطح مخزن VIP روی سرور مقصد اعمال نمی‌شود).": [
+                "One quality per line: quality-key | Customer Label | asset_id. Use vip:... or local:... for the VIP vault, or direct:https://cdn.example.com/track.mp3 for controlled direct HTTPS delivery (note: VIP vault origin protection does not apply to direct: URLs)."
             ],
             "در چند ثانیه حساب بسازید و کتابخانه، صف شنیدن و دانلودهای خود را در یک‌جا نگه دارید.": [
                 "Create an account in seconds and keep your library, listening queue, and downloads in one place."
@@ -2631,8 +2703,8 @@
             "دسترسی «%s» محدود به اشتراک ویژه یا خرید است — فایل‌های واقعی آن برای پیش‌نمایش نمایش داده شده‌اند.": [
                 "Access to \"%s\" requires VIP membership or purchase — showing its real files for editor preview."
             ],
-            "دسترسی آزاد — انتشارهای صرفاً عضویتی بدون افزونه VIP قابل مشاهده بمانند (توصیه می‌شود)": [
-                "Allow access — keep membership-gated releases open when no membership add-on is active (recommended)"
+            "دسترسی آزاد (سازگار با پیش‌فرض قبلی)": [
+                "Allow Access (Backwards-Compatible Default)"
             ],
             "دسترسی اعطا شد": [
                 "Access granted"
@@ -2643,11 +2715,17 @@
             "دسترسی انبوه همچنان در حال اجرا است: %1$d به‌روزرسانی شد و %2$d تاکنون نادیده گرفته شده است.": [
                 "Bulk access is still running: %1$d releases updated and %2$d skipped so far."
             ],
+            "دسترسی توسط MusicWave بررسی شده و پس از صدور بلیت یک‌بارمصرف به میزبان امن فایل هدایت می‌شوید.": [
+                "Access is verified by MusicWave before issuing a one-time ticket and redirecting to the secure file host."
+            ],
             "دسترسی دائمی": [
                 "Lifetime access"
             ],
             "دسترسی دائمی فعال روی حساب شما": [
                 "Lifetime access active on your account"
+            ],
+            "دسترسی و سهمیه توسط MusicWave بررسی و بلیت یک‌بارمصرف صادر می‌شود؛ برای نگهداری فایل در مخزن خصوصی خارج از وب‌روت، افزونه MusicWave VIP را فعال کنید.": [
+                "Entitlements and quotas are verified by MusicWave with one-time tickets; activate MusicWave VIP to store files in a private vault outside the web root."
             ],
             "دسته‌ها": [
                 "categories"
@@ -2943,6 +3021,9 @@
             "ساختار URL کاتالوگ و طبقه‌بندی‌های متعارف را پیکربندی کنید.": [
                 "Configure canonical catalog and taxonomy URL structure."
             ],
+            "ساختار نشانی اینترنتی واردشده معتبر نیست.": [
+                "The entered URL structure is invalid."
+            ],
             "ساده (سطح آرام)": [
                 "Plain (quiet surface)"
             ],
@@ -3108,6 +3189,15 @@
             "سیاست حریم خصوصی": [
                 "Privacy policy"
             ],
+            "سیاست مؤثر فعلی: «دانلود آزاد کامل» — انتشارهای عضویتی و دوگانه بدون نیاز به VIP قابل دانلود هستند.": [
+                "Effective policy: Open Download — membership and hybrid releases are downloadable without VIP."
+            ],
+            "سیاست مؤثر فعلی: «دسترسی آزاد» — انتشارهای عضویتی باز هستند و انتشارهای دوگانه دارای محصول، مسیر خرید تکی را حفظ می‌کنند.": [
+                "Effective policy: Allow Access — membership-only releases stay open while product-linked hybrid releases retain single-purchase gating."
+            ],
+            "سیاست مؤثر فعلی: «مسدودسازی ایمن» — انتشارهای عضویتی تا فعال‌شدن افزونه عضویت قفل هستند.": [
+                "Effective policy: Fail-Closed Deny — membership releases remain locked until a membership add-on is activated."
+            ],
             "سیستم": [
                 "System"
             ],
@@ -3161,6 +3251,9 @@
             ],
             "شما مجاز به تغییر تنظیمات دسترسی MusicWave نیستید.": [
                 "You are not allowed to change MusicWave access settings."
+            ],
+            "شما مجوز ثبت یا تغییر لینک مستقیم HTTPS را ندارید.": [
+                "You do not have permission to assign or modify direct HTTPS download links."
             ],
             "شما نمی‌توانید این انتشار را ویرایش کنید.": [
                 "You cannot edit this release."
@@ -3237,8 +3330,8 @@
             "شناسه هنرمند ثابت (اختیاری)": [
                 "Pinned artist term ID (optional)"
             ],
-            "شناسهٔ دارایی ارائه‌دهنده مانند local:album/track.zip را ذخیره کنید؛ هرگز نشانی دانلود عمومی ذخیره نکنید.": [
-                "Store a provider asset identifier such as local:album/track.zip, never a public download URL."
+            "شناسهٔ حفاظت‌شده (مانند vip:... یا local:album/track.zip) یا لینک مستقیم کنترل‌شده با پیشوند direct:https://... را وارد کنید؛ نشانی عمومی خام پذیرفته نمی‌شود.": [
+                "Enter an opaque protected ID (such as vip:... or local:album/track.zip) or a controlled direct HTTPS link prefixed with direct:https://...; raw public URLs are rejected."
             ],
             "شناسهٔ کلاینت Spotify": [
                 "Spotify client ID"
@@ -3273,8 +3366,8 @@
             "شیشه‌ای مات": [
                 "Frosted glass"
             ],
-            "صدور توکن امضاشدهٔ یک‌بارمصرف، طول عمر پیوندها و سهمیهٔ تحویل به ازای هر بازدیدکننده یا کاربر را کنترل کنید.": [
-                "Control single-use signed tokens, link expiration lifetimes, and per-visitor rate and daily delivery quotas."
+            "صدور توکن امضاشدهٔ یک‌بارمصرف، طول عمر پیوندها، سهمیهٔ تحویل و میزبان‌های مجاز پیوند مستقیم HTTPS (direct:) را کنترل کنید.": [
+                "Control one-time signed ticket issuance, link lifetimes, delivery quotas, and allowed direct HTTPS (direct:) hostnames."
             ],
             "صدور توکن محدود و تحویل فایل: rate limiter bucket download (پیش‌فرض %1$d درخواست در %2$d ثانیه) و سهمیه روزانه %3$d (0=نامحدود) در DownloadRateLimiter.php و DownloadResolver.php. کلیدها از IP هش‌شده (ClientIp::get() با فیلتر music_wave_client_ip، پیش‌فرض REMOTE_ADDR) در transients با expiry کوتاه (rate window) ذخیره می‌شوند، نه raw IP. توکن یک‌بارمصرف و پس از چک سهمیه مصرف می‌شود. پیوندها امضاشده، کوتاه‌مدت و دارای محدودیت نرخ باقی می‌مانند. Audit event music_wave_download_event فقط توسط integrationها نگهداری می‌شود (Core پیش‌فرض persist نمی‌کند).": [
                 "Token issuance and file delivery enforce %1$d requests per %2$d seconds and a daily quota of %3$d (0 = unlimited) using hashed IPs and single-use signed tokens."
@@ -3387,6 +3480,9 @@
             "طرح‌واره، تحویل، سئو و سلامت محیط را بررسی کنید.": [
                 "Inspect schema, delivery, SEO, and environment health."
             ],
+            "طرح‌وارهٔ شناسهٔ دارایی دانلود مجاز نیست.": [
+                "The download asset identifier scheme is not permitted."
+            ],
             "طرح‌وارهٔ پایگاه داده": [
                 "Database schema"
             ],
@@ -3401,6 +3497,9 @@
             ],
             "طول عمر پیوند استریم امن برای پخش بی‌وقفه در پلیر سراسری (پیش‌فرض: 900 ثانیه = ۱۵ دقیقه).": [
                 "Lifetime of secure stream tokens for uninterrupted playback in the global player (default: 900 seconds = 15 minutes)."
+            ],
+            "طول نشانی لینک مستقیم از حد مجاز ۲۰۴۸ نویسه بیشتر است.": [
+                "The direct link URL exceeds the 2,048-character maximum length."
             ],
             "طول پنجرهٔ ثابت استفاده‌شده توسط محدودیت نرخ رمز.": [
                 "Length of the fixed window used by the token rate limit."
@@ -3582,6 +3681,9 @@
             "فایل اصلی انتشار": [
                 "Main release file"
             ],
+            "فایل حفاظت‌شده (VIP / ارائه‌دهنده امن)": [
+                "Protected File (VIP / Secure Provider)"
+            ],
             "فایل حفاظت‌شده آپلود نشد.": [
                 "The protected file could not be uploaded."
             ],
@@ -3626,9 +3728,6 @@
             ],
             "فایل‌های خریداری‌شده و قابل دانلود حساب شما.": [
                 "Your purchased and downloadable files."
-            ],
-            "فایل‌های خصوصی و دانلود ایمن": [
-                "Private files and secure downloads"
             ],
             "فایل‌های محلی حفاظت‌شده، تغییرمسیر HMAC و عضویت طرح‌های ووکامرس.": [
                 "Protected local vault files, signed HTTPS HMAC redirects, and WooCommerce membership plans."
@@ -3985,6 +4084,9 @@
             "قدیمی‌ترین اول": [
                 "Oldest first"
             ],
+            "قرار دادن نام کاربری یا گذرواژه درون نشانی لینک مستقیم مجاز نیست.": [
+                "Embedding a username or password inside a direct link URL is not allowed."
+            ],
             "قسمت پادکست": [
                 "Podcast episode"
             ],
@@ -4075,14 +4177,20 @@
             "لینک سفارش": [
                 "Order link"
             ],
+            "لینک مستقیم HTTPS (تحت کنترل دسترسی هسته)": [
+                "Direct HTTPS Link (Core Entitlement-Gated)"
+            ],
+            "لینک مستقیم فایل باید الزاماً با پروتکل امن https:// آغاز شود.": [
+                "Direct file links must start with the secure https:// protocol."
+            ],
             "مادام‌العمر": [
                 "Lifetime"
             ],
-            "ماژول MusicWave VIP نصب است، اما کلید «اعمال قوانین VIP» موقتاً خاموش (حالت رایگان) است.": [
-                "MusicWave VIP is installed, while VIP enforcement is currently paused (promotional open access mode)."
+            "ماژول MusicWave VIP نصب است، اما کلید «اعمال قوانین VIP» خاموش (حالت پروموشن باز) است؛ اولویت با کلید اصلی VIP است.": [
+                "MusicWave VIP is installed, but its master enforcement switch is off (open promotion mode); the VIP master switch takes precedence."
             ],
-            "ماژول عضویت MusicWave VIP فعال است و «اعمال قوانین VIP» روشن است.": [
-                "MusicWave VIP membership module is active and VIP enforcement is enabled."
+            "ماژول عضویت فعال است: این تنظیم فعلاً بدون اثر است، زیرا تصمیم‌های عضویت مستقیماً توسط ارائه‌دهنده فعال ارزیابی می‌شوند.": [
+                "A membership module is active: this fallback setting is currently inactive because membership decisions are evaluated live by the active provider."
             ],
             "متن اضافی ایمیل تأیید": [
                 "Extra text for the confirmation email"
@@ -4162,6 +4270,9 @@
             "مثلاً: قطعهٔ پاپ برای تیزر تبلیغاتی": [
                 "e.g. a pop track for an advertising teaser"
             ],
+            "مجاز کردن حالت فقط اشتراک (پیش‌فرض سازگار — حفظ قفل خرید در حالت ترکیبی)": [
+                "Allow membership-only releases (compatible default — keeps purchase gate on hybrid releases)"
+            ],
             "مجرد": [
                 "Single"
             ],
@@ -4230,9 +4341,6 @@
             ],
             "محصولات، مالکیت خرید، پرداخت، و کتابخانه مشتری.": [
                 "Products, purchase ownership, checkout, and customer library."
-            ],
-            "محل ذخیره‌سازی خصوصی، خودآزمایی پوشه، امضای HMAC سرور راه‌دور و مدیر فایل‌های حفاظت‌شده در تب «تحویل حفاظت‌شده» افزونه VIP قرار دارد.": [
-                "Private vault path, directory diagnostics, remote HTTPS HMAC signing, and protected file uploads live in the VIP Protected Delivery tab."
             ],
             "محموله صف پخش باید یک شی باشد.": [
                 "The playback queue payload must be an object."
@@ -4342,8 +4450,14 @@
             "مرکز کنترل پیکربندی MusicWave را بر اساس موضوع گروه‌بندی می‌کند:": [
                 "The control center groups MusicWave configuration by concern:"
             ],
-            "مسدودسازی — تا زمان فعال‌شدن یک ماژول عضویت، دسترسی به انتشارهای عضویتی قفل بماند": [
-                "Block access — keep membership-gated releases locked until a membership add-on is enabled"
+            "مسدود کردن حالت‌های اشتراکی (ایمن‌ترین حالت برای محتوای پولی)": [
+                "Deny membership gates (safest fail-closed posture for paid catalogs)"
+            ],
+            "مسدودسازی ایمن (Fail-Closed)": [
+                "Fail-Closed Deny"
+            ],
+            "مسیر دارایی دانلود حاوی اجزای غیرمجاز است.": [
+                "The download asset path contains disallowed segments."
             ],
             "مشابه": [
                 "similar"
@@ -4525,6 +4639,9 @@
             "میزان پیشرفت پیش‌نمایش": [
                 "Preview progress"
             ],
+            "میزبان‌های مجاز پیوند مستقیم HTTPS (اختیاری)": [
+                "Allowed Direct HTTPS Hostnames (Optional)"
+            ],
             "میلی ثانیه بین حرکات خودکار.": [
                 "Milliseconds between automatic movements."
             ],
@@ -4560,6 +4677,9 @@
             ],
             "نام خود را وارد کنید (حداقل ۲ نویسه).": [
                 "Enter your name (at least 2 characters)."
+            ],
+            "نام دامنه در نشانی لینک مستقیم یافت نشد.": [
+                "No valid hostname was found in the direct link URL."
             ],
             "نام عامل تولید": [
                 "Credit name"
@@ -4683,6 +4803,33 @@
             ],
             "نشانی صفحهٔ اشتراک VIP (خالی = تشخیص خودکار)": [
                 "VIP plans page URL (blank = auto-detect)"
+            ],
+            "نشانی عمومی خام پذیرفته نشد؛ برای لینک مستقیم کنترل‌شده از پیشوند direct:https://... استفاده کنید.": [
+                "Raw public URL rejected; prefix controlled direct links with direct:https://..."
+            ],
+            "نشانی عمومی خام پذیرفته نمی‌شود؛ برای لینک مستقیم کنترل‌شده گزینهٔ «لینک مستقیم HTTPS» (پیشوند direct:) را انتخاب کنید.": [
+                "Raw public URLs are not accepted; choose Direct HTTPS Link (direct: prefix) for controlled direct delivery."
+            ],
+            "نشانی لینک مستقیم HTTPS نمی‌تواند خالی باشد.": [
+                "Direct HTTPS link URL cannot be empty."
+            ],
+            "نشانی لینک مستقیم این فایل معتبر نیست یا خارج از دامنه‌های مجاز تحویل قرار دارد.": [
+                "The direct link URL for this file is invalid or outside the configured allowed delivery hostnames."
+            ],
+            "نشانی لینک مستقیم توسط سیاست امنیتی سایت رد شد.": [
+                "The direct link URL was rejected by the site security policy."
+            ],
+            "نشانی لینک مستقیم حاوی نویسه‌های کنترلی غیرمجاز است.": [
+                "The direct link URL contains disallowed control characters."
+            ],
+            "نشانی لینک مستقیم معتبر نیست.": [
+                "The direct link URL is invalid."
+            ],
+            "نشانی لینک مستقیم پس از نرمال‌سازی معتبر نبود.": [
+                "The direct link URL was invalid after normalization."
+            ],
+            "نشانی مستقیم HTTPS فایل": [
+                "Direct HTTPS File URL"
             ],
             "نشانی پاسخ (Reply-To)": [
                 "Reply-To address"
@@ -5056,6 +5203,9 @@
             "نوع درخواست: %s": [
                 "Request type: %s"
             ],
+            "نوع منبع تحویل فایل": [
+                "File Delivery Source Type"
+            ],
             "نوع مورد": [
                 "Item type"
             ],
@@ -5109,6 +5259,9 @@
             ],
             "هر درخواست از «جدید» شروع می‌شود. با ارسال پاسخ به «پاسخ داده شده» می‌رود و شما آن را به «پذیرفته شده»، «رد شده» یا «بایگانی» می‌برید.": [
                 "Every request starts as “New”. Sending a reply moves it to “Replied”, and you move it on to “Accepted”, “Declined”, or “Archived”."
+            ],
+            "هر دو حالت «فقط عضویت» و «خرید یا اشتراک» در غیاب افزونه عضویت بدون نیاز به خرید برای دانلود و پخش باز می‌شوند (انتشارهای «فقط خرید تکی» همچنان پولی می‌مانند).": [
+                "Both Membership-Only and Purchase or Membership releases open for download and streaming without purchase when no membership add-on is active (Purchase-Only releases remain paid)."
             ],
             "هر دو عنوان را خالی بگذارید تا عنوان را با بلوک مستقل بسازید؛ خالی بماند تا سربرگ این بخش چاپ نشود.": [
                 "Leave both titles empty to build the heading with a standalone block; leave it empty and this section prints no header."
@@ -5398,6 +5551,24 @@
             "وضعیت فعلی: هیچ ماژول عضویتی فعال نیست.": [
                 "Current status: no membership add-on is active."
             ],
+            "وضعیت مؤثر فعلی: افزونه MusicWave VIP فعال و روشن است؛ قواعد سطح عضویت VIP اجرا می‌شوند و تنظیم غیاب عضویت تا زمان غیرفعال‌سازی افزونه اشتراک وارد عمل نمی‌شود.": [
+                "Effective state: MusicWave VIP is active and enabled; VIP plan rules are enforced and the membership-absence fallback remains dormant unless the membership add-on is deactivated."
+            ],
+            "وضعیت مؤثر فعلی: افزونه MusicWave VIP نصب است اما کلید اصلی آن خاموش است؛ حالت‌های اشتراکی و ترکیبی توسط کلید اصلی VIP باز شده‌اند.": [
+                "Effective state: MusicWave VIP is installed with its master switch turned off; membership and hybrid releases are currently opened by the VIP master switch."
+            ],
+            "وضعیت مؤثر فعلی: هیچ افزونه اشتراکی فعال نیست و حالت «باز شدن دانلود» روشن است؛ تمام انتشارهای «فقط اشتراک» و «خرید یا اشتراک» هم‌اکنون بدون نیاز به خرید باز هستند (انتشارهای «فقط خرید» و «محدود» همچنان بسته می‌مانند).": [
+                "Effective state: No membership add-on is active and Open Download is enabled; all Membership-Only and Purchase or Membership releases are open without purchase (Purchase-Only and Restricted releases stay locked)."
+            ],
+            "وضعیت مؤثر فعلی: هیچ افزونه اشتراکی فعال نیست و حالت «مسدود کردن» اجرا می‌شود؛ انتشارهای اشتراکی بسته هستند و انتشارهای ترکیبی فقط از مسیر خرید تکی قابل دریافت‌اند.": [
+                "Effective state: No membership add-on is active and Deny is enforced; membership releases stay locked and hybrid releases are accessible only through single purchase."
+            ],
+            "وضعیت مؤثر فعلی: هیچ افزونه اشتراکی فعال نیست؛ انتشارهای «فقط اشتراک» باز هستند اما انتشارهای ترکیبی دارای محصول همچنان نیازمند خرید تکی باقی می‌مانند.": [
+                "Effective state: No membership add-on is active; Membership-Only releases stay open while product-linked hybrid releases still require a single purchase."
+            ],
+            "وضعیت مؤثر فعلی: یک ارائه‌دهنده عضویت سفارشی فعال است و تصمیم‌گیری سطح دسترسی را مدیریت می‌کند.": [
+                "Effective state: A custom membership provider is active and governs membership entitlement decisions."
+            ],
             "وضعیت پرداخت و جزئیات اشتراک را بررسی کنید.": [
                 "Review your payment status and membership details."
             ],
@@ -5413,8 +5584,8 @@
             "وقتی درخواست‌کننده به ایمیل‌های شما پاسخ می‌دهد به این نشانی می‌رسد. خالی = ایمیل مدیر سایت.": [
                 "When a requester replies to your emails, the reply goes to this address. Empty = the site admin email."
             ],
-            "وقتی هیچ ماژول عضویتی مانند MusicWave VIP فعال نیست، انتشارهای دارای محدودیت عضویت می‌توانند برای همه در دسترس بمانند یا تا زمان فعال‌شدن یک ماژول، دسترسی‌شان مسدود شود (در حالت دوگانه «خرید یا اشتراک»، در صورت داشتن محصول WooCommerce مسیر خرید تکی همچنان فعال می‌ماند).": [
-                "When no membership add-on such as MusicWave VIP is active, membership-gated releases can either stay accessible or remain locked until a provider is enabled (dual Purchase or VIP releases with a linked WooCommerce product always retain single purchase)."
+            "وقتی هیچ ماژول عضویتی مانند MusicWave VIP فعال نیست، سیاست زیر تعیین می‌کند انتشارهای «فقط عضویت» و «خرید یا عضویت» چگونه ارزیابی شوند (انتشارهای «فقط خرید تکی» و «محدود» هرگز باز نمی‌شوند).": [
+                "When no membership module such as MusicWave VIP is active, the policy below governs how Membership-Only and Purchase or Membership releases are evaluated (Purchase-Only and Restricted releases are never opened)."
             ],
             "وقتی چیزی که از قبل ذخیره کرده بودم خارج شد": [
                 "When something I pre-saved is out"
@@ -5674,6 +5845,9 @@
             "پنهان کردن": [
                 "Hide"
             ],
+            "پوشه خصوصی MusicWave VIP + لینک مستقیم HTTPS": [
+                "MusicWave VIP Private Vault + Direct HTTPS Links"
+            ],
             "پوشه دانلود": [
                 "Download Tray"
             ],
@@ -5724,9 +5898,6 @@
             ],
             "پیام‌های دسترسی مشتری": [
                 "Customer-facing access messages"
-            ],
-            "پیش از اختصاص دارایی‌های دانلود حفاظت‌شده به انتشارها، MusicWave VIP را فعال کنید.": [
-                "Activate MusicWave VIP before assigning protected download assets to releases."
             ],
             "پیش ذخیره": [
                 "Pre-save"
@@ -6118,6 +6289,9 @@
             "کیفیتی به فایل قابل دانلود انتخابی اضافه شد. آن را مرور کنید، سپس همه تغییرات را ذخیره کنید.": [
                 "A quality was added to the selected downloadable file. Review it, then save all changes."
             ],
+            "کیفیت‌های این انتشار از طریق بلیت یک‌بارمصرف (ترکیب مخزن حفاظت‌شده و تغییرمسیر امن HTTPS) تحویل داده می‌شوند.": [
+                "Qualities on this release are delivered via one-time tickets combining private vault storage and hardened HTTPS redirects."
+            ],
             "کیفیت‌های دانلود": [
                 "download qualities"
             ],
@@ -6169,9 +6343,6 @@
             "گروه‌ها": [
                 "Groups"
             ],
-            "گزینهٔ رادیویی زیر مستقیماً تعیین می‌کند انتشارهای عضویتی فعلاً باز بمانند یا مسدود شوند.": [
-                "Choose below whether membership-restricted releases remain open or locked while no provider is active."
-            ],
             "گزینه‌های هر فیلتر": [
                 "Options per filter"
             ],
@@ -6208,8 +6379,8 @@
             "یادداشت داخلی: فقط تیم شما می‌بیند.": [
                 "Internal note: visible to your team only."
             ],
-            "یک ارائه‌دهنده دارایی‌های حفاظت‌شده غیرشفاف را پس از تصویب بررسی‌های دسترسی، پخش می‌کند.": [
-                "A provider streams opaque protected assets after access checks pass."
+            "یک ارائه‌دهنده تحویل امن سفارشی در کنار لینک مستقیم HTTPS هسته فعال است.": [
+                "A custom secure delivery provider is active alongside Core direct HTTPS link delivery."
             ],
             "یک ارائه‌دهنده یکپارچه سازی MusicWave یک مشکل را گزارش می‌کند": [
                 "A MusicWave integration provider reports a problem"
