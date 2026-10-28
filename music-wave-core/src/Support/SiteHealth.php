@@ -130,11 +130,12 @@ final class SiteHealth {
 
 	/** @return array<string, string|array<string, string>> */
 	public function test_download_provider(): array {
-		$ready = has_filter( 'music_wave_download_provider' );
+		$caps  = DeliveryCapabilities::describe();
+		$ready = $caps['has_protected_provider'];
 		return $this->result(
-			$ready ? __( 'ارائه‌دهنده تحویل حفاظت‌شده MusicWave در دسترس است', 'music-wave-core' ) : __( 'ارائه‌دهنده تحویل حفاظت‌شده MusicWave اختیاری است اما در دسترس نیست', 'music-wave-core' ),
+			$ready ? __( 'ارائه‌دهنده تحویل حفاظت‌شده MusicWave در دسترس است', 'music-wave-core' ) : __( 'تحویل پیوند مستقیم HTTPS فعال است؛ ارائه‌دهنده حفاظت‌شده اختیاری در دسترس نیست', 'music-wave-core' ),
 			$ready ? 'good' : 'recommended',
-			$ready ? __( 'ارائه‌دهنده می‌تواند دارایی‌های حفاظت‌شده غیرشفاف را پس از تصویب بررسی‌های دسترسی، پخش کند.', 'music-wave-core' ) : __( 'پیش از اختصاص دارایی‌های دانلود حفاظت‌شده به انتشارها، MusicWave VIP را فعال کنید.', 'music-wave-core' ),
+			$caps['detail'],
 			'music_wave_download_provider'
 		);
 	}

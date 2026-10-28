@@ -13,11 +13,12 @@ a real WordPress fixture before Stage 7 sign-off.
 | Token tampering | HMAC-SHA256 over the full claim payload; nonce binding; expiry, purpose, user/release/asset match checks | `tests/run.php` token service cases |
 | Cross-user transfer | Claims bind user ID + nonce; delivery re-runs the access decision for the presenting user | `tests/run.php` token binding cases |
 | Mode/parameter tampering on remote URLs | Complete-payload signing `url|expires|mode|kid` | `tests/run.php` signature-differs cases |
-| Unsafe redirect | HTTPS + explicit host allowlist enforced after all filters | `tests/run.php` allowlist cases |
-| Weak/rotated signing keys | Fail-closed 32-char minimum; `kid` rotation parameter; settings warning | `tests/run.php` weak-key case |
-| Replaced/truncated master on disk | Registry size fingerprint re-verified at delivery | code path in `resolve_registered()`; *wp-env* |
-| Token-issue flooding | Per-user fixed-window rate limit (429) | `tests/run.php` rate-limit case |
-| Bulk exfiltration via compromised account | Optional per-user daily delivery quota (`music_wave_download_daily_quota`) | code path; disabled by default |
+| Unsafe redirect / SSRF on `direct:` URLs | HTTPS-only, `<=2048` chars, blocks credentials/fragments, `localhost`, internal TLDs, RFC 1918, CGNAT `100.64/10`, `198.18/15`, multicast, `::ffff:` IPv4-mapped IPv6, NAT64 `64:ff9b::/96`, numeric/hex/octal IPs, plus `direct_link_allowed_hosts` re-validated at both save and delivery time; `manage_mw_protected_assets` required on assignment | `tests/vip-access-delivery-suite.php` T7–T13 |
+| Weak/rotated signing keys & autoload exposure | Fail-closed 32-char minimum; `MUSIC_WAVE_VIP_REMOTE_SECRET` constant priority; non-autoloaded `music_wave_vip_remote_keyring` (`active`/`retired` `kid` rotation + `hash_equals()`) | `tests/vip-access-delivery-suite.php` T18 |
+| `vip:<hash>` leakage in remote URLs | `RemoteRedirectProvider` resolves `vip:<32hex>` via `ProtectedAssetRegistry` to `relative_path` and fails closed on unknown IDs | `tests/vip-access-delivery-suite.php` T15–T17 |
+| Replaced/truncated master on disk | Registry size/SHA-256 fingerprint re-verified at delivery | `tests/protected-asset-storage.php` |
+| Token-issue flooding | Per-user fixed-window rate limit (429) | `tests/run.php` + `tests/download-e2e.php` |
+| Bulk exfiltration / cache-flush quota bypass | Optional per-user daily delivery quota (`music_wave_download_daily_quota`) persisted in non-autoloaded `mw_dl_quota_*` DB options with shutdown-safe counting and daily cleanup | `tests/vip-access-delivery-suite.php` T14 |
 | PHP worker exhaustion on large files | X-Sendfile / X-Accel-Redirect offload modes | `tests/run.php` header builder cases |
 
 ## Load testing

@@ -709,27 +709,148 @@
 			}
 		}
 
-		function validQualities() {
+		function isDirectAssetId( rawId ) {
+			return /^direct:/i.test( String( rawId || '' ).trim() );
+		}
+
+		function extractDirectUrl( rawId ) {
+			var trimmed = String( rawId || '' ).trim();
+			return isDirectAssetId( trimmed )
+				? trimmed.slice( 7 ).trim()
+				: trimmed;
+		}
+
+		function validateDirectHttpsUrl( rawUrl ) {
+			var candidate = String( rawUrl || '' ).trim();
+			if ( ! candidate ) {
+				return __(
+					'نشانی لینک مستقیم HTTPS نمی‌تواند خالی باشد.',
+					'music-wave-core'
+				);
+			}
+			if (
+				candidate.length > 2048 ||
+				/[\u0000-\u001F\u007F]/.test( candidate )
+			) {
+				return __( 'نشانی لینک مستقیم معتبر نیست.', 'music-wave-core' );
+			}
+			var parsed;
+			try {
+				parsed = new window.URL( candidate );
+			} catch ( err ) {
+				return __(
+					'ساختار نشانی اینترنتی واردشده معتبر نیست.',
+					'music-wave-core'
+				);
+			}
+			if ( parsed.protocol !== 'https:' ) {
+				return __(
+					'لینک مستقیم فایل باید الزاماً با پروتکل امن https:// آغاز شود.',
+					'music-wave-core'
+				);
+			}
+			if ( parsed.username || parsed.password || parsed.hash ) {
+				return __(
+					'استفاده از اطلاعات کاربری یا #fragment در نشانی فایل دانلودی مجاز نیست.',
+					'music-wave-core'
+				);
+			}
+			var host = String( parsed.hostname || '' )
+				.toLowerCase()
+				.replace( /\.$/, '' );
+			if (
+				! host ||
+				host === 'localhost' ||
+				host === 'metadata.google.internal' ||
+				/\.(?:localhost|local|internal|home\.arpa|localdomain)$/.test(
+					host
+				) ||
+				/^\[/.test( host ) ||
+				/^(?:127\.|10\.|0\.|169\.254\.|192\.168\.|172\.(?:1[6-9]|2\d|3[01])\.|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.)/.test(
+					host
+				) ||
+				host.indexOf( '.' ) === -1
+			) {
+				return __(
+					'استفاده از localhost، شبکه داخلی یا آدرس‌های IP خصوصی/رزروشده مجاز نیست.',
+					'music-wave-core'
+				);
+			}
+			var editorCfg = window.musicWaveEditorConfig || {};
+			var allowedHosts = Array.isArray( editorCfg.directAllowedHosts )
+				? editorCfg.directAllowedHosts
+				: [];
+			if ( allowedHosts.length ) {
+				var matched = allowedHosts.some( function ( pattern ) {
+					var norm = String( pattern || '' ).toLowerCase();
+					if ( norm === host ) {
+						return true;
+					}
+					if ( norm.indexOf( '*.' ) === 0 ) {
+						var suffix = norm.slice( 1 );
+						return (
+							host.length > suffix.length &&
+							host.slice( -suffix.length ) === suffix
+						);
+					}
+					return false;
+				} );
+				if ( ! matched ) {
+					return __(
+						'دامنه این لینک در فهرست دامنه‌های مجاز تنظیمات تحویل MusicWave قرار ندارد.',
+						'music-wave-core'
+					);
+				}
+			}
+			return '';
+		}
+
+		function qualityValidationError() {
 			var keys = {};
-			return ! privateAssets.some( function ( asset ) {
+			for ( var i = 0; i < privateAssets.length; i++ ) {
+				var asset = privateAssets[ i ];
 				var key = normalizedKey( asset.key );
-				if (
-					! asset.key ||
-					! asset.label ||
-					! asset.asset_id ||
-					keys[ key ] ||
-					/^https?:\/\//i.test( asset.asset_id )
-				) {
-					return true;
+				var rawId = String( asset.asset_id || '' ).trim();
+				var mode =
+					asset.delivery_type === 'direct' || isDirectAssetId( rawId )
+						? 'direct'
+						: 'protected';
+				if ( ! asset.key || ! asset.label || keys[ key ] ) {
+					return __(
+						'هر کیفیت به یک کلید فنی منحصر به فرد، برچسب مشتری و دارایی ایمن غیر عمومی ID نیاز دارد.',
+						'music-wave-core'
+					);
+				}
+				if ( mode === 'direct' ) {
+					var directErr = validateDirectHttpsUrl(
+						extractDirectUrl( rawId )
+					);
+					if ( directErr ) {
+						return directErr;
+					}
+				} else if ( ! rawId || /^https?:\/\//i.test( rawId ) ) {
+					return __(
+						'هر کیفیت به یک کلید فنی منحصر به فرد، برچسب مشتری و دارایی ایمن غیر عمومی ID نیاز دارد.',
+						'music-wave-core'
+					);
 				}
 				keys[ key ] = true;
-				return false;
-			} );
+			}
+			return '';
 		}
 
 		function normalizedDownloadFiles() {
 			return privateAssets.map( function ( asset ) {
+				var rawId = String( asset.asset_id || '' ).trim();
+				var isDirect =
+					asset.delivery_type === 'direct' ||
+					isDirectAssetId( rawId );
+				var nextId = isDirect
+					? 'direct:' + extractDirectUrl( rawId )
+					: rawId;
 				return Object.assign( {}, asset, {
+					asset_id: nextId,
+					delivery_type: isDirect ? 'direct' : 'protected',
 					file_key: fileKeyFor( asset ),
 					file_label: fileLabelFor( asset ),
 				} );
@@ -737,13 +858,9 @@
 		}
 
 		function saveQualities() {
-			if ( ! validQualities() ) {
-				setStatus(
-					__(
-						'هر کیفیت به یک کلید فنی منحصر به فرد، برچسب مشتری و دارایی ایمن غیر عمومی ID نیاز دارد.',
-						'music-wave-core'
-					)
-				);
+			var validationErr = qualityValidationError();
+			if ( validationErr ) {
+				setStatus( validationErr );
 				return;
 			}
 
@@ -895,20 +1012,126 @@
 						},
 					} )
 				),
-				el( TextControl, {
-					label: __(
-						'دارایی ارائه‌دهنده حفاظت‌شده ID',
-						'music-wave-core'
-					),
-					help: __(
-						'از یک شناسهٔ غیرشفاف مانند local:album/track.flac استفاده کنید. نشانی‌های عمومی مجاز نیستند.',
-						'music-wave-core'
-					),
-					value: asset.asset_id || '',
-					onChange( value ) {
-						setQualityValue( index, 'asset_id', value );
-					},
-				} ),
+				( function () {
+					var isDirect =
+						asset.delivery_type === 'direct' ||
+						isDirectAssetId( asset.asset_id );
+					var directUrlValue = isDirect
+						? extractDirectUrl( asset.asset_id )
+						: '';
+					var directError =
+						isDirect && directUrlValue
+							? validateDirectHttpsUrl( directUrlValue )
+							: '';
+					var editorCfg = window.musicWaveEditorConfig || {};
+					var canDirect = editorCfg.canManageDirectLinks !== false;
+
+					return el(
+						'div',
+						{ className: 'mw-editor-delivery-source' },
+						el( SelectControl, {
+							label: __(
+								'نوع منبع تحویل فایل',
+								'music-wave-core'
+							),
+							value: isDirect ? 'direct' : 'protected',
+							options: [
+								{
+									label: __(
+										'فایل حفاظت‌شده (VIP / ارائه‌دهنده امن)',
+										'music-wave-core'
+									),
+									value: 'protected',
+								},
+								{
+									label: __(
+										'لینک مستقیم HTTPS (تحت کنترل دسترسی هسته)',
+										'music-wave-core'
+									),
+									value: 'direct',
+									disabled: ! canDirect && ! isDirect,
+								},
+							],
+							onChange( modeVal ) {
+								var next = privateAssets.slice();
+								var currentRaw = String(
+									asset.asset_id || ''
+								).trim();
+								var nextAssetId = currentRaw;
+								if ( modeVal === 'direct' ) {
+									nextAssetId = isDirectAssetId( currentRaw )
+										? currentRaw
+										: 'direct:';
+								} else if ( isDirectAssetId( currentRaw ) ) {
+									nextAssetId = '';
+								}
+								next[ index ] = Object.assign(
+									{},
+									next[ index ],
+									{
+										delivery_type: modeVal,
+										asset_id: nextAssetId,
+									}
+								);
+								setPrivateAssets( next );
+							},
+						} ),
+						isDirect
+							? el(
+									'div',
+									{},
+									el( TextControl, {
+										label: __(
+											'نشانی مستقیم HTTPS فایل',
+											'music-wave-core'
+										),
+										placeholder:
+											'https://cdn.example.com/audio/track-320.mp3',
+										help:
+											directError ||
+											__(
+												'تذکر امنیتی: مجوز دسترسی و سهمیه توسط هسته MusicWave بررسی می‌شود، اما محافظت مخزن خصوصی VIP روی سرور مقصد اعمال نمی‌شود.',
+												'music-wave-core'
+											),
+										value: directUrlValue,
+										onChange( urlVal ) {
+											var next = privateAssets.slice();
+											next[ index ] = Object.assign(
+												{},
+												next[ index ],
+												{
+													delivery_type: 'direct',
+													asset_id:
+														'direct:' +
+														String(
+															urlVal || ''
+														).trim(),
+												}
+											);
+											setPrivateAssets( next );
+										},
+									} )
+							  )
+							: el( TextControl, {
+									label: __(
+										'دارایی ارائه‌دهنده حفاظت‌شده ID',
+										'music-wave-core'
+									),
+									help: __(
+										'از یک شناسهٔ غیرشفاف مانند vip:… یا local:album/track.flac استفاده کنید. نشانی‌های عمومی خام مجاز نیستند.',
+										'music-wave-core'
+									),
+									value: asset.asset_id || '',
+									onChange( value ) {
+										setQualityValue(
+											index,
+											'asset_id',
+											value
+										);
+									},
+							  } )
+					);
+				} )(),
 				el( TextControl, {
 					label: __( 'نام فایل ذخیره‌شده', 'music-wave-core' ),
 					help: qualitySummary( asset )

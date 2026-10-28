@@ -13,6 +13,7 @@ namespace ManaCore\MusicWave\Vip\Delivery;
 use ManaCore\MusicWave\Core\Downloads\DownloadTokenClaims;
 use ManaCore\MusicWave\Vip\ProtectedAssetStorage;
 use ManaCore\MusicWave\Vip\RemoteRedirectProvider;
+use ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring;
 use ManaCore\MusicWave\Vip\VipSettings;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -57,13 +58,14 @@ final class ProtectedDeliveryDiagnostics {
 		$host_allowlist_ok   = false;
 
 		if ( $https_ok && $secret_strong && class_exists( DownloadTokenClaims::class ) ) {
-			$remote_provider     = new RemoteRedirectProvider( $config );
+			$remote_provider     = new RemoteRedirectProvider( $config, $this->storage->registry() );
 			$sample_claims       = new DownloadTokenClaims( 1, 1, time() + 120, 'self-test', 'self-test-nonce', 'flac', 'download' );
 			$sample_download_url = $remote_provider->create_url( 'diagnostics/sample-track.flac', $sample_claims, false );
 			$sample_stream_url   = $remote_provider->create_url( 'diagnostics/sample-track.flac', $sample_claims, true );
 			$host_allowlist_ok   = '' !== $sample_download_url && $remote_provider->allowed_url( $sample_download_url );
 		}
 
+		$key_summary  = RemoteSigningKeyring::public_summary( $config );
 		$remote_ready = $https_ok && $secret_strong && $ttl_ok && $host_allowlist_ok;
 		$active_ready = 'remote_redirect' === $provider ? $remote_ready : $local_ready;
 
@@ -92,6 +94,9 @@ final class ProtectedDeliveryDiagnostics {
 				'secret_configured'   => $secret_set,
 				'secret_length'       => strlen( $remote_secret ),
 				'secret_strong'       => $secret_strong,
+				'secret_source'       => $key_summary['source'],
+				'active_kid'          => $key_summary['active_kid'],
+				'retired_kids'        => $key_summary['retired_kids'],
 				'ttl'                 => $remote_ttl,
 				'ttl_valid'           => $ttl_ok,
 				'host_allowlist_ok'   => $host_allowlist_ok,

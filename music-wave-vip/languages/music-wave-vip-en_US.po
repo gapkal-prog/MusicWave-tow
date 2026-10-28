@@ -67,11 +67,11 @@ msgstr "+ Create new plan product"
 msgid "+%d طرح دیگر"
 msgstr "+%d more plans"
 
-#: src/SettingsPage.php:464
+#: src/SettingsPage.php:517
 msgid "Apache / LiteSpeed — هدر X-Sendfile"
 msgstr "Apache / LiteSpeed — X-Sendfile header"
 
-#: src/SettingsPage.php:68 src/SettingsPage.php:552 src/VipPlans.php:96
+#: src/SettingsPage.php:68 src/SettingsPage.php:605 src/VipPlans.php:96
 msgid "MusicWave VIP"
 msgstr "MusicWave VIP"
 
@@ -84,7 +84,7 @@ msgstr "MusicWave VIP requires MusicWave Core %1$s or newer; the active version 
 msgid "MusicWave VIP به افزونهٔ MusicWave Core نیاز دارد."
 msgstr "MusicWave VIP requires the MusicWave Core plugin."
 
-#: src/SettingsPage.php:465
+#: src/SettingsPage.php:518
 msgid "Nginx — هدر X-Accel-Redirect"
 msgstr "Nginx — X-Accel-Redirect header"
 
@@ -134,7 +134,7 @@ msgstr "The protected asset could not be stored."
 msgid "آخرین آهنگ‌های پخش‌شده توسط کاربر"
 msgstr "Recent tracks played by user"
 
-#: src/SettingsPage.php:767
+#: src/SettingsPage.php:818
 msgid "آخرین رویدادهای حسابرسی عضویت VIP"
 msgstr "Recent VIP membership audit events"
 
@@ -151,7 +151,7 @@ msgstr "Membership and entitlement adapters"
 msgid "آدرس ایمیل"
 msgstr "Email address"
 
-#: src/SettingsPage.php:613
+#: src/SettingsPage.php:666
 msgid "آماده سرویس‌دهی ایمن"
 msgstr "Ready for secure delivery"
 
@@ -159,13 +159,17 @@ msgstr "Ready for secure delivery"
 msgid "اجازهٔ مدیریت طرح‌های VIP را ندارید."
 msgstr "You are not allowed to manage VIP plans."
 
-#: src/SettingsPage.php:130 src/SettingsPage.php:690
+#: src/SettingsPage.php:130 src/SettingsPage.php:743
 msgid "ارائه‌دهندهٔ تحویل"
 msgstr "Delivery provider"
 
-#: src/SettingsPage.php:146 src/SettingsPage.php:752
+#: src/SettingsPage.php:146 src/SettingsPage.php:803
 msgid "ارتقای نقش VIP"
 msgstr "VIP role promotion"
+
+#: src/SettingsPage.php:463
+msgid "از ثابت MUSIC_WAVE_VIP_REMOTE_SECRET در wp-config.php خوانده می‌شود"
+msgstr "Loaded from MUSIC_WAVE_VIP_REMOTE_SECRET in wp-config.php"
 
 #: src/Checkout/SubscriptionOrderPresenter.php:173 src/Checkout/SubscriptionOrderPresenter.php:177
 msgid "اشتراک"
@@ -188,11 +192,11 @@ msgstr "Value 6-month membership for dedicated listeners with uninterrupted acce
 msgid "اشتراک شما فعال شد!"
 msgstr "Your VIP membership is now active!"
 
-#: music-wave-vip.php:334 src/SettingsPage.php:556
+#: music-wave-vip.php:334 src/SettingsPage.php:609
 msgid "اعضای VIP"
 msgstr "VIP Members"
 
-#: src/SettingsPage.php:285 src/Users/UsersListIntegration.php:127
+#: src/SettingsPage.php:321 src/Users/UsersListIntegration.php:127
 msgid "اعضای VIP فعال"
 msgstr "Active VIP Members"
 
@@ -200,7 +204,7 @@ msgstr "Active VIP Members"
 msgid "اعطای اشتراک جدید یا تمدید مدت VIP کاربر"
 msgstr "Grant a new VIP membership or extend duration"
 
-#: src/SettingsPage.php:383
+#: src/SettingsPage.php:419
 msgid "اعطای خودکار نقش VIP MusicWave (mw_vip)"
 msgstr "Automatically grant MusicWave VIP role (mw_vip)"
 
@@ -220,23 +224,23 @@ msgstr "Bulk grant on users.php"
 msgid "اعمال اشتراک / تمدید جدید هنگام ذخیره پروفایل"
 msgstr "Apply new VIP grant / extension on profile save"
 
-#: src/SettingsPage.php:246
+#: src/SettingsPage.php:282
 msgid "اعمال عضویت VIP خاموش است — حالت پروموشن باز فعال است."
 msgstr "VIP membership enforcement is paused — open promotional mode is active."
 
-#: src/SettingsPage.php:242
+#: src/SettingsPage.php:278
 msgid "اعمال عضویت VIP روشن است."
 msgstr "VIP membership enforcement is ON."
 
-#: src/SettingsPage.php:575
+#: src/SettingsPage.php:628
 msgid "اعمال قوانین VIP"
 msgstr "VIP enforcement"
 
-#: src/SettingsPage.php:741
-msgid "اعمال قوانین خاموش است؛ با روشن کردن کلید اصلی در تب «عمومی» این گزینه‌ها بلافاصله برای ویرایش باز می‌شوند."
-msgstr "Enforcement is paused; enable the master switch in the General tab to edit these controls."
+#: src/SettingsPage.php:793
+msgid "اعمال قوانین VIP در حال حاضر خاموش است؛ تمام کنترل‌های زیر برای پیش‌پیکربندی طرح‌ها و منابع عضویت باز هستند و تغییرات شما ذخیره می‌شود، اما تا روشن کردن کلید اصلی در تب «عمومی» قفل عضویت روی سایت اعمال نخواهد شد."
+msgstr "VIP enforcement is currently turned off; all controls below remain unlocked so you can pre-configure plans and membership sources, and your changes will be saved without enforcing membership locks until the master switch is enabled."
 
-#: src/SettingsPage.php:550
+#: src/SettingsPage.php:603
 msgid "اعمال قوانین روشن است"
 msgstr "Enforcement on"
 
@@ -244,11 +248,11 @@ msgstr "Enforcement on"
 msgid "افزودن به انتهای اعتبار فعلی"
 msgstr "Stack onto current expiry"
 
-#: src/SettingsPage.php:490
+#: src/SettingsPage.php:543
 msgid "افزونه WooCommerce Memberships"
 msgstr "WooCommerce Memberships integration"
 
-#: src/SettingsPage.php:491
+#: src/SettingsPage.php:544
 msgid "افزونه WooCommerce Subscriptions"
 msgstr "WooCommerce Subscriptions integration"
 
@@ -260,11 +264,11 @@ msgstr "Repurchase anytime to automatically stack extra time onto your active ex
 msgid "انباشت روی انتهای اعتبار فعلی"
 msgstr "Stack onto active expiry"
 
-#: src/SettingsPage.php:557
+#: src/SettingsPage.php:610
 msgid "انتشارها"
 msgstr "Releases"
 
-#: src/SettingsPage.php:242
+#: src/SettingsPage.php:278
 msgid "انتشارهای حالت «فقط عضویت» و «خرید یا عضویت» بر اساس سطح اشتراک یا خرید تکی بررسی می‌شوند و تحویل فایل‌ها با توکن امضاشده انجام می‌گیرد."
 msgstr "Membership-only and Purchase-or-Membership releases are verified against active subscription tiers or single purchases and delivered via signed tokens."
 
@@ -276,11 +280,11 @@ msgstr "Scheduled expiration"
 msgid "اولویت بررسی و اجابت درخواست‌های موسیقی در پنل کاربری"
 msgstr "Priority review and fulfillment for music requests in your dashboard"
 
-#: src/SettingsPage.php:425
+#: src/SettingsPage.php:464
 msgid "ایجاد با دکمهٔ «ایجاد» یا openssl rand -hex 32"
 msgstr "Generate with the button beside this field or openssl rand -hex 32"
 
-#: src/SettingsPage.php:293
+#: src/SettingsPage.php:329
 msgid "ایجاد طرح‌های پیش‌فرض (۱، ۶ و ۱۲ ماهه)"
 msgstr "Create default plans (1 / 6 / 12 months)"
 
@@ -288,11 +292,11 @@ msgstr "Create default plans (1 / 6 / 12 months)"
 msgid "ایجاد محصولات طرح پیش‌فرض ناموفق بود. آیا ووکامرس فعال است؟"
 msgstr "Creating the default plan products failed. Is WooCommerce active?"
 
-#: src/SettingsPage.php:427
+#: src/SettingsPage.php:468
 msgid "ایجاد کلید امن ۶۴ کاراکتری"
 msgstr "Generate 64-character secret key"
 
-#: src/SettingsPage.php:614
+#: src/SettingsPage.php:667
 msgid "ایجاد، ایمن‌سازی و همگام‌سازی خودکار پوشه"
 msgstr "Provision, harden & sync vault directory"
 
@@ -304,11 +308,11 @@ msgstr "This order includes a VIP membership plan; access is active upon payment
 msgid "این محصول به‌عنوان طرح اشتراک VIP نگاشت شده اما مجازی نیست. برای حذف فیلدهای حمل‌ونقل و فعال‌سازی پرداخت مستقیم، آن را مجازی کنید."
 msgstr "This product is mapped to a VIP membership plan but is not marked Virtual; mark it Virtual for streamlined checkout without shipping fields."
 
-#: src/SettingsPage.php:356
+#: src/SettingsPage.php:392
 msgid "با تکمیل سفارش، سطح طرح و نقش mw_vip فوراً اعطا می‌شوند؛ تمدید زودتر روزها را روی باقیمانده قبلی تجمیع می‌کند؛ لغو یا استرداد وجه بلافاصله دسترسی همان سفارش را پس می‌گیرد."
 msgstr "Completed orders immediately grant the plan tier and mw_vip role; early renewals stack remaining days; refunds or cancellations immediately revoke that order grant."
 
-#: src/SettingsPage.php:405
+#: src/SettingsPage.php:441
 msgid "با ثابت MUSIC_WAVE_VIP_PROTECTED_ROOT در wp-config.php قفل شده است."
 msgstr "Locked via MUSIC_WAVE_VIP_PROTECTED_ROOT constant in wp-config.php."
 
@@ -316,7 +320,7 @@ msgstr "Locked via MUSIC_WAVE_VIP_PROTECTED_ROOT constant in wp-config.php."
 msgid "بارگذاری asset حفاظت‌شده معتبر نیست."
 msgstr "The protected asset upload was invalid."
 
-#: src/SettingsPage.php:649
+#: src/SettingsPage.php:702
 msgid "بارگذاری در مخزن خصوصی"
 msgstr "Upload to private vault"
 
@@ -324,7 +328,7 @@ msgstr "Upload to private vault"
 msgid "بارگذاری فایل در مخزن خصوصی ناموفق بود."
 msgstr "Uploading file to the private vault failed."
 
-#: src/SettingsPage.php:878
+#: src/SettingsPage.php:929
 msgid "باز کردن تنظیمات VIP"
 msgstr "Open VIP settings"
 
@@ -336,7 +340,7 @@ msgstr "View user orders →"
 msgid "باز کردن ووکامرس → محصولات"
 msgstr "Open WooCommerce → Products"
 
-#: src/SettingsPage.php:265
+#: src/SettingsPage.php:301
 msgid "بازدیدکنندگان مهمان حتی روی انتشارهای عمومی/پروموشن برای پخش یا دانلود فایل حفاظت‌شده باید وارد حساب کاربری شوند."
 msgstr "Guest visitors must sign in before streaming or downloading protected files even on public or promotional releases."
 
@@ -348,7 +352,7 @@ msgstr "Back to Home"
 msgid "بالاترین اولویت در پیگیری درخواست‌های آهنگ و پشتیبانی اختصاصی مشترکین"
 msgstr "Top priority on track requests and dedicated subscriber support"
 
-#: src/SettingsPage.php:413
+#: src/SettingsPage.php:449
 msgid "باید HTTPS باشد. میزبان نشانی پایه خودکار در فهرست مجاز قرار می‌گیرد."
 msgstr "Must use HTTPS. The base URL host is allowlisted automatically."
 
@@ -356,23 +360,23 @@ msgstr "Must use HTTPS. The base URL host is allowlisted automatically."
 msgid "بدون اشتراک VIP"
 msgstr "No VIP Membership"
 
-#: src/SettingsPage.php:268
+#: src/SettingsPage.php:304
 msgid "بر اساس حالت دسترسی هر انتشار (شامل مهمانان در آثار عمومی)"
 msgstr "Follow each release access policy (including guests on public releases)"
 
-#: src/SettingsPage.php:295
+#: src/SettingsPage.php:331
 msgid "برای ایجاد و فروش محصولات طرح، ووکامرس را فعال کنید."
 msgstr "Activate WooCommerce to create and sell plan products."
 
-#: src/SettingsPage.php:355
+#: src/SettingsPage.php:391
 msgid "برای دسترسی به انتشارهای «فقط عضویت» یا «خرید یا عضویت»، سطح پیش‌فرض mw_vip همهٔ مشترکین فعال VIP را پوشش می‌دهد و نامک اختصاصی طرح (مانند vip-12m) فقط دارندگان همان طرح را مجاز می‌کند."
 msgstr "For Membership-only or Purchase-or-Membership releases, mw_vip matches any active VIP subscriber while plan slugs (such as vip-12m) restrict access to that tier."
 
-#: src/SettingsPage.php:491
+#: src/SettingsPage.php:544
 msgid "بررسی اشتراک‌های تکرارشونده WooCommerce Subscriptions."
 msgstr "Evaluate recurring subscriptions managed by WooCommerce Subscriptions."
 
-#: src/SettingsPage.php:611
+#: src/SettingsPage.php:664
 msgid "بررسی خودکار مسیر خصوصی، مجوزهای خواندن/نوشتن، سپر .htaccess/web.config و فهرست فایل‌های ثبت‌شده."
 msgstr "Live verification of vault path isolation, read/write permissions, .htaccess/web.config shields, and indexed assets."
 
@@ -380,11 +384,11 @@ msgstr "Live verification of vault path isolation, read/write permissions, .htac
 msgid "بررسی درخواست‌های کاربر ←"
 msgstr "Review user requests →"
 
-#: src/SettingsPage.php:490
+#: src/SettingsPage.php:543
 msgid "بررسی طرح‌های فعال افزونه WooCommerce Memberships."
 msgstr "Evaluate active plans managed by WooCommerce Memberships."
 
-#: src/SettingsPage.php:488
+#: src/SettingsPage.php:541
 msgid "بررسی مستقیم نقش وردپرس هم‌نام با نامک سطح عضویت."
 msgstr "Evaluate matching WordPress user roles directly against required level keys."
 
@@ -392,15 +396,15 @@ msgstr "Evaluate matching WordPress user roles directly against required level k
 msgid "بهترین ارزش سالانه"
 msgstr "Best Annual Value"
 
-#: src/SettingsPage.php:791
+#: src/SettingsPage.php:842
 msgid "به‌صورت پیش‌فرض خاموش و ایمن است: هنگام حذف موقت یا به‌روزرسانی دستی افزونه، تمام اشتراک‌های پرداخت‌شدهٔ مشتریان، جدول mw_vip_assets، گزارش حسابرسی و تنظیمات حفظ می‌شوند. تنها در صورت روشن کردن این گزینه، هنگام حذف کامل افزونه تمام داده‌های پایگاه داده پاک خواهند شد (فایل‌های روی دیسک هرگز پاک نمی‌شوند)."
 msgstr "Disabled by default for safety: paid customer subscriptions, mw_vip_assets records, audit logs, and settings are preserved across updates or reinstallations. Only when enabled will full plugin uninstallation drop VIP database tables and options (vault files on disk are never deleted)."
 
-#: src/SettingsPage.php:112 src/SettingsPage.php:681
+#: src/SettingsPage.php:112 src/SettingsPage.php:734
 msgid "تأیید حذف قطعی؟"
 msgstr "Confirm permanent removal?"
 
-#: src/SettingsPage.php:339
+#: src/SettingsPage.php:375
 msgid "تأیید حذف نگاشت؟"
 msgstr "Confirm remove mapping?"
 
@@ -425,15 +429,15 @@ msgstr "End date"
 msgid "تاریخچه تغییرات اشتراک VIP این کاربر"
 msgstr "VIP membership audit log for this user"
 
-#: src/SettingsPage.php:129 src/SettingsPage.php:564
+#: src/SettingsPage.php:129 src/SettingsPage.php:617
 msgid "تحویل حفاظت‌شده"
 msgstr "Protected delivery"
 
-#: src/SettingsPage.php:865
+#: src/SettingsPage.php:916
 msgid "تحویل حفاظت‌شده و عضویت‌های VIP"
 msgstr "VIP protected delivery and memberships"
 
-#: src/SettingsPage.php:553
+#: src/SettingsPage.php:606
 msgid "تحویل فایل حفاظت‌شده، مخزن خصوصی فایل‌ها خارج از ریشهٔ وب، نشانی‌های امضاشده HMAC و اشتراک‌های زمان‌دار ووکامرس."
 msgstr "Protected file delivery, private off-webroot file vault, HMAC-signed URLs, and timed WooCommerce memberships."
 
@@ -453,11 +457,11 @@ msgstr "Custom days..."
 msgid "تغییر به اشتراک مادام‌العمر"
 msgstr "Converted to lifetime membership"
 
-#: src/SettingsPage.php:391
+#: src/SettingsPage.php:427
 msgid "تغییرمسیر راه‌دور امضاشده با HTTPS HMAC (سرور دانلود / CDN)"
 msgstr "Signed HTTPS HMAC remote redirect (download server / CDN)"
 
-#: src/SettingsPage.php:537
+#: src/SettingsPage.php:590
 msgid "تمام تب‌ها یکجا اعتبارسنجی و ذخیره می‌شوند؛ پوشهٔ حفاظت‌شده خارج از ریشهٔ وب به صورت خودکار ایجاد و ایمن‌سازی می‌گردد."
 msgstr "All tabs validate and save peacefully together; the private vault outside the web root is provisioned and hardened automatically."
 
@@ -477,11 +481,11 @@ msgstr "Settings"
 msgid "تنظیمات MusicWave VIP"
 msgstr "MusicWave VIP settings"
 
-#: src/SettingsPage.php:817
+#: src/SettingsPage.php:868
 msgid "تنظیمات VIP"
 msgstr "VIP settings"
 
-#: src/SettingsPage.php:801
+#: src/SettingsPage.php:852
 msgid "تنظیمات مرتبط در هستهٔ MusicWave"
 msgstr "Related settings in MusicWave Core"
 
@@ -497,11 +501,11 @@ msgstr "Audit log note"
 msgid "توضیحات محصول و قابلیت‌های اشتراک"
 msgstr "Product description & plan capabilities"
 
-#: src/SettingsPage.php:344
+#: src/SettingsPage.php:380
 msgid "توضیحات، چک‌لیست امکانات و قیمت هر طرح مستقیماً از صفحه ویرایش محصول در ووکامرس خوانده شده و در کارت‌های عضویت (.mw-membership__plan) و صفحه تک‌محصول نمایش داده می‌شود."
 msgstr "Each plan's description, feature checklist, and pricing are read directly from its WooCommerce product editor and displayed across membership cards (.mw-membership__plan) and single product pages."
 
-#: src/SettingsPage.php:447
+#: src/SettingsPage.php:500
 msgid "ثانیه (۳۰ تا ۹۰۰)"
 msgstr "seconds (30–900)"
 
@@ -521,35 +525,35 @@ msgstr "Membership Details"
 msgid "جزئیات کامل"
 msgstr "Full profile"
 
-#: src/SettingsPage.php:652
+#: src/SettingsPage.php:705
 msgid "جستجو در نام فایل‌های حفاظت‌شده…"
 msgstr "Search protected filenames…"
 
-#: src/SettingsPage.php:211
+#: src/SettingsPage.php:247
 msgid "حالت تغییرمسیر راه‌دور هم به نشانی پایهٔ HTTPS و هم به راز امضا (حداقل ۳۲ کاراکتر) نیاز دارد. تا پیکربندی هر دو، تحویل با رد امن پیش‌فرض باقی می‌ماند."
 msgstr "Remote redirect mode requires both an HTTPS base URL and a signing secret of at least 32 characters. Delivery safely fails closed until both are configured."
 
-#: src/SettingsPage.php:395
+#: src/SettingsPage.php:431
 msgid "حالت محلی فایل‌ها را از دیسک خصوصی می‌فرستد؛ حالت راه‌دور نشانی کوتاه‌عمر امضاشده با HMAC-SHA256 صادر می‌کند."
 msgstr "Local mode streams files from the private disk vault; remote mode issues short-lived HMAC-SHA256 signed URLs."
 
-#: src/SettingsPage.php:234
+#: src/SettingsPage.php:270
 msgid "حالت محلی فایل‌ها را خارج از ریشهٔ عمومی وب نگه می‌دارد و با PHP (پشتیبانی کامل HTTP Range) یا شتاب‌دهی وب‌سرور (X-Sendfile / Nginx X-Accel-Redirect) پخش می‌کند. حالت راه‌دور نشانی‌های کوتاه‌عمر HTTPS با امضای HMAC-SHA256 برای سرور دانلود، Cloudflare، R2 یا CDN می‌سازد."
 msgstr "Local mode stores files outside the public web root and streams via PHP HTTP Range or web-server acceleration (X-Sendfile / Nginx X-Accel-Redirect). Remote mode signs short-lived HTTPS URLs via HMAC-SHA256 for CDNs, R2, or dedicated download servers."
 
-#: src/SettingsPage.php:550
+#: src/SettingsPage.php:603
 msgid "حالت پروموشن باز (VIP خاموش)"
 msgstr "Open promotional mode (VIP paused)"
 
-#: src/SettingsPage.php:658
+#: src/SettingsPage.php:711
 msgid "حجم"
 msgstr "Size"
 
-#: src/SettingsPage.php:111 src/SettingsPage.php:681
+#: src/SettingsPage.php:111 src/SettingsPage.php:734
 msgid "حذف"
 msgstr "Delete"
 
-#: src/SettingsPage.php:790
+#: src/SettingsPage.php:841
 msgid "حذف داده‌ها هنگام حذف افزونه"
 msgstr "Delete plugin data on uninstall"
 
@@ -557,23 +561,28 @@ msgstr "Delete plugin data on uninstall"
 msgid "حذف دسترسی"
 msgstr "Revoke grant"
 
-#: src/SettingsPage.php:339
+#: src/SettingsPage.php:375
 msgid "حذف نگاشت"
 msgstr "Remove mapping"
 
-#: src/SettingsPage.php:795
+#: src/SettingsPage.php:846
 msgid "حذف همهٔ داده‌های پایگاه دادهٔ VIP هنگام حذف افزونه"
 msgstr "Delete all VIP database data on plugin uninstall"
 
-#: src/SettingsPage.php:383
+#: src/SettingsPage.php:478
+#, php-format
+msgid "حذف کلیدهای بازنشسته پس از همگام‌سازی CDN (%s)"
+msgstr "Purge retired signing keys after CDN sync (%s)"
+
+#: src/SettingsPage.php:419
 msgid "حساب‌های VIP فعال را در فهرست کاربران وردپرس مشخص می‌کند و پس از انقضا یا لغو سفارش خودکار بازپس گرفته می‌شود."
 msgstr "Marks active VIP subscribers in WordPress Users and revokes automatically upon order refund or expiration."
 
-#: src/SettingsPage.php:620
+#: src/SettingsPage.php:673
 msgid "خارج بودن از ریشهٔ عمومی وب (ABSPATH / DOCUMENT_ROOT)"
 msgstr "Isolated outside public web root (ABSPATH / DOCUMENT_ROOT)"
 
-#: src/SettingsPage.php:407
+#: src/SettingsPage.php:443
 msgid "خالی بگذارید تا پوشهٔ خودکار کنار وردپرس ساخته شود، یا مسیر دلخواه خارج از ریشهٔ وب (مانند /var/private/musicwave) را وارد کنید تا خودکار ایجاد و ایمن‌سازی شود."
 msgstr "Leave blank to auto-provision beside WordPress, or specify an absolute directory outside the web root (e.g. /var/private/musicwave)."
 
@@ -581,7 +590,7 @@ msgstr "Leave blank to auto-provision beside WordPress, or specify an absolute d
 msgid "خرید / تمدید اشتراک"
 msgstr "Plan purchase / renewal"
 
-#: src/SettingsPage.php:487
+#: src/SettingsPage.php:540
 msgid "خرید طرح یا اعطای دستی مدیر سطح را فوراً فعال می‌کند و بازپرداخت یا انقضا آن را خودکار پس می‌گیرد."
 msgstr "Purchasing a plan or granting access manually activates membership immediately; refunds or expiration revoke it automatically."
 
@@ -605,7 +614,7 @@ msgstr "Direct downloads of VIP singles and albums in original quality (320kbps 
 msgid "دانلود نامحدود نسخه‌های اورجینال و Lossless / Hi-Res بدون افت کیفیت"
 msgstr "Unlimited Lossless / Hi-Res master downloads with zero transcoding loss"
 
-#: src/SettingsPage.php:246
+#: src/SettingsPage.php:282
 msgid "در این حالت انتشارهای «فقط عضویت» و «خرید یا عضویت» موقتاً رایگان‌اند، اما انتشارهای «فقط خرید تکی» و «محدود» همچنان بسته می‌مانند و سفارش‌های جدید اشتراک همچنان زمان VIP مشتریان را ثبت می‌کنند."
 msgstr "Membership-only and Purchase-or-Membership releases open temporarily while Single-Purchase and Restricted releases stay gated and new plan orders continue recording subscriber time."
 
@@ -617,7 +626,7 @@ msgstr "Provisioning vault directory, writing .htaccess / web.config shields, an
 msgid "در حال بارگذاری در مخزن خصوصی و محاسبه هش SHA-256…"
 msgstr "Uploading file to private vault and computing SHA-256 checksum…"
 
-#: src/SettingsPage.php:373
+#: src/SettingsPage.php:409
 #, php-format
 msgid "در حال حاضر %d طرح فعال پیکربندی‌شده است."
 msgstr "%d plan(s) currently configured and active."
@@ -634,7 +643,7 @@ msgstr "In progress"
 msgid "در صورت حذف کامل افزونه، تنظیمات، نقش mw_vip و متاداده‌های مجوز عضویت VIP از پایگاه‌داده پاک می‌شوند؛ فایل‌های بارگذاری‌شده در پوشهٔ حفاظت‌شده دست‌نخورده باقی می‌مانند تا محتوای کاتالوگ از بین نرود."
 msgstr "Uninstalling the plugin removes its settings, the mw_vip role, and VIP entitlement metadata from the database; protected audio and archive files remain intact so catalog media is never destroyed."
 
-#: src/SettingsPage.php:368
+#: src/SettingsPage.php:404
 msgid "در هر خط یک طرح با فرمت level:product_id[:days]."
 msgstr "Enter one plan mapping per line in level:product_id[:days] format."
 
@@ -670,31 +679,39 @@ msgstr "Recorded VIP grants & membership periods"
 msgid "دستی توسط مدیر"
 msgstr "Manual admin grant"
 
-#: src/SettingsPage.php:536
+#: src/SettingsPage.php:589
 msgid "ذخیرهٔ تنظیمات VIP"
 msgstr "Save VIP settings"
 
-#: src/SettingsPage.php:876
+#: src/SettingsPage.php:927
 msgid "ذخیره‌سازی محلی خارج از ریشهٔ وب، سرور دانلود امضاشده با HMAC و اشتراک‌های زمان‌دار ووکامرس."
 msgstr "Off-webroot local file vault, HMAC-signed download servers, and timed WooCommerce memberships."
 
-#: src/SettingsPage.php:134 src/SettingsPage.php:702
+#: src/SettingsPage.php:471
+msgid "راز امضا با ثابت MUSIC_WAVE_VIP_REMOTE_SECRET در wp-config.php قفل شده است (امن‌ترین حالت — خارج از پایگاه داده)."
+msgstr "Signing secret is locked by the MUSIC_WAVE_VIP_REMOTE_SECRET constant in wp-config.php (recommended — kept out of the database)."
+
+#: src/SettingsPage.php:134 src/SettingsPage.php:755
 msgid "راز امضای راه‌دور"
 msgstr "Remote signing secret"
 
-#: src/SettingsPage.php:219
+#: src/SettingsPage.php:255
 msgid "راز امضای راه‌دور کوتاه‌تر از ۳۲ نویسه است. تا ذخیرهٔ راز قوی‌تر، نشانی امضاشده صادر نمی‌شود."
 msgstr "The remote signing secret is shorter than 32 characters. Signed URLs will not be issued until a stronger secret is saved."
 
-#: src/SettingsPage.php:425
-msgid "راز ذخیره‌شده — برای حفظ آن خالی بگذارید"
-msgstr "Stored secret — leave blank to keep"
+#: src/SettingsPage.php:473
+msgid "راز در گزینهٔ غیرخودکار (autoload=no) ذخیره می‌شود. ذخیرهٔ کلید جدید به‌طور خودکار کلید قبلی را در وضعیت بازنشسته (retired) نگه می‌دارد تا لینک‌های در حال دانلود قطع نشوند."
+msgstr "Stored in a non-autoloaded option (autoload=no). Saving a new secret automatically retains the previous key as retired so in-flight signed URLs continue working during rotation."
 
-#: src/SettingsPage.php:798
+#: src/SettingsPage.php:464
+msgid "راز ذخیره‌شده — برای چرخش امن کلید جدید وارد کنید یا خالی بگذارید"
+msgstr "Secret stored — enter a new key to rotate safely, or leave blank to keep"
+
+#: src/SettingsPage.php:849
 msgid "رازهای راه‌دور هرگز در معرض مرورگر قرار نمی‌گیرند؛ فقط نشانی‌های کوتاه‌عمر امضاشده با Referrer-Policy: no-referrer صادر می‌شوند."
 msgstr "Signing secrets are never exposed to the browser; only short-lived signed redirects with Referrer-Policy: no-referrer are issued."
 
-#: src/SettingsPage.php:873
+#: src/SettingsPage.php:924
 msgid "راه‌دورِ امضاشده"
 msgstr "Remote signed"
 
@@ -702,7 +719,7 @@ msgstr "Remote signed"
 msgid "رفتن به پنل کاربری"
 msgstr "Go to My Account"
 
-#: src/SettingsPage.php:433
+#: src/SettingsPage.php:486
 msgid "رمز فعلی کوتاه‌تر از ۳۲ کاراکتر است. تا ذخیرهٔ رمز قوی‌تر، نشانی امضاشده صادر نمی‌شود."
 msgstr "Current signing secret is shorter than 32 characters. Signed URLs remain disabled until a stronger secret is saved."
 
@@ -710,19 +727,19 @@ msgstr "Current signing secret is shorter than 32 characters. Signed URLs remain
 msgid "روش درخواست نامعتبر است. حذف طرح باید با POST انجام شود."
 msgstr "Invalid request method. Plan deletion requires POST."
 
-#: src/SettingsPage.php:253
+#: src/SettingsPage.php:289
 msgid "روشن: قفل‌های عضویت، خرید یا عضویت، سطح‌های پلن و زمان انقضا اعمال می‌شوند. خاموش: حالت پروموشن باز برای محتوای عضویت فعال می‌شود، بدون آنکه خریدهای تکی WooCommerce یا ثبت اشتراک سفارش‌های جدید مختل شود."
 msgstr "Enabled: membership gates, Purchase-or-Membership rules, plan tiers, and expirations are enforced. Disabled: membership content enters open promotional access while keeping single WooCommerce purchases and new plan grants intact."
 
-#: src/SettingsPage.php:269
+#: src/SettingsPage.php:305
 msgid "روی آثار عمومی ثبت‌نام اختیاری است، اما آثار VIP و خریدنی همچنان صددرصد نیازمند اشتراک معتبر یا خرید محصول‌اند (این گزینه هرگز آثار پولی را رایگان نمی‌کند)."
 msgstr "Public releases allow anonymous streaming while VIP and paid releases always require valid membership or product purchase."
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:822
 msgid "رویداد"
 msgstr "Event"
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:822
 msgid "زمان"
 msgstr "Timestamp"
 
@@ -730,7 +747,7 @@ msgstr "Timestamp"
 msgid "ساخت فهرست‌های پخش نامحدود و ثبت درخواست اختصاصی موسیقی"
 msgstr "Unlimited personal playlists and dedicated music request submissions"
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:822
 msgid "سطح"
 msgstr "Level"
 
@@ -742,11 +759,11 @@ msgstr "Level / Plan"
 msgid "سطح اشتراک"
 msgstr "Plan level"
 
-#: src/SettingsPage.php:301
+#: src/SettingsPage.php:337
 msgid "سطح و آیکن"
 msgstr "Level & Icon"
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:822
 msgid "سفارش / مدیر"
 msgstr "Order / Actor"
 
@@ -755,19 +772,19 @@ msgstr "Order / Actor"
 msgid "سفارش ووکامرس #%d"
 msgstr "WooCommerce Order #%d"
 
-#: src/SettingsPage.php:293
+#: src/SettingsPage.php:329
 msgid "سه محصول مجازی ووکامرس همراه با آیکن اختصاصی، توضیحات کامل قابلیت‌ها و چک‌لیست امکانات ایجاد و به‌عنوان طرح VIP نگاشت می‌کند."
 msgstr "Creates three virtual WooCommerce products with custom tier icons, descriptions, and feature checklists mapped automatically as VIP plans."
 
-#: src/SettingsPage.php:578
+#: src/SettingsPage.php:631
 msgid "سیاست پخش و دانلود مهمانان در تحویل حفاظت‌شده"
 msgstr "Guest delivery policy for protected files"
 
-#: src/SettingsPage.php:140 src/SettingsPage.php:728
+#: src/SettingsPage.php:140 src/SettingsPage.php:781
 msgid "شتاب‌دهی سرور"
 msgstr "Server acceleration"
 
-#: src/SettingsPage.php:726
+#: src/SettingsPage.php:779
 msgid "شتاب‌دهی وب‌سرور"
 msgstr "Web-server sendfile acceleration"
 
@@ -779,7 +796,7 @@ msgstr "Start date"
 msgid "شروع سریع"
 msgstr "Quick Start"
 
-#: src/SettingsPage.php:618
+#: src/SettingsPage.php:671
 msgid "شناسایی مسیر پوشهٔ خصوصی"
 msgstr "Private vault path resolution"
 
@@ -787,7 +804,7 @@ msgstr "Private vault path resolution"
 msgid "شناسه"
 msgstr "ID"
 
-#: src/SettingsPage.php:659
+#: src/SettingsPage.php:712
 msgid "شناسه امن تحویل (Asset ID)"
 msgstr "Protected Asset ID"
 
@@ -799,11 +816,11 @@ msgstr "Copy an ID into the plan field below. Use comma-separated IDs if one lev
 msgid "شناسهٔ فایل حفاظت‌شده نامعتبر است."
 msgstr "Invalid protected asset ID."
 
-#: src/SettingsPage.php:139 src/SettingsPage.php:717
+#: src/SettingsPage.php:139 src/SettingsPage.php:770
 msgid "شناسهٔ کلید امضا"
 msgstr "Signing key ID"
 
-#: src/SettingsPage.php:370
+#: src/SettingsPage.php:406
 msgid "شناسه‌های محصول، شناسهٔ محصولات ووکامرس هستند. مدت به‌روز است (۱ تا ۳۶۵۰)؛ برای مادام‌العمر خالی بگذارید."
 msgstr "Product IDs are WooCommerce product IDs. Duration is in days (1–3650); omit for lifetime."
 
@@ -815,7 +832,7 @@ msgstr "Filter VIP"
 msgid "طرح / سطح اشتراک"
 msgstr "Plan / Tier level"
 
-#: src/SettingsPage.php:356
+#: src/SettingsPage.php:392
 msgid "طرح‌های ووکامرس:"
 msgstr "WooCommerce plans:"
 
@@ -823,7 +840,7 @@ msgstr "WooCommerce plans:"
 msgid "طرح‌های پیش‌فرض از قبل پیکربندی‌شده‌اند؛ مورد جدیدی برای ایجاد نیست."
 msgstr "Default plans were already configured — nothing new to create."
 
-#: src/SettingsPage.php:137 src/SettingsPage.php:711
+#: src/SettingsPage.php:137 src/SettingsPage.php:764
 msgid "طول عمر نشانی راه‌دور"
 msgstr "Remote URL lifetime"
 
@@ -851,15 +868,15 @@ msgstr "VIP Membership — 12 Months"
 msgid "عضویت VIP — ۶ ماه"
 msgstr "VIP Membership — 6 Months"
 
-#: src/SettingsPage.php:565
+#: src/SettingsPage.php:618
 msgid "عضویت و طرح‌ها"
 msgstr "Membership & Plans"
 
-#: src/SettingsPage.php:739
+#: src/SettingsPage.php:792
 msgid "عضویت و مجوز دسترسی"
 msgstr "Membership & entitlement"
 
-#: src/Admin/VipSettingsUi.php:61 src/SettingsPage.php:301 src/SettingsPage.php:660
+#: src/Admin/VipSettingsUi.php:61 src/SettingsPage.php:337 src/SettingsPage.php:713
 msgid "عملیات"
 msgstr "Actions"
 
@@ -868,11 +885,11 @@ msgstr "Actions"
 msgid "عملیات گروهی اشتراک VIP برای %1$s کاربر با موفقیت اجرا شد (%2$s)."
 msgstr "Completed bulk VIP action for %1$s users (%2$s)."
 
-#: src/SettingsPage.php:563
+#: src/SettingsPage.php:616
 msgid "عمومی"
 msgstr "General"
 
-#: src/SettingsPage.php:572
+#: src/SettingsPage.php:625
 msgid "عمومی — کلید اصلی و سیاست تحویل"
 msgstr "General — Master Switch & Delivery Policy"
 
@@ -892,23 +909,23 @@ msgstr "Protected file could not be found."
 msgid "فایل رسانه‌ها در ذخیره‌سازی حفاظت‌شده کپی نشد."
 msgstr "The Media Library file could not be copied to protected storage."
 
-#: src/SettingsPage.php:646
+#: src/SettingsPage.php:699
 msgid "فایل صوتی (MP3, FLAC, WAV, M4A, AAC, OGG) یا بسته ZIP آلبوم را مستقیماً خارج از پوشهٔ عمومی وردپرس ذخیره کنید."
 msgstr "Upload master audio (MP3, FLAC, WAV, M4A, AAC, OGG) or album ZIP packages directly into the off-webroot private vault."
 
-#: src/SettingsPage.php:834
+#: src/SettingsPage.php:885
 msgid "فایل‌های بازدارندهٔ لایهٔ دفاعی (.htaccess / web.config) وجود دارند."
 msgstr "Web-server deny shields (.htaccess / web.config) are present."
 
-#: src/SettingsPage.php:637
+#: src/SettingsPage.php:690
 msgid "فایل‌های ثبت‌شده در مخزن:"
 msgstr "Indexed vault files:"
 
-#: src/SettingsPage.php:233
+#: src/SettingsPage.php:269
 msgid "فایل‌های حفاظت‌شده کجا قرار می‌گیرند و چگونه تحویل داده می‌شوند."
 msgstr "Where protected files live and how they are delivered."
 
-#: src/SettingsPage.php:657
+#: src/SettingsPage.php:710
 msgid "فرمت / مشخصات"
 msgstr "Format / Details"
 
@@ -929,15 +946,15 @@ msgstr "Activity & Payments"
 msgid "فعال‌سازی آنی بلافاصله پس از پرداخت آنلاین با قابلیت تمدید انباشتی"
 msgstr "Instant activation upon online payment with stackable renewal support"
 
-#: src/SettingsPage.php:253
+#: src/SettingsPage.php:289
 msgid "فعال‌سازی اعمال عضویت VIP (کلید اصلی)"
 msgstr "Enable VIP membership enforcement (master switch)"
 
-#: src/SettingsPage.php:795
+#: src/SettingsPage.php:846
 msgid "فقط هنگام حذف کامل افزونه اعمال می‌شود، نه غیرفعال‌سازی. پیش‌فرض امن: خاموش."
 msgstr "Runs only when deleting the plugin completely, never on deactivation. Safe default: disabled."
 
-#: src/SettingsPage.php:264
+#: src/SettingsPage.php:300
 msgid "فقط کاربران ثبت‌نام‌شده (الزام به ورود برای دانلود/استریم فایل حفاظت‌شده)"
 msgstr "Registered users only (require sign-in for protected stream/download)"
 
@@ -949,7 +966,7 @@ msgstr "Playlists created by user"
 msgid "فیلتر سطح VIP"
 msgstr "Filter by VIP level"
 
-#: src/SettingsPage.php:489
+#: src/SettingsPage.php:542
 msgid "فیلتر عضویت خارجی (آداپتر توسعه‌دهنده)"
 msgstr "External membership filter (developer adapter)"
 
@@ -989,7 +1006,7 @@ msgstr "Lifetime"
 msgid "مادام‌العمر (بدون انقضا)"
 msgstr "Lifetime (never expires)"
 
-#: src/SettingsPage.php:872
+#: src/SettingsPage.php:923
 #, php-format
 msgid "متصل شد: تحویل %1$s فعال است و %2$d طرح اشتراک VIP پیکربندی شده است."
 msgstr "Connected: %1$s delivery active with %2$d VIP membership plans configured."
@@ -998,11 +1015,11 @@ msgstr "Connected: %1$s delivery active with %2$d VIP membership plans configure
 msgid "مثلاً هدیه پشتیبانی یا تمدید تلفنی"
 msgstr "e.g. support courtesy credit or phone renewal"
 
-#: src/SettingsPage.php:621
+#: src/SettingsPage.php:674
 msgid "مجوز خواندن توسط سرور"
 msgstr "Readable by PHP worker"
 
-#: src/SettingsPage.php:622
+#: src/SettingsPage.php:675
 msgid "مجوز نوشتن برای بارگذاری امن"
 msgstr "Writable for vault uploads"
 
@@ -1018,7 +1035,7 @@ msgstr "The file content does not match its extension."
 msgid "محتوای فایل یک بایگانی ZIP معتبر نیست."
 msgstr "The file content is not a valid ZIP archive."
 
-#: src/SettingsPage.php:804
+#: src/SettingsPage.php:855
 msgid "محدودیت نرخ دانلود، سهمیهٔ روزانه و TTL توکن‌ها"
 msgstr "Download rate limits, daily quotas & token TTLs"
 
@@ -1026,15 +1043,15 @@ msgstr "Download rate limits, daily quotas & token TTLs"
 msgid "محصول"
 msgstr "Product"
 
-#: src/SettingsPage.php:301
+#: src/SettingsPage.php:337
 msgid "محصول و توضیحات طرح"
 msgstr "Product & Plan Description"
 
-#: src/SettingsPage.php:145 src/SettingsPage.php:749
+#: src/SettingsPage.php:145 src/SettingsPage.php:800
 msgid "محصولات طرح VIP"
 msgstr "VIP plan products"
 
-#: src/SettingsPage.php:487
+#: src/SettingsPage.php:540
 msgid "محصولات طرح ووکامرس و اعطای دستی پنل کاربران — پیشنهادشده"
 msgstr "WooCommerce plan products & manual user grants (recommended)"
 
@@ -1042,7 +1059,7 @@ msgstr "WooCommerce plan products & manual user grants (recommended)"
 msgid "محصولات طرح پیش‌فرض ایجاد شدند. قیمت آن‌ها را در ووکامرس → محصولات تعیین کنید."
 msgstr "Default plan products created. Set their prices in WooCommerce → Products."
 
-#: src/SettingsPage.php:288 src/SettingsPage.php:555
+#: src/SettingsPage.php:324 src/SettingsPage.php:608
 msgid "محصولات ووکامرس"
 msgstr "WooCommerce Products"
 
@@ -1050,15 +1067,15 @@ msgstr "WooCommerce Products"
 msgid "محصولی پیدا نشد. برای شروع، نخستین محصول طرح VIP خود را ایجاد کنید."
 msgstr "No products found. Create your first VIP plan product to get started."
 
-#: src/SettingsPage.php:873
+#: src/SettingsPage.php:924
 msgid "محلی"
 msgstr "Local"
 
-#: src/SettingsPage.php:645
+#: src/SettingsPage.php:698
 msgid "مخزن فایل‌های خصوصی (بارگذاری مستقیم و مدیریت شناسه‌های vip:)"
 msgstr "Private File Vault (direct upload & vip: asset registry)"
 
-#: src/SettingsPage.php:301
+#: src/SettingsPage.php:337
 msgid "مدت"
 msgstr "Duration"
 
@@ -1066,7 +1083,7 @@ msgstr "Duration"
 msgid "مدت اعتبار"
 msgstr "Duration"
 
-#: src/SettingsPage.php:783
+#: src/SettingsPage.php:834
 msgid "مدیر #"
 msgstr "Admin #"
 
@@ -1078,31 +1095,31 @@ msgstr "Manage VIP & Activity"
 msgid "مدیریت اشتراک ویژه (MusicWave VIP) و کارنامه فعالیت کاربر"
 msgstr "MusicWave VIP Membership & User Activity Overview"
 
-#: src/SettingsPage.php:805
+#: src/SettingsPage.php:856
 msgid "مدیریت حالت دسترسی انبوه کاتالوگ"
 msgstr "Bulk catalog access manager"
 
-#: src/SettingsPage.php:283
+#: src/SettingsPage.php:319
 msgid "مدیریت طرح‌های اشتراک VIP"
 msgstr "Manage VIP membership plans"
 
-#: src/SettingsPage.php:818
+#: src/SettingsPage.php:869
 msgid "مدیریت یکپارچه کلید اصلی VIP، تحویل حفاظت‌شده، طرح‌های اشتراک ووکامرس و چرخهٔ حیات داده‌ها."
 msgstr "Unified control center for the VIP master switch, protected file vault, WooCommerce subscription plans, and data lifecycle."
 
-#: src/SettingsPage.php:604
+#: src/SettingsPage.php:657
 msgid "مرکز کنترل تحویل حفاظت‌شده"
 msgstr "Protected Delivery Control Center"
 
-#: src/SettingsPage.php:636
+#: src/SettingsPage.php:689
 msgid "مسیر فعال فعلی:"
 msgstr "Active vault directory:"
 
-#: src/SettingsPage.php:403
+#: src/SettingsPage.php:439
 msgid "مسیر مطلق خارج از public_html؛ در صورت نبود، هنگام ذخیره به صورت خودکار ساخته و با .htaccess / web.config ایمن‌سازی می‌شود."
 msgstr "Absolute filesystem path outside public_html; automatically created and hardened with .htaccess / web.config on save."
 
-#: src/SettingsPage.php:829
+#: src/SettingsPage.php:880
 msgid "مسیر پوشهٔ حفاظت‌شده تنظیم شده یا قابل تشخیص است."
 msgstr "A protected directory path is configured or derivable."
 
@@ -1114,7 +1131,7 @@ msgstr "View WooCommerce Payments & Orders"
 msgid "مشاهده پرداخت‌ها و سفارش‌های ووکامرس این کاربر"
 msgstr "View this user's WooCommerce payments and orders"
 
-#: src/SettingsPage.php:337
+#: src/SettingsPage.php:373
 msgid "مشترکین"
 msgstr "Subscribers"
 
@@ -1122,7 +1139,7 @@ msgstr "Subscribers"
 msgid "مقایسه سایر طرح‌های اشتراک ویژه"
 msgstr "Compare other VIP membership plans"
 
-#: src/SettingsPage.php:144 src/SettingsPage.php:746
+#: src/SettingsPage.php:144 src/SettingsPage.php:797
 msgid "منابع عضویت"
 msgstr "Membership sources"
 
@@ -1138,15 +1155,15 @@ msgstr "Expired"
 msgid "منقضی‌شده"
 msgstr "Expired"
 
-#: src/SettingsPage.php:286
+#: src/SettingsPage.php:322
 msgid "منقضی‌شده‌ها"
 msgstr "Expired VIP"
 
-#: src/SettingsPage.php:138 src/SettingsPage.php:714
+#: src/SettingsPage.php:138 src/SettingsPage.php:767
 msgid "میزبان‌های مجاز اضافی برای تغییرمسیر"
 msgstr "Additional allowed redirect hosts"
 
-#: src/SettingsPage.php:656
+#: src/SettingsPage.php:709
 msgid "نام فایل"
 msgstr "Filename"
 
@@ -1170,19 +1187,19 @@ msgstr "Expiring Soon (7 days)"
 msgid "نشان ویژه VIP در حساب کاربری با تضمین حفظ کامل سابقه و پلی‌لیست‌ها"
 msgstr "Verified VIP badge on your account with full playback history and playlists preserved"
 
-#: src/SettingsPage.php:132 src/SettingsPage.php:696
+#: src/SettingsPage.php:132 src/SettingsPage.php:749
 msgid "نشانی پایهٔ میزبان راه‌دور"
 msgstr "Remote host base URL"
 
-#: src/SettingsPage.php:488
+#: src/SettingsPage.php:541
 msgid "نقش‌های وردپرس (مانند نقش mw_vip)"
 msgstr "WordPress roles (e.g. mw_vip role)"
 
-#: src/SettingsPage.php:426
+#: src/SettingsPage.php:467
 msgid "نمایش/پنهان‌کردن راز"
 msgstr "Show/hide secret"
 
-#: src/SettingsPage.php:370
+#: src/SettingsPage.php:406
 msgid "نمونهٔ نگاشت کامل"
 msgstr "Example complete mapping"
 
@@ -1194,7 +1211,7 @@ msgstr "The asset type or size is not allowed."
 msgid "نکته: یک محصول عادی ووکامرس بسازید (محصول ساده، قیمت و غیره). شناسهٔ آن را از فهرست محصولات یادداشت کنید (روی آن بروید → ID). سپس شناسه را پایین وارد کنید."
 msgstr "Tip: Create a normal WooCommerce product (Simple product, price, etc.). Note its ID from the Products list (hover → ID). Then reference that ID below."
 
-#: src/SettingsPage.php:368
+#: src/SettingsPage.php:404
 msgid "نگاشت طرح VIP"
 msgstr "VIP plan mapping"
 
@@ -1202,11 +1219,11 @@ msgstr "VIP plan mapping"
 msgid "نگاشت طرح حذف شد. خود محصول حذف نشده است."
 msgstr "Plan mapping removed. The product itself was not deleted."
 
-#: src/SettingsPage.php:613
+#: src/SettingsPage.php:666
 msgid "نیازمند تکمیل پیکربندی"
 msgstr "Configuration required"
 
-#: src/SettingsPage.php:799
+#: src/SettingsPage.php:850
 msgid "هر تصمیم دسترسی به‌صورت زنده دوباره بررسی می‌شود تا لغو سفارش یا انقضا بلافاصله اثر کند."
 msgstr "Every entitlement check runs live so order refunds or expirations take effect immediately."
 
@@ -1226,11 +1243,11 @@ msgstr "All VIP Levels"
 msgid "همه مشترکین فعال VIP (mw_vip)"
 msgstr "All active VIP subscribers (mw_vip)"
 
-#: src/SettingsPage.php:636
+#: src/SettingsPage.php:689
 msgid "هنوز ایجاد نشده است — روی دکمهٔ بالا کلیک کنید"
 msgstr "Not provisioned yet — click the button above"
 
-#: src/SettingsPage.php:769
+#: src/SettingsPage.php:820
 msgid "هنوز رویداد اعطا، تمدید، لغو یا انقضایی در گزارش حسابرسی ثبت نشده است."
 msgstr "No grant, extension, revocation, or expiration events have been logged yet."
 
@@ -1238,15 +1255,15 @@ msgstr "No grant, extension, revocation, or expiration events have been logged y
 msgid "هنوز سابقه پخشی ثبت نشده است."
 msgstr "No playback activity recorded yet."
 
-#: src/SettingsPage.php:375
+#: src/SettingsPage.php:411
 msgid "هنوز طرحی پیکربندی‌نشده است. دست‌کم یک خط اضافه و ذخیره کنید."
 msgstr "No plans configured yet. Add at least one line and save."
 
-#: src/SettingsPage.php:299
+#: src/SettingsPage.php:335
 msgid "هنوز نگاشتی برای طرح وجود ندارد. از دکمهٔ بالا استفاده کنید یا در کادر نگاشت پایین خط اضافه کنید."
 msgstr "No plan mappings yet. Use the button above or add lines in the mapping box below."
 
-#: src/SettingsPage.php:113 src/SettingsPage.php:663
+#: src/SettingsPage.php:113 src/SettingsPage.php:716
 msgid "هنوز هیچ فایل حفاظت‌شده‌ای در مخزن خصوصی ثبت نشده است."
 msgstr "No protected files have been indexed in the private vault yet."
 
@@ -1262,19 +1279,19 @@ msgstr "When downloading protected audio or ZIP files, short-lived rate-limit or
 msgid "هیچ دوره اشتراک فعالی یا قبلی برای این کاربر ثبت نشده است."
 msgstr "No active or historical VIP membership grants found for this user."
 
-#: src/SettingsPage.php:832
+#: src/SettingsPage.php:883
 msgid "وب‌سرور می‌تواند بارگذاری‌ها را در پوشهٔ حفاظت‌شده بنویسد."
 msgstr "The web server can write uploads into the protected directory."
 
-#: src/SettingsPage.php:831
+#: src/SettingsPage.php:882
 msgid "وب‌سرور می‌تواند پوشهٔ حفاظت‌شده را بخواند."
 msgstr "The web server can read the protected directory."
 
-#: src/SettingsPage.php:623
+#: src/SettingsPage.php:676
 msgid "وجود فایل‌های حفاظتی (.htaccess / web.config)"
 msgstr "Protective deny files (.htaccess / web.config)"
 
-#: src/SettingsPage.php:619
+#: src/SettingsPage.php:672
 msgid "وجود فیزیکی پوشه روی سرور"
 msgstr "Vault directory exists on disk"
 
@@ -1282,7 +1299,7 @@ msgstr "Vault directory exists on disk"
 msgid "وضعیت"
 msgstr "Status"
 
-#: src/SettingsPage.php:610
+#: src/SettingsPage.php:663
 msgid "وضعیت زنده و پیش‌بررسی امنیتی مخزن"
 msgstr "Live vault status & security preflight"
 
@@ -1314,11 +1331,11 @@ msgstr "Edit end date (UTC)"
 msgid "ویرایش سریع در users.php"
 msgstr "Quick edit on users.php"
 
-#: src/SettingsPage.php:135 src/SettingsPage.php:705
+#: src/SettingsPage.php:135 src/SettingsPage.php:758
 msgid "پارامتر query امضا"
 msgstr "Signature query parameter"
 
-#: src/SettingsPage.php:136 src/SettingsPage.php:708
+#: src/SettingsPage.php:136 src/SettingsPage.php:761
 msgid "پارامتر query انقضا"
 msgstr "Expiry query parameter"
 
@@ -1326,9 +1343,9 @@ msgstr "Expiry query parameter"
 msgid "پارامترهای تاریخ یا سطح اشتراک معتبر نیستند."
 msgstr "Invalid plan level or expiration date parameters."
 
-#: src/SettingsPage.php:430
-msgid "پاک‌سازی راز امضای ذخیره‌شده"
-msgstr "Clear stored signing secret"
+#: src/SettingsPage.php:483
+msgid "پاک‌سازی کامل همهٔ کلیدهای امضای ذخیره‌شده"
+msgstr "Clear all stored signing keys"
 
 #: src/Users/UsersListIntegration.php:274
 #, php-format
@@ -1339,7 +1356,7 @@ msgstr "Ended %s"
 msgid "پخش آنلاین کامل و بدون وقفه تمامی آثار اختصاصی آرشیو"
 msgstr "Uninterrupted full-length streaming across the entire exclusive catalog"
 
-#: src/SettingsPage.php:463
+#: src/SettingsPage.php:516
 msgid "پخش جریانی مستقیم PHP با پشتیبانی کامل HTTP Range (پیش‌فرض)"
 msgstr "Direct PHP byte-range streaming (HTTP Range supported, default)"
 
@@ -1371,7 +1388,7 @@ msgstr "WooCommerce Payments & Orders"
 msgid "پرداخت‌های ووکامرس"
 msgstr "WooCommerce Payments"
 
-#: src/SettingsPage.php:833
+#: src/SettingsPage.php:884
 msgid "پوشه خارج از همهٔ ریشه‌های وب عمومی است."
 msgstr "The directory is outside every publicly served web root."
 
@@ -1379,19 +1396,19 @@ msgstr "The directory is outside every publicly served web root."
 msgid "پوشهٔ asset حفاظت‌شده در دسترس نیست یا قابل نوشتن نیست."
 msgstr "The protected asset directory is unavailable or not writable."
 
-#: src/SettingsPage.php:199
+#: src/SettingsPage.php:235
 msgid "پوشهٔ حفاظت‌شده باید خارج از ریشهٔ عمومی وب (ABSPATH / DOCUMENT_ROOT) بوده و قابل خواندن و نوشتن باشد. مقدار قبلی حفظ شد."
 msgstr "The protected vault path must live outside public web roots (ABSPATH / DOCUMENT_ROOT) and be readable and writable. Previous setting retained."
 
-#: src/SettingsPage.php:800
+#: src/SettingsPage.php:851
 msgid "پوشهٔ حفاظت‌شده خارج از تمام ریشه‌های وب (ABSPATH و DOCUMENT_ROOT) نگهداری و با .htaccess / web.config سخت‌سازی می‌شود."
 msgstr "Protected files stay isolated outside all web roots (ABSPATH & DOCUMENT_ROOT) and hardened with .htaccess / web.config."
 
-#: src/SettingsPage.php:830
+#: src/SettingsPage.php:881
 msgid "پوشهٔ حفاظت‌شده وجود دارد."
 msgstr "The protected directory exists."
 
-#: src/SettingsPage.php:390
+#: src/SettingsPage.php:426
 msgid "پوشهٔ حفاظت‌شدهٔ محلی خارج از ریشهٔ وب (پیشنهادشده)"
 msgstr "Local protected directory outside web root (recommended)"
 
@@ -1399,7 +1416,7 @@ msgstr "Local protected directory outside web root (recommended)"
 msgid "پوشهٔ خصوصی با موفقیت ایمن‌سازی و فهرست فایل‌ها همگام‌سازی شد."
 msgstr "Private vault hardened and asset index synchronized."
 
-#: src/SettingsPage.php:131 src/SettingsPage.php:693
+#: src/SettingsPage.php:131 src/SettingsPage.php:746
 msgid "پوشهٔ فایل‌های حفاظت‌شده"
 msgstr "Protected files directory"
 
@@ -1407,15 +1424,15 @@ msgstr "Protected files directory"
 msgid "پوشهٔ فایل‌های حفاظت‌شده در دسترس نیست یا داخل ریشهٔ وب قرار دارد."
 msgstr "Protected vault directory is inaccessible or inside the public web root."
 
-#: src/SettingsPage.php:803
+#: src/SettingsPage.php:854
 msgid "پیام‌های دسترسی (شامل خرید یا عضویت) و رفتار ماژول عضویت"
 msgstr "Access gate messages (including Purchase or VIP) & fallback behavior"
 
-#: src/SettingsPage.php:566
+#: src/SettingsPage.php:619
 msgid "پیشرفته و حسابرسی"
 msgstr "Advanced & Audit"
 
-#: src/SettingsPage.php:763
+#: src/SettingsPage.php:814
 msgid "پیشرفته، حسابرسی و مدیریت چرخهٔ داده"
 msgstr "Advanced, Audit Trail & Data Lifecycle"
 
@@ -1423,23 +1440,23 @@ msgstr "Advanced, Audit Trail & Data Lifecycle"
 msgid "پیشنهاد محبوب"
 msgstr "Most Popular"
 
-#: src/SettingsPage.php:141 src/SettingsPage.php:731
+#: src/SettingsPage.php:141 src/SettingsPage.php:784
 msgid "پیشوند داخلی X-Accel"
 msgstr "X-Accel internal prefix"
 
-#: src/SettingsPage.php:133 src/SettingsPage.php:699
+#: src/SettingsPage.php:133 src/SettingsPage.php:752
 msgid "پیشوند مسیر راه‌دور"
 msgstr "Remote path prefix"
 
-#: src/SettingsPage.php:847
+#: src/SettingsPage.php:898
 msgid "پیش‌آزمایش تحویل حفاظت‌شده نیازمند اقدام است (در تب «تحویل حفاظت‌شده» روی «ایجاد، ایمن‌سازی و همگام‌سازی خودکار پوشه» کلیک کنید):"
 msgstr "Protected delivery preflight requires attention (click Provision, harden & sync vault directory in the Protected Delivery tab):"
 
-#: src/SettingsPage.php:802
+#: src/SettingsPage.php:853
 msgid "پیش‌فرض‌های انتشار جدید و سطح‌های عضویت پیش‌فرض"
 msgstr "New release defaults & default membership levels"
 
-#: src/SettingsPage.php:720
+#: src/SettingsPage.php:773
 msgid "پیش‌نمایش زنده لینک امضاشده آزمایشی:"
 msgstr "Live sample signed URL preview:"
 
@@ -1447,7 +1464,7 @@ msgstr "Live sample signed URL preview:"
 msgid "چه داده‌هایی توسط افزونه عضویت VIP MusicWave ذخیره می‌شود"
 msgstr "What personal data MusicWave VIP stores"
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:822
 msgid "کاربر"
 msgstr "User"
 
@@ -1471,15 +1488,15 @@ msgstr "MusicWave's complete annual VIP membership with maximum savings, unlimit
 msgid "کتابخانه موسیقی و فهرست‌های پخش"
 msgstr "Music Library & Playlists"
 
-#: src/SettingsPage.php:442
+#: src/SettingsPage.php:495
 msgid "کلید query که timestamp انقضای Unix را دریافت می‌کند."
 msgstr "Query key receiving the Unix expiry timestamp."
 
-#: src/SettingsPage.php:438
+#: src/SettingsPage.php:491
 msgid "کلید query که امضای base64url با HMAC-SHA256 را دریافت می‌کند."
 msgstr "Query key receiving the base64url HMAC-SHA256 signature."
 
-#: src/SettingsPage.php:868
+#: src/SettingsPage.php:919
 msgid "کلید اصلی خاموش است: انتشارهای عضویت در حالت پروموشن رایگان‌اند؛ خریدهای تکی ووکامرس و تحویل امن فعال‌اند."
 msgstr "Master switch paused: membership releases are in open promotional access while single WooCommerce purchases and secure delivery remain active."
 
@@ -1487,7 +1504,7 @@ msgstr "Master switch paused: membership releases are in open promotional access
 msgid "کپی شد!"
 msgstr "Copied!"
 
-#: src/SettingsPage.php:110 src/SettingsPage.php:679
+#: src/SettingsPage.php:110 src/SettingsPage.php:732
 msgid "کپی شناسه"
 msgstr "Copy Asset ID"
 
@@ -1495,7 +1512,7 @@ msgstr "Copy Asset ID"
 msgid "یادداشت داخلی مدیریت برای این مشترک (فقط قابل مشاهده برای مدیر)"
 msgstr "Internal admin note for this member (visible to administrators only)"
 
-#: src/SettingsPage.php:797
+#: src/SettingsPage.php:848
 msgid "یادداشت‌های امنیتی"
 msgstr "Security notes"
 
@@ -1507,7 +1524,7 @@ msgstr "One full year of unlimited access to the entire VIP catalog and new rele
 msgid "یک فایل معتبر از رسانه‌ها انتخاب کنید."
 msgstr "Choose a valid Media Library file."
 
-#: src/SettingsPage.php:489
+#: src/SettingsPage.php:542
 msgid "یکپارچه‌سازی سفارشی از طریق فیلترهای music_wave_vip_membership_*."
 msgstr "Custom integrations via music_wave_vip_membership_* hooks."
 

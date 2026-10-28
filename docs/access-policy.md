@@ -7,10 +7,19 @@ The engine is deliberately deny-by-default. An invalid release, unknown mode, mi
 | Access mode | Anonymous | Customer without entitlement | Customer with entitlement | Administrator |
 |---|---:|---:|---:|---:|
 | `public` | allow | allow | allow | allow |
+| `logged_in` | deny (`login_required`) | allow (any signed-in user) | allow | allow |
 | `purchase` | deny | deny | allow after WooCommerce confirms ownership | allow (explicit preview override) |
-| `membership` | deny | deny | allow when the membership provider matches a configured level | allow (explicit preview override) |
-| `purchase_or_membership` | deny | deny | allow when either check passes | allow (explicit preview override) |
+| `membership` | depends on absence policy when no provider is active; otherwise deny | deny | allow when the membership provider matches a configured level | allow (explicit preview override) |
+| `purchase_or_membership` | depends on absence policy when no provider is active; otherwise deny | deny | allow when either check passes | allow (explicit preview override) |
 | `restricted` or unknown | deny | deny | deny | allow (explicit preview override) |
+
+## Membership-absence policy (`MembershipAbsencePolicy`)
+
+When no `MembershipProvider` is registered (`NullMembershipProvider`), `MembershipAbsencePolicy` evaluates `membership_absent_behavior` (filter `music_wave_membership_absent_behavior`):
+
+- `allow` (default): `membership` allows (`membership_provider_absent`); product-linked `purchase_or_membership` still requires purchase (`purchase_required`).
+- `open_download`: opens both `membership` and non-purchased `purchase_or_membership` (`membership_absent_open_download`) without modifying post metadata. Never opens `purchase`, `restricted`, or guest `logged_in`.
+- `deny`: fails closed (`membership_provider_absent` / `purchase_required`).
 
 Manual grants are checked for authenticated users before purchase or membership checks. They are supplied by an optional `ManualAccessProvider`; no manual-grant storage is created by Core in this milestone.
 

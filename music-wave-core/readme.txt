@@ -4,7 +4,7 @@ Tags: music, catalog, releases, woocommerce, downloads, playlists, rtl
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 0.15.0
+Stable tag: 0.16.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,12 @@ Block `music-wave/request-form` includes honeypot, timing check, per-actor rate 
 6. Setup & diagnostics with schema version, delivery, SEO checks.
 
 == Changelog ==
+
+= 0.16.0 =
+* Feature: `MembershipAbsencePolicy` introduces three explicit modes when no membership module is active: `allow` (backwards-compatible default), `open_download` (opens `membership` and `purchase_or_membership` without editing releases, while keeping `purchase`, `restricted`, and guest `logged_in` closed), and `deny` (fail-closed).
+* Feature: scheme-based `DeliveryRouter`, `DirectLinkProvider`, `DirectLinkAsset`, `DirectLinkUrlValidator`, `DirectLinkPermission`, `RedirectResponse`, and `DeliveryCapabilities` add Core-native controlled `direct:<https-url>` delivery and streaming alongside VIP/external `vip:` and `local:` protected providers — no database migration required.
+* Security: strict SSRF/redirect hardening (HTTPS-only, `<=2048` chars, blocks credentials/fragments, `localhost`, internal TLDs, CGNAT `100.64/10`, `198.18/15`, multicast, `::ffff:` IPv4-mapped IPv6, NAT64 `64:ff9b::/96`, octal/hex/decimal IPs, plus optional `direct_link_allowed_hosts` enforced at both save and delivery time), capability gating (`manage_mw_protected_assets`), `MAX_TTL = 7200` ceiling, shutdown-safe delivery counting/auditing, and non-autoloaded DB daily quota persistence (`mw_dl_quota_*`).
+* Performance: `BulkAccessManager::mode_counts()` uses a single aggregated SQL `GROUP BY` query with a 5-minute transient cache invalidated on release mutations; `DatabaseReplayStore::cleanup()` prunes expired replay and stale quota rows in bounded primary-key batches.
 
 = 0.15.0 =
 * Design: term colours are unified around one source of truth (`ManaCore\MusicWave\Core\Catalog\TermHue`). The term hero, taxonomy shelf tiles, artist cards, playlist fallback art, and release taxonomy chips all derive their hue from the term's numeric ID and emit the canonical `mw-term-hue-N` modifier, so a genre keeps its colour everywhere and never repaints when lists re-order; legacy surface classes remain supported through CSS aliases.

@@ -228,7 +228,8 @@ final class SettingsPage {
 				MigrationRunner::LATEST_VERSION
 			)
 		);
-		$this->status_row( __( 'تحویل حفاظت‌شده', 'music-wave-core' ), has_filter( 'music_wave_download_provider' ), __( 'فایل‌های خصوصی و دانلود ایمن', 'music-wave-core' ) );
+		$delivery_caps = \ManaCore\MusicWave\Core\Support\DeliveryCapabilities::describe();
+		$this->status_row( __( 'تحویل حفاظت‌شده و مستقیم', 'music-wave-core' ), $delivery_caps['has_protected_provider'], $delivery_caps['summary'] );
 		$this->status_row( __( 'ارائه‌دهنده عضویت', 'music-wave-core' ), has_filter( 'music_wave_membership_provider' ), __( 'تصمیمات دسترسی مبتنی بر عضویت', 'music-wave-core' ) );
 		$this->status_row( __( 'تم بلوک همراه', 'music-wave-core' ), 'musicwave' === $theme->get_stylesheet(), __( 'قالب‌ها و سبک‌های MusicWave', 'music-wave-core' ) );
 		echo '</section></div>';
@@ -329,11 +330,15 @@ final class SettingsPage {
 
 		$settings = Settings::all();
 		$this->settings_form_start();
-		$absent = (string) $settings['membership_absent_behavior'];
+		$absent = \ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy::sanitize_mode( (string) $settings['membership_absent_behavior'] );
 		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'رفتار ماژول عضویت', 'music-wave-core' ) . '</h2>';
 		$this->render_live_vip_status_banner();
-		echo '<p>' . esc_html__( 'وقتی هیچ ماژول عضویتی مانند MusicWave VIP فعال نیست، انتشارهای دارای محدودیت عضویت می‌توانند برای همه در دسترس بمانند یا تا زمان فعال‌شدن یک ماژول، دسترسی‌شان مسدود شود (در حالت دوگانه «خرید یا اشتراک»، در صورت داشتن محصول WooCommerce مسیر خرید تکی همچنان فعال می‌ماند).', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
-		echo '<tr><th>' . esc_html__( 'در حالی که هیچ ماژول عضویت فعال نیست', 'music-wave-core' ) . '</th><td><label style="display:block;margin-bottom:6px;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="allow" ' . checked( $absent, 'allow', false ) . '> ' . esc_html__( 'دسترسی آزاد — انتشارهای صرفاً عضویتی بدون افزونه VIP قابل مشاهده بمانند (توصیه می‌شود)', 'music-wave-core' ) . '</label><label style="display:block;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="deny" ' . checked( $absent, 'deny', false ) . '> ' . esc_html__( 'مسدودسازی — تا زمان فعال‌شدن یک ماژول عضویت، دسترسی به انتشارهای عضویتی قفل بماند', 'music-wave-core' ) . '</label></td></tr>';
+		echo '<p>' . esc_html__( 'وقتی هیچ ماژول عضویتی مانند MusicWave VIP فعال نیست، سیاست زیر تعیین می‌کند انتشارهای «فقط عضویت» و «خرید یا عضویت» چگونه ارزیابی شوند (انتشارهای «فقط خرید تکی» و «محدود» هرگز باز نمی‌شوند).', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
+		echo '<tr><th>' . esc_html__( 'در حالی که هیچ ماژول عضویت فعال نیست', 'music-wave-core' ) . '</th><td>';
+		echo '<label style="display:block;margin-bottom:8px;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="allow" ' . checked( $absent, 'allow', false ) . '> <strong>' . esc_html__( 'دسترسی آزاد (سازگار با پیش‌فرض قبلی)', 'music-wave-core' ) . '</strong> — ' . esc_html__( 'انتشارهای صرفاً عضویتی بدون افزونه VIP باز می‌مانند، اما در حالت دوگانه «خرید یا اشتراک» اگر محصول WooCommerce متصل باشد مسیر خرید تکی الزامی می‌ماند.', 'music-wave-core' ) . '</label>';
+		echo '<label style="display:block;margin-bottom:8px;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="open_download" ' . checked( $absent, 'open_download', false ) . '> <strong>' . esc_html__( 'دانلود آزاد کامل محتوای عضویتی (Open Download)', 'music-wave-core' ) . '</strong> — ' . esc_html__( 'هر دو حالت «فقط عضویت» و «خرید یا اشتراک» در غیاب افزونه عضویت بدون نیاز به خرید برای دانلود و پخش باز می‌شوند (انتشارهای «فقط خرید تکی» همچنان پولی می‌مانند).', 'music-wave-core' ) . '</label>';
+		echo '<label style="display:block;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="deny" ' . checked( $absent, 'deny', false ) . '> <strong>' . esc_html__( 'مسدودسازی ایمن (Fail-Closed)', 'music-wave-core' ) . '</strong> — ' . esc_html__( 'تا زمان فعال‌شدن یک ماژول عضویت، دسترسی عضویتی قفل می‌ماند و فقط خریداران محصول متصل دسترسی دارند.', 'music-wave-core' ) . '</label>';
+		echo '</td></tr>';
 		echo '</table></section>';
 
 		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'پیام‌های دسترسی مشتری', 'music-wave-core' ) . '</h2>';
@@ -357,18 +362,25 @@ final class SettingsPage {
 	}
 
 	private function render_live_vip_status_banner(): void {
-		$has_provider = has_filter( 'music_wave_membership_provider' );
-		$vip_url      = admin_url( 'edit.php?post_type=' . ReleasePostType::KEY . '&page=music-wave-vip' );
+		$has_provider   = has_filter( 'music_wave_membership_provider' );
+		$effective_mode = \ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy::current_mode();
+		$vip_url        = admin_url( 'edit.php?post_type=' . ReleasePostType::KEY . '&page=music-wave-vip' );
 		if ( ! $has_provider ) {
-			echo '<div class="notice notice-warning inline" style="margin:0 0 12px;"><p><strong>' . esc_html__( 'وضعیت فعلی: هیچ ماژول عضویتی فعال نیست.', 'music-wave-core' ) . '</strong> ' . esc_html__( 'گزینهٔ رادیویی زیر مستقیماً تعیین می‌کند انتشارهای عضویتی فعلاً باز بمانند یا مسدود شوند.', 'music-wave-core' ) . '</p></div>';
+			$mode_summary = array(
+				'allow'         => __( 'سیاست مؤثر فعلی: «دسترسی آزاد» — انتشارهای عضویتی باز هستند و انتشارهای دوگانه دارای محصول، مسیر خرید تکی را حفظ می‌کنند.', 'music-wave-core' ),
+				'open_download' => __( 'سیاست مؤثر فعلی: «دانلود آزاد کامل» — انتشارهای عضویتی و دوگانه بدون نیاز به VIP قابل دانلود هستند.', 'music-wave-core' ),
+				'deny'          => __( 'سیاست مؤثر فعلی: «مسدودسازی ایمن» — انتشارهای عضویتی تا فعال‌شدن افزونه عضویت قفل هستند.', 'music-wave-core' ),
+			);
+			$summary_text = isset( $mode_summary[ $effective_mode ] ) ? $mode_summary[ $effective_mode ] : $mode_summary['allow'];
+			echo '<div class="notice notice-warning inline" style="margin:0 0 12px;"><p><strong>' . esc_html__( 'وضعیت فعلی: هیچ ماژول عضویتی فعال نیست.', 'music-wave-core' ) . '</strong> ' . esc_html( $summary_text ) . '</p></div>';
 			return;
 		}
 
 		$vip_opts = get_option( 'music_wave_vip_settings', array() );
 		$vip_on   = ! is_array( $vip_opts ) || ! isset( $vip_opts['module_enabled'] ) || 'disabled' !== (string) $vip_opts['module_enabled'];
 		$status   = $vip_on
-			? __( 'ماژول عضویت MusicWave VIP فعال است و «اعمال قوانین VIP» روشن است.', 'music-wave-core' )
-			: __( 'ماژول MusicWave VIP نصب است، اما کلید «اعمال قوانین VIP» موقتاً خاموش (حالت رایگان) است.', 'music-wave-core' );
+			? __( 'ماژول عضویت فعال است: این تنظیم فعلاً بدون اثر است، زیرا تصمیم‌های عضویت مستقیماً توسط ارائه‌دهنده فعال ارزیابی می‌شوند.', 'music-wave-core' )
+			: __( 'ماژول MusicWave VIP نصب است، اما کلید «اعمال قوانین VIP» خاموش (حالت پروموشن باز) است؛ اولویت با کلید اصلی VIP است.', 'music-wave-core' );
 
 		echo '<div class="notice notice-' . esc_attr( $vip_on ? 'info' : 'warning' ) . ' inline" style="margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">';
 		echo '<span><strong>' . esc_html( $status ) . '</strong></span>';
@@ -389,16 +401,23 @@ final class SettingsPage {
 		);
 		$this->settings_form_start();
 
-		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'دانلودهای ایمن', 'music-wave-core' ) . '</h2>';
+		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'دانلودهای ایمن و مسیریابی تحویل', 'music-wave-core' ) . '</h2>';
+		$delivery_caps = \ManaCore\MusicWave\Core\Support\DeliveryCapabilities::describe();
+		echo '<div class="notice notice-' . esc_attr( $delivery_caps['has_protected_provider'] ? 'info' : 'warning' ) . ' inline" style="margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span><strong>' . esc_html( $delivery_caps['summary'] ) . ':</strong> ' . esc_html( $delivery_caps['detail'] ) . '</span>';
 		if ( defined( 'MUSIC_WAVE_VIP_FILE' ) ) {
-			echo '<div class="notice notice-info inline" style="margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span>' . esc_html__( 'محل ذخیره‌سازی خصوصی، خودآزمایی پوشه، امضای HMAC سرور راه‌دور و مدیر فایل‌های حفاظت‌شده در تب «تحویل حفاظت‌شده» افزونه VIP قرار دارد.', 'music-wave-core' ) . '</span><a class="button button-secondary" href="' . esc_url( admin_url( 'edit.php?post_type=' . ReleasePostType::KEY . '&page=music-wave-vip&tab=delivery' ) ) . '">' . esc_html__( 'باز کردن تب تحویل حفاظت‌شده VIP', 'music-wave-core' ) . '</a></div>';
+			echo '<a class="button button-secondary" href="' . esc_url( admin_url( 'edit.php?post_type=' . ReleasePostType::KEY . '&page=music-wave-vip&tab=delivery' ) ) . '">' . esc_html__( 'باز کردن تب تحویل حفاظت‌شده VIP', 'music-wave-core' ) . '</a>';
 		}
-		echo '<p>' . esc_html__( 'صدور توکن امضاشدهٔ یک‌بارمصرف، طول عمر پیوندها و سهمیهٔ تحویل به ازای هر بازدیدکننده یا کاربر را کنترل کنید.', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
+		echo '</div>';
+		echo '<p>' . esc_html__( 'صدور توکن امضاشدهٔ یک‌بارمصرف، طول عمر پیوندها، سهمیهٔ تحویل و میزبان‌های مجاز پیوند مستقیم HTTPS (direct:) را کنترل کنید.', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
 		$this->number_row( 'download_token_ttl', __( 'مدت اعتبار پیوند دانلود (ثانیه)', 'music-wave-core' ), (int) $settings['download_token_ttl'], 30, 3600, __( 'طول عمر تیکت یک‌بارمصرف دانلود فایل (پیش‌فرض: 300 ثانیه = ۵ دقیقه).', 'music-wave-core' ) );
 		$this->number_row( 'stream_token_ttl', __( 'مدت اعتبار پیوند پخش امن (ثانیه)', 'music-wave-core' ), (int) $settings['stream_token_ttl'], 60, 7200, __( 'طول عمر پیوند استریم امن برای پخش بی‌وقفه در پلیر سراسری (پیش‌فرض: 900 ثانیه = ۱۵ دقیقه).', 'music-wave-core' ) );
 		$this->number_row( 'download_rate_limit', __( 'درخواست توکن در هر پنجره', 'music-wave-core' ), (int) $settings['download_rate_limit'], 1, 1000, __( 'حداکثر تعداد توکن‌های دانلود یا پخش جریانی که یک بازدیدکننده می‌تواند پیش از اعمال محدودیت ۴۲۹ درخواست کند.', 'music-wave-core' ) );
 		$this->number_row( 'download_rate_window', __( 'پنجرهٔ محدودیت نرخ (ثانیه)', 'music-wave-core' ), (int) $settings['download_rate_window'], 10, 3600, __( 'طول پنجرهٔ ثابت استفاده‌شده توسط محدودیت نرخ رمز.', 'music-wave-core' ) );
 		$this->number_row( 'download_daily_quota', __( 'سهمیهٔ تحویل روزانه', 'music-wave-core' ), (int) $settings['download_daily_quota'], 0, 10000, __( 'حداکثر تحویل فایل تکمیل‌شده برای هر کاربر/بازدیدکننده در شبانه‌روز. 0 را برای بدون سقف روزانه تنظیم کنید.', 'music-wave-core' ) );
+		$allowed_hosts = isset( $settings['direct_link_allowed_hosts'] ) ? (string) $settings['direct_link_allowed_hosts'] : '';
+		echo '<tr><th scope="row"><label for="mw-setting-direct_link_allowed_hosts">' . esc_html__( 'میزبان‌های مجاز پیوند مستقیم HTTPS (اختیاری)', 'music-wave-core' ) . '</label></th><td>';
+		echo '<textarea class="regular-text code" rows="3" id="mw-setting-direct_link_allowed_hosts" name="' . esc_attr( Settings::OPTION ) . '[direct_link_allowed_hosts]" placeholder="cdn.example.com&#10;*.r2.dev">' . esc_textarea( $allowed_hosts ) . '</textarea>';
+		echo '<p class="description">' . esc_html__( 'در هر خط یک دامنه (مانند cdn.example.com یا *.example.com). خالی گذاشتن به معنای پذیرش هر میزبان عمومی HTTPS معتبر است (نشانی‌های داخلی، localhost و IPهای خصوصی همیشه مسدود می‌شوند). توجه: تغییرمسیر 302 نشانی نهایی را به مرورگر کاربر مجاز نشان می‌دهد؛ برای فایل‌های پولی حساس از تحویل حفاظت‌شده VIP استفاده کنید.', 'music-wave-core' ) . '</p></td></tr>';
 		echo '</table></section>';
 
 		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'جست‌وجو و کشف کاتالوگ', 'music-wave-core' ) . '</h2>';

@@ -130,6 +130,13 @@ final class DownloadRoutes {
 					array( 'status' => 503 )
 				);
 			}
+			if ( 'invalid_direct_url' === $reason ) {
+				return new WP_Error(
+					'mw_download_denied',
+					__( 'نشانی لینک مستقیم این فایل معتبر نیست یا خارج از دامنه‌های مجاز تحویل قرار دارد.', 'music-wave-core' ),
+					array( 'status' => 403 )
+				);
+			}
 			if ( 'stream_unsupported' === $reason ) {
 				return new WP_Error(
 					'mw_stream_denied',
@@ -186,6 +193,13 @@ final class DownloadRoutes {
 				'mw_authentication_required',
 				__( 'برای دانلود این فایل وارد حساب کاربری خود شوید.', 'music-wave-core' ),
 				array( 'status' => 401 )
+			);
+		}
+		if ( 'provider_unavailable' === $this->resolver->last_deny_reason() ) {
+			return new WP_Error(
+				'mw_download_denied',
+				__( 'دانلودهای حفاظت‌شده VIP در حال حاضر در دسترس نیستند.', 'music-wave-core' ),
+				array( 'status' => 503 )
 			);
 		}
 

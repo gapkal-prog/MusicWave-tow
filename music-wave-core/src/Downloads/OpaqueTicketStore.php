@@ -19,7 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class OpaqueTicketStore {
-	public const PREFIX = 'mwt_';
+	public const PREFIX  = 'mwt_';
+	public const MAX_TTL = 7200;
 
 	/**
 	 * Store a signed token and return the opaque browser ticket.
@@ -30,7 +31,7 @@ final class OpaqueTicketStore {
 	 */
 	public function wrap( string $signed_token, int $ttl ): string {
 		$ticket = self::PREFIX . bin2hex( random_bytes( 20 ) );
-		$ttl    = max( 30, min( $ttl, 900 ) );
+		$ttl    = max( 30, min( $ttl, self::MAX_TTL ) );
 		$key    = $this->key( $ticket );
 		// Primary: transient (object-cache aware).
 		set_transient( $key, $signed_token, $ttl );

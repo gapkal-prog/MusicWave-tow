@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Vip;
 
+use ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -50,7 +52,16 @@ final class VipSettings {
 			$stored['protected_root'] = (string) get_option( self::LEGACY_ROOT_OPTION, '' );
 		}
 
-		return self::normalize( array_merge( self::defaults(), $stored ), false );
+		$normalized = self::normalize( array_merge( self::defaults(), $stored ), false );
+		$active_key = RemoteSigningKeyring::resolve_active_key( $normalized );
+		if ( '' !== $active_key['secret'] ) {
+			$normalized['remote_signing_secret'] = $active_key['secret'];
+		}
+		if ( '' !== $active_key['kid'] && '' === (string) $normalized['remote_key_id'] ) {
+			$normalized['remote_key_id'] = $active_key['kid'];
+		}
+
+		return $normalized;
 	}
 
 	/** @param mixed $value @return array<string, mixed> */

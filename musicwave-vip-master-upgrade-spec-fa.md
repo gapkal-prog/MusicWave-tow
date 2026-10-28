@@ -1,397 +1,329 @@
-# مشخصات و پرامپت اجرایی کامل ارتقای VIP، دسترسی و تحویل فایل در MusicWave
+# سند مرجع جامع معماری، امنیت، کارایی و پیاده‌سازی ارتقای VIP، سیاست دسترسی و سیستم تحویل فایل در MusicWave
 
-> این فایل **یک سند واحد و خودکفاست**. هوش مصنوعی اجراکننده باید همهٔ پروژه را بررسی کند، ارتقا را از صفر تا صد خودش انجام دهد و نتیجهٔ کامل، تست‌شده و مستند تحویل بدهد. هیچ سند دیگری لازم نیست.
-
-**تاریخ:** ۲۷ اکتبر ۲۰۲۶
-**نسخه‌های مبنا (طبق manifest پروژه):** هسته `music-wave-core 0.15.0` (schema `0.14.0`) · `music-wave-vip 0.5.1` · قالب `0.9.2`
-**نسخه‌های هدف:** هسته `0.16.0` · VIP `0.5.2` · قالب بدون تغییر نسخه مگر نیاز واقعی · schema بدون تغییر
-
----
-
-## ۱. ماموریت و تعریف «تمام‌شده»
-
-### ۱.۱ نقش
-تو معمار ارشد وردپرس/PHP و مهندس امنیت هستی. مالک پروژه کدنویسی را تمام کرده و می‌خواهد محصول (قالب + افزونه‌ها) حرفه‌ای، امن و قابل‌فروش شود.
-
-### ۱.۲ هدف
-ارتقای **تنظیمات، معماری، امنیت و عملکرد** سامانهٔ VIP و مسیر «دسترسی و تحویل فایل» تا:
-- حرفه‌ای، **پویا و هوشمند** باشد (رابط، وضعیت واقعی را نشان بدهد، نه فقط گزینه‌های بی‌اثر).
-- امن باشد (استانداردهای OWASP، امضای قوی، اعتبارسنجی چندلایه).
-- تمیز و استاندارد باشد (SOLID، DRY، شیءگرا، بدون کد تکراری/مرده).
-- بدون مهاجرت دیتابیس و بدون شکستن سازگاری عقب‌رو.
-
-### ۱.۳ نتایج مشخص مورد انتظار
-1. **سیاست دسترسی بدون ماژول عضویت** با سه حالت روشن و گزینهٔ جدید «دسترسی کامل و لینک دانلود».
-2. **لینک مستقیم** (CDN/میزبان خارجی) به‌عنوان منبع فایل در بخش «فایل‌ها و کیفیت دانلود»، با اعتبارسنجی چندلایه و تحویل امن.
-3. **رفع باگ نگاشت `vip:`** در حالت تغییرمسیر راه‌دور.
-4. **تنظیمات هوشمند:** هر بخش تنظیمات وضعیت واقعی و اثر عملی خود را (با/بدون VIP) نشان بدهد.
-5. **سخت‌سازی امنیتی** (اعتبارسنجی، دسترسی‌ها، مدیریت کلید امضا) و **بهبود عملکرد** (کش، کوئری، پاک‌سازی).
-6. **پاک‌سازی کامل** کد/فایل/کلید/استایل/ترجمهٔ تکراری و بی‌مصرف.
-7. **تست، مستندات، نسخه‌ها و گزارش نهایی** کامل.
-
-### ۱.۴ تعریف «تمام‌شده» (Definition of Done)
-همهٔ معیارهای بخش ۱۱ برقرار، همهٔ دروازه‌های کیفیت بخش ۹ سبز (یا با دلیل واقعی «اجرا نشد»)، و گزارش نهایی بخش ۱۳ تحویل شده باشد.
+> **نسخه سند:** `2.0.0` (بازبینی‌شده، ممیزی‌شده با کد واقعی مخزن در کامیت پایه `e0882d9`، و ارتقایافته در سطح معماری، امنیت سرور و مهندسی وردپرس)
+> **تاریخ به‌روزرسانی:** `2026-10-28`
+> **پکیج‌های هدف:** `music-wave-core` (`0.15.0` ← `0.16.0`، نسخه اسکیمای دیتابیس ثابت روی `0.15.0`) و `music-wave-vip` (`0.5.1` ← `0.5.2` با `MIN_CORE_VERSION = '0.16.0'`)، سازگار با قالب `musicwave` (`0.9.2`)
+> **کف پشتیبانی اجرایی (طبق ADR-0003):** `PHP >= 7.4` (آزمون‌شده روی `7.4`، `8.0`، `8.3`، `8.4`؛ بدون سینتکس اختصاصی PHP 8)، `WordPress >= 6.6` (تا `6.8`)، `WooCommerce >= 9.0` (اختیاری)
 
 ---
 
-## ۲. پروتکل کار مستقل (Autonomy Protocol)
+## بخش ۰ — خلاصه مدیریتی، ممیزی کدبیس واقعی و قوانین قطعی اجرا
 
-1. **سؤال نپرس؛ تصمیم بگیر و ثبت کن.** تصمیم‌های اصلی در بخش ۱۰ از قبل گرفته شده‌اند. برای هر ابهام دیگر، امن‌ترین و ساده‌ترین گزینهٔ سازگار با استانداردها را انتخاب کن و در بخش «تصمیم‌ها و انحراف‌ها» گزارش نهایی بنویس.
-2. **اول کشف و راستی‌آزمایی، بعد کدنویسی.** بخش ۳ «فرضیه‌هاست»، نه حقیقت قطعی؛ شماره خط‌ها ممکن است کهنه باشند. هر فرضیه را در کد واقعی بسنج. اگر کد واقعی فرق داشت، **طراحی را با همان روح و اصول تطبیق بده** و انحراف را ثبت کن.
-3. **توقف فقط در این موارد:** (الف) عملیات مخرب/برگشت‌ناپذیر روی داده یا حذف فایل‌های غیرقابل‌بازیابی خارج از مخزن git، (ب) تناقض مستقیم بین دو الزام این سند که هیچ تفسیر امنی ندارد، (ج) نبود امکان اجرای هر نوع تست و اعتبارسنجی. در غیر این صورت کار را ادامه بده.
-4. **گردش git:** شاخهٔ جدید `feature/vip-access-delivery-upgrade`؛ یک commit برای هر گام منطقی (پیام شفاف)؛ هرگز push/merge نکن. پیش از هر refactor، تست‌های مشخصه‌سازی (بخش ۵، فاز ۰) سبز باشند.
-5. **دامنه:** هر چیز خارج از اهداف بخش ۱ را فقط در «بدهی/پیشنهاد آینده» گزارش بده، نساز. موارد «خارج از دامنه» بخش ۴.۹ را نساز.
-6. **صداقت:** نتیجهٔ واقعی هر دستور را ثبت کن. چیزی که اجرا نشد یا ناموفق بود را «سبز» نگو. تستی را برای سبز شدن تضعیف یا حذف نکن؛ مگر آنکه خودش رفتار عمداً‌تغییرکرده را بسنجد و دلیلش در گزارش باشد.
+### ۰.۱. قوانین قطعی اجرا (الزامی و غیرقابل تخطی)
 
----
-
-## ۳. زمینه و یافته‌های اولیهٔ تحلیل (فرضیه‌هایی که باید راستی‌آزمایی شوند)
-
-### ۳.۱ ساختار
-- `music-wave-core`: سیاست دسترسی (`Access/*`)، تحویل (`Downloads/*`)، تنظیمات (`Admin/SettingsPage.php`، `Support/Settings.php`)، متادیتا (`Schema/*`)، ویرایشگر (`assets/editor.js`)، بلوک‌ها.
-- `music-wave-vip`: عضویت، مخزن خصوصی دارایی‌ها (`vip:<hash>`)، ارائه‌دهندهٔ محلی (`ProtectedFileProvider`)، ارائه‌دهندهٔ تغییرمسیر راه‌دور امضاشده (`RemoteRedirectProvider`)، صفحهٔ تنظیمات VIP.
-- هسته هیچ‌جا به کلاس‌های VIP وابستگی مستقیم ندارد (VIP به هسته وابسته است). این جهت وابستگی **باید حفظ شود**.
-- ابزارهای پروژه: `composer test`، `check:syntax`، `check:strict-types`، `check:abspath`، `check:phpcs`، `check:phpstan`، `check:script-translations`، `npm run lint:js`، `tests/run.php`، `tests/vip-access-delivery-suite.php`، `tests/staging-smoke.php`، `tools/final-check.sh`. (وجود/نام دقیق را در فاز ۰ تأیید کن.)
-
-### ۳.۲ فرضیه‌ها (H1–H16) و روش راستی‌آزمایی
-
-| # | فرضیه | روش |
-|---|---|---|
-| H1 | رادیوهای باکس «رفتار ماژول عضویت» در `Admin/SettingsPage.php` هرگز `disabled` نمی‌شوند؛ حس «قفل بودن» از کنترل‌های `.mwvip-module-control` در صفحهٔ VIP می‌آید (وقتی کلید اصلی خاموش است) | grep `disabled` در `Admin/` هسته + بررسی `music-wave-vip` `SettingsPage.php` و `assets/admin-vip-settings.js` |
-| H2 | مقدار `membership_absent_behavior` (`allow`/`deny`) فقط در مسیر «هیچ ارائه‌دهندهٔ عضویتی ثبت نیست» (`AccessPolicyEngine::absent_provider_decision`) خوانده می‌شود؛ با VIP روشن یا نصب‌شدهٔ خاموش بی‌اثر است | خواندن `AccessPolicyEngine` + `music-wave-vip.php` (فیلتر `music_wave_access_decision` با دلیل `vip_module_disabled`) |
-| H3 | در `hybrid_access` با محصول WooCommerce نگاشت‌شده، بدون ارائه‌دهنده هم حتی با `allow` تصمیم `purchase_required` می‌ماند | تست مشخصه‌سازی |
-| H4 | بدون ارائه‌دهندهٔ تحویل، `Plugin.php` از `NullDownloadProvider` استفاده می‌کند و `DownloadResolver::issue()` برای `vip:`/`local:` دلیل `provider_unavailable` می‌دهد؛ برای شناسه‌های دیگر `provider_failed` | خواندن `Plugin.php` و `DownloadResolver.php` |
-| H5 | لینک مستقیم در **سه لایه** مسدود است: (۱) `assets/editor.js` (`validQualities()` رد `^https?://`)، (۲) `Schema/MetaDefinition::sanitize_download_assets` (حذف asset_idهای با scheme http/https)، (۳) متن راهنما در `editor.js` و `Admin/ReleaseMetaBox.php` | خواندن + تست‌های ورودی |
-| H6 | مسیر REST `Downloads/DownloadAssetRoutes::normalize_assets` هیچ اعتبارسنجی URL ندارد؛ پس درخواست دست‌ساز مدیر می‌تواند URL خام را به‌عنوان «دارایی حفاظت‌شده» ذخیره کند و لایهٔ اول را دور بزند | تست REST با payload دست‌ساز |
-| H7 | `RemoteRedirectProvider` نشانی را از `base + prefix + asset_id` با `rawurlencode` هر بخش می‌سازد؛ برای `vip:<hash>` نتیجه `…/vip%3A<hash>` است که CDN/میزبان دانلود نمی‌تواند به فایل واقعی نگاشت کند | **تست قرمز** که نشانی ساخته‌شده را بسنجد |
-| H8 | امضای راه‌دور: payload `url|expires|mode|kid`، HMAC-SHA256 + base64url، راز ≥۳۲ نویسه، TTL ۳۰–۹۰۰ ثانیه، allowlist میزبان بعد از همهٔ فیلترها، HTTPS اجباری، fail-closed | خواندن و تأیید؛ اگر فرق داشت گزارش |
-| H9 | فقط یک کلید امضای فعال؛ `kid` صرفاً برچسب است؛ چرخش کلید بدون قطعی ممکن نیست؛ راز در DB است | خواندن تنظیمات و `RemoteRedirectProvider` |
-| H10 | هر چهار بخش تنظیمات هسته (پیام‌های دسترسی، حالت دسترسی انبوه، دانلودهای ایمن، پیش‌فرض‌های انتشار جدید) بدون شرط رندر می‌شوند و بدون VIP کار می‌کنند، اما بدون VIP سه‌تایشان گمراه‌کننده‌اند (ذخیره و تأیید می‌شوند ولی نتیجه در فرانت شکست می‌خورد یا معنای دیگری دارد) | اجرای واقعی صفحه‌ها با/بدون VIP |
-| H11 | چهار محل `has_filter('music_wave_download_provider')` برای تشخیص «تحویل فعال است؟»: `Admin/SettingsPage.php`، `Admin/Concerns/DiagnosticsChecks.php`، `Blocks/Release/CollectionAndDownloadRenderer.php`، `Support/SiteHealth.php` | grep |
-| H12 | کد مرده: `add_settings_section`/`add_settings_field` در `music-wave-vip/src/SettingsPage.php` (صفحه دستی رندر می‌شود، `do_settings_sections()` فراخوانی نمی‌شود) و ناهمخوانی نام‌های `music_wave_vip_membership`/`music-wave-vip_membership` | grep + اجرای صفحه |
-| H13 | `ReleaseDownloadCatalog::is_asset_streamable()` و `TrackStreamPresenter::streamable_quality()` برای دارایی‌های غیر `vip:`/`local:` فرمت را از کجا می‌گیرند و آیا `direct:` را پخش‌پذیر می‌کنند | خواندن + تست |
-| H14 | `BulkAccessManager::mode_counts()` (یا معادل) کوئری سنگین روی `postmeta` است | `EXPLAIN` روی دادهٔ نمونه |
-| H15 | ذخیرهٔ تیکت غیرشفاف (`OpaqueTicketStore`) از ترنزینت + fallback در `wp_options` استفاده می‌کند (یک نوشتن DB به‌ازای هر تیکت)؛ replay در جدول DB اندیس‌دار است | خواندن + اندازه‌گیری |
-| H16 | مستندات از کد عقب‌اند (مثلاً `docs/vip-integration.md` امضای راه‌دور را با فرمت قدیمی توصیف می‌کند) | مقایسه |
-
-### ۳.۳ ممیزی عمومی (علاوه بر فرضیه‌ها — اجباری)
-کل سطح VIP و تحویل را با این چک‌لیست بررسی کن و یافته‌ها را **P0 (بحرانی) تا P3** طبقه‌بندی کن. P0/P1 مرتبط با دامنه را همین‌جا رفع کن؛ بقیه را در «بدهی» گزارش بده.
-
-- **امنیت:** nonce و capability در همهٔ اکشن‌ها/فرم‌ها/REST؛ `permission_callback` واقعی؛ `$wpdb->prepare`؛ escaping خروجی در لحظهٔ چاپ؛ sanitization ورودی؛ path traversal و symlink در مخزن فایل؛ هدرهای پاسخ؛ مقایسهٔ توکن/امضا/nonce فقط با `hash_equals` (مقدار مورد اعتماد اول، ورودی کاربر دوم)؛ بازتاب ورودی در HTML/هدر؛ افشای خطا؛ `ABSPATH` guard؛ لاگ‌کردن داده‌های حساس.
-- **معماری:** کلاس‌های خدایی، وابستگی چرخه‌ای، `static`/سراسری بی‌دلیل، منطق در تمپلیت، تکرار قواعد، literalهای پراکنده، نشت انتزاع.
-- **عملکرد:** کوئری‌های سنگین/N+1، option با `autoload` بی‌جا، نبود کش/بی‌اعتبارسازی، بارگذاری JS/CSS در صفحه‌های نامربوط، cron بی‌حد.
-- **تنظیمات و چرخهٔ عمر:** defaults، sanitize همهٔ کلیدها، `uninstall`/پاک‌سازی، سازگاری نسخه‌ها.
-- **سازگاری و i18n:** PHP 7.4، RTL، text domainها، رشته‌های ترجمه‌ناپذیر، دسترس‌پذیری رابط مدیریت (برچسب فرم، `aria`، تباین).
+1. این سند پس از ممیزی خط‌به‌خط کدبیس واقعی پروژه `MusicWave-tow` بازبینی و نهایی شده است؛ تمامی فرضیه‌های اولیه (`H1` تا `H16`) با فایل و خط دقیق کد تطبیق داده شده‌اند و یافته‌های امنیتی/معماری جدید کدبیس نیز به بک‌لاگ رسمی افزوده شده‌اند.
+2. معماری فعلی MusicWave بر تفکیک سخت‌گیرانه سه لایه استوار است (ADR-0001 و ADR-0002):
+   - **`music-wave-core`**: مالک مدل داده کاتالوگ (`mw_release`)، موتور سیاست دسترسی (`AccessPolicyEngine`)، صدور و مصرف بلیت/توکن یک‌بارمصرف (`OpaqueTicketStore` + `DownloadTokenService` + `DatabaseReplayStore`)، محدودیت نرخ و سهمیه روزانه، و مسیریابی تحویل فایل.
+   - **`music-wave-vip`**: افزونه الحاقی اختیاری برای ارائه‌دهنده عضویت (`ConfigurableMembershipProvider` + `VipPlans`) و تحویل فایل حفاظت‌شده (`ProtectedFileProvider` محلی و `RemoteRedirectProvider` با امضای HMAC).
+   - **`musicwave`**: قالب بلوکی نمایشی بدون منطق تصمیم‌گیری امنیتی یا دسترسی.
+   هیچ تغییری نباید باعث نشت منطق VIP به قالب یا وابسته شدن اجباری هسته به VIP یا WooCommerce شود.
+3. کف پشتیبانی `PHP >= 7.4` در سراسر کد جدید و اصلاح‌شده الزامی است: استفاده از `match`، `readonly`، `enum`، آرگومان‌های نام‌گذاری‌شده، `str_starts_with`/`str_contains` بدون پلی‌فیل، union types و constructor property promotion ممنوع است و تمامی فایل‌های PHP باید دارای `declare(strict_types=1);` و محافظ `defined( 'ABSPATH' ) || exit;` باشند.
+4. زبان منبع رشته‌های ترجمه در این مخزن **فارسی** است (`msgid` فارسی در `.pot` و ترجمه انگلیسی کامل در `*-en_US.po`، کامپایل‌شده به `.mo` و کاتالوگ‌های اسکریپتی JED `.json`). هر رشته کاربری جدید در PHP یا JS باید دارای ترجمه دقیق `en_US` باشد تا گیت `tools/check-translation-coverage.php` و `tools/check-script-translations.php` بدون خطا عبور کنند.
+5. ارتقا باید **بدون مهاجرت اسکیمای پایگاه‌داده** (حفظ `MigrationRunner::LATEST_VERSION = '0.15.0'`) و با حفظ سازگاری کامل رو به عقب برای سایت‌های فعلی انجام شود.
 
 ---
 
-## ۴. طراحی هدف (معماری نهایی)
+### ۰.۲. خلاصه مدیریتی مسئله و راه‌حل مهندسی
 
-### ۴.۱ اصل بنیادی
-**سیاست دسترسی («چه کسی مجاز است») از مسیر تحویل («فایل چگونه می‌رسد») جدا است.** تصمیم دسترسی همیشه مرجع است؛ تحویل فقط پس از تأیید دسترسی، توکن، سهمیه و replay انجام می‌شود. اصل **deny-by-default** حفظ می‌شود.
+در معماری پیش از ارتقا (`core 0.15.0` / `vip 0.5.1`)، پنج گلوگاه کلیدی عملیاتی، امنیتی و تجربه کاربری وجود داشت:
 
-### ۴.۲ سیاست دسترسی بدون ماژول عضویت
+1. **عدم تقارن در رفتار غیاب افزونه VIP (`AccessPolicyEngine.php:100-154`):**
+   - وقتی افزونه `music-wave-vip` فعال باشد ولی کلید اصلی آن (`module_enabled`) خاموش شود، فیلتر `music_wave_access_decision` در `music-wave-vip.php:68-89` هر دو حالت `membership_required` و `purchase_or_membership_required` را با دلیل `vip_module_disabled` باز می‌کند.
+   - اما وقتی خود افزونه `music-wave-vip` از وردپرس **غیرفعال** شود (`NullMembershipProvider`)، تنظیم `membership_absent_behavior` (با مقادیر قبلی `allow` | `deny` و پیش‌فرض `allow` در `Settings.php:35`) فقط حالت `membership` و حالت ترکیبی فاقد محصول را باز می‌کرد؛ در حالی که انتشارهای `purchase_or_membership` متصل به محصول WooCommerce در `hybrid_access()` (`AccessPolicyEngine.php:142-147`) پیش از بررسی غیاب VIP روی `purchase_required` قفل می‌شدند و مدیر سایت راهی برای باز کردن یکپارچه دانلود اشتراکی بدون دست‌کاری تک‌تک انتشارها نداشت.
+2. **نبود مسیر تحویل استاندارد بدون VIP برای لینک مستقیم HTTPS کنترل‌شده:**
+   - هسته به‌درستی URLهای خام `http://` و `https://` را در `MetaDefinition.php:290-339`، `DownloadAssetRoutes.php:147-188`، `ReleaseMetaBox.php:374-403` و `assets/editor.js:763-780` رد می‌کند تا لینک خام فایل لو نرود.
+   - اما اگر ادمین بخواهد بدون نصب VIP (یا در کنار VIP برای برخی فایل‌ها مثل نسخه‌های رایگان/آرشیوی روی CDN عمومی) از لینک مستقیم HTTPS پشت دروازه احراز دسترسی، بلیت یک‌بارمصرف، محدودیت نرخ و سهمیه روزانه هسته استفاده کند، هیچ طرح‌واره (`scheme`) رسمی و ایمنی وجود نداشت و `NullDownloadProvider` تحویل را مسدود می‌کرد.
+3. **باگ بحرانی نگاشت `vip:<32hex>` و `local:` در `RemoteRedirectProvider` (`RemoteRedirectProvider.php:92-137`):**
+   - فایل‌های آپلودشده از طریق رسانه خصوصی VIP با شناسه کدر `vip:<32hex>` در جدول `{prefix}mw_vip_assets` ثبت می‌شوند، اما `RemoteRedirectProvider::signed_url()` شناسه را از `ProtectedAssetRegistry` استخراج نمی‌کرد و رشته خام `vip%3A...` یا `local%3A...` را وارد مسیر URL امضاشده می‌کرد که منجر به خطای `404` در CDN/سرور مقصد و نشت ساختار شناسه داخلی می‌شد.
+4. **مدیریت تک‌کلیدی راز امضای راه‌دور در گزینه Autoloaded (`VipSettings.php:29,213`):**
+   - `remote_signing_secret` مستقیماً درون آرایه `music_wave_vip_settings` (که در وردپرس به‌طور پیش‌فرض autoload می‌شود) نگهداری می‌شد، از ثابت امنیتی `MUSIC_WAVE_VIP_REMOTE_SECRET` در `wp-config.php` پشتیبانی نمی‌کرد و هنگام چرخش کلید (`key rotation`) امکان حفظ موقت کلید قبلی در وضعیت `retired` برای لینک‌های امضاشده در حال انقضا وجود نداشت.
+5. **ابهام وضعیت مؤثر در پنل تنظیمات، قفل بودن کنترل‌های VIP در حالت خاموش، و هزینه سنگین کوئری در صفحه تنظیمات هسته:**
+   - در `BulkAccessManager::mode_counts()` (`BulkAccessManager.php:118-146`) که در رندر صفحه تنظیمات فراخوانی می‌شود، تا ۵۰ صفحه کوئری `WP_Query` (۵۰۰۰ پست) و هزاران فراخوانی متا بدون کش اجرا می‌شد.
+   - در تنظیمات VIP (`music-wave-vip/src/SettingsPage.php:251-253,519-541`) وقتی `module_enabled === 'disabled'` بود، فیلدهای منابع عضویت در سمت سرور `disabled` رندر می‌شدند و ادمین پیش از روشن کردن کلید اصلی قادر به پیش‌پیکربندی منابع نبود؛ همچنین لینک مدیریت دسترسی انبوه در خط `834` به صفحه ناموجود `page=music-wave-bulk-access` اشاره می‌کرد.
 
-- کلید ذخیره: `membership_absent_behavior` (بدون تغییر). مقادیر: `deny` (قفل)، `allow` (باز بودن انتشارهای فقط-عضویتی)، **جدید:** `open_download` (دسترسی کامل و لینک دانلود). مقادیر قدیمی بدون تغییر نام و بدون مهاجرت.
-- کلاس جدید `Access/MembershipAbsencePolicy` (منبع یگانهٔ حقیقت، هم‌الگو با `AccessModePolicy` موجود): ثابت‌های مدها، `mode()` (با فیلتر موجود `music_wave_membership_absent_behavior`)، `choices()` (برچسب + توضیح)، `sanitize()` (نامعتبر → `allow`)، `opens_membership()`، `opens_hybrid()`. همهٔ literalهای پراکندهٔ `'allow'`/`'deny'` (در `Settings`، `Plugin`، `AccessPolicyEngine`، `SettingsPage`) به آن ارجاع بدهند.
-- `AccessPolicyEngine::absent_provider_decision()` از این کلاس بخواند؛ دلیل‌های موجود (`allow`/`deny` و…) برای گزارش‌ها و عملیات انبوه حفظ شوند؛ دلیل جدید `membership_provider_absent_open`.
+---
 
-**جدول صدق (فقط وقتی هیچ ارائه‌دهندهٔ عضویتی ثبت نیست). ستون‌های `deny` و `allow` باید دقیقاً برابر رفتار فعلی باشند (با تست مشخصه‌سازی قفل شود):**
+## بخش ۱ — نتایج ممیزی کدبیس واقعی: تعیین تکلیف H1 تا H16 و باگ‌های جدید کشف‌شده
 
-| نوع دسترسی انتشار | `deny` | `allow` | `open_download` |
+### ۱.۱. جدول تطبیق فرضیه‌های H1 تا H16 با کد واقعی مخزن
+
+| کد | موضوع فرضیه | وضعیت پس از ممیزی کد | مرجع دقیق در کدبیس و تصمیم نهایی مهندسی |
 |---|---|---|---|
-| `membership` | قفل | باز | باز (دلیل `membership_provider_absent_open`) |
-| `purchase_or_membership` | رفتار فعلی | رفتار فعلی (با محصول نگاشت‌شده هنوز `purchase_required`) | **باز** (سمت عضویت) |
-| `purchase` | بدون تغییر | بدون تغییر | بدون تغییر (فروش تکی رایگان نمی‌شود) |
-| `restricted` | بدون تغییر | بدون تغییر | بدون تغییر |
-
-تفاوت واقعی `open_download` با `allow`، بازشدن انتشارهای «خرید-یا-عضویت» است؛ **تحویل فایل به این مقدار وابسته نیست** (بخش ۴.۳). برچسب‌های UI باید همین را صادقانه بگویند (بخش ۶). اگر راستی‌آزمایی (H2/H3) نشان داد رفتار فعلی با این جدول فرق دارد، جدول را با رفتار واقعی فعلی تطبیق بده و فقط ستون جدید را اضافه کن.
-
-### ۴.۳ تحویل: روتر scheme-محور
-
-کلاس‌های جدید در `music-wave-core/src/Downloads/` (هر کدام یک مسئولیت):
-
-| کلاس | مسئولیت |
-|---|---|
-| `DirectLinkAsset` | هویت `direct:<https-url>`: `is()`، `encode()`، `decode()`. نشانگر `direct:` قبل از هر چیز تشخیص داده می‌شود تا قاعدهٔ «URL خام هرگز به‌عنوان asset_id ذخیره نشود» واقعاً برقرار بماند |
-| `DirectLinkUrlValidator` | **تنها** محل قواعد اعتبارسنجی URL (بخش ۴.۴)؛ خالص و تست‌پذیر بدون وردپرس |
-| `DirectLinkPermission` | `can_assign()`: پیش‌فرض `current_user_can('manage_options')`، قابل گسترش با فیلتر `music_wave_can_assign_direct_link` (بدون نوشتن capability جدید در DB) |
-| `RedirectResponse` | پاسخ ۳۰۲ مشترک: `Cache-Control: no-store, private`، `Referrer-Policy: no-referrer`، `X-Content-Type-Options: nosniff`، `X-Robots-Tag: noindex`، سپس `exit`؛ قابل تزریق برای تست |
-| `DirectLinkProvider` | `implements DownloadProvider, StreamableDownloadProvider`؛ **بعد از** تأیید توسط `DownloadResolver`، URL را **دوباره** اعتبارسنجی می‌کند (دادهٔ DB قابل اعتماد نیست: import، WP-CLI، `update_post_meta` مستقیم) و با `RedirectResponse` هدایت می‌کند. فیلتر `music_wave_direct_link_url` برای امضای CDN. `stream()` توکن replay را مصرف نمی‌کند (Rangeهای متعدد) |
-| `DeliveryRouter` | `implements DownloadProvider, StreamableDownloadProvider`؛ دارایی `direct:` → `DirectLinkProvider`؛ غیر آن → ارائه‌دهندهٔ خارجی (فیلتر) |
-| `DeliveryCapabilities` | `is_available()`، `supports(string $asset_id)`، `state()` سه‌حالته (آداپتور فعال / فقط لینک مستقیم هسته / هیچ)؛ با memo درون‌درخواستی (خصوصیت نمونه، نه وضعیت سراسری) |
-
-**سیم‌کشی:** `Plugin.php`: `$external = apply_filters('music_wave_download_provider', new NullDownloadProvider())` و سپس `new DeliveryRouter(new DirectLinkProvider(...), $external)`. **قرارداد فیلتر `music_wave_download_provider` برای توسعه‌دهندگان ثالث بدون تغییر می‌ماند.**
-
-- `DownloadResolver::issue()`: شرط سخت `instanceof NullDownloadProvider` با `DeliveryCapabilities::supports($asset_id)` جایگزین شود تا `provider_unavailable` برای `vip:`/`local:` بدون آداپتور دقیقاً مثل امروز بماند.
-- `DeliveryCapabilities` جایگزین هر محلی شود که `has_filter('music_wave_download_provider')` دارد (H11).
-- `ReleaseDownloadCatalog::is_asset_streamable()` / `TrackStreamPresenter`: برای `direct:` فرمت از فیلد `format` یا پسوند مسیر (بدون query و فقط از فهرست فرمت‌های مجاز موجود پروژه) تعیین شود تا فایل در پخش‌کننده بیاید.
-- پیام امنیتی در `CollectionAndDownloadRenderer` بر اساس نوع دارایی صادق باشد: برای `direct:`: «تحویل از میزبان خارجی؛ پس از بررسی دسترسی صادر می‌شود اما نشانی قابل اشتراک است.»
-
-| دارایی | VIP نصب‌نشده | VIP فعال |
-|---|---|---|
-| `vip:` / `local:` | `provider_unavailable` (بدون تغییر) | ارائه‌دهندهٔ VIP |
-| `direct:` | تحویل (اگر تصمیم دسترسی اجازه دهد) | تحویل (همان شرط) |
-| URL خام / scheme ناشناخته | رد در نگارش؛ در تحویل `provider_failed` | همان |
-
-`vip:`/`local:` هرگز از مسیر هسته سرو نمی‌شوند.
-
-### ۴.۴ قواعد `DirectLinkUrlValidator` (همه الزامی، با تست واحد)
-1. trim؛ طول ≤ ۲۰۴۸؛ بدون کاراکتر کنترلی (`0x00–0x1F`، `0x7F`)، بدون فاصله/بک‌اسلش (ضد CRLF injection و header splitting).
-2. با `wp_parse_url`؛ scheme دقیقاً `https` (غیرحساس به حروف).
-3. host موجود و lowercase؛ **بدون userinfo**؛ port فقط خالی یا ۴۴۳.
-4. host فقط ASCII/punycode (غیر ASCII رد، ضد homograph).
-5. **IP literal رد شود** (v4/v6/دهدهی/هگز/اکتال)، `localhost`، میزبان تک‌برچسبی، پسوندهای `.local`، `.internal`، `.localhost`.
-6. اگر تنظیم `direct_link_allowed_hosts` خالی نیست: host باید یکی از موارد باشد (wildcard فقط پیشوندی مثل `*.cdn.example.com`؛ `cdn.example.com.evil.net` و `evil-cdn.example.com` باید رد شوند).
-7. fragment حذف؛ خروجی نهایی با `esc_url_raw($url, ['https'])`.
-
-### ۴.۵ لایه‌های نگارش: سه لایه، یک منبع حقیقت
-هر سه از `DirectLinkUrlValidator` و `DirectLinkAsset` استفاده کنند (JS فقط آینهٔ UX است؛ مرجع سرور است):
-
-1. **`Schema/MetaDefinition::sanitize_download_assets`:** شاخهٔ `direct:` **قبل** از قاعدهٔ حذف http/https؛ رفتار `vip:`/`local:` بدون تغییر.
-2. **`Downloads/DownloadAssetRoutes::normalize_assets`:** `direct:` فقط با اعتبارسنجی + `DirectLinkPermission::can_assign()`؛ هر `asset_id` با scheme خام http/https → خطای 400 با کد ثابت (مثل `mw_raw_url_not_allowed`). `deny_unauthorized_assignments()` برای `direct:` اعمال نشود (ارجاع به گاوصندوق نیست) ولی `current_user_can('edit_post', $release_id)` همچنان لازم است. طبق راهنمای REST وردپرس، `validate_callback`/`sanitize_callback` پیش از `permission_callback` اجرا می‌شوند؛ در آن‌ها هیچ نوشتن DB یا کوئری سنگینی نباشد.
-3. **`assets/editor.js` (`DeliveryManager`، `validQualities()`):** دکمهٔ سوم «افزودن فایل با لینک مستقیم (CDN/میزبان خارجی)»؛ دکمهٔ فعلی به «افزودن فایل با شناسهٔ حفاظت‌شده (VIP)» تغییر نام دهد؛ در ردیف کیفیت برای `source=direct` یک `TextControl` «لینک مستقیم فایل (HTTPS)» با اعتبارسنجی زنده؛ ذخیره به‌صورت `direct:<url>`؛ قاعدهٔ «رد هر `^https?://`» فقط برای ردیف‌های غیر direct بماند. نمایش دکمه فقط وقتی `can_assign` درست است (مقدار از داده‌های ویرایشگر).
-4. **متاباکس کلاسیک و متن راهنما:** یک راهنمای واحد وابسته به حالت تحویل (نه چند متن جدا).
-
-### ۴.۶ حالت راه‌دور: نگاشت `vip:` → مسیر نسبی (رفع باگ H7)
-- `RemoteRedirectProvider` یک وابستگی اختیاری به رجیستری دارایی بگیرد؛ برای `vip:<hash>` مقدار `relative_path` را از `mw_vip_assets` بخواند و در **مسیر امضاشده** بگذارد؛ هرگز `vip%3A…` تولید نشود.
-- fail-closed: رکورد نبود / اثر انگشت اندازه نامطابق / مسیر نامعتبر → رشتهٔ خالی.
-- سخت‌سازی مسیر: رد `..`، `.`، `//`، مسیر مطلق، `\`، `%2e%2e`، `%2f` رمزگشایی‌شده، NUL؛ هر segment جداگانه `rawurlencode` شود.
-- ۳۰۲ را به `RedirectResponse` مشترک بسپار و کد تکراری را حذف کن؛ `MIN_CORE_VERSION` در VIP به `0.16.0` برود.
-
-### ۴.۷ مدیریت کلید امضا (الگوی صنعتی: چند کلید هم‌زمان برای چرخش بدون قطعی)
-- راز در ثابت `wp-config.php` (مثلاً `MUSIC_WAVE_VIP_REMOTE_SECRET`) اولویت دارد؛ اگر تعریف شد، فیلد DB در UI غیرفعال و «مدیریت‌شده با wp-config» نمایش داده شود.
-- `remote_signing_keys`: فهرست `{kid, secret, created, status: active|retired}` با `autoload=no`؛ امضا فقط با کلید `active` و `kid` همان در URL؛ کلید `retired` تا حذف دستی برای overlap سمت CDN نگه داشته می‌شود.
-- دکمهٔ «چرخش کلید»: `random_bytes(32)` → base64url، قبلی `retired`، رویداد حسابرسی.
-- حداقل طول راز ≥ ۳۲ نویسه و fail-closed حفظ شود؛ مهاجرت بی‌صدا: راز فعلی به‌عنوان کلید `active` با `kid` فعلی ثبت شود.
-- مستند: نمونهٔ مرجع تأییدکنندهٔ سمت CDN/وب‌سرور باید چند `kid` را بپذیرد.
-
-### ۴.۸ نکات مرورگر و شبکه
-- **دانلود در برابر باز شدن در تب:** مرورگرها ویژگی `download` را برای منبع cross-origin نادیده می‌گیرند مگر میزبان `Content-Disposition: attachment` بفرستد. پس: UI/مستندات بگویند میزبان باید این هدر را بدهد یا از طریق فیلتر `music_wave_direct_link_url` پارامتر معادل (مثل `response-content-disposition` در S3/CloudFront) اضافه شود.
-- **CORS:** اگر پخش‌کننده برای نشانی استریم از `crossorigin`، `fetch` یا Web Audio استفاده می‌کند (در کد بررسی کن)، میزبان باید CORS بدهد؛ در مستندات و تشخیص ثبت شود.
-- **مرز SSRF:** هسته هرگز خودش URL لینک مستقیم را fetch نکند (نه HEAD، نه اعتبارسنجی شبکه‌ای). اگر روزی لازم شد: `wp_safe_remote_*` + allowlist + بازبینی IP پس از DNS + غیرفعال‌کردن redirect (OWASP SSRF).
-
-### ۴.۹ خارج از دامنه (نساز)
-`attachment:<id>` (رسانهٔ وردپرس؛ فایل عمومی را شبیه حفاظت‌شده نشان می‌دهد و مسیر «کپی به مخزن خصوصی» از قبل هست)، امضای نامتقارن، اتصال نشانی به IP/نشست، سهمیهٔ بایتی، DRM/واترمارک، fetch سمت سرور از لینک مستقیم، اینترفیس `AssetAwareProvider` (YAGNI: دو پیاده‌سازی واقعی ندارد). این‌ها فقط در بدهی/پیشنهاد آینده ثبت شوند.
+| **H1** | وجود تنظیم رفتار غیاب عضویت (`allow` / `deny`) در هسته | **تأیید شد (با کشف نکته کلیدی)** | `music-wave-core/src/Support/Settings.php:35,113` و `AccessPolicyEngine.php:108,148,162`. نکته مهم: مقدار پیش‌فرض فعلی در کد `'allow'` است (نه `'deny'`) و تست `tests/run.php:4228` صراحتاً به آن وابسته است؛ در حالی که تست `tests/vip-access-delivery-suite.php:91-94` تضمین می‌کند در همان حالت پیش‌فرض `'allow'`، انتشار پولی `purchase_or_membership` نشت نکند. بنابراین پیش‌فرض برای حفظ ۱۰۰٪ سازگاری `'allow'` باقی می‌ماند، `'deny'` حالت fail-closed کامل است و `'open_download'` حالت صریح جدید برای باز کردن هر دو حالت اشتراکی و ترکیبی خواهد بود. |
+| **H2** | تفاوت رفتار `purchase_or_membership` هنگام غیرفعال بودن VIP | **تأیید شد** | در `AccessPolicyEngine::hybrid_access()` (`خطوط 129-154`)، شرط `$has_products` در خطوط `142-147` پیش از بررسی غیاب ارائه‌دهنده عضویت اجرا می‌شود و بلافاصله `deny('purchase_required')` برمی‌گرداند. کلاس جدید `MembershipAbsencePolicy` این منطق را شفاف، یکپارچه و بدون ابهام تفکیک می‌کند. |
+| **H3** | وابستگی دانلود پس از مجاز شدن دسترسی به ارائه‌دهنده تحویل | **تأیید شد** | در `DownloadResolver.php:98-102`، وقتی ارائه‌دهنده `NullDownloadProvider` باشد، فایل‌های `vip:` و `local:` با خطای `provider_unavailable` (کد HTTP `503`) رد می‌شوند. با معرفی `DeliveryRouter` و `DirectLinkProvider`، فایل‌های `direct:` بدون نیاز به VIP تحویل می‌شوند و فایل‌های `vip:`/`local:` همچنان در غیاب VIP با پیام دقیق `503` مسدود می‌مانند. |
+| **H4** | ثبت فیلتر بازکننده توسط VIP هنگام خاموش بودن `module_enabled` | **تأیید شد** | `music-wave-vip/music-wave-vip.php:48-90` همیشه `ConfigurableMembershipProvider` را ثبت می‌کند و هنگام خاموش بودن `module_enabled`، در فیلتر `music_wave_access_decision` (اولویت ۲۰) دلایل `membership_required` و `purchase_or_membership_required` را به `allow('vip_module_disabled')` تبدیل می‌کند. |
+| **H5** | رد شدن URL مستقیم در متای فایل دانلود در ویرایشگر و بک‌اند | **تأیید شد (همراه با کشف حفره بالقوه)** | رد URLهای `http://` و `https://` در سه لایه `MetaDefinition.php:290-339`، `DownloadAssetRoutes.php:147-188,226-275`، `ReleaseMetaBox.php:374-403` و `assets/editor.js:763-780` پیاده شده است. نکته امنیتی کشف‌شده: در PHP، خروجی `wp_parse_url('direct:http://127.0.0.1/a.mp3', PHP_URL_SCHEME)` برابر `'direct'` است و بدون اعتبارسنج اختصاصی `DirectLinkUrlValidator` در `MetaDefinition`، طرح‌واره `direct:` می‌توانست اعتبارسنج قدیمی `http/https` را دور بزند! |
+| **H6** | مصرف توکن یک‌بارمصرف در مسیر دانلود هسته پیش از تحویل | **تأیید شد** | `DownloadResolver::deliver()` (`خطوط 133-170`) ابتدا توکن، تطابق کاربر/انتشار، وضعیت دسترسی زنده و سهمیه روزانه را بررسی می‌کند، سپس در خط `157` توکن را در `ReplayStore::consume()` مصرف کرده و در خط `162` به `provider->deliver()` می‌سپارد. |
+| **H7** | عدم نیاز مسیر استریم امن به مصرف تک‌بار توکن به‌دلیل Range Request | **تأیید شد** | `DownloadResolver::stream()` (`خطوط 198-227`) توکن با `purpose === 'stream'` را بدون فراخوانی `replays->consume()` راستی‌آزمایی می‌کند تا درخواست‌های چندگانه `Range` مرورگر در طول پخش قطع نشوند. |
+| **H8** | تشخیص وضعیت تحویل امن با `has_filter('music_wave_download_provider')` | **تأیید شد (۴ نقطه دقیق)** | دقیقاً در ۴ فایل هسته یافت شد: ۱) `Admin/Concerns/DiagnosticsChecks.php:35`، ۲) `Admin/SettingsPage.php:231`، ۳) `Blocks/Release/CollectionAndDownloadRenderer.php:540`، ۴) `Support/SiteHealth.php:133` (به‌علاوه نقطه تزریق در `Plugin.php:156`). تمامی این نقاط به سرویس واحد `DeliveryCapabilities` متصل می‌شوند. |
+| **H9** | استفاده از شناسه خام در `RemoteRedirectProvider` بدون رجوع به رجیستری | **تأیید شد (باگ قطعی)** | در `RemoteRedirectProvider.php:92-137` هیچ تزریق یا فراخوانی از `ProtectedAssetRegistry::find()` وجود ندارد و حتی پیشوند `local:` نیز حذف نمی‌شود (`vip%3A...` و `local%3A...` در URL تولید می‌شدند). |
+| **H10** | جدول رجیستری فایل‌های حفاظت‌شده حاوی نگاشت شناسه کدر به مسیر نسبی | **تأیید شد** | `ProtectedAssetRegistry.php` جدول `{prefix}mw_vip_assets` را مدیریت می‌کند و متد `find( 'vip:<32hex>' )` آرایه شامل `relative_path`، `file_size`، `mime_type` و `checksum_sha256` برمی‌گرداند. همچنین `ProviderFactory::download_provider( ProtectedAssetStorage $storage )` از قبل شیء `$storage` (و `$storage->registry()`) را در اختیار دارد. |
+| **H11** | ذخیره کلید امضای ریموت در `wp_options` به‌صورت تک‌کلیدی | **تأیید شد** | `VipSettings::OPTION` (`music_wave_vip_settings`) کلید `remote_signing_secret` را به‌صورت تک‌رشته‌ای درون آرایه اصلی ذخیره می‌کند که در وردپرس autoload می‌شود. |
+| **H12** | وجود فیلتر سفارشی‌سازی URL ریموت برای یکپارچه‌سازی S3/CDN | **تأیید شد** | فیلتر `music_wave_vip_remote_download_url` در `RemoteRedirectProvider.php:88` وجود دارد و خروجی آن نیز از صافی امنیتی `allowed_url()` (الزام HTTPS + تطابق دامنه مجاز) عبور می‌کند. |
+| **H13** | تشخیص قابلیت استریم بر اساس پسوند فایل/فرمت | **تأیید شد** | در `ReleaseDownloadCatalog::is_asset_streamable()` (`خطوط 38-55`)، ابتدا فیلد `format`، سپس پسوند `file_name` و در نهایت `pathinfo($asset['asset_id'], PATHINFO_EXTENSION)` بررسی می‌شود که روی `direct:https://cdn.example.com/a.mp3?x=1` بدون استخراج `PHP_URL_PATH` خراب می‌شود. |
+| **H14** | محاسبه پرهزینه شمارش حالت‌های دسترسی در صفحه تنظیمات | **تأیید شد** | `SettingsPage::render_bulk_form()` (`خط 466`) در هر بار رندر تب دسترسی، `BulkAccessManager::mode_counts()` (`خطوط 118-146`) را بدون کش صدا می‌زند (تا ۵۰ کوئری صفحه‌بندی‌شده + هزاران `get_post_meta`). |
+| **H15** | غیرفعال شدن فیلدهای وابسته VIP در DOM هنگام خاموش بودن ماژول | **تأیید شد + کشف مسیر دقیق فایل JS** | در `music-wave-vip/src/SettingsPage.php:251-253,519-541,683-686` صفت `disabled` در PHP چاپ می‌شود و فایل واقعی جاوااسکریپت `music-wave-vip/assets/admin-vip-settings.js` (خطوط `567-588`؛ نه `vip-admin.js`) آن را مدیریت می‌کند. همچنین مکانیزم `mwvip_controls_unlocked` از قبل در `sanitize_settings` پیش‌بینی شده و در `tests/vip-access-delivery-suite.php:180-194` تست دارد. |
+| **H16** | مستندات هم‌راستا اما نیازمند به‌روزرسانی برای قابلیت‌های جدید | **تأیید شد** | فایل‌های `docs/access-policy.md`، `docs/secure-downloads.md`، `docs/vip-integration.md`، `docs/delivery-threat-model.md`، `docs/extension-contracts.md` و ADRهای `0001` تا `0004` موجودند؛ ADR جدید باید با شماره `docs/adr/0005-membership-absence-policy-and-direct-delivery.md` ایجاد شود. |
 
 ---
 
-## ۵. فازهای اجرا و دروازه‌ها
+### ۱.۲. باگ‌ها و ریسک‌های امنیتی/عملیاتی جدید کشف‌شده در ممیزی عمیق کدبیس (افزوده‌شده به اسکوپ اصلاح)
 
-| فاز | کار | دروازهٔ خروج |
-|---|---|---|
-| **۰** | کشف: نقشهٔ فایل‌ها، راستی‌آزمایی H1–H16، ممیزی عمومی (۳.۳)، خط پایه (`composer test` و همهٔ دستورهای بخش ۹ — phpcs/phpstan را با `composer install` نصب و اجرا کن)، **تست‌های مشخصه‌سازی** برای جدول تصمیم فعلی (۴ نوع دسترسی × `allow`/`deny` × ارائه‌دهنده هست/نیست) و تست‌های قرمز باگ‌ها (H6، H7) | گزارش فاز ۰ در گزارش نهایی؛ مشخصه‌سازی سبز |
-| **۱** | زیرساخت: `DirectLinkUrlValidator`، `DirectLinkAsset`، `DirectLinkPermission`، `RedirectResponse` | تست‌های واحد validator (شامل موارد حمله) سبز |
-| **۲** | سیاست: `MembershipAbsencePolicy`، `Settings`، `AccessPolicyEngine`، `Plugin.php` (بخش سیاست) | مشخصه‌سازی قدیمی سبز + تست‌های `open_download` سبز |
-| **۳** | تحویل: `DirectLinkProvider`، `DeliveryRouter`، `DeliveryCapabilities`، `DownloadResolver`، `ReleaseDownloadCatalog`/`TrackStreamPresenter`، پیام‌ها | `vip:` همچنان بسته؛ `direct:` با و بدون VIP تحویل می‌شود |
-| **۴** | نگارش: `MetaDefinition`، `DownloadAssetRoutes`، `editor.js`، `ReleaseMetaBox`، i18n | سه لایه هم‌رفتار؛ URL خام همه‌جا رد؛ دادهٔ قدیمی دست‌نخورده |
-| **۵** | VIP: نگاشت `vip:` راه‌دور (۴.۶)، `RedirectResponse`، **مدیریت کلید (۴.۷)**، رفع یافته‌های P0/P1 ممیزی | نشانی بدون `vip%3A`؛ چرخش کلید تست‌شده |
-| **۶** | UI و تشخیص: باکس سیاست، خط «اثر فعلی»، بنر تحویل، بنرهای زمینه‌ای، پنل تشخیص (کش‌شده/تنبل)، صفحهٔ VIP با کلید خاموش | چهار ترکیب وضعیت درست نمایش داده می‌شود |
-| **۷** | عملکرد (بخش ۷): اندازه‌گیری قبل/بعد، پیاده‌سازی موارد لازم | اعداد واقعی در گزارش |
-| **۸** | پاک‌سازی (بخش ۸)، مستندات و ADR، نسخه‌ها، changelog، اجرای کامل دروازه‌ها، گزارش نهایی | بخش ۱۱ و ۹ برقرار |
+علاوه بر موارد اولیه سند، ممیزی خط‌به‌خط کدبیس **۷ نقص واقعی دیگر** را آشکار کرد که مستقیماً بر امنیت، سهمیه، استریم و صحت تنظیمات اثر دارند و در همین ارتقا برطرف می‌شوند:
 
-وابستگی: ۲ و ۳ پس از ۱؛ ۴ پس از ۳؛ ۵ مستقل از ۴؛ ۶ پس از ۲ و ۳؛ ۷ و ۸ آخر.
+- **B-NEW-1 (سطح P1 — یکپارچگی داده دسترسی در REST/Schema):** در `music-wave-core/src/Schema/MetaDefinition.php:139-144`، لیست سفید حالت‌های `mw_access_mode` شامل `'logged_in'` نیست (`array('public', 'purchase', 'membership', 'purchase_or_membership', 'restricted')`)؛ در نتیجه ذخیره انتشاری با حالت «فقط کاربران واردشده» از طریق REST/ویرایشگر بلوکی، بی‌صدا آن را به `'restricted'` بازنویسی می‌کرد! باید به `AccessModePolicy::sanitize_mode()` متصل شود.
+- **B-NEW-2 (سطح P1 — دور خوردن سهمیه روزانه و رویداد ممیزی در تحویل واقعی HTTP):** در `DownloadResolver::deliver()` (`خطوط 162-168`)، فراخوانی `count_delivery()` و `audit('download_delivered')` **بعد از** بازگشت `$this->provider->deliver()` قرار گرفته بود؛ اما هم `ProtectedFileProvider` (`خطوط 77, 110`) و هم `RemoteRedirectProvider` (`خط 48`) در درخواست‌های واقعی وردپرس پس از ارسال فایل/هدر `302` دستور `exit;` اجرا می‌کنند! در نتیجه در محیط پروداکشن واقعی، سهمیه روزانه دانلود (`download_daily_quota`) و هوک ممیزی `download_delivered` هرگز ثبت نمی‌شدند. با ثبت محافظ نهایی‌سازی پیش از خروج (`shutdown/termination finalizer` ایمن در برابر خطای مرگبار PHP)، ثبت سهمیه و ممیزی در ۱۰۰٪ تحویل‌های موفق تضمین می‌شود.
+- **B-NEW-3 (سطح P1 — ناپایداری سهمیه روزانه در برابر پاک‌سازی Object Cache):** در `DownloadResolver.php:176-191`، شمارنده سهمیه روزانه (`mw_dl_quota_*`) در Transient ذخیره می‌شد که در حضور Redis/Memcached با یک `wp_cache_flush()` صفر می‌شد (برخلاف الزام P4 و آزمون شماره ۲۲). ذخیره‌سازی سهمیه روزانه به گزینه غیر-autoload در پایگاه‌داده (`wp_options` با `autoload = false` و انقضای روزانه + پاک‌سازی دسته‌ای در کران و `uninstall.php`) منتقل می‌شود.
+- **B-NEW-4 (سطح P1 — برش پنهان TTL توکن استریم و دانلود روی ۹۰۰ ثانیه):** تنظیمات هسته (`Settings.php` و `DownloadResolver::ttl_for()`) اجازه تنظیم `download_token_ttl` تا `3600` ثانیه و `stream_token_ttl` تا `7200` ثانیه را می‌دهند، اما `DownloadTokenService::issue()` (`خط 22`) و `OpaqueTicketStore::wrap()` (`خط 30`) به‌طور پنهانی مقدار TTL را روی `min($ttl, 900)` سقف می‌زدند که باعث قطع پخش فایل‌های بلند (پادکست/میکس بالای ۱۵ دقیقه) در درخواست‌های Range بعدی می‌شد! سقف سرویس به `7200` ثانیه هم‌تراز می‌شود.
+- **B-NEW-5 (سطح P2 — کوئری DELETE بدون LIMIT در کران پاک‌سازی و کسری هوک در Uninstall):** در `DatabaseReplayStore::cleanup()` (`خطوط 79-82`) حذف ردیف‌های منقضی بدون `LIMIT` انجام می‌شد که روی کاتالوگ‌های پرترافیک می‌تواند قفل جدول ایجاد کند؛ همچنین هوک کران `music_wave_replay_cleanup` در `music-wave-core/uninstall.php` پاک نمی‌شد. هر دو مورد اصلاح می‌شوند (حذف دسته‌ای با `LIMIT` ایمن و پاک‌سازی کامل هوک در `uninstall.php`).
+- **B-NEW-6 (سطح P2 — لینک شکسته مدیریت دسترسی انبوه در تنظیمات VIP):** در `music-wave-vip/src/SettingsPage.php:834` پیوند به `page=music-wave-bulk-access` (صفحه ناموجود) اشاره می‌کرد؛ به مسیر صحیح `edit.php?post_type=mw_release&page=music-wave-settings&tab=access` اصلاح می‌شود.
+- **B-NEW-7 (سطح P2 — عدم تطابق `schema_version` در `release-manifest.json`):** فایل `release-manifest.json` مقدار `"schema_version": "0.14.0"` را نگه داشته بود در حالی که `MigrationRunner::LATEST_VERSION` برابر `'0.15.0'` است و خود مانیفست در بخش `notes` تطابق این دو را الزامی اعلام کرده است. هم‌زمان با ارتقای نسخه پکیج‌ها به `0.16.0` و `0.5.2`، این مقدار روی `"0.15.0"` همگام می‌شود.
+- **B-NEW-8 (سطح P1 — خواندن مستقیم تنظیم سیاست غیاب عضویت و پشتیبانی از `open_download` در بوت هسته):** در کد قبلی `AccessPolicyEngine` مقدار `membership_absent_behavior` را مستقیماً از `Settings::get()` نمی‌خواند و تنها زمانی عمل می‌کرد که `Plugin::boot()` فیلتر `music_wave_membership_absent_behavior` را ثبت کرده باشد؛ علاوه بر آن، همان فیلتر در `Plugin.php` فقط دو رشته `'allow'` و `'deny'` را مجاز می‌شمرد و `'open_download'` را رد می‌کرد. با انتقال منطق به `MembershipAbsencePolicy::configured_mode()` (که ابتدا `Settings::get('membership_absent_behavior', 'allow')` را خوانده و از فیلتر عبور می‌دهد) و همگام‌سازی `Plugin.php` با `MembershipAbsencePolicy::allowed_modes()`، این گسست در تمامی مسیرهای اجرایی (از جمله فراخوانی مستقیم موتور در تست‌ها و CLI) برطرف شد.
 
 ---
 
-## ۶. رابط کاربری: تنظیمات هوشمند و متن‌ها
+## بخش ۲ — اهداف، معیارهای موفقیت و غیرهدف‌ها
 
-### ۶.۱ رفتار
-1. **هیچ قفل مصنوعی:** گزینه‌های هسته همیشه قابل انتخاب‌اند؛ به‌جای قفل، **وضعیت واقعی و اثر عملی** نشان داده شود.
-2. **خط «اثر فعلی»** زیر باکس سیاست (بر اساس وضعیت واقعی).
-3. **بنر تحویل** در تب دانلودهای ایمن بر اساس `DeliveryCapabilities::state()`: آداپتور فعال / فقط لینک مستقیم / هیچ ارائه‌دهنده.
-4. **یادداشت زمینه‌ای دسترسی انبوه** وقتی حالت هدف `membership`/`purchase_or_membership` است و ارائه‌دهنده نیست.
-5. **صفحهٔ VIP با کلید اصلی خاموش:** `notice` درجا + دکمهٔ «بازکردن کنترل‌های عضویت برای ویرایش» با همان پرچم موجود `mwvip_controls_unlocked` و منطق JS موجود (راستی‌آزمایی کن `sanitize_settings()` پرچم را می‌پذیرد).
-6. **پنل تشخیص:** شمارش انتشارها تنبل (درخواست جدا پس از رندر) و کش‌شده (مثلاً ۵ دقیقه، `wp_cache_get/set` با گروه اختصاصی) و بی‌اعتبار پس از عملیات انبوه؛ هرگز کوئری سنگین در رندر اولیه.
-7. **هشدارهای پویا:** (الف) انتشار عضویتی هست ولی سیاست `deny` و VIP نیست؛ (ب) راه‌دور فعال ولی راز ضعیف/خالی؛ (ج) `direct:` روی انتشار پولی (هشدار، نه مسدودسازی)؛ (د) `direct:` فعال ولی میزبان مجاز تنظیم نشده (توصیه).
-8. همهٔ رشته‌ها با text domain موجود، RTL-safe، دسترس‌پذیر (label/aria).
+### ۲.۱. معیارهای موفقیت قابل آزمون
 
-### ۶.۲ متن‌ها (فارسی)
+1. **سیاست غیاب عضویت (`MembershipAbsencePolicy`):**
+   - پشتیبانی از سه حالت صریح در تنظیم `membership_absent_behavior`:
+     - `deny`: مسدود کردن حالت `membership` (`membership_provider_absent`) و حفظ الزام خرید در `purchase_or_membership` دارای محصول (`purchase_required`) یا مسدودسازی در صورت عدم پیکربندی (`purchase_or_membership_unconfigured`).
+     - `allow` (پیش‌فرض سازگار با نسخه‌های قبل): باز کردن حالت صرفاً `membership` (`membership_provider_absent`) و حفظ الزام خرید روی انتشارهای پولی `purchase_or_membership` متصل به محصول WooCommerce تا هیچ محتوای پولی به‌طور ناخواسته رایگان نشود.
+     - `open_download` (حالت صریح جدید): باز کردن دانلود و استریم برای **هر دو** حالت `membership` و `purchase_or_membership` (حتی اگر محصول WooCommerce متصل باشد و کاربر نخریده باشد) با کد دلیل متمایز `membership_absent_open_download`، بدون دست زدن به متای هیچ انتشاری.
+   - حالت‌های `purchase` (فقط خرید تکی)، `restricted` (کاملاً محدود) و `logged_in` (نیازمند ورود) در هیچ‌یک از سه حالت بالا به‌طور خودکار برای مهمان باز نمی‌شوند.
+   - هنگام بازگشت و فعال‌سازی مجدد `music-wave-vip`، قواعد اشتراک و ترکیبی بلافاصله بر اساس متای دست‌نخورده انتشارها از سر گرفته می‌شوند.
+2. **تحویل مبتنی بر طرح‌واره (`Scheme-Based Delivery Routing`) و لینک مستقیم HTTPS:**
+   - پشتیبانی بومی در `music-wave-core` از شناسه‌های `direct:<https-url>` از طریق `DirectLinkAsset`، `DirectLinkUrlValidator`، `DirectLinkPermission`، `DirectLinkProvider`، `RedirectResponse` و `DeliveryRouter`.
+   - عبور ۱۰۰٪ دانلود و استریم فایل‌های `direct:` از مسیر استاندارد هسته: بررسی `AccessPolicyEngine`، بررسی مجوز مهمان، محدودیت نرخ (`DownloadRateLimiter`)، صدور بلیت کدر `mwt_...`، مصرف یک‌بارمصرف در `DatabaseReplayStore` (برای دانلود)، ثبت سهمیه روزانه پایدار در دیتابیس، و ارسال پاسخ `302` با هدرهای `Referrer-Policy: no-referrer`، `Cache-Control: private, no-store, max-age=0` و `X-Content-Type-Options: nosniff`.
+   - هم‌زیستی کامل در یک انتشار واحد: یک کیفیت می‌تواند `vip:<32hex>` یا `local:...` باشد و کیفیت دیگر `direct:https://...`؛ مسیریاب تحویل بر اساس پیشوند تصمیم می‌گیرد و هرگز بین ارائه‌دهنده‌ها fallback ناامن انجام نمی‌دهد.
+3. **اصلاح کامل `RemoteRedirectProvider` و چرخش کلید چندکلیدی در `music-wave-vip`:**
+   - حل کردن شناسه‌های `vip:<32hex>` از طریق `ProtectedAssetRegistry::find()` به `relative_path` نرمال‌شده، حذف پیشوند `local:` در شناسه‌های میراثی، و fail-closed کامل (`''`) در صورت نامعتبر بودن یا یافت نشدن رکورد (عدم تولید هرگونه `vip%3A` یا `local%3A` در URL نهایی).
+   - پشتیبانی از ثابت `MUSIC_WAVE_VIP_REMOTE_SECRET` (و `MUSIC_WAVE_VIP_REMOTE_KEY_ID` اختیاری) در `wp-config.php` با بالاترین اولویت، به‌علاوه مخزن کلید چندکلیدی `RemoteSigningKeyring` در گزینه غیر-autoload (`music_wave_vip_remote_keyring` با `autoload = false`) با وضعیت‌های `active` و `retired` و مقایسه زمان‌ثابت `hash_equals`.
+4. **شفافیت UX پنل‌های ادمین، عیب‌یابی هوشمند و بهبود کارایی:**
+   - نمایش زنده «وضعیت مؤثر فعلی» در تنظیمات هسته و VIP، رفع قفل ظاهری کنترل‌های عضویت VIP در حالت خاموش، کش و بهینه‌سازی SQL در `BulkAccessManager::mode_counts()`، و جایگزینی چک‌های خام `has_filter('music_wave_download_provider')` با `DeliveryCapabilities`.
 
-**عنوان باکس:** سیاست دسترسی بدون ماژول عضویت
-**توضیح:** «تعیین می‌کند وقتی هیچ ماژول عضویتی (مثل MusicWave VIP) فعال نیست، انتشارهای دارای محدودیت عضویت چه رفتاری داشته باشند. خریدهای تکی WooCommerce همیشه مستقل و محفوظ می‌مانند. این گزینه‌ها همیشه قابل انتخاب‌اند، حتی وقتی VIP نصب نیست.»
+### ۲.۲. غیرهدف‌ها (خارج از دامنه این ارتقا)
 
-| مقدار | برچسب | توضیح |
-|---|---|---|
-| `open_download` | **دسترسی کامل و لینک دانلود** | «همهٔ انتشارهای عضویتی و «خرید یا عضویت» برای همه باز می‌شوند. فایل‌های با لینک مستقیم پخش و دانلود می‌شوند. فایل‌های مخزن حفاظت‌شدهٔ VIP همچنان به ماژول VIP نیاز دارند.» |
-| `allow` | **مشاهدهٔ آزاد انتشارهای عضویتی** | «انتشارهای فقط-عضویتی باز می‌شوند؛ «خرید یا عضویت» با محصول نگاشت‌شده همچنان خرید می‌خواهد. فایل‌های حفاظت‌شدهٔ VIP بدون ماژول تحویل نمی‌شوند.» |
-| `deny` | **قفل کامل** | «تا فعال‌شدن یک ماژول عضویت، انتشارهای عضویتی مسدود می‌مانند.» |
-
-**خط اثر فعلی:**
-- بدون ارائه‌دهنده: «اکنون: هیچ ماژول عضویتی فعال نیست؛ این سیاست همین حالا اعمال می‌شود.»
-- VIP روشن: «اکنون: MusicWave VIP فعال است؛ این سیاست تا غیرفعال‌شدن ماژول اثری ندارد.»
-- VIP نصب ولی کلید خاموش: «اکنون: VIP نصب است اما اعمال قوانین خاموش است؛ محتوای عضویتی باز است و تحویل امن همچنان کار می‌کند.»
-
-**راهنمای فیلد دارایی (وابسته به حالت تحویل):**
-- محلی: «شناسهٔ مخزن را از تب «تحویل حفاظت‌شده» کپی کنید (`vip:…`). مسیر قدیمی `local:…` فقط برای سازگاری است.»
-- راه‌دور: «شناسهٔ `vip:…` به‌طور خودکار به مسیر نگاشت می‌شود، یا مسیر نسبی روی میزبان دانلود (مثل `album/track-320.mp3`).»
-- لینک مستقیم: «نشانی HTTPS فایل روی CDN/میزبان خارجی. پس از بررسی دسترسی، کاربر به آن هدایت می‌شود و نشانی در مرورگر او دیده و قابل اشتراک است؛ برای محتوای پولی از مخزن حفاظت‌شدهٔ VIP استفاده کنید. برای دانلود (نه باز شدن در تب) میزبان باید هدر `Content-Disposition: attachment` بفرستد.»
+- عدم ایجاد جدول جدید در پایگاه‌داده یا تغییر نسخه اسکیمای دیتابیس (`0.15.0`).
+- عدم بازنویسی قالب `musicwave` یا تغییر استایل/چیدمان بلوک‌های فرانت‌اند (به‌جز اصلاح دقیق نشان و پیام وضعیت امنیتی پنل دانلود در `CollectionAndDownloadRenderer.php`).
+- عدم پروکسی کردن ترافیک فایل‌های حجیم خارجی از داخل پردازش PHP هسته در حالت `direct:` (تحویل `direct:` منحصراً از طریق تغییرمسیر امن `302` پس از بررسی مجوز و مصرف توکن انجام می‌شود تا کارگرهای PHP اشغال نشوند و خطر SSRF مستقیم از سمت سرور حذف گردد).
 
 ---
 
-## ۷. عملکرد (اول اندازه‌گیری، بعد بهینه‌سازی)
+## بخش ۳ — طراحی دقیق معماری هدف
 
-**اندازه‌گیری پایه:** تعداد کوئری و زمان برای بار صفحهٔ تنظیمات هسته، صدور توکن، تحویل، و یک پخش با seek (چند درخواست به endpoint استریم می‌رسد؟). ابزار: Query Monitor / `SAVEQUERIES` / لاگ زمان. اعداد قبل و بعد در گزارش نهایی.
+### ۳.۱. لایه سیاست دسترسی در غیاب ماژول عضویت (`MembershipAbsencePolicy`)
 
-| # | مورد | اقدام |
-|---|---|---|
-| P1 | شمارش انتشارها روی `postmeta` | کش + بارگذاری تنبل (۶.۱) — **الزامی** |
-| P2 | `DeliveryCapabilities` چندبار در یک درخواست | memo درون‌درخواستی — **الزامی** |
-| P3 | ذخیرهٔ تیکت: ترنزینت + fallback `wp_options` = یک نوشتن DB به‌ازای هر تیکت. ترنزینت‌ها «بهینه‌سازی عملکرد»اند و با object cache دائمی ممکن است هر لحظه حذف شوند | اگر اندازه‌گیری نیاز را ثابت کرد: اینترفیس `TicketStorage` با دو پیاده‌سازی (object cache وقتی `wp_using_ext_object_cache()`؛ جدول اندیس‌دار با `expires_at`) |
-| P4 | **وضعیت امنیتی (replay/سهمیه) هرگز در کش قابل‌حذف نباشد** | همان جدول DB بماند؛ تستی ثابت کند پاک‌شدن object cache replay را بازنشانی نمی‌کند — **الزامی** |
-| P5 | رشد ردیف‌های منقضی (تیکت/replay) | cron دسته‌ای با `LIMIT`؛ هر option جانبی `autoload=no` — **الزامی** |
-| P6 | هر Range/seek ممکن است دوباره به endpoint استریم وردپرس برسد | اندازه‌گیری؛ در صورت بار زیاد: کش درون‌درخواستی تصمیم دسترسی و توکن استریم کوتاه‌عمر |
-| P7 | بارگذاری JS/CSS تنظیمات VIP در صفحه‌های نامربوط | `enqueue` فقط روی screen خودش — **الزامی** اگر نقض شود |
+کلاس جدید `ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy` مسئولیت متمرکز تفسیر تنظیم `membership_absent_behavior` و فیلتر `music_wave_membership_absent_behavior` را بر عهده می‌گیرد:
 
----
+| حالت انتشار (`mw_access_mode`) | وضعیت خرید محصول WooCommerce | خروجی با `deny` | خروجی با `allow` (پیش‌فرض سازگار) | خروجی با `open_download` (جدید) |
+|---|---|---|---|---|
+| `public` | — | `allow('public')` | `allow('public')` | `allow('public')` |
+| `logged_in` | — | مهمان: `deny('login_required')` / کاربر: `allow('logged_in')` | مهمان: `deny('login_required')` / کاربر: `allow('logged_in')` | مهمان: `deny('login_required')` / کاربر: `allow('logged_in')` |
+| `purchase` | خریده / نخریده / بدون محصول | `allow('purchase')` / `deny('purchase_required')` / `deny('purchase_unconfigured')` | بدون تغییر (همیشه نیازمند خرید) | **بدون تغییر (هرگز باز نمی‌شود)** |
+| `restricted` | — | `deny('restricted')` | `deny('restricted')` | **بدون تغییر (هرگز باز نمی‌شود)** |
+| `membership` | — | `deny('membership_provider_absent')` | `allow('membership_provider_absent')` | `allow('membership_absent_open_download')` |
+| `purchase_or_membership` (کاربر محصول را خریده) | خریده (`true`) | `allow('purchase')` | `allow('purchase')` | `allow('purchase')` |
+| `purchase_or_membership` (کاربر نخریده، محصول متصل است) | نخریده (`has_products = true`) | `deny('purchase_required')` | `deny('purchase_required')` | **`allow('membership_absent_open_download')`** |
+| `purchase_or_membership` (بدون محصول متصل) | `has_products = false` | `deny('purchase_or_membership_unconfigured')` | `allow('membership_provider_absent')` | **`allow('membership_absent_open_download')`** |
 
-## ۸. پاک‌سازی کد و فایل تکراری/بی‌مصرف
-
-**روش:**
-1. نامزدها: grep ارجاع‌ها + تحلیل ایستا (PHPStan unused / Psalm `--find-unused-code`؛ ESLint `no-unused-vars`).
-2. هر نامزد: جست‌وجو در کد، `apply_filters`/`do_action`، تمپلیت‌ها، JS، تست‌ها، مستندات، فایل‌های ترجمه.
-3. «بدون ارجاع و بدون قرارداد عمومی مستند» → حذف. «قرارداد عمومی (فیلتر/اکشن مستند)» → حذف نکن، فقط گزارش بده.
-4. هر حذف در commit جدا با تست سبز.
-
-**نامزدهای شناخته‌شده:** کد مردهٔ `add_settings_section/field` و ناهمخوانی نام‌ها در VIP (H12)؛ چهار `has_filter` تکراری (H11)؛ literalهای `'allow'`/`'deny'` پراکنده؛ کد ۳۰۲ تکراری در `RemoteRedirectProvider`؛ متن‌های ترجمه/`.pot`/`.json` بی‌مصرف پس از تغییر برچسب‌ها؛ هر چیز دیگری که ممیزی پیدا کند.
+> **هم‌آهنگی با کلید اصلی VIP هنگام نصب بودن افزونه VIP:** وقتی افزونه `music-wave-vip` فعال است، ارائه‌دهنده عضویت غایب نیست (`ConfigurableMembershipProvider` ثبت است)؛ بنابراین `MembershipAbsencePolicy` وارد عمل نمی‌شود و همان کلید اصلی `module_enabled` در VIP تعیین‌کننده است. این تفکیک صراحتاً در کارت وضعیت زنده هر دو پنل ادمین نمایش داده می‌شود.
 
 ---
 
-## ۹. استانداردهای کد و دروازه‌های کیفیت
+### ۳.۲. لایه مسیریابی تحویل فایل مبتنی بر طرح‌واره (`DeliveryRouter` و کلاس‌های همکار)
 
-### ۹.۱ استانداردها (الزامی)
-- **PHP:** نحو سازگار با ۷.۴ (بدون enum، readonly، `match`، named arguments، union types، constructor promotion، nullsafe)؛ `declare(strict_types=1)` مطابق چک‌کنندهٔ پروژه؛ تست روی ۷.۴ (کف)، ۸.۳ (توصیهٔ رسمی وردپرس)، ۸.۴.
-- **معماری:** شیءگرا؛ `final` برای کلاس‌های بدون ارث‌بری؛ DI از طریق سازنده؛ بدون وضعیت سراسری جدید؛ جهت وابستگی VIP → هسته حفظ شود.
-- **اصول:** SOLID، DRY (هر قاعده یک منبع حقیقت)، KISS، YAGNI؛ اینترفیس جدید فقط با دو پیاده‌سازی واقعی.
-- **Refactoring ایمن:** ابتدا تست مشخصه‌سازی، سپس تغییر ساختار؛ تغییر رفتار و تغییر ساختار در یک commit قاطی نشود.
-- **وردپرس:** WordPress Coding Standards؛ ورودی با `sanitize_*`/`esc_url_raw`، خروجی با `esc_*` در لحظهٔ چاپ؛ هر مسیر REST با `permission_callback` واقعی؛ nonce برای فرم‌ها؛ `$wpdb->prepare`؛ مقایسهٔ امضا/توکن فقط `hash_equals`.
-- **JS:** ESLint پروژه، بدون وابستگی تولیدی جدید، i18n با `@wordpress/i18n`.
-- **بدون وابستگی تولیدی جدید و بدون مهاجرت DB.**
+در `music-wave-core/src/Downloads/` و `Support/` کلاس‌های زیر با مسئولیت تک‌منظوره (SRP) اضافه می‌شوند:
 
-### ۹.۲ دستورها
-`composer test` · `composer check:syntax` · `composer check:strict-types` · `composer check:abspath` · `composer check:phpcs` · `composer check:phpstan` · `composer check:script-translations` · `npm ci && npm run lint:js` · `php tests/run.php` · `tools/final-check.sh` (هر کدام در پروژه وجود داشت). اگر ابزاری نصب نیست، نصب کن؛ اگر نشد، «اجرا نشد + دلیل».
-
-### ۹.۳ آزمون‌های جدید (حداقل)
-
-*سیاست دسترسی*
-1. `Settings::sanitize` مقدار `open_download` را حفظ و نامعتبر را به `allow` برمی‌گرداند.
-2. جدول صدق ۴.۲ برای هر سلول (بدون ارائه‌دهنده)؛ ستون‌های `allow`/`deny` برابر مشخصه‌سازی.
-3. با ارائه‌دهندهٔ ثبت‌شده، تصمیم ارائه‌دهنده حاکم است و `open_download` اثری ندارد.
-
-*اعتبارسنجی لینک مستقیم*
-4. رد: `http://`، `javascript:`، `data:`، `//host/x`، userinfo، IP literal (v4/v6/دهدهی/هگز)، `localhost`، `.internal`، host غیر ASCII، `\r\n` و `%0d%0a`، طول > ۲۰۴۸، port غیر ۴۴۳.
-5. پذیرش `https://cdn.example.com/a/b.mp3?x=1`؛ با allowlist فقط میزبان‌های منطبق؛ `evil-cdn.example.com` و `cdn.example.com.evil.net` در برابر `*.cdn.example.com` رد شوند.
-6. round-trip `encode/decode`؛ `is()` برای `vip:`/`local:` false.
-
-*سه لایهٔ نگارش*
-7. REST: `direct:https://…` با مدیر پذیرفته، با کاربر غیرمجاز رد؛ URL خام همیشه 400.
-8. `MetaDefinition`: `direct:` حفظ؛ URL خام حذف؛ `vip:`/`local:` بدون تغییر.
-9. JS: `validQualities()` ردیف direct معتبر را می‌پذیرد و URL خام را رد می‌کند.
-
-*تحویل*
-10. بدون VIP و انتشار رایگان: `direct:` دانلود می‌شود (۳۰۲ + هدرهای `no-store`/`no-referrer`/`nosniff`/`noindex`).
-11. **با VIP فعال:** `direct:` همچنان کار می‌کند و `vip:` به VIP می‌رود.
-12. بدون VIP: `vip:`/`local:` → `provider_unavailable`.
-13. URL دستکاری‌شده در DB (مثل `http://` یا `javascript:`) در لحظهٔ تحویل رد می‌شود.
-14. `DirectLinkProvider` هرگز `vip:`/`local:` را سرو نمی‌کند.
-15. `stream()` توکن replay را مصرف نمی‌کند؛ Rangeهای متعدد مشکلی ندارند.
-16. ارائه‌دهندهٔ ثالث ثبت‌شده با `music_wave_download_provider` برای دارایی غیر-direct بدون تغییر کار می‌کند.
-
-*حالت راه‌دور و کلید*
-17. `vip:<hash>` → مسیر `relative_path` در نشانی امضاشده، بدون `vip%3A`.
-18. رکورد ناموجود / اثر انگشت نامطابق / مسیر با `..` یا `%2e%2e` → رشتهٔ خالی.
-19. چرخش کلید: امضا با کلید `active` و `kid` درست؛ ثابت `wp-config` اولویت دارد؛ مهاجرت بی‌صدای راز فعلی.
-
-*UI/عملکرد*
-20. بنر/خط وضعیت در ترکیب (VIP نصب‌نشده / نصب-خاموش / روشن) × (۳ مقدار سیاست).
-21. `mode_counts` کش می‌شود و بعد از عملیات انبوه بی‌اعتبار می‌شود؛ رندر اولیهٔ تنظیمات کوئری شمارش اجرا نمی‌کند.
-22. پاک‌شدن object cache replay/سهمیه را بازنشانی نمی‌کند.
-
-**دستی (چندمرورگره):** دانلود و پخش `direct:` در Chrome/Firefox/Safari دسکتاپ و موبایل، با و بدون `Content-Disposition` و CORS در میزبان؛ صفحهٔ تنظیمات هسته و VIP در RTL، با/بدون VIP. اگر امکان اجرای دستی نداری، این مرحله را در گزارش «اجرا نشد» ثبت کن و مراحل را برای مالک بنویس.
+1. **`DirectLinkUrlValidator`**:
+   - اعتبارسنجی سخت‌گیرانه نشانی HTTPS مقصد:
+     - رد رشته‌های خالی، بلندتر از `2048` بایت، یا دارای بایت NUL و کاراکترهای کنترلی (`[\x00-\x1F\x7F]`).
+     - الزام قطعی طرح‌واره `https` (رد `http`، `javascript`، `data`، `file`، `ftp`، `php`، `phar` و غیره).
+     - رد کامل اطلاعات کاربری در URL (`user`/`pass` مانند `https://user:pass@host`) و رد `fragment` (`#...`).
+     - رد میزبان‌های محلی و داخلی: `localhost`، `*.localhost`، `*.local`، `*.internal`، `metadata.google.internal`، آدرس‌های IP غیرعمومی IPv4 و IPv6 شامل `127.0.0.0/8`، `10.0.0.0/8`، `172.16.0.0/12`، `192.168.0.0/16`، `169.254.0.0/16` (متادیتای ابری)، `100.64.0.0/10` (CGNAT)، `0.0.0.0/8`، `::1`، `fe80::/10`، `fc00::/7`، آدرس‌های IPv4-mapped IPv6 (`::ffff:127.0.0.1`) و فرم‌های عددی/مبنای ۸ یا ۱۶ IPv4 (مانند `2130706433` یا `0x7f000001`).
+     - بررسی لیست سفید دامنه‌های مجاز (`direct_link_allowed_hosts` در تنظیمات هسته + فیلتر `music_wave_direct_link_allowed_hosts`) در صورت پیکربندی توسط ادمین (با پشتیبانی از تطابق دقیق دامنه و زیرشاخه صریح `*.example.com`).
+2. **`DirectLinkAsset`**:
+   - مدیریت پیشوند استاندارد `direct:`، تشخیص حساس و غیرحساس به حروف بزرگ/کوچک (`has_direct_scheme` برای مسدودسازی `DIRECT:http://...`)، استخراج URL و تولید شناسه نرمال `direct:<normalized-https-url>`.
+3. **`DirectLinkPermission`**:
+   - بررسی مجوز انتساب لینک مستقیم جدید یا تغییریافته بر پایه قابلیت `manage_mw_protected_assets` (قابل سخت‌تر شدن توسط مدیر شبکه/سایت از طریق فیلتر `music_wave_direct_link_capability` به `manage_options` و فیلتر `music_wave_can_manage_direct_links`).
+4. **`RedirectResponse`**:
+   - ارسال‌کننده مشترک و ایمن تغییرمسیر HTTP `302` برای هر دو کلاس `DirectLinkProvider` (در هسته) و `RemoteRedirectProvider` (در VIP):
+     - پاک‌سازی کاراکترهای تزریق هدر (`\r`، `\n`، `\0`) و راستی‌آزمایی مجدد طرح‌واره `https`.
+     - ارسال هدرهای امنیتی استاندارد: `Cache-Control: private, no-store, max-age=0` (به‌همراه `nocache_headers()`)، `Referrer-Policy: no-referrer`، `X-Content-Type-Options: nosniff` و `X-Robots-Tag: noindex, nofollow`.
+     - پشتیبانی از حالت تست بدون کشتن پردازش CLI (`MUSIC_WAVE_TESTING` یا فیلتر `music_wave_redirect_response_terminate`) با ثبت آخرین تغییرمسیر (`RedirectResponse::last_redirect()`) جهت تست‌های E2E دقیق هدرها و کد وضعیت.
+5. **`DirectLinkProvider`** (پیاده‌ساز `DownloadProvider` و `StreamableDownloadProvider`):
+   - اعتبارسنجی مجدد URL در لحظه تحویل/استریم (Defense-in-Depth: اگر ادمین بعد از ذخیره انتشار، لیست سفید دامنه را محدود کرده باشد، لینک‌های قدیمی خارج از لیست سفید بلافاصله در زمان تحویل مسدود می‌شوند!) و ارسال از طریق `RedirectResponse::send()`.
+6. **`DeliveryRouter`** (پیاده‌ساز `DownloadProvider` و `StreamableDownloadProvider`):
+   - پوشاننده ارائه‌دهنده خارجی در `Plugin.php`:
+     - شناسه‌های دارای طرح‌واره `direct:` منحصراً به `DirectLinkProvider` هدایت می‌شوند (بدون fallback به ارائه‌دهنده دیگر).
+     - شناسه‌های `vip:`، `local:` و شناسه‌های کدر سفارشی منحصراً به ارائه‌دهنده خارجی (`ProtectedFileProvider`، `RemoteRedirectProvider` یا `NullDownloadProvider`) هدایت می‌شوند.
+7. **`DeliveryCapabilities`** (`music-wave-core/src/Support/DeliveryCapabilities.php`):
+   - گزارش‌دهنده یکپارچه قابلیت‌های تحویل فعال سایت (`vip_local`، `vip_remote`، `external_provider`، `direct_only`) برای صفحه تنظیمات، صفحه راه‌اندازی و عیب‌یابی، Site Health وردپرس و پنل دانلود فرانت‌اند.
 
 ---
 
-## ۱۰. تصمیم‌های نهایی (از قبل گرفته شده — بازگشایی نکن)
+### ۳.۳. اصلاح معماری `RemoteRedirectProvider` و مخزن کلید `RemoteSigningKeyring` در `music-wave-vip`
 
-| موضوع | تصمیم |
-|---|---|
-| تحویل در برابر سیاست دسترسی | مستقل؛ روتر scheme-محور؛ با VIP فعال هم `direct:` کار می‌کند |
-| پیشوند لینک مستقیم | `direct:<https-url>`؛ هرگز URL خام ذخیره نشود |
-| `attachment:` | ساخته نمی‌شود (۴.۹) |
-| چه کسی لینک مستقیم ثبت کند | فقط `manage_options` + فیلتر `music_wave_can_assign_direct_link` |
-| allowlist میزبان | تنظیم اختیاری `direct_link_allowed_hosts`، پیش‌فرض خالی؛ در UI/مستندات توصیه برای محصول فروشی |
-| `direct:` روی انتشار پولی | هشدار، نه مسدودسازی |
-| مقادیر قدیمی `allow`/`deny` | بدون تغییر نام و بدون مهاجرت |
-| مدیریت کلید چندگانه + ثابت `wp-config` | در این نسخه انجام شود (۴.۷) |
-| بهینه‌سازی تیکت (P3) | فقط با اثبات اندازه‌گیری |
-
----
-
-## ۱۱. معیارهای پذیرش نهایی
-
-1. بدون VIP و با `open_download`: انتشار `membership` برای مهمان باز است و `direct:` پخش/دانلود (۳۰۲) می‌شود.
-2. بدون VIP و با `allow`: انتشار فقط-عضویتی باز؛ `vip:` با پیام روشن تحویل نمی‌شود؛ رفتار قدیمی بدون تغییر.
-3. بدون VIP و با `deny`: انتشار `membership` مسدود.
-4. **با VIP فعال:** `direct:` و `vip:` هر دو درست کار می‌کنند.
-5. `vip:`/`local:` در هیچ حالتی بدون ارائه‌دهندهٔ VIP تحویل نمی‌شوند.
-6. URL خام در JS، REST و متادیتا رد می‌شود؛ `direct:http://…` رد؛ `direct:https://…` از مدیر پذیرفته.
-7. URL دستکاری‌شده در DB در لحظهٔ تحویل رد می‌شود.
-8. حالت راه‌دور: نشانی امضاشدهٔ `vip:` مسیر واقعی دارد و `vip%3A` ندارد؛ چرخش کلید بدون قطعی ممکن است.
-9. هر چهار بخش تنظیمات بدون VIP وضعیت واقعی خود را نشان می‌دهند؛ شمارش‌ها کش و تنبل‌اند.
-10. هیچ تست موجودی حذف/تضعیف نشده؛ همهٔ دروازه‌های ۹.۲ سبز یا با دلیل «اجرا نشد».
-11. دادهٔ موجود (`mw_download_assets`، `mw_download_asset_id`، `mw_vip_assets`، تنظیمات) بدون مهاجرت خوانده می‌شود.
-12. کد مرده/تکراری فهرست بخش ۸ حذف شده و گزارش «حذف‌شده/نگه‌داشته‌شده با دلیل» آمده است.
-13. یافته‌های P0/P1 ممیزی (۳.۳) در دامنه رفع شده و بقیه در بدهی ثبت شده‌اند.
-14. مستندات، ADR، نسخه‌ها و changelog به‌روزند.
+1. **حل کامل شناسه‌های `vip:<32hex>` و `local:` در `RemoteRedirectProvider`:**
+   - سازنده `RemoteRedirectProvider::__construct( array $config, ?ProtectedAssetRegistry $registry = null )` رجیستری را به‌صورت اختیاری می‌پذیرد (سازگاری کامل با فراخوانی‌های موجود در تست‌ها) و `ProviderFactory::download_provider()` نمونه `$storage->registry()` را به آن تزریق می‌کند.
+   - متد `resolve_relative_path( string $asset_id )`:
+     - برای `vip:<32hex>`: رکورد را از `ProtectedAssetRegistry::find()` می‌خواند؛ اگر رکورد وجود نداشت یا `relative_path` خالی/نامعتبر بود، **به‌صورت fail-closed رشته خالی `''` برمی‌گرداند** و هرگز `vip%3A...` را امضا نمی‌کند.
+     - برای `local:<path>`: پیشوند `local:` را حذف کرده و مسیر نسبی را از `PathValidator::is_safe_relative()` عبور می‌دهد.
+     - برای مسیر نسبی ساده (`album/track.flac`): مستقیماً با `PathValidator::is_safe_relative()` اعتبارسنجی و نرمال می‌کند.
+     - برای `direct:...` یا هر رشته دارای `..` یا بایت کنترلی: بلافاصله `''` برمی‌گرداند.
+2. **مخزن کلید امضای چندکلیدی غیر-Autoload (`RemoteSigningKeyring`):**
+   - کلاس جدید `ManaCore\MusicWave\Vip\Security\RemoteSigningKeyring` کلیدهای امضا را در گزینه مستقل `music_wave_vip_remote_keyring` با `autoload = false` ذخیره می‌کند و کلید متنی قدیمی را هنگام ذخیره از گزینه autoloaded `music_wave_vip_settings` پاک‌سازی می‌کند.
+   - ترتیب اولویت کلید فعال امضا:
+     1. ثابت `MUSIC_WAVE_VIP_REMOTE_SECRET` در `wp-config.php` (در صورت تعریف و طول حداقل ۳۲ بایت؛ بالاترین اولویت و غیرقابل بازنویسی از دیتابیس/ادمین).
+     2. کلید با وضعیت `active` در `music_wave_vip_remote_keyring`.
+     3. مقدار میراثی `remote_signing_secret` در `music_wave_vip_settings` (برای سازگاری بدون مهاجرت با نصب‌های قبلی تا اولین ذخیره تنظیمات).
+   - چرخش کلید بدون قطعی (Zero-Downtime Key Rotation):
+     - هنگام ثبت کلید جدید با گزینه چرخش کلید، کلید فعال قبلی با شناسه `kid` خود به وضعیت `retired` (همراه با زمان بازنشستگی `retired_at`) منتقل می‌شود و کلید جدید با `kid` جدید وضعیت `active` می‌گیرد.
+     - متد `RemoteSigningKeyring::verify_signature()` با استفاده از `hash_equals()` امکان راستی‌آزمایی امضا در برابر کلید `active` و کلیدهای `retired` معتبر را فراهم می‌کند و ادمین پس از پایان پنجره TTL می‌تواند با یک تیک کلیدهای `retired` را ابطال و پاک کند.
 
 ---
 
-## ۱۲. ریسک‌ها و کاهش
+## بخش ۴ — استانداردهای سخت‌گیرانه امنیت (الزامات S1 تا S10)
 
-| ریسک | کاهش |
-|---|---|
-| سوءاستفاده از `direct:` برای محتوای پولی (پس از تحویل قابل اشتراک است) | هشدار صریح، فقط مدیر، توصیهٔ `vip:` برای محتوای پولی |
-| Open redirect / فیشینگ از روی دامنهٔ سایت | https-only، رد userinfo/IP/کنترل‌کاراکتر، allowlist اختیاری، اعتبارسنجی در لحظهٔ تحویل |
-| رفتار متفاوت مرورگرها در دانلود cross-origin | ۴.۸، تست دستی، مستند میزبان |
-| تغییر معنای تنظیم موجود | مقادیر قدیمی بدون تغییر؛ تست مشخصه‌سازی |
-| شکستن ارائه‌دهندگان ثالث | قرارداد فیلتر حفظ؛ تست ۱۶ |
-| ۴۰۴ در CDN به‌خاطر نگاشت راه‌دور | fail-closed + تشخیص در تب تحویل |
-| حذف اشتباه کد «به‌ظاهر مرده» | روش بخش ۸، commit جدا |
-| Downgrade هسته با دارایی‌های `direct:` ذخیره‌شده | باید fail-closed شوند؛ در changelog ثبت شود |
-| مهاجرت کلید امضا | ثبت بی‌صدای راز فعلی به‌عنوان `active`؛ تست ۱۹ |
-
----
-
-## ۱۳. مستندات، نسخه‌ها و گزارش نهایی
-
-### ۱۳.۱ مستندات
-- ADR: `docs/adr/0005-membership-absence-policy-and-direct-delivery.md` (سیاست دسترسی ≠ مسیر تحویل؛ روتر scheme-محور؛ پیشوند `direct:`؛ چرا `attachment:` و `AssetAwareProvider` نیامدند).
-- به‌روزرسانی: `docs/access-policy.md`، `docs/secure-downloads.md`، `docs/download-qualities-and-hosting.md`، `docs/extension-contracts.md` (فیلترهای `music_wave_direct_link_url` و `music_wave_can_assign_direct_link`)، `docs/data-dictionary.md`، `docs/compatibility-matrix.md`، `docs/delivery-threat-model.md` (لینک مستقیم قابل اشتراک؛ نشانی امضاشدهٔ قابل تکرار تا انقضا)، `docs/vip-integration.md` (**رفع drift:** امضای واقعی `url|expires|mode|kid` است) و نمونهٔ مرجع تأییدکنندهٔ CDN با چند `kid`.
-- هر مستندی که پس از تغییرات ناسازگار شد، اصلاح شود.
-
-### ۱۳.۲ نسخه‌ها
-هسته `0.16.0`؛ VIP `0.5.2` با `MIN_CORE_VERSION=0.16.0`؛ `release-manifest.json` و changelog هر دو افزونه؛ schema بدون تغییر.
-
-### ۱۳.۳ گزارش نهایی (فایل `docs/reports/vip-access-delivery-upgrade-report.md` + خلاصه در پاسخ)
-1. **خلاصهٔ اجرایی** (چه شد، چه نشد).
-2. **نتیجهٔ راستی‌آزمایی H1–H16:** تأیید/رد هر مورد با شاهد.
-3. **یافته‌های ممیزی** با اولویت P0–P3 و وضعیت (رفع‌شده/بدهی).
-4. **فهرست فایل‌های تغییرکرده/جدید/حذف‌شده** با دلیل.
-5. **نتیجهٔ واقعی هر دستور بخش ۹.۲** (سبز/قرمز/اجرا نشد + دلیل).
-6. **اعداد عملکرد قبل/بعد.**
-7. **تصمیم‌ها و انحراف‌ها** از این سند با دلیل.
-8. **بدهی و پیشنهاد آینده** (از جمله موارد خارج از دامنه).
-9. **راهنمای تست دستی** برای مالک (مراحل و نتیجهٔ انتظار).
-10. **یادداشت انتشار/ارتقا و بازگشت (rollback).**
+- **S1 (جلوگیری از Open Redirect):** تغییرمسیر فقط به مقاصد ذخیره‌شده در متای انتشار معتبر پس از احراز دسترسی و مصرف توکن مجاز است؛ هیچ پارامتر ورودی کاربر در کوئری‌استرینگ/بدنه درخواست REST هرگز مستقیماً مقصد `Location` قرار نمی‌گیرد.
+- **S2 (پیشگیری از SSRF و دسترسی به شبکه داخلی):** رد کامل طرح‌واره‌های غیرایمن، `localhost`، دامنه‌های داخلی و تمامی رنج‌های IP خصوصی/رزروشده/ابری (`127/8`، `10/8`، `172.16/12`، `192.168/16`، `169.254/16`، `100.64/10`، `0/8`، `::1`، `fc00::/7`، `fe80::/10` و IPv4-mapped IPv6) هم در زمان ذخیره و هم در زمان تحویل.
+- **S3 (کنترل دسترسی و Nonce در تمام مرزهای نوشتن):** بررسی `current_user_can()`، قابلیت اختصاصی `DirectLinkPermission` (`manage_mw_protected_assets` + فیلتر ارتقا به `manage_options`) و بررسی کامل Nonce در متاباکس، اکشن‌های تنظیمات و مسیرهای REST.
+- **S4 (هدرهای امنیتی پاسخ تغییرمسیر و تحویل):** ارسال اجباری `Referrer-Policy: no-referrer`، `Cache-Control: private, no-store, max-age=0`، `X-Content-Type-Options: nosniff` و `X-Robots-Tag: noindex, nofollow` در `RedirectResponse`.
+- **S5 (حفاظت در برابر دستکاری مسیر — Path Traversal):** عبور تمامی مسیرهای نسبی در `MetaDefinition`، `ProtectedFileProvider` و `RemoteRedirectProvider` از نرمال‌ساز سخت‌گیرانه و رد قطعی `..`، بک‌اسلش غیرمجاز، بایت NUL و کاراکترهای کنترلی.
+- **S6 (مقایسه زمان‌ثابت امضاها):** استفاده انحصاری از `hash_equals()` در `DownloadTokenService` و `RemoteSigningKeyring` و حداقل طول ۳۲ بایت برای کلید امضای HMAC.
+- **S7 (عدم نشت کلید و جزئیات حساس در پاسخ خطا و لاگ):** پیام‌های خطای کاربر عمومی و امن هستند؛ مقادیر راز امضا هرگز در HTML صفحه تنظیمات، خروجی REST، عیب‌یابی یا لاگ چاپ نمی‌شوند.
+- **S8 (پایداری ضدتکرار و سهمیه در برابر پاک‌سازی کش):** مصرف یک‌بارمصرف بلیت دانلود در جدول `{prefix}mw_download_replays` و شمارش سهمیه روزانه در گزینه غیر-autoload دیتابیس ذخیره می‌شوند تا پاک‌سازی کش شیء (`wp_cache_flush()`) هرگز موجب دور خوردن replay یا بازنشانی سهمیه روزانه نشود.
+- **S9 (ثبت صحیح سهمیه و رویداد ممیزی حتی با `exit` ارائه‌دهنده):** تضمین اجرای شمارش سهمیه و هوک `music_wave_download_event` در تحویل‌های واقعی استریم/ریدایرکت.
+- **S10 (حذف ایمن در `uninstall.php`):** پاک‌سازی کامل گزینه‌های جدید (`music_wave_vip_remote_keyring`، `mw_dl_quota_*`، کش شمارش حالت‌ها و کران `music_wave_replay_cleanup`) صرفاً در صورت فعال بودن صریح `delete_data_on_uninstall = enabled`، بدون دست زدن به پست‌های انتشار یا فایل‌های خصوصی روی دیسک.
 
 ---
 
-## پیوست — استانداردها و منابع مرجع
-- OWASP Unvalidated Redirects and Forwards Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
-- OWASP Server-Side Request Forgery Prevention Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
-- Amazon CloudFront: signed URLs و trusted key groups (چرخش کلید) — https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-trusted-signers.html
-- PHP Manual: `hash_equals` — https://www.php.net/hash_equals
-- WordPress REST API: `permission_callback`، `validate_callback`، `sanitize_callback` — https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/#permissions-callback
-- WordPress Developer Blog: Transients API و object cache — https://developer.wordpress.org/news/2024/06/an-introduction-to-the-transients-api/
-- HTML Standard: دانلود cross-origin و `download` — https://html.spec.whatwg.org/multipage/semantics.html#as-a-download
-- نیازمندی‌های PHP وردپرس: کف ۷.۴، توصیه ۸.۳ (طبق منابع ثانویه ۲۰۲۶؛ پیش از انتشار با صفحهٔ رسمی wordpress.org/about/requirements تطبیق بده).
+## بخش ۵ — استانداردهای کارایی و مقیاس‌پذیری (الزامات P1 تا P7)
+
+- **P1 (صفر کوئری و بار اضافی در فرانت‌اند عمومی):** منطق تنظیمات، شمارش حالت‌ها و کلیدهای امضای راه‌دور در درخواست‌های عادی صفحات عمومی سایت هیچ کوئری اضافه‌ای ایجاد نمی‌کنند.
+- **P2 (عدم autoload برای داده‌های حساس و موقت):** گزینه `music_wave_vip_remote_keyring` و شمارنده‌های سهمیه روزانه `mw_dl_quota_*` همگی با `autoload = false` ذخیره می‌شوند.
+- **P3 (تغییرمسیر سبک `302` بدون اشغال PHP Worker):** در هر دو حالت `direct:` و `remote_redirect`، سرور وردپرس فایل صوتی را دانلود یا پروکسی نمی‌کند و بلافاصله پس از احراز هویت/توکن پاسخ `302` برمی‌گرداند.
+- **P4 (کش و تجمیع SQL در `BulkAccessManager::mode_counts()`):** تبدیل حلقه ۵۰ صفحه‌ای `WP_Query` + متا به یک کوئری تجمیعی `GROUP BY` همراه با کش Transient پنج‌دقیقه‌ای (`mw_bulk_access_mode_counts`) و ابطال خودکار هنگام ذخیره/حذف انتشار یا اجرای تغییر دسترسی انبوه، به‌علاوه اجرای تنبل فقط در تب `access`.
+- **P5 (پاک‌سازی دسته‌ای محدود در کران):** محدود کردن کوئری‌های `DELETE` در `DatabaseReplayStore::cleanup()` با `LIMIT` ایمن (مثلاً دسته‌های ۵۰۰تایی) برای جلوگیری از قفل جدول در سایت‌های پرترافیک.
+- **P6 (پشتیبانی کامل از استریم طولانی با Range Request):** هم‌ترازسازی سقف TTL توکن/بلیت تا `7200` ثانیه برای پخش بدون قطعی فایل‌های صوتی بلند.
+
+---
+
+## بخش ۶ — برنامه اجرایی فازبه‌فاز و فهرست دقیق فایل‌ها
+
+### فاز ۱: سیاست دسترسی در غیاب ماژول عضویت و یکپارچگی اسکیمای دسترسی (`music-wave-core`)
+- **ایجاد:** `music-wave-core/src/Access/MembershipAbsencePolicy.php`
+- **اصلاح:**
+  - `music-wave-core/src/Access/AccessPolicyEngine.php`
+  - `music-wave-core/src/Access/AccessCtaResolver.php`
+  - `music-wave-core/src/Support/Settings.php`
+  - `music-wave-core/src/Schema/MetaDefinition.php` (رفع باگ `'logged_in'` + اتصال اعتبارسنجی `direct:`)
+
+### فاز ۲: مسیریابی تحویل مبتنی بر طرح‌واره، لینک مستقیم HTTPS و پایداری سهمیه/TTL (`music-wave-core`)
+- **ایجاد:**
+  - `music-wave-core/src/Downloads/DirectLinkUrlValidator.php`
+  - `music-wave-core/src/Downloads/DirectLinkAsset.php`
+  - `music-wave-core/src/Downloads/DirectLinkPermission.php`
+  - `music-wave-core/src/Downloads/RedirectResponse.php`
+  - `music-wave-core/src/Downloads/DirectLinkProvider.php`
+  - `music-wave-core/src/Downloads/DeliveryRouter.php`
+  - `music-wave-core/src/Support/DeliveryCapabilities.php`
+- **اصلاح:**
+  - `music-wave-core/src/Plugin.php`
+  - `music-wave-core/src/Downloads/DownloadResolver.php` (مسیریابی، پایداری سهمیه در دیتابیس، محافظ شمارش قبل از `exit`)
+  - `music-wave-core/src/Downloads/DownloadRoutes.php` (پیام‌های خطای دقیق برای `provider_unavailable` و `invalid_direct_url`)
+  - `music-wave-core/src/Downloads/DownloadTokenService.php` و `OpaqueTicketStore.php` (رفع سقف ۹۰۰ ثانیه به ۷۲۰۰ ثانیه)
+  - `music-wave-core/src/Downloads/ReleaseDownloadCatalog.php` (تشخیص استریم‌پذیری روی مسیر URL در `direct:`)
+  - `music-wave-core/src/Downloads/DatabaseReplayStore.php` و `music-wave-core/uninstall.php` (پاک‌سازی دسته‌ای محدود + هوک کران و سهمیه)
+
+### فاز ۳: تجربه نویسندگی و اعتبارسنجی سه‌لایه در متاباکس و ویرایشگر بلوکی (`music-wave-core`)
+- **اصلاح:**
+  - `music-wave-core/src/Downloads/DownloadAssetRoutes.php`
+  - `music-wave-core/src/Admin/ReleaseMetaBox.php` و `music-wave-core/assets/admin-release-meta.js`
+  - `music-wave-core/src/Admin/EditorAssets.php` و `music-wave-core/assets/editor.js`
+
+### فاز ۴: اصلاح `RemoteRedirectProvider` (`vip:<hash>`)، چرخش کلید و ثابت `wp-config.php` (`music-wave-vip`)
+- **ایجاد:** `music-wave-vip/src/Security/RemoteSigningKeyring.php`
+- **اصلاح:**
+  - `music-wave-vip/src/ProviderFactory.php`
+  - `music-wave-vip/src/RemoteRedirectProvider.php`
+  - `music-wave-vip/src/VipSettings.php`
+  - `music-wave-vip/src/Delivery/ProtectedDeliveryDiagnostics.php`
+  - `music-wave-vip/uninstall.php`
+
+### فاز ۵: هوشمندسازی پنل‌های تنظیمات، عیب‌یابی، نشان فرانت‌اند و بهینه‌سازی `mode_counts`
+- **اصلاح:**
+  - `music-wave-core/src/Admin/SettingsPage.php`
+  - `music-wave-core/src/Admin/BulkAccessManager.php`
+  - `music-wave-core/src/Admin/Concerns/DiagnosticsChecks.php`
+  - `music-wave-core/src/Support/SiteHealth.php`
+  - `music-wave-core/src/Blocks/Release/CollectionAndDownloadRenderer.php`
+  - `music-wave-vip/src/SettingsPage.php` (رفع قفل کنترل‌ها در حالت خاموش، کارت وضعیت زنده، رابط چرخش کلید، اصلاح لینک شکسته خط `834`)
+  - `music-wave-vip/assets/admin-vip-settings.js`
+
+### فاز ۶ تا ۸: آزمون‌های جامع (واحد، یکپارچه‌سازی، امنیتی، کش و کارایی)، ترجمه‌ها، مستندات، نسخه‌گذاری و گزارش نهایی
+- **ایجاد/توسعه آزمون‌ها:**
+  - `tests/vip-access-delivery-suite.php` (پوشش کامل ۲۲+ سناریوی ماتریس دسترسی، لینک مستقیم، بردارهای حمله امنیتی، چرخش کلید، کش شیء و کارایی)
+  - حفظ سبز بودن ۱۰۰٪ تمامی تست‌های موجود (`tests/run.php`، `tests/download-e2e.php`، `tests/protected-asset-storage.php`، `tests/template-integrity.php`، `tests/wordpress-runtime-audit.php`، `npm run test:unit`).
+- **به‌روزرسانی ترجمه‌ها:** اجرای `generate-pot.php`، `sync-po.php`، تکمیل ۱۰۰٪ ترجمه‌های انگلیسی در `music-wave-core-en_US.po` و `music-wave-vip-en_US.po`، کامپایل `generate-mo.php` و `generate-script-json.php`.
+- **نسخه‌گذاری، مانیفست‌ها و مستندات:**
+  - ارتقای `music-wave-core` به `0.16.0` و `music-wave-vip` به `0.5.2` (`MIN_CORE_VERSION = '0.16.0'`).
+  - به‌روزرسانی `release-manifest.json`، `CHANGELOG.md`، `music-wave-core/readme.txt`، `music-wave-vip/readme.txt`، و بازتولید `MANIFEST.sha256` هر پکیج.
+  - ایجاد `docs/adr/0005-membership-absence-policy-and-direct-delivery.md` و به‌روزرسانی `docs/access-policy.md`، `docs/secure-downloads.md`، `docs/vip-integration.md`، `docs/delivery-threat-model.md`، `docs/extension-contracts.md`.
+  - تدوین گزارش جامع مهندسی، امنیتی و بنچمارک کارایی در `docs/reports/vip-access-delivery-upgrade-report.md`.
+
+---
+
+## بخش ۷ — ماتریس جامع آزمون‌های الزامی (۲۴ سناریو)
+
+1. انتشار `membership` + افزونه VIP غایب + حالت `deny` ← رد دسترسی (`membership_provider_absent`).
+2. انتشار `membership` + افزونه VIP غایب + حالت `allow` ← مجاز (`membership_provider_absent`).
+3. انتشار `membership` + افزونه VIP غایب + حالت `open_download` ← مجاز (`membership_absent_open_download`).
+4. انتشار پولی `purchase_or_membership` (دارای محصول WooCommerce) + کاربر فاقد خرید + VIP غایب + حالت `deny` ← رد (`purchase_required`).
+5. انتشار پولی `purchase_or_membership` (دارای محصول WooCommerce) + کاربر فاقد خرید + VIP غایب + حالت `allow` ← رد (`purchase_required` — عدم نشت محتوای پولی در پیش‌فرض).
+6. انتشار پولی `purchase_or_membership` (دارای محصول WooCommerce) + کاربر دارای خرید معتبر + VIP غایب + حالت `deny` یا `allow` ← مجاز (`purchase`).
+7. انتشار پولی `purchase_or_membership` (دارای محصول WooCommerce) + کاربر فاقد خرید + VIP غایب + حالت `open_download` ← مجاز (`membership_absent_open_download`).
+8. انتشار `purchase` (فقط خرید تکی) و `restricted` و `logged_in` + VIP غایب + حالت `open_download` ← عدم باز شدن خودکار برای مهمان (`purchase_required` / `restricted` / `login_required`).
+9. حفظ `mw_access_mode = 'logged_in'` در `MetaDefinition::sanitize()` بدون بازنویسی به `restricted`.
+10. فعال‌سازی مجدد VIP پس از دوره غیاب ← بازگشت فوری قواعد سطح عضویت بدون تغییر در متای انتشارها.
+11. انتشار با دارایی `direct:https://cdn.example.com/audio/track.mp3` بدون نصب VIP ← صدور بلیت `mwt_...`، مصرف یک‌بارمصرف در دانلود، پاسخ `302` با هدرهای امنیتی کامل، و رد استفاده مجدد از همان بلیت (Replay).
+12. استریم امن دارایی صوتی `direct:https://cdn.example.com/audio/track.mp3?ver=1` بدون VIP ← مجاز و چندبارمصرف در طول TTL؛ عدم استریم‌پذیری `direct:https://cdn.example.com/archive/album.zip` (فقط دانلود).
+13. پشتیبانی از TTLهای بالای ۹۰۰ ثانیه (تا ۳۶۰۰ برای دانلود و ۷۲۰۰ برای استریم) در `DownloadTokenService` و `OpaqueTicketStore`.
+14. انتشار ترکیبی دارای یک کیفیت `vip:<32hex>` و یک کیفیت `direct:https://...`: با VIP فعال هر دو کار می‌کنند؛ با VIP غایب، کیفیت `direct:` تحویل می‌شود و کیفیت `vip:` با `503 provider_unavailable` رد می‌شود.
+15. رد تمامی ورودی‌های مخرب در `DirectLinkUrlValidator` و `MetaDefinition` و `DownloadAssetRoutes`: `http://`، `javascript:`، `data:`، `file://`، `https://localhost/...`، `https://127.0.0.1/...`، `https://10.0.0.1/...`، `https://172.16.5.4/...`، `https://192.168.1.1/...`، `https://169.254.169.254/...`، `https://100.64.0.1/...`، `https://[::1]/...`، `https://[::ffff:127.0.0.1]/...`، `https://user:pass@cdn.example.com/...`، کاراکترهای `\r\n\0` و پیشوند بزرگ `DIRECT:http://...`.
+16. اجرای لیست سفید دامنه (`direct_link_allowed_hosts`): پذیرش دامنه مجاز و رد دامنه غیرمجاز هم در زمان ذخیره و هم در زمان تحویل (حتی اگر لیست سفید بعد از ذخیره محدود شده باشد).
+17. کنترل قابلیت `DirectLinkPermission`: کاربر فاقد `manage_mw_protected_assets` قادر به ثبت لینک مستقیم جدید نیست (`403`)، اما قابلیت ویرایش برچسب دارایی موجود حفظ می‌شود.
+18. نگاشت `vip:<32hex>` در `RemoteRedirectProvider`: تولید URL امضاشده حاوی `relative_path` واقعی از رجیستری، حذف `local:` در شناسه‌های میراثی، عدم وجود `vip%3A` یا `local%3A` در خروجی، و بازگشت `''` (fail-closed) برای `vip:` ناموجود در رجیستری.
+19. اولویت ثابت `MUSIC_WAVE_VIP_REMOTE_SECRET` و چرخش کلید در `RemoteSigningKeyring`: ذخیره با `autoload = false`، انتقال کلید قبلی به `retired`، صحت راستی‌آزمایی امضای هر دو کلید `active` و `retired` با `hash_equals`، و ابطال قطعی پس از پاک‌سازی کلیدهای بازنشسته.
+20. ویرایش و ذخیره منابع عضویت VIP در تب طرح‌ها هنگامی که `module_enabled = disabled` است، بدون پاک شدن تنظیمات سایر تب‌ها.
+21. صحت خروجی `DeliveryCapabilities` و عدم نمایش نشان گمراه‌کننده «VIP حفاظت‌شده» روی انتشارهای صرفاً `direct:`.
+22. پایداری ضدتکرار توکن (`DatabaseReplayStore`) و سهمیه روزانه دانلود (`mw_dl_quota_*`) پس از پاک‌سازی کش شیء (`wp_cache_flush()`).
+23. ثبت دقیق شمارنده سهمیه روزانه دانلود و رویداد ممیزی `download_delivered` در سناریوی واقعی تغییرمسیر/تحویل.
+24. بنچمارک کارایی `BulkAccessManager::mode_counts()` (کاهش چشمگیر تعداد کوئری و زمان اجرا با کش و ابطال خودکار) و پاک‌سازی دسته‌ای محدود (`LIMIT`) در کران `DatabaseReplayStore::cleanup()`.
+
+---
+
+## بخش ۸ — نتایج بنچمارک اندازه‌گیری‌شده و چک‌لیست نهایی پذیرش
+
+### ۸.۱. نتایج بنچمارک واقعی اجرای کد (PHP 8.3 WASM Runtime)
+
+| عملیات مورد سنجش | حجم نمونه | زمان کل | میانگین هر عملیات | سقف بودجه مجاز | وضعیت |
+|---|---:|---:|---:|---:|---|
+| `DirectLinkUrlValidator::validate()` | ۱٬۰۰۰ بار | `95.19 ms` | `0.0952 ms/op` | `< 0.50 ms/op` | PASS |
+| `DeliveryRouter::can_deliver_asset()` | ۱٬۰۰۰ بار | `52.17 ms` | `0.0522 ms/op` | `< 0.25 ms/op` | PASS |
+| `AccessPolicyEngine::decide()` (با `MembershipAbsencePolicy`) | ۱٬۰۰۰ بار | `69.79 ms` | `0.0698 ms/op` | `< 0.50 ms/op` | PASS |
+| `RemoteSigningKeyring::verify_signature()` (`hash_equals`) | ۱٬۰۰۰ بار | `62.57 ms` | `0.0626 ms/op` | `< 0.25 ms/op` | PASS |
+| `DatabaseReplayStore::cleanup()` (حذف دسته‌ای ۵۰۰ ردیف منقضی) | ۱ دسته | `32.33 ms` | `32.33 ms/batch` | `< 100 ms/batch` | PASS |
+| `BulkAccessManager::mode_counts()` (کش سرد — `GROUP BY` روی ۵۰۰ انتشار) | ۱ بار | `5.68 ms` | `5.68 ms` (۱ کوئری) | `< 50 ms` | PASS |
+| `BulkAccessManager::mode_counts()` (کش گرم Transient) | ۱٬۰۰۰ بار | `7.74 ms` | `0.0077 ms/op` | `< 0.05 ms/op` | PASS |
+
+### ۸.۲. چک‌لیست نهایی پذیرش پیش از تحویل
+
+- [x] سند مرجع با کد واقعی مخزن ممیزی و تمامی ابهام‌ها و باگ‌های جانبی (`B-NEW-1` تا `B-NEW-8`) مستند شدند.
+- [x] پیاده‌سازی کامل فازهای ۱ تا ۵ مطابق استانداردهای کدنویسی وردپرس (WPCS) و سازگار با PHP 7.4 تا 8.4.
+- [x] عبور کامل از گیت‌های کیفیت: `check-syntax.php` (روی PHP 7.4/8.3/8.4)، `check-strict-types.php`، `check-abspath.php`، `check-nul-bytes.php`، `phpcs` (صفر خطا روی کل مخزن)، `phpstan` سطح ۵ (صفر خطا روی Core و VIP)، `npm run lint:js` و `npm run test:unit`.
+- [x] پوشش کامل ترجمه‌های فارسی به انگلیسی (`generate-pot.php`، `sync-po.php`، `generate-mo.php`، `generate-script-json.php`، `check-translation-coverage.php`، `check-script-translations.php`).
+- [x] اجرای موفقیت‌آمیز تمامی سوئیت‌های تست PHP از جمله ۲۴ سناریوی جدید در `tests/vip-access-delivery-suite.php`.
+- [x] به‌روزرسانی مستندات، ADR-0005، نسخه‌ها (`0.16.0` و `0.5.2`)، `release-manifest.json`، `MANIFEST.sha256` و ثبت گزارش نهایی در `docs/reports/vip-access-delivery-upgrade-report.md`.

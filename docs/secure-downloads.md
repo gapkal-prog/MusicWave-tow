@@ -6,7 +6,12 @@ The frontend sends the WordPress REST nonce explicitly in `X-WP-Nonce` when requ
 
 `GET /wp-json/music-wave/v1/downloads/{id}?token=...&nonce=...` verifies the HMAC signature, expiry, user/release/quality/nonce binding, current `AccessPolicyEngine` decision, and one-time replay marker before delegating delivery. A token therefore cannot be reused, transferred to another account, switched to a higher quality, or remain valid after a purchase/membership entitlement changes.
 
-Core ships deny-by-default: no asset is delivered until an integration supplies a `DownloadProvider` through `music_wave_download_provider`. A provider must stream a protected asset itself and must not reveal a master-file URL. Download tokens are single-use. Stream tokens remain reusable during their short lifetime so browser byte-range requests can seek correctly; entitlement is re-evaluated for every request.
+Core routes delivery by asset scheme through `DeliveryRouter` (ADR 0005):
+
+- **Opaque protected schemes (`vip:<32hex>`, `local:<relative-path>`)**: deny-by-default (`503`) unless an integration supplies a `DownloadProvider` through `music_wave_download_provider` (such as MusicWave VIP).
+- **Controlled direct HTTPS scheme (`direct:https://...`)**: handled natively in Core by `DirectLinkProvider` + `DirectLinkUrlValidator` + `RedirectResponse` (`302` with `Referrer-Policy: no-referrer`, `Cache-Control: private, no-store, max-age=0`, `X-Content-Type-Options: nosniff`). Assigning or editing `direct:` URLs requires `manage_mw_protected_assets`, enforces strict SSRF/IP/scheme validation plus optional `direct_link_allowed_hosts` at both save and delivery time, and supports streaming when URL extension, `format`, or `file_name` indicates a browser-playable audio codec. Because a `302` redirect reveals the final target URL to authorized browsers, sensitive paid masters should use VIP local vault or short-lived HMAC remote signing.
+
+Download tokens are single-use (`MAX_TTL = 7200`). Stream tokens remain reusable during their short lifetime so browser byte-range requests can seek correctly; entitlement is re-evaluated for every request. Daily delivery quotas (`download_daily_quota`) persist in non-autoloaded `mw_dl_quota_*` options so object-cache flushes cannot reset user quotas, and shutdown guards ensure delivery counting and `music_wave_download_event` auditing execute even when HTTP providers terminate via `exit`.
 
 Core emits `music_wave_download_event` with an event name, release ID, and user ID for `token_issued`, `token_denied`, `download_delivered`, and `download_denied`. Integrations that persist these events must define retention and personal-data export/erasure behavior.
 

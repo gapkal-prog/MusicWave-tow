@@ -20,7 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class DatabaseReplayStore implements ReplayStore {
-	public const TABLE = 'mw_download_replays';
+	public const TABLE      = 'mw_download_replays';
+	public const BATCH_SIZE = 500;
 
 	/** @var ReplayStore Fallback used until the table migration has run. */
 	private $fallback;
@@ -59,27 +60,48 @@ final class DatabaseReplayStore implements ReplayStore {
 	}
 
 	/**
-	 * Delete expired replay rows and stale legacy option rows.
-	 *
-	 * Runs from the scheduled cleanup event; both storage backends stay
-	 * bounded even when the site later switches providers.
+	 * Delete expired replay rows, legacy replay options, and stale daily quota
+	 * buckets in bounded primary-key batches to avoid long table locks on MySQL
+	 * while remaining 100% compatible with SQLite test environments.
 	 *
 	 * @return void
 	 */
 	public function cleanup(): void {
+		/** @var \wpdb|null $wpdb */
 		global $wpdb;
 
-		if ( ! isset( $wpdb ) ) {
+		if ( ! isset( $wpdb ) || ! is_object( $wpdb ) ) {
 			return;
 		}
 
-		if ( $this->table_available() ) {
-			$table = $wpdb->prefix . self::TABLE;
-			$wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE expires_at < %d", time() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$now = time();
+		if ( $this->table_available() && method_exists( $wpdb, 'get_col' ) && method_exists( $wpdb, 'prepare' ) ) {
+			$table  = $wpdb->prefix . self::TABLE;
+			$hashes = $wpdb->get_col( $wpdb->prepare( "SELECT token_hash FROM {$table} WHERE expires_at < %d LIMIT %d", $now, self::BATCH_SIZE ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			if ( is_array( $hashes ) && ! empty( $hashes ) ) {
+				$placeholders = implode( ',', array_fill( 0, count( $hashes ), '%s' ) );
+				$wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE token_hash IN ({$placeholders})", ...array_map( 'strval', $hashes ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+			}
 		}
 
-		// Purge expired rows left behind by the legacy options-based store.
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s AND CAST(option_value AS UNSIGNED) < %d", $wpdb->esc_like( 'mw_download_replay_' ) . '%', time() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		if ( property_exists( $wpdb, 'options' ) && method_exists( $wpdb, 'get_col' ) && method_exists( $wpdb, 'prepare' ) ) {
+			$legacy_opts = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s AND CAST(option_value AS INTEGER) < %d LIMIT %d", 'mw_download_replay_%', $now, self::BATCH_SIZE ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			foreach ( is_array( $legacy_opts ) ? $legacy_opts : array() as $opt_name ) {
+				$name = (string) $opt_name;
+				if ( 0 === strpos( $name, 'mw_download_replay_' ) ) {
+					delete_option( $name );
+				}
+			}
+
+			$today_tag    = '_' . gmdate( 'Ymd' );
+			$stale_quotas = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s AND option_name NOT LIKE %s LIMIT %d", 'mw_dl_quota_%', '%' . $today_tag, self::BATCH_SIZE ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			foreach ( is_array( $stale_quotas ) ? $stale_quotas : array() as $quota_opt ) {
+				$qname = (string) $quota_opt;
+				if ( 0 === strpos( $qname, 'mw_dl_quota_' ) && substr( $qname, -strlen( $today_tag ) ) !== $today_tag ) {
+					delete_option( $qname );
+				}
+			}
+		}
 	}
 
 	private function table_available(): bool {

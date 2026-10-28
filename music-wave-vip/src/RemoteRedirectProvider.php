@@ -11,7 +11,9 @@ namespace ManaCore\MusicWave\Vip;
 
 use ManaCore\MusicWave\Core\Downloads\DownloadProvider;
 use ManaCore\MusicWave\Core\Downloads\DownloadTokenClaims;
+use ManaCore\MusicWave\Core\Downloads\RedirectResponse;
 use ManaCore\MusicWave\Core\Downloads\StreamableDownloadProvider;
+use ManaCore\MusicWave\Vip\Storage\PathValidator;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,9 +24,16 @@ final class RemoteRedirectProvider implements DownloadProvider, StreamableDownlo
 	/** @var array<string, mixed> */
 	private $config;
 
-	/** @param array<string, mixed> $config */
-	public function __construct( array $config ) {
-		$this->config = $config;
+	/** @var ProtectedAssetRegistry|null */
+	private $registry;
+
+	/**
+	 * @param array<string, mixed>        $config   Normalized VIP configuration.
+	 * @param ProtectedAssetRegistry|null $registry Optional registry for resolving `vip:<hash>` assets.
+	 */
+	public function __construct( array $config, ?ProtectedAssetRegistry $registry = null ) {
+		$this->config   = $config;
+		$this->registry = $registry;
 	}
 
 	public function deliver( string $asset_id, DownloadTokenClaims $claims ): bool {
@@ -39,6 +48,10 @@ final class RemoteRedirectProvider implements DownloadProvider, StreamableDownlo
 		$url = $this->create_url( $asset_id, $claims, $inline );
 		if ( '' === $url || ! $this->allowed_url( $url ) ) {
 			return false;
+		}
+
+		if ( class_exists( RedirectResponse::class ) ) {
+			return RedirectResponse::send( $url, 302, 'MusicWave VIP' );
 		}
 
 		nocache_headers();
@@ -101,13 +114,13 @@ final class RemoteRedirectProvider implements DownloadProvider, StreamableDownlo
 			return '';
 		}
 
-		$asset_id = trim( $asset_id );
-		if ( '' === $asset_id || false !== strpos( $asset_id, '..' ) || preg_match( '/[\x00-\x1F\x7F]/', $asset_id ) ) {
+		$relative = $this->resolve_relative_path( $asset_id );
+		if ( '' === $relative ) {
 			return '';
 		}
 		$prefix        = isset( $this->config['remote_path_prefix'] ) ? trim( (string) $this->config['remote_path_prefix'], '/' ) : '';
 		$path_parts    = array_filter(
-			array_merge( '' !== $prefix ? explode( '/', $prefix ) : array(), explode( '/', ltrim( $asset_id, '/' ) ) ),
+			array_merge( '' !== $prefix ? explode( '/', $prefix ) : array(), explode( '/', ltrim( $relative, '/' ) ) ),
 			static function ( $part ): bool {
 				return '' !== $part;
 			}
@@ -134,5 +147,48 @@ final class RemoteRedirectProvider implements DownloadProvider, StreamableDownlo
 		}
 
 		return add_query_arg( $args, $url );
+	}
+
+	/**
+	 * Resolve `vip:<32hex>`, `local:<path>`, or bare relative paths into a clean
+	 * forward-slash relative path, failing closed (`''`) on unknown registry IDs
+	 * or unsafe path segments so `vip%3A...` / `local%3A...` never leak into URLs.
+	 */
+	public function resolve_relative_path( string $asset_id ): string {
+		$trimmed = trim( $asset_id );
+		if ( '' === $trimmed || 1 === preg_match( '/[\x00-\x1F\x7F]/', $trimmed ) || 0 === stripos( $trimmed, 'direct:' ) ) {
+			return '';
+		}
+
+		if ( 0 === stripos( $trimmed, ProtectedAssetRegistry::PREFIX ) ) {
+			if ( 0 !== strpos( $trimmed, ProtectedAssetRegistry::PREFIX ) ) {
+				return '';
+			}
+			$registry = null !== $this->registry ? $this->registry : new ProtectedAssetRegistry();
+			$record   = $registry->find( $trimmed );
+			if ( ! is_array( $record ) || empty( $record['relative_path'] ) || ! is_string( $record['relative_path'] ) ) {
+				return '';
+			}
+			$candidate = $record['relative_path'];
+		} elseif ( 0 === stripos( $trimmed, 'local:' ) ) {
+			$candidate = substr( $trimmed, 6 );
+		} elseif ( 1 === preg_match( '/^[a-z][a-z0-9+.-]*:/i', $trimmed ) ) {
+			// Unknown scheme (e.g. http:, https:, file:): fail closed.
+			return '';
+		} else {
+			$candidate = $trimmed;
+		}
+
+		$candidate = trim( str_replace( '\\', '/', $candidate ), '/' );
+		if ( '' === $candidate || ! PathValidator::is_safe_relative( $candidate ) ) {
+			return '';
+		}
+		foreach ( explode( '/', $candidate ) as $segment ) {
+			if ( '' === $segment || '.' === $segment || '..' === $segment ) {
+				return '';
+			}
+		}
+
+		return $candidate;
 	}
 }

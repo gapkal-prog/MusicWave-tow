@@ -537,12 +537,22 @@ final class CollectionAndDownloadRenderer {
 			? '<div class="mw-download-action__heading">' . $heading_html . $description_html . '</div>'
 			: '';
 
-		$protected = function_exists( 'has_filter' ) && (bool) \has_filter( 'music_wave_download_provider' );
-		$message   = $protected
+		$protected  = \ManaCore\MusicWave\Core\Support\DeliveryCapabilities::has_protected_provider();
+		$all_direct = ! empty( $files );
+		foreach ( $files as $file_entry ) {
+			$file_id = is_array( $file_entry ) && isset( $file_entry['id'] ) ? (string) $file_entry['id'] : '';
+			if ( ! \ManaCore\MusicWave\Core\Downloads\DirectLinkAsset::is_direct( $file_id ) ) {
+				$all_direct = false;
+				break;
+			}
+		}
+		$message  = ( $protected && ! $all_direct )
 			? __( 'حفاظت‌شده توسط MusicWave VIP: فایل‌ها از پوشه‌ای حفاظت‌شده و از طریق پیوندهای امضاشده و زمان‌دار پخش می‌شوند. نشانی مستقیم فایل هرگز نمایش داده نمی‌شود.', 'music-wave-core' )
-			: __( 'از طریق پیوندهای امضاشده و منقضی‌شده تحویل داده می‌شود. نشانی مستقیم فایل هرگز در معرض دید قرار نمی‌گیرد.', 'music-wave-core' );
-		$badge     = $protected ? '<span class="mw-download-action__security-badge">' . esc_html__( 'VIP حفاظت‌شده', 'music-wave-core' ) . '</span>' : '';
-		$security  = '<p class="mw-download-action__security"><svg class="mw-download-action__security-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>' . esc_html( $message ) . '</span>' . $badge . '</p>';
+			: ( $all_direct
+				? __( 'از طریق تیکت یک‌بارمصرف کوتاه‌عمر با بررسی دسترسی، محدودیت نرخ و تغییرمسیر ایمن HTTPS تحویل داده می‌شود.', 'music-wave-core' )
+				: __( 'از طریق پیوندهای امضاشده و منقضی‌شده تحویل داده می‌شود. نشانی مستقیم فایل هرگز در معرض دید قرار نمی‌گیرد.', 'music-wave-core' ) );
+		$badge    = ( $protected && ! $all_direct ) ? '<span class="mw-download-action__security-badge">' . esc_html__( 'VIP حفاظت‌شده', 'music-wave-core' ) . '</span>' : '';
+		$security = '<p class="mw-download-action__security"><svg class="mw-download-action__security-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>' . esc_html( $message ) . '</span>' . $badge . '</p>';
 
 		$panel_extra  = count( $files ) === 1 ? ' mw-download-action--single' : '';
 		$panel_extra .= ' mw-download-action--unified';

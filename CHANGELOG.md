@@ -38,6 +38,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Theme: the stream top bar stops repeating the brand at `≥64rem` (the rail already carries it). Core's `.wp-block-group.is-layout-flex` re-showed it, so the hide rule carries three classes instead of one.
 - Theme: `music-wave/rail-toggle` PHP fallback now defaults to the `bar` variant, matching `block.json` instead of contradicting it.
 
+## [0.16.0] - 2026-10-28 - Core
+### Added
+- `MembershipAbsencePolicy` (`allow`, `open_download`, `deny`) with live effective-state admin banners; `open_download` opens `membership` and `purchase_or_membership` in the absence of a membership add-on without modifying release metadata or opening `purchase`, `restricted`, or guest `logged_in` releases.
+- Scheme-based `DeliveryRouter`, `DirectLinkProvider`, `DirectLinkAsset`, `DirectLinkUrlValidator`, `DirectLinkPermission`, `RedirectResponse`, and `DeliveryCapabilities` supporting Core-native `direct:<https-url>` download and streaming alongside external/VIP `vip:` and `local:` protected providers, plus Block Editor (`assets/editor.js`), REST (`DownloadAssetRoutes`), and Classic Metabox (`ReleaseMetaBox`) authoring controls.
+- `direct_link_allowed_hosts` delivery setting and `music_wave_direct_link_allowed_hosts` filter enforced at both save time and runtime delivery.
+### Security
+- Full SSRF and open-redirect hardening on `direct:` URLs (HTTPS-only, `<=2048` chars, blocks credentials/fragments, `localhost`, internal suffixes, RFC 1918, CGNAT `100.64/10`, `198.18/15`, multicast, `::ffff:` IPv4-mapped IPv6, NAT64 `64:ff9b::/96`, octal/hex/decimal IPs), `manage_mw_protected_assets` capability check on new/modified `direct:` links, `MAX_TTL = 7200` ceiling, shutdown-safe delivery counting/auditing before `exit`, and non-autoloaded DB persistence for daily download quotas (`mw_dl_quota_*`).
+### Fixed
+- `AccessPolicyEngine` + `Plugin` now read `Settings::get('membership_absent_behavior')` directly across all allowed modes (`allow`, `deny`, `open_download`), and `MetaDefinition` preserves `logged_in` access mode during schema sanitization.
+### Performance
+- `BulkAccessManager::mode_counts()` uses a single aggregated SQL `GROUP BY` query cached for 5 minutes (`mw_bulk_access_mode_counts`) and invalidated on release mutations; `DatabaseReplayStore::cleanup()` prunes expired replay and stale daily quota rows in bounded primary-key batches (`LIMIT 500`).
+
+## [0.5.2] - 2026-10-28 - VIP
+### Added
+- `RemoteSigningKeyring` (`music_wave_vip_remote_keyring`, `autoload=no`) supporting zero-downtime `active`/`retired` HMAC key rotation, constant-time `hash_equals()` signature verification, and `MUSIC_WAVE_VIP_REMOTE_SECRET` `wp-config.php` constant priority.
+### Fixed
+- `RemoteRedirectProvider` resolves `vip:<32hex>` via `ProtectedAssetRegistry` to `relative_path`, strips `local:`, fails closed on unknown `vip:` IDs, never emits `vip%3A` in signed URLs, and shares Core's `RedirectResponse`.
+- Unlocked membership & plan configuration controls when the VIP master switch is disabled, fixed the dead `music-wave-bulk-access` link to `page=music-wave-settings&tab=access`, and raised `MIN_CORE_VERSION` to `0.16.0`.
+
 ## [0.15.0] - 2026-10-17 - Core
 ### Changed
 - Design: term colours unified around `TermHue` source of truth, `mw-term-hue-N` modifier, legacy aliases.

@@ -94,17 +94,30 @@ final class DownloadResolver {
 		if ( null === $asset ) {
 			$this->last_deny_reason = 'unknown_asset';
 			$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => 'unknown_asset' ) );
-			return null; }
-		if ( $this->provider instanceof NullDownloadProvider && ( 0 === strpos( $asset['asset_id'], 'vip:' ) || 0 === strpos( $asset['asset_id'], 'local:' ) ) ) {
+			return null;
+		}
+		if ( $this->provider instanceof DeliveryRouter ) {
+			if ( ! $this->provider->can_deliver_asset( $asset['asset_id'] ) ) {
+				$this->last_deny_reason = DirectLinkAsset::has_direct_scheme( $asset['asset_id'] ) ? 'invalid_direct_url' : 'provider_unavailable';
+				$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => $this->last_deny_reason ) );
+				return null;
+			}
+		} elseif ( $this->provider instanceof NullDownloadProvider && ( 0 === strpos( $asset['asset_id'], 'vip:' ) || 0 === strpos( $asset['asset_id'], 'local:' ) ) ) {
 			$this->last_deny_reason = 'provider_unavailable';
 			$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => 'provider_unavailable' ) );
 			return null;
 		}
 		$purpose = in_array( $purpose, array( 'download', 'stream' ), true ) ? $purpose : 'download';
-		if ( 'stream' === $purpose && ! $this->provider instanceof StreamableDownloadProvider ) {
-			$this->last_deny_reason = 'stream_unsupported';
-			$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => 'stream_unsupported' ) );
-			return null; }
+		if ( 'stream' === $purpose ) {
+			$can_stream = $this->provider instanceof DeliveryRouter
+				? ( ReleaseDownloadCatalog::is_asset_streamable( $asset ) && $this->provider->can_stream_asset( $asset['asset_id'] ) )
+				: ( $this->provider instanceof StreamableDownloadProvider );
+			if ( ! $can_stream ) {
+				$this->last_deny_reason = 'stream_unsupported';
+				$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => 'stream_unsupported' ) );
+				return null;
+			}
+		}
 		$this->audit(
 			'token_issued',
 			$release_id,
@@ -155,16 +168,48 @@ final class DownloadResolver {
 			$this->last_deny_reason = 'quota_exceeded';
 			$this->audit( 'download_denied', $release_id, $user_id, array( 'reason' => 'quota_exceeded' ) );
 			return false; }
+		$asset = $this->asset( $release_id, $claims->asset_key() );
+		if ( null === $asset ) {
+			$this->last_deny_reason = 'unknown_asset';
+			$this->audit( 'download_denied', $release_id, $user_id, array( 'reason' => 'unknown_asset' ) );
+			return false;
+		}
+		if ( $this->provider instanceof DeliveryRouter && ! $this->provider->can_deliver_asset( $asset['asset_id'] ) ) {
+			$this->last_deny_reason = DirectLinkAsset::has_direct_scheme( $asset['asset_id'] ) ? 'invalid_direct_url' : 'provider_unavailable';
+			$this->audit( 'download_denied', $release_id, $user_id, array( 'reason' => $this->last_deny_reason ) );
+			return false;
+		}
 		if ( ! $this->replays->consume( $claims->token_id(), $claims->expires_at() ) ) {
 			$this->last_deny_reason = 'replay';
 			$this->audit( 'download_denied', $release_id, $user_id, array( 'reason' => 'replay' ) );
 			return false; }
-		$asset     = $this->asset( $release_id, $claims->asset_key() );
-		$delivered = null !== $asset && $this->provider->deliver( $asset['asset_id'], $claims );
+
+		// Real HTTP providers (`ProtectedFileProvider`, `RedirectResponse`) call
+		// `exit` after streaming or sending a 302 redirect. A shutdown guard
+		// ensures daily quota counting and `download_delivered` auditing run
+		// reliably on live HTTP requests as well as non-exiting test providers.
+		$returned = false;
+		register_shutdown_function(
+			function () use ( &$returned, $user_id, $release_id ): void {
+				if ( $returned ) {
+					return;
+				}
+				$last_error = error_get_last();
+				if ( is_array( $last_error ) && in_array( (int) $last_error['type'], array( E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR ), true ) ) {
+					return;
+				}
+				$returned = true;
+				$this->count_delivery( $user_id );
+				$this->audit( 'download_delivered', $release_id, $user_id );
+			}
+		);
+
+		$delivered = $this->provider->deliver( $asset['asset_id'], $claims );
+		$returned  = true;
 		if ( $delivered ) {
 			$this->count_delivery( $user_id );
 		} else {
-			$this->last_deny_reason = null === $asset ? 'unknown_asset' : 'provider_failed';
+			$this->last_deny_reason = 'provider_failed';
 		}
 		$this->audit( $delivered ? 'download_delivered' : 'download_denied', $release_id, $user_id );
 		return $delivered;
@@ -173,9 +218,9 @@ final class DownloadResolver {
 	/**
 	 * Optional per-user daily delivery quota (disabled by default).
 	 *
-	 * Sites can bound bulk exfiltration through a single compromised account
-	 * via the `music_wave_download_daily_quota` filter
-	 * (PROJECT_PLAN.md Stage 2 deliverable 4).
+	 * Persisted in a non-autoloaded database option (`mw_dl_quota_*`) rather
+	 * than volatile object-cache transients so `wp_cache_flush()` cannot reset
+	 * daily download quotas on sites running Redis or Memcached.
 	 */
 	private function within_daily_quota( int $user_id ): bool {
 		$default = class_exists( Settings::class ) ? max( 0, (int) Settings::get( 'download_daily_quota' ) ) : 0;
@@ -183,15 +228,37 @@ final class DownloadResolver {
 		if ( $quota < 1 ) {
 			return true;
 		}
-		$count = get_transient( $this->quota_key( $user_id ) );
 
-		return ( false === $count ? 0 : (int) $count ) < $quota;
+		return $this->read_quota_count( $this->quota_key( $user_id ) ) < $quota;
 	}
 
 	private function count_delivery( int $user_id ): void {
-		$key   = $this->quota_key( $user_id );
-		$count = get_transient( $key );
-		set_transient( $key, ( false === $count ? 0 : (int) $count ) + 1, defined( 'DAY_IN_SECONDS' ) ? DAY_IN_SECONDS : 86400 );
+		$key = $this->quota_key( $user_id );
+		$ttl = defined( 'DAY_IN_SECONDS' ) ? DAY_IN_SECONDS : 86400;
+		update_option(
+			$key,
+			array(
+				'count'      => $this->read_quota_count( $key ) + 1,
+				'expires_at' => time() + $ttl,
+			),
+			false
+		);
+	}
+
+	private function read_quota_count( string $key ): int {
+		$stored = get_option( $key, null );
+		if ( is_array( $stored ) && isset( $stored['count'], $stored['expires_at'] ) ) {
+			if ( (int) $stored['expires_at'] < time() ) {
+				delete_option( $key );
+				return 0;
+			}
+			return max( 0, (int) $stored['count'] );
+		}
+		if ( is_numeric( $stored ) ) {
+			return max( 0, (int) $stored );
+		}
+
+		return 0;
 	}
 
 	private function quota_key( int $user_id ): string {
@@ -236,10 +303,46 @@ final class DownloadResolver {
 			$this->audit( 'stream_denied', $release_id, $user_id, array( 'reason' => $decision->reason() ) );
 			return false;
 		}
-		$asset    = $this->asset( $release_id, $claims->asset_key() );
-		$streamed = null !== $asset && $this->provider->stream( $asset['asset_id'], $claims );
+		$asset = $this->asset( $release_id, $claims->asset_key() );
+		if ( null === $asset ) {
+			$this->last_deny_reason = 'unknown_asset';
+			$this->audit( 'stream_denied', $release_id, $user_id, array( 'reason' => 'unknown_asset' ) );
+			return false;
+		}
+		if ( $this->provider instanceof DeliveryRouter ) {
+			if ( ! ReleaseDownloadCatalog::is_asset_streamable( $asset ) || ! $this->provider->can_stream_asset( $asset['asset_id'] ) ) {
+				$this->last_deny_reason = 'stream_unsupported';
+				$this->audit( 'stream_denied', $release_id, $user_id, array( 'reason' => 'stream_unsupported' ) );
+				return false;
+			}
+		}
+
+		$returned = false;
+		register_shutdown_function(
+			function () use ( &$returned, $user_id, $release_id ): void {
+				if ( $returned ) {
+					return;
+				}
+				$last_error = error_get_last();
+				if ( is_array( $last_error ) && in_array( (int) $last_error['type'], array( E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR ), true ) ) {
+					return;
+				}
+				$returned = true;
+				$this->audit( 'stream_delivered', $release_id, $user_id );
+			}
+		);
+
+		if ( ! ( $this->provider instanceof StreamableDownloadProvider ) ) {
+			$returned               = true;
+			$this->last_deny_reason = 'stream_not_supported';
+			$this->audit( 'stream_denied', $release_id, $user_id );
+			return false;
+		}
+
+		$streamed = $this->provider->stream( $asset['asset_id'], $claims );
+		$returned = true;
 		if ( ! $streamed ) {
-			$this->last_deny_reason = null === $asset ? 'unknown_asset' : 'provider_failed';
+			$this->last_deny_reason = 'provider_failed';
 		}
 		$this->audit( $streamed ? 'stream_delivered' : 'stream_denied', $release_id, $user_id );
 
@@ -289,21 +392,35 @@ final class DownloadResolver {
 	 * @return array<string, string>|null
 	 */
 	private function valid_asset( array $asset ) {
-		$sanitize = static function ( string $value ): string {
+		$sanitize  = static function ( string $value ): string {
 			if ( function_exists( 'sanitize_text_field' ) ) {
 				return sanitize_text_field( $value );
 			}
 			return function_exists( 'wp_strip_all_tags' ) ? trim( wp_strip_all_tags( $value ) ) : trim( (string) preg_replace( '/<[^>]*>/', '', $value ) );
 		};
-		$key      = isset( $asset['key'] ) ? sanitize_key( (string) $asset['key'] ) : '';
-		$label    = isset( $asset['label'] ) ? $sanitize( (string) $asset['label'] ) : '';
-		$asset_id = isset( $asset['asset_id'] ) ? $sanitize( (string) $asset['asset_id'] ) : '';
+		$key       = isset( $asset['key'] ) ? sanitize_key( (string) $asset['key'] ) : '';
+		$label     = isset( $asset['label'] ) ? $sanitize( (string) $asset['label'] ) : '';
+		$asset_id  = isset( $asset['asset_id'] ) ? $sanitize( (string) $asset['asset_id'] ) : '';
+		$format    = isset( $asset['format'] ) && is_scalar( $asset['format'] ) ? sanitize_key( strtolower( (string) $asset['format'] ) ) : '';
+		$file_name = isset( $asset['file_name'] ) && is_scalar( $asset['file_name'] ) ? $sanitize( (string) $asset['file_name'] ) : '';
 
-		return '' !== $key && '' !== $label && '' !== $asset_id ? array(
+		if ( '' === $key || '' === $label || '' === $asset_id ) {
+			return null;
+		}
+
+		$valid = array(
 			'key'      => $key,
 			'label'    => $label,
 			'asset_id' => $asset_id,
-		) : null;
+		);
+		if ( '' !== $format ) {
+			$valid['format'] = $format;
+		}
+		if ( '' !== $file_name ) {
+			$valid['file_name'] = $file_name;
+		}
+
+		return $valid;
 	}
 
 	/**

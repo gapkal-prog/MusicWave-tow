@@ -14,6 +14,8 @@ use ManaCore\MusicWave\Core\Access\AccessModePolicy;
 use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
 use ManaCore\MusicWave\Core\Commerce\ProductMapper;
 use ManaCore\MusicWave\Core\Contracts\ReleaseRepository;
+use ManaCore\MusicWave\Core\Downloads\DirectLinkAsset;
+use ManaCore\MusicWave\Core\Downloads\DirectLinkPermission;
 use ManaCore\MusicWave\Core\Schema\MetaDefinition;
 use ManaCore\MusicWave\Core\Schema\ReleaseMetaSchema;
 use WP_Post;
@@ -186,7 +188,7 @@ final class ReleaseMetaBox {
 
 			$value = wp_unslash( $_POST[ $key ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			if ( 'mw_download_assets' === $key ) {
-				$value = $this->download_assets_from_submission( $value );
+				$value = $this->download_assets_from_submission( $value, $post_id );
 			}
 			$this->repository->update( $post_id, $key, $value );
 		}
@@ -304,7 +306,7 @@ final class ReleaseMetaBox {
 		$position = 0;
 		foreach ( $credits as $credit ) {
 			$this->render_credit_row( $key, (string) $position, is_array( $credit ) ? $credit : array() );
-			$position++;
+			++$position;
 		}
 
 		echo '</div>';
@@ -364,7 +366,7 @@ final class ReleaseMetaBox {
 	 */
 	private function render_protected_asset( string $key, $value ): void {
 		echo '<input class="widefat" type="text" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" value="' . esc_attr( is_scalar( $value ) ? (string) $value : '' ) . '" autocomplete="off">';
-		echo '<span class="description">' . esc_html__( 'شناسهٔ دارایی ارائه‌دهنده مانند local:album/track.zip را ذخیره کنید؛ هرگز نشانی دانلود عمومی ذخیره نکنید.', 'music-wave-core' ) . '</span>';
+		echo '<span class="description">' . esc_html__( 'شناسهٔ حفاظت‌شده (مانند vip:... یا local:album/track.zip) یا لینک مستقیم کنترل‌شده با پیشوند direct:https://... را وارد کنید؛ نشانی عمومی خام پذیرفته نمی‌شود.', 'music-wave-core' ) . '</span>';
 	}
 
 	/**
@@ -382,16 +384,27 @@ final class ReleaseMetaBox {
 		}
 
 		echo '<textarea class="widefat" rows="5" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '">' . esc_textarea( implode( "\n", $lines ) ) . '</textarea>';
-		echo '<span class="description">' . esc_html__( 'در هر خط یک کیفیت: quality-key | برچسب مشتری | شناسهٔ opaque دارایی ارائه‌دهنده. نمونه: mp3-320 | MP3 320 kbps | local:downloads/track-320.mp3', 'music-wave-core' ) . '</span>';
+		echo '<span class="description">' . esc_html__( 'در هر خط یک کیفیت: quality-key | برچسب مشتری | شناسهٔ دارایی. برای مخزن VIP از vip:... یا local:... و برای لینک مستقیم کنترل‌شده از direct:https://cdn.example.com/track.mp3 استفاده کنید (توجه: در حالت direct: محافظت سطح مخزن VIP روی سرور مقصد اعمال نمی‌شود).', 'music-wave-core' ) . '</span>';
 	}
 
 	/**
-	 * @param mixed $value Posted textarea value.
+	 * @param mixed $value   Posted textarea value.
+	 * @param int   $post_id Release post ID being saved.
 	 * @return array<int, array<string, string>>
 	 */
-	private function download_assets_from_submission( $value ): array {
+	private function download_assets_from_submission( $value, int $post_id = 0 ): array {
 		if ( ! is_scalar( $value ) ) {
 			return array();
+		}
+
+		$existing_ids = array();
+		if ( $post_id > 0 ) {
+			$stored = $this->repository->get( $post_id, 'mw_download_assets' );
+			foreach ( is_array( $stored ) ? $stored : array() as $row ) {
+				if ( is_array( $row ) && isset( $row['asset_id'] ) && is_scalar( $row['asset_id'] ) ) {
+					$existing_ids[] = (string) $row['asset_id'];
+				}
+			}
 		}
 
 		$assets = array();
@@ -401,10 +414,31 @@ final class ReleaseMetaBox {
 			if ( 3 !== count( $parts ) ) {
 				continue;
 			}
+			$raw_id = $parts[2];
+			if ( DirectLinkAsset::has_direct_scheme( $raw_id ) ) {
+				$validation = DirectLinkAsset::validate( $raw_id );
+				if ( ! $validation['valid'] ) {
+					set_transient( self::NOTICE_KEY . get_current_user_id(), $validation['message'], MINUTE_IN_SECONDS );
+					continue;
+				}
+				if ( ! in_array( $validation['asset_id'], $existing_ids, true ) && ! DirectLinkPermission::can_manage( $post_id ) && ! current_user_can( 'manage_options' ) ) {
+					set_transient( self::NOTICE_KEY . get_current_user_id(), __( 'شما مجوز ثبت یا تغییر لینک مستقیم HTTPS را ندارید.', 'music-wave-core' ), MINUTE_IN_SECONDS );
+					continue;
+				}
+				$raw_id = $validation['asset_id'];
+			} elseif ( 1 === preg_match( '/^https?:\/\//i', $raw_id ) ) {
+				set_transient(
+					self::NOTICE_KEY . get_current_user_id(),
+					__( 'نشانی عمومی خام پذیرفته نشد؛ برای لینک مستقیم کنترل‌شده از پیشوند direct:https://... استفاده کنید.', 'music-wave-core' ),
+					MINUTE_IN_SECONDS
+				);
+				continue;
+			}
+
 			$assets[] = array(
 				'key'      => $parts[0],
 				'label'    => $parts[1],
-				'asset_id' => $parts[2],
+				'asset_id' => $raw_id,
 			);
 		}
 

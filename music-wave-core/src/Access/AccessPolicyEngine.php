@@ -104,15 +104,8 @@ final class AccessPolicyEngine {
 
 		$has_products = ! empty( $this->repository->product_ids( $release_id ) );
 
-		// When no membership module is active at all: if a WooCommerce product IS
-		// mapped, keep the paid product purchasable instead of silently giving paid
-		// products away for free; if NO product is mapped, mirror `membership_absent_behavior`.
 		if ( $this->membership_provider instanceof NullMembershipProvider ) {
-			if ( $has_products ) {
-				return AccessDecision::deny( 'purchase_required', $mode );
-			}
-
-			return $this->absent_provider_decision( $mode );
+			return MembershipAbsencePolicy::decide( $mode, $has_products );
 		}
 
 		$levels = $this->effective_levels( $release_id );
@@ -127,7 +120,7 @@ final class AccessPolicyEngine {
 
 	private function membership_access( int $release_id, AccessSubject $subject, string $mode ): AccessDecision {
 		if ( $this->membership_provider instanceof NullMembershipProvider ) {
-			return $this->absent_provider_decision( $mode );
+			return MembershipAbsencePolicy::decide( $mode, false );
 		}
 
 		$levels = $this->effective_levels( $release_id );
@@ -138,18 +131,11 @@ final class AccessPolicyEngine {
 		return AccessDecision::deny( 'membership_required', $mode );
 	}
 
-	private function absent_provider_decision( string $mode ): AccessDecision {
-		/**
-		 * Filter how membership releases behave while no membership module
-		 * (e.g. MusicWave VIP) provides decisions.
-		 *
-		 * @param string $behavior 'allow' (default, content stays usable) or 'deny'.
-		 */
-		$absent = sanitize_key( (string) apply_filters( 'music_wave_membership_absent_behavior', 'allow' ) );
-
-		return 'deny' === $absent
-			? AccessDecision::deny( 'membership_provider_absent', $mode )
-			: AccessDecision::allow( 'membership_provider_absent', $mode );
+	/**
+	 * Whether a non-null membership provider (e.g. MusicWave VIP) is registered.
+	 */
+	public function has_membership_provider(): bool {
+		return ! ( $this->membership_provider instanceof NullMembershipProvider );
 	}
 
 	/**
