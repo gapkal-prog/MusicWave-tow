@@ -16,6 +16,7 @@ namespace ManaCore\MusicWave\Core\Blocks;
 
 use ManaCore\MusicWave\Core\Access\AccessPolicyEngine;
 use ManaCore\MusicWave\Core\Access\AccessSubject;
+use ManaCore\MusicWave\Core\Blocks\Concerns\ReleaseResolver;
 use ManaCore\MusicWave\Core\Blocks\Release\CatalogFilterRenderer;
 use ManaCore\MusicWave\Core\Blocks\Release\CollectionAndDownloadRenderer;
 use ManaCore\MusicWave\Core\Blocks\Release\RelatedReleasesRenderer;
@@ -217,6 +218,7 @@ final class ReleaseBlocks {
 		$this->register_dynamic_block( 'preview-player', 'render_preview_player' );
 		$this->register_dynamic_block( 'download-button', 'render_download_button' );
 		$this->register_dynamic_block( 'related-releases', 'render_related_releases' );
+		$this->register_dynamic_block( 'release-card', 'render_release_card_item' );
 	}
 
 	public function filter_content( string $content ): string {
@@ -283,6 +285,23 @@ final class ReleaseBlocks {
 	/** @param array<string, mixed> $attributes */
 	public function render_related_releases( array $attributes ): string {
 		return $this->related_renderer()->render( $attributes, $this->render_context );
+	}
+
+	/**
+	 * Render one release card for a Query Loop.
+	 *
+	 * The card itself comes from `ReleaseCard`, the same class the PHP shelves
+	 * use, so a loop renders the identical card the shelf renders.
+	 *
+	 * @param array<string, mixed> $attributes Block attributes.
+	 */
+	public function render_release_card_item( array $attributes ): string {
+		$release_id = ReleaseResolver::resolve_explicit_or_contextual( $attributes, $this->render_context );
+		if ( $release_id < 1 ) {
+			return '';
+		}
+
+		return ReleaseCard::render_for_post( $release_id, $attributes );
 	}
 
 	/** @param array<string, mixed> $options */

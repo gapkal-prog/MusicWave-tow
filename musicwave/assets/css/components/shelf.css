@@ -415,8 +415,10 @@ html[dir="rtl"] .mw-release-shelf__nav-button svg {
  * wrapped in `<li class="wp-block-post">`. The shelf chrome expects the card it
  * styles to be the grid child, so the wrapper steps out of the box model; that
  * keeps the Query Loop card pixel-identical to the hand-built one.
+ *
+ * The class matches the modifier the renderer emits (`mw-release-shelf--loop`).
  */
-.mw-release-shelf__loop .wp-block-post {
+.mw-release-shelf--loop .wp-block-post {
 	display: contents;
 }
 

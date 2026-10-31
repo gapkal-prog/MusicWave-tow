@@ -10,7 +10,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:755
+#: src/Blocks/ShelfAndSliderRenderer.php:754
 #, php-format
 msgid "%d قطعه"
 msgid_plural "%d قطعه"
@@ -203,12 +203,12 @@ msgstr "Use excerpt"
 msgid "اسلاید %1$d از %2$d"
 msgstr "Slide %1$d of %2$d"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1357
+#: src/Blocks/ShelfAndSliderRenderer.php:1420
 #, php-format
 msgid "اسلاید %1$d: %2$s"
 msgstr "Slide %1$d: %2$s"
 
-#: src/Assets/AssetManager.php:359 src/Blocks/ShelfAndSliderRenderer.php:1378
+#: src/Assets/AssetManager.php:359 src/Blocks/ShelfAndSliderRenderer.php:1441
 msgid "اسلاید بعدی"
 msgstr "Next slide"
 
@@ -216,15 +216,15 @@ msgstr "Next slide"
 msgid "اسلاید تمام‌قاب با تیتر بزرگ و پردهٔ تیره‌تر."
 msgstr "Full-frame slide with an oversized title and a darker scrim."
 
-#: src/Assets/AssetManager.php:358 src/Blocks/ShelfAndSliderRenderer.php:1377
+#: src/Assets/AssetManager.php:358 src/Blocks/ShelfAndSliderRenderer.php:1440
 msgid "اسلاید قبلی"
 msgstr "Previous slide"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1403 blocks/release-shelf/block.json blocks/release-slider/block.json
+#: src/Blocks/ShelfAndSliderRenderer.php:1466 blocks/release-shelf/block.json blocks/release-slider/block.json
 msgid "اسلایدر"
 msgstr "Slider"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1390
+#: src/Blocks/ShelfAndSliderRenderer.php:1453
 msgid "اسلایدر انتشارها"
 msgstr "Release slider"
 
@@ -264,7 +264,7 @@ msgstr "Today (last 24 hours)"
 msgid "انتخاب"
 msgstr "Select"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:552
+#: src/Blocks/ShelfAndSliderRenderer.php:551
 msgid "انتشار MusicWave"
 msgstr "MusicWave release"
 
@@ -272,7 +272,7 @@ msgstr "MusicWave release"
 msgid "انتشار در هر صفحه"
 msgstr "Releases per page"
 
-#: assets/editor-blocks.js:2627
+#: assets/editor-blocks.js:2629
 msgid "انتشار یا آلبوم نمونه برای پیش‌نمایش"
 msgstr "Sample release or album for preview"
 
@@ -288,19 +288,19 @@ msgstr "Releases to show"
 msgid "انتشارها، هنرمندان، آلبوم‌ها و دانلودهای اختصاصی را در تجربه‌ای یکپارچه کشف کنید."
 msgstr "Explore releases, artists, albums, and exclusive downloads in one focused experience."
 
-#: src/Blocks/ShelfAndSliderRenderer.php:606
+#: src/Blocks/ShelfAndSliderRenderer.php:605
 msgid "انتشارهای بعدی"
 msgstr "Next releases"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1224
+#: src/Blocks/ShelfAndSliderRenderer.php:1287
 msgid "انتشارهای بیشتر"
 msgstr "More releases"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:606
+#: src/Blocks/ShelfAndSliderRenderer.php:605
 msgid "انتشارهای قبلی"
 msgstr "Previous releases"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:603
+#: src/Blocks/ShelfAndSliderRenderer.php:602
 msgid "انتشارهای منتخب"
 msgstr "Featured releases"
 
@@ -356,12 +356,12 @@ msgstr "Pressing Ctrl+K anywhere on the site opens the search overlay."
 msgid "باز و بستهٔ منو"
 msgstr "Toggle menu"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:582 src/Blocks/ShelfAndSliderRenderer.php:752 src/Blocks/ShelfAndSliderRenderer.php:1053 src/Blocks/ShelfAndSliderRenderer.php:1276
+#: src/Blocks/ShelfAndSliderRenderer.php:581 src/Blocks/ShelfAndSliderRenderer.php:751 src/Blocks/ShelfAndSliderRenderer.php:1120 src/Blocks/ShelfAndSliderRenderer.php:1339
 #, php-format
 msgid "باز کردن %s"
 msgstr "Open %s"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1028 src/Blocks/ShelfAndSliderRenderer.php:1145 src/Blocks/ShelfAndSliderRenderer.php:1263
+#: src/Blocks/ShelfAndSliderRenderer.php:1095 src/Blocks/ShelfAndSliderRenderer.php:1208 src/Blocks/ShelfAndSliderRenderer.php:1326
 msgid "باز کردن انتشار"
 msgstr "Open release"
 
@@ -373,7 +373,7 @@ msgstr "Open menu"
 msgid "باز کردن پنجره جستجوی سریع"
 msgstr "Open quick search modal"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:575 src/Blocks/ShelfAndSliderRenderer.php:1168
+#: src/Blocks/ShelfAndSliderRenderer.php:574 src/Blocks/ShelfAndSliderRenderer.php:1231
 msgid "بازدیدها"
 msgstr "Views"
 
@@ -450,11 +450,11 @@ msgstr "No lyrics or LRC timing have been added for this release yet; this block
 msgid "برای تغییر آیکون هر پیوند منو (خانه، مرور، قطعه‌ها، هنرمندان، فروشگاه، درخواست‌ها و…): بلوک Navigation یا Navigation Link را انتخاب کنید → در ستون تنظیمات → پیشرفته → کلاس CSS اضافی، یک کلاس mw-icon-* اضافه کنید. مثلاً: mw-icon-home، mw-icon-browse، mw-icon-tracks، mw-icon-artists، mw-icon-charts، mw-icon-radio (درخواست‌ها)، mw-icon-library، mw-icon-playlists، mw-icon-genres، mw-icon-albums، mw-icon-podcasts، mw-icon-search، mw-icon-account، mw-icon-settings. اگر کلاسی ندهید، آیکون به صورت خودکار از روی برچسب فارسی/انگلیسی تشخیص داده می‌شود (خانه، مرور، قطعه‌ها، هنرمندان، فروشگاه و…)."
 msgstr "To customize any menu link icon, select the Navigation Link block, open Advanced -> Additional CSS class(es), and add an mw-icon-* class (such as mw-icon-home, mw-icon-browse, mw-icon-tracks, mw-icon-artists, mw-icon-charts, mw-icon-radio, mw-icon-library, mw-icon-playlists, mw-icon-genres, mw-icon-albums, mw-icon-podcasts, mw-icon-search, mw-icon-account, or mw-icon-settings). Without an explicit class, icons resolve automatically from the link label."
 
-#: src/Blocks/ShelfAndSliderRenderer.php:602
+#: src/Blocks/ShelfAndSliderRenderer.php:601
 msgid "برای شما"
 msgstr "Made for you"
 
-#: assets/editor-blocks.js:2504
+#: assets/editor-blocks.js:2506
 msgid "برای نمایش پیش‌نمایش زنده، انتشار منتشرشده اضافه کنید یا تنظیمات بلوک را بررسی کنید."
 msgstr "Publish at least one release or adjust the block query settings to preview this block live."
 
@@ -478,7 +478,7 @@ msgstr "Label"
 msgid "برچسب اقدام"
 msgstr "Action label"
 
-#: assets/editor-blocks.js:1445 assets/editor-blocks.js:1755 assets/editor-blocks.js:2769 blocks/section-head/block.json
+#: assets/editor-blocks.js:1445 assets/editor-blocks.js:1755 assets/editor-blocks.js:2771 blocks/section-head/block.json
 msgid "برچسب بالایی"
 msgstr "Eyebrow"
 
@@ -498,7 +498,7 @@ msgstr "Home link label"
 msgid "برچسب مشاهده همه"
 msgstr "View-all label"
 
-#: assets/editor-blocks.js:2837
+#: assets/editor-blocks.js:2839
 msgid "برچسب پیوند"
 msgstr "Link label"
 
@@ -546,7 +546,7 @@ msgstr "Close search"
 msgid "بسیار بزرگ"
 msgstr "XX Large"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:492
+#: src/Blocks/ShelfAndSliderRenderer.php:491
 msgid "بعدی"
 msgstr "Next"
 
@@ -679,7 +679,7 @@ msgstr "Dynamic text settings"
 msgid "تنظیمات مسیر راهنما"
 msgstr "Breadcrumb settings"
 
-#: assets/editor-blocks.js:2778
+#: assets/editor-blocks.js:2780
 msgid "توضیح کوتاه بخش"
 msgstr "Short section description"
 
@@ -883,7 +883,7 @@ msgstr "Vertical bar (|)"
 msgid "خط مورب (/)"
 msgstr "Slash (/)"
 
-#: assets/editor-blocks.js:2516
+#: assets/editor-blocks.js:2518
 msgid "خطا در دریافت پیش‌نمایش از سرور وردپرس."
 msgstr "Failed to render block preview from WordPress server."
 
@@ -891,7 +891,7 @@ msgstr "Failed to render block preview from WordPress server."
 msgid "خطی"
 msgstr "Outline"
 
-#: assets/editor-blocks.js:2634
+#: assets/editor-blocks.js:2636
 msgid "خودکار (محتوای واقعی فعلی سایت)"
 msgstr "Automatic (current live site content)"
 
@@ -919,7 +919,7 @@ msgstr "Circle"
 msgid "دایره‌ای"
 msgstr "Circle"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:627 src/Blocks/ShelfAndSliderRenderer.php:1088
+#: src/Blocks/ShelfAndSliderRenderer.php:626 src/Blocks/ShelfAndSliderRenderer.php:1155
 msgid "در این بازه یا دسته هنوز انتشاری ثبت نشده است."
 msgstr "No releases found for this time window or filter yet."
 
@@ -1027,7 +1027,7 @@ msgstr "Editorial rose"
 msgid "رفتار اسلایدر"
 msgstr "Slider behavior"
 
-#: src/Assets/AssetManager.php:361 src/Blocks/ShelfAndSliderRenderer.php:1384
+#: src/Assets/AssetManager.php:361 src/Blocks/ShelfAndSliderRenderer.php:1447
 #, php-format
 msgid "رفتن به اسلاید %d"
 msgstr "Go to slide %d"
@@ -1301,7 +1301,7 @@ msgstr "Landing (no header/footer)"
 msgid "صفحه پیدا نشد (۴۰۴)"
 msgstr "Page Not Found (404)"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1387
+#: src/Blocks/ShelfAndSliderRenderer.php:1450
 msgid "صفحهبندی اسلایدر"
 msgstr "Slider pagination"
 
@@ -1309,7 +1309,7 @@ msgstr "Slider pagination"
 msgid "صفحهٔ استریم (نوار کناری)"
 msgstr "Stream page (side rail)"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:607
+#: src/Blocks/ShelfAndSliderRenderer.php:606
 msgid "صفحه‌بندی اسلایدر"
 msgstr "Slider pagination"
 
@@ -1341,7 +1341,7 @@ msgstr "Highlight memberships, exclusive releases, downloads, or a curated playl
 msgid "عمودی (۴:۵)"
 msgstr "Portrait (4:5)"
 
-#: assets/editor-blocks.js:1113 assets/editor-blocks.js:1452 assets/editor-blocks.js:1762 assets/editor-blocks.js:1865 assets/editor-blocks.js:2694
+#: assets/editor-blocks.js:1113 assets/editor-blocks.js:1452 assets/editor-blocks.js:1762 assets/editor-blocks.js:1865 assets/editor-blocks.js:2696
 msgid "عنوان"
 msgstr "Title"
 
@@ -1349,7 +1349,7 @@ msgstr "Title"
 msgid "عنوان بالای فهرست کناری در چیدمان ویژه‌نامه. برای پیش‌فرض («منتخب‌های بعدی») خالی بگذارید."
 msgstr "Heading displayed above the side release list in Feature layout. Leave empty for default (\"Up Next\")."
 
-#: assets/editor-blocks.js:2774 blocks/section-head/block.json
+#: assets/editor-blocks.js:2776 blocks/section-head/block.json
 msgid "عنوان بخش"
 msgstr "Section heading"
 
@@ -1453,7 +1453,7 @@ msgstr "Playlist"
 msgid "فهرست‌های پخش"
 msgstr "Playlists"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:686
+#: src/Blocks/ShelfAndSliderRenderer.php:685
 msgid "فهرست‌های پخش اجتماعی"
 msgstr "Community playlists"
 
@@ -1465,7 +1465,7 @@ msgstr "Playlists to show"
 msgid "فهرست‌های پخش عمومی"
 msgstr "Public playlists"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:457
+#: src/Blocks/ShelfAndSliderRenderer.php:456
 msgid "فیلتر بازه و سبک"
 msgstr "Range and genre filter"
 
@@ -1505,7 +1505,7 @@ msgstr "Frosted glass frame over the archive image."
 msgid "قالب"
 msgstr "Template"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:491
+#: src/Blocks/ShelfAndSliderRenderer.php:490
 msgid "قبلی"
 msgstr "Previous"
 
@@ -1521,11 +1521,11 @@ msgstr "Discover the next track you will love."
 msgid "قطعه‌ها"
 msgstr "Tracks"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:769
+#: src/Blocks/ShelfAndSliderRenderer.php:768
 msgid "قفسه فهرست‌های پخش"
 msgstr "Playlists Shelf"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:1087
+#: src/Blocks/ShelfAndSliderRenderer.php:1154
 msgid "قفسه موسیقی"
 msgstr "Music Shelf"
 
@@ -1561,7 +1561,7 @@ msgstr "Featured body"
 msgid "متن ترجمه‌شده برای قالب‌های MusicWave. کلید، رشتهٔ متناسب با زبان را انتخاب می‌کند."
 msgstr "Translated template text for MusicWave templates. The key selects a language-aware string."
 
-#: assets/editor-blocks.js:2703
+#: assets/editor-blocks.js:2705
 msgid "متن جایگزین (اگر متای LRC خالی باشد)"
 msgstr "Fallback lyrics (when the LRC meta is empty)"
 
@@ -1585,7 +1585,7 @@ msgstr "Not-found page text"
 msgid "متن قالب MusicWave"
 msgstr "MusicWave template text"
 
-#: assets/editor-blocks.js:2690
+#: assets/editor-blocks.js:2692
 msgid "متن هم‌زمان"
 msgstr "Synced lyrics"
 
@@ -1689,11 +1689,11 @@ msgstr "Dynamic hierarchical breadcrumb navigation for releases, artists, genres
 msgid "مشاهده عضویت‌ها"
 msgstr "View memberships"
 
-#: assets/editor-blocks.js:1519 assets/editor-blocks.js:2838 patterns/home-showcase-rail.php:36 src/Blocks/ShelfAndSliderRenderer.php:131 src/Blocks/ShelfAndSliderRenderer.php:610 src/Blocks/ShelfAndSliderRenderer.php:979
+#: assets/editor-blocks.js:1519 assets/editor-blocks.js:2840 patterns/home-showcase-rail.php:36 src/Blocks/ShelfAndSliderRenderer.php:130 src/Blocks/ShelfAndSliderRenderer.php:609 src/Blocks/ShelfAndSliderRenderer.php:1038
 msgid "مشاهده همه"
 msgstr "See all"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:683
+#: src/Blocks/ShelfAndSliderRenderer.php:682
 msgid "مشاهدهٔ همهٔ فهرست‌های پخش"
 msgstr "See all playlists"
 
@@ -1721,7 +1721,7 @@ msgstr "Content source"
 msgid "منتخب"
 msgstr "Featured"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:687
+#: src/Blocks/ShelfAndSliderRenderer.php:686
 msgid "منتخب شنوندگان"
 msgstr "Curated by listeners"
 
@@ -1953,7 +1953,7 @@ msgstr "Vazirmatn display"
 msgid "نمونه مسیر راهنما (Breadcrumb)"
 msgstr "Sample Breadcrumb Trail"
 
-#: assets/editor-blocks.js:2620
+#: assets/editor-blocks.js:2622
 msgid "نمونه پیش‌نمایش در ویرایشگر"
 msgstr "Editor Preview Sample"
 
@@ -2074,7 +2074,7 @@ msgstr "Artist"
 msgid "هنرمندان"
 msgstr "Artists"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:886
+#: src/Blocks/ShelfAndSliderRenderer.php:899
 msgid "هنوز انتشاری با این فیلترها پیدا نشد."
 msgstr "No release matched these filters yet."
 
@@ -2178,7 +2178,7 @@ msgstr "Autoplay"
 msgid "پخش خودکار اسلایدها"
 msgstr "Autoplay slides"
 
-#: src/Blocks/ShelfAndSliderRenderer.php:749
+#: src/Blocks/ShelfAndSliderRenderer.php:748
 #, php-format
 msgid "پخش همه قطعه‌های %s"
 msgstr "Play all tracks in %s"
@@ -2292,7 +2292,7 @@ msgstr "Default for every header. Each header can also carry its own width style
 msgid "پیمایش"
 msgstr "Navigate"
 
-#: assets/editor-blocks.js:2356 assets/editor-blocks.js:2825
+#: assets/editor-blocks.js:2356 assets/editor-blocks.js:2827
 msgid "پیوند بخش"
 msgstr "Section link"
 
@@ -2304,7 +2304,7 @@ msgstr "Section link (View all)"
 msgid "پیوند مشاهده همه"
 msgstr "View-all link"
 
-#: assets/editor-blocks.js:2829
+#: assets/editor-blocks.js:2831
 msgid "پیوند مشاهده همه (سمت چپ)"
 msgstr "View all link (end)"
 

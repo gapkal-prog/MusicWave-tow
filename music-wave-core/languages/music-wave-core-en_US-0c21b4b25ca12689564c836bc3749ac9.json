@@ -1122,6 +1122,9 @@
             "این بخش نحوه جمع‌آوری و استفاده داده‌های شخصی توسط MusicWave Core را توضیح می‌دهد. متن از حقایق کد و ثابت‌ها استخراج شده و هرگز ابداعی نیست.": [
                 "Describes how MusicWave Core stores and processes personal data directly from runtime storage contracts."
             ],
+            "این بلوک همان کارتی را می‌سازد که ویترین‌های MusicWave رندر می‌کنند. داخل بلوک «حلقهٔ کوئری» قرارش دهید تا هر انتشار یک کارت بگیرد.": [
+                "This block renders the same card the MusicWave shelves render. Place it inside a Query Loop so each release gets a card."
+            ],
             "این جلسه حساب را ایمن ببندید.": [
                 "Securely close this account session."
             ],
@@ -1212,6 +1215,9 @@
             "باز کردن %s": [
                 "Open %s"
             ],
+            "باز کردن انتشار": [
+                "Open release"
+            ],
             "باز کردن تب تحویل حفاظت‌شده VIP": [
                 "Open VIP Protected Delivery tab"
             ],
@@ -1238,6 +1244,9 @@
             ],
             "باز کردن ویرایشگر سایت": [
                 "Open Site Editor"
+            ],
+            "بازدیدها": [
+                "views"
             ],
             "بازدیدکنندگان همچنان می‌توانند حالت مرتب‌سازی دیگری را انتخاب کنند.": [
                 "Visitors can still choose another sorting mode."
@@ -1520,6 +1529,9 @@
             ],
             "برچسب": [
                 "Label"
+            ],
+            "برچسب اقدام": [
+                "Action label"
             ],
             "برچسب تب الفبایی": [
                 "Alphabetical tab label"
@@ -5041,6 +5053,9 @@
             "نمایش بیوگرافی کوتاه": [
                 "Show biography"
             ],
+            "نمایش تاریخ": [
+                "Show date"
+            ],
             "نمایش تاریخ انتشار": [
                 "Show release date"
             ],
@@ -5052,6 +5067,9 @@
             ],
             "نمایش تراشه‌های فیلتر فعال": [
                 "Show active filter chips"
+            ],
+            "نمایش تصویر": [
+                "Show artwork"
             ],
             "نمایش تصویر / آواتار هنرمند": [
                 "Show artist avatar"
@@ -5070,6 +5088,9 @@
             ],
             "نمایش تعداد انتشارها": [
                 "Show release count"
+            ],
+            "نمایش تعداد بازدید": [
+                "Show view count"
             ],
             "نمایش تعداد نتایج": [
                 "Show result count"
@@ -5284,6 +5305,9 @@
             "نمایش پیوند بازنشانی": [
                 "Show reset link"
             ],
+            "نمایش چکیده": [
+                "Show excerpt"
+            ],
             "نمایش ژانر": [
                 "Show genre"
             ],
@@ -5298,6 +5322,9 @@
             ],
             "نمایش کلید موسیقی": [
                 "Show musical key"
+            ],
+            "نمایش کنترل پخش": [
+                "Show play control"
             ],
             "نمایش کنترل‌های کلیک و تکرار": [
                 "Show shuffle and repeat controls"
@@ -6316,6 +6343,15 @@
             "کارت افقی متعادل (کنار هم)": [
                 "Horizontal card (side by side)"
             ],
+            "کارت انتشار": [
+                "Release card"
+            ],
+            "کارت انتشار MusicWave (جلد، پخش، عنوان، هنرمند، تاریخ و پیوند اقدام). داخل حلقهٔ کوئری قرار می‌گیرد و همان کارتی را می‌سازد که ویترین‌های MusicWave با PHP رندر می‌کنند.": [
+                "MusicWave release card (cover, play control, title, artist, date and action link). Drop it inside a Query Loop and it renders the same card the MusicWave shelves render in PHP."
+            ],
+            "کارت انتشار یادشده در حلقهٔ کوئری: جلد، کنترل پخش، عنوان، هنرمند و پیوند اقدام.": [
+                "The card a Query Loop repeats: cover, play control, title, artist and action link."
+            ],
             "کارت پرتره عمودی": [
                 "Vertical portrait card"
             ],
@@ -6432,6 +6468,9 @@
             ],
             "کنترل‌های قبلی و بعدی را نشان می‌دهد.": [
                 "Shows previous and next controls."
+            ],
+            "کوئری": [
+                "query"
             ],
             "کوتاه": [
                 "Short"

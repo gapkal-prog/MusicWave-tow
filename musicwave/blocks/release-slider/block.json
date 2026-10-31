@@ -68,10 +68,6 @@
       "type": "integer",
       "default": 0
     },
-    "showAll": {
-      "type": "boolean",
-      "default": false
-    },
     "columns": {
       "type": "integer",
       "default": 0

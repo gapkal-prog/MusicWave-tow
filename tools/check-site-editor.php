@@ -221,12 +221,13 @@ foreach ($core_block_files as $block_file) {
 		$fail($name . ' must be present in both Core PHP and JavaScript editor registries.');
 	}
 }
-// 40 canonical Core blocks: the 37 after consolidating `dashboard-edit` into
-// `dashboard-account` (hidden PHP alias preserved) plus the three artists
-// browsing-surface leaves of the composable artists index. The artists pager is
-// not a block any more: the shelf renders WordPress' own pagination.
-if (40 !== count($core_block_names) || count($core_block_names) !== count(array_unique($core_block_names))) {
-	$fail('Core block metadata inventory must contain 40 unique blocks.');
+// 41 canonical Core blocks: the 40 dynamic surfaces after consolidating
+// `dashboard-edit` into `dashboard-account` (hidden PHP alias preserved), the
+// three artists browsing-surface leaves of the composable artists index, and
+// `music-wave/release-card` — the card a Query Loop repeats. The artists pager
+// is not a block any more: the shelf renders WordPress' own pagination.
+if (41 !== count($core_block_names) || count($core_block_names) !== count(array_unique($core_block_names))) {
+	$fail('Core block metadata inventory must contain 41 unique blocks.');
 }
 foreach ($expected_theme_blocks as $expected_block) {
 	if (! isset($theme_block_names[$expected_block])) {

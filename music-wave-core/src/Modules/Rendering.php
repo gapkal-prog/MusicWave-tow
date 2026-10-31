@@ -233,6 +233,7 @@ final class Rendering implements Module {
 		'showTypeFilter',
 		'showUpdated',
 		'showVipBadge',
+		'showViews',
 		'showWelcome',
 		'showWhen',
 		'showWhenGranted',
@@ -731,6 +732,13 @@ final class Rendering implements Module {
 				'description' => __( 'انتشارهای مرتبط MusicWave را نمایش می‌دهد.', 'music-wave-core' ),
 				'icon'        => 'share',
 				'keywords'    => array( __( 'مشابه', 'music-wave-core' ), __( 'همان هنرمند', 'music-wave-core' ), __( 'ویترین', 'music-wave-core' ) ),
+			),
+			array(
+				'name'        => 'music-wave/release-card',
+				'title'       => __( 'کارت انتشار', 'music-wave-core' ),
+				'description' => __( 'کارت انتشار یادشده در حلقهٔ کوئری: جلد، کنترل پخش، عنوان، هنرمند و پیوند اقدام.', 'music-wave-core' ),
+				'icon'        => 'format-image',
+				'keywords'    => array( __( 'انتشار', 'music-wave-core' ), __( 'کارت', 'music-wave-core' ), __( 'حلقه', 'music-wave-core' ) ),
 			),
 			array(
 				'name'        => 'music-wave/artist-profile',

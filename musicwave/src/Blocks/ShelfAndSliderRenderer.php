@@ -22,26 +22,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class ShelfAndSliderRenderer {
 
 	/**
-	 * Canonical release-card composition used by the standard Query Loop.
+	 * Shelf attributes that the `music-wave/release-card` block understands.
 	 *
-	 * It is the exact block list the bundled taxonomy templates ship
-	 * (`taxonomy-mw_genre.html`, `taxonomy-mw_artist.html`). Keeping one copy
-	 * here means a shelf that hands its full listing to WordPress renders the
-	 * same card WYSIWYG in the Site Editor and on the front end.
+	 * Both surfaces share one attribute vocabulary (`imageShape`, `showArtwork`,
+	 * …), so a shelf can hand its card settings straight to the block instead of
+	 * re-implementing the card in Query Loop markup.
+	 *
+	 * @var array<int, string>
 	 */
-	private const LOOP_CARD_BLOCKS = '<!-- wp:group {"className":"mw-release-card mw-surface","layout":{"type":"constrained"}} -->'
-		. '<div class="wp-block-group mw-release-card mw-surface">'
-		. '<!-- wp:group {"className":"mw-release-card__media","layout":{"type":"default"}} -->'
-		. '<div class="wp-block-group mw-release-card__media">'
-		. '<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"1"} /-->'
-		. '<!-- wp:music-wave/preview-player {"buttonStyle":"icon","variant":"accent","size":"md","className":"mw-hero-slide__play"} /-->'
-		. '</div><!-- /wp:group -->'
-		. '<!-- wp:group {"className":"mw-release-card__body","layout":{"type":"constrained"}} -->'
-		. '<div class="wp-block-group mw-release-card__body">'
-		. '<!-- wp:post-title {"isLink":true,"fontSize":"medium"} /-->'
-		. '<!-- wp:music-wave/release-meta /-->'
-		. '</div><!-- /wp:group -->'
-		. '</div><!-- /wp:group -->';
+	private const CARD_ATTRIBUTE_KEYS = array(
+		'imageShape',
+		'showArtwork',
+		'showPlayButton',
+		'showArtist',
+		'showDate',
+		'showExcerpt',
+		'showAction',
+		'actionLabel',
+		'showViews',
+	);
 
 	/** @var BlockRegistry */
 	private BlockRegistry $blocks;
@@ -226,8 +225,8 @@ final class ShelfAndSliderRenderer {
 
 		$release_ids = isset( $attributes['releaseIds'] ) ? (string) $attributes['releaseIds'] : '';
 		$release_ids = preg_split( '/[\s,]+/', $release_ids );
-		// Manual picks honour the block's item count, and stay unrestricted when
-		// the author asked for every release (`showAll` passes -1).
+		// Manual picks never exceed the number of cards this render can show, so a
+		// long hand-picked list cannot turn a rail or a slider into a full query.
 		$id_limit    = $items > 0 ? max( 24, $items ) : 1000;
 		$release_ids = is_array( $release_ids ) ? array_slice( array_values( array_unique( array_filter( array_map( 'absint', $release_ids ) ) ) ), 0, $id_limit ) : array();
 		if ( ! empty( $release_ids ) ) {
@@ -772,19 +771,25 @@ final class ShelfAndSliderRenderer {
 	/**
 	 * Query Loop bridge: turn the shelf's own query into the standard loop.
 	 *
-	 * The shelf never re-implements paging. When «نمایش همهٔ انتشارها» is on it
-	 * renders a real `core/query` → `core/post-template` → `core/query-pagination`
-	 * composition, and hands its filters to core through
-	 * `query_loop_block_query_vars` for that loop's `queryId` only, so every
-	 * other Query Loop on the page (archives, taxonomy templates, related
-	 * releases) keeps its own query untouched.
+	 * The shelf never re-implements retrieval or paging. When «نمایش همهٔ
+	 * انتشارها» is on it renders a real `core/query` → `core/post-template` →
+	 * `core/query-pagination` composition inside *the same* section shell the
+	 * hand-built listing uses, and the loop's cards are
+	 * `music-wave/release-card` — the block that wraps the very same
+	 * `ReleaseCard` markup. Layout (`mw-release-shelf--{layout}`), style variant,
+	 * column count and every card toggle therefore apply to both paths, which is
+	 * what «چیدمان و سبک نمایش» promises.
+	 *
+	 * Shelf filters reach core through `query_loop_block_query_vars` for this
+	 * loop's `queryId` only, so every other Query Loop on the page (archives,
+	 * taxonomy templates, related releases) keeps its own query untouched.
 	 *
 	 * @param array<string, mixed>                  $attributes  Block attributes.
 	 * @param array<string, mixed>                  $tabbed      Filter-tab state.
 	 * @param string                                $tab_scope   Filter tab scope key.
 	 * @param string                                $layout      Resolved layout key.
 	 * @param int                                   $columns     Resolved column count.
-	 * @param string                                $shelf_class Extra wrapper classes.
+	 * @param string                                $shelf_variant Style-variant class.
 	 * @param array{eyebrow:string,title:string,description:string,url:string,label:string,icon:string} $chrome Header chrome.
 	 * @return string
 	 */
@@ -794,7 +799,7 @@ final class ShelfAndSliderRenderer {
 		string $tab_scope,
 		string $layout,
 		int $columns,
-		string $shelf_class,
+		string $shelf_variant,
 		array $chrome
 	): string {
 		if ( ! function_exists( 'do_blocks' ) ) {
@@ -840,10 +845,6 @@ final class ShelfAndSliderRenderer {
 		};
 		add_filter( 'query_loop_block_query_vars', $apply_overrides, 10, 2 );
 
-		// Grid layouts carry the author's column count; the flat list stays one
-		// column, exactly like the hand-built layouts.
-		$template_layout = ',"layout":{"type":"grid","columnCount":' . ( 'list' === $layout ? 1 : $columns ) . '}';
-
 		// Ordering travels in the block attributes where core handles it. Only
 		// page-stable orders are allowed: a shuffled listing would repeat and
 		// drop releases between pages. «بازدید» is not a core order and travels
@@ -868,25 +869,37 @@ final class ShelfAndSliderRenderer {
 		$query_attributes = array(
 			'queryId' => $query_id,
 			'query'   => array(
-				'perPage'   => $per_page,
-				'pages'     => 0,
-				'offset'    => 0,
-				'postType'  => 'mw_release',
-				'order'     => $order,
-				'orderBy'   => $order_by,
-				'author'    => '',
-				'search'    => '',
-				'exclude'   => array(),
-				'sticky'    => '',
-				'inherit'   => false,
+				'perPage'  => $per_page,
+				'pages'    => 0,
+				'offset'   => 0,
+				'postType' => 'mw_release',
+				'order'    => $order,
+				'orderBy'  => $order_by,
+				'author'   => '',
+				'search'   => '',
+				'exclude'  => array(),
+				'sticky'   => '',
+				'inherit'  => false,
 			),
 			'className' => 'mw-release-shelf__loop',
 		);
 
+		// The shelf's own grid decides the columns; `core/post-template` must not
+		// seat the cards differently from the hand-built listing. `list` is a
+		// one-column grid, and `scroll` leaves layout to the rail CSS, which
+		// turns the same element into a horizontal track.
+		$template_attributes = array( 'className' => 'mw-release-shelf__items' );
+		if ( 'scroll' !== $layout ) {
+			$template_attributes['layout'] = array(
+				'type'        => 'grid',
+				'columnCount' => 'list' === $layout ? 1 : $columns,
+			);
+		}
+
 		$empty_copy = __( 'هنوز انتشاری با این فیلترها پیدا نشد.', 'musicwave' );
 		$markup     = '<!-- wp:query ' . $this->loop_json( $query_attributes ) . ' -->'
-			. '<!-- wp:post-template {"className":"mw-release-shelf__items"' . $template_layout . '} -->'
-			. self::LOOP_CARD_BLOCKS
+			. '<!-- wp:post-template ' . $this->loop_json( $template_attributes ) . ' -->'
+			. $this->loop_card_block( $attributes )
 			. '<!-- /wp:post-template -->'
 			. '<!-- wp:query-no-results -->'
 			. '<!-- wp:paragraph {"className":"mw-release-shelf__empty"} -->'
@@ -912,11 +925,57 @@ final class ShelfAndSliderRenderer {
 		$header      = $this->render_shelf_header( $chrome['eyebrow'], $chrome['title'], $chrome['description'], $chrome['url'], $chrome['label'], $chrome['icon'] );
 		$tabs_markup = $this->render_filter_tabs( $tabbed['tabs'], $tabbed['active'], $tab_scope );
 		$scope_attr  = ! empty( $tabbed['tabs'] ) ? ' data-mw-filter-scope="' . esc_attr( $tab_scope ) . '"' : '';
-		$bento_class = 'bento' === $layout ? ' mw-release-shelf--bento' : '';
 
 		return '<section ' . get_block_wrapper_attributes(
-			array( 'class' => 'mw-release-shelf mw-release-shelf--' . ( 'bento' === $layout ? 'grid' : $layout ) . $bento_class . ' mw-release-shelf--columns-' . $columns . ' mw-release-shelf--loop' . $shelf_class )
+			array( 'class' => $this->shelf_section_classes( $layout, $columns, $shelf_variant, 'mw-release-shelf--loop' ) )
 		) . $scope_attr . '>' . $header . $tabs_markup . $rendered . '</section>';
+	}
+
+	/**
+	 * Inline markup for the card the loop repeats.
+	 *
+	 * The block owns the card; the shelf only forwards the settings it already
+	 * shares with it. Values that were never saved are omitted so the block's own
+	 * defaults apply, exactly like an attribute the editor never touched.
+	 *
+	 * @param array<string, mixed> $attributes Shelf attributes.
+	 */
+	private function loop_card_block( array $attributes ): string {
+		$card = array();
+		foreach ( self::CARD_ATTRIBUTE_KEYS as $key ) {
+			if ( array_key_exists( $key, $attributes ) ) {
+				$card[ $key ] = $attributes[ $key ];
+			}
+		}
+
+		return '<!-- wp:music-wave/release-card ' . $this->loop_json( $card ) . ' /-->';
+	}
+
+	/**
+	 * Section classes shared by the hand-built listing and the Query Loop path.
+	 *
+	 * One composer means «چیدمان», «ستون‌های دسکتاپ» and «سبک نمایش» cannot drift
+	 * between the two renderers.
+	 *
+	 * @param string $layout    Resolved layout key.
+	 * @param int    $columns   Resolved column count.
+	 * @param string $variant   Style-variant class (with its leading space).
+	 * @param string $extra     Extra section class.
+	 */
+	private function shelf_section_classes( string $layout, int $columns, string $variant = '', string $extra = '' ): string {
+		$classes = array(
+			'mw-release-shelf',
+			'mw-release-shelf--' . $layout,
+			'mw-release-shelf--columns-' . $columns,
+			$extra,
+			trim( $variant ),
+		);
+		if ( 'bento' === $layout ) {
+			// Bento is a grid with extra mosaic spans, so both classes ship.
+			array_splice( $classes, 2, 0, array( 'mw-release-shelf--grid' ) );
+		}
+
+		return implode( ' ', array_filter( $classes ) );
 	}
 
 	/**
@@ -986,7 +1045,9 @@ final class ShelfAndSliderRenderer {
 		 * «نمایش همهٔ انتشارها» is a publishing surface, not a bigger preview:
 		 * it delegates the complete listing — and its paging — to the standard
 		 * WordPress Query Loop instead of fetching an unbounded `get_posts()`
-		 * result. Curated/editorial layouts keep their hand-built composition.
+		 * result. The loop keeps this shelf's section shell, card block and
+		 * every display setting, so switching the toggle cannot change the look.
+		 * Curated layouts (`feature`, `slider`) stay bounded and hand-built.
 		 */
 		if ( $show_all && in_array( $layout, array( 'grid', 'bento', 'list' ), true ) ) {
 			$looped = $this->render_release_loop(
@@ -1010,7 +1071,13 @@ final class ShelfAndSliderRenderer {
 			}
 		}
 
-		$items = $show_all ? -1 : min( 24, max( 1, $items ) );
+		/*
+		 * Every remaining layout is a bounded preview (rail, hero slider,
+		 * editorial feature). «نمایش همه» never widens them into an unbounded
+		 * `get_posts()` call: the toggle only ever means "hand the complete,
+		 * paged listing to the Query Loop" above.
+		 */
+		$items = min( 24, max( 1, $items ) );
 		$ids   = get_posts( $this->release_query_args( $attributes, $items ) );
 		if ( ( ! is_array( $ids ) || empty( $ids ) ) && empty( $tabbed['tabs'] ) ) {
 			return '';
@@ -1087,11 +1154,7 @@ final class ShelfAndSliderRenderer {
 			? '<div id="' . esc_attr( $viewport_id ) . '" class="mw-release-shelf__items" data-mw-shelf-viewport tabindex="0" role="region" aria-label="' . esc_attr( $section_title ? $section_title : __( 'قفسه موسیقی', 'musicwave' ) ) . '" aria-live="polite">' . implode( '', $cards ) . '</div>'
 			: '<p class="mw-filter-tabs__empty" role="status">' . esc_html__( 'در این بازه یا دسته هنوز انتشاری ثبت نشده است.', 'musicwave' ) . '</p>';
 
-		$layout_classes = 'bento' === $layout
-			? 'mw-release-shelf--grid mw-release-shelf--bento'
-			: 'mw-release-shelf--' . $layout;
-
-		return '<section ' . get_block_wrapper_attributes( array( 'class' => 'mw-release-shelf ' . $layout_classes . ' mw-release-shelf--columns-' . $columns . $shelf_variant ) ) . $scope_attr . '>' . $header . $tabs_markup . $nav . $items_html . '<p class="screen-reader-text" aria-live="polite" data-mw-shelf-status></p></section>';
+		return '<section ' . get_block_wrapper_attributes( array( 'class' => $this->shelf_section_classes( $layout, $columns, $shelf_variant ) ) ) . $scope_attr . '>' . $header . $tabs_markup . $nav . $items_html . '<p class="screen-reader-text" aria-live="polite" data-mw-shelf-status></p></section>';
 	}
 
 	/**

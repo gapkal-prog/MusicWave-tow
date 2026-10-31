@@ -13,6 +13,13 @@
 declare(strict_types=1);
 
 namespace {
+	/*
+	 * The WordPress mock lives in one place (`tests/bootstrap.php`). Without it
+	 * this suite cannot even load the plugin — `ABSPATH` would be undefined and
+	 * the plugin would `exit` before a single contract ran.
+	 */
+	require_once __DIR__ . '/bootstrap.php';
+
 	use ManaCore\MusicWave\Core\Blocks\Concerns\ActionButtonStyle;
 
 	if ( ! defined( 'EP_PAGES' ) ) {
@@ -63,9 +70,7 @@ namespace {
 		}
 	}
 
-	if ( ! defined( 'MUSIC_WAVE_CORE_FILE' ) ) {
-		require_once dirname( __DIR__ ) . '/music-wave-core/music-wave-core.php';
-	}
+	require_once dirname( __DIR__ ) . '/music-wave-core/music-wave-core.php';
 	\ManaCore\MusicWave\Core\Plugin::instance()->boot();
 	foreach ( $GLOBALS['mw_test_action_callbacks']['init'] ?? array() as $mw_init_cb ) {
 		if ( is_callable( $mw_init_cb ) ) {
@@ -74,6 +79,10 @@ namespace {
 	}
 
 $mw_root = dirname( __DIR__ );
+
+// Shared services the block renderers receive, built exactly like the app builds them.
+$schema              = new ManaCore\MusicWave\Core\Schema\ReleaseMetaSchema();
+$relation_repository = new ManaCore\MusicWave\Core\Infrastructure\WordPressReleaseRepository( $schema );
 
 /**
  * Invoke a real registered dynamic block callback identically to WordPress core.
@@ -236,6 +245,13 @@ $mw_dashboard_custom = $mw_render_registered(
 	);
 
 // 7. `release-shelf` Bento & Hero Slider Shapes + JS Inspector Contracts.
+if ( ! isset( $mw_shelf_renderer ) ) {
+	// The suite also runs standalone, so build the theme kernel it needs.
+	require_once $mw_root . '/musicwave/src/Autoloader.php';
+	ManaCore\MusicWave\Theme\Autoloader::register( $mw_root . '/musicwave/src' );
+	$mw_theme_kernel   = new ManaCore\MusicWave\Theme\Theme();
+	$mw_shelf_renderer = $mw_theme_kernel->shelves();
+}
 $mw_bento_shelf = $mw_shelf_renderer->render_release_shelf( array( 'layout' => 'bento', 'styleVariant' => 'minimal', 'itemsToShow' => 4 ) );
 $mw_hero_circle = $mw_shelf_renderer->render_release_shelf( array( 'layout' => 'slider', 'imageShape' => 'circle', 'itemsToShow' => 4 ) );
 mw_assert_same( true, false !== strpos( $mw_bento_shelf, 'mw-release-shelf--bento' ) && false !== strpos( $mw_bento_shelf, 'mw-release-shelf--minimal' ), 'release-shelf must combine layout=bento with styleVariant=minimal cleanly.' );
@@ -577,6 +593,33 @@ unset(
 	$GLOBALS['mw_test_statuses'][ $mw_dl_track_b ],
 	$_GET['context']
 );
+
+// 9. `release-card`: the Query Loop and the PHP shelves share one card.
+$mw_card_release_id = wp_insert_post(
+	array(
+		'post_type'   => 'mw_release',
+		'post_status' => 'publish',
+		'post_title'  => 'کارت مشترک حلقه',
+	)
+);
+$mw_card_attributes = array(
+	'releaseId'   => $mw_card_release_id,
+	'imageShape'  => 'circle',
+	'showDate'    => true,
+	'showArtist'  => false,
+	'actionLabel' => 'شنیدن',
+);
+$mw_card_block = $mw_render_registered( 'music-wave/release-card', $mw_card_attributes );
+$mw_card_direct = ManaCore\MusicWave\Core\Blocks\ReleaseCard::render(
+	ManaCore\MusicWave\Core\Blocks\ReleaseCard::presentation_data( (int) $mw_card_release_id ),
+	ManaCore\MusicWave\Core\Blocks\ReleaseCard::options_from_attributes( $mw_card_attributes, (int) $mw_card_release_id )
+);
+mw_assert_same( true, '' !== $mw_card_block, 'release-card must render a card for the looped release.' );
+mw_assert_same( $mw_card_direct, $mw_card_block, 'release-card must be byte-identical to the card the PHP shelves render.' );
+mw_assert_same( true, false !== strpos( $mw_card_block, 'mw-release-shelf__item' ) && false !== strpos( $mw_card_block, 'mw-release-shelf__art--circle' ), 'release-card must reuse the shelf card classes so shelf layouts and shapes apply inside a Query Loop.' );
+mw_assert_same( false, false !== strpos( $mw_card_block, 'mw-release-shelf__artist' ), 'release-card must honor showArtist=false.' );
+mw_assert_same( true, false !== strpos( $mw_card_block, 'شنیدن' ), 'release-card must honor the custom action label.' );
+mw_assert_same( 0, ManaCore\MusicWave\Core\Blocks\ReleaseCard::render_for_post( 0, array() ) === '' ? 0 : 1, 'release-card must render nothing without a resolvable release.' );
 
 echo 'Block architecture, CSS cascade & Inspector refactor suite OK (' . count( $GLOBALS['mw_test_registered_blocks'] ) . ' registered blocks verified).' . PHP_EOL;
 }

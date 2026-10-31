@@ -900,6 +900,78 @@
 				},
 			],
 		},
+		'music-wave/release-card': {
+			groups: [
+				{
+					title: __( 'کارت انتشار', 'music-wave-core' ),
+					help: __(
+						'این بلوک همان کارتی را می‌سازد که ویترین‌های MusicWave رندر می‌کنند. داخل بلوک «حلقهٔ کوئری» قرارش دهید تا هر انتشار یک کارت بگیرد.',
+						'music-wave-core'
+					),
+					controls: [
+						[
+							'select',
+							'imageShape',
+							__( 'شکل تصویر', 'music-wave-core' ),
+							[
+								[ 'square', __( 'مربع', 'music-wave-core' ) ],
+								[ 'landscape', __( 'منظره', 'music-wave-core' ) ],
+								[ 'portrait', __( 'پرتره', 'music-wave-core' ) ],
+								[ 'circle', __( 'دایره', 'music-wave-core' ) ],
+							],
+						],
+						[
+							'toggle',
+							'showArtwork',
+							__( 'نمایش تصویر', 'music-wave-core' ),
+							true,
+						],
+						[
+							'toggle',
+							'showPlayButton',
+							__( 'نمایش کنترل پخش', 'music-wave-core' ),
+							true,
+						],
+						[
+							'toggle',
+							'showArtist',
+							__( 'نمایش هنرمند', 'music-wave-core' ),
+							true,
+						],
+						[
+							'toggle',
+							'showDate',
+							__( 'نمایش تاریخ', 'music-wave-core' ),
+							false,
+						],
+						[
+							'toggle',
+							'showViews',
+							__( 'نمایش تعداد بازدید', 'music-wave-core' ),
+							false,
+						],
+						[
+							'toggle',
+							'showExcerpt',
+							__( 'نمایش چکیده', 'music-wave-core' ),
+							false,
+						],
+						[
+							'toggle',
+							'showAction',
+							__( 'نمایش پیوند اقدام', 'music-wave-core' ),
+							true,
+						],
+						[
+							'text',
+							'actionLabel',
+							__( 'برچسب اقدام', 'music-wave-core' ),
+							'',
+						],
+					],
+				},
+			],
+		},
 		'music-wave/preview-player': {
 			releaseId: true,
 			managesOwnStyles: true,

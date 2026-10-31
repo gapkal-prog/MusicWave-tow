@@ -108,6 +108,82 @@ final class ReleaseCard {
 	}
 
 	/**
+	 * Translate block/shelf attributes into the card options this class renders.
+	 *
+	 * One mapping feeds both card producers — the PHP shelf list and the
+	 * `music-wave/release-card` block used inside a Query Loop — so a given
+	 * attribute set can only ever produce one card.
+	 *
+	 * @param array<string, mixed> $attributes Block or shelf attributes.
+	 * @param int                  $release_id Release being rendered.
+	 * @return array<string, mixed>
+	 */
+	public static function options_from_attributes( array $attributes, int $release_id ): array {
+		$release_id = absint( $release_id );
+		$shape      = isset( $attributes['imageShape'] ) ? sanitize_key( (string) $attributes['imageShape'] ) : 'square';
+		$shape      = in_array( $shape, array( 'square', 'landscape', 'portrait', 'circle' ), true ) ? $shape : 'square';
+		$title      = (string) get_the_title( $release_id );
+
+		/* translators: %s: music release title. */
+		$open_label = sprintf( __( 'باز کردن %s', 'music-wave-core' ), $title );
+
+		$overlay = '';
+		if ( ! isset( $attributes['showPlayButton'] ) || false !== $attributes['showPlayButton'] ) {
+			$overlay = apply_filters( 'music_wave_card_play_button', '', $release_id, 'mw-release-shelf__play' );
+			$overlay = is_string( $overlay ) && '' !== $overlay
+				? $overlay
+				: '<span class="mw-release-shelf__play" aria-hidden="true">&#9654;</span>';
+		}
+
+		$meta_parts = array();
+		if ( ! empty( $attributes['showDate'] ) ) {
+			$meta_parts[] = '<time datetime="' . esc_attr( (string) get_the_date( 'c', $release_id ) ) . '">' . esc_html( (string) get_the_date( '', $release_id ) ) . '</time>';
+		}
+		if ( ! empty( $attributes['showViews'] ) ) {
+			$views = absint( get_post_meta( $release_id, 'mw_views', true ) );
+			if ( $views > 0 ) {
+				$meta_parts[] = '<span class="mw-release-shelf__views">' . esc_html( number_format_i18n( $views ) ) . ' ' . esc_html__( 'بازدیدها', 'music-wave-core' ) . '</span>';
+			}
+		}
+
+		$action_label = isset( $attributes['actionLabel'] ) ? sanitize_text_field( (string) $attributes['actionLabel'] ) : '';
+
+		return array(
+			'shape'            => $shape,
+			'image_attributes' => array(
+				'loading'  => 'lazy',
+				'decoding' => 'async',
+			),
+			'open_label'       => $open_label,
+			'overlay'          => $overlay,
+			'show_artwork'     => ! isset( $attributes['showArtwork'] ) || false !== $attributes['showArtwork'],
+			'show_artist'      => ! isset( $attributes['showArtist'] ) || false !== $attributes['showArtist'],
+			'show_excerpt'     => ! empty( $attributes['showExcerpt'] ),
+			'show_action'      => ! isset( $attributes['showAction'] ) || false !== $attributes['showAction'],
+			'action_label'     => '' !== $action_label ? $action_label : __( 'باز کردن انتشار', 'music-wave-core' ),
+			'meta_html'        => implode( ' ', $meta_parts ),
+		);
+	}
+
+	/**
+	 * Render the card for one post from its block attributes.
+	 *
+	 * Used by the `music-wave/release-card` block inside `core/post-template`,
+	 * so a Query Loop renders the identical card the shelf renders in PHP.
+	 *
+	 * @param int                  $release_id Release ID (usually the loop's `postId` context).
+	 * @param array<string, mixed> $attributes Block attributes.
+	 */
+	public static function render_for_post( int $release_id, array $attributes ): string {
+		$data = self::presentation_data( $release_id );
+		if ( empty( $data ) ) {
+			return '';
+		}
+
+		return self::render( $data, self::options_from_attributes( $attributes, (int) $data['id'] ) );
+	}
+
+	/**
 	 * One complete release card.
 	 *
 	 * @param array{id:int,link:string,title:string,artist:string,initial:string} $data    Presentation data.

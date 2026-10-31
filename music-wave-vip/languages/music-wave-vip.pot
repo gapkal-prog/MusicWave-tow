@@ -285,7 +285,7 @@ msgstr ""
 msgid "اشتراک"
 msgstr ""
 
-#: src/VipPlans.php:1197
+#: src/VipPlans.php:1198
 #, php-format
 msgid "اشتراک VIP اعطا شد: %s"
 msgstr ""
@@ -1228,7 +1228,7 @@ msgstr ""
 msgid "ردیف پررنگ همان حالتی است که همین حالا انتخاب کرده‌اید. بخش‌هایی که در حالت جاری اثری ندارند، پایین‌تر جمع می‌شوند ولی سرتیترشان می‌ماند."
 msgstr ""
 
-#: src/VipPlans.php:1192
+#: src/VipPlans.php:1193
 #, php-format
 msgid "رزرو از %s"
 msgstr ""

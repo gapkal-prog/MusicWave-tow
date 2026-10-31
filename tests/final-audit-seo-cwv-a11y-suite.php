@@ -12,6 +12,10 @@
 
 declare(strict_types=1);
 
+// Shared WordPress mock + runtime boot: without it this suite cannot run.
+require_once __DIR__ . '/bootstrap.php';
+mw_test_load_plugins();
+
 use ManaCore\MusicWave\Core\Playlists\PublicPlaylistSeo;
 use ManaCore\MusicWave\Core\Seo\CrawlerDiscovery;
 use ManaCore\MusicWave\Core\Seo\SearchSeo;

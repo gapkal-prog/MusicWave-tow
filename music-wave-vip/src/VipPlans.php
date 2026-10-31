@@ -445,15 +445,16 @@ final class VipPlans {
 		usort(
 			$result,
 			static function ( array $a, array $b ): int {
+				// Lifetime is the documented last row, ahead of the reserved
+				// queue: a grant that already runs forever never belongs above
+				// one that merely starts later.
+				if ( $a['is_lifetime'] !== $b['is_lifetime'] ) {
+					return $a['is_lifetime'] ? 1 : -1;
+				}
 				if ( $a['is_reserved'] !== $b['is_reserved'] ) {
 					return $a['is_reserved'] ? 1 : -1;
 				}
-				if ( $a['is_lifetime'] && ! $b['is_lifetime'] ) {
-					return 1;
-				}
-				if ( ! $a['is_lifetime'] && $b['is_lifetime'] ) {
-					return -1;
-				}
+
 				return $a['expires_at'] <=> $b['expires_at'];
 			}
 		);
