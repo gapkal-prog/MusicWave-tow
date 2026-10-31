@@ -58,6 +58,7 @@ use ManaCore\MusicWave\Core\Downloads\DownloadRoutes;
 use ManaCore\MusicWave\Core\Downloads\DownloadAssetRoutes;
 use ManaCore\MusicWave\Core\Downloads\DownloadTokenService;
 use ManaCore\MusicWave\Core\Downloads\NullDownloadProvider;
+use ManaCore\MusicWave\Core\Downloads\SegmentSigner;
 use ManaCore\MusicWave\Core\Downloads\DatabaseReplayStore;
 use ManaCore\MusicWave\Core\Downloads\TransientReplayStore;
 use ManaCore\MusicWave\Core\Migrations\MigrationSet;
@@ -84,6 +85,8 @@ use ManaCore\MusicWave\Core\Notifications\FollowNotifier;
 use ManaCore\MusicWave\Core\Notifications\LibraryFollowerDirectory;
 use ManaCore\MusicWave\Core\Notifications\NotificationPreferences;
 use ManaCore\MusicWave\Core\Playback\PlaybackQueueRoutes;
+use ManaCore\MusicWave\Core\Playback\StreamSessionCookie;
+use ManaCore\MusicWave\Core\Playback\StreamSessionStore;
 use ManaCore\MusicWave\Core\Schema\ReleaseMetaRegistry;
 use ManaCore\MusicWave\Core\Schema\ReleaseMetaSchema;
 use ManaCore\MusicWave\Core\Seo\ReleaseJsonLd;
@@ -103,6 +106,9 @@ final class Plugin {
 	/** @var bool */
 	private $booted = false;
 
+	/** @var AccessPolicyEngine|null Composed access policy, shared read-only. */
+	private $access_policy;
+
 	/**
 	 * Get the single composition root instance.
 	 *
@@ -114,6 +120,17 @@ final class Plugin {
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * The composed access policy engine, or null before boot.
+	 *
+	 * Exposed so integration plugins (e.g. MusicWave VIP) can reuse Core's
+	 * single composed policy instance instead of rebuilding one from scratch —
+	 * keeping entitlement decisions consistent across Core and its extensions.
+	 */
+	public function access_policy(): ?AccessPolicyEngine {
+		return $this->access_policy;
 	}
 
 	/**
@@ -140,23 +157,27 @@ final class Plugin {
 		if ( ! $manual_provider instanceof ManualAccessProvider ) {
 			$manual_provider = new NullManualAccessProvider();
 		}
-		$policy = new AccessPolicyEngine( $releases, $purchase_checker, $membership_provider, $manual_provider );
+		$policy              = new AccessPolicyEngine( $releases, $purchase_checker, $membership_provider, $manual_provider );
+		$this->access_policy = $policy;
 		// Membership gating is a monetization layer: when no membership module
 		// (e.g. MusicWave VIP) is active, the configured absent-behavior decides
 		// whether membership releases stay usable (default) or deny closed.
 		add_filter(
 			'music_wave_membership_absent_behavior',
-			static function ( $behavior ): string {
+			static function (): string {
 				$setting = \ManaCore\MusicWave\Core\Support\Settings::get( 'membership_absent_behavior' );
 
-				return in_array( $setting, array( 'allow', 'deny' ), true ) ? $setting : $behavior;
+				return \ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy::sanitize( $setting );
 			}
 		);
 		( new \ManaCore\MusicWave\Core\Support\SettingsFilters() )->register();
-		$download_provider = apply_filters( 'music_wave_download_provider', new NullDownloadProvider() );
-		if ( ! $download_provider instanceof \ManaCore\MusicWave\Core\Downloads\DownloadProvider ) {
-			$download_provider = new NullDownloadProvider();
+		$external_provider = apply_filters( 'music_wave_download_provider', new NullDownloadProvider() );
+		if ( ! $external_provider instanceof \ManaCore\MusicWave\Core\Downloads\DownloadProvider ) {
+			$external_provider = new NullDownloadProvider();
 		}
+		$direct_provider       = new \ManaCore\MusicWave\Core\Downloads\DirectLinkProvider();
+		$download_provider     = new \ManaCore\MusicWave\Core\Downloads\DeliveryRouter( $direct_provider, $external_provider );
+		$delivery_capabilities = new \ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities( $external_provider );
 		// Dedicated salt scheme (review finding S4): the download-token secret
 		// derives from its own wp_salt() scheme instead of 'auth', isolating its
 		// blast radius from cookie/nonce secrets. Sites may pin it independently
@@ -164,7 +185,7 @@ final class Plugin {
 		$download_secret = function_exists( 'wp_salt' ) ? wp_salt( 'music_wave_download' ) : hash( 'sha256', MUSIC_WAVE_CORE_FILE );
 		$replay_store    = new DatabaseReplayStore( new TransientReplayStore() );
 		$ticket_store    = new \ManaCore\MusicWave\Core\Downloads\OpaqueTicketStore();
-		$downloads       = new DownloadResolver( $releases, $policy, new DownloadTokenService( $download_secret ), $replay_store, $download_provider, $ticket_store );
+		$downloads       = new DownloadResolver( $releases, $policy, new DownloadTokenService( $download_secret ), $replay_store, $download_provider, $ticket_store, $delivery_capabilities );
 
 		// Phase 1+2 clean: shared HTTP client + dedicated cover importer + cover resolver (SRP, DRY, DIP).
 		// Phase 5: iTunes (no key, 600px), Deezer (no key, 1000px), Last.fm (optional key, artist bio).
@@ -240,8 +261,37 @@ final class Plugin {
 		);
 		$playlist_forms = new PlaylistFormHandler( $playlists );
 		$registry->add( new \ManaCore\MusicWave\Core\Modules\Playlists( $playlists, new PlaylistRoutes( $playlists, $policy, $releases ), $playlist_forms, new PlaylistBlocks( $playlists, $playlist_forms ) ) );
-		$registry->add( new Rendering( new ReleaseBlocks( $policy, $releases ), new ArtistProfileBlock(), new PreviewPlayer( $releases, $policy ), new PlaybackQueueRoutes( $policy, $releases ), new ReleaseRestVisibilityPolicy( $policy ), new ArtistShelfBlock(), new TaxonomyShelfBlock(), new TermHeroBlock(), new ShareButtonBlock(), new ShuffleButtonBlock(), new \ManaCore\MusicWave\Core\Blocks\SearchUnifiedBlock(), $releases, $playlists ) );
-		$registry->add( new Downloads( new DownloadRoutes( $downloads ), new DownloadAssetRoutes( $releases ), $replay_store, $ticket_store ) );
+		$registry->add( new Rendering( new ReleaseBlocks( $policy, $releases ), new ArtistProfileBlock(), new PreviewPlayer( $releases, $policy ), new PlaybackQueueRoutes( $policy, $releases ), new ReleaseRestVisibilityPolicy( $policy ), new ArtistShelfBlock(), new TaxonomyShelfBlock(), new TermHeroBlock(), new ShareButtonBlock(), new ShuffleButtonBlock( $releases, $policy ), new \ManaCore\MusicWave\Core\Blocks\SearchUnifiedBlock(), $releases, $playlists ) );
+		// Playback-session services (ADR 0006). Core owns the session REST routes
+		// but never loads a delivery plugin's classes: an integration (e.g.
+		// MusicWave VIP) provides the store/cookie/signer through filters, which
+		// are resolved here — during Core's boot — so the routes are registered on
+		// `rest_api_init`, never earlier.
+		$session_store   = apply_filters( 'music_wave_stream_session_store', null );
+		$session_cookie  = apply_filters( 'music_wave_stream_session_cookie', null );
+		$stream_signer   = apply_filters( 'music_wave_stream_signer', null );
+		$download_routes = new DownloadRoutes(
+			$downloads,
+			null,
+			$session_store instanceof StreamSessionStore ? $session_store : null,
+			$session_cookie instanceof StreamSessionCookie ? $session_cookie : null,
+			$stream_signer instanceof SegmentSigner ? $stream_signer : null
+		);
+		$registry->add( new Downloads( $download_routes, new DownloadAssetRoutes( $releases ), $replay_store, $ticket_store ) );
+
+		// A playback session must not outlive the login it was created under:
+		// revoke the user's sessions on logout, password reset, and deletion.
+		if ( $session_store instanceof StreamSessionStore ) {
+			$revoke_user_sessions = static function ( $subject ) use ( $session_store ): void {
+				$user_id = $subject instanceof \WP_User ? (int) $subject->ID : (int) $subject;
+				if ( $user_id > 0 ) {
+					$session_store->revoke_for_user( $user_id );
+				}
+			};
+			add_action( 'wp_logout', $revoke_user_sessions );
+			add_action( 'after_password_reset', $revoke_user_sessions );
+			add_action( 'deleted_user', $revoke_user_sessions );
+		}
 		$registry->add( new Diagnostics( new DiagnosticsPage(), new SiteHealth() ) );
 		$queue_forms = new \ManaCore\MusicWave\Core\Listening\QueueFormHandler( $listening_repository );
 		$registry->add(
@@ -283,6 +333,7 @@ final class Plugin {
 		// The catalog autocomplete is registered (not enqueued) on every request so
 		// the theme's header search can reuse the same script handle.
 		( new \ManaCore\MusicWave\Core\Support\SuggestAssets() )->register();
+		( new \ManaCore\MusicWave\Core\Support\BlockShortcode() )->register();
 		( new \ManaCore\MusicWave\Core\Support\FrontendRuntime() )->register();
 		( new \ManaCore\MusicWave\Core\Cli\Commands( $migration_runner ) )->register();
 		( new \ManaCore\MusicWave\Core\Privacy\PersonalData( $library_repository, $listening_repository, $playlists, $notification_preferences ) )->register();

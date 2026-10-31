@@ -31,10 +31,9 @@ final class BlockRegistry {
 	 * Register pattern categories used in the Site Editor inserter.
 	 */
 	public function register_pattern_categories(): void {
-$categories = array(
+		$categories = array(
 			'musicwave'         => __( 'MusicWave', 'musicwave' ),
 			'featured'          => __( 'منتخب', 'musicwave' ),
-			'musicwave-demos'   => __( 'دموهای MusicWave', 'musicwave' ),
 			'musicwave-shelves' => __( 'ویترینهای MusicWave', 'musicwave' ),
 			'musicwave-cards'   => __( 'کارتهای MusicWave', 'musicwave' ),
 		);

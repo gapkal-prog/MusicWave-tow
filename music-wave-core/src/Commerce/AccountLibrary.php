@@ -28,6 +28,7 @@ use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
 use ManaCore\MusicWave\Core\Contracts\ReleaseRepository;
 use ManaCore\MusicWave\Core\Downloads\ReleaseDownloadCatalog;
 use ManaCore\MusicWave\Core\Library\LibraryRepository;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -570,7 +571,7 @@ final class AccountLibrary {
 			);
 		}
 
-		if ( ( defined( 'MUSIC_WAVE_VIP_FILE' ) || $is_editor ) && $on( 'showMembershipPanel' ) ) {
+		if ( ( VipModuleStatus::is_active() || $is_editor ) && $on( 'showMembershipPanel' ) ) {
 			$panels['membership'] = array(
 				'icon'        => '★',
 				'label'       => $heading( 'membershipHeading', __( 'اشتراک VIP', 'music-wave-core' ) ),

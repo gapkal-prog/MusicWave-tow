@@ -166,6 +166,21 @@
 		[ 'rounded', __( 'گوشه‌گرد مدرن', 'music-wave-core' ) ],
 	];
 
+	// Section titles carry no icon unless the author picks one, so the empty
+	// state reads as "remove" instead of "restore a default".
+	var SECTION_ICON_OPTIONS = {
+		emptyLabel: __( 'بدون آیکون', 'music-wave-core' ),
+		emptyTitle: __( 'حذف آیکون عنوان بخش', 'music-wave-core' ),
+		help: __(
+			'آیکون کنار عنوان بخش نمایش داده می‌شود و به‌صورت پیش‌فرض خالی است. یک آیکون انتخاب کنید، کلاس CSS فونت آیکون بنویسید، یا کد <svg>…</svg> را جای‌گذاری کنید.',
+			'music-wave-core'
+		),
+	};
+
+	function sectionIconControl( label, key ) {
+		return [ 'customIcon', key || 'icon', label, '', SECTION_ICON_OPTIONS ];
+	}
+
 	function actionButtonAppearanceGroup( defaultHelp, defaultIcon ) {
 		return {
 			title: __( 'سبک، اندازه و آیکون دکمه', 'music-wave-core' ),
@@ -1103,6 +1118,19 @@
 							],
 						],
 						[
+							'text',
+							'sameArtistHeading',
+							__( 'عنوان همان هنرمند', 'music-wave-core' ),
+							'',
+						],
+						sectionIconControl(
+							__(
+								'آیکون عنوان «همان هنرمند» (اختیاری)',
+								'music-wave-core'
+							),
+							'sameArtistIcon'
+						),
+						[
 							'select',
 							'similarSection',
 							__( 'بخش انتشارات مشابه', 'music-wave-core' ),
@@ -1110,7 +1138,7 @@
 								[
 									'inherit',
 									__(
-										'پیش‌فرض (تنظیم جهانی)',
+										'پیشفرض (تنظیم جهانی)',
 										'music-wave-core'
 									),
 								],
@@ -1126,32 +1154,17 @@
 						],
 						[
 							'text',
-							'sameArtistHeading',
-							__( 'عنوان همان هنرمند', 'music-wave-core' ),
-							'',
-						],
-						[
-							'text',
 							'similarHeading',
 							__( 'عنوان انتشارهای مشابه', 'music-wave-core' ),
 							'',
 						],
-						[
-							'toggle',
-							'showSectionLink',
-							__( 'نمایش پیوند بخش', 'music-wave-core' ),
-							false,
+						sectionIconControl(
 							__(
-								'بخش مربوط به همان هنرمند را به آرشیو هنرمند و بخش مشابه را به کاتالوگ پیوند می‌دهد.',
+								'آیکون عنوان «انتشارهای مشابه» (اختیاری)',
 								'music-wave-core'
 							),
-						],
-						[
-							'text',
-							'sectionLinkLabel',
-							__( 'برچسب پیوند بخش', 'music-wave-core' ),
-							'',
-						],
+							'similarIcon'
+						),
 					],
 				},
 				{
@@ -1219,7 +1232,7 @@
 					],
 				},
 				{
-					title: __( 'چیدمان', 'music-wave-core' ),
+					title: __( 'سبک نمایش', 'music-wave-core' ),
 					controls: [
 						[
 							'select',
@@ -1229,24 +1242,15 @@
 								[ 'grid', __( 'شبکه', 'music-wave-core' ) ],
 								[
 									'scroll',
-									__( 'طومار افقی', 'music-wave-core' ),
+									__( 'قفسه افقی', 'music-wave-core' ),
 								],
 								[ 'list', __( 'فهرست', 'music-wave-core' ) ],
 							],
 						],
 						[
-							'range',
-							'columns',
-							__( 'ستون‌های شبکه', 'music-wave-core' ),
-							2,
-							6,
-							undefined,
-							4,
-						],
-						[
 							'select',
 							'imageShape',
-							__( 'شکل اثر هنری', 'music-wave-core' ),
+							__( 'شکل تصویر', 'music-wave-core' ),
 							[
 								[ 'square', __( 'مربع', 'music-wave-core' ) ],
 								[
@@ -1258,6 +1262,29 @@
 									__( 'پرتره', 'music-wave-core' ),
 								],
 								[ 'circle', __( 'دایره', 'music-wave-core' ) ],
+							],
+						],
+						[
+							'stepper',
+							'columns',
+							__( 'ستون‌های دسکتاپ', 'music-wave-core' ),
+							2,
+							6,
+							undefined,
+							4,
+						],
+						[
+							'styleClass',
+							[ 'editorial', 'vinyl' ],
+							'',
+							__( 'سبک نمایش', 'music-wave-core' ),
+							[
+								[ '', __( 'پیش‌فرض', 'music-wave-core' ) ],
+								[
+									'editorial',
+									__( 'تحریریه', 'music-wave-core' ),
+								],
+								[ 'vinyl', __( 'وینیل', 'music-wave-core' ) ],
 							],
 						],
 					],
@@ -2159,6 +2186,15 @@
 							__( 'متن حالت ذخیره‌شده', 'music-wave-core' ),
 							'',
 						],
+						[
+							'toggle',
+							'showCount',
+							__(
+								'نمایش تعداد کاربران کتابخانه',
+								'music-wave-core'
+							),
+							false,
+						],
 					],
 				},
 			],
@@ -2183,6 +2219,9 @@
 								'music-wave-core'
 							),
 						],
+						sectionIconControl(
+							__( 'آیکون عنوان بخش (اختیاری)', 'music-wave-core' )
+						),
 						[
 							'text',
 							'description',
@@ -2287,21 +2326,36 @@
 							),
 						],
 						[
-							'range',
+							'stepper',
 							'itemsToShow',
 							__( 'حداکثر هنرمندان', 'music-wave-core' ),
 							1,
 							24,
-							undefined,
+							__(
+								'برای نمایش همهٔ هنرمندان، گزینهٔ «نمایش همه» را روشن کنید.',
+								'music-wave-core'
+							),
 							8,
 						],
 						[
 							'toggle',
-							'pagination',
-							__( 'صفحه‌بندی هنرمندان', 'music-wave-core' ),
+							'showAll',
+							__(
+								'نمایش همهٔ هنرمندان (بدون محدودیت)',
+								'music-wave-core'
+							),
 							false,
 							__(
-								'زیر ویترین، ناوبری صفحه‌بندی با شمارهٔ صفحه، «قبلی/بعدی» و شمارش هنرمندان اضافه می‌شود. برای فهرست کامل هنرمندان در صفحهٔ هنرمندان مناسب است.',
+								'همهٔ هنرمندانِ منطبق با منبع را نمایش می‌دهد و صفحه‌بندی را غیرفعال می‌کند.',
+								'music-wave-core'
+							),
+						],
+						[
+							'pagingMode',
+							'pagination',
+							__( 'حالت صفحه‌بندی', 'music-wave-core' ),
+							__(
+								'صفحه‌بندی درون‌بلوکی، صفحه‌بندی با بلوک جداگانهٔ هنرمندان، یا نمایش یک‌جای همه. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند.',
 								'music-wave-core'
 							),
 						],
@@ -2321,6 +2375,44 @@
 							'text',
 							'emptyMessage',
 							__( 'پیام حالت خالی', 'music-wave-core' ),
+						],
+					],
+				},
+				{
+					title: __( 'مرور و فیلتر', 'music-wave-core' ),
+					controls: [
+						[
+							'toggle',
+							'showResultCount',
+							__( 'نمایش شمارش نتایج', 'music-wave-core' ),
+							false,
+							__(
+								'خط «نمایش ۱۰ از ۱۰ خواننده» را بالای کارت‌ها چاپ می‌کند.',
+								'music-wave-core'
+							),
+						],
+						[
+							'toggle',
+							'showCrowns',
+							__( 'نشان محبوبیت سه نفر اول', 'music-wave-core' ),
+							false,
+							__(
+								'روی سه هنرمند اولِ ترتیب «بیشترین انتشار» نشان ۱، ۲ و ۳ می‌گذارد.',
+								'music-wave-core'
+							),
+						],
+						[
+							'text',
+							'noResultsMessage',
+							__(
+								'پیام نبود نتیجه برای فیلترها',
+								'music-wave-core'
+							),
+							'',
+							__(
+								'وقتی جست‌وجو یا فیلتر الفبایی نتیجه‌ای ندارد نمایش داده می‌شود. خالی بگذارید تا پیام پیش‌فرض استفاده شود.',
+								'music-wave-core'
+							),
 						],
 					],
 				},
@@ -2368,9 +2460,9 @@
 							],
 						],
 						[
-							'range',
+							'stepper',
 							'columns',
-							__( 'ستون‌های شبکه', 'music-wave-core' ),
+							__( 'ستون‌های دسکتاپ', 'music-wave-core' ),
 							2,
 							6,
 							undefined,
@@ -2449,6 +2541,169 @@
 				},
 			],
 		},
+		'music-wave/artists-hero': {
+			groups: [
+				{
+					title: __( 'محتوا', 'music-wave-core' ),
+					controls: [
+						[ 'text', 'eyebrow', __( 'ابرو', 'music-wave-core' ) ],
+						[
+							'text',
+							'heading',
+							__( 'عنوان بنر', 'music-wave-core' ),
+							'',
+							__(
+								'برای استفاده از عنوان پیش‌فرض ترجمه‌شده خالی بگذارید.',
+								'music-wave-core'
+							),
+						],
+						[
+							'text',
+							'description',
+							__( 'متن مقدمه', 'music-wave-core' ),
+						],
+						[
+							'select',
+							'level',
+							__( 'سطح عنوان', 'music-wave-core' ),
+							[
+								[ '1', __( 'H1', 'music-wave-core' ) ],
+								[ '2', __( 'H2', 'music-wave-core' ) ],
+								[ '3', __( 'H3', 'music-wave-core' ) ],
+							],
+						],
+					],
+				},
+				{
+					title: __( 'آمار', 'music-wave-core' ),
+					controls: [
+						[
+							'toggle',
+							'showStats',
+							__( 'نمایش آمار کاتالوگ', 'music-wave-core' ),
+							true,
+							__(
+								'تعداد خواننده‌ها و آثار منتشرشده را زیر مقدمه نمایش می‌دهد.',
+								'music-wave-core'
+							),
+						],
+					],
+				},
+			],
+		},
+		'music-wave/artists-toolbar': {
+			groups: [
+				{
+					title: __( 'جست‌وجو', 'music-wave-core' ),
+					controls: [
+						[
+							'toggle',
+							'showSearch',
+							__( 'نمایش جست‌وجو', 'music-wave-core' ),
+							true,
+						],
+						[
+							'text',
+							'searchPlaceholder',
+							__( 'متن راهنمای جست‌وجو', 'music-wave-core' ),
+						],
+					],
+				},
+				{
+					title: __( 'ترتیب', 'music-wave-core' ),
+					controls: [
+						[
+							'toggle',
+							'showSortTabs',
+							__( 'نمایش تب‌های ترتیب', 'music-wave-core' ),
+							true,
+						],
+						[
+							'text',
+							'popularLabel',
+							__( 'برچسب تب محبوب', 'music-wave-core' ),
+							'',
+							__( 'پیش‌فرض: پیکارتین', 'music-wave-core' ),
+						],
+						[
+							'text',
+							'alphabeticalLabel',
+							__( 'برچسب تب الفبایی', 'music-wave-core' ),
+							'',
+							__( 'پیش‌فرض: الفبایی', 'music-wave-core' ),
+						],
+						[
+							'select',
+							'defaultSort',
+							__( 'ترتیب پیش‌فرض', 'music-wave-core' ),
+							[
+								[
+									'popular',
+									__( 'پیکارتین (محبوب)', 'music-wave-core' ),
+								],
+								[
+									'alphabetical',
+									__( 'الفبایی', 'music-wave-core' ),
+								],
+							],
+						],
+					],
+				},
+			],
+		},
+		'music-wave/artists-alphabet': {
+			groups: [
+				{
+					title: __( 'حروف', 'music-wave-core' ),
+					controls: [
+						[
+							'toggle',
+							'showAll',
+							__( 'نمایش کلید «همه»', 'music-wave-core' ),
+							true,
+						],
+						[
+							'text',
+							'allLabel',
+							__( 'برچسب کلید «همه»', 'music-wave-core' ),
+						],
+						[
+							'toggle',
+							'showCounts',
+							__( 'نمایش شمارش هر حرف', 'music-wave-core' ),
+							false,
+						],
+					],
+				},
+			],
+		},
+		'music-wave/artists-pagination': {
+			groups: [
+				{
+					title: __( 'صفحه‌بندی', 'music-wave-core' ),
+					controls: [
+						[
+							'range',
+							'perPage',
+							__( 'هنرمند در هر صفحه', 'music-wave-core' ),
+							4,
+							48,
+							__(
+								'باید با «هنرمند در هر صفحه» در بلوک ویترین هنرمندان یکی باشد.',
+								'music-wave-core'
+							),
+							12,
+						],
+						[
+							'toggle',
+							'showStatus',
+							__( 'نمایش خط وضعیت صفحه', 'music-wave-core' ),
+							true,
+						],
+					],
+				},
+			],
+		},
 		'music-wave/taxonomy-shelf': {
 			groups: [
 				{
@@ -2465,6 +2720,9 @@
 								'music-wave-core'
 							),
 						],
+						sectionIconControl(
+							__( 'آیکون عنوان بخش (اختیاری)', 'music-wave-core' )
+						),
 						[
 							'text',
 							'description',
@@ -2597,9 +2855,9 @@
 							),
 						],
 						[
-							'range',
+							'stepper',
 							'columns',
-							__( 'ستون‌های شبکه', 'music-wave-core' ),
+							__( 'ستون‌های دسکتاپ', 'music-wave-core' ),
 							2,
 							6,
 							undefined,
@@ -3160,6 +3418,9 @@
 							__( 'عنوان بخش', 'music-wave-core' ),
 							'',
 						],
+						sectionIconControl(
+							__( 'آیکون عنوان بخش (اختیاری)', 'music-wave-core' )
+						),
 						[
 							'text',
 							'intro',
@@ -3355,6 +3616,9 @@
 								'music-wave-core'
 							),
 						],
+						sectionIconControl(
+							__( 'آیکون عنوان بخش (اختیاری)', 'music-wave-core' )
+						),
 						[
 							'text',
 							'intro',
@@ -3658,9 +3922,20 @@
 		);
 	}
 
-	function renderCustomIconField( label, currentValue, onSelect ) {
+	function renderCustomIconField( label, currentValue, onSelect, options ) {
 		var previews = window.musicWaveEditorPreviews || {};
 		var icons = Array.isArray( previews.icons ) ? previews.icons : [];
+		var opts = options || {};
+		var emptyLabel = opts.emptyLabel || __( 'پیش‌فرض', 'music-wave-core' );
+		var emptyTitle =
+			opts.emptyTitle ||
+			__( 'بازگشت به آیکون پیش‌فرض استاندارد', 'music-wave-core' );
+		var help =
+			opts.help ||
+			__(
+				'روش ۱: روی یکی از آیکون‌های بالا کلیک کنید. روش ۲: کلاس CSS فونت آیکون (مثل dashicons dashicons-download) بنویسید. روش ۳: کد <svg>…</svg> دلخواه را جای‌گذاری کنید (خالی = آیکون پیش‌فرض).',
+				'music-wave-core'
+			);
 
 		return createElement(
 			'div',
@@ -3683,12 +3958,9 @@
 								onClick() {
 									onSelect( '' );
 								},
-								title: __(
-									'بازگشت به آیکون پیش‌فرض استاندارد',
-									'music-wave-core'
-								),
+								title: emptyTitle,
 							},
-							__( 'پیش‌فرض', 'music-wave-core' )
+							emptyLabel
 						),
 						icons.map( function ( item ) {
 							var active = currentValue === item.slug;
@@ -3714,11 +3986,8 @@
 				label,
 				value: currentValue || '',
 				placeholder:
-					'play-filled / dashicons dashicons-controls-play / <svg>…',
-				help: __(
-					'روش ۱: روی یکی از آیکون‌های بالا کلیک کنید. روش ۲: کلاس CSS فونت آیکون (مثل dashicons dashicons-download) بنویسید. روش ۳: کد <svg>…</svg> دلخواه را جای‌گذاری کنید (خالی = آیکون پیش‌فرض).',
-					'music-wave-core'
-				),
+					'play-filled / dashicons dashicons-controls-play / <svg>...',
+				help,
 				onChange( value ) {
 					onSelect( value );
 				},
@@ -4133,6 +4402,8 @@
 	 * ['toggle', attr, label, default, help?]            ToggleControl
 	 * ['select', attr, label, [[value, label]], help?]   SelectControl
 	 * ['range', attr, label, min, max, help?, fallback?]   RangeControl
+	 * ['stepper', attr, label, min, max, help?, fallback?] Numeric stepper (−/+ with a number field)
+	 * ['pagingMode', attr, label, help?]                SelectControl over pagination/browseIndex as one mode
 	 */
 	function buildGroupControl( descriptor, props, blockName ) {
 		var type = descriptor[ 0 ];
@@ -4210,7 +4481,8 @@
 			'columns' === attr &&
 			props.attributes.layout &&
 			'grid' !== props.attributes.layout &&
-			'bento' !== props.attributes.layout
+			'bento' !== props.attributes.layout &&
+			'scroll' !== props.attributes.layout
 		) {
 			return null;
 		}
@@ -4229,19 +4501,57 @@
 			return null;
 		}
 		// Artists index pagination: page size only matters while it is on, and
-		// paging is impossible for curated or shuffled shelves.
+		// paging is impossible for curated or shuffled shelves. «Show all»
+		// replaces both the item cap and paging, so those controls hide.
 		if ( 'music-wave/artists-shelf' === blockName ) {
-			if ( 'perPage' === attr && ! props.attributes.pagination ) {
+			if (
+				props.attributes.showAll &&
+				( 'itemsToShow' === attr ||
+					'pagination' === attr ||
+					'perPage' === attr )
+			) {
 				return null;
 			}
 			if (
-				'pagination' === attr &&
+				'perPage' === attr &&
+				! props.attributes.pagination &&
+				! props.attributes.browseIndex
+			) {
+				return null;
+			}
+			if (
+				( 'pagination' === attr || 'browseIndex' === attr ) &&
 				( ( props.attributes.source &&
 					'all' !== props.attributes.source ) ||
 					'rand' === props.attributes.orderBy )
 			) {
 				return null;
 			}
+		}
+		// Artists toolbar: each label only applies while its control is on.
+		if ( 'music-wave/artists-toolbar' === blockName ) {
+			if (
+				'searchPlaceholder' === attr &&
+				! props.attributes.showSearch
+			) {
+				return null;
+			}
+			if (
+				[ 'popularLabel', 'alphabeticalLabel', 'defaultSort' ].indexOf(
+					attr
+				) !== -1 &&
+				! props.attributes.showSortTabs
+			) {
+				return null;
+			}
+		}
+		// Artists alphabet: the "all" label belongs to the "all" control.
+		if (
+			'music-wave/artists-alphabet' === blockName &&
+			'allLabel' === attr &&
+			! props.attributes.showAll
+		) {
+			return null;
 		}
 		if ( 'bioLength' === attr && ! props.attributes.showBio ) {
 			return null;
@@ -4429,7 +4739,8 @@
 								value || ''
 							)
 						);
-					}
+					},
+					descriptor[ 4 ] || {}
 				)
 			);
 		}
@@ -4470,6 +4781,129 @@
 					props.setAttributes( { className: kept.join( ' ' ) } );
 				},
 			} );
+		}
+
+		if ( 'pagingMode' === type ) {
+			var pagingMode = 'none';
+			if ( props.attributes.browseIndex ) {
+				pagingMode = 'external';
+			} else if ( props.attributes.pagination ) {
+				pagingMode = 'internal';
+			}
+			return createElement( components.SelectControl, {
+				key: 'pagingMode',
+				label,
+				help: descriptor[ 3 ] || undefined,
+				value: pagingMode,
+				options: [
+					{
+						value: 'none',
+						label: __(
+							'بدون صفحه‌بندی (نمایش یک‌جا)',
+							'music-wave-core'
+						),
+					},
+					{
+						value: 'internal',
+						label: __( 'صفحه‌بندی درون بلوک', 'music-wave-core' ),
+					},
+					{
+						value: 'external',
+						label: __(
+							'صفحه‌بندی با بلوک «صفحه‌بندی هنرمندان»',
+							'music-wave-core'
+						),
+					},
+				],
+				onChange( value ) {
+					props.setAttributes( {
+						pagination: 'internal' === value,
+						browseIndex: 'external' === value,
+					} );
+				},
+			} );
+		}
+
+		if ( 'stepper' === type ) {
+			var stepMin = parseInt( descriptor[ 3 ], 10 );
+			var stepMax = parseInt( descriptor[ 4 ], 10 );
+			var stepFallback = parseInt( descriptor[ 6 ], 10 );
+			if ( isNaN( stepFallback ) ) {
+				stepFallback = stepMin;
+			}
+			var minBound = isNaN( stepMin ) ? -Infinity : stepMin;
+			var maxBound = isNaN( stepMax ) ? Infinity : stepMax;
+			var stepRaw = parseInt( props.attributes[ attr ], 10 );
+			var stepValue = isNaN( stepRaw ) ? stepFallback : stepRaw;
+			var stepApply = function ( next ) {
+				var clamped = Math.max( minBound, Math.min( maxBound, next ) );
+				props.setAttributes(
+					attributeUpdate( props, blockName, attr, clamped )
+				);
+			};
+			return createElement(
+				'div',
+				{ key: attr, className: 'mw-stepper' },
+				createElement(
+					'div',
+					{ className: 'mw-stepper__label' },
+					label,
+					descriptor[ 5 ]
+						? createElement(
+								'span',
+								{ className: 'mw-stepper__help' },
+								descriptor[ 5 ]
+						  )
+						: null
+				),
+				createElement(
+					'div',
+					{ className: 'mw-stepper__control' },
+					createElement(
+						components.Button,
+						{
+							className: 'mw-stepper__button',
+							variant: 'secondary',
+							isSmall: true,
+							disabled: stepValue <= stepMin,
+							onClick() {
+								stepApply( stepValue - 1 );
+							},
+							'aria-label': __( 'کاهش', 'music-wave-core' ),
+						},
+						'\u2212'
+					),
+					createElement( components.TextControl, {
+						className: 'mw-stepper__input',
+						type: 'number',
+						min: stepMin,
+						max: stepMax,
+						step: 1,
+						value: stepValue,
+						__nextHasNoMarginBottom: true,
+						onChange( next ) {
+							var parsed = parseInt( next, 10 );
+							if ( ! isNaN( parsed ) ) {
+								stepApply( parsed );
+							}
+						},
+					} ),
+					createElement(
+						components.Button,
+						{
+							className: 'mw-stepper__button',
+							variant: 'secondary',
+							isSmall: true,
+							disabled: stepValue >= stepMax,
+							onClick() {
+								stepApply( stepValue + 1 );
+							},
+							'aria-label': __( 'افزایش', 'music-wave-core' ),
+						},
+						'+'
+					)
+				)
+			);
 		}
 
 		if ( 'range' === type ) {

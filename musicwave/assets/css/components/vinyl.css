@@ -236,15 +236,6 @@ html[dir="rtl"] .mw-release-shelf.mw-release-shelf--vinyl .mw-release-shelf__art
  * for the total. Every difference is structural so the two looks never read
  * as the same design, at any width.
  * ---------------------------------------------------------------------- */
-
-.mw-collection-list.mw-collection-list--tracklist {
-	padding: var(--wp--preset--spacing--30);
-	background: var(--mw-color-surface);
-	border: 1px solid var(--mw-color-border);
-	border-radius: var(--mw-radius-lg);
-	box-shadow: var(--mw-shadow-card);
-}
-
 .mw-collection-list.mw-collection-list--tracklist .mw-collection-list__heading {
 	margin: 0;
 	padding: 0;
@@ -305,16 +296,6 @@ html[dir="rtl"] .mw-release-shelf.mw-release-shelf--vinyl .mw-release-shelf__art
 	font-weight: 700;
 	letter-spacing: var(--mw-eyebrow-tracking, 0.12em);
 	text-transform: uppercase;
-}
-
-.mw-collection-list.mw-collection-list--tracklist .mw-collection-list__total {
-	margin: 0;
-	padding-block: 0.25rem;
-	padding-inline: 0.65rem;
-	border-block-start: 0;
-	font-family: var(--wp--preset--font-family--mono, ui-monospace, monospace);
-	font-weight: 600;
-	letter-spacing: 0.04em;
 }
 
 .mw-collection-list.mw-collection-list--tracklist .mw-collection-list__disc-heading,

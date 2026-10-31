@@ -153,13 +153,13 @@ final class VipPlans {
 		$mutated = $this->store->mutate_grants(
 			$user_id,
 			static function ( array $grants ) use ( $order_id, $now, $matching ): array {
-				$next = $grants;
+				$next         = $grants;
+				$timeline_end = self::timeline_end( $grants );
 
 				foreach ( $matching as $level => $info ) {
 					$existing       = isset( $next[ $level ] ) && is_array( $next[ $level ] ) ? $next[ $level ] : array();
 					$other_entries  = array();
 					$previous_entry = null;
-					$max_other_exp  = 0;
 
 					foreach ( $existing as $entry ) {
 						if ( ! is_array( $entry ) ) {
@@ -170,24 +170,33 @@ final class VipPlans {
 							continue;
 						}
 						$other_entries[] = $entry;
-						$exp             = isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
-						if ( $exp > $max_other_exp ) {
-							$max_other_exp = $exp;
-						}
 					}
 
 					$total_duration = (int) $info['total_duration'];
-					$granted_at     = ( null !== $previous_entry && ! empty( $previous_entry['granted_at'] ) )
-						? (int) $previous_entry['granted_at']
-						: $now;
-					$base_time      = max( $max_other_exp, $now );
-					$expires_at     = $total_duration > 0 ? $base_time + ( $total_duration * self::SECONDS_PER_DAY ) : 0;
+					if ( null !== $previous_entry ) {
+						// A replayed order keeps the windows the first hook assigned.
+						$granted_at = isset( $previous_entry['granted_at'] ) ? (int) $previous_entry['granted_at'] : $now;
+						$expires_at = isset( $previous_entry['expires_at'] ) ? (int) $previous_entry['expires_at'] : 0;
+						$starts_at  = isset( $previous_entry['starts_at'] ) ? (int) $previous_entry['starts_at'] : 0;
+					} else {
+						// Every purchase appends to one membership timeline: a new
+						// term starts where the current one ends, so a shorter plan
+						// bought during a longer one becomes a reserved term instead
+						// of running (and expiring) alongside it.
+						$start_time = max( $timeline_end, $now );
+						$granted_at = $start_time;
+						$expires_at = $total_duration > 0 ? $start_time + ( $total_duration * self::SECONDS_PER_DAY ) : 0;
+						$starts_at  = $total_duration > 0 && $start_time > $now ? $start_time : 0;
+					}
 
 					$new_entry = array(
 						'order_id'   => $order_id,
 						'granted_at' => $granted_at,
 						'expires_at' => $expires_at,
 					);
+					if ( $starts_at > 0 ) {
+						$new_entry['starts_at'] = $starts_at;
+					}
 					if ( $total_duration > 0 ) {
 						$new_entry['duration_days'] = $total_duration;
 					}
@@ -235,9 +244,10 @@ final class VipPlans {
 		}
 
 		$removed = 0;
+		$now     = $this->now();
 		$mutated = $this->store->mutate_grants(
 			$user_id,
-			static function ( array $grants ) use ( $order_id, &$removed ): ?array {
+			static function ( array $grants ) use ( $order_id, &$removed, $now ): ?array {
 				$removed = 0;
 				$next    = array();
 				foreach ( $grants as $level => $entries ) {
@@ -253,7 +263,7 @@ final class VipPlans {
 						$next[ $level ] = $kept;
 					}
 				}
-				return $removed > 0 ? $next : null;
+				return $removed > 0 ? self::rebuild_reserved_chain( $next, $now ) : null;
 			}
 		);
 
@@ -301,8 +311,7 @@ final class VipPlans {
 		}
 		$now = $this->now();
 		foreach ( $grants[ $level ] as $entry ) {
-			$expires_at = isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
-			if ( 0 === $expires_at || $expires_at > $now ) {
+			if ( is_array( $entry ) && self::entry_is_active( $entry, $now ) ) {
 				return true;
 			}
 		}
@@ -319,8 +328,7 @@ final class VipPlans {
 		$levels = array();
 		foreach ( $this->grants_for_user( $user_id ) as $level => $entries ) {
 			foreach ( $entries as $entry ) {
-				$expires_at = isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
-				if ( 0 === $expires_at || $expires_at > $now ) {
+				if ( is_array( $entry ) && self::entry_is_active( $entry, $now ) ) {
 					$levels[] = (string) $level;
 					break;
 				}
@@ -374,7 +382,7 @@ final class VipPlans {
 				if ( $expires_at > 0 && $expires_at > $now + ( VipPlanParser::MAX_DURATION_DAYS * self::SECONDS_PER_DAY ) ) {
 					$expires_at = $now + ( VipPlanParser::MAX_DURATION_DAYS * self::SECONDS_PER_DAY );
 				}
-				if ( $granted_at > $now + 300 ) {
+				if ( $granted_at > $now + ( VipPlanParser::MAX_DURATION_DAYS * self::SECONDS_PER_DAY ) ) {
 					$granted_at = $now;
 				}
 				$is_lifetime = 0 === $expires_at;
@@ -396,11 +404,16 @@ final class VipPlans {
 
 				$remaining_days = $is_lifetime ? 0 : max( 0, (int) ceil( ( $expires_at - $now ) / self::SECONDS_PER_DAY ) );
 				$percent_used   = $is_lifetime ? 0.0 : $this->calculate_percent_used( $granted_at, $expires_at, $now );
+				$starts_at      = isset( $entry['starts_at'] ) ? absint( $entry['starts_at'] ) : 0;
+				$is_reserved    = $starts_at > $now;
 				$expires_label  = $is_lifetime
 					? __( 'مادام‌العمر', 'music-wave-vip' )
 					: ( $expires_at > 0 && function_exists( 'date_i18n' ) ? date_i18n( (string) get_option( 'date_format' ), $expires_at ) : '' );
 				$granted_label  = $granted_at > 0 && function_exists( 'date_i18n' )
 					? date_i18n( (string) get_option( 'date_format' ), $granted_at )
+					: '';
+				$starts_label   = $is_reserved && function_exists( 'date_i18n' )
+					? date_i18n( (string) get_option( 'date_format' ), $starts_at )
 					: '';
 				$is_stacked     = $duration_days > 0 && $granted_at > 0 && ( $expires_at - $granted_at ) > ( $duration_days * self::SECONDS_PER_DAY + self::SECONDS_PER_DAY );
 
@@ -411,6 +424,10 @@ final class VipPlans {
 					'note'             => isset( $entry['note'] ) ? self::clean_text( (string) $entry['note'] ) : '',
 					'granted_at'       => $granted_at,
 					'expires_at'       => $expires_at,
+					'starts_at'        => $starts_at,
+					'is_reserved'      => $is_reserved,
+					'reserved_days'    => $is_reserved ? max( 0, (int) ceil( ( $starts_at - $now ) / self::SECONDS_PER_DAY ) ) : 0,
+					'starts_label'     => self::clean_text( $starts_label ),
 					'duration_days'    => $duration_days,
 					'is_lifetime'      => $is_lifetime,
 					'remaining_days'   => $remaining_days,
@@ -428,6 +445,9 @@ final class VipPlans {
 		usort(
 			$result,
 			static function ( array $a, array $b ): int {
+				if ( $a['is_reserved'] !== $b['is_reserved'] ) {
+					return $a['is_reserved'] ? 1 : -1;
+				}
 				if ( $a['is_lifetime'] && ! $b['is_lifetime'] ) {
 					return 1;
 				}
@@ -458,7 +478,7 @@ final class VipPlans {
 
 		$needing = array();
 		foreach ( $this->detailed_active_grants( $user_id ) as $grant ) {
-			if ( ! empty( $grant['is_lifetime'] ) ) {
+			if ( ! empty( $grant['is_lifetime'] ) || ! empty( $grant['is_reserved'] ) ) {
 				continue;
 			}
 			if ( (float) $grant['percent_used'] >= $ratio ) {
@@ -638,6 +658,12 @@ final class VipPlans {
 					$granted_base           = isset( $entry['granted_at'] ) && (int) $entry['granted_at'] > 0 ? (int) $entry['granted_at'] : $now;
 					$entry['granted_at']    = min( $granted_base, $clamped - 60 );
 					$entry['duration_days'] = max( 1, (int) ceil( ( $clamped - (int) $entry['granted_at'] ) / self::SECONDS_PER_DAY ) );
+					// An admin edit that pulls the end before the reserved start
+					// promotes the term to a live one instead of storing an
+					// impossible window (which normalization would drop).
+					if ( isset( $entry['starts_at'] ) && (int) $entry['starts_at'] >= $clamped ) {
+						unset( $entry['starts_at'] );
+					}
 				}
 				if ( '' !== $clean_note ) {
 					$entry['source'] = isset( $entry['source'] ) && 'admin' === (string) $entry['source'] ? 'admin' : 'order';
@@ -647,6 +673,10 @@ final class VipPlans {
 			}
 		}
 		unset( $entries, $entry );
+
+		if ( $found ) {
+			$stored = self::rebuild_reserved_chain( $stored, $now );
+		}
 
 		if ( ! $found || ! $this->store->cas_write_grants( $user_id, $expected, $stored ) ) {
 			return false;
@@ -691,7 +721,7 @@ final class VipPlans {
 			}
 		}
 
-		if ( ! $removed || ! $this->store->cas_write_grants( $user_id, $expected, $next ) ) {
+		if ( ! $removed || ! $this->store->cas_write_grants( $user_id, $expected, self::rebuild_reserved_chain( $next, $this->now() ) ) ) {
 			return false;
 		}
 
@@ -744,11 +774,13 @@ final class VipPlans {
 		}
 		$stored = $this->store->all_stored_for_admin( $user_id );
 		$flat   = array();
+		$now    = $this->now();
 
 		foreach ( $stored as $level => $entries ) {
 			foreach ( $entries as $idx => $entry ) {
 				$key          = self::make_grant_key( (string) $level, (int) $idx, $entry );
 				$expires_at   = isset( $entry['expires_at'] ) ? absint( $entry['expires_at'] ) : 0;
+				$starts_at    = isset( $entry['starts_at'] ) ? absint( $entry['starts_at'] ) : 0;
 				$flat[ $key ] = array(
 					'key'           => $key,
 					'level'         => (string) $level,
@@ -757,6 +789,8 @@ final class VipPlans {
 					'granted_at'    => isset( $entry['granted_at'] ) ? absint( $entry['granted_at'] ) : 0,
 					'expires_at'    => $expires_at,
 					'until'         => $expires_at,
+					'starts_at'     => $starts_at,
+					'is_reserved'   => $starts_at > $now,
 					'duration_days' => isset( $entry['duration_days'] ) ? absint( $entry['duration_days'] ) : 0,
 					'note'          => isset( $entry['note'] ) ? self::clean_text( (string) $entry['note'] ) : '',
 					'granted_by'    => isset( $entry['granted_by'] ) ? absint( $entry['granted_by'] ) : 0,
@@ -845,7 +879,9 @@ final class VipPlans {
 		if ( ! is_object( $user ) || ! method_exists( $user, 'add_role' ) || ! method_exists( $user, 'remove_role' ) ) {
 			return;
 		}
-		if ( ! empty( $active_grants ) ) {
+		// Reserved terms must not promote the role before they start.
+		$has_active = ! empty( $this->active_levels( $user_id ) );
+		if ( $has_active ) {
 			$user->add_role( self::VIP_ROLE );
 		} else {
 			$user->remove_role( self::VIP_ROLE );
@@ -879,6 +915,117 @@ final class VipPlans {
 		if ( $max_until > 0 ) {
 			update_user_meta( $user_id, self::EVER_GRANTED_META, '1' );
 		}
+	}
+
+	/**
+	 * Whether a grant row grants access right now.
+	 *
+	 * A reserved term (`starts_at` in the future) is stored on the same timeline
+	 * but must not grant access until the preceding term ends.
+	 *
+	 * @param array<string, mixed> $entry Grant row.
+	 */
+	private static function entry_is_active( array $entry, int $now ): bool {
+		$expires_at = isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
+		if ( 0 !== $expires_at && $expires_at <= $now ) {
+			return false;
+		}
+		$starts_at = isset( $entry['starts_at'] ) ? (int) $entry['starts_at'] : 0;
+
+		return $starts_at < 1 || $starts_at <= $now;
+	}
+
+	/**
+	 * Latest finite expiry across every level: the end of the current
+	 * membership timeline. Lifetime rows have no end and are ignored.
+	 *
+	 * @param array<string, array<int, array<string, mixed>>> $grants Grant set.
+	 */
+	private static function timeline_end( array $grants ): int {
+		$end = 0;
+		foreach ( $grants as $entries ) {
+			if ( ! is_array( $entries ) ) {
+				continue;
+			}
+			foreach ( $entries as $entry ) {
+				if ( ! is_array( $entry ) ) {
+					continue;
+				}
+				$expires_at = isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
+				if ( $expires_at > $end ) {
+					$end = $expires_at;
+				}
+			}
+		}
+
+		return $end;
+	}
+
+	/**
+	 * Re-lay the reserved part of the timeline after a term disappears early
+	 * (refund, cancellation, manual removal).
+	 *
+	 * Reserved terms are queued behind the current timeline end, so removing the
+	 * term they were waiting on would otherwise lock a paid plan until a start
+	 * date that no longer corresponds to anything. Recomputing the chain from the
+	 * remaining live term keeps every reservation contiguous; it is idempotent,
+	 * so it can run after any window change without disturbing a valid chain.
+	 *
+	 * @param array<string, array<int, array<string, mixed>>> $grants Grant set.
+	 */
+	private static function rebuild_reserved_chain( array $grants, int $now ): array {
+		$reserved = array();
+		$end      = 0;
+
+		foreach ( $grants as $level => $entries ) {
+			if ( ! is_array( $entries ) ) {
+				continue;
+			}
+			foreach ( $entries as $index => $entry ) {
+				if ( ! is_array( $entry ) ) {
+					continue;
+				}
+				$starts_at  = isset( $entry['starts_at'] ) ? absint( $entry['starts_at'] ) : 0;
+				$expires_at = isset( $entry['expires_at'] ) ? absint( $entry['expires_at'] ) : 0;
+				if ( $starts_at > $now ) {
+					$reserved[] = array(
+						'level'      => (string) $level,
+						'index'      => (int) $index,
+						'starts_at'  => $starts_at,
+						'expires_at' => $expires_at,
+					);
+					continue;
+				}
+				if ( $expires_at > $end && self::entry_is_active( $entry, $now ) ) {
+					$end = $expires_at;
+				}
+			}
+		}
+
+		if ( empty( $reserved ) ) {
+			return $grants;
+		}
+
+		usort(
+			$reserved,
+			static function ( array $a, array $b ): int {
+				return $a['starts_at'] <=> $b['starts_at'];
+			}
+		);
+
+		$cursor = max( $end, $now );
+		foreach ( $reserved as $row ) {
+			$duration = $row['expires_at'] > $row['starts_at'] ? $row['expires_at'] - $row['starts_at'] : 0;
+			if ( $duration < 1 ) {
+				continue;
+			}
+			$grants[ $row['level'] ][ $row['index'] ]['granted_at'] = $cursor;
+			$grants[ $row['level'] ][ $row['index'] ]['expires_at'] = $cursor + $duration;
+			unset( $grants[ $row['level'] ][ $row['index'] ]['starts_at'] );
+			$cursor += $duration;
+		}
+
+		return $grants;
 	}
 
 	/**
@@ -1000,34 +1147,51 @@ final class VipPlans {
 		}
 
 		$expiries   = array();
+		$starts     = array();
 		$grants_now = $this->grants_for_user( $user_id );
 		foreach ( $grant_levels as $lvl ) {
-			$max_exp      = 0;
-			$has_lifetime = false;
+			$expiry  = 0;
+			$start   = 0;
+			$has_row = false;
 			if ( isset( $grants_now[ $lvl ] ) && is_array( $grants_now[ $lvl ] ) ) {
 				foreach ( $grants_now[ $lvl ] as $entry ) {
-					$exp = isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
-					if ( 0 === $exp ) {
-						$has_lifetime = true;
-						break;
+					if ( ! is_array( $entry ) || ! isset( $entry['order_id'] ) || (int) $entry['order_id'] !== $order_id ) {
+						continue;
 					}
-					if ( $exp > $max_exp ) {
-						$max_exp = $exp;
+					$has_row = true;
+					$expiry  = isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
+					$start   = isset( $entry['starts_at'] ) ? (int) $entry['starts_at'] : 0;
+					break;
+				}
+			}
+			// Legacy rows without an order id fall back to the level's latest expiry.
+			if ( ! $has_row && isset( $grants_now[ $lvl ] ) && is_array( $grants_now[ $lvl ] ) ) {
+				foreach ( $grants_now[ $lvl ] as $entry ) {
+					$exp = is_array( $entry ) && isset( $entry['expires_at'] ) ? (int) $entry['expires_at'] : 0;
+					if ( $exp > $expiry ) {
+						$expiry = $exp;
 					}
 				}
 			}
-			$expiries[ $lvl ] = $has_lifetime ? 0 : $max_exp;
+			$expiries[ $lvl ] = $expiry;
+			$starts[ $lvl ]   = $start;
 		}
 
 		$order->update_meta_data( '_mw_vip_granted_levels', $grant_levels );
 		$order->update_meta_data( '_mw_vip_granted_expiries', $expiries );
+		$order->update_meta_data( '_mw_vip_granted_starts', $starts );
 		$order->update_meta_data( '_mw_vip_granted_at', (string) $this->now() );
 		$order->update_meta_data( '_mw_vip_granted_quantities', $quantities );
 		$order->save();
 
 		$notes = array();
 		foreach ( $matching as $lvl => $info ) {
-			$notes[] = sprintf( '%s (x%d, %d روز)', $lvl, $info['total_qty'], $info['total_duration'] );
+			$note_line = sprintf( '%s (x%d, %d روز)', $lvl, $info['total_qty'], $info['total_duration'] );
+			if ( ! empty( $starts[ $lvl ] ) && (int) $starts[ $lvl ] > $this->now() ) {
+				/* translators: %s: activation date of the reserved term. */
+				$note_line .= ' — ' . sprintf( __( 'رزرو از %s', 'music-wave-vip' ), date_i18n( (string) get_option( 'date_format' ), (int) $starts[ $lvl ] ) );
+			}
+			$notes[] = $note_line;
 		}
 		/* translators: %s: value 1. */
 		$order->add_order_note( sprintf( __( 'اشتراک VIP اعطا شد: %s', 'music-wave-vip' ), implode( ', ', $notes ) ) );

@@ -3,10 +3,11 @@
  *
  * Synchronized 1:1 with `ManaCore\MusicWave\Vip\SettingsPage`:
  * - `.mwvip-tabs button[data-tab]` <-> `.mwvip-panel[data-panel]` (`.active` + ARIA + RTL arrows + URL/session persistence)
- * - `#mwvip-delivery-provider` & `#mwvip-sendfile-mode` <-> `tr.mwvip-local-row` / `tr.mwvip-remote-row` / `tr.mwvip-xaccel-row`
+ * - `#mwvip-delivery-provider` & `#mwvip-sendfile-mode` <-> `[data-mwvip-section]` collapse, `[data-mwvip-mode-hint]` and `tr.mwvip-xaccel-row`
+ * - `#mwvip-upload-enabled` & `#mwvip-upload-mode` <-> `.mwvip-upload-group` / `.mwvip-upload-creds[data-modes]`
  * - `#mwvip-module-enabled` <-> `.mwvip-module-control`, `[data-mwvip-controls-unlocked]` & `#mwvip-membership-note`
  * - `#mwvip-provision-btn`, `#mwvip-vault-upload-btn`, `#mwvip-vault-search`, `[data-mwvip-copy]`, `[data-mwvip-delete-asset]`
- * - `#mwvip-toggle-secret` & `#mwvip-gen-secret` <-> `#mwvip-remote-secret`
+ * - `[data-mwvip-generate]` & `[data-mwvip-reveal]` <-> the secret input named in their `data-*` attribute
  */
 ( function () {
 	'use strict';
@@ -515,28 +516,77 @@
 			'mwvip-delivery-provider'
 		);
 		const sendfileSelect = document.getElementById( 'mwvip-sendfile-mode' );
-		const localRows = Array.prototype.slice.call(
-			document.querySelectorAll( '.mwvip-local-row' )
-		);
-		const remoteRows = Array.prototype.slice.call(
-			document.querySelectorAll( '.mwvip-remote-row' )
-		);
 		const xaccelRows = Array.prototype.slice.call(
 			document.querySelectorAll( '.mwvip-xaccel-row' )
 		);
 
 		function syncDeliveryRows() {
-			const isRemote =
-				Boolean( providerSelect ) &&
-				providerSelect.value === 'remote_redirect';
-			localRows.forEach( function ( row ) {
-				row.style.display = isRemote ? 'none' : '';
-			} );
-			remoteRows.forEach( function ( row ) {
-				row.style.display = isRemote ? '' : 'none';
-			} );
+			const mode = providerSelect ? providerSelect.value : 'local';
+			const isLocalLike = mode === 'local' || mode === 'proxy';
+
+			// Every bounded section collapses when the chosen mode does not use
+			// it: the page then shows only what can take effect, while the header
+			// (and its badge) stays visible so the admin still sees the section.
+			Array.prototype.forEach.call(
+				document.querySelectorAll( '[data-mwvip-section]' ),
+				function ( section ) {
+					const modes = (
+						section.getAttribute( 'data-mwvip-section-modes' ) || ''
+					)
+						.split( /\s+/ )
+						.filter( Boolean );
+					let applies =
+						modes.length === 0 || modes.indexOf( mode ) !== -1;
+					if (
+						applies &&
+						section.getAttribute( 'data-mwvip-needs-upload' ) ===
+							'1' &&
+						mode === 'remote_redirect'
+					) {
+						const queue = document.getElementById(
+							'mwvip-upload-enabled'
+						);
+						applies = Boolean( queue && queue.checked );
+					}
+					section.classList.toggle( 'is-collapsed', ! applies );
+
+					const badge = section.querySelector(
+						'[data-mwvip-applies]'
+					);
+					if ( ! badge ) {
+						return;
+					}
+					badge.classList.toggle( 'is-on', applies );
+					badge.classList.toggle( 'is-off', ! applies );
+					badge.textContent = applies
+						? i18n.appliesNow || badge.textContent
+						: i18n.appliesNo || badge.textContent;
+				}
+			);
+
+			// Exactly one "what to fill for this mode" hint under the chooser.
+			Array.prototype.forEach.call(
+				document.querySelectorAll( '[data-mwvip-mode-hint]' ),
+				function ( hint ) {
+					const hintMode =
+						hint.getAttribute( 'data-mwvip-mode-hint' ) || '';
+					hint.style.display = hintMode === mode ? '' : 'none';
+				}
+			);
+
+			// Keep the quick-guide matrix in step with the chooser.
+			Array.prototype.forEach.call(
+				document.querySelectorAll( '[data-mwvip-matrix-mode]' ),
+				function ( row ) {
+					row.classList.toggle(
+						'is-current',
+						row.getAttribute( 'data-mwvip-matrix-mode' ) === mode
+					);
+				}
+			);
+
 			const showXaccel =
-				! isRemote &&
+				isLocalLike &&
 				Boolean( sendfileSelect ) &&
 				sendfileSelect.value === 'xaccel';
 			xaccelRows.forEach( function ( row ) {
@@ -552,6 +602,55 @@
 		}
 		if ( providerSelect || sendfileSelect ) {
 			syncDeliveryRows();
+		}
+
+		// Remote-upload: show the pipeline rows only when enabled, and only the
+		// credential rows belonging to the selected transfer method.
+		const uploadToggle = document.getElementById( 'mwvip-upload-enabled' );
+		const uploadMode = document.getElementById( 'mwvip-upload-mode' );
+		const uploadGroups = Array.prototype.slice.call(
+			document.querySelectorAll( '.mwvip-upload-group' )
+		);
+
+		function syncUploadRows() {
+			const on = uploadToggle ? uploadToggle.checked : false;
+			const mode = uploadMode ? uploadMode.value : 'webhook';
+			uploadGroups.forEach( function ( row ) {
+				let visible = on;
+				if (
+					visible &&
+					row.classList.contains( 'mwvip-upload-creds' )
+				) {
+					const modes = (
+						row.getAttribute( 'data-modes' ) || ''
+					).split( /\s+/ );
+					visible = modes.indexOf( mode ) !== -1;
+				}
+				row.style.display = visible ? '' : 'none';
+				// A hidden row must not submit: several modes share
+				// `remote_upload_endpoint`, `remote_upload_auth_token` and
+				// `remote_upload_access_key`, and an empty duplicate would
+				// override the value typed into the visible row.
+				Array.prototype.forEach.call(
+					row.querySelectorAll( 'input, button, select, textarea' ),
+					function ( control ) {
+						control.disabled = ! visible;
+					}
+				);
+			} );
+		}
+
+		if ( uploadToggle ) {
+			uploadToggle.addEventListener( 'change', syncUploadRows );
+			// The storage section only applies in remote_redirect when the queue
+			// is on, so its collapse state tracks this toggle too.
+			uploadToggle.addEventListener( 'change', syncDeliveryRows );
+		}
+		if ( uploadMode ) {
+			uploadMode.addEventListener( 'change', syncUploadRows );
+		}
+		if ( uploadToggle || uploadMode ) {
+			syncUploadRows();
 		}
 
 		// Master VIP toggle live control state + browser unlock flag.
@@ -577,36 +676,202 @@
 				}
 			} );
 		}
+	}
 
-		// Remote signing secret visibility + CSPRNG hex generator.
-		const secretInput = document.getElementById( 'mwvip-remote-secret' );
-		const toggleBtn = document.getElementById( 'mwvip-toggle-secret' );
-		const genBtn = document.getElementById( 'mwvip-gen-secret' );
+	// Delivery tools: edge connection test, upload connection test, library
+	// sync, and queue status. Each posts to its REST route with the WP nonce and
+	// reports the result inline (no browser alerts).
+	function initTools() {
+		const tools = cfg.tools || {};
 
-		if ( secretInput && toggleBtn ) {
-			toggleBtn.addEventListener( 'click', function ( event ) {
-				event.preventDefault();
-				secretInput.type =
-					secretInput.type === 'password' ? 'text' : 'password';
+		function setFeedback( el, text, ok ) {
+			if ( ! el ) {
+				return;
+			}
+			el.textContent = text;
+			el.style.color = ok ? '#166534' : '#b32d2e';
+		}
+
+		function post( url, body ) {
+			return window
+				.fetch( url, {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: {
+						'X-WP-Nonce': cfg.restNonce || '',
+						'Content-Type': 'application/json',
+					},
+					body: body ? JSON.stringify( body ) : undefined,
+				} )
+				.then( function ( r ) {
+					return r.json().then( function ( data ) {
+						return { status: r.status, data };
+					} );
+				} );
+		}
+
+		function wire( btnId, feedbackId, url, busyText, map ) {
+			const btn = document.getElementById( btnId );
+			if ( ! btn || ! url ) {
+				return;
+			}
+			const fb = document.getElementById( feedbackId );
+			btn.addEventListener( 'click', function () {
+				const prev = btn.textContent;
+				btn.disabled = true;
+				setFeedback( fb, busyText, true );
+				post( url )
+					.then( function ( res ) {
+						map( res, fb, setFeedback );
+					} )
+					.catch( function () {
+						setFeedback( fb, i18n.testFailed || 'Error', false );
+					} )
+					.then( function () {
+						btn.disabled = false;
+						btn.textContent = prev;
+					} );
 			} );
 		}
-		if (
-			secretInput &&
-			genBtn &&
-			window.crypto &&
-			window.crypto.getRandomValues
-		) {
-			genBtn.addEventListener( 'click', function ( event ) {
+
+		wire(
+			'mwvip-edge-test',
+			'mwvip-edge-feedback',
+			tools.edgeTest,
+			i18n.testing || '...',
+			function ( res, fb, set ) {
+				const data = res.data || {};
+				if ( res.status >= 200 && res.status < 300 && data.ok ) {
+					set( fb, i18n.testOk || 'OK', true );
+				} else {
+					set(
+						fb,
+						( i18n.testFailed || '' ) +
+							' ' +
+							( data.error || data.message || res.status ),
+						false
+					);
+				}
+			}
+		);
+
+		wire(
+			'mwvip-upload-test',
+			'mwvip-upload-feedback',
+			tools.uploadTest,
+			i18n.testing || '...',
+			function ( res, fb, set ) {
+				const data = res.data || {};
+				if ( res.status >= 200 && res.status < 300 && data.ok ) {
+					set( fb, i18n.testOk || 'OK', true );
+				} else {
+					set(
+						fb,
+						( i18n.testFailed || '' ) +
+							' ' +
+							( data.error || data.message || res.status ),
+						false
+					);
+				}
+			}
+		);
+
+		wire(
+			'mwvip-upload-sync',
+			'mwvip-upload-feedback',
+			tools.uploadSync,
+			i18n.syncing || '...',
+			function ( res, fb, set ) {
+				const data = res.data || {};
+				if ( res.status >= 200 && res.status < 300 ) {
+					set(
+						fb,
+						( i18n.syncDone || 'OK' ) +
+							' — synced: ' +
+							( data.synced || 0 ) +
+							', failed: ' +
+							( data.failed || 0 ),
+						true
+					);
+				} else {
+					set( fb, data.message || res.status, false );
+				}
+			}
+		);
+
+		wire(
+			'mwvip-upload-status',
+			'mwvip-upload-feedback',
+			tools.uploadStatus,
+			i18n.statusLoading || '...',
+			function ( res, fb, set ) {
+				const q = ( res.data && res.data.queue ) || {};
+				if ( res.status >= 200 && res.status < 300 ) {
+					set(
+						fb,
+						'pending: ' +
+							( q.pending || 0 ) +
+							', uploading: ' +
+							( q.uploading || 0 ) +
+							', synced: ' +
+							( q.synced || 0 ) +
+							', failed: ' +
+							( q.failed || 0 ),
+						Number( q.failed || 0 ) === 0
+					);
+				} else {
+					set( fb, res.status, false );
+				}
+			}
+		);
+	}
+
+	// Secure-key generation and reveal toggles for every secret field.
+	function initSecretTools() {
+		document.addEventListener( 'click', function ( event ) {
+			const target = event.target;
+			if ( ! target || ! target.closest ) {
+				return;
+			}
+
+			const genBtn = target.closest( '[data-mwvip-generate]' );
+			if ( genBtn ) {
 				event.preventDefault();
-				const bytes = new Uint8Array( 32 );
-				window.crypto.getRandomValues( bytes );
-				secretInput.value = Array.from( bytes, function ( b ) {
-					return b.toString( 16 ).padStart( 2, '0' );
-				} ).join( '' );
-				secretInput.type = 'text';
-				secretInput.focus();
-			} );
-		}
+				const input = document.getElementById(
+					genBtn.getAttribute( 'data-mwvip-generate' ) || ''
+				);
+				if ( ! input ) {
+					return;
+				}
+				const bytes =
+					parseInt(
+						genBtn.getAttribute( 'data-mwvip-generate-bytes' ),
+						10
+					) || 32;
+				if ( window.crypto && window.crypto.getRandomValues ) {
+					const arr = new Uint8Array( bytes );
+					window.crypto.getRandomValues( arr );
+					input.value = Array.from( arr, function ( b ) {
+						return b.toString( 16 ).padStart( 2, '0' );
+					} ).join( '' );
+					input.type = 'text';
+					input.focus();
+				}
+				return;
+			}
+
+			const revealBtn = target.closest( '[data-mwvip-reveal]' );
+			if ( revealBtn ) {
+				event.preventDefault();
+				const input = document.getElementById(
+					revealBtn.getAttribute( 'data-mwvip-reveal' ) || ''
+				);
+				if ( input ) {
+					input.type =
+						input.type === 'password' ? 'text' : 'password';
+				}
+			}
+		} );
 	}
 
 	function initConfirmations() {
@@ -641,6 +906,8 @@
 		initConfirmations();
 		initVaultAndProvisionControls();
 		initDeliveryAndSecretControls();
+		initTools();
+		initSecretTools();
 	}
 
 	if ( document.readyState === 'loading' ) {

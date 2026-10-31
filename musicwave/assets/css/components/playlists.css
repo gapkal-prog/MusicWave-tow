@@ -405,16 +405,9 @@
 	--mw-fan-inset: 14% 10%;
 }
 
-/* Circular shape: the front sleeve reads as a vinyl disc and the decorative
- * back sleeve hides — a dark circle cannot read as a sleeve behind another. */
-.mw-public-playlists__art--circle .mw-playlists__art-grid,
-.mw-public-playlists__art--circle .mw-playlists__art-cell:first-child {
-	border-radius: 50%;
-}
-
-.mw-public-playlists__art--circle .mw-public-playlists__art-back {
-	display: none;
-}
+/* Circular and wide/tall boxes only reshape the sleeve; the radius itself is
+ * declared after the front-sleeve rules further down so it is not overridden
+ * by the shared plate radius. */
 
 @media (prefers-reduced-motion: reduce) {
 	.mw-playlists__art-cell {
@@ -1465,7 +1458,10 @@
 	align-items: start;
 }
 
-.mw-public-playlists__grid[class*="--columns-"] {
+/* Column counts belong to the grid layout only: `--scroll` and `--list` keep
+ * their own template columns, and a modifier printed there used to win the
+ * cascade and flatten the rail / break the list. */
+.mw-public-playlists__grid--grid[class*="--columns-"] {
 	grid-template-columns: repeat(var(--mw-shelf-columns), minmax(0, 1fr));
 }
 
@@ -1522,6 +1518,22 @@
 		border-color var(--mw-speed-fast, 140ms) ease,
 		transform var(--mw-speed-normal, 260ms) var(--mw-ease-out, ease),
 		box-shadow var(--mw-speed-normal, 260ms) ease;
+}
+
+/* Card shell: the artwork plate and the copy share one row once the card is
+ * wide enough for the "studio" arrangement and stay stacked on narrow cards.
+ * The plate's `flex` sizing in the container query below depends on this. */
+.mw-public-playlists__frame {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20);
+	min-inline-size: 0;
+}
+
+.mw-public-playlists__grid--list .mw-public-playlists__frame {
+	flex-direction: row;
+	align-items: center;
+	gap: 0.85rem;
 }
 
 /* Artwork plate: frames the layered sleeve deck and hosts the master stamp.
@@ -1589,6 +1601,18 @@
 	transform: none;
 	filter: none;
 	box-shadow: none;
+}
+
+/* Circular shape: the front sleeve reads as a vinyl disc and the decorative
+ * back sleeve hides — a dark circle cannot read as a sleeve behind another.
+ * Placed after the plate rules: `art--circle .art-grid` and
+ * `art .art-grid` share specificity, so source order picks the winner. */
+.mw-public-playlists__art--circle .mw-playlists__art-grid {
+	border-radius: 50%;
+}
+
+.mw-public-playlists__art--circle .mw-public-playlists__art-back {
+	display: none;
 }
 
 /* Deck depth: the glass layer lifts a little further on interaction. */
@@ -1729,6 +1753,11 @@
 /* Wide card: the reference "studio" arrangement — artwork plate beside the
  * copy, primary action stretched along the bottom edge. */
 @container (min-width: 30rem) {
+	.mw-public-playlists__frame {
+		flex-direction: row;
+		align-items: flex-start;
+	}
+
 	.mw-public-playlists__art {
 		flex: 0 0 clamp(9rem, 32cqi, 15rem);
 	}

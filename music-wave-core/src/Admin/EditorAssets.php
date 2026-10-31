@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace ManaCore\MusicWave\Core\Admin;
 
 use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
-
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -39,6 +39,15 @@ final class EditorAssets {
 			MUSIC_WAVE_CORE_URL . 'assets/editor.css',
 			array( 'wp-components' ),
 			MUSIC_WAVE_CORE_VERSION
+		);
+
+		wp_localize_script(
+			'music-wave-editor',
+			'mwEditorConfig',
+			array(
+				// wp_localize_script stringifies booleans; use an explicit flag.
+				'isVipActive' => VipModuleStatus::is_active() ? '1' : '0',
+			)
 		);
 	}
 }

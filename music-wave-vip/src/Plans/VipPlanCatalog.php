@@ -169,7 +169,7 @@ final class VipPlanCatalog {
 
 		$features = array();
 		$combined = $raw_content . "\n" . $raw_excerpt;
-		if ( preg_match_all( '/<li\b[^>]*>(.*?)<\/li>/is', $combined, $matches ) && ! empty( $matches[1] ) ) {
+		if ( preg_match_all( '/<li\b[^>]*>(.*?)<\/li>/is', $combined, $matches ) ) {
 			foreach ( $matches[1] as $item ) {
 				$clean = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( (string) $item ) ) ?? '' );
 				if ( '' !== $clean && ! in_array( $clean, $features, true ) ) {

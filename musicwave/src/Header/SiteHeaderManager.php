@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Theme\Header;
 
-use ManaCore\MusicWave\Theme\Routing\RouteManager;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -52,9 +50,6 @@ final class SiteHeaderManager {
 	/** Default bottom bar scope. */
 	private const DEFAULT_TABBAR = 'both';
 
-	/** @var RouteManager */
-	private RouteManager $routes;
-
 	/**
 	 * Request-scoped cache for Site Editor header template parts.
 	 *
@@ -67,10 +62,6 @@ final class SiteHeaderManager {
 
 	/** @var int */
 	private int $render_depth = 0;
-
-	public function __construct( RouteManager $routes ) {
-		$this->routes = $routes;
-	}
 
 	/**
 	 * Register header chrome hooks across frontend, Site Editor, and Customizer.
@@ -873,7 +864,7 @@ final class SiteHeaderManager {
 		$wp_customize->add_setting(
 			self::TABBAR_LABELS_MOD,
 			array(
-				'default'           => true,
+				'default'           => '1',
 				'sanitize_callback' => 'musicwave_sanitize_tabbar_labels',
 				'transport'         => 'refresh',
 			)
@@ -881,9 +872,9 @@ final class SiteHeaderManager {
 		$wp_customize->add_control(
 			self::TABBAR_LABELS_MOD,
 			array(
-				'type'        => 'checkbox',
-				'section'     => 'musicwave_chrome',
-				'label'       => __( 'نمایش برچسب کنار آیکون‌های نوار پایین', 'musicwave' ),
+				'type'    => 'checkbox',
+				'section' => 'musicwave_chrome',
+				'label'   => __( 'نمایش برچسب کنار آیکون‌های نوار پایین', 'musicwave' ),
 			)
 		);
 	}

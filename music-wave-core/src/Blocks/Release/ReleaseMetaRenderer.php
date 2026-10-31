@@ -12,7 +12,6 @@ namespace ManaCore\MusicWave\Core\Blocks\Release;
 
 use ManaCore\MusicWave\Core\Access\AccessSubject;
 use ManaCore\MusicWave\Core\Blocks\BlockSupport;
-use ManaCore\MusicWave\Core\Downloads\ReleaseDownloadCatalog;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -334,13 +333,6 @@ final class ReleaseMetaRenderer {
 			}
 		}
 
-		if ( $full_specs ) {
-			$quality_summary = $this->audio_quality_summary( $release_id );
-			if ( '' !== $quality_summary ) {
-				$items[] = $this->meta_item_markup( __( 'کیفیت صدا', 'music-wave-core' ), esc_html( $quality_summary ), $show_labels );
-			}
-		}
-
 		if ( BlockSupport::bool_attribute( $attributes, 'showBpm', true ) ) {
 			$bpm = (int) $repo->get( $release_id, 'mw_bpm' );
 			if ( $bpm > 0 ) {
@@ -404,26 +396,6 @@ final class ReleaseMetaRenderer {
 		}
 
 		return $items;
-	}
-
-	/**
-	 * Collect distinct human-readable quality labels from actual attached assets.
-	 */
-	private function audio_quality_summary( int $release_id ): string {
-		$assets = ( new ReleaseDownloadCatalog( $this->context->repository() ) )->assets( $release_id );
-		if ( empty( $assets ) ) {
-			return '';
-		}
-
-		$labels = array();
-		foreach ( $assets as $asset ) {
-			$label = isset( $asset['label'] ) ? trim( (string) $asset['label'] ) : '';
-			if ( '' !== $label && ! in_array( $label, $labels, true ) ) {
-				$labels[] = $label;
-			}
-		}
-
-		return implode( ' · ', $labels );
 	}
 
 	private function meta_item_markup( string $label, string $value_html, bool $show_label ): string {

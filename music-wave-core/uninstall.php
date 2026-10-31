@@ -28,6 +28,7 @@ $core_tables = array(
 	'mw_download_replays',
 	'mw_release_views',
 	'mw_library_index',
+	'mw_stream_sessions',
 );
 
 $core_crons = array(

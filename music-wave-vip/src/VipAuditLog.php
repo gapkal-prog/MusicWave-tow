@@ -82,16 +82,18 @@ final class VipAuditLog {
 
 	public static function event_label( string $event ): string {
 		$labels = array(
-			'order_grant'    => __( 'خرید / تمدید اشتراک', 'music-wave-vip' ),
-			'order_granted'  => __( 'خرید / تمدید اشتراک', 'music-wave-vip' ),
-			'manual_grant'   => __( 'اعطای دستی مدیر', 'music-wave-vip' ),
-			'admin_granted'  => __( 'اعطای دستی مدیر', 'music-wave-vip' ),
-			'admin_extended' => __( 'تمدید دستی مدیر', 'music-wave-vip' ),
-			'manual_revoke'  => __( 'لغو دستی مدیر', 'music-wave-vip' ),
-			'admin_revoked'  => __( 'لغو دستی مدیر', 'music-wave-vip' ),
-			'order_revoke'   => __( 'لغو / استرداد سفارش', 'music-wave-vip' ),
-			'order_revoked'  => __( 'لغو / استرداد سفارش', 'music-wave-vip' ),
-			'expired'        => __( 'انقضای زمانی', 'music-wave-vip' ),
+			'order_grant'                   => __( 'خرید / تمدید اشتراک', 'music-wave-vip' ),
+			'order_granted'                 => __( 'خرید / تمدید اشتراک', 'music-wave-vip' ),
+			'manual_grant'                  => __( 'اعطای دستی مدیر', 'music-wave-vip' ),
+			'admin_granted'                 => __( 'اعطای دستی مدیر', 'music-wave-vip' ),
+			'admin_extended'                => __( 'تمدید دستی مدیر', 'music-wave-vip' ),
+			'manual_revoke'                 => __( 'لغو دستی مدیر', 'music-wave-vip' ),
+			'admin_revoked'                 => __( 'لغو دستی مدیر', 'music-wave-vip' ),
+			'order_revoke'                  => __( 'لغو / استرداد سفارش', 'music-wave-vip' ),
+			'order_revoked'                 => __( 'لغو / استرداد سفارش', 'music-wave-vip' ),
+			'expired'                       => __( 'انقضای زمانی', 'music-wave-vip' ),
+			'local_root_selfheal_htaccess'  => __( 'بازسازی خودکار .htaccess پوشهٔ محافظتشده', 'music-wave-vip' ),
+			'local_root_selfheal_webconfig' => __( 'بازسازی خودکار web.config پوشهٔ محافظتشده', 'music-wave-vip' ),
 		);
 
 		return isset( $labels[ $event ] ) ? $labels[ $event ] : $event;

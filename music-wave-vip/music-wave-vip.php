@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       MusicWave VIP Integration
  * Description:       Configurable protected-file delivery, remote-host signing, WooCommerce plan membership, WordPress user management integration, and membership adapters for MusicWave Core.
- * Version:           0.5.1
+ * Version:           0.5.2
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            ManaCore
@@ -23,7 +23,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'MUSIC_WAVE_VIP_FILE', __FILE__ );
 define( 'MUSIC_WAVE_VIP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'MUSIC_WAVE_VIP_URL', plugin_dir_url( __FILE__ ) );
-define( 'MUSIC_WAVE_VIP_VERSION', '0.5.1' );
+define( 'MUSIC_WAVE_VIP_VERSION', '0.5.2' );
+
+/**
+ * Register the custom cron intervals VIP schedules against.
+ *
+ * `wp_schedule_event()` silently fails on an unregistered interval, so the
+ * upload worker's every-minute cadence depends on this filter.
+ *
+ * @param array<string, array{interval: int, display: string}> $schedules Existing schedules.
+ * @return array<string, array{interval: int, display: string}>
+ */
+function music_wave_vip_cron_schedules( array $schedules ): array {
+	if ( ! isset( $schedules['music_wave_every_minute'] ) ) {
+		$schedules['music_wave_every_minute'] = array(
+			'interval' => MINUTE_IN_SECONDS,
+			'display'  => __( 'هر دقیقه (MusicWave VIP)', 'music-wave-vip' ),
+		);
+	}
+
+	return $schedules;
+}
+// phpcs:ignore WordPress.WP.CronInterval.CronSchedulesInterval -- the remote-upload worker drains its queue on a one-minute cadence by design (ADR 0006); nothing heavy runs on that tick.
+add_filter( 'cron_schedules', 'music_wave_vip_cron_schedules' );
+
+/**
+ * Clear every cron event VIP schedules when the plugin is switched off.
+ */
+function music_wave_vip_deactivate(): void {
+	ManaCore\MusicWave\Vip\VipPlans::clear_expiry_checks();
+
+	foreach ( array( 'music_wave_vip_upload_worker', 'music_wave_vip_daily_maintenance' ) as $event ) {
+		$timestamp = wp_next_scheduled( $event );
+		while ( false !== $timestamp ) {
+			wp_unschedule_event( $timestamp, $event );
+			$timestamp = wp_next_scheduled( $event );
+		}
+	}
+}
 
 require_once MUSIC_WAVE_VIP_PATH . 'src/Autoloader.php';
 ManaCore\MusicWave\Vip\Autoloader::register();
@@ -215,9 +252,15 @@ register_activation_hook(
 	static function () use ( $music_wave_vip_storage ): void {
 		ManaCore\MusicWave\Vip\VipPlans::schedule_expiry_checks();
 		$music_wave_vip_storage->provision();
+		if ( ! wp_next_scheduled( 'music_wave_vip_upload_worker' ) ) {
+			wp_schedule_event( time(), 'music_wave_every_minute', 'music_wave_vip_upload_worker' );
+		}
+		if ( ! wp_next_scheduled( 'music_wave_vip_daily_maintenance' ) ) {
+			wp_schedule_event( time(), 'daily', 'music_wave_vip_daily_maintenance' );
+		}
 	}
 );
-register_deactivation_hook( MUSIC_WAVE_VIP_FILE, array( ManaCore\MusicWave\Vip\VipPlans::class, 'clear_expiry_checks' ) );
+register_deactivation_hook( MUSIC_WAVE_VIP_FILE, 'music_wave_vip_deactivate' );
 
 /**
  * Surface active plan levels alongside roles in dashboard and level displays.
@@ -341,6 +384,210 @@ add_filter(
 $music_wave_vip_asset_routes = new ManaCore\MusicWave\Vip\ProtectedAssetRoutes( $music_wave_vip_storage );
 $music_wave_vip_asset_routes->register();
 ( new ManaCore\MusicWave\Vip\PrivacyPolicy() )->register();
+
+/*
+=========================================================================
+ *  ADR 0006: edge-signed / proxy / edge_hls delivery + session lifecycle
+ * =========================================================================
+ */
+
+/**
+ * Supply Core's playback-session services and the effective delivery mode.
+ *
+ * These filters are registered at load time — before Core boots on
+ * `plugins_loaded` — and Core resolves them while composing its REST routes,
+ * so the session routes are registered on `rest_api_init` exactly like every
+ * other route and never on an earlier hook.
+ */
+add_filter(
+	'music_wave_stream_session_store',
+	static function () {
+		return ManaCore\MusicWave\Vip\ProviderFactory::stream_session_store();
+	}
+);
+add_filter(
+	'music_wave_stream_session_cookie',
+	static function () {
+		return ManaCore\MusicWave\Vip\ProviderFactory::stream_session_cookie();
+	}
+);
+add_filter(
+	'music_wave_stream_signer',
+	static function () {
+		return ManaCore\MusicWave\Vip\ProviderFactory::stream_signer();
+	}
+);
+add_filter(
+	'music_wave_stream_effective_mode',
+	static function () {
+		return ManaCore\MusicWave\Vip\ProviderFactory::effective_stream_mode();
+	}
+);
+
+/**
+ * Feed the session/signature knobs configured in the VIP screen into Core's
+ * stream pipeline. Without these the corresponding settings would be stored
+ * but never consulted, so the admin would change nothing.
+ */
+add_filter(
+	'music_wave_session_ttl',
+	static function (): int {
+		$ttl = absint( ManaCore\MusicWave\Vip\VipSettings::all()['session_ttl'] ?? 60 );
+
+		return max( 30, min( 900, $ttl ) );
+	}
+);
+add_filter(
+	'music_wave_session_max_concurrent',
+	static function (): int {
+		$max = absint( ManaCore\MusicWave\Vip\VipSettings::all()['session_max_concurrent'] ?? 1 );
+
+		return max( 1, min( 10, $max ) );
+	}
+);
+add_filter(
+	'music_wave_signed_url_ttl',
+	static function (): int {
+		$ttl = absint( ManaCore\MusicWave\Vip\VipSettings::all()['signed_url_ttl'] ?? 3600 );
+
+		return max( 300, min( 14400, $ttl ) );
+	}
+);
+add_filter(
+	'music_wave_session_sliding_renewal',
+	static function (): bool {
+		return 'enabled' === (string) ( ManaCore\MusicWave\Vip\VipSettings::all()['session_sliding_renewal'] ?? 'enabled' );
+	}
+);
+
+/**
+ * Register VIP-owned HLS and remote-upload routes. Each controller hooks its
+ * own `rest_api_init`; nothing is registered on an earlier hook.
+ */
+function music_wave_vip_bootstrap_stream_routes(): void {
+	$hls_routes = ManaCore\MusicWave\Vip\ProviderFactory::hls_routes();
+	if ( null !== $hls_routes ) {
+		$hls_routes->register();
+	}
+
+	$upload_routes = ManaCore\MusicWave\Vip\ProviderFactory::remote_upload_routes();
+	if ( null !== $upload_routes ) {
+		$upload_routes->register();
+	}
+}
+add_action( 'plugins_loaded', 'music_wave_vip_bootstrap_stream_routes', 25 );
+
+/**
+ * Build the remote-upload manager for the current settings, or null when the
+ * pipeline is off, needs no remote bytes, or has no usable adapter.
+ */
+function music_wave_vip_upload_manager(): ?ManaCore\MusicWave\Vip\Delivery\RemoteUploadManager {
+	$config = ManaCore\MusicWave\Vip\VipSettings::all();
+	if ( 'enabled' !== (string) ( $config['remote_upload_enabled'] ?? 'disabled' ) ) {
+		return null;
+	}
+	if ( ! ManaCore\MusicWave\Vip\Delivery\RemoteUploadManager::remote_bytes_required( $config ) ) {
+		return null;
+	}
+
+	$adapter = ManaCore\MusicWave\Vip\ProviderFactory::remote_upload_adapter( $config );
+	if ( null === $adapter ) {
+		return null;
+	}
+
+	return new ManaCore\MusicWave\Vip\Delivery\RemoteUploadManager(
+		$adapter,
+		new ManaCore\MusicWave\Vip\Delivery\RemoteUploadQueue(),
+		new ManaCore\MusicWave\Vip\ProtectedAssetStorage(),
+		$config
+	);
+}
+
+/**
+ * Background worker: process the pending upload queue on every cron tick.
+ */
+function music_wave_vip_upload_worker(): void {
+	$config = ManaCore\MusicWave\Vip\VipSettings::all();
+
+	// Do not claim rows when the pipeline is off or the mode no longer needs
+	// remote bytes: `sync()` would skip them and leave each row stuck in
+	// `uploading` until the stale reclaim window.
+	if ( ! ManaCore\MusicWave\Vip\Delivery\RemoteUploadManager::remote_bytes_required( $config ) ) {
+		return;
+	}
+
+	$manager = music_wave_vip_upload_manager();
+	if ( null === $manager ) {
+		return;
+	}
+
+	$concurrency = absint( $config['remote_upload_concurrency'] ?? 2 );
+	$queue       = new ManaCore\MusicWave\Vip\Delivery\RemoteUploadQueue();
+	foreach ( $queue->claim( $concurrency ) as $asset_key ) {
+		$manager->sync( $asset_key );
+	}
+}
+add_action( 'music_wave_vip_upload_worker', 'music_wave_vip_upload_worker' );
+
+if ( ! wp_next_scheduled( 'music_wave_vip_upload_worker' ) ) {
+	wp_schedule_event( time(), 'music_wave_every_minute', 'music_wave_vip_upload_worker' );
+}
+
+/**
+ * Auto-enqueue a freshly registered asset (or a freshly packaged HLS asset)
+ * and kick a one-off background run so the upload does not wait a whole tick.
+ * Uploads happen entirely in the background, never on the request that
+ * registered the asset.
+ *
+ * @param mixed $asset_id Opaque `vip:<32hex>` identifier.
+ */
+function music_wave_vip_auto_enqueue_asset( $asset_id ): void {
+	if ( ! is_string( $asset_id ) || '' === $asset_id ) {
+		return;
+	}
+
+	$manager = music_wave_vip_upload_manager();
+	if ( null === $manager || ! $manager->enqueue( $asset_id ) ) {
+		return;
+	}
+
+	wp_schedule_single_event( time(), 'music_wave_vip_upload_worker' );
+}
+add_action( 'music_wave_vip_asset_registered', 'music_wave_vip_auto_enqueue_asset' );
+add_action( 'music_wave_vip_hls_ready', 'music_wave_vip_auto_enqueue_asset' );
+
+/**
+ * Daily session cleanup + local root self-heal + upload queue cleanup.
+ */
+function music_wave_vip_daily_maintenance(): void {
+	$config = ManaCore\MusicWave\Vip\VipSettings::all();
+
+	if ( class_exists( ManaCore\MusicWave\Core\Playback\DbStreamSessionStore::class ) ) {
+		$store = new ManaCore\MusicWave\Core\Playback\DbStreamSessionStore();
+		$store->cleanup( absint( $config['session_lease_grace'] ?? 120 ) );
+	}
+
+	if ( class_exists( ManaCore\MusicWave\Vip\Delivery\LocalDeliveryDiagnostics::class )
+		&& 'enabled' === (string) ( $config['local_selfheal_enabled'] ?? 'enabled' )
+	) {
+		$diag = new ManaCore\MusicWave\Vip\Delivery\LocalDeliveryDiagnostics(
+			new ManaCore\MusicWave\Vip\ProtectedAssetStorage(),
+			$config
+		);
+		$diag->selfheal_root();
+	}
+
+	if ( class_exists( ManaCore\MusicWave\Vip\Delivery\RemoteUploadQueue::class ) ) {
+		( new ManaCore\MusicWave\Vip\Delivery\RemoteUploadQueue() )->cleanup_synced( 7 * DAY_IN_SECONDS );
+	}
+}
+add_action( 'music_wave_vip_daily_maintenance', 'music_wave_vip_daily_maintenance' );
+
+if ( ! wp_next_scheduled( 'music_wave_vip_daily_maintenance' ) ) {
+	wp_schedule_event( time(), 'daily', 'music_wave_vip_daily_maintenance' );
+}
+
+/* ========================================================================= */
 
 /**
  * Provider-side authorization for assigning local protected assets.

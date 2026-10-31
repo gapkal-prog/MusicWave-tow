@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Core\Admin\Concerns;
 
+use ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities;
 use ManaCore\MusicWave\Core\Migrations\MigrationRunner;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -31,8 +33,8 @@ final class DiagnosticsChecks {
 		$theme_ready    = 'musicwave' === $theme->get_stylesheet();
 		$theme_name     = (string) $theme->get( 'Name' );
 		$woo_ready      = class_exists( 'WooCommerce' );
-		$vip_active     = defined( 'MUSIC_WAVE_VIP_FILE' );
-		$provider_ready = (bool) has_filter( 'music_wave_download_provider' );
+		$vip_active     = VipModuleStatus::is_active();
+		$provider_ready = DeliveryCapabilities::probe()->is_available();
 		$permalinks     = '' !== (string) get_option( 'permalink_structure', '' );
 		$cron_disabled  = defined( 'DISABLE_WP_CRON' ) && constant( 'DISABLE_WP_CRON' );
 

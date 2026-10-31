@@ -22,6 +22,10 @@
       "type": "string",
       "default": "فهرست‌های پخش انجمن"
     },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
     "intro": {
       "type": "string",
       "default": ""

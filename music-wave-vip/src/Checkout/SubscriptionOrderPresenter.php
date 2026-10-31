@@ -16,6 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class SubscriptionOrderPresenter {
 	/**
+	 * Body-class scopes that render the shared subscription status card: the
+	 * thank-you screen and the `order-pay` retry screen.
+	 */
+	private const STATUS_SCOPES = array( 'body.mw-thankyou--virtual-only', 'body.mw-pay--subscription' );
+
+	/**
 	 * @param mixed $text  Default received text.
 	 * @param mixed $order Optional WC_Order or ID.
 	 */
@@ -35,42 +41,115 @@ final class SubscriptionOrderPresenter {
 	}
 
 	public function output_virtual_thankyou_css(): void {
-		if ( ! SubscriptionOrderInspector::is_thankyou_page() ) {
+		$is_thankyou = SubscriptionOrderInspector::is_thankyou_page();
+		if ( ! $is_thankyou && null === $this->pending_subscription_order() ) {
 			return;
 		}
 
-		$order      = SubscriptionOrderInspector::resolve_thankyou_order();
-		$is_virtual = $order instanceof \WC_Order ? SubscriptionOrderInspector::order_contains_only_virtual_subscription( $order ) : true;
-
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<style id="mw-virtual-thankyou-css">';
-		if ( $is_virtual ) {
-			echo 'body.mw-thankyou--virtual-only .woocommerce-order-overview,'
-				. 'body.mw-thankyou--virtual-only .woocommerce-order-details,'
-				. 'body.mw-thankyou--virtual-only .woocommerce-customer-details,'
-				. 'body.mw-thankyou--virtual-only .woocommerce-order-downloads,'
-				. 'body.mw-thankyou--virtual-only .woocommerce-bacs-bank-details,'
-				. 'body.mw-thankyou--virtual-only .woocommerce-thankyou-order-details,'
-				. 'body.mw-thankyou--virtual-only .mw-order-subscription-details,'
-				. 'body.mw-thankyou--virtual-only .woocommerce-thankyou-order-received + ul.woocommerce-order-overview,'
-				. 'body.mw-thankyou--virtual-only .woocommerce-thankyou-order-received ~ .woocommerce-order-overview{ display:none !important; }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal{ max-width:640px; margin:2.5rem auto; padding:2rem; border-radius:1rem; background:var(--wp--preset--color--base, #fff); border:1px solid var(--wp--preset--color--border, #e5e7eb); text-align:center; box-shadow:0 4px 24px rgba(0,0,0,0.06); }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal__icon{ width:64px; height:64px; margin:0 auto 1rem; border-radius:9999px; background:var(--wp--preset--color--accent, #22c55e); color:#fff; display:flex; align-items:center; justify-content:center; font-size:32px; }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal__title{ font-size:1.5rem; font-weight:700; margin:0 0 0.5rem; }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal__desc{ color:var(--wp--preset--color--muted, #6b7280); margin:0 0 1.5rem; line-height:1.6; }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal__actions{ display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal__btn{ display:inline-flex; align-items:center; justify-content:center; padding:0.75rem 1.25rem; border-radius:9999px; font-weight:600; text-decoration:none; border:1px solid transparent; transition:all 0.15s ease; }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal__btn--primary{ background:var(--wp--preset--color--accent, #111); color:var(--wp--preset--color--base, #fff); }'
-				. 'body.mw-thankyou--virtual-only .mw-thankyou-minimal__btn--ghost{ background:transparent; border-color:var(--wp--preset--color--border, #e5e7eb); color:inherit; }'
-				. 'body.woocommerce-order-received .woocommerce-order-overview{ display:none !important; }';
+		echo $this->status_card_css();
+
+		if ( $is_thankyou ) {
+			$order      = SubscriptionOrderInspector::resolve_thankyou_order();
+			$is_virtual = $order instanceof \WC_Order ? SubscriptionOrderInspector::order_contains_only_virtual_subscription( $order ) : true;
+
+			if ( $is_virtual ) {
+				echo 'body.mw-thankyou--virtual-only .woocommerce-order-overview,'
+					. 'body.mw-thankyou--virtual-only .woocommerce-order-details,'
+					. 'body.mw-thankyou--virtual-only .woocommerce-customer-details,'
+					. 'body.mw-thankyou--virtual-only .woocommerce-order-downloads,'
+					. 'body.mw-thankyou--virtual-only .woocommerce-bacs-bank-details,'
+					. 'body.mw-thankyou--virtual-only .woocommerce-thankyou-order-details,'
+					. 'body.mw-thankyou--virtual-only .mw-order-subscription-details,'
+					. 'body.mw-thankyou--virtual-only .woocommerce-thankyou-order-received + ul.woocommerce-order-overview,'
+					. 'body.mw-thankyou--virtual-only .woocommerce-thankyou-order-received ~ .woocommerce-order-overview{ display:none !important; }';
+			}
+			echo 'body.woocommerce-order-received .woocommerce-order-overview{ display:none !important; }'
+				. 'body.woocommerce-order-received .woocommerce-customer-details--billing,'
+				. 'body.woocommerce-order-received .woocommerce-customer-details .col2-set .col-1,'
+				. 'body.woocommerce-order-received .woocommerce-order-overview li.order,'
+				. 'body.woocommerce-order-received .woocommerce-order-overview__order,'
+				. 'body.woocommerce-order-received .woocommerce-order-overview li.woocommerce-order-overview__order{ display:none !important; }';
 		}
-		echo 'body.woocommerce-order-received .woocommerce-customer-details--billing,'
-			. 'body.woocommerce-order-received .woocommerce-customer-details .col2-set .col-1,'
-			. 'body.woocommerce-order-received .woocommerce-order-overview li.order,'
-			. 'body.woocommerce-order-received .woocommerce-order-overview__order,'
-			. 'body.woocommerce-order-received .woocommerce-order-overview li.woocommerce-order-overview__order{ display:none !important; }';
+
 		echo '</style>';
 		// phpcs:enable
+	}
+
+	/**
+	 * Failed/pending payment screen: a retry affordance above the WooCommerce
+	 * `order-pay` form instead of a bare, unbranded retry form.
+	 */
+	public function render_pending_payment_notice(): void {
+		if ( null === $this->pending_subscription_order() ) {
+			return;
+		}
+
+		echo '<div class="mw-thankyou-minimal mw-thankyou-minimal--failed" role="status">';
+		echo '<div class="mw-thankyou-minimal__icon" aria-hidden="true">!</div>';
+		echo '<h2 class="mw-thankyou-minimal__title">' . esc_html__( 'پرداخت تکمیل نشد', 'music-wave-vip' ) . '</h2>';
+		echo '<p class="mw-thankyou-minimal__desc">' . esc_html__( 'پرداخت اشتراک شما کامل نشد و مبلغی از حساب شما کسر نشده است. می‌توانید همین‌جا پرداخت را دوباره انجام دهید یا به صفحهٔ اشتراک‌ها بازگردید و پلن دیگری انتخاب کنید.', 'music-wave-vip' ) . '</p>';
+		echo '<div class="mw-thankyou-minimal__actions">';
+		echo '<a class="mw-thankyou-minimal__btn mw-thankyou-minimal__btn--ghost" href="' . esc_url( $this->membership_url() ) . '">' . esc_html__( 'بازگشت به صفحهٔ اشتراک‌ها', 'music-wave-vip' ) . '</a>';
+		echo '</div>';
+		echo '</div>';
+	}
+
+	/**
+	 * Subscription order currently awaiting payment on the `order-pay` endpoint.
+	 */
+	private function pending_subscription_order(): ?\WC_Order {
+		$order = SubscriptionOrderInspector::resolve_pay_order();
+		if ( ! $order instanceof \WC_Order || ! $order->needs_payment() ) {
+			return null;
+		}
+
+		return SubscriptionOrderInspector::order_has_subscription_item( $order ) ? $order : null;
+	}
+
+	/**
+	 * Success/retry card styling, emitted once for every scope that can be present.
+	 */
+	private function status_card_css(): string {
+		$rules = array(
+			' .mw-thankyou-minimal{ max-width:640px; margin:2.5rem auto; padding:2rem; border-radius:1rem; background:var(--wp--preset--color--base, #fff); border:1px solid var(--wp--preset--color--border, #e5e7eb); text-align:center; box-shadow:0 4px 24px rgba(0,0,0,0.06); }',
+			' .mw-thankyou-minimal__icon{ width:64px; height:64px; margin:0 auto 1rem; border-radius:9999px; background:var(--wp--preset--color--accent, #22c55e); color:#fff; display:flex; align-items:center; justify-content:center; font-size:32px; }',
+			' .mw-thankyou-minimal__title{ font-size:1.5rem; font-weight:700; margin:0 0 0.5rem; }',
+			' .mw-thankyou-minimal__desc{ color:var(--wp--preset--color--muted, #6b7280); margin:0 0 1.5rem; line-height:1.6; }',
+			' .mw-thankyou-minimal__actions{ display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; }',
+			' .mw-thankyou-minimal__btn{ display:inline-flex; align-items:center; justify-content:center; padding:0.75rem 1.25rem; border-radius:9999px; font-weight:600; text-decoration:none; border:1px solid transparent; transition:all 0.15s ease; }',
+			' .mw-thankyou-minimal__btn--primary{ background:var(--wp--preset--color--accent, #111); color:var(--wp--preset--color--base, #fff); }',
+			' .mw-thankyou-minimal__btn--ghost{ background:transparent; border-color:var(--wp--preset--color--border, #e5e7eb); color:inherit; }',
+			' .mw-thankyou-minimal--failed .mw-thankyou-minimal__icon{ background:#d63638; }',
+		);
+
+		$css = '';
+		foreach ( self::STATUS_SCOPES as $scope ) {
+			foreach ( $rules as $rule ) {
+				$css .= $scope . $rule;
+			}
+		}
+
+		return $css;
+	}
+
+	/**
+	 * Customer account dashboard URL.
+	 */
+	private function account_url(): string {
+		$url = function_exists( 'wc_get_page_permalink' ) ? (string) wc_get_page_permalink( 'myaccount' ) : '';
+
+		return '' !== $url ? $url : home_url( '/' );
+	}
+
+	/**
+	 * Plans/membership page URL, honouring the Core `music_wave_membership_cta_url` override.
+	 */
+	private function membership_url(): string {
+		$url = (string) apply_filters( 'music_wave_membership_cta_url', '' );
+
+		return '' !== trim( $url ) ? $url : $this->account_url();
 	}
 
 	/** @param mixed $order_id Order ID. */
@@ -82,10 +161,7 @@ final class SubscriptionOrderPresenter {
 		if ( ! $order instanceof \WC_Order || ! SubscriptionOrderInspector::order_contains_only_virtual_subscription( $order ) ) {
 			return;
 		}
-		$dashboard_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/my-account/' );
-		if ( '' === $dashboard_url ) {
-			$dashboard_url = home_url( '/' );
-		}
+		$dashboard_url = $this->account_url();
 
 		echo '<div class="mw-thankyou-minimal">';
 		echo '<div class="mw-thankyou-minimal__icon" aria-hidden="true">✓</div>';
@@ -111,6 +187,8 @@ final class SubscriptionOrderPresenter {
 		$granted_at = (int) $order->get_meta( '_mw_vip_granted_at' );
 		$expiries   = $order->get_meta( '_mw_vip_granted_expiries' );
 		$expiries   = is_array( $expiries ) ? $expiries : array();
+		$starts     = $order->get_meta( '_mw_vip_granted_starts' );
+		$starts     = is_array( $starts ) ? $starts : array();
 
 		echo '<section class="mw-order-subscription-details" style="margin:2rem 0;padding:1.25rem;background:var(--mw-color-surface, #fff);border:1px solid var(--mw-color-border, #ddd);border-radius:0.75rem;">';
 		echo '<h3 style="margin:0 0 0.75rem;">' . esc_html__( 'جزئیات اشتراک', 'music-wave-vip' ) . '</h3>';
@@ -120,7 +198,22 @@ final class SubscriptionOrderPresenter {
 			foreach ( $levels as $level ) {
 				$level = sanitize_key( (string) $level );
 				$exp   = isset( $expiries[ $level ] ) ? (int) $expiries[ $level ] : 0;
+				$start = isset( $starts[ $level ] ) ? (int) $starts[ $level ] : 0;
 				$label = 0 === $exp ? __( 'مادام‌العمر', 'music-wave-vip' ) : ( $exp > 0 && function_exists( 'date_i18n' ) ? date_i18n( get_option( 'date_format' ), $exp ) : '' );
+
+				if ( $start > time() ) {
+					$start_label = function_exists( 'date_i18n' ) ? date_i18n( get_option( 'date_format' ), $start ) : '';
+					echo '<li><strong>' . esc_html( $level ) . '</strong> — ' . esc_html(
+						sprintf(
+							/* translators: 1: activation date of the reserved term, 2: expiry date. */
+							__( 'رزرو؛ فعال‌سازی از %1$s تا %2$s', 'music-wave-vip' ),
+							$start_label,
+							$label
+						)
+					) . '</li>';
+					continue;
+				}
+
 				echo '<li><strong>' . esc_html( $level ) . '</strong> — ' . esc_html( $label );
 				if ( $exp > 0 ) {
 					$remaining = (int) ceil( ( $exp - time() ) / DAY_IN_SECONDS );

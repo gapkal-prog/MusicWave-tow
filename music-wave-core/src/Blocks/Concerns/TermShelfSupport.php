@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Core\Blocks\Concerns;
 
+use ManaCore\MusicWave\Core\Blocks\SectionHeader;
 use WP_Term;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -135,7 +136,7 @@ final class TermShelfSupport {
 
 		return '<header class="mw-release-shelf__header"><div>'
 			. ( '' !== $options['eyebrow'] ? '<span>' . esc_html( (string) $options['eyebrow'] ) . '</span>' : '' )
-			. '<h2>' . esc_html( $heading ) . '</h2>'
+			. '<h2>' . SectionHeader::title( $heading, isset( $options['icon'] ) ? (string) $options['icon'] : '' ) . '</h2>'
 			. ( '' !== $options['description'] ? '<p>' . esc_html( (string) $options['description'] ) . '</p>' : '' )
 			. '</div>' . $more . '</header>';
 	}

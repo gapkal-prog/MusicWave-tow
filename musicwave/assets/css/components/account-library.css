@@ -481,6 +481,54 @@
 	border-style: dashed;
 }
 
+/* A reserved term (paid, waiting for the running term to end). */
+.mw-membership__level--reserved {
+	border-style: dashed;
+	border-color: color-mix(in srgb, var(--mw-color-accent) 35%, var(--mw-color-border));
+	background: color-mix(in srgb, var(--mw-color-accent) 5%, var(--mw-color-surface-raised));
+}
+
+.mw-membership__level-expiry--reserved {
+	color: var(--mw-color-accent-strong);
+	font-weight: 700;
+}
+
+.mw-membership__level-stacked-badge--reserved {
+	background: color-mix(in srgb, var(--mw-color-accent) 16%, transparent);
+	color: var(--mw-color-accent-strong);
+}
+
+.mw-membership__levels--reserved {
+	margin-block-start: 0.5rem;
+}
+
+.mw-membership__summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	align-items: baseline;
+	margin: 0.75rem 0 0;
+	padding: 0.55rem 0.85rem;
+	font-size: 0.8125rem;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-accent) 7%, transparent);
+	border-inline-start: 3px solid var(--mw-color-accent);
+	border-radius: 0.5rem;
+}
+
+.mw-membership__summary strong {
+	color: var(--mw-color-text);
+}
+
+.mw-membership__plan-badge--reserved {
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
+}
+
+.mw-membership__plan-status--reserved {
+	color: var(--mw-color-accent-strong);
+}
+
 .mw-membership__level--renewal-needed {
 	border-color: color-mix(in srgb, #ff3b30 40%, var(--mw-color-border));
 }
@@ -946,6 +994,110 @@
 	align-items: center;
 }
 
+/*
+ * The cluster also carries `.mw-download-action` for the delegated JS hooks, whose
+ * standalone panel rules (1.5rem outer margins + inline-size containment) are meant
+ * for the «دانلود این انتشار» box. Neutralise that geometry here so the controls
+ * stay a single compact, right-aligned row inside the library card.
+ */
+.mw-account-library__item .mw-account-library__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 0.4rem;
+	margin: 0;
+	padding: 0;
+	background: none;
+	border: 0;
+	box-shadow: none;
+	container-type: normal;
+	container-name: none;
+}
+
+.mw-account-library__item .mw-download-action__controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem;
+	min-width: 0;
+}
+
+.mw-account-library__item .mw-download-action__quality,
+.mw-account-library__item .mw-download-action__file {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	min-width: 0;
+	color: var(--mw-color-text-muted);
+	font-size: 0.6875rem;
+	font-weight: 600;
+}
+
+.mw-account-library__item .mw-download-quality,
+.mw-account-library__item .mw-download-file {
+	width: auto;
+	max-width: 9.5rem;
+	min-height: 2.25rem;
+	padding-block: 0.3rem;
+	padding-inline: 0.7rem;
+	font-size: 0.8125rem;
+}
+
+.mw-account-library__item .mw-download-button {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.35rem;
+	min-height: 2.25rem;
+	padding: 0 1rem;
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	border: 1px solid var(--mw-color-accent);
+	border-radius: var(--mw-radius-pill);
+	font-size: 0.8125rem;
+	font-weight: 700;
+	line-height: 1.2;
+	white-space: nowrap;
+	cursor: pointer;
+	transition:
+		background-color var(--mw-speed-fast) ease,
+		border-color var(--mw-speed-fast) ease,
+		box-shadow var(--mw-speed-fast) ease,
+		transform var(--mw-speed-fast) ease;
+}
+
+.mw-account-library__item .mw-download-button:hover:not(:disabled) {
+	background: var(--mw-color-accent-strong);
+	border-color: var(--mw-color-accent-strong);
+	box-shadow: var(--mw-shadow-sm);
+	transform: translateY(-1px);
+}
+
+.mw-account-library__item .mw-download-button:focus-visible {
+	outline: 2px solid var(--mw-color-accent);
+	outline-offset: 2px;
+}
+
+.mw-account-library__item .mw-download-button:disabled {
+	opacity: 0.6;
+	cursor: progress;
+}
+
+.mw-account-library__item .mw-download-status {
+	flex: 1 0 100%;
+	min-height: 0;
+	margin: 0;
+	text-align: end;
+	font-size: 0.75rem;
+	line-height: 1.4;
+}
+
+.mw-account-library__item .mw-download-status:empty {
+	display: none;
+}
+
 /* Music library specific */
 .mw-music-library__header {
 	display: flex;
@@ -1086,6 +1238,23 @@
 	}
 	.mw-account-library__actions {
 		grid-column: 1 / -1;
+	}
+	/* Phone width: the controls take their own full row instead of squeezing the title. */
+	.mw-account-library__item .mw-account-library__actions {
+		justify-content: flex-start;
+	}
+	.mw-account-library__item .mw-download-action__controls {
+		flex: 1 1 100%;
+	}
+	.mw-account-library__item .mw-download-action__quality,
+	.mw-account-library__item .mw-download-action__file,
+	.mw-account-library__item .mw-download-button {
+		flex: 1 1 auto;
+	}
+	.mw-account-library__item .mw-download-quality,
+	.mw-account-library__item .mw-download-file {
+		flex: 1 1 auto;
+		max-width: none;
 	}
 	.mw-user-dashboard__stats {
 		flex-direction: column;

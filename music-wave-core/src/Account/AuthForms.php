@@ -64,9 +64,11 @@ final class AuthForms {
 			. '<header class="mw-auth__head">'
 			. '<span class="mw-auth__eyebrow">' . esc_html__( 'حساب کاربری', 'music-wave-core' ) . '</span>'
 			. '<h2 class="mw-auth__title">' . esc_html( $is_register ? __( 'ساخت حساب تازه', 'music-wave-core' ) : __( 'ورود به حساب', 'music-wave-core' ) ) . '</h2>'
-			. '<p class="mw-auth__lede">' . esc_html( $is_register
+			. '<p class="mw-auth__lede">' . esc_html(
+				$is_register
 				? __( 'در چند ثانیه حساب بسازید و کتابخانه، صف شنیدن و دانلودهای خود را در یک‌جا نگه دارید.', 'music-wave-core' )
-				: __( 'برای ادامه، نام کاربری یا ایمیل و گذرواژه خود را وارد کنید.', 'music-wave-core' ) ) . '</p>'
+				: __( 'برای ادامه، نام کاربری یا ایمیل و گذرواژه خود را وارد کنید.', 'music-wave-core' )
+			) . '</p>'
 			. '</header>'
 			. $this->notices()
 			. $this->panel_switch( $panel, $redirect )
@@ -148,19 +150,25 @@ final class AuthForms {
 	private function login_form( string $redirect ): string {
 		return '<form class="mw-auth__form" action="' . esc_url( $this->endpoint() ) . '" method="post" novalidate="novalidate">'
 			. $this->hidden_fields( AuthPolicy::LOGIN_NONCE, self::PANEL_LOGIN, $redirect )
-			. $this->field( 'mw_login', array(
-				'label'        => __( 'نام کاربری یا ایمیل', 'music-wave-core' ),
-				'type'         => 'text',
-				'autocomplete' => 'username',
-				'required'     => true,
-				'inputmode'    => 'text',
-			) )
-			. $this->field( 'mw_password', array(
-				'label'        => __( 'گذرواژه', 'music-wave-core' ),
-				'type'         => 'password',
-				'autocomplete' => 'current-password',
-				'required'     => true,
-			) )
+			. $this->field(
+				'mw_login',
+				array(
+					'label'        => __( 'نام کاربری یا ایمیل', 'music-wave-core' ),
+					'type'         => 'text',
+					'autocomplete' => 'username',
+					'required'     => true,
+					'inputmode'    => 'text',
+				)
+			)
+			. $this->field(
+				'mw_password',
+				array(
+					'label'        => __( 'گذرواژه', 'music-wave-core' ),
+					'type'         => 'password',
+					'autocomplete' => 'current-password',
+					'required'     => true,
+				)
+			)
 			. '<div class="mw-auth__row">'
 			. '<label class="mw-auth__check" for="mw-remember"><input type="checkbox" id="mw-remember" name="mw_remember" value="1" checked="checked"> <span>' . esc_html__( 'مرا به خاطر بسپار', 'music-wave-core' ) . '</span></label>'
 			. '<a class="mw-auth__link" href="' . esc_url( wp_lostpassword_url( AuthPolicy::login_page_url() ) ) . '">' . esc_html__( 'گذرواژه را فراموش کرده‌اید؟', 'music-wave-core' ) . '</a>'
@@ -184,35 +192,47 @@ final class AuthForms {
 
 		return '<form class="mw-auth__form" action="' . esc_url( $this->endpoint() ) . '" method="post" novalidate="novalidate">'
 			. $this->hidden_fields( AuthPolicy::REGISTER_NONCE, self::PANEL_REGISTER, $redirect )
-			. $this->field( 'mw_register_login', array(
-				'label'        => __( 'نام کاربری', 'music-wave-core' ),
-				'type'         => 'text',
-				'autocomplete' => 'username',
-				'required'     => true,
-				'hint'         => __( 'حروف لاتین، عدد، نقطه، خط تیره و زیرخط.', 'music-wave-core' ),
-			) )
-			. $this->field( 'mw_register_email', array(
-				'label'        => __( 'ایمیل', 'music-wave-core' ),
-				'type'         => 'email',
-				'autocomplete' => 'email',
-				'required'     => true,
-				'inputmode'    => 'email',
-			) )
-			. $this->field( 'mw_register_password', array(
-				'label'        => __( 'گذرواژه', 'music-wave-core' ),
-				'type'         => 'password',
-				'autocomplete' => 'new-password',
-				'required'     => true,
-				'minlength'    => 8,
-				'hint'         => __( 'دست‌کم ۸ نویسه؛ ترکیبی از حروف، عدد و نماد.', 'music-wave-core' ),
-			) )
-			. $this->field( 'mw_register_confirm', array(
-				'label'        => __( 'تکرار گذرواژه', 'music-wave-core' ),
-				'type'         => 'password',
-				'autocomplete' => 'new-password',
-				'required'     => true,
-				'minlength'    => 8,
-			) )
+			. $this->field(
+				'mw_register_login',
+				array(
+					'label'        => __( 'نام کاربری', 'music-wave-core' ),
+					'type'         => 'text',
+					'autocomplete' => 'username',
+					'required'     => true,
+					'hint'         => __( 'حروف لاتین، عدد، نقطه، خط تیره و زیرخط.', 'music-wave-core' ),
+				)
+			)
+			. $this->field(
+				'mw_register_email',
+				array(
+					'label'        => __( 'ایمیل', 'music-wave-core' ),
+					'type'         => 'email',
+					'autocomplete' => 'email',
+					'required'     => true,
+					'inputmode'    => 'email',
+				)
+			)
+			. $this->field(
+				'mw_register_password',
+				array(
+					'label'        => __( 'گذرواژه', 'music-wave-core' ),
+					'type'         => 'password',
+					'autocomplete' => 'new-password',
+					'required'     => true,
+					'minlength'    => 8,
+					'hint'         => __( 'دست‌کم ۸ نویسه؛ ترکیبی از حروف، عدد و نماد.', 'music-wave-core' ),
+				)
+			)
+			. $this->field(
+				'mw_register_confirm',
+				array(
+					'label'        => __( 'تکرار گذرواژه', 'music-wave-core' ),
+					'type'         => 'password',
+					'autocomplete' => 'new-password',
+					'required'     => true,
+					'minlength'    => 8,
+				)
+			)
 			. '<label class="mw-auth__check mw-auth__check--stacked" for="mw-terms">'
 			. '<input type="checkbox" id="mw-terms" name="mw_terms" value="1" required="required">'
 			. '<span>' . sprintf(
@@ -278,15 +298,15 @@ final class AuthForms {
 	 * @param array<string,mixed> $args Field configuration.
 	 */
 	private function field( string $name, array $args ): string {
-		$id          = 'mw-' . str_replace( '_', '-', $name );
-		$type        = isset( $args['type'] ) && is_string( $args['type'] ) ? $args['type'] : 'text';
-		$label       = isset( $args['label'] ) && is_string( $args['label'] ) ? $args['label'] : '';
-		$hint        = isset( $args['hint'] ) && is_string( $args['hint'] ) ? $args['hint'] : '';
-		$hint_id     = $id . '-hint';
+		$id           = 'mw-' . str_replace( '_', '-', $name );
+		$type         = isset( $args['type'] ) && is_string( $args['type'] ) ? $args['type'] : 'text';
+		$label        = isset( $args['label'] ) && is_string( $args['label'] ) ? $args['label'] : '';
+		$hint         = isset( $args['hint'] ) && is_string( $args['hint'] ) ? $args['hint'] : '';
+		$hint_id      = $id . '-hint';
 		$autocomplete = isset( $args['autocomplete'] ) && is_string( $args['autocomplete'] ) ? $args['autocomplete'] : 'off';
-		$required    = ! empty( $args['required'] );
-		$minlength   = isset( $args['minlength'] ) ? (int) $args['minlength'] : 0;
-		$inputmode   = isset( $args['inputmode'] ) && is_string( $args['inputmode'] ) ? $args['inputmode'] : '';
+		$required     = ! empty( $args['required'] );
+		$minlength    = isset( $args['minlength'] ) ? (int) $args['minlength'] : 0;
+		$inputmode    = isset( $args['inputmode'] ) && is_string( $args['inputmode'] ) ? $args['inputmode'] : '';
 
 		$attributes = ' type="' . esc_attr( $type ) . '" id="' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '"'
 			. ' autocomplete="' . esc_attr( $autocomplete ) . '"'

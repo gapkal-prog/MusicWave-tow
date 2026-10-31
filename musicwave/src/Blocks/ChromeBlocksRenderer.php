@@ -25,25 +25,27 @@ final class ChromeBlocksRenderer {
 	/**
 	 * Build wrapper attributes string with safe non-editor fallback.
 	 *
+	 * Support-generated styles (colour, border, spacing, typography) live on
+	 * this element, so every chrome block styles itself through custom
+	 * properties and never hard-codes what WordPress already prints.
+	 *
 	 * @param array<string, mixed> $attributes Block attributes.
+	 * @param string               $class_names Extra wrapper classes.
 	 */
-	public function block_wrapper_attributes( array $attributes, string $class_names = '', string $inline_styles = '' ): string {
-		$style = trim( $inline_styles );
+	public function block_wrapper_attributes( array $attributes, string $class_names = '' ): string {
 		if ( function_exists( 'get_block_wrapper_attributes' ) ) {
 			$args = array();
 			if ( '' !== $class_names ) {
 				$args['class'] = $class_names;
 			}
-			if ( '' !== $style ) {
-				$args['style'] = $style;
-			}
+
 			return get_block_wrapper_attributes( $args );
 		}
 
 		$class_name = isset( $attributes['className'] ) && is_scalar( $attributes['className'] ) ? (string) $attributes['className'] : '';
 		$class_name = trim( (string) preg_replace( '/[^A-Za-z0-9_\-\s]/', '', $class_name . ' ' . $class_names ) );
 
-		return 'class="' . esc_attr( $class_name ) . '"' . ( '' !== $style ? ' style="' . esc_attr( $style ) . '"' : '' );
+		return 'class="' . esc_attr( $class_name ) . '"';
 	}
 
 	/**
@@ -186,9 +188,6 @@ final class ChromeBlocksRenderer {
 		$show_recent       = ! array_key_exists( 'showRecentSearches', $attributes ) || ! empty( $attributes['showRecentSearches'] );
 		$show_voice        = ! array_key_exists( 'showVoiceSearch', $attributes ) || ! empty( $attributes['showVoiceSearch'] );
 		$show_footer_hints = ! array_key_exists( 'showFooterHints', $attributes ) || ! empty( $attributes['showFooterHints'] );
-
-		$max_width = isset( $attributes['maxWidth'] ) ? absint( $attributes['maxWidth'] ) : 440;
-		$max_width = max( 200, min( 760, $max_width > 0 ? $max_width : 440 ) );
 
 		$placeholder = isset( $attributes['placeholder'] ) && is_scalar( $attributes['placeholder'] ) ? sanitize_text_field( (string) $attributes['placeholder'] ) : '';
 		if ( '' === $placeholder ) {
@@ -380,15 +379,14 @@ final class ChromeBlocksRenderer {
 			. '</div>'
 			. '</div>';
 
-		$data_attrs   = ' data-mw-search-mode="' . esc_attr( $primary_mode ) . '"'
+		$data_attrs = ' data-mw-search-mode="' . esc_attr( $primary_mode ) . '"'
 			. ' data-desktop-mode="' . esc_attr( $desktop_mode ) . '"'
 			. ' data-tablet-mode="' . esc_attr( $tablet_mode ) . '"'
 			. ' data-mobile-mode="' . esc_attr( $mobile_mode ) . '"'
 			. ( $enable_shortcut ? ' data-mw-shortcut="1"' : ' data-mw-shortcut="0"' )
 			. ( $show_recent ? ' data-mw-recent="1"' : ' data-mw-recent="0"' );
-		$inline_style = '--mw-header-search-max:' . (string) $max_width . 'px;';
 
-		return '<div ' . $this->block_wrapper_attributes( $attributes, $wrapper_classes, $inline_style ) . $data_attrs . '>'
+		return '<div ' . $this->block_wrapper_attributes( $attributes, $wrapper_classes ) . $data_attrs . '>'
 			. $toggle_btn
 			. $inline_form
 			. $popup_html

@@ -15,6 +15,10 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Vip;
 
+use ManaCore\MusicWave\Vip\Delivery\LocalDeliveryDiagnostics;
+use ManaCore\MusicWave\Vip\Hls\AssetKeyStore;
+use ManaCore\MusicWave\Vip\Hls\HlsPackager;
+use ManaCore\MusicWave\Vip\Hls\HlsRenditions;
 use ManaCore\MusicWave\Vip\Storage\MimeValidator;
 use ManaCore\MusicWave\Vip\Storage\PathValidator;
 use ManaCore\MusicWave\Vip\Storage\RootResolver;
@@ -32,9 +36,13 @@ final class ProtectedAssetStorage {
 	/** @var RootResolver */
 	private $root_resolver;
 
-	public function __construct( ?ProtectedAssetRegistry $registry = null, ?RootResolver $root_resolver = null ) {
+	/** @var array<string, mixed> */
+	private $config;
+
+	public function __construct( ?ProtectedAssetRegistry $registry = null, ?RootResolver $root_resolver = null, array $config = array() ) {
 		$this->registry      = null !== $registry ? $registry : new ProtectedAssetRegistry();
 		$this->root_resolver = null !== $root_resolver ? $root_resolver : new RootResolver();
+		$this->config        = $config;
 	}
 
 	public function registry(): ProtectedAssetRegistry {
@@ -86,8 +94,11 @@ final class ProtectedAssetStorage {
 
 		$this->harden_directory( $root );
 
+		$auto_refresh = 'enabled' === (string) ( $this->config['local_checksum_autorefresh'] ?? 'enabled' );
+
 		$scanned     = 0;
 		$registered  = 0;
+		$refreshed   = 0;
 		$total_bytes = 0;
 		$iterator    = new RecursiveIteratorIterator(
 			new RecursiveDirectoryIterator( $root, FilesystemIterator::SKIP_DOTS ),
@@ -116,6 +127,13 @@ final class ProtectedAssetStorage {
 			$total_bytes += $size;
 			$relative     = ltrim( substr( $path, strlen( rtrim( $root, DIRECTORY_SEPARATOR ) ) ), DIRECTORY_SEPARATOR );
 			$normalized   = str_replace( DIRECTORY_SEPARATOR, '/', $relative );
+
+			if ( $auto_refresh ) {
+				if ( $this->registry->refresh_checksum_if_newer( $normalized, $path, $size ) ) {
+					++$refreshed;
+				}
+			}
+
 			if ( false !== $this->registry->register( $normalized, $path ) ) {
 				++$registered;
 			}
@@ -124,9 +142,61 @@ final class ProtectedAssetStorage {
 		return array(
 			'scanned'     => $scanned,
 			'registered'  => $registered,
+			'refreshed'   => $refreshed,
 			'total_bytes' => $total_bytes,
 		);
 	}
+
+	/**
+	 * Package a registered asset into AES-128 encrypted HLS renditions.
+	 *
+	 * @param string $asset_key Opaque `vip:<32hex>` identifier.
+	 * @param string $source_path Absolute path to the source file.
+	 * @return array{manifest: string, renditions: list<string>, bytes: int, duration: int}|WP_Error
+	 */
+	public function package_hls( string $asset_key, string $source_path ) {
+		$config     = VipSettings::all();
+		$renditions = new HlsRenditions( (array) ( $config['hls_renditions'] ?? array( 128, 320 ) ) );
+		$key_store  = new AssetKeyStore();
+		$key_store->ensure_table();
+
+		$output_dir       = $this->root() !== false ? rtrim( (string) $this->root(), '/' ) . '/.hls' : sys_get_temp_dir() . '/music-wave-hls';
+		$segment_base_url = '';
+
+		$packager = new HlsPackager(
+			(string) ( $config['ffmpeg_binary'] ?? 'ffmpeg' ),
+			(string) ( $config['ffprobe_binary'] ?? 'ffprobe' ),
+			$renditions,
+			$key_store,
+			$output_dir,
+			$segment_base_url,
+			(int) ( $config['hls_segment_seconds'] ?? HlsPackager::SEGMENT_SECONDS )
+		);
+
+		$result = $packager->package( $source_path, $asset_key );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		$this->registry->set_hls_state(
+			$asset_key,
+			'ready',
+			$result['manifest'],
+			(int) $result['bytes'],
+			(int) $result['duration']
+		);
+
+		/**
+		 * Fires after an asset's HLS renditions are packaged and ready.
+		 *
+		 * @param string $asset_key Opaque `vip:<32hex>` identifier.
+		 */
+		do_action( 'music_wave_vip_hls_ready', $asset_key );
+
+		return $result;
+	}
+
+	private function __clone() {}
 
 	/**
 	 * Aggregate protected asset count and byte size from the DB inventory,

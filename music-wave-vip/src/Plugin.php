@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Plugin {
 	// Lowest Core schema/feature level VIP's provider and access-decision
 	// integrations assume, per release-manifest.json (review finding A3).
-	public const MIN_CORE_VERSION = '0.9.0';
+	public const MIN_CORE_VERSION = '0.16.0';
 
 	public static function core_meets_minimum(): bool {
 		return defined( 'MUSIC_WAVE_CORE_VERSION' )

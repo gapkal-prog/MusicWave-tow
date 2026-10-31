@@ -40,7 +40,14 @@
 }
 
 .mw-preview-button__icon {
-	font-size: 0.75em;
+	flex: 0 0 auto;
+	inline-size: 1.15rem;
+	block-size: 1.15rem;
+}
+
+.mw-preview-button__icon .mw-btn-svg {
+	inline-size: 100%;
+	block-size: 100%;
 }
 
 .mw-preview-button--compact {

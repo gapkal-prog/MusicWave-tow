@@ -37,8 +37,16 @@ final class ReleaseDownloadCatalog {
 	public static function is_asset_streamable( array $asset ): bool {
 		$format = isset( $asset['format'] ) && is_scalar( $asset['format'] ) ? sanitize_key( strtolower( (string) $asset['format'] ) ) : '';
 		if ( '' === $format && isset( $asset['asset_id'] ) && is_scalar( $asset['asset_id'] ) ) {
-			$ext    = pathinfo( (string) $asset['asset_id'], PATHINFO_EXTENSION );
-			$format = '' !== $ext ? sanitize_key( strtolower( $ext ) ) : '';
+			$asset_id = (string) $asset['asset_id'];
+			// `direct:<https-url>`: derive format from the URL path (strip query).
+			if ( 0 === strpos( $asset_id, 'direct:' ) ) {
+				$url_path = wp_parse_url( substr( $asset_id, strlen( 'direct:' ) ), PHP_URL_PATH );
+				$ext      = false !== $url_path ? pathinfo( $url_path, PATHINFO_EXTENSION ) : '';
+				$format   = '' !== $ext ? sanitize_key( strtolower( $ext ) ) : '';
+			} else {
+				$ext    = pathinfo( $asset_id, PATHINFO_EXTENSION );
+				$format = '' !== $ext ? sanitize_key( strtolower( $ext ) ) : '';
+			}
 		}
 
 		return in_array( $format, self::STREAMABLE_FORMATS, true );

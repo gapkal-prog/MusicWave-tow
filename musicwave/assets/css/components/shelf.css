@@ -1,5 +1,6 @@
 .mw-release-shelf {
 	--mw-shelf-columns: 4;
+	--mw-shelf-gap: clamp(1rem, 2vw, 1.5rem);
 	container-type: inline-size;
 	content-visibility: auto;
 	contain-intrinsic-size: 1px 600px;
@@ -37,7 +38,7 @@
 
 .mw-release-shelf__header h2 {
 	font-family: var(--wp--preset--font-family--display, 'Syne', sans-serif);
-	font-size: clamp(1.5rem, 3.3vw, 2.35rem);
+	font-size: var(--mw-section-title-size);
 	font-weight: 800;
 	letter-spacing: -.02em;
 	line-height: 1.08;
@@ -76,7 +77,7 @@
 
 .mw-release-shelf__items {
 	display: grid;
-	gap: clamp(1rem, 2vw, 1.5rem);
+	gap: var(--mw-shelf-gap);
 	grid-template-columns: repeat(var(--mw-shelf-columns), minmax(0, 1fr));
 }
 
@@ -278,7 +279,7 @@
 
 .mw-release-shelf--scroll .mw-release-shelf__items {
 	display: grid;
-	grid-auto-columns: clamp(10rem, 22vw, 15rem);
+	grid-auto-columns: minmax(clamp(9rem, 18vw, 14rem), calc((100% - (var(--mw-shelf-gap) * (var(--mw-shelf-columns) - 1))) / var(--mw-shelf-columns)));
 	grid-auto-flow: column;
 	grid-template-columns: none;
 	overflow-x: auto;

@@ -1,7 +1,10 @@
 <?php
 /**
  * Direct-checkout redirect, cart non-subscription pruning, virtual product
- * enforcement, and subscription stacking validation (SOLID SRP).
+ * enforcement, and single-VIP-plan cart validation (SOLID SRP).
+ *
+ * A VIP plan behaves as a single-seat purchase: at most one plan may sit in the
+ * cart, always at quantity 1, and every purchase button lands on checkout.
  *
  * @package ManaCore\MusicWave\Vip
  */
@@ -16,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class DirectCheckoutHandler {
 	/**
-	 * Enforce virtual + allow stacking/reservation + disable stock management on VIP plan products.
+	 * Enforce virtual + single-seat + disabled stock management on VIP plan products.
 	 *
 	 * @param mixed $post Post object.
 	 */
@@ -27,7 +30,7 @@ final class DirectCheckoutHandler {
 		}
 
 		update_post_meta( $post_id, '_virtual', 'yes' );
-		update_post_meta( $post_id, '_sold_individually', 'no' );
+		update_post_meta( $post_id, '_sold_individually', 'yes' );
 		update_post_meta( $post_id, '_manage_stock', 'no' );
 	}
 
@@ -42,11 +45,13 @@ final class DirectCheckoutHandler {
 		}
 
 		echo '<div class="notice notice-warning inline" style="margin:12px 0;"><p>';
-		echo esc_html__( 'این محصول به‌عنوان طرح اشتراک VIP نگاشت شده اما مجازی نیست. برای حذف فیلدهای حمل‌ونقل و فعال‌سازی پرداخت مستقیم، آن را مجازی کنید.', 'music-wave-vip' );
+		echo esc_html__( 'این محصول بهعنوان طرح اشتراک VIP نگاشت شده اما مجازی نیست. برای حذف فیلدهای حملونقل و فعالسازی پرداخت مستقیم، آن را مجازی کنید.', 'music-wave-vip' );
 		echo '</p></div>';
 	}
 
 	/**
+	 * Send every plan purchase straight to the checkout page.
+	 *
 	 * @param mixed $url     Default redirect URL.
 	 * @param mixed $product Added WC_Product.
 	 */
@@ -82,11 +87,12 @@ final class DirectCheckoutHandler {
 		if ( '1' !== $flag && 'true' !== $flag ) {
 			return;
 		}
-		if ( ! SubscriptionOrderInspector::is_subscription_product( (int) $product_id ) || ! function_exists( 'WC' ) || ! WC()->cart ) {
+		$cart = $this->cart();
+		if ( ! $this->is_plan_product( $product_id ) || null === $cart ) {
 			return;
 		}
 
-		$this->prune_non_subscription_items( WC()->cart, (string) $cart_item_key );
+		$this->prune_non_subscription_items( $cart, (string) $cart_item_key );
 	}
 
 	public function handle_direct_checkout_flag(): void {
@@ -94,17 +100,19 @@ final class DirectCheckoutHandler {
 			return;
 		}
 		$product_id = absint( $_REQUEST['add-to-cart'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! SubscriptionOrderInspector::is_subscription_product( $product_id )
-			|| ! function_exists( 'WC' )
-			|| ! WC()->cart
+		if ( ! $this->is_plan_product( $product_id )
 			|| ! function_exists( 'wc_get_checkout_url' )
 			|| ! function_exists( 'is_checkout' )
 			|| ! is_checkout()
 		) {
 			return;
 		}
+		$cart = $this->cart();
+		if ( null === $cart ) {
+			return;
+		}
 
-		$this->prune_non_subscription_items( WC()->cart );
+		$this->prune_non_subscription_items( $cart );
 
 		$clean_url   = wc_get_checkout_url();
 		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( (string) $_SERVER['REQUEST_URI'] ) ) : '';
@@ -118,17 +126,23 @@ final class DirectCheckoutHandler {
 	}
 
 	/**
-	 * @param mixed $found          Whether sold-individually item is already in cart.
+	 * Release WooCommerce's sold-individually duplicate guard for plans.
+	 *
+	 * Plans are sold individually, but re-buying must not dead-end on
+	 * "you cannot add another … to your cart": the guard is released here and the
+	 * previously queued plan is swapped out in the same request by
+	 * `filter_add_to_cart_validation()`.
+	 *
+	 * @param mixed $found          Whether a sold-individually item is already in the cart.
 	 * @param mixed $product_id     Product ID.
+	 * @param mixed $quantity       Quantity the guard would apply.
 	 * @param mixed $variation_id   Variation ID.
 	 * @param mixed $cart_item_data Cart item data.
-	 * @param mixed $cart_item_key  Cart item key.
+	 * @param mixed $cart_item_key  Matching existing cart item key.
 	 */
-	public function filter_sold_individually_found( $found, $product_id = 0, $variation_id = 0, $cart_item_data = array(), $cart_item_key = '' ): bool {
-		unset( $cart_item_data, $cart_item_key );
-		if ( ( (int) $product_id > 0 && SubscriptionOrderInspector::is_subscription_product( (int) $product_id ) )
-			|| ( (int) $variation_id > 0 && SubscriptionOrderInspector::is_subscription_product( (int) $variation_id ) )
-		) {
+	public function filter_sold_individually_found( $found, $product_id = 0, $quantity = 1, $variation_id = 0, $cart_item_data = array(), $cart_item_key = '' ): bool {
+		unset( $quantity, $cart_item_data, $cart_item_key );
+		if ( $this->is_plan_product( $product_id ) || $this->is_plan_product( $variation_id ) ) {
 			return false;
 		}
 
@@ -136,6 +150,9 @@ final class DirectCheckoutHandler {
 	}
 
 	/**
+	 * Replace-on-add: queueing a plan clears whichever plan was queued before, so
+	 * the click always succeeds and two plans can never share the cart.
+	 *
 	 * @param mixed $passed       Validation state.
 	 * @param mixed $product_id   Product ID.
 	 * @param mixed $quantity     Quantity.
@@ -147,29 +164,102 @@ final class DirectCheckoutHandler {
 		if ( ! $passed ) {
 			return false;
 		}
-		if ( (int) $product_id > 0 && SubscriptionOrderInspector::is_subscription_product( (int) $product_id ) ) {
+		if ( ! $this->is_plan_product( $product_id ) ) {
 			return true;
 		}
+		$cart = $this->cart();
+		if ( null !== $cart ) {
+			$this->clear_plan_items( $cart );
+		}
 
-		return (bool) $passed;
+		return true;
 	}
 
 	/**
-	 * Shared helper removing non-subscription items while preserving VIP plan stacking.
+	 * Post-add invariant: whatever path added the plan (form handler, REST, Store
+	 * API, direct `WC_Cart::add_to_cart()`), exactly the new plan survives at quantity 1.
 	 *
-	 * @param object $cart     WC_Cart instance.
-	 * @param string $keep_key Optional newly added item key to preserve unconditionally.
+	 * @param mixed $cart_item_key  Newly added cart item key.
+	 * @param mixed $product_id     Product ID.
+	 * @param mixed $quantity       Requested quantity.
+	 * @param mixed $variation_id   Variation ID.
+	 * @param mixed $variation      Variation attributes.
+	 * @param mixed $cart_item_data Cart item data.
 	 */
-	private function prune_non_subscription_items( $cart, string $keep_key = '' ): void {
+	public function enforce_single_subscription_plan( $cart_item_key, $product_id, $quantity = 1, $variation_id = 0, $variation = array(), $cart_item_data = array() ): void {
+		unset( $quantity, $variation_id, $variation, $cart_item_data );
+		if ( ! $this->is_plan_product( $product_id ) ) {
+			return;
+		}
+		$cart = $this->cart();
+		if ( null === $cart ) {
+			return;
+		}
+
+		$key = (string) $cart_item_key;
+		$this->clear_plan_items( $cart, $key );
+
+		$item = '' !== $key ? $cart->get_cart_item( $key ) : false;
+		if ( is_array( $item ) && isset( $item['quantity'] ) && 1 !== (int) $item['quantity'] ) {
+			$cart->set_quantity( $key, 1 );
+		}
+	}
+
+	/**
+	 * Remove every VIP plan from the cart, optionally preserving one item key.
+	 *
+	 * @param \WC_Cart $cart     Cart instance.
+	 * @param string   $keep_key Cart item key to preserve.
+	 */
+	private function clear_plan_items( \WC_Cart $cart, string $keep_key = '' ): void {
+		foreach ( $cart->get_cart() as $key => $item ) {
+			if ( $key === $keep_key ) {
+				continue;
+			}
+			if ( $this->is_plan_product( isset( $item['product_id'] ) ? $item['product_id'] : 0 ) ) {
+				$cart->remove_cart_item( $key );
+			}
+		}
+	}
+
+	/**
+	 * Shared helper removing non-subscription items for the direct-checkout flow;
+	 * the surviving plan itself is managed by `clear_plan_items()`.
+	 *
+	 * @param \WC_Cart $cart     Cart instance.
+	 * @param string   $keep_key Optional newly added item key to preserve unconditionally.
+	 */
+	private function prune_non_subscription_items( \WC_Cart $cart, string $keep_key = '' ): void {
 		foreach ( $cart->get_cart() as $key => $item ) {
 			if ( '' !== $keep_key && $key === $keep_key ) {
 				continue;
 			}
-			$pid = isset( $item['product_id'] ) ? (int) $item['product_id'] : 0;
-			if ( $pid > 0 && SubscriptionOrderInspector::is_subscription_product( $pid ) ) {
+			if ( $this->is_plan_product( isset( $item['product_id'] ) ? $item['product_id'] : 0 ) ) {
 				continue;
 			}
 			$cart->remove_cart_item( $key );
 		}
+	}
+
+	/**
+	 * Whether a product or variation ID maps to a VIP plan product.
+	 *
+	 * @param mixed $product_id Candidate product ID.
+	 */
+	private function is_plan_product( $product_id ): bool {
+		return (int) $product_id > 0 && SubscriptionOrderInspector::is_subscription_product( (int) $product_id );
+	}
+
+	/**
+	 * Live cart instance, or null when WooCommerce is unavailable in this request.
+	 */
+	private function cart(): ?\WC_Cart {
+		if ( ! function_exists( 'WC' ) ) {
+			return null;
+		}
+		$woocommerce = WC();
+		$cart        = is_object( $woocommerce ) ? $woocommerce->cart : null;
+
+		return $cart instanceof \WC_Cart ? $cart : null;
 	}
 }

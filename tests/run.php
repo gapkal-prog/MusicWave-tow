@@ -99,6 +99,9 @@ final class WP_Post {
 	/** @var string */
 	public $post_status = 'publish';
 
+	/** @var int Owning post ID; track rows read it to resolve release cover art. */
+	public $post_parent = 0;
+
 	public function __construct( int $post_id, string $post_type, string $post_name = '' ) {
 		$this->ID        = $post_id;
 		$this->post_type = $post_type;
@@ -516,6 +519,20 @@ function add_filter( string $hook, callable $callback, int $priority = 10, int $
 
 function add_shortcode( string $tag, callable $callback ): void {
 	unset( $tag, $callback );
+}
+
+$GLOBALS['mw_test_rendered_blocks'] = array();
+
+/**
+ * Minimal renderer used by the page-builder shortcode bridge.
+ *
+ * @param array<string, mixed> $block Parsed block.
+ */
+function render_block( array $block ): string {
+	$GLOBALS['mw_test_rendered_blocks'][] = $block;
+	$name                                 = isset( $block['blockName'] ) ? (string) $block['blockName'] : '';
+
+	return '' === $name ? '' : '<div class="mw-test-block" data-block="' . $name . '"></div>';
 }
 
 function apply_filters( string $hook, $value, ...$args ) {
@@ -2195,6 +2212,31 @@ mw_assert_same(
 	),
 	'Each downloadable file must retain a valid title and stable group key without breaking legacy variants.'
 );
+$direct_asset_url = 'https://dl.rozmusic.com/Music/1405/08/04/Sina%20Derakhshande%20-%20Delam%20Tangete%20%28128%29.mp3';
+mw_assert_same(
+	array(
+		array(
+			'key'      => 'direct-128',
+			'label'    => 'MP3 128',
+			'asset_id' => 'direct:' . $direct_asset_url,
+		),
+	),
+	$schema->get( 'mw_download_assets' )->sanitize(
+		array(
+			array(
+				'key'      => 'direct-128',
+				'label'    => 'MP3 128',
+				'asset_id' => 'direct:' . $direct_asset_url,
+			),
+		)
+	),
+	'Direct-link asset IDs must preserve percent-encoding exactly (%20, %28, %29, hyphens).'
+);
+mw_assert_same(
+	'direct:' . $direct_asset_url,
+	$schema->get( 'mw_download_asset_id' )->sanitize( 'direct:' . $direct_asset_url ),
+	'Legacy single direct-link asset IDs must preserve percent-encoding exactly.'
+);
 mw_assert_same(
 	array(
 		array(
@@ -3269,6 +3311,21 @@ mw_assert_same( true, false !== strpos( $presave_button, 'aria-pressed=' ), 'Lib
 $GLOBALS['mw_test_meta'][3]['mw_release_date'] = gmdate( 'Y-m-d', time() - 86400 );
 mw_assert_same( '', ManaCore\MusicWave\Core\Library\LibraryButton::markup( 'presave', 3 ), 'A released item must not render a pre-save button.' );
 mw_assert_same( true, false !== strpos( ManaCore\MusicWave\Core\Library\LibraryButton::markup( 'wishlist', 4 ), 'data-mw-library-type="wishlist"' ), 'The wishlist button must post the wishlist item type.' );
+mw_assert_same( false, false !== strpos( ManaCore\MusicWave\Core\Library\LibraryButton::markup( 'wishlist', 4 ), 'mw-library-button__count' ), 'The saved-by badge must stay opt-in.' );
+
+// Public "saved by" aggregate: totals only, served from a short-lived cache.
+$GLOBALS['mw_test_transients']['mw_library_count_wishlist_4'] = 27;
+mw_assert_same( 27, $wishlist_library->count_for_item( 'wishlist', 4 ), 'The saved-by aggregate must read the cached count.' );
+mw_assert_same( 0, $wishlist_library->count_for_item( 'review', 4 ), 'Unknown item types must never produce an aggregate.' );
+mw_assert_same( 0, $wishlist_library->count_for_item( 'wishlist', 0 ), 'Missing item IDs must never produce an aggregate.' );
+$count_markup = ManaCore\MusicWave\Core\Library\LibraryButton::markup( 'wishlist', 4, array( 'showCount' => true ) );
+mw_assert_same( true, false !== strpos( $count_markup, 'mw-library-button--has-count' ), 'A visible badge must flag the button layout.' );
+mw_assert_same( true, false !== strpos( $count_markup, 'data-mw-library-count-value="27"' ), 'The badge must expose the aggregate for client-side sync.' );
+mw_assert_same( true, false !== strpos( $count_markup, ' aria-hidden="true">27</span>' ), 'The badge must print the localized total.' );
+mw_assert_same( false, false !== strpos( $count_markup, 'data-mw-library-user' ), 'The badge must never leak member identities.' );
+$zero_markup = ManaCore\MusicWave\Core\Library\LibraryButton::markup( 'wishlist', 5, array( 'showCount' => true ) );
+mw_assert_same( true, false !== strpos( $zero_markup, 'data-mw-library-count-value="0"' ), 'Zero totals must still render a syncable badge.' );
+mw_assert_same( true, false !== strpos( $zero_markup, ' hidden>' ), 'Zero totals must be hidden until the first save.' );
 $GLOBALS['mw_test_current_user'] = 0;
 
 // --- Artists shelf and continue-listening presentation surfaces ---
@@ -3309,7 +3366,9 @@ mw_assert_same( true, false !== strpos( $shelf_markup, 'https://example.test/art
 mw_assert_same( true, false !== strpos( $shelf_markup, 'mw-artists-shelf__avatar--circle' ), 'The avatar shape attribute must reach the markup.' );
 mw_assert_same( true, false !== strpos( $shelf_markup, 'mw-artists-shelf__initial' ), 'Artists without images must fall back to an initial-letter avatar.' );
 mw_assert_same( true, false !== strpos( $shelf_markup, 'data-mw-library-type="artist"' ), 'Every artist card must expose the shared follow-artist button.' );
-mw_assert_same( true, false !== strpos( $shelf_markup, 'انتشار 12' ), 'Release counts must render from core term counts.' );
+mw_assert_same( true, false !== strpos( $shelf_markup, '12 اثر' ), 'Release counts must render from core term counts.' );
+mw_assert_same( true, false !== strpos( $shelf_markup, '<div class="mw-artists-shelf__media"><a class="mw-artists-shelf__avatar' ), 'Artist cards must keep the cover directly inside the media shell.' );
+mw_assert_same( false, false !== strpos( $shelf_markup, 'mw-artists-shelf__disc' ), 'The artist cover must not render the retired vinyl disc.' );
 mw_assert_same( true, false !== strpos( $shelf_markup, 'Aria sings over waves of synth.' ), 'Biography excerpts must strip inline tags.' );
 
 $limited_shelf = $artists_shelf->render( array( 'source' => 'all', 'itemsToShow' => 2, 'showFollowButton' => false, 'showHeading' => false ) );
@@ -3397,6 +3456,221 @@ mw_assert_same(
 	'The first page must keep the clean canonical URL.'
 );
 $GLOBALS['mw_test_terms'] = $paged_backup;
+
+/*
+ * Artists index browsing surface (page-artists.html). The hero, toolbar,
+ * alphabet, shelf and pagination are separate blocks, so each surface is
+ * asserted on its own while all of them read the same request state. A
+ * Persian fixture is required: the alphabet filter and the search normalise
+ * Arabic letter variants (ي ك ة) onto their Persian buckets.
+ */
+$artists_surface_backup   = $GLOBALS['mw_test_terms'];
+$GLOBALS['mw_test_terms'] = array();
+$idx_aria                 = wp_insert_term( 'آریا', 'mw_artist', array( 'slug' => 'aria' ) );
+$idx_babak                = wp_insert_term( 'بابک', 'mw_artist', array( 'slug' => 'babak' ) );
+$idx_pouya                = wp_insert_term( 'پویا', 'mw_artist', array( 'slug' => 'pouya' ) );
+$idx_yasin                = wp_insert_term( 'ياسمين', 'mw_artist', array( 'slug' => 'yasmin' ) );
+$GLOBALS['mw_test_terms'][ $idx_aria['term_id'] ]->count  = 9;
+$GLOBALS['mw_test_terms'][ $idx_babak['term_id'] ]->count = 4;
+$GLOBALS['mw_test_terms'][ $idx_pouya['term_id'] ]->count = 6;
+$GLOBALS['mw_test_terms'][ $idx_yasin['term_id'] ]->count = 2;
+
+$mw_artists_query_keys = array( 'mw_artists_page', 'mw_artists_search', 'mw_artists_letter', 'mw_artists_sort', 'context' );
+foreach ( $mw_artists_query_keys as $mw_artists_query_key ) {
+	unset( $_GET[ $mw_artists_query_key ] );
+}
+unset( $_SERVER['REQUEST_URI'] );
+
+$artists_index = new ManaCore\MusicWave\Core\Catalog\ArtistIndex();
+mw_assert_same( 33, count( ManaCore\MusicWave\Core\Catalog\ArtistIndex::ALPHABET ), 'The alphabet filter must cover the full Persian alphabet.' );
+mw_assert_same( 'ی', ManaCore\MusicWave\Core\Catalog\ArtistIndex::term_letter( 'ياسمين' ), 'An Arabic yeh must bucket under the Persian yeh.' );
+mw_assert_same( 'ک', ManaCore\MusicWave\Core\Catalog\ArtistIndex::term_letter( 'كاميار' ), 'An Arabic kaf must bucket under the Persian kaf.' );
+mw_assert_same( '', ManaCore\MusicWave\Core\Catalog\ArtistIndex::term_letter( '123' ), 'A name without letters must not claim an alphabet bucket.' );
+mw_assert_same( 4, count( $artists_index->filtered( ManaCore\MusicWave\Core\Catalog\ArtistIndex::SORT_POPULAR, '', '' ) ), 'An empty filter must return every artist.' );
+mw_assert_same( 1, count( $artists_index->filtered( ManaCore\MusicWave\Core\Catalog\ArtistIndex::SORT_POPULAR, '', 'آ' ) ), 'The letter filter must bucket names by their first letter.' );
+mw_assert_same( 1, count( $artists_index->filtered( ManaCore\MusicWave\Core\Catalog\ArtistIndex::SORT_POPULAR, 'باب', '' ) ), 'Search must match on the artist name.' );
+mw_assert_same( 1, count( $artists_index->filtered( ManaCore\MusicWave\Core\Catalog\ArtistIndex::SORT_POPULAR, 'pouya', '' ) ), 'Search must match on the artist slug too.' );
+$artists_letters = $artists_index->letters();
+mw_assert_same( 1, (int) $artists_letters['آ'], 'The alphabet row must count the artists behind every bucket.' );
+mw_assert_same( 1, (int) $artists_letters['ی'], 'Artists written with an Arabic yeh must still count under ی.' );
+mw_assert_same( 0, (int) $artists_letters['ژ'], 'A letter with no artists must count zero.' );
+mw_assert_same( 4, $artists_index->total(), 'The hero total must come from the published artist count.' );
+mw_assert_same( 21, $artists_index->release_total(), 'The hero release total must sum the published release counts.' );
+mw_assert_same( 2, $artists_index->page_count( 3 ), 'The page count must follow the matching total and the page size.' );
+mw_assert_same( 'https://example.test/', $artists_index->url(), 'The default browsing state must build a clean URL.' );
+mw_assert_same( 'https://example.test/?mw_artists_sort=alphabetical', $artists_index->url( array( 'mw_artists_sort' => 'alphabetical' ) ), 'A non-default ordering must appear in the URL.' );
+mw_assert_same( 'https://example.test/?mw_artists_page=3', $artists_index->url( array( 'mw_artists_page' => 3 ) ), 'Only pages after the first need a page query var.' );
+
+$artists_hero = new ManaCore\MusicWave\Core\Blocks\ArtistsHeroBlock();
+$hero_markup  = $artists_hero->render( array( 'level' => '2' ) );
+mw_assert_same( true, false !== strpos( $hero_markup, '<h2 class="mw-artists-hero__title">خوانندگان</h2>' ), 'The hero heading must honour the level attribute and default to the page title.' );
+mw_assert_same( true, false !== strpos( $hero_markup, 'کتابخانهٔ هنرمندان' ), 'The hero must render its eyebrow copy.' );
+mw_assert_same( false, false !== strpos( $hero_markup, 'mw-artists-hero__collage' ), 'The hero banner must not render the retired artist collage.' );
+mw_assert_same( true, false !== strpos( $hero_markup, '<strong class="mw-artists-hero__stat-value">4</strong>' ), 'The hero must report the artist total.' );
+mw_assert_same( true, false !== strpos( $hero_markup, '<strong class="mw-artists-hero__stat-value">21</strong>' ), 'The hero must report the published release total.' );
+
+$hero_minimal = $artists_hero->render(
+	array(
+		'showStats'   => false,
+		'eyebrow'     => '',
+		'heading'     => 'کتابخانهٔ خوانندگان',
+		'description' => '',
+	)
+);
+mw_assert_same( false, false !== strpos( $hero_minimal, 'mw-artists-hero__stats' ), 'showStats must be able to drop the stats list.' );
+mw_assert_same( false, false !== strpos( $hero_minimal, 'mw-artists-hero__eyebrow' ), 'Clearing the eyebrow must hide the element instead of printing an empty paragraph.' );
+mw_assert_same( true, false !== strpos( $hero_minimal, '>کتابخانهٔ خوانندگان</h1>' ), 'An edited heading must render at the default level.' );
+
+$hero_backup              = $GLOBALS['mw_test_terms'];
+$GLOBALS['mw_test_terms'] = array();
+$_GET['context']          = 'edit';
+mw_assert_same( true, false !== strpos( $artists_hero->render( array() ), 'mw-artists-hero--placeholder' ), 'An empty artists catalogue must give the editor a placeholder, not an error.' );
+unset( $_GET['context'] );
+$GLOBALS['mw_test_terms'] = $hero_backup;
+
+$artists_toolbar = new ManaCore\MusicWave\Core\Blocks\ArtistsToolbarBlock();
+$toolbar_markup  = $artists_toolbar->render( array() );
+mw_assert_same( true, false !== strpos( $toolbar_markup, 'name="mw_artists_search"' ), 'The toolbar must post a GET search form.' );
+mw_assert_same( true, false !== strpos( $toolbar_markup, 'mw_artists_sort=alphabetical' ), 'The ordering tabs must link to their own query state.' );
+mw_assert_same( false, false !== strpos( $toolbar_markup, 'mw-artists-toolbar__views' ), 'The retired grid/list toggle must not render.' );
+mw_assert_same( false, false !== strpos( $toolbar_markup, 'mw-artists-toolbar__menu' ), 'The retired alphabet jump link must not render.' );
+mw_assert_same( true, false !== strpos( $toolbar_markup, 'class="mw-artists-toolbar__sort is-active" href="https://example.test/"' ), 'The default ordering tab must be the active one and need no query var.' );
+mw_assert_same( 1, substr_count( $toolbar_markup, 'aria-current="true"' ), 'Exactly the active sort tab must be marked current.' );
+
+$_GET['mw_artists_sort'] = 'alphabetical';
+$toolbar_active          = $artists_toolbar->render( array() );
+mw_assert_same( true, false !== strpos( $toolbar_active, 'name="mw_artists_sort" value="alphabetical"' ), 'Searching must preserve the active ordering.' );
+mw_assert_same( true, false !== strpos( $toolbar_active, 'class="mw-artists-toolbar__sort is-active" href="https://example.test/?mw_artists_sort=alphabetical"' ), 'The active ordering tab must point at the current state.' );
+unset( $_GET['mw_artists_sort'] );
+
+$_GET['mw_artists_search'] = 'پو';
+$toolbar_search            = $artists_toolbar->render( array() );
+mw_assert_same( true, false !== strpos( $toolbar_search, 'value="پو"' ), 'The search field must echo the active query.' );
+mw_assert_same( true, false !== strpos( $toolbar_search, 'mw-artists-toolbar__clear' ), 'An active search must offer a way to clear it.' );
+unset( $_GET['mw_artists_search'] );
+
+$artists_alphabet = new ManaCore\MusicWave\Core\Blocks\ArtistsAlphabetBlock();
+$alphabet_markup  = $artists_alphabet->render( array() );
+mw_assert_same( true, false !== strpos( $alphabet_markup, 'id="mw-artists-alphabet"' ), 'The alphabet row must keep its stable anchor id.' );
+mw_assert_same( true, false !== strpos( $alphabet_markup, 'class="mw-artists-alphabet__item is-active" href="https://example.test/" data-count="4" aria-current="true">همه</a>' ), 'Without an active letter the "all" chip must be current.' );
+mw_assert_same( true, false !== strpos( $alphabet_markup, 'href="https://example.test/?mw_artists_letter=%D8%A2"' ), 'Letters with artists must link to their filter.' );
+mw_assert_same( true, false !== strpos( $alphabet_markup, 'data-count="1">آ</a>' ), 'Each letter link must carry its artist count.' );
+mw_assert_same( true, false !== strpos( $alphabet_markup, 'class="mw-artists-alphabet__item is-empty" data-count="0">ژ</span>' ), 'A letter with no artists must render inert instead of a dead link.' );
+mw_assert_same( false, false !== strpos( $artists_alphabet->render( array( 'showAll' => false ) ), '>همه</a>' ), 'showAll must be able to drop the "all" chip.' );
+mw_assert_same( true, false !== strpos( $artists_alphabet->render( array( 'showCounts' => true ) ), 'mw-artists-alphabet__count' ), 'showCounts must print the count badge.' );
+
+$surface_shelf = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+		'showResultCount'  => true,
+		'showCrowns'       => true,
+		'itemsToShow'      => 12,
+	)
+);
+mw_assert_same( true, false !== strpos( $surface_shelf, 'نمایش 4 از 4 خواننده' ), 'The shelf must print the "showing X of Y" line when asked.' );
+mw_assert_same( 3, substr_count( $surface_shelf, 'mw-artists-shelf__crown--' ), 'Only the three most popular artists may wear a crown.' );
+mw_assert_same( true, false !== strpos( $surface_shelf, 'mw-artists-shelf__crown--1' ) && false !== strpos( $surface_shelf, 'aria-label="رتبهٔ 1 در محبوبیت"' ), 'Crowns must be ranked and labelled for assistive tech.' );
+mw_assert_same( false, false !== strpos( $surface_shelf, 'mw-artists-shelf__disc' ), 'Artist cards must not render the retired vinyl disc.' );
+
+$plain_shelf = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+	)
+);
+mw_assert_same( false, false !== strpos( $plain_shelf, 'mw-artists-shelf__summary' ), 'showResultCount=false must remove the summary line.' );
+
+$curated_shelf = $artists_shelf->render(
+	array(
+		'source'           => 'manual',
+		'artistIds'        => (string) $idx_pouya['term_id'],
+		'showHeading'      => false,
+		'showFollowButton' => false,
+	)
+);
+mw_assert_same( true, false !== strpos( $curated_shelf, 'mw-release-shelf--grid' ), 'A hand-picked shelf must keep the layout its editor chose.' );
+
+$_GET['mw_artists_letter'] = 'آ';
+$letter_shelf              = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+		'showResultCount'  => true,
+	)
+);
+mw_assert_same( true, false !== strpos( $letter_shelf, '>آریا</a>' ) && false === strpos( $letter_shelf, '>پویا</a>' ), 'The alphabet filter must narrow the shelf to one letter.' );
+mw_assert_same( true, false !== strpos( $letter_shelf, 'نمایش 1 از 1 خواننده' ), 'The summary must report the filtered total.' );
+$letter_alphabet = $artists_alphabet->render( array() );
+mw_assert_same( true, false !== strpos( $letter_alphabet, 'class="mw-artists-alphabet__item is-active" href="https://example.test/?mw_artists_letter=%D8%A2"' ), 'The active letter must be marked current in the alphabet row.' );
+mw_assert_same( 1, substr_count( $letter_alphabet, 'aria-current="true"' ), 'Only the active letter may be marked current.' );
+unset( $_GET['mw_artists_letter'] );
+
+$_GET['mw_artists_search'] = 'پویا';
+$search_shelf              = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+		'showResultCount'  => true,
+	)
+);
+mw_assert_same( true, false !== strpos( $search_shelf, 'نمایش 1 از 1 خواننده' ) && false === strpos( $search_shelf, '>بابک</a>' ), 'The search box must filter the artists shelf.' );
+
+$_GET['mw_artists_search'] = 'هیچکس';
+$no_match_shelf            = $artists_shelf->render( array( 'source' => 'all', 'showHeading' => false, 'showFollowButton' => false ) );
+mw_assert_same( true, false !== strpos( $no_match_shelf, 'با این فیلترها پیدا نشد' ), 'An empty filtered result must explain how to recover.' );
+mw_assert_same( false, false !== strpos( $no_match_shelf, 'هنوز هنرمندی برای نمایش وجود ندارد.' ), 'The "no artists at all" copy must not stand in for an empty filter result.' );
+unset( $_GET['mw_artists_search'] );
+
+$GLOBALS['mw_test_terms'] = $artists_surface_backup;
+
+/*
+ * Artists pagination surface: the standalone pager block and the shelf's
+ * browseIndex mode must slice the same index with the same page size.
+ */
+$paging_backup            = $GLOBALS['mw_test_terms'];
+$GLOBALS['mw_test_terms'] = array();
+for ( $index_slot = 1; $index_slot <= 25; $index_slot++ ) {
+	wp_insert_term( 'Artist P' . str_pad( (string) $index_slot, 2, '0', STR_PAD_LEFT ), 'mw_artist', array( 'slug' => 'artist-p-' . $index_slot ) );
+}
+foreach ( $mw_artists_query_keys as $mw_artists_query_key ) {
+	unset( $_GET[ $mw_artists_query_key ] );
+}
+unset( $_SERVER['REQUEST_URI'] );
+
+$artists_pagination = new ManaCore\MusicWave\Core\Blocks\ArtistsPaginationBlock();
+$pager_markup       = $artists_pagination->render( array( 'perPage' => 4 ) );
+mw_assert_same( true, false !== strpos( $pager_markup, 'mw-artists-pagination-wrap' ) && false !== strpos( $pager_markup, '<nav class="mw-artists-pagination"' ), 'The pagination block must render the shared pager chrome in its own wrapper.' );
+mw_assert_same( true, false !== strpos( $pager_markup, 'aria-current="page">1</span>' ), 'The active page must be marked with aria-current instead of a link.' );
+mw_assert_same( true, false !== strpos( $pager_markup, 'rel="next"' ) && false === strpos( $pager_markup, 'rel="prev"' ), 'The first page must offer only a next link.' );
+mw_assert_same( true, false !== strpos( $pager_markup, 'صفحهٔ 1 از 7 · 25 هنرمند' ), 'The pager status line must summarise the matching total.' );
+
+$_GET['mw_artists_page'] = '7';
+$last_page_markup        = $artists_pagination->render( array( 'perPage' => 4 ) );
+mw_assert_same( true, false !== strpos( $last_page_markup, 'aria-current="page">7</span>' ) && false !== strpos( $last_page_markup, 'rel="prev"' ) && false === strpos( $last_page_markup, 'rel="next"' ), 'The last page must mark page seven and drop the next link.' );
+
+$browse_shelf = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+		'browseIndex'      => true,
+		'perPage'          => 4,
+		'showResultCount'  => true,
+	)
+);
+mw_assert_same( true, false !== strpos( $browse_shelf, 'Artist P25' ) && false === strpos( $browse_shelf, 'Artist P24' ), 'browseIndex must slice the shelf to the requested page.' );
+mw_assert_same( true, false !== strpos( $browse_shelf, 'نمایش 1 از 25 خواننده' ), 'A paged shelf must report the page slice against the full matching total.' );
+mw_assert_same( false, false !== strpos( $browse_shelf, 'mw-artists-shelf__pager' ), 'browseIndex pages the shelf but leaves the pager to the pagination block.' );
+
+unset( $_GET['mw_artists_page'] );
+mw_assert_same( '', $artists_pagination->render( array( 'perPage' => 30 ) ), 'A single-page index must not render pager chrome.' );
+
+$GLOBALS['mw_test_terms'] = $paging_backup;
 
 $taxonomy_shelf                      = new ManaCore\MusicWave\Core\Blocks\TaxonomyShelfBlock();
 $shelf_pop                           = wp_insert_term( 'Pop', 'mw_genre', array( 'slug' => 'pop' ) );
@@ -4065,6 +4339,84 @@ mw_assert_same( true, in_array( 'music_wave_vip_plan_revoked', $GLOBALS['mw_test
 $GLOBALS['mw_test_user_meta'][7][ ManaCore\MusicWave\Vip\VipPlans::GRANTS_META_KEY ] = 'corrupted-host-data';
 mw_assert_same( false, $vip_engine->user_has_access( 7, 'vipgold' ), 'Corrupted grant payloads must fail closed.' );
 mw_assert_same( false, isset( $GLOBALS['mw_test_user_meta'][7][ ManaCore\MusicWave\Vip\VipPlans::GRANTS_META_KEY ] ), 'Corrupted grant payloads must be removed.' );
+
+// --- Reserved terms: a shorter plan bought during a longer one waits its turn ---
+
+$reserve_clock  = 1710000000;
+$reserve_now    = function () use ( &$reserve_clock ): int {
+	return $reserve_clock;
+};
+$reserve_engine = new ManaCore\MusicWave\Vip\VipPlans(
+	array(
+		'halfyear' => array(
+			'product_ids'   => array( 70 ),
+			'duration_days' => 180,
+		),
+		'monthly'  => array(
+			'product_ids'   => array( 71 ),
+			'duration_days' => 30,
+		),
+	),
+	false,
+	$reserve_now
+);
+
+$halfyear_expiry = $reserve_clock + ( 180 * 86400 );
+$monthly_expiry  = $halfyear_expiry + ( 30 * 86400 );
+
+$GLOBALS['mw_test_orders'][701] = new TestWcOrder( 8, array( new TestWcOrderItem( 70 ) ) );
+$GLOBALS['mw_test_orders'][702] = new TestWcOrder( 8, array( new TestWcOrderItem( 71 ) ) );
+
+mw_assert_same( 1, $reserve_engine->grant_for_order( 701 ), 'The longer plan must grant immediately.' );
+mw_assert_same( 1, $reserve_engine->grant_for_order( 702 ), 'Buying a shorter plan during a longer one must still grant.' );
+mw_assert_same( true, $reserve_engine->user_has_access( 8, 'halfyear' ), 'The longer plan must stay active.' );
+mw_assert_same( false, $reserve_engine->user_has_access( 8, 'monthly' ), 'A reserved term must not grant access before its start.' );
+mw_assert_same( array( 'halfyear' ), $reserve_engine->active_levels( 8 ), 'Reserved terms must not appear in the active level list.' );
+
+$reserved_monthly = array_values(
+	array_filter(
+		$reserve_engine->detailed_active_grants( 8 ),
+		static function ( array $grant ): bool {
+			return 'monthly' === $grant['level'];
+		}
+	)
+);
+mw_assert_same( 1, count( $reserved_monthly ), 'The reserved term must be reported exactly once.' );
+mw_assert_same( true, $reserved_monthly[0]['is_reserved'], 'The shorter plan must be reported as a reserved term.' );
+mw_assert_same( $halfyear_expiry, $reserved_monthly[0]['starts_at'], 'A reserved term must start exactly when the longer plan ends.' );
+mw_assert_same( $monthly_expiry, $reserved_monthly[0]['expires_at'], 'A reserved term must keep its full duration after activation.' );
+mw_assert_same( 180, $reserved_monthly[0]['reserved_days'], 'The reserved term must report its waiting period in days.' );
+
+$reserve_clock = $halfyear_expiry;
+mw_assert_same( false, $reserve_engine->user_has_access( 8, 'halfyear' ), 'The longer plan must end on its expiry date.' );
+mw_assert_same( true, $reserve_engine->user_has_access( 8, 'monthly' ), 'The reserved plan must activate when the longer one ends.' );
+mw_assert_same( array( 'monthly' ), $reserve_engine->active_levels( 8 ), 'Only the activated reserve must stay active.' );
+mw_assert_same( true, $reserve_engine->user_has_access( 8, ManaCore\MusicWave\Vip\VipPlans::VIP_ROLE ), 'The umbrella VIP level must follow the active reserve.' );
+
+$reserve_clock = $monthly_expiry;
+mw_assert_same( false, $reserve_engine->user_has_access( 8, 'monthly' ), 'The activated reserve must expire after its own duration.' );
+
+// Refunding the blocking term releases the reservation instead of leaving the
+// paid shorter plan locked behind a start date that no longer exists.
+$reserve_clock = 1710000000;
+$GLOBALS['mw_test_orders'][703] = new TestWcOrder( 10, array( new TestWcOrderItem( 70 ) ) );
+$GLOBALS['mw_test_orders'][704] = new TestWcOrder( 10, array( new TestWcOrderItem( 71 ) ) );
+$reserve_engine->grant_for_order( 703 );
+$reserve_engine->grant_for_order( 704 );
+mw_assert_same( false, $reserve_engine->user_has_access( 10, 'monthly' ), 'The shorter plan must start out reserved.' );
+mw_assert_same( 1, $reserve_engine->revoke_for_order( 703 ), 'Refunding the blocking plan must revoke it.' );
+mw_assert_same( true, $reserve_engine->user_has_access( 10, 'monthly' ), 'Refunding the blocking plan must release the reservation.' );
+$released_monthly = array_values(
+	array_filter(
+		$reserve_engine->detailed_active_grants( 10 ),
+		static function ( array $grant ): bool {
+			return 'monthly' === $grant['level'];
+		}
+	)
+);
+mw_assert_same( false, $released_monthly[0]['is_reserved'], 'A released reservation must stop being reported as reserved.' );
+mw_assert_same( 1710000000 + ( 30 * 86400 ), $released_monthly[0]['expires_at'], 'A released reservation must run its full duration from today.' );
+unset( $GLOBALS['mw_test_orders'][701], $GLOBALS['mw_test_orders'][702], $GLOBALS['mw_test_orders'][703], $GLOBALS['mw_test_orders'][704] );
 
 // Settings round-trip: textarea parsing, preservation, and explicit clearing.
 $GLOBALS['mw_test_options'][ ManaCore\MusicWave\Vip\VipSettings::OPTION ] = array();
@@ -4827,6 +5179,25 @@ mw_assert_same(
 	'Preview player in icon mode must render a clean circular action button with custom icon and zero box chrome.'
 );
 
+/*
+ * The block-style (Styles panel) selection must win over the `variant`
+ * attribute default that block.json pre-fills, otherwise the "minimal, no
+ * background" (ghost) style is unreachable from the Site Editor.
+ */
+$mw_preview_ghost_ui = $mw_col_renderer->render_preview_player(
+	array(
+		'variant'   => 'accent',
+		'className' => 'is-style-ghost',
+	),
+	null
+);
+mw_assert_same(
+	true,
+	false !== strpos( $mw_preview_ghost_ui, 'mw-action-button--ghost' )
+		&& false === strpos( $mw_preview_ghost_ui, 'mw-action-button--accent' ),
+	'Preview player must honour an is-style-ghost block style over a default accent variant so the minimal no-background mode renders.'
+);
+
 $mw_col_auto_html = $mw_col_renderer->render_collection_list(
 	array(
 		'density'      => 'comfortable',
@@ -5007,5 +5378,60 @@ mw_assert_same(
 	'Unified search block in Editor must dynamically reflect mw_preview_query sample parameter.'
 );
 $_GET = $mw_prev_get;
+
+/*
+ * Page-builder bridge: [musicwave_block] renders only the project namespace and
+ * forwards just the attributes a block declares.
+ */
+$mw_builder_shortcode = new ManaCore\MusicWave\Core\Support\BlockShortcode(
+	static function ( string $name ): array {
+		unset( $name );
+		return array( 'layout', 'itemsToShow' );
+	}
+);
+$GLOBALS['mw_test_rendered_blocks'] = array();
+$mw_bridge_html                     = $mw_builder_shortcode->shortcode(
+	array(
+		'name'       => 'music-wave/release-shelf',
+		'attributes' => '{"layout":"grid","itemsToShow":6,"undeclared":"nope"}',
+	)
+);
+mw_assert_same( 1, count( $GLOBALS['mw_test_rendered_blocks'] ), 'The builder shortcode must render exactly one block.' );
+mw_assert_same(
+	array(
+		'layout'      => 'grid',
+		'itemsToShow' => 6,
+	),
+	$GLOBALS['mw_test_rendered_blocks'][0]['attrs'],
+	'The builder shortcode must forward declared attributes and drop undeclared keys.'
+);
+mw_assert_same(
+	true,
+	false !== strpos( $mw_bridge_html, 'data-block="music-wave/release-shelf"' ),
+	'The builder shortcode must return the rendered block markup.'
+);
+
+$GLOBALS['mw_test_rendered_blocks'] = array();
+mw_assert_same( '', $mw_builder_shortcode->shortcode( array( 'name' => 'core/paragraph' ) ), 'The builder shortcode must reject blocks outside the project namespace.' );
+mw_assert_same( array(), $GLOBALS['mw_test_rendered_blocks'], 'A rejected block must never reach render_block().' );
+
+mw_assert_same(
+	'',
+	$mw_builder_shortcode->shortcode(
+		array(
+			'name'       => 'music-wave/release-shelf',
+			'attributes' => '{"layout":',
+		)
+	),
+	'The builder shortcode must reject malformed attribute JSON instead of rendering partial data.'
+);
+
+$GLOBALS['mw_test_rendered_blocks'] = array();
+$mw_builder_shortcode->shortcode( array( 'name' => 'music-wave/release-shelf' ) );
+mw_assert_same(
+	array(),
+	$GLOBALS['mw_test_rendered_blocks'][0]['attrs'],
+	'Omitting attributes must render the block with its defaults.'
+);
 
 echo 'MusicWave domain smoke tests passed.' . PHP_EOL;

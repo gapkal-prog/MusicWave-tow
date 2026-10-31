@@ -89,6 +89,9 @@
             "آیکون دکمه را نمایش یا پنهان کنید. وقتی خاموش باشد فقط متن (اگر فعال باشد) نمایش داده می‌شود.": [
                 "Show or hide the button icon. When off, only the label text (if enabled) is displayed."
             ],
+            "آیکون عنوان بخش (اختیاری)": [
+                "Section title icon (optional)"
+            ],
             "آیکون منو": [
                 "Menu icon"
             ],
@@ -128,15 +131,6 @@
             "از صفحهٔ حساب خود، هر زمان و بدون پرسش اضافه.": [
                 "From your account page, any time, with no extra questions."
             ],
-            "از کجا شروع کنیم؟": [
-                "Where should we start?"
-            ],
-            "از یک ردیف سریع تا فهرست کامل صفحهبهصفحه؛ هر سه حالت از یک بلوک ساخته شدهاند و میتوانید هرکدام را نگه دارید.": [
-                "From a quick rail to a full page-by-page directory; all three shapes come from one block, and you can keep whichever you need."
-            ],
-            "استاندارد (۴ ستون دسکتاپ)": [
-                "Standard (4 desktop columns)"
-            ],
             "استفاده از تنظیمات کلی": [
                 "Use global setting"
             ],
@@ -154,9 +148,6 @@
             ],
             "استفاده از چکیده": [
                 "Use excerpt"
-            ],
-            "استودیوی شخصی شما در یک نگاه": [
-                "Your personal studio at a glance"
             ],
             "اسلاید %1$d از %2$d": [
                 "Slide %1$d of %2$d"
@@ -191,8 +182,8 @@
             "اسکرول خودکار": [
                 "Auto-scroll"
             ],
-            "اشتراک فعال، طرحهای عضویت، تاریخچهٔ سفارش، دانلودهای مجاز، آدرس و روش پرداخت؛ هر بخش یک بلوک جداگانه و قابل ویرایش.": [
-                "Active subscription, membership plans, order history, entitled downloads, address and payment method; each part is a separate, editable block."
+            "افزایش": [
+                "Increase"
             ],
             "افقی (۱۶:۱۰)": [
                 "Landscape (16:10)"
@@ -239,14 +230,11 @@
             "اندازه فونت عنوان (پیکسل، ۰ = پیش‌فرض)": [
                 "Title font size (px, 0 = default)"
             ],
-            "اندازه کارت‌ها": [
-                "Card size"
+            "اندازهٔ فایل تصویر بارگذاری‌شده را تعیین می‌کند و روی تعداد ستون‌ها اثری ندارد.": [
+                "Sets the uploaded image file size; it does not affect the column count."
             ],
             "این بلوک سه ناحیه ابزارک فوتر را نمایش می‌دهد. برای ویرایش مستقیم و ماژولار در ویرایشگر سایت، می‌توانید مستقیماً بلوک «ستون‌ها» وردپرس را با بلوک‌های فهرست، پیوند و متن ترکیب کنید.": [
                 "This block renders the three footer widget areas. To build custom modular footer columns directly in the Site Editor, compose core Columns with List, Navigation, and Paragraph blocks."
-            ],
-            "این دو گزینه فقط پیشنمایش داخل ویرایشگر را تغییر میدهند و هیچ اثری روی سایت ندارند.": [
-                "These two options only change the in-editor preview and have no effect on the site."
             ],
             "این متن روی دکمه دیده نمیشود و فقط به عنوان برچسب دسترسپذیری استفاده میشود.": [
                 "This text is not shown on the button and is used only as an accessibility label."
@@ -265,6 +253,9 @@
             ],
             "با زدن Ctrl+K در هر جای سایت، پنجره جستجو باز میشود.": [
                 "Pressing Ctrl+K anywhere on the site opens the search overlay."
+            ],
+            "بارگذاری همهٔ انتشارها": [
+                "Load all releases"
             ],
             "باز و بستهٔ منو": [
                 "Toggle menu"
@@ -392,14 +383,11 @@
             "برگه با نوار کناری": [
                 "Page with sidebar"
             ],
-            "برگهٔ انتشار، همهٔ امکانات": [
-                "The release page, every feature"
-            ],
             "بزرگ": [
                 "Large"
             ],
-            "بزرگ (۳ ستون دسکتاپ)": [
-                "Large (3 desktop columns)"
+            "بزرگ (کیفیت بالا)": [
+                "Large (high quality)"
             ],
             "بزرگ‌تر کردن متن": [
                 "Increase lyrics size"
@@ -428,9 +416,6 @@
             "بوم": [
                 "Canvas"
             ],
-            "بیشتر بخوانید": [
-                "Read more"
-            ],
             "بیکلام": [
                 "Instrumental"
             ],
@@ -448,9 +433,6 @@
             ],
             "تایپوگرافی شاخص و کنتراست مجله‌ای.": [
                 "Display typography and editorial contrast."
-            ],
-            "تبلت": [
-                "Tablet"
             ],
             "تبلت — ۷۶۸ تا ۱۰۲۳ پیکسل": [
                 "Tablet — 768 to 1023 pixels"
@@ -482,8 +464,8 @@
             "تصادفی": [
                 "Random"
             ],
-            "تعداد انتشارهای بارگذاری‌شده": [
-                "Releases loaded"
+            "تعداد انتشارهای بارگذاریشده": [
+                "Number of releases loaded"
             ],
             "تعداد سفارشی‌سازی‌های ذخیره‌شده قالب: %d": [
                 "Customized built-in template overrides found: %d"
@@ -539,6 +521,9 @@
             "تگ HTML خروجی": [
                 "HTML wrapper tag"
             ],
+            "تگ را متناسب با جای استفاده انتخاب کنید؛ تگ‌های ناشناخته به پاراگراف تبدیل می‌شوند.": [
+                "Choose a tag that fits its placement; unknown tags fall back to a paragraph."
+            ],
             "تیتر اصلی": [
                 "Hero"
             ],
@@ -547,9 +532,6 @@
             ],
             "تیرگی لایه رویی (سبک سینمایی)": [
                 "Scrim opacity (Cinema style)"
-            ],
-            "جامعه": [
-                "Community"
             ],
             "جای دکمه": [
                 "Button position"
@@ -596,9 +578,6 @@
             "جستجوی هوشمند کاتالوگ": [
                 "Smart catalog search"
             ],
-            "جستوجو، هنرمند، سبک، حالوهوا، نوع و مرتبسازی؛ نتیجه بلافاصله در شبکهٔ پایین بهروز میشود.": [
-                "Search, artist, genre, mood, type and sort; the grid below updates immediately."
-            ],
             "جست‌وجو": [
                 "Search"
             ],
@@ -626,9 +605,6 @@
             "حداکثر طول عنوان آیتم‌ها (۰ = نامحدود)": [
                 "Max item label length (0 = unlimited)"
             ],
-            "حداکثر عرض نوار جستجو در دسکتاپ (پیکسل)": [
-                "Maximum search bar width on desktop (pixels)"
-            ],
             "حذف تب‌ها": [
                 "Clear tabs"
             ],
@@ -640,12 +616,6 @@
             ],
             "حساب کاربری من": [
                 "My account"
-            ],
-            "حساب کاربری، بخش خرید": [
-                "Account, the purchase side"
-            ],
-            "حساب کاربری، چیدمان متفاوت": [
-                "Account, a different layout"
             ],
             "خالی بگذارید تا به شکل خودکار از محبوبترین ژانرهای سایت پر شود؛ برای پنهان کردن عبارت off را بنویسید.": [
                 "Leave empty to auto-fill from the site’s most popular genres; write off to hide it."
@@ -692,9 +662,6 @@
             "خودکار (محتوای واقعی فعلی سایت)": [
                 "Automatic (current live site content)"
             ],
-            "خوشآمد، آمار شنیدن، ادامهٔ پخش، صف پخش و کتابخانهٔ شخصی؛ هر بخش یک بلوک مستقل که میتوانید جابهجا کنید یا حذف کنید.": [
-                "Welcome, listening stats, continue playing, the playback queue and your personal library; each part is an independent block you can move or remove."
-            ],
             "خیلی بزرگ": [
                 "X Large"
             ],
@@ -740,41 +707,11 @@
             "درخواست آهنگ و همکاری": [
                 "Song request & collaboration"
             ],
-            "درخواست موسیقی تازه": [
-                "Request fresh music"
-            ],
             "درخواست‌ها": [
                 "Requests"
             ],
-            "دسکتاپ": [
-                "Desktop"
-            ],
             "دسکتاپ — از ۱۰۲۴ پیکسل به بالا": [
                 "Desktop — 1024 pixels and up"
-            ],
-            "دموهای MusicWave": [
-                "MusicWave demos"
-            ],
-            "دموی استودیوی حساب کاربری": [
-                "Account studio demo"
-            ],
-            "دموی برگهٔ کامل انتشار": [
-                "Full release page demo"
-            ],
-            "دموی جامعه و درخواستها": [
-                "Community and requests demo"
-            ],
-            "دموی خرید و عضویت حساب کاربری": [
-                "Account purchase and membership demo"
-            ],
-            "دموی فهرست هنرمندان": [
-                "Artists directory demo"
-            ],
-            "دموی قابلیتها": [
-                "Feature demo"
-            ],
-            "دموی مرور و کشف کاتالوگ": [
-                "Catalog browse and discovery demo"
             ],
             "دنبال قطعه، هنرمند یا آلبوم بگردید": [
                 "Look for a track, artist, or album"
@@ -818,9 +755,6 @@
             "راهنمای کامل فرمان‌های قابل استفاده:": [
                 "Available filter rules reference:"
             ],
-            "ردیف سبکها و حالوهواها، نوار فیلتر، خلاصهٔ نتایج، شبکهٔ انتشارها با صفحهبندی و یک ردیف پیشنهادی — همه در یک برگه.": [
-                "A rail of genres and moods, a filter bar, a results summary, a paginated release grid and a suggested rail — all on one page."
-            ],
             "رز تحریریه": [
                 "Editorial rose"
             ],
@@ -851,9 +785,6 @@
             "رنگ نام هنرمند و متن توضیح روی کارت معرفی (مثلاً #e2e8f0).": [
                 "Artist and summary text color inside the hero card (e.g. #e2e8f0)."
             ],
-            "رنگ، قلم و فاصلهها را از زبانه «شیوهنامهها» تنظیم کنید؛ این گزینه فقط قالب ظاهری فیلد را عوض میکند.": [
-                "Set colours, fonts and spacing from the Styles tab; this option only changes the look of the field."
-            ],
             "روشن": [
                 "Light"
             ],
@@ -875,6 +806,9 @@
             "سبک": [
                 "Genre"
             ],
+            "سبک (سریع‌تر)": [
+                "Light (faster)"
+            ],
             "سبک دکمه": [
                 "Button style"
             ],
@@ -892,6 +826,9 @@
             ],
             "ستون‌های دسکتاپ": [
                 "Desktop columns"
+            ],
+            "ستون‌های دسکتاپ (اندازه کارت)": [
+                "Desktop columns (card size)"
             ],
             "سربرگ": [
                 "Header"
@@ -959,14 +896,8 @@
             "سطح شیشه‌ای مات با حاشیه ظریف.": [
                 "Frosted glass surface with a subtle border."
             ],
-            "سفارش": [
-                "Order"
-            ],
             "سفارش آهنگ اختصاصی": [
                 "Custom song order"
-            ],
-            "سفارشها و دانلودها": [
-                "Orders and downloads"
             ],
             "سفارشی — تنظیم دستی هر اندازه": [
                 "Custom — set each size manually"
@@ -995,9 +926,6 @@
             "شروع شنیدن": [
                 "Start listening"
             ],
-            "شعار سایت (Tagline)": [
-                "Site tagline"
-            ],
             "شعاع گوشه دکمه (پیکسل)": [
                 "Button corner radius (px)"
             ],
@@ -1018,9 +946,6 @@
             ],
             "شکل تصویر": [
                 "Artwork shape"
-            ],
-            "شیشهای (Glass)": [
-                "Glass"
             ],
             "شیشه‌ای": [
                 "Glass"
@@ -1049,14 +974,8 @@
             "صفحه‌بندی اسلایدر": [
                 "Slider pagination"
             ],
-            "ظاهر بلوک": [
-                "Block appearance"
-            ],
             "ظریف": [
                 "Subtle"
-            ],
-            "عرض بیشینه فیلد جستجو در حالت «نوار جستجوی کامل»؛ برای نوار باریکتر عدد کوچکتری بگذارید.": [
-                "Maximum search field width in the “full search bar” mode; use a smaller number for a narrower bar."
             ],
             "عرض ستون کناری (پیکسل)": [
                 "Side column width (px)"
@@ -1069,9 +988,6 @@
             ],
             "عضویت را چطور لغو کنم؟": [
                 "How do I cancel my membership?"
-            ],
-            "عضویت، سفارش و دانلود در یک برگه": [
-                "Membership, orders and downloads on one page"
             ],
             "عضویت‌ها، انتشارهای اختصاصی، دانلودها یا یک فهرست پخش منتخب را با این فراخوان قابل ویرایش برجسته کنید.": [
                 "Highlight memberships, exclusive releases, downloads, or a curated playlist with this editable callout."
@@ -1090,6 +1006,18 @@
             ],
             "عنوان بخش معرفی": [
                 "Hero title"
+            ],
+            "عنوان تسویه‌حساب": [
+                "Checkout title"
+            ],
+            "عنوان حساب کاربری": [
+                "Account title"
+            ],
+            "عنوان سبد خرید": [
+                "Cart title"
+            ],
+            "عنوان صفحهٔ یافت‌نشد": [
+                "Not-found page title"
             ],
             "عنوان فهرست کناری": [
                 "Side column heading"
@@ -1124,9 +1052,6 @@
             "فروشگاه با نوار کناری": [
                 "Shop with sidebar"
             ],
-            "فشرده (۵ ستون دسکتاپ)": [
-                "Compact (5 desktop columns)"
-            ],
             "فعال": [
                 "Enabled"
             ],
@@ -1142,26 +1067,11 @@
             "فلش‌های پیمایش": [
                 "Navigation arrows"
             ],
-            "فهرست الفبایی": [
-                "Alphabetical directory"
-            ],
             "فهرست جمع‌وجور": [
                 "Compact list"
             ],
-            "فهرست شخصی با فیلتر، شمارش و امکان حذف؛ همان کتابخانهٔ حساب کاربری، اینبار بهصورت یک فهرست کامل.": [
-                "Your personal list with filters, counts and removal; the same account library, this time as a full list."
-            ],
-            "فهرست هنرمندان": [
-                "Artists directory"
-            ],
             "فهرست پخش": [
                 "Playlist"
-            ],
-            "فهرستهای پخش عمومی و درخواستهای سفارش": [
-                "Public playlists and song requests"
-            ],
-            "فهرستهایی که شنوندگان ساختهاند، و فرمی که کار تازه را به سایت میآورد؛ هر دو در یک برگه و هر دو قابل ویرایش.": [
-                "Lists built by listeners, and the form that brings new work to the site; both on one page and both editable."
             ],
             "فهرست‌های پخش": [
                 "Playlists"
@@ -1183,9 +1093,6 @@
             ],
             "فیلتر طبقه‌بندی": [
                 "Filter taxonomy"
-            ],
-            "فیلترها": [
-                "Filters"
             ],
             "فیلترها را تغییر دهید یا کاتالوگ کامل را مرور کنید.": [
                 "Change the filters or browse the full catalog."
@@ -1229,11 +1136,17 @@
             "ماه اخیر (۳۰ روز گذشته)": [
                 "This Month (last 30 days)"
             ],
+            "متعادل": [
+                "Balanced"
+            ],
             "متن": [
                 "Text"
             ],
             "متن LRC انتشار را با خط فعال هم‌زمان با پخش‌کننده سراسری نشان می‌دهد. بدون جاوااسکریپت همهٔ خطوط خوانا می‌مانند.": [
                 "Shows the release’s LRC lyrics with the active line synced to the global player. Without JavaScript every line stays readable."
+            ],
+            "متن «قدرت‌گرفته از MusicWave»": [
+                "“Powered by MusicWave” text"
             ],
             "متن از کاتالوگ همین انتشار · هم‌زمان با پخش‌کننده سراسری": [
                 "Lyrics from this release’s catalog · synced with the global player"
@@ -1256,11 +1169,11 @@
             "متن راهنمای داخل فیلد": [
                 "Placeholder text inside the field"
             ],
+            "متن صفحهٔ یافت‌نشد": [
+                "Not-found page text"
+            ],
             "متن قالب MusicWave": [
                 "MusicWave template text"
-            ],
-            "متن معرفی فوتر (درباره ما)": [
-                "Footer about copy"
             ],
             "متن هم‌زمان": [
                 "Synced lyrics"
@@ -1274,10 +1187,7 @@
             "متن کم‌رنگ": [
                 "Muted text"
             ],
-            "متن کپی‌رایت فوتر (همراه سال جاری)": [
-                "Footer copyright line (with current year)"
-            ],
-            "متنها و برچسبها": [
+            "متن‌ها و برچسب‌ها": [
                 "Texts and labels"
             ],
             "متوسط": [
@@ -1349,17 +1259,11 @@
             "مشاهدهٔ همهٔ فهرست‌های پخش": [
                 "See all playlists"
             ],
-            "مشخصات فنی، دسترسی، پخش پیشنمایش، صف پخش، فهرست قطعه، دانلود، متن همگام، اعتبارات و انتشارهای مرتبط؛ همه روی یک برگه و همه قابل ویرایش.": [
-                "Specs, access, preview playback, the play queue, the tracklist, downloads, synced lyrics, credits and related releases; all on one page and all editable."
-            ],
             "معرفی کشف موسیقی": [
                 "Music discovery hero"
             ],
             "معکوس (روی سطح رنگی)": [
                 "Inverted (on a colored surface)"
-            ],
-            "مقادیر سفارشی این متن‌ها از بخش سفارشی‌سازی پوسته یا تنظیمات عمومی وردپرس خوانده می‌شوند.": [
-                "Custom values are read from the WordPress Customizer or General Settings."
             ],
             "ممکن است صفحه جابه‌جا شده باشد. کاتالوگ را جست‌وجو کنید.": [
                 "The page may have moved. Try searching the catalog."
@@ -1394,9 +1298,6 @@
             "موارد قبلی": [
                 "Previous items"
             ],
-            "موبایل": [
-                "Mobile"
-            ],
             "موبایل و تبلت (تا ۶۴rem)": [
                 "Mobile and tablet (up to 64rem)"
             ],
@@ -1417,9 +1318,6 @@
             ],
             "موسیقی": [
                 "Music"
-            ],
-            "موسیقی اختصاصی، همکاری روی پروژه یا درخواست قطعه؛ فرم زیر درخواست را مستقیم به تیم میرساند.": [
-                "Custom music, project collaboration or a song request; the form below sends the request straight to the team."
             ],
             "موسیقی‌ای پیدا نشد.": [
                 "No music was found."
@@ -1490,6 +1388,9 @@
             "نمایش برچسب کنار آیکون‌های نوار پایین": [
                 "Show labels next to bottom bar icons"
             ],
+            "نمایش بیشتر محتوا": [
+                "Show more content"
+            ],
             "نمایش تاریخ": [
                 "Show date"
             ],
@@ -1520,11 +1421,11 @@
             "نمایش نقاط صفحه‌بندی": [
                 "Show pagination dots"
             ],
+            "نمایش همهٔ انتشارها": [
+                "Show all releases"
+            ],
             "نمایش هنرمند": [
                 "Show artist"
-            ],
-            "نمایش پنجره پاپآپ باز در پیشنمایش": [
-                "Show the popup open in the preview"
             ],
             "نمایش پیوند اقدام": [
                 "Show action link"
@@ -1534,6 +1435,9 @@
             ],
             "نمایش چکیده‌ها": [
                 "Show excerpts"
+            ],
+            "نمایش کمتر": [
+                "Show less"
             ],
             "نمایش کنترل پخش": [
                 "Show play affordance"
@@ -1598,14 +1502,14 @@
             "هر سربرگ یا بخش سربرگی که در ویرایشگر سایت می‌سازید اینجا فهرست می‌شود. <a href=\"%s\">همین سربرگ را در ویرایشگر سایت ویرایش کنید</a>.": [
                 "Every header or header template part you create in the Site Editor is listed here. <a href=\"%s\">Edit the active header in the Site Editor</a>."
             ],
+            "هر متن ترجمه‌شده و آماده است؛ برای تغییر خودِ نوشته، ترجمهٔ پوسته را ویرایش کنید تا در همهٔ زبان‌ها هماهنگ بماند.": [
+                "Every text is already translated; to change the wording itself, edit the theme translation so all languages stay in sync."
+            ],
             "هفته اخیر (۷ روز گذشته)": [
                 "This Week (last 7 days)"
             ],
             "هم به عنوان متن روی دکمه و هم به عنوان توضیح صفحه‌خوان استفاده می‌شود.": [
                 "Used both as the visible button text and as the screen-reader label."
-            ],
-            "همان فهرست، اینبار صفحهبهصفحه و با امکان دنبال کردن؛ برای کاتالوگهای بزرگ مناسبتر است.": [
-                "The same directory, this time page by page with follow buttons; a better fit for large catalogs."
             ],
             "همبرگری": [
                 "Hamburger"
@@ -1613,20 +1517,20 @@
             "همه": [
                 "All"
             ],
-            "همهٔ آنچه ذخیره کردهاید": [
-                "Everything you have saved"
-            ],
             "همهٔ انتشارها": [
                 "All releases"
             ],
             "همهٔ انتشارها در دو نسخهٔ ۲۴ بیت ارائه میشوند: ۴۸ و ۹۶ کیلوهرتز.": [
                 "All releases come in two 24-bit versions: 48 and 96 kHz."
             ],
+            "همهٔ انتشارهای منطبق با فیلترهای این بلوک را بدون محدودیت تعداد نمایش می‌دهد.": [
+                "Shows every release matching this block's filters without a count limit."
+            ],
+            "همهٔ انتشارهای منطبق با فیلترهای ویترین را بدون محدودیت تعداد نمایش می‌دهد.": [
+                "Shows every release matching the shelf filters without a count limit."
+            ],
             "همهٔ زمان‌ها (بدون محدودیت)": [
                 "All time (no limit)"
-            ],
-            "همهٔ هنرمندان": [
-                "All artists"
             ],
             "همکاری": [
                 "Collaboration"
@@ -1642,9 +1546,6 @@
             ],
             "هنرمندان": [
                 "Artists"
-            ],
-            "هنرمندان را پیدا کنید و دنبال کنید": [
-                "Find artists and follow them"
             ],
             "هیرو": [
                 "Hero"
@@ -1730,9 +1631,6 @@
             "پربازدیدترین": [
                 "Most viewed"
             ],
-            "پرداخت": [
-                "Payment"
-            ],
             "پرسشهای پرتکرار": [
                 "Frequently asked questions"
             ],
@@ -1793,9 +1691,6 @@
             "پیشتنظیم آماده": [
                 "Ready preset"
             ],
-            "پیشنمایش ویرایشگر": [
-                "Editor preview"
-            ],
             "پیشنهاد": [
                 "Suggestion"
             ],
@@ -1829,9 +1724,6 @@
             "پیکان بازگشت": [
                 "Back arrow"
             ],
-            "پیگیری سفارش، فایلهای آمادهٔ دانلود و اطلاعات پرداخت، همه در یک قالب یکدست.": [
-                "Order tracking, downloadable files and payment details, all in one consistent layout."
-            ],
             "چرخان": [
                 "Carousel"
             ],
@@ -1856,12 +1748,6 @@
             "کاتالوگ": [
                 "Catalog"
             ],
-            "کاتالوگ را دقیق کنید": [
-                "Narrow the catalog"
-            ],
-            "کاتالوگ را مرور کنید، نه فقط تماشا": [
-                "Browse the catalog, not just look at it"
-            ],
             "کارت": [
                 "Card"
             ],
@@ -1880,8 +1766,8 @@
             "کارتهای MusicWave": [
                 "MusicWave cards"
             ],
-            "کتابخانه": [
-                "Library"
+            "کاهش": [
+                "Decrease"
             ],
             "کتابخانه‌ای مطابق سلیقه خود بسازید.": [
                 "Build a library that sounds like you."
@@ -1892,8 +1778,8 @@
             "کشف موسیقی": [
                 "Explore music"
             ],
-            "کمتر": [
-                "Show less"
+            "کنار عنوان نمایش داده می‌شود؛ خالی یعنی بدون آیکون. یک اسلاگ، کلاس آیکون فونت، یا کد SVG جای‌گذاری کنید.": [
+                "Shown next to the title; leave empty for no icon. Enter a slug, a font icon class, or paste SVG markup."
             ],
             "کوتاهترین پاسخها به پرسشهایی که بیشتر از همه پرسیده میشود.": [
                 "The shortest answers to the questions asked most often."
@@ -1910,8 +1796,8 @@
             "کپسولی (MusicWave)": [
                 "Pill (MusicWave)"
             ],
-            "کپسولی پیشفرض": [
-                "Default capsule"
+            "کیفیت تصویر": [
+                "Image quality"
             ],
             "کیفیت فایلها چه اندازه است؟": [
                 "What is the file quality?"
@@ -1928,14 +1814,11 @@
             "گسترده": [
                 "Wide"
             ],
-            "یک انتشار، با تمام قابلیتهایش": [
-                "One release, with everything it can do"
-            ],
-            "یک ردیف کوتاه از انتشارهای تصادفی برای کسانی که هنوز تصمیم نگرفتهاند.": [
-                "A short rail of random releases for anyone who has not decided yet."
-            ],
             "یک سال اخیر": [
                 "Past Year"
+            ],
+            "— انتخاب کنید —": [
+                "— Select —"
             ],
             "• بازه زمانی: امروز|period:today ، هفته|period:week ، ماه|period:month ، سال|period:year": [
                 "• Time windows: Today|period:today , Week|period:week , Month|period:month , Year|period:year"

@@ -205,6 +205,43 @@
   height: 1.05rem;
 }
 
+/* Aggregate "saved by" count — a total only, never member identities. */
+.mw-library-button__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 1.65em;
+  padding: 0.1em 0.45em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.45;
+  color: inherit;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  border-radius: 999px;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.mw-library-button__count[hidden] {
+  display: none;
+}
+
+/* Icon-only discs are fixed-size, so the total rides as a corner bubble. */
+.mw-library-button--heart .mw-library-button__count,
+.mw-library-button--icon-only .mw-library-button__count {
+  position: absolute;
+  inset-block-start: -0.3rem;
+  inset-inline-end: -0.3rem;
+  min-inline-size: 1.3rem;
+  padding: 0 0.3rem;
+  font-size: 0.6875rem;
+  line-height: 1.3rem;
+  color: var(--mw-color-on-accent, #ffffff);
+  background: var(--mw-color-accent, #d91b38);
+  box-shadow: 0 2px 8px color-mix(in srgb, #000 26%, transparent);
+  pointer-events: none;
+}
+
 /* Status live region — floating bubble */
 .mw-library-button__status {
   position: absolute;

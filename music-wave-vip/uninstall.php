@@ -37,9 +37,12 @@ if ( ! function_exists( 'music_wave_vip_uninstall_site' ) ) {
 		/** @var \wpdb|object|null $wpdb */
 		global $wpdb;
 
-		// Always clear scheduled VIP cron hooks and ephemeral sweep cooldown transient.
+		// Always clear scheduled VIP cron hooks (recurring and one-off) and the
+		// ephemeral sweep cooldown transient.
 		if ( function_exists( 'wp_clear_scheduled_hook' ) ) {
-			wp_clear_scheduled_hook( 'music_wave_vip_expiry_check' );
+			foreach ( array( 'music_wave_vip_expiry_check', 'music_wave_vip_upload_worker', 'music_wave_vip_daily_maintenance' ) as $vip_hook ) {
+				wp_clear_scheduled_hook( $vip_hook );
+			}
 		}
 		if ( function_exists( 'delete_transient' ) ) {
 			delete_transient( 'mwvip_expiry_sweep_cooldown' );
@@ -55,8 +58,10 @@ if ( ! function_exists( 'music_wave_vip_uninstall_site' ) ) {
 		delete_option( 'music_wave_vip_audit_log' );
 
 		if ( is_object( $wpdb ) && method_exists( $wpdb, 'query' ) && property_exists( $wpdb, 'prefix' ) ) {
-			$safe_table = str_replace( '`', '``', $wpdb->prefix . 'mw_vip_assets' );
-			$wpdb->query( "DROP TABLE IF EXISTS `{$safe_table}`" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			foreach ( array( 'mw_vip_assets', 'mw_vip_asset_keys', 'mw_vip_upload_queue' ) as $vip_table ) {
+				$safe_table = str_replace( '`', '``', $wpdb->prefix . $vip_table );
+				$wpdb->query( "DROP TABLE IF EXISTS `{$safe_table}`" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			}
 
 			if ( isset( $wpdb->options ) ) {
 				$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_mwvip_%' OR option_name LIKE '_transient_timeout_mwvip_%' OR option_name LIKE '_transient_music_wave_vip_%' OR option_name LIKE '_transient_timeout_music_wave_vip_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery

@@ -206,6 +206,36 @@ final class ActionButtonStyle {
 	}
 
 	/**
+	 * Render an author-supplied icon, or nothing when the value is empty.
+	 *
+	 * Unlike `render_icon()`, an empty value yields no markup: section titles
+	 * stay plain text by default and only gain a glyph when one is set.
+	 *
+	 * @param string $raw          Icon slug, CSS icon classes, or inline `<svg>`.
+	 * @param int    $size         Pixel box size (12..40).
+	 * @param string $extra_class  Optional extra class on the rendered element.
+	 */
+	public static function optional_icon( string $raw, int $size = 22, string $extra_class = '' ): string {
+		$raw = trim( $raw );
+		if ( '' === $raw ) {
+			return '';
+		}
+
+		$dim  = max( 12, min( 40, $size ) );
+		$defs = self::icon_definitions();
+		$slug = sanitize_key( $raw );
+		if ( '' !== $slug && strtolower( $raw ) === $slug && isset( $defs[ $slug ] ) ) {
+			return self::icon_svg( $slug, $dim, $extra_class );
+		}
+
+		if ( false !== stripos( $raw, '<svg' ) ) {
+			return self::sanitize_inline_svg( $raw, $dim, $extra_class );
+		}
+
+		return self::render_css_icon_class( $raw, $dim, $extra_class );
+	}
+
+	/**
 	 * Strictly sanitize user-supplied inline `<svg>` vector markup (zero script/event vectors).
 	 */
 	public static function sanitize_inline_svg( string $raw_svg, int $size = 20, string $extra_class = '' ): string {

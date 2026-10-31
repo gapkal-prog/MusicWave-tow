@@ -369,7 +369,7 @@ final class ListeningBlocks {
 		}
 		$actions_html = array() !== $actions ? '<div class="mw-continue-listening__actions">' . implode( '', $actions ) . '</div>' : '';
 
-		return '<header class="mw-continue-listening__header"><div><h2>' . esc_html( $heading ) . '</h2>'
+		return '<header class="mw-continue-listening__header"><div><h2>' . SectionHeader::title( $heading, isset( $attributes['icon'] ) && is_scalar( $attributes['icon'] ) ? trim( (string) $attributes['icon'] ) : '' ) . '</h2>'
 			. ( '' !== $intro ? '<p class="mw-continue-listening__intro">' . esc_html( $intro ) . '</p>' : '' )
 			. '</div>' . $actions_html . '</header>';
 	}

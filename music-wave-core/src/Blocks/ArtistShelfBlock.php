@@ -16,8 +16,10 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Core\Blocks;
 
+use ManaCore\MusicWave\Core\Catalog\ArtistIndex;
 use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
 use ManaCore\MusicWave\Core\Catalog\TermHue;
+use ManaCore\MusicWave\Core\Blocks\Concerns\ArtistsPager;
 use ManaCore\MusicWave\Core\Blocks\Concerns\TermShelfSupport;
 use ManaCore\MusicWave\Core\Library\LibraryButton;
 use ManaCore\MusicWave\Core\Library\LibraryRepository;
@@ -36,13 +38,21 @@ final class ArtistShelfBlock {
 	private const MIN_PER_PAGE = 4;
 
 	/** Public query var that carries the artists index page number. */
-	public const PAGE_QUERY_VAR = 'mw_artists_page';
-
-	/** Published artist total, memoized so one render costs one count query. */
-	private ?int $artist_total = null;
+	public const PAGE_QUERY_VAR = ArtistIndex::QUERY_PAGE;
 
 	/**
-	 * Register the server-rendered artists shelf block.
+	 * Browsing state for the render in progress (filters, paging, URLs).
+	 *
+	 * @var ArtistIndex|null
+	 */
+	private ?ArtistIndex $index = null;
+
+	/**
+	 * Register the artists browsing surface.
+	 *
+	 * The shelf, hero, toolbar, alphabet and pagination blocks compose one
+	 * page, so they are registered together here even though each block owns
+	 * its own markup and editor panel.
 	 *
 	 * @return void
 	 */
@@ -63,6 +73,27 @@ final class ArtistShelfBlock {
 				'supports'    => BlockSupport::appearance_tools(),
 			)
 		);
+
+		$siblings = array(
+			new ArtistsHeroBlock(),
+			new ArtistsToolbarBlock(),
+			new ArtistsAlphabetBlock(),
+			new ArtistsPaginationBlock(),
+		);
+		foreach ( $siblings as $block ) {
+			$block->register();
+		}
+	}
+
+	/**
+	 * Browsing service for this request, created on first use.
+	 */
+	private function index(): ArtistIndex {
+		if ( null === $this->index ) {
+			$this->index = new ArtistIndex();
+		}
+
+		return $this->index;
 	}
 
 	/**
@@ -73,8 +104,9 @@ final class ArtistShelfBlock {
 	 * @return string
 	 */
 	public function render( array $attributes = array() ): string {
-		// One render owns one count query; the memo never outlives the render.
-		$this->artist_total = null;
+		// One render owns one browsing state: filters and page number come
+		// from the request and must never leak into the next render.
+		$this->index = new ArtistIndex();
 
 		$options = $this->resolve_options( $attributes );
 		$terms   = $this->resolve_terms( $attributes, $options );
@@ -84,18 +116,20 @@ final class ArtistShelfBlock {
 				return $this->render_editor_placeholder( $attributes );
 			}
 
-			$message = '' !== $options['empty_message']
-				? $options['empty_message']
-				: __( 'هنوز هنرمندی برای نمایش وجود ندارد.', 'music-wave-core' );
-
 			return '<section '
 				. BlockSupport::wrapper_attributes( 'mw-artists-shelf mw-artists-shelf--empty' )
-				. '><p class="mw-artists-shelf__empty">' . esc_html( $message ) . '</p></section>';
+				. '>' . $this->empty_state( $options ) . '</section>';
 		}
 
-		$cards = array();
+		$show_ranks = $options['show_crowns']
+			&& 'count' === $options['order_by']
+			&& 1 === $this->index()->page();
+
+		$cards    = array();
+		$position = 0;
 		foreach ( $terms as $term ) {
-			$card = $this->card( $term, $options );
+			++$position;
+			$card = $this->card( $term, $options, $show_ranks && $position <= 3 ? $position : 0 );
 			if ( '' !== $card ) {
 				$cards[] = $card;
 			}
@@ -110,9 +144,10 @@ final class ArtistShelfBlock {
 			$header = $this->header( $attributes, $options );
 		}
 
-		$variation   = \ManaCore\MusicWave\Core\Blocks\BlockSupport::style_variation( $attributes, array( 'minimal', 'editorial', 'glass' ) );
+		$variation   = BlockSupport::style_variation( $attributes, array( 'minimal', 'editorial', 'glass' ) );
 		$shelf_class = 'mw-artists-shelf mw-release-shelf mw-release-shelf--' . $options['layout'];
-		if ( 'grid' === $options['layout'] ) {
+		// Columns also drive the horizontal scroll card width, not just the grid.
+		if ( in_array( $options['layout'], array( 'grid', 'scroll' ), true ) ) {
 			$shelf_class .= ' mw-release-shelf--columns-' . $options['columns'];
 		}
 		if ( '' !== $variation ) {
@@ -125,6 +160,7 @@ final class ArtistShelfBlock {
 			. BlockSupport::wrapper_attributes( $shelf_class )
 			. '>'
 			. $header
+			. $this->summary( $options, count( $terms ) )
 			. \ManaCore\MusicWave\Core\Support\ShelfNavMarkup::items_region(
 				(string) $options['layout'],
 				implode( '', $cards ),
@@ -135,12 +171,55 @@ final class ArtistShelfBlock {
 	}
 
 	/**
+	 * Empty-state copy, distinguishing "no artists" from "no matches".
+	 *
+	 * @param array<string, mixed> $options Resolved display options.
+	 */
+	private function empty_state( array $options ): string {
+		if ( '' !== $options['no_match_message'] && ( '' !== $this->index()->search() || '' !== $this->index()->letter() ) ) {
+			return '<p class="mw-artists-shelf__empty">' . esc_html( (string) $options['no_match_message'] ) . '</p>';
+		}
+
+		$message = '' !== $options['empty_message']
+			? (string) $options['empty_message']
+			: __( 'هنوز هنرمندی برای نمایش وجود ندارد.', 'music-wave-core' );
+
+		return '<p class="mw-artists-shelf__empty">' . esc_html( $message ) . '</p>';
+	}
+
+	/**
+	 * "Showing X of Y artists" line above the cards.
+	 *
+	 * @param array<string, mixed> $options Resolved display options.
+	 * @param int                  $showing Number of cards on this page.
+	 */
+	private function summary( array $options, int $showing ): string {
+		if ( ! $options['show_result_count'] ) {
+			return '';
+		}
+
+		$total = $this->index()->matching_total();
+
+		return '<p class="mw-artists-shelf__summary">' . esc_html(
+			sprintf(
+				/* translators: 1: artists on this page, 2: matching artist total. */
+				__( 'نمایش %1$s از %2$s خواننده', 'music-wave-core' ),
+				number_format_i18n( $showing ),
+				number_format_i18n( $total )
+			)
+		) . '</p>';
+	}
+
+	/**
 	 * Resolve sanitized display options once per render.
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
 	 * @return array<string, mixed>
 	 */
 	private function resolve_options( array $attributes ): array {
+		$source = isset( $attributes['source'] ) ? sanitize_key( (string) $attributes['source'] ) : 'all';
+		$source = in_array( $source, array( 'all', 'genre', 'mood', 'manual' ), true ) ? $source : 'all';
+
 		$layout = isset( $attributes['layout'] ) ? sanitize_key( (string) $attributes['layout'] ) : 'grid';
 		$layout = in_array( $layout, array( 'grid', 'scroll', 'list' ), true ) ? $layout : 'grid';
 
@@ -155,7 +234,12 @@ final class ArtistShelfBlock {
 		$image_size = in_array( $image_size, array( 'thumbnail', 'medium', 'large', 'full' ), true ) ? $image_size : 'medium';
 
 		$items = isset( $attributes['itemsToShow'] ) ? absint( $attributes['itemsToShow'] ) : 0;
-		$items = min( self::MAX_ITEMS, max( 1, $items > 0 ? $items : 8 ) );
+		// "Show all" disables the shelf ceiling so the full index renders
+		// (still bounded by the index's own MAX_TERMS query ceiling).
+		$show_all = ! empty( $attributes['showAll'] );
+		$items    = $show_all
+			? ArtistIndex::MAX_TERMS
+			: min( self::MAX_ITEMS, max( 1, $items > 0 ? $items : 8 ) );
 
 		$columns = isset( $attributes['columns'] ) ? absint( $attributes['columns'] ) : 4;
 		$columns = min( 6, max( 2, $columns > 0 ? $columns : 4 ) );
@@ -165,6 +249,13 @@ final class ArtistShelfBlock {
 
 		$order_by = isset( $attributes['orderBy'] ) ? sanitize_key( (string) $attributes['orderBy'] ) : 'count';
 		$order_by = in_array( $order_by, array( 'name', 'count', 'rand' ), true ) ? $order_by : 'count';
+
+		// The toolbar ordering tabs write their choice into the URL and win
+		// over the block default, otherwise clicking a tab would do nothing.
+		$requested_sort = $this->index()->sort();
+		if ( 'all' === $source && '' !== $requested_sort ) {
+			$order_by = ArtistIndex::SORT_ALPHABETICAL === $requested_sort ? 'name' : 'count';
+		}
 
 		$order = isset( $attributes['order'] ) && 'ASC' === strtoupper( (string) $attributes['order'] ) ? 'ASC' : 'DESC';
 		if ( 'name' === $order_by ) {
@@ -181,29 +272,45 @@ final class ArtistShelfBlock {
 		$per_page = $per_page > 0 ? $per_page : $items;
 		$per_page = min( self::MAX_ITEMS, max( self::MIN_PER_PAGE, $per_page ) );
 
+		// Paging needs a stable order: a shuffled or hand-picked list cannot be
+		// split across pages without repeating or dropping artists. Showing every
+		// artist at once is the opposite of paging, so it wins over both modes.
+		$pagination = ! $show_all && ! empty( $attributes['pagination'] );
+		$browse     = ! $show_all && ! empty( $attributes['browseIndex'] );
+		$paged      = ( $pagination || $browse ) && 'all' === $source && 'rand' !== $order_by;
+
 		return array(
-			'layout'        => $layout,
-			'pagination'    => ! empty( $attributes['pagination'] ),
-			'per_page'      => $per_page,
-			'image_shape'   => $image_shape,
-			'image_size'    => $image_size,
-			'items'         => $items,
-			'columns'       => $columns,
-			'bio_length'    => $bio_length,
-			'order_by'      => $order_by,
-			'order'         => $order,
-			'show_heading'  => ! isset( $attributes['showHeading'] ) || (bool) $attributes['showHeading'],
-			'show_image'    => ! isset( $attributes['showImage'] ) || (bool) $attributes['showImage'],
-			'show_name'     => ! isset( $attributes['showName'] ) || (bool) $attributes['showName'],
-			'show_bio'      => ! isset( $attributes['showBio'] ) || (bool) $attributes['showBio'],
-			'show_count'    => ! isset( $attributes['showReleaseCount'] ) || (bool) $attributes['showReleaseCount'],
-			'show_follow'   => ! isset( $attributes['showFollowButton'] ) || (bool) $attributes['showFollowButton'],
-			'eyebrow'       => isset( $attributes['eyebrow'] ) ? sanitize_text_field( (string) $attributes['eyebrow'] ) : '',
-			'heading'       => $heading_val,
-			'description'   => isset( $attributes['description'] ) ? sanitize_text_field( (string) $attributes['description'] ) : '',
-			'section_url'   => isset( $attributes['sectionUrl'] ) ? esc_url_raw( (string) $attributes['sectionUrl'] ) : '',
-			'section_label' => isset( $attributes['sectionLinkLabel'] ) ? sanitize_text_field( (string) $attributes['sectionLinkLabel'] ) : '',
-			'empty_message' => isset( $attributes['emptyMessage'] ) ? sanitize_text_field( (string) $attributes['emptyMessage'] ) : '',
+			'source'            => $source,
+			'layout'            => $layout,
+			'paged'             => $paged,
+			'pager'             => $pagination && $paged,
+			'per_page'          => $per_page,
+			'show_all'          => $show_all,
+			'image_shape'       => $image_shape,
+			'image_size'        => $image_size,
+			'items'             => $items,
+			'columns'           => $columns,
+			'bio_length'        => $bio_length,
+			'order_by'          => $order_by,
+			'order'             => $order,
+			'show_heading'      => ! isset( $attributes['showHeading'] ) || (bool) $attributes['showHeading'],
+			'show_image'        => ! isset( $attributes['showImage'] ) || (bool) $attributes['showImage'],
+			'show_name'         => ! isset( $attributes['showName'] ) || (bool) $attributes['showName'],
+			'show_bio'          => ! isset( $attributes['showBio'] ) || (bool) $attributes['showBio'],
+			'show_count'        => ! isset( $attributes['showReleaseCount'] ) || (bool) $attributes['showReleaseCount'],
+			'show_follow'       => ! isset( $attributes['showFollowButton'] ) || (bool) $attributes['showFollowButton'],
+			'show_crowns'       => ! empty( $attributes['showCrowns'] ),
+			'show_result_count' => ! empty( $attributes['showResultCount'] ),
+			'eyebrow'           => isset( $attributes['eyebrow'] ) ? sanitize_text_field( (string) $attributes['eyebrow'] ) : '',
+			'heading'           => $heading_val,
+			'icon'              => isset( $attributes['icon'] ) ? (string) $attributes['icon'] : '',
+			'description'       => isset( $attributes['description'] ) ? sanitize_text_field( (string) $attributes['description'] ) : '',
+			'section_url'       => isset( $attributes['sectionUrl'] ) ? esc_url_raw( (string) $attributes['sectionUrl'] ) : '',
+			'section_label'     => isset( $attributes['sectionLinkLabel'] ) ? sanitize_text_field( (string) $attributes['sectionLinkLabel'] ) : '',
+			'empty_message'     => isset( $attributes['emptyMessage'] ) ? sanitize_text_field( (string) $attributes['emptyMessage'] ) : '',
+			'no_match_message'  => isset( $attributes['noResultsMessage'] ) && '' !== (string) $attributes['noResultsMessage']
+				? sanitize_text_field( (string) $attributes['noResultsMessage'] )
+				: __( 'خواننده‌ای با این فیلترها پیدا نشد. جست‌وجو را پاک کنید یا حرف دیگری را امتحان کنید.', 'music-wave-core' ),
 		);
 	}
 
@@ -219,45 +326,55 @@ final class ArtistShelfBlock {
 	 * @return array<int, WP_Term>
 	 */
 	private function resolve_terms( array $attributes, array $options ): array {
-		$source = isset( $attributes['source'] ) ? sanitize_key( (string) $attributes['source'] ) : 'all';
-		$source = in_array( $source, array( 'all', 'genre', 'mood', 'manual' ), true ) ? $source : 'all';
-
 		$terms = array();
+		// Effective number of artists this render may output: the page size on a
+		// paged shelf, otherwise `itemsToShow` (or the whole index for "show all").
+		$limit = (int) $options['items'];
 
-		if ( 'manual' === $source ) {
+		if ( 'all' === $options['source'] ) {
+			$terms = $this->index()->filtered( $this->index_order( (string) $options['order_by'] ) );
+
+			if ( $options['paged'] ) {
+				$per_page = (int) $options['per_page'];
+				$terms    = array_slice( $terms, ( $this->current_page( $options ) - 1 ) * $per_page, $per_page );
+				// `finalize_terms()` honours `itemsToShow`; the page size is the
+				// output size on a paged shelf, so hand it the effective number.
+				$attributes['itemsToShow'] = $per_page;
+				$limit                     = max( $limit, $per_page );
+			}
+		} elseif ( 'manual' === $options['source'] ) {
 			$terms = TermShelfSupport::query_terms(
-				'mw_artist',
+				ArtistIndex::TAXONOMY,
 				true,
 				isset( $attributes['artistIds'] ) ? (string) $attributes['artistIds'] : '',
 				'count',
-				self::MAX_ITEMS
+				$limit
 			);
-		} elseif ( 'genre' === $source || 'mood' === $source ) {
-			$terms = $this->terms_behind_taxonomy( $source, isset( $attributes['termSlug'] ) ? sanitize_title( (string) $attributes['termSlug'] ) : '' );
-		} elseif ( $this->pagination_enabled( $attributes, $options ) ) {
-			$per_page = (int) $options['per_page'];
-			$terms    = TermShelfSupport::query_terms(
-				'mw_artist',
-				false,
-				'',
-				(string) $options['order_by'],
-				$per_page,
-				( $this->current_page( $options ) - 1 ) * $per_page
-			);
-			// `finalize_terms()` honours `itemsToShow`; the page size is the
-			// ceiling on a paged shelf, so hand it the effective number.
-			$attributes['itemsToShow'] = $per_page;
-		} else {
-			$terms = TermShelfSupport::query_terms(
-				'mw_artist',
-				false,
-				'',
-				isset( $attributes['orderBy'] ) ? sanitize_key( (string) $attributes['orderBy'] ) : 'count',
-				self::MAX_ITEMS
-			);
+		} elseif ( 'genre' === $options['source'] || 'mood' === $options['source'] ) {
+			$terms = $this->terms_behind_taxonomy( (string) $options['source'], isset( $attributes['termSlug'] ) ? sanitize_title( (string) $attributes['termSlug'] ) : '' );
 		}
 
-		return TermShelfSupport::finalize_terms( $terms, $attributes, self::MAX_ITEMS, 'music_wave_artists_shelf_terms', 'mw_artist' );
+		if ( ! $options['paged'] ) {
+			$attributes['itemsToShow'] = $limit;
+		}
+
+		return TermShelfSupport::finalize_terms( $terms, $attributes, $limit, 'music_wave_artists_shelf_terms', ArtistIndex::TAXONOMY );
+	}
+
+	/**
+	 * Map the block's ordering key onto the index ordering key.
+	 *
+	 * @param string $order_by Block ordering key (count|name|rand).
+	 */
+	private function index_order( string $order_by ): string {
+		if ( 'name' === $order_by ) {
+			return ArtistIndex::SORT_ALPHABETICAL;
+		}
+		if ( 'rand' === $order_by ) {
+			return 'random';
+		}
+
+		return ArtistIndex::SORT_POPULAR;
 	}
 
 	/**
@@ -300,7 +417,7 @@ final class ArtistShelfBlock {
 
 		$found = get_terms(
 			array(
-				'taxonomy'   => 'mw_artist',
+				'taxonomy'   => ArtistIndex::TAXONOMY,
 				'object_ids' => $release_ids,
 				'hide_empty' => true,
 				'orderby'    => 'count',
@@ -317,9 +434,10 @@ final class ArtistShelfBlock {
 	 *
 	 * @param WP_Term              $term    Artist term.
 	 * @param array<string, mixed> $options Resolved options.
+	 * @param int                  $rank    Popularity rank (1-3), zero when unranked.
 	 * @return string
 	 */
-	private function card( WP_Term $term, array $options ): string {
+	private function card( WP_Term $term, array $options, int $rank = 0 ): string {
 		$link = get_term_link( $term );
 		if ( is_wp_error( $link ) || ! is_string( $link ) || '' === $link ) {
 			return '';
@@ -362,7 +480,7 @@ final class ArtistShelfBlock {
 			$count_html = '<p class="mw-artists-shelf__count">' . esc_html(
 				sprintf(
 					/* translators: %s: number of published releases. */
-					_n( 'انتشار %s', 'انتشار %s', (int) $term->count, 'music-wave-core' ),
+					__( '%s اثر', 'music-wave-core' ),
 					number_format_i18n( (int) $term->count )
 				)
 			) . '</p>';
@@ -371,6 +489,11 @@ final class ArtistShelfBlock {
 		$bio_html = '';
 		if ( $options['show_bio'] && $options['bio_length'] >= 5 ) {
 			$biography = (string) get_term_meta( $term->term_id, 'mw_artist_biography', true );
+			// Fall back to the artist's term description so the toggle produces
+			// a visible excerpt even when no biography meta has been authored.
+			if ( '' === trim( $biography ) && '' !== trim( $term->description ) ) {
+				$biography = (string) $term->description;
+			}
 			if ( '' !== $biography ) {
 				$bio_html = '<p class="mw-artists-shelf__bio">' . esc_html( wp_trim_words( wp_strip_all_tags( $biography ), $options['bio_length'] ) ) . '</p>';
 			}
@@ -392,9 +515,41 @@ final class ArtistShelfBlock {
 		}
 
 		return '<article class="mw-artists-shelf__item">'
-			. $avatar
+			. ( '' !== $avatar || $rank > 0 ? $this->media( $avatar, $rank ) : $avatar )
 			. '<div class="mw-artists-shelf__body">' . $name_html . $count_html . $bio_html . $follow_html . '</div>'
 			. '</article>';
+	}
+
+	/**
+	 * Card media shell: the cover plus the rank badge.
+	 *
+	 * The wrapper keeps the cover's own sizing (it stretches to the card width,
+	 * like the avatar did before) and gives the crown a positioning context.
+	 *
+	 * @param string $avatar Avatar link markup.
+	 * @param int    $rank   Popularity rank (1-3), zero when unranked.
+	 */
+	private function media( string $avatar, int $rank ): string {
+		return '<div class="mw-artists-shelf__media">' . $avatar . $this->crown( $rank ) . '</div>';
+	}
+
+	/**
+	 * Popularity badge for the first three artists of the popular ordering.
+	 *
+	 * @param int $rank One-based rank.
+	 */
+	private function crown( int $rank ): string {
+		if ( $rank < 1 ) {
+			return '';
+		}
+
+		/* translators: %s: popularity rank. */
+		$label = sprintf( __( 'رتبهٔ %s در محبوبیت', 'music-wave-core' ), number_format_i18n( $rank ) );
+
+		return '<span class="mw-artists-shelf__crown mw-artists-shelf__crown--' . (int) $rank . '" role="img" aria-label="' . esc_attr( $label ) . '">'
+			. '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3 8.5 7.5 12 12 5l4.5 7L21 8.5V18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg>'
+			. '<span aria-hidden="true">' . esc_html( number_format_i18n( $rank ) ) . '</span>'
+			. '</span>';
 	}
 
 	/**
@@ -414,49 +569,12 @@ final class ArtistShelfBlock {
 	}
 
 	/**
-	 * Whether this render is a page of the paginated artists index.
-	 *
-	 * Pagination is deliberately limited to the "all artists" source: paged
-	 * genre/mood shelves and hand-picked lists are editorial curves, not
-	 * indexes, and a random order cannot be paged without repeating items.
-	 *
-	 * @param array<string, mixed> $attributes Block attributes.
-	 * @param array<string, mixed> $options    Resolved display options.
-	 */
-	private function pagination_enabled( array $attributes, array $options ): bool {
-		if ( empty( $options['pagination'] ) ) {
-			return false;
-		}
-
-		$source = isset( $attributes['source'] ) ? sanitize_key( (string) $attributes['source'] ) : 'all';
-
-		return 'all' === $source && 'rand' !== $options['order_by'];
-	}
-
-	/**
 	 * One-based page number requested by the current URL, clamped to the index.
 	 *
 	 * @param array<string, mixed> $options Resolved display options.
 	 */
 	private function current_page( array $options ): int {
-		return min( $this->requested_page_number(), $this->total_pages( $options ) );
-	}
-
-	/**
-	 * Raw, one-based page number from the URL (never clamped, never filtered by
-	 * the index size) so the canonical tag can mirror the requested page.
-	 */
-	private function requested_page_number(): int {
-		if ( BlockSupport::is_editor_context() ) {
-			return 1;
-		}
-
-		// Read-only navigation state: no nonce is involved and nothing is written.
-		$raw  = isset( $_GET[ self::PAGE_QUERY_VAR ] ) ? wp_unslash( $_GET[ self::PAGE_QUERY_VAR ] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$page = is_scalar( $raw ) ? absint( $raw ) : 0;
-		$page = max( 1, (int) apply_filters( 'music_wave_artists_page', $page ) );
-
-		return $page;
+		return min( $this->index()->page(), $this->index()->page_count( (int) $options['per_page'] ) );
 	}
 
 	/**
@@ -472,64 +590,9 @@ final class ArtistShelfBlock {
 			return $canonical;
 		}
 
-		$page = $this->requested_page_number();
+		$page = $this->index()->page();
 
 		return $page > 1 ? add_query_arg( self::PAGE_QUERY_VAR, $page, $canonical ) : $canonical;
-	}
-
-	/**
-	 * Published artist terms in the index, ignoring the browsing page.
-	 */
-	private function total_artists(): int {
-		if ( null !== $this->artist_total ) {
-			return $this->artist_total;
-		}
-
-		if ( ! function_exists( 'wp_count_terms' ) ) {
-			$this->artist_total = 0;
-
-			return $this->artist_total;
-		}
-
-		$total = wp_count_terms(
-			array(
-				'taxonomy'   => 'mw_artist',
-				'hide_empty' => true,
-			)
-		);
-
-		$this->artist_total = is_wp_error( $total ) ? 0 : absint( $total );
-
-		return $this->artist_total;
-	}
-
-	/**
-	 * Page count for the current page size (never less than one).
-	 *
-	 * @param array<string, mixed> $options Resolved display options.
-	 */
-	private function total_pages( array $options ): int {
-		$per_page = (int) ( $options['per_page'] ?? 0 );
-		if ( $per_page < 1 ) {
-			return 1;
-		}
-
-		return max( 1, (int) ceil( $this->total_artists() / $per_page ) );
-	}
-
-	/**
-	 * Absolute URL of one artists-index page.
-	 *
-	 * The current request is the base, so the pager survives blocks that live
-	 * on a filtered URL (search, taxonomy, custom query args) instead of
-	 * hard-coding `/artists/`.
-	 *
-	 * @param int $page One-based page number.
-	 */
-	private function page_url( int $page ): string {
-		$base = isset( $_SERVER['REQUEST_URI'] ) ? remove_query_arg( self::PAGE_QUERY_VAR ) : home_url( '/' );
-
-		return (string) add_query_arg( self::PAGE_QUERY_VAR, $page, $base );
 	}
 
 	/**
@@ -539,60 +602,13 @@ final class ArtistShelfBlock {
 	 * @param array<string, mixed> $options    Resolved display options.
 	 */
 	private function pager( array $attributes, array $options ): string {
-		if ( ! $this->pagination_enabled( $attributes, $options ) ) {
+		unset( $attributes );
+
+		if ( empty( $options['pager'] ) ) {
 			return '';
 		}
 
-		$total_pages = $this->total_pages( $options );
-		$total_items = $this->total_artists();
-		if ( $total_pages < 2 || $total_items < 1 ) {
-			return '';
-		}
-
-		$current = $this->current_page( $options );
-
-		$numbers = array( 1, $total_pages );
-		for ( $number = max( 1, $current - 1 ); $number <= min( $total_pages, $current + 1 ); $number++ ) {
-			$numbers[] = $number;
-		}
-		$numbers = array_values( array_unique( $numbers ) );
-		sort( $numbers );
-
-		$items  = '';
-		$before = 0;
-		foreach ( $numbers as $number ) {
-			if ( $before > 0 && $number - $before > 1 ) {
-				$items .= '<li class="mw-pagination__item mw-pagination__item--gap"><span class="mw-pagination__ellipsis" aria-hidden="true">…</span></li>';
-			}
-			$before = $number;
-
-			if ( $number === $current ) {
-				$items .= '<li class="mw-pagination__item"><span class="mw-pagination__link is-current" aria-current="page">' . esc_html( number_format_i18n( $number ) ) . '</span></li>';
-				continue;
-			}
-
-			$items .= '<li class="mw-pagination__item"><a class="mw-pagination__link" href="' . esc_url( $this->page_url( $number ) ) . '">' . esc_html( number_format_i18n( $number ) ) . '</a></li>';
-		}
-
-		if ( $current > 1 ) {
-			$items = '<li class="mw-pagination__item"><a class="mw-pagination__link mw-pagination__link--prev" rel="prev" href="' . esc_url( $this->page_url( $current - 1 ) ) . '">' . esc_html__( 'قبلی', 'music-wave-core' ) . '</a></li>' . $items;
-		}
-		if ( $current < $total_pages ) {
-			$items .= '<li class="mw-pagination__item"><a class="mw-pagination__link mw-pagination__link--next" rel="next" href="' . esc_url( $this->page_url( $current + 1 ) ) . '">' . esc_html__( 'بعدی', 'music-wave-core' ) . '</a></li>';
-		}
-
-		$status = sprintf(
-			/* translators: 1: current page, 2: total pages, 3: total artist count. */
-			__( 'صفحهٔ %1$s از %2$s · %3$s هنرمند', 'music-wave-core' ),
-			number_format_i18n( $current ),
-			number_format_i18n( $total_pages ),
-			number_format_i18n( $total_items )
-		);
-
-		return '<nav class="mw-artists-shelf__pager" aria-label="' . esc_attr__( 'صفحه‌بندی هنرمندان', 'music-wave-core' ) . '">'
-			. '<p class="mw-artists-shelf__pager-status">' . esc_html( $status ) . '</p>'
-			. '<ul class="mw-pagination">' . $items . '</ul>'
-			. '</nav>';
+		return ArtistsPager::render( $this->index(), (int) $options['per_page'], 'mw-artists-shelf__pager' );
 	}
 
 	/**

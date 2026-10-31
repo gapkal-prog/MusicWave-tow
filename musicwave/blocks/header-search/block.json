@@ -31,10 +31,6 @@
       "type": "string",
       "default": "popup"
     },
-    "maxWidth": {
-      "type": "number",
-      "default": 480
-    },
     "placeholder": {
       "type": "string",
       "default": "جستجوی قطعه، هنرمند یا آلبوم…"

@@ -31,7 +31,7 @@
 }
 
 .mw-continue-listening__header h2 {
-	font-size: clamp(1.5rem, 3.3vw, 2.35rem);
+	font-size: var(--mw-section-title-size);
 	letter-spacing: -.035em;
 	line-height: 1.08;
 	margin: 0;

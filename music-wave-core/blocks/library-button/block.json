@@ -57,6 +57,10 @@
     "compact": {
       "type": "boolean",
       "default": false
+    },
+    "showCount": {
+      "type": "boolean",
+      "default": false
     }
   },
   "usesContext": [

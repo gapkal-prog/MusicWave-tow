@@ -67,8 +67,9 @@ final class CheckoutCustomizer {
 		add_action( 'woocommerce_product_options_general_product_data', array( $this->direct_checkout, 'maybe_warn_non_virtual' ) );
 		add_filter( 'woocommerce_add_to_cart_redirect', array( $this->direct_checkout, 'handle_add_to_cart_redirect' ), 20, 2 );
 		add_action( 'woocommerce_add_to_cart', array( $this->direct_checkout, 'maybe_empty_cart_for_direct_checkout' ), 10, 6 );
+		add_action( 'woocommerce_add_to_cart', array( $this->direct_checkout, 'enforce_single_subscription_plan' ), 11, 6 );
 		add_action( 'template_redirect', array( $this->direct_checkout, 'handle_direct_checkout_flag' ), 5 );
-		add_filter( 'woocommerce_add_to_cart_sold_individually_found_in_cart', array( $this->direct_checkout, 'filter_sold_individually_found' ), 10, 5 );
+		add_filter( 'woocommerce_add_to_cart_sold_individually_found_in_cart', array( $this->direct_checkout, 'filter_sold_individually_found' ), 10, 6 );
 		add_filter( 'woocommerce_add_to_cart_validation', array( $this->direct_checkout, 'filter_add_to_cart_validation' ), 10, 5 );
 
 		add_filter( 'woocommerce_cart_needs_shipping', array( $this->simplifier, 'filter_needs_shipping' ), 10, 1 );
@@ -86,6 +87,7 @@ final class CheckoutCustomizer {
 		add_filter( 'body_class', array( $this->simplifier, 'filter_body_class' ), 10, 1 );
 		add_action( 'wp_head', array( $this->simplifier, 'output_virtual_checkout_css' ), 20 );
 		add_action( 'wp_head', array( $this->presenter, 'output_virtual_thankyou_css' ), 25 );
+		add_action( 'before_woocommerce_pay', array( $this->presenter, 'render_pending_payment_notice' ), 10 );
 		add_filter( 'woocommerce_thankyou_order_received_text', array( $this->presenter, 'filter_thankyou_text' ), 20, 2 );
 
 		add_action( 'woocommerce_order_details_after_order_table', array( $this->presenter, 'render_subscription_details_in_order' ), 10, 1 );
@@ -176,14 +178,27 @@ final class CheckoutCustomizer {
 	}
 
 	/**
+	 * @param mixed $cart_item_key
+	 * @param mixed $product_id
+	 * @param mixed $quantity
+	 * @param mixed $variation_id
+	 * @param mixed $variation
+	 * @param mixed $cart_item_data
+	 */
+	public function enforce_single_subscription_plan( $cart_item_key, $product_id, $quantity = 1, $variation_id = 0, $variation = array(), $cart_item_data = array() ): void {
+		$this->direct_checkout->enforce_single_subscription_plan( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data );
+	}
+
+	/**
 	 * @param mixed $found
 	 * @param mixed $product_id
+	 * @param mixed $quantity
 	 * @param mixed $variation_id
 	 * @param mixed $cart_item_data
 	 * @param mixed $cart_item_key
 	 */
-	public function filter_sold_individually_found( $found, $product_id = 0, $variation_id = 0, $cart_item_data = array(), $cart_item_key = '' ): bool {
-		return $this->direct_checkout->filter_sold_individually_found( $found, $product_id, $variation_id, $cart_item_data, $cart_item_key );
+	public function filter_sold_individually_found( $found, $product_id = 0, $quantity = 1, $variation_id = 0, $cart_item_data = array(), $cart_item_key = '' ): bool {
+		return $this->direct_checkout->filter_sold_individually_found( $found, $product_id, $quantity, $variation_id, $cart_item_data, $cart_item_key );
 	}
 
 	/**
@@ -237,6 +252,10 @@ final class CheckoutCustomizer {
 
 	public function output_virtual_thankyou_css(): void {
 		$this->presenter->output_virtual_thankyou_css();
+	}
+
+	public function render_pending_payment_notice(): void {
+		$this->presenter->render_pending_payment_notice();
 	}
 
 	/** @param mixed $order_id */

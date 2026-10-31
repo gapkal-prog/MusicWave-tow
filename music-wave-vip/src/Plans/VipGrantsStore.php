@@ -157,13 +157,22 @@ final class VipGrantsStore {
 					$expires_at = $max_future;
 				}
 
-				$granted_at    = isset( $entry['granted_at'] ) ? absint( $entry['granted_at'] ) : 0;
-				$duration_days = isset( $entry['duration_days'] ) ? absint( $entry['duration_days'] ) : 0;
+				$granted_at        = isset( $entry['granted_at'] ) ? absint( $entry['granted_at'] ) : 0;
+					$duration_days = isset( $entry['duration_days'] ) ? absint( $entry['duration_days'] ) : 0;
+					$starts_at     = isset( $entry['starts_at'] ) ? absint( $entry['starts_at'] ) : 0;
 				if ( $duration_days > VipPlanParser::MAX_DURATION_DAYS ) {
 					$duration_days = VipPlanParser::MAX_DURATION_DAYS;
 				}
-				if ( $granted_at > $ref_now + 300 ) {
-					$granted_at = $ref_now;
+				if ( $starts_at > 0 ) {
+					$starts_at = min( $starts_at, $max_future );
+				}
+					// Future timestamps are legitimate for reserved terms, so the
+					// clock-skew guard allows the same horizon as `expires_at`.
+				if ( $granted_at > $max_future ) {
+					$granted_at = $max_future;
+				}
+				if ( $granted_at < 1 && $starts_at > 0 ) {
+					$granted_at = $starts_at;
 				}
 				if ( $granted_at < 1 && $expires_at > 0 && $duration_days > 0 ) {
 					$granted_at = max( 1, $expires_at - ( $duration_days * 86400 ) );
@@ -171,32 +180,38 @@ final class VipGrantsStore {
 				if ( $expires_at > 0 && $granted_at > 0 && $expires_at <= $granted_at ) {
 					continue;
 				}
+				if ( $starts_at > 0 && $expires_at > 0 && $starts_at >= $expires_at ) {
+					continue;
+				}
 
-				$normalized = array(
-					'order_id'   => $order_id,
-					'expires_at' => $expires_at,
-				);
-				if ( $granted_at > 0 ) {
-					$normalized['granted_at'] = $granted_at;
-				}
-				if ( $duration_days > 0 ) {
-					$normalized['duration_days'] = $duration_days;
-				}
-				if ( 'admin' === $source ) {
-					$normalized['source'] = 'admin';
-					if ( ! empty( $entry['grant_id'] ) && is_string( $entry['grant_id'] ) ) {
-						$normalized['grant_id'] = preg_replace( '/[^a-zA-Z0-9_\-]/', '', $entry['grant_id'] ) ?? '';
+					$normalized = array(
+						'order_id'   => $order_id,
+						'expires_at' => $expires_at,
+					);
+					if ( $granted_at > 0 ) {
+						$normalized['granted_at'] = $granted_at;
 					}
-					if ( ! empty( $entry['granted_by'] ) ) {
-						$normalized['granted_by'] = absint( $entry['granted_by'] );
+					if ( $starts_at > 0 ) {
+						$normalized['starts_at'] = $starts_at;
 					}
-					if ( ! empty( $entry['note'] ) && is_string( $entry['note'] ) ) {
-						$normalized['note'] = function_exists( 'sanitize_text_field' )
+					if ( $duration_days > 0 ) {
+						$normalized['duration_days'] = $duration_days;
+					}
+					if ( 'admin' === $source ) {
+						$normalized['source'] = 'admin';
+						if ( ! empty( $entry['grant_id'] ) && is_string( $entry['grant_id'] ) ) {
+							$normalized['grant_id'] = preg_replace( '/[^a-zA-Z0-9_\-]/', '', $entry['grant_id'] ) ?? '';
+						}
+						if ( ! empty( $entry['granted_by'] ) ) {
+							$normalized['granted_by'] = absint( $entry['granted_by'] );
+						}
+						if ( ! empty( $entry['note'] ) && is_string( $entry['note'] ) ) {
+							$normalized['note'] = function_exists( 'sanitize_text_field' )
 							? sanitize_text_field( $entry['note'] )
 							: trim( $entry['note'] );
+						}
 					}
-				}
-				$kept[] = $normalized;
+					$kept[] = $normalized;
 			}
 
 			if ( count( $kept ) > VipPlanParser::MAX_PLANS_PER_LEVEL ) {

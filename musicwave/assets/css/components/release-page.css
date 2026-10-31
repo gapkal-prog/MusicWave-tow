@@ -265,12 +265,6 @@
 	display: none;
 }
 
-/* Hide shuffle when no asset (PHP returns empty, but editor placeholder needs dim) */
-.mw-shuffle-button--no-asset {
-	opacity: 0.55;
-	pointer-events: none;
-}
-
 .mw-lyrics__header {
 	align-items: center;
 }
@@ -284,12 +278,6 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-}
-
-.mw-release-stage {
-	align-items: start;
-	gap: clamp(1.25rem, 3vw, 2rem);
-	margin-block: 0 var(--wp--preset--spacing--50, 3rem);
 }
 
 .mw-release-stage__primary,
@@ -364,7 +352,215 @@
 		margin-inline: auto;
 	}
 
-	.mw-release-actions {
-		justify-content: flex-start;
+.mw-release-actions {
+			justify-content: flex-start;
+		}
+	}
+
+/* ------------------------------------------------------------------ *
+ * Release description (`.mw-release-content`)
+ *
+ * One prose surface for the release post content: comfortable measure, a
+ * single vertical rhythm, and a JS-enhanced clamp. Without JavaScript the
+ * content is never hidden — the clamp class is added by release-content.js.
+ * ------------------------------------------------------------------ */
+.mw-release-content {
+	--mw-release-content-bg: color-mix(
+		in srgb,
+		var(--mw-color-surface) 62%,
+		var(--mw-color-canvas)
+	);
+	position: relative;
+	isolation: isolate;
+	margin-block-start: clamp(1.5rem, 4vw, 2.5rem);
+	max-inline-size: 70ch;
+	padding: clamp(1.15rem, 2.6vw, 1.9rem) clamp(1.2rem, 3vw, 2.1rem);
+	color: var(--mw-color-text);
+	font-size: 1rem;
+	line-height: 1.85;
+	text-wrap: pretty;
+	background: var(--mw-release-content-bg);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 1.1rem;
+}
+
+.mw-release-content > :where(p, ul, ol, blockquote, figure, pre, table) {
+	margin-block: 0 1.15em;
+}
+
+.mw-release-content > :where(h2, h3, h4) {
+	margin-block: 1.9em 0.6em;
+	font-family: var(--mw-font-display);
+	font-weight: 800;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+}
+
+.mw-release-content > h2 {
+	font-size: clamp(1.2rem, 1rem + 0.7vw, 1.6rem);
+}
+
+.mw-release-content > h3 {
+	font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+}
+
+.mw-release-content > h4 {
+	font-size: 1.05rem;
+}
+
+/* Section headings get a compact accent rule so the prose scans faster. */
+.mw-release-content > h2::after {
+	content: "";
+	display: block;
+	inline-size: 2.4rem;
+	block-size: 3px;
+	margin-block-start: 0.5rem;
+	background: var(--mw-color-accent);
+	border-radius: 999px;
+}
+
+/* The opening paragraph reads as a standfirst. */
+.mw-release-content > p:first-of-type {
+	font-size: clamp(1.03rem, 1rem + 0.2vw, 1.12rem);
+	font-weight: 500;
+	line-height: 1.8;
+}
+
+.mw-release-content > :where(h2, h3, h4):first-child {
+	margin-block-start: 0;
+}
+
+.mw-release-content :where(a) {
+	color: var(--mw-color-accent-strong);
+	text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+	text-underline-offset: 0.2em;
+}
+
+.mw-release-content :where(a:hover, a:focus-visible) {
+	text-decoration-color: currentColor;
+}
+
+.mw-release-content :where(ul, ol) {
+	padding-inline-start: 1.35em;
+}
+
+.mw-release-content :where(li + li) {
+	margin-block-start: 0.4em;
+}
+
+.mw-release-content :where(blockquote) {
+	margin-inline: 0;
+	padding: 0.9rem 1.15rem;
+	color: var(--mw-color-text-muted);
+	background: color-mix(in srgb, var(--mw-color-text) 4%, transparent);
+	border-inline-start: 3px solid var(--mw-color-accent);
+	border-radius: 0.65rem;
+}
+
+.mw-release-content :where(figure) {
+	margin-inline: 0;
+}
+
+.mw-release-content :where(img, video, iframe) {
+	max-inline-size: 100%;
+	block-size: auto;
+	border-radius: 0.9rem;
+}
+
+.mw-release-content :where(figcaption) {
+	margin-block-start: 0.5rem;
+	color: var(--mw-color-text-muted);
+	font-size: 0.8125rem;
+}
+
+.mw-release-content :where(code, pre) {
+	font-family: var(--mw-font-mono);
+	font-size: 0.875em;
+}
+
+.mw-release-content :where(pre) {
+	padding: 1rem;
+	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 0.75rem;
+	overflow-x: auto;
+}
+
+.mw-release-content > :last-child {
+	margin-block-end: 0;
+}
+
+/* Collapsed state: only added by release-content.js for long descriptions. */
+.mw-release-content--clamped {
+	max-block-size: 24rem;
+	overflow: hidden;
+}
+
+.mw-release-content--clamped::after {
+	content: "";
+	position: absolute;
+	z-index: 1;
+	inset-inline: 0;
+	inset-block-end: 0;
+	block-size: 7rem;
+	background: linear-gradient(
+		to bottom,
+		transparent,
+		var(--mw-release-content-bg) 86%
+	);
+	border-end-start-radius: inherit;
+	border-end-end-radius: inherit;
+	pointer-events: none;
+}
+
+.mw-release-content__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	inline-size: fit-content;
+	margin-block-start: 0.9rem;
+	margin-inline: auto;
+	padding: 0.6rem 1.4rem;
+	font: inherit;
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: var(--mw-color-text);
+	background: color-mix(in srgb, var(--mw-color-text) 7%, transparent);
+	border: 1px solid var(--mw-color-border);
+	border-radius: 999px;
+	cursor: pointer;
+	transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.mw-release-content__toggle::after {
+	content: "";
+	inline-size: 0.45rem;
+	block-size: 0.45rem;
+	border-inline-end: 2px solid currentColor;
+	border-block-end: 2px solid currentColor;
+	transform: rotate(45deg) translateY(-1px);
+	transition: transform 180ms ease;
+}
+
+.mw-release-content__toggle[aria-expanded="true"]::after {
+	transform: rotate(-135deg) translateY(-1px);
+}
+
+.mw-release-content__toggle:hover {
+	color: var(--mw-color-accent-strong);
+	background: color-mix(in srgb, var(--mw-color-accent) 10%, transparent);
+	border-color: color-mix(in srgb, var(--mw-color-accent) 45%, transparent);
+}
+
+.mw-release-content__toggle:focus-visible {
+	outline: 2px solid color-mix(in srgb, var(--mw-color-accent) 55%, transparent);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-release-content__toggle,
+	.mw-release-content__toggle::after {
+		transition: none;
 	}
 }

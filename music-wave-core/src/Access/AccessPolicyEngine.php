@@ -103,11 +103,15 @@ final class AccessPolicyEngine {
 		}
 
 		$has_products = ! empty( $this->repository->product_ids( $release_id ) );
+		$behavior     = MembershipAbsencePolicy::mode();
 
-		// When no membership module is active at all: if a WooCommerce product IS
-		// mapped, keep the paid product purchasable instead of silently giving paid
-		// products away for free; if NO product is mapped, mirror `membership_absent_behavior`.
+		// When no membership module is active at all: the absent-behavior decides.
+		// `open_download` opens hybrid releases on the membership side even when a
+		// WooCommerce product is mapped; `allow` keeps paid products purchasable.
 		if ( $this->membership_provider instanceof NullMembershipProvider ) {
+			if ( MembershipAbsencePolicy::opens_hybrid( $behavior ) ) {
+				return AccessDecision::allow( MembershipAbsencePolicy::REASON_OPEN, $mode );
+			}
 			if ( $has_products ) {
 				return AccessDecision::deny( 'purchase_required', $mode );
 			}
@@ -139,17 +143,17 @@ final class AccessPolicyEngine {
 	}
 
 	private function absent_provider_decision( string $mode ): AccessDecision {
-		/**
-		 * Filter how membership releases behave while no membership module
-		 * (e.g. MusicWave VIP) provides decisions.
-		 *
-		 * @param string $behavior 'allow' (default, content stays usable) or 'deny'.
-		 */
-		$absent = sanitize_key( (string) apply_filters( 'music_wave_membership_absent_behavior', 'allow' ) );
+		$behavior = MembershipAbsencePolicy::mode();
 
-		return 'deny' === $absent
-			? AccessDecision::deny( 'membership_provider_absent', $mode )
-			: AccessDecision::allow( 'membership_provider_absent', $mode );
+		if ( MembershipAbsencePolicy::MODE_DENY === $behavior ) {
+			return AccessDecision::deny( 'membership_provider_absent', $mode );
+		}
+
+		if ( MembershipAbsencePolicy::MODE_OPEN_DOWNLOAD === $behavior ) {
+			return AccessDecision::allow( MembershipAbsencePolicy::REASON_OPEN, $mode );
+		}
+
+		return AccessDecision::allow( 'membership_provider_absent', $mode );
 	}
 
 	/**

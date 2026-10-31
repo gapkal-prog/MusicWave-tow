@@ -13,6 +13,7 @@ parameters:
         - musicwave/patterns
     scanFiles:
         - musicwave/functions.php
+        - tools/stubs/phpseclib.php
     bootstrapFiles:
         - tools/phpstan-bootstrap.php
     excludePaths:

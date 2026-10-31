@@ -54,3 +54,36 @@
 :is([aria-pressed="true"], [data-mw-playing], .is-playing) .mw-icon-swap__pause {
 	display: inline-grid;
 }
+
+/*
+ * Optional section-title icon.
+ *
+ * Every shelf/section heading renders its glyph through
+ * `SectionHeader::title()`, so one rule keeps the alignment and scale
+ * identical across shelves, sliders, related lists, and playlist headers.
+ * The glyph is absent unless the author set one.
+ */
+.mw-release-shelf__header h2,
+.mw-release-slider__header h2,
+.mw-related-releases__section-header h2,
+.mw-continue-listening__header h2,
+.mw-section-head h2,
+.mw-public-playlists__title {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.mw-section-header__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	color: var(--mw-color-accent);
+	line-height: 0;
+}
+
+.mw-section-header__icon > :is(svg, i) {
+	inline-size: 1.1em;
+	block-size: 1.1em;
+}

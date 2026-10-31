@@ -271,25 +271,12 @@
 	pointer-events: none;
 }
 
-/* Block style variations for `music-wave/preview-player` */
-.mw-preview-button--outline {
-	color: var(--mw-color-text);
-	background: transparent;
-	border: 1.5px solid var(--mw-color-accent, #1db954);
-	box-shadow: none;
-}
-
-.mw-preview-button--ghost {
-	color: var(--mw-color-text);
-	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
-	border: 1px solid color-mix(in srgb, var(--mw-color-text) 16%, transparent);
-	box-shadow: none;
-}
-
-.mw-preview-button--block {
-	display: flex;
-	inline-size: 100%;
-}
+/* Preview-player/button color variants live in ONE place:
+ * `.mw-action-button--{variant}` below (accent/surface/outline/ghost) plus the
+ * base compatibility selectors in `global-player.css`. Do not re-declare
+ * `.mw-preview-button--*` here — duplicated, equal-specificity rules are what
+ * previously painted the "minimal/no-background" (ghost) button with a tinted
+ * pill in the release action row. */
 
 /* Standalone wrappers keep clean inline flow without unwanted margins */
 .mw-share-button-wrap,

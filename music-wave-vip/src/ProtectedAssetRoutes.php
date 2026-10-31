@@ -89,6 +89,15 @@ final class ProtectedAssetRoutes {
 				'permission_callback' => array( $this, 'can_manage_options' ),
 			)
 		);
+		register_rest_route(
+			'music-wave/v1',
+			'/protected-assets/edge-test',
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'edge_test' ),
+				'permission_callback' => array( $this, 'can_manage_options' ),
+			)
+		);
 	}
 
 	/**
@@ -164,6 +173,17 @@ final class ProtectedAssetRoutes {
 		$diagnostics = new ProtectedDeliveryDiagnostics( $this->storage );
 
 		return new WP_REST_Response( $diagnostics->snapshot(), 200 );
+	}
+
+	/**
+	 * Probe the configured edge base URL for `edge_signed`/`edge_hls` readiness.
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function edge_test(): WP_REST_Response {
+		$result = ( new \ManaCore\MusicWave\Vip\Delivery\EdgeConnectionManager( VipSettings::all() ) )->test();
+
+		return new WP_REST_Response( $result, $result['ok'] ? 200 : 422 );
 	}
 
 	/**

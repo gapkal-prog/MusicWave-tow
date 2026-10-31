@@ -756,9 +756,9 @@ if ( $mw_card_theme_loaded ) {
 }
 
 /*
- * Section headers. `musicwave_render_shelf_header()` and
- * `ReleaseBlocks::related_section()` share the same "see all" link shape with
- * different BEM roots, so both are pinned here before Stage B extracts it.
+ * Section headers. `musicwave_render_shelf_header()` owns the shelf "see all"
+ * link shape; `ReleaseBlocks::related_section()` renders icon-bearing titles
+ * without a section link, so both producers are pinned here independently.
  */
 if ( $mw_card_theme_loaded ) {
 	$mw_card_cases['header:shelf:full']         = musicwave_render_shelf_header( 'منتخب', 'انتشارات برگزیده', 'توضیح بخش', 'https://example.test/releases/', 'مشاهده همه' );
@@ -768,12 +768,15 @@ if ( $mw_card_theme_loaded ) {
 	$mw_card_cases['header:shelf:desc-only']    = musicwave_render_shelf_header( '', '', 'فقط توضیح' );
 }
 
-$mw_card_section_options = array_merge( $mw_card_defaults, array( 'layout' => 'list', 'columns' => 3 ) );
-$mw_card_cases['related-section:with-more']      = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11, 12 ), $mw_card_section_options, 'https://example.test/releases/', 'همه را ببینید' ) );
-$mw_card_cases['related-section:no-more']        = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11 ), $mw_card_section_options ) );
-$mw_card_cases['related-section:label-only']     = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11 ), $mw_card_section_options, '', 'همه را ببینید' ) );
-$mw_card_cases['related-section:empty']          = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array(), $mw_card_section_options, 'https://example.test/releases/', 'همه' ) );
-$mw_card_cases['related-section:editorial']      = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 13 ), array_merge( $mw_card_section_options, array( 'variation' => 'editorial', 'layout' => 'grid' ) ) ) );
+// The related-releases block owns its shelf geometry through the «سبک نمایش» group.
+$mw_card_section_options = $mw_card_defaults;
+$mw_card_cases['related-section:default']        = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11, 12 ), $mw_card_section_options ) );
+$mw_card_cases['related-section:single']         = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11 ), $mw_card_section_options ) );
+$mw_card_cases['related-section:empty']          = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array(), $mw_card_section_options ) );
+$mw_card_cases['related-section:editorial']      = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 13 ), array_merge( $mw_card_section_options, array( 'variation' => 'editorial' ) ) ) );
+$mw_card_cases['related-section:icon']           = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11 ), array_merge( $mw_card_section_options, array( 'icon' => 'sparkles' ) ) ) );
+$mw_card_cases['related-section:scroll-6']       = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11, 12 ), array_merge( $mw_card_section_options, array( 'layout' => 'scroll', 'columns' => 6 ) ) ) );
+$mw_card_cases['related-section:list']           = mw_card_call( $mw_card_related, 'related_section', array( 'شبیه این', array( 11 ), array_merge( $mw_card_section_options, array( 'layout' => 'list' ) ) ) );
 
 $mw_card_cases = array_map( 'mw_card_normalize', $mw_card_cases );
 ksort( $mw_card_cases );

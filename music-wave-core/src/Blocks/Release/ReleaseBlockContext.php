@@ -18,6 +18,7 @@ use ManaCore\MusicWave\Core\Access\AccessDecision;
 use ManaCore\MusicWave\Core\Access\AccessPolicyEngine;
 use ManaCore\MusicWave\Core\Access\AccessSubject;
 use ManaCore\MusicWave\Core\Blocks\BlockSupport;
+use ManaCore\MusicWave\Core\Blocks\Concerns\ActionButtonStyle;
 use ManaCore\MusicWave\Core\Blocks\Concerns\ReleasePlayability;
 use ManaCore\MusicWave\Core\Blocks\Concerns\ReleaseResolver;
 use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
@@ -233,7 +234,7 @@ final class ReleaseBlockContext {
 		$link    = get_permalink( $release_id );
 		$limit   = TrackStreamPresenter::preview_limit( $release_id, $this->repository );
 
-		return '<button class="mw-preview-button mw-preview-button--compact" type="button" aria-pressed="false" data-preview-url="' . esc_url( $url ) . '" data-preview-title="' . esc_attr( $title ) . '" data-preview-artist="' . esc_attr( $artist ) . '" data-preview-image="' . esc_url( is_string( $image ) ? $image : '' ) . '" data-preview-link="' . esc_url( is_string( $link ) ? $link : '' ) . '" data-preview-limit="' . esc_attr( (string) $limit ) . '"><span class="mw-preview-button__icon" aria-hidden="true">▶</span><span>' . esc_html__( 'پیش‌نمایش', 'music-wave-core' ) . '</span></button>';
+		return '<button class="mw-preview-button mw-preview-button--compact" type="button" aria-pressed="false" data-preview-url="' . esc_url( $url ) . '" data-preview-title="' . esc_attr( $title ) . '" data-preview-artist="' . esc_attr( $artist ) . '" data-preview-image="' . esc_url( is_string( $image ) ? $image : '' ) . '" data-preview-link="' . esc_url( is_string( $link ) ? $link : '' ) . '" data-preview-limit="' . esc_attr( (string) $limit ) . '"><span class="mw-preview-button__icon" aria-hidden="true">' . ActionButtonStyle::play_toggle_icon( 'play-filled', 16 ) . '</span><span>' . esc_html__( 'پیش‌نمایش', 'music-wave-core' ) . '</span></button>';
 	}
 
 	/**

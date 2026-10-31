@@ -113,6 +113,13 @@ final class DownloadAssetRoutes {
 		// operate on exactly the same bounded, sanitized variant list.
 		$assets = array_slice( $this->normalize_assets( $assets ), 0, self::MAX_ASSETS );
 
+		// Secure direct-link assignments: raw http/https URLs are rejected;
+		// `direct:` URLs are validated and require the assign capability.
+		$secure_error = $this->secure_direct_link_assets( $assets );
+		if ( null !== $secure_error ) {
+			return $secure_error;
+		}
+
 		$release_id = absint( $request->get_param( 'id' ) );
 		$denied     = $this->deny_unauthorized_assignments( $release_id, $assets );
 		if ( null !== $denied ) {
@@ -143,8 +150,14 @@ final class DownloadAssetRoutes {
 			if ( ! is_array( $asset ) || ! isset( $asset['asset_id'] ) || ! is_scalar( $asset['asset_id'] ) ) {
 				continue;
 			}
-			$asset_id = sanitize_text_field( (string) $asset['asset_id'] );
+			$raw_asset_id = (string) $asset['asset_id'];
+			$asset_id     = AssetIdSanitizer::sanitize( $raw_asset_id );
 			if ( '' === $asset_id || in_array( $asset_id, $existing, true ) ) {
+				continue;
+			}
+			// `direct:` assets are authorized by secure_direct_link_assets(),
+			// not by the provider-assignment gate (they are not protected assets).
+			if ( 0 === strpos( $asset_id, 'direct:' ) ) {
 				continue;
 			}
 
@@ -180,6 +193,53 @@ final class DownloadAssetRoutes {
 	}
 
 	/**
+	 * Validate `direct:` asset URLs and reject raw http/https asset IDs.
+	 *
+	 * @return WP_Error|null
+	 */
+	private function secure_direct_link_assets( array $assets ): ?WP_Error {
+		$validator = new DirectLinkUrlValidator();
+
+		foreach ( $assets as $asset ) {
+			if ( ! is_array( $asset ) || ! isset( $asset['asset_id'] ) || ! is_scalar( $asset['asset_id'] ) ) {
+				continue;
+			}
+			$asset_id = AssetIdSanitizer::sanitize( (string) $asset['asset_id'] );
+
+			// Raw public URLs are never stored as asset IDs.
+			$scheme = wp_parse_url( $asset_id, PHP_URL_SCHEME );
+			if ( in_array( strtolower( (string) $scheme ), array( 'http', 'https' ), true ) ) {
+				return new WP_Error(
+					'mw_raw_url_not_allowed',
+					__( 'نشانی عمومی مجاز نیست. از شناسهٔ دارایی EOP (مثل vip:…) یا پیشوند direct:<https-url> استفاده کنید.', 'music-wave-core' ),
+					array( 'status' => 400 )
+				);
+			}
+
+			// Validate and normalize `direct:` URLs; require the assign capability.
+			if ( 0 === strpos( $asset_id, 'direct:' ) ) {
+				$url = substr( $asset_id, strlen( 'direct:' ) );
+				if ( null === $validator->validate( $url ) ) {
+					return new WP_Error(
+						'mw_direct_link_invalid',
+						__( 'لینک مستقیم نامعتبر است: فقط HTTPS، بدون کاراکتر کنترل، بدون userinfo/IP/سرور محلی، و port ۴۴۳.', 'music-wave-core' ),
+						array( 'status' => 400 )
+					);
+				}
+				if ( ! DirectLinkPermission::can_assign() ) {
+					return new WP_Error(
+						'mw_direct_link_forbidden',
+						__( 'شما مجاز به اختصاص لینک مستقیم نیستید.', 'music-wave-core' ),
+						array( 'status' => 403 )
+					);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Collect the asset identifiers already stored on a release.
 	 *
 	 * @return array<int, string>
@@ -189,13 +249,14 @@ final class DownloadAssetRoutes {
 		$value = $this->releases->get( $release_id, 'mw_download_assets' );
 		foreach ( is_array( $value ) ? $value : array() as $asset ) {
 			if ( is_array( $asset ) && isset( $asset['asset_id'] ) && is_scalar( $asset['asset_id'] ) ) {
-				$ids[] = sanitize_text_field( (string) $asset['asset_id'] );
+				$raw   = (string) $asset['asset_id'];
+				$ids[] = AssetIdSanitizer::sanitize( $raw );
 			}
 		}
 
 		$legacy = $this->releases->get( $release_id, 'mw_download_asset_id' );
 		if ( is_string( $legacy ) && '' !== $legacy ) {
-			$ids[] = sanitize_text_field( $legacy );
+			$ids[] = AssetIdSanitizer::sanitize( $legacy );
 		}
 
 		return array_values( array_unique( array_filter( $ids ) ) );
@@ -236,18 +297,19 @@ final class DownloadAssetRoutes {
 			if ( ! is_array( $asset ) || empty( $asset['key'] ) || empty( $asset['label'] ) || empty( $asset['asset_id'] ) ) {
 				continue;
 			}
-			$normalized = array(
+			$raw_asset_id = (string) $asset['asset_id'];
+			$normalized   = array(
 				'key'      => sanitize_key( (string) $asset['key'] ),
 				'label'    => sanitize_text_field( (string) $asset['label'] ),
-				'asset_id' => sanitize_text_field( (string) $asset['asset_id'] ),
+				'asset_id' => AssetIdSanitizer::sanitize( $raw_asset_id ),
 			);
-			$format     = isset( $asset['format'] ) ? sanitize_key( strtolower( (string) $asset['format'] ) ) : '';
-			$file_name  = isset( $asset['file_name'] ) ? sanitize_file_name( (string) $asset['file_name'] ) : '';
-			$file_key   = isset( $asset['file_key'] ) ? sanitize_key( (string) $asset['file_key'] ) : '';
-			$file_label = isset( $asset['file_label'] ) ? sanitize_text_field( (string) $asset['file_label'] ) : '';
-			$bitrate    = isset( $asset['bitrate'] ) ? absint( $asset['bitrate'] ) : 0;
-			$duration   = isset( $asset['duration'] ) ? absint( $asset['duration'] ) : 0;
-			$file_size  = isset( $asset['file_size'] ) ? absint( $asset['file_size'] ) : 0;
+			$format       = isset( $asset['format'] ) ? sanitize_key( strtolower( (string) $asset['format'] ) ) : '';
+			$file_name    = isset( $asset['file_name'] ) ? sanitize_file_name( (string) $asset['file_name'] ) : '';
+			$file_key     = isset( $asset['file_key'] ) ? sanitize_key( (string) $asset['file_key'] ) : '';
+			$file_label   = isset( $asset['file_label'] ) ? sanitize_text_field( (string) $asset['file_label'] ) : '';
+			$bitrate      = isset( $asset['bitrate'] ) ? absint( $asset['bitrate'] ) : 0;
+			$duration     = isset( $asset['duration'] ) ? absint( $asset['duration'] ) : 0;
+			$file_size    = isset( $asset['file_size'] ) ? absint( $asset['file_size'] ) : 0;
 
 			if ( '' !== $format ) {
 				$normalized['format'] = $format;

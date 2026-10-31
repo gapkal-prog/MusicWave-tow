@@ -23,28 +23,28 @@ msgstr ""
 msgid "%1$s سفارش (%2$s)"
 msgstr ""
 
-#: src/PlanProducts.php:424
+#: src/PlanProducts.php:436
 #, php-format
 msgid "%d روز"
 msgid_plural "%d روز"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:129
+#: src/Checkout/SubscriptionOrderPresenter.php:222
 #, php-format
 msgid "%d روز باقی‌مانده"
 msgid_plural "%d روز باقی‌مانده"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/PlanProducts.php:417
+#: src/PlanProducts.php:429
 #, php-format
 msgid "%d سال"
 msgid_plural "%d سال"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/PlanProducts.php:421
+#: src/PlanProducts.php:433
 #, php-format
 msgid "%d ماه"
 msgid_plural "%d ماه"
@@ -65,11 +65,15 @@ msgstr ""
 msgid "+%d طرح دیگر"
 msgstr ""
 
-#: src/SettingsPage.php:464
-msgid "Apache / LiteSpeed — هدر X-Sendfile"
+#: src/SettingsPage.php:1018
+msgid "AES-128 — کلید فقط با نشست معتبر صادر میشود"
 msgstr ""
 
-#: src/SettingsPage.php:68 src/SettingsPage.php:552 src/VipPlans.php:96
+#: src/SettingsPage.php:1119
+msgid "Access Key"
+msgstr ""
+
+#: src/SettingsPage.php:69 src/SettingsPage.php:1325 src/VipPlans.php:96
 msgid "MusicWave VIP"
 msgstr ""
 
@@ -82,11 +86,19 @@ msgstr ""
 msgid "MusicWave VIP به افزونهٔ MusicWave Core نیاز دارد."
 msgstr ""
 
-#: src/SettingsPage.php:465
-msgid "Nginx — هدر X-Accel-Redirect"
+#: src/SettingsPage.php:1096
+msgid "S3 یا سازگار (Cloudflare R2، MinIO، Wasabi)"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:193
+#: src/SettingsPage.php:1098
+msgid "SFTP (نیازمند افزونهٔ ssh2 یا phpseclib)"
+msgstr ""
+
+#: src/SettingsPage.php:1120
+msgid "Secret Key"
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:286
 msgid "VIP"
 msgstr ""
 
@@ -124,15 +136,35 @@ msgstr ""
 msgid "VIP: لغو همه اشتراک‌های فعال"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:377
+#: src/SettingsPage.php:1097
+msgid "WebDAV (Nextcloud، ownCloud)"
+msgstr ""
+
+#: src/SettingsPage.php:1095
+msgid "Webhook امضاشده (سرور دانلود پیشرفته)"
+msgstr ""
+
+#: src/ProtectedAssetStorage.php:447
 msgid "asset حفاظت‌شده ذخیره نشد."
+msgstr ""
+
+#: src/Hls/HlsPackager.php:95
+msgid "ffmpeg/ffprobe روی سرور در دسترس نیست؛ بسته‌بندی HLS امکان‌پذیر نیست."
+msgstr ""
+
+#: src/SettingsPage.php:826
+msgid "«لبه» یعنی دامنهٔ عمومی که کاربر می‌بیند (مثلاً files.example.com). فایل‌ها روی سرور شما/CDN می‌مانند و لینک‌های کوتاه‌عمرِ امضاشده ساخته می‌شوند؛ آدرس واقعی سرور هرگز در مرورگر ظاهر نمی‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:920
+msgid "«نشانی پایهٔ سرور راهدور» را با https وارد کنید؛ همان آدرسی که فایل از آن دانلود می‌شود (بدون اسلش آخر)."
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:302
 msgid "آخرین آهنگ‌های پخش‌شده توسط کاربر"
 msgstr ""
 
-#: src/SettingsPage.php:767
+#: src/SettingsPage.php:1526
 msgid "آخرین رویدادهای حسابرسی عضویت VIP"
 msgstr ""
 
@@ -141,40 +173,124 @@ msgstr ""
 msgid "آخرین فعالیت: %s پیش"
 msgstr ""
 
-#: src/SettingsPage.php:143
-msgid "آداپترهای عضویت و مجوز دسترسی"
+#: src/Delivery/RemoteUploadRoutes.php:125 src/Delivery/RemoteUploadRoutes.php:154
+msgid "آداپتور انتخابشده در دسترس نیست."
 msgstr ""
 
-#: src/Checkout/VirtualCheckoutSimplifier.php:75
+#: src/Checkout/VirtualCheckoutSimplifier.php:82
 msgid "آدرس ایمیل"
 msgstr ""
 
-#: src/SettingsPage.php:613
+#: src/SettingsPage.php:839
+msgid "آدرسی که فایل‌ها از آن سرو می‌شوند؛ باید با https:// شروع شود وگرنه حالت لبه فعال نمی‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:874
+msgid "آزمایش اتصال به لبه/CDN"
+msgstr ""
+
+#: src/SettingsPage.php:123
+msgid "آزمایش اتصال ناموفق بود:"
+msgstr ""
+
+#: src/SettingsPage.php:1184
+msgid "آستانهٔ چندبخشی S3 (مگابایت)"
+msgstr ""
+
+#: src/SettingsPage.php:1409
 msgid "آماده سرویس‌دهی ایمن"
+msgstr ""
+
+#: src/SettingsPage.php:634 src/SettingsPage.php:641 src/SettingsPage.php:648
+msgid "آپلود خودکار"
+msgstr ""
+
+#: src/SettingsPage.php:1075
+msgid "آپلود خودکار به سرور دانلود/CDN"
+msgstr ""
+
+#: src/Delivery/RemoteUploadRoutes.php:149
+msgid "آپلود خودکار در حالت تحویل فعلی لازم نیست."
+msgstr ""
+
+#: src/SettingsPage.php:1189
+msgid "ابزارها"
+msgstr ""
+
+#: src/Delivery/Adapters/SftpUploadAdapter.php:162
+msgid "اتصال SFTP برقرار نشد (یا اثر انگشت کلید میزبان مطابقت نداشت)."
+msgstr ""
+
+#: src/SettingsPage.php:981
+msgid "اتصال به آیپی"
+msgstr ""
+
+#: src/SettingsPage.php:822
+msgid "اتصال به لبه / CDN (شبکهٔ توزیع محتوا)"
+msgstr ""
+
+#: src/SettingsPage.php:634 src/SettingsPage.php:641
+msgid "اتصال به لبه/CDN"
+msgstr ""
+
+#: src/SettingsPage.php:984
+msgid "اتصال به مرورگر"
+msgstr ""
+
+#: src/SettingsPage.php:122
+msgid "اتصال سالم است."
+msgstr ""
+
+#: src/SettingsPage.php:1126
+msgid "اثر انگشت کلید میزبان (اختیاری)"
+msgstr ""
+
+#: src/Delivery/Adapters/SftpUploadAdapter.php:189
+msgid "اثر انگشت کلید میزبان SFTP مطابقت ندارد."
+msgstr ""
+
+#: src/Delivery/RemoteUploadRoutes.php:90 src/Delivery/RemoteUploadRoutes.php:110
+msgid "اجازهٔ مدیریت آپلود راهدور را ندارید."
 msgstr ""
 
 #: src/PlanProducts.php:143 src/PlanProducts.php:171
 msgid "اجازهٔ مدیریت طرح‌های VIP را ندارید."
 msgstr ""
 
-#: src/SettingsPage.php:130 src/SettingsPage.php:690
-msgid "ارائه‌دهندهٔ تحویل"
+#: src/Delivery/Adapters/SftpUploadAdapter.php:167 src/Delivery/Adapters/SftpUploadAdapter.php:184
+msgid "احراز هویت SFTP ناموفق بود."
 msgstr ""
 
-#: src/SettingsPage.php:146 src/SettingsPage.php:752
+#: src/SettingsPage.php:699
+msgid "اختیاری"
+msgstr ""
+
+#: src/SettingsPage.php:1511
 msgid "ارتقای نقش VIP"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:173 src/Checkout/SubscriptionOrderPresenter.php:177
+#: src/SettingsPage.php:489
+msgid "ارسال با PHP (با همهٔ وبسرورها سازگار؛ سادهترین و پیشفرض)"
+msgstr ""
+
+#: src/SettingsPage.php:1120
+msgid "از پنل S3/R2 خود. این کلید معمولاً فقط یک‌بار نمایش داده می‌شود؛ همان‌جا کپی کنید."
+msgstr ""
+
+#: src/SettingsPage.php:1119
+msgid "از پنل S3/R2 خود؛ MusicWave آن را نمی‌سازد."
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:266 src/Checkout/SubscriptionOrderPresenter.php:270
 msgid "اشتراک"
 msgstr ""
 
-#: src/VipPlans.php:1033
+#: src/VipPlans.php:1197
 #, php-format
 msgid "اشتراک VIP اعطا شد: %s"
 msgstr ""
 
-#: src/VipPlans.php:273
+#: src/VipPlans.php:283
 msgid "اشتراک VIP لغو شد (سفارش لغو/بازپرداخت/ناموفق). دسترسی به سطح عادی بازگشت."
 msgstr ""
 
@@ -182,15 +298,31 @@ msgstr ""
 msgid "اشتراک شش‌ماهه اقتصادی برای شنوندگان حرفه‌ای با دسترسی بی‌وقفه به تمام انتشارهای جدید و آرشیو کامل باکیفیت."
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:92
+#: src/Checkout/SubscriptionOrderPresenter.php:168
 msgid "اشتراک شما فعال شد!"
 msgstr ""
 
-#: music-wave-vip.php:334 src/SettingsPage.php:556
+#: src/SettingsPage.php:1083
+msgid "اطلاعات اتصال همان مقصد را پایین وارد کنید. فقط فیلدهایی که MusicWave می‌سازد دکمهٔ «ایجاد» دارند؛ کلیدهای S3 و رمزهای WebDAV/SFTP را از پنل سرویس خود بردارید."
+msgstr ""
+
+#: src/Delivery/Adapters/S3CompatibleUploadAdapter.php:376
+msgid "اعتبارنامه S3 ناقص است."
+msgstr ""
+
+#: src/Delivery/RemoteUploadManager.php:105
+msgid "اعتبارنامه یا انتهای آپلود نامعتبر است (fail-closed)."
+msgstr ""
+
+#: src/Delivery/RemoteUploadManager.php:108
+msgid "اعتبارنامه یا انتهای آپلود نامعتبر است."
+msgstr ""
+
+#: music-wave-vip.php:377 src/SettingsPage.php:1329
 msgid "اعضای VIP"
 msgstr ""
 
-#: src/SettingsPage.php:285 src/Users/UsersListIntegration.php:127
+#: src/SettingsPage.php:290 src/Users/UsersListIntegration.php:127
 msgid "اعضای VIP فعال"
 msgstr ""
 
@@ -198,7 +330,7 @@ msgstr ""
 msgid "اعطای اشتراک جدید یا تمدید مدت VIP کاربر"
 msgstr ""
 
-#: src/SettingsPage.php:383
+#: src/SettingsPage.php:388
 msgid "اعطای خودکار نقش VIP MusicWave (mw_vip)"
 msgstr ""
 
@@ -218,23 +350,23 @@ msgstr ""
 msgid "اعمال اشتراک / تمدید جدید هنگام ذخیره پروفایل"
 msgstr ""
 
-#: src/SettingsPage.php:246
+#: src/SettingsPage.php:251
 msgid "اعمال عضویت VIP خاموش است — حالت پروموشن باز فعال است."
 msgstr ""
 
-#: src/SettingsPage.php:242
+#: src/SettingsPage.php:247
 msgid "اعمال عضویت VIP روشن است."
 msgstr ""
 
-#: src/SettingsPage.php:575
+#: src/SettingsPage.php:1348
 msgid "اعمال قوانین VIP"
 msgstr ""
 
-#: src/SettingsPage.php:741
+#: src/SettingsPage.php:1500
 msgid "اعمال قوانین خاموش است؛ با روشن کردن کلید اصلی در تب «عمومی» این گزینه‌ها بلافاصله برای ویرایش باز می‌شوند."
 msgstr ""
 
-#: src/SettingsPage.php:550
+#: src/SettingsPage.php:1323
 msgid "اعمال قوانین روشن است"
 msgstr ""
 
@@ -242,12 +374,24 @@ msgstr ""
 msgid "افزودن به انتهای اعتبار فعلی"
 msgstr ""
 
-#: src/SettingsPage.php:490
+#: src/SettingsPage.php:1264
 msgid "افزونه WooCommerce Memberships"
 msgstr ""
 
-#: src/SettingsPage.php:491
+#: src/SettingsPage.php:1265
 msgid "افزونه WooCommerce Subscriptions"
+msgstr ""
+
+#: src/SettingsPage.php:970
+msgid "الزام نشست امن برای پخش جریانی"
+msgstr ""
+
+#: src/SettingsPage.php:731
+msgid "الزامی برای این حالت"
+msgstr ""
+
+#: src/SettingsPage.php:418
+msgid "الزامی:"
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:67
@@ -258,12 +402,36 @@ msgstr ""
 msgid "انباشت روی انتهای اعتبار فعلی"
 msgstr ""
 
-#: src/SettingsPage.php:557
+#: src/SettingsPage.php:1330
 msgid "انتشارها"
 msgstr ""
 
-#: src/SettingsPage.php:242
+#: src/SettingsPage.php:247
 msgid "انتشارهای حالت «فقط عضویت» و «خرید یا عضویت» بر اساس سطح اشتراک یا خرید تکی بررسی می‌شوند و تحویل فایل‌ها با توکن امضاشده انجام می‌گیرد."
+msgstr ""
+
+#: src/Delivery/Adapters/SftpUploadAdapter.php:114 src/Delivery/Adapters/SftpUploadAdapter.php:134
+msgid "انتقال فایل از طریق SFTP ناموفق بود."
+msgstr ""
+
+#: src/SettingsPage.php:1183
+msgid "انتقال هم‌روند در هر اجرا (۱ تا ۵)"
+msgstr ""
+
+#: src/Delivery/Adapters/WebdavUploadAdapter.php:88 src/Delivery/Adapters/WebdavUploadAdapter.php:159
+msgid "انتهای WebDAV تنظیم نشده است."
+msgstr ""
+
+#: src/Delivery/Adapters/WebhookUploadAdapter.php:58
+msgid "انتهای آپلود تنظیم نشده است."
+msgstr ""
+
+#: src/Delivery/RemoteUploadManager.php:132 src/Delivery/RemoteUploadManager.php:135
+msgid "اندازهٔ فایل نامعتبر است."
+msgstr ""
+
+#: src/SettingsPage.php:1224
+msgid "اندازهٔ قطعهٔ پخش"
 msgstr ""
 
 #: src/VipAuditLog.php:94
@@ -274,11 +442,27 @@ msgstr ""
 msgid "اولویت بررسی و اجابت درخواست‌های موسیقی در پنل کاربری"
 msgstr ""
 
-#: src/SettingsPage.php:425
-msgid "ایجاد با دکمهٔ «ایجاد» یا openssl rand -hex 32"
+#: src/SettingsPage.php:831
+msgid "اگر CDN فقط درخواست‌های دارای یک هدر مخفی را به مبدأ می‌پذیرد، نام و مقدار آن هدر را پایین وارد کنید (اختیاری)."
 msgstr ""
 
-#: src/SettingsPage.php:293
+#: src/SettingsPage.php:922
+msgid "اگر سرور شما امضای HMAC را بررسی نمی‌کند (مثلاً فقط یک CDN استاتیک است)، به‌جای این حالت از «لبه» یا «HLS» استفاده کنید."
+msgstr ""
+
+#: src/SettingsPage.php:1079
+msgid "اگر فایل‌ها باید روی سرور دانلود جداگانه یا CDN قرار بگیرند، این بخش را روشن کنید تا فایل‌های تازه خودکار منتقل شوند و نیازی به FTP دستی نباشد. اگر فایل‌ها روی همان سرور سایت می‌مانند، این بخش لازم نیست."
+msgstr ""
+
+#: src/SettingsPage.php:870
+msgid "اگر لینک‌ها روی چند دامنه ساخته می‌شوند، اینجا با کاما جدا کنید. برای زیردامنه‌ها از *. استفاده کنید (مثلاً *.cdn.example.com)."
+msgstr ""
+
+#: src/SettingsPage.php:864 src/SettingsPage.php:1154
+msgid "ایجاد توکن تصادفی"
+msgstr ""
+
+#: src/SettingsPage.php:298
 msgid "ایجاد طرح‌های پیش‌فرض (۱، ۶ و ۱۲ ماهه)"
 msgstr ""
 
@@ -286,43 +470,80 @@ msgstr ""
 msgid "ایجاد محصولات طرح پیش‌فرض ناموفق بود. آیا ووکامرس فعال است؟"
 msgstr ""
 
-#: src/SettingsPage.php:427
-msgid "ایجاد کلید امن ۶۴ کاراکتری"
+#: src/Delivery/Adapters/SftpUploadAdapter.php:109
+msgid "ایجاد نشست SFTP ناموفق بود."
 msgstr ""
 
-#: src/SettingsPage.php:614
+#: src/SettingsPage.php:796
+#, php-format
+msgid "ایجاد کلید %d نویسهای"
+msgstr ""
+
+#: src/SettingsPage.php:1410
 msgid "ایجاد، ایمن‌سازی و همگام‌سازی خودکار پوشه"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:138
+#: src/Checkout/SubscriptionOrderPresenter.php:231
 msgid "این سفارش شامل طرح اشتراک VIP است. دسترسی پس از پرداخت فعال شد."
 msgstr ""
 
-#: src/Checkout/DirectCheckoutHandler.php:45
-msgid "این محصول به‌عنوان طرح اشتراک VIP نگاشت شده اما مجازی نیست. برای حذف فیلدهای حمل‌ونقل و فعال‌سازی پرداخت مستقیم، آن را مجازی کنید."
+#: src/Checkout/DirectCheckoutHandler.php:48
+msgid "این محصول بهعنوان طرح اشتراک VIP نگاشت شده اما مجازی نیست. برای حذف فیلدهای حملونقل و فعالسازی پرداخت مستقیم، آن را مجازی کنید."
 msgstr ""
 
-#: src/SettingsPage.php:356
+#: src/SettingsPage.php:1113
+msgid "این مقدار از سرویس شما می‌آید (مثلاً Nextcloud → Settings → Security → App password) و MusicWave آن را نمی‌سازد."
+msgstr ""
+
+#: src/SettingsPage.php:1084
+msgid "با «تست اتصال آپلود» درستی اطلاعات را بسنجید و با «همگام‌سازی کل کتابخانه» فایل‌های موجود را یک‌باره منتقل کنید."
+msgstr ""
+
+#: src/SettingsPage.php:361
 msgid "با تکمیل سفارش، سطح طرح و نقش mw_vip فوراً اعطا می‌شوند؛ تمدید زودتر روزها را روی باقیمانده قبلی تجمیع می‌کند؛ لغو یا استرداد وجه بلافاصله دسترسی همان سفارش را پس می‌گیرد."
 msgstr ""
 
-#: src/SettingsPage.php:405
+#: src/SettingsPage.php:432
 msgid "با ثابت MUSIC_WAVE_VIP_PROTECTED_ROOT در wp-config.php قفل شده است."
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:350
+#: src/SettingsPage.php:1108
+msgid "با دکمهٔ «ایجاد» بسازید و همان مقدار را در سرور دانلود خود هم تنظیم کنید."
+msgstr ""
+
+#: src/SettingsPage.php:921
+msgid "با دکمهٔ «ایجاد» کلید مخفی امضا بسازید و همان مقدار را روی سرور دانلود ثبت کنید تا بتواند امضا را بررسی کند."
+msgstr ""
+
+#: src/SettingsPage.php:830
+msgid "با دکمهٔ «ایجاد» یک کلید مخفی ۶۴ نویسه‌ای بسازید و همان مقدار را در پیکربندی لبه/CDN ثبت کنید."
+msgstr ""
+
+#: src/SettingsPage.php:976
+msgid "با عبور از این سقف، قدیمیترین نشست آزاد میشود تا اشتراکگذاری حساب محدود شود."
+msgstr ""
+
+#: src/SettingsPage.php:973
+msgid "با هر درخواست معتبر تمدید میشود؛ مقدار کوتاهتر امنتر است."
+msgstr ""
+
+#: src/SettingsPage.php:847
+msgid "با همین کلید، لینک‌های manifest/قطعه/کلید امضا می‌شوند تا کسی نتواند نشانی را دست‌کاری کند. اگر خالی یا کوتاه باشد، حالت لبه به‌صورت ایمن به تحویل محلی برمی‌گردد."
+msgstr ""
+
+#: src/ProtectedAssetStorage.php:420
 msgid "بارگذاری asset حفاظت‌شده معتبر نیست."
 msgstr ""
 
-#: src/SettingsPage.php:649
+#: src/SettingsPage.php:1445
 msgid "بارگذاری در مخزن خصوصی"
 msgstr ""
 
-#: src/SettingsPage.php:108
+#: src/SettingsPage.php:115
 msgid "بارگذاری فایل در مخزن خصوصی ناموفق بود."
 msgstr ""
 
-#: src/SettingsPage.php:878
+#: src/SettingsPage.php:1637
 msgid "باز کردن تنظیمات VIP"
 msgstr ""
 
@@ -334,43 +555,96 @@ msgstr ""
 msgid "باز کردن ووکامرس → محصولات"
 msgstr ""
 
-#: src/SettingsPage.php:265
+#: src/SettingsPage.php:916
+msgid "بازدیدکننده یک نشانی کوتاه‌عمرِ امضاشده با HMAC-SHA256 دریافت می‌کند که به فایل روی سرور دانلود یا CDN خودتان اشاره می‌کند. هیچ بایتی از سرور وردپرس عبور نمی‌کند و مبدأ پنهان می‌ماند."
+msgstr ""
+
+#: src/SettingsPage.php:270
 msgid "بازدیدکنندگان مهمان حتی روی انتشارهای عمومی/پروموشن برای پخش یا دانلود فایل حفاظت‌شده باید وارد حساب کاربری شوند."
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:96
+#: src/VipAuditLog.php:95
+msgid "بازسازی خودکار .htaccess پوشهٔ محافظتشده"
+msgstr ""
+
+#: src/VipAuditLog.php:96
+msgid "بازسازی خودکار web.config پوشهٔ محافظتشده"
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:172
 msgid "بازگشت به خانه"
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:94
+msgid "بازگشت به صفحهٔ اشتراک‌ها"
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:80
 msgid "بالاترین اولویت در پیگیری درخواست‌های آهنگ و پشتیبانی اختصاصی مشترکین"
 msgstr ""
 
-#: src/SettingsPage.php:413
-msgid "باید HTTPS باشد. میزبان نشانی پایه خودکار در فهرست مجاز قرار می‌گیرد."
+#: src/Delivery/Adapters/S3CompatibleUploadAdapter.php:94
+msgid "باکت S3 تنظیم نشده است."
+msgstr ""
+
+#: src/SettingsPage.php:440
+msgid "باید HTTPS باشد. دامنهٔ همین نشانی پایه به‌طور خودکار به فهرست دامنه‌های مجاز اضافه می‌شود."
+msgstr ""
+
+#: src/Delivery/Adapters/S3CompatibleUploadAdapter.php:305
+#, php-format
+msgid "بخش %1$d با کد %2$d رد شد."
+msgstr ""
+
+#: src/SettingsPage.php:832
+msgid "بخش «آپلود خودکار» را روشن کنید تا فایل‌ها بدون انتقال دستی به CDN بروند."
+msgstr ""
+
+#: src/SettingsPage.php:730
+msgid "بخش‌های موردنیاز"
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:142
 msgid "بدون اشتراک VIP"
 msgstr ""
 
-#: src/SettingsPage.php:268
+#: src/SettingsPage.php:273
 msgid "بر اساس حالت دسترسی هر انتشار (شامل مهمانان در آثار عمومی)"
 msgstr ""
 
-#: src/SettingsPage.php:295
+#: src/SettingsPage.php:828
+msgid "برای اتصال به CDN این چهار کار را انجام دهید:"
+msgstr ""
+
+#: src/SettingsPage.php:918
+msgid "برای اتصال به سرور دانلود این چهار کار را انجام دهید:"
+msgstr ""
+
+#: src/SettingsPage.php:300
 msgid "برای ایجاد و فروش محصولات طرح، ووکامرس را فعال کنید."
 msgstr ""
 
-#: src/SettingsPage.php:355
+#: src/SettingsPage.php:413
+msgid "برای این حالت این بخش‌ها را پر کنید:"
+msgstr ""
+
+#: src/SettingsPage.php:1126
+msgid "برای جلوگیری از حملهٔ مرد میانی، اثر انگشت کلید سرور را وارد کنید."
+msgstr ""
+
+#: src/SettingsPage.php:360
 msgid "برای دسترسی به انتشارهای «فقط عضویت» یا «خرید یا عضویت»، سطح پیش‌فرض mw_vip همهٔ مشترکین فعال VIP را پوشش می‌دهد و نامک اختصاصی طرح (مانند vip-12m) فقط دارندگان همان طرح را مجاز می‌کند."
 msgstr ""
 
-#: src/SettingsPage.php:491
+#: src/SettingsPage.php:1086
+msgid "برای لینک فایل نیازی به کار دستی نیست: MusicWave شناسهٔ هر فایل را در مخزن نگه می‌دارد و هنگام پخش، خودش نشانی امضاشدهٔ کوتاه‌عمر روی دامنهٔ CDN/سرور شما را می‌سازد. کافی است فایل را در «مخزن فایل‌های خصوصی» بالا بارگذاری و شناسهٔ vip: آن را در انتشار انتخاب کنید."
+msgstr ""
+
+#: src/SettingsPage.php:1265
 msgid "بررسی اشتراک‌های تکرارشونده WooCommerce Subscriptions."
 msgstr ""
 
-#: src/SettingsPage.php:611
+#: src/SettingsPage.php:1407
 msgid "بررسی خودکار مسیر خصوصی، مجوزهای خواندن/نوشتن، سپر .htaccess/web.config و فهرست فایل‌های ثبت‌شده."
 msgstr ""
 
@@ -378,31 +652,60 @@ msgstr ""
 msgid "بررسی درخواست‌های کاربر ←"
 msgstr ""
 
-#: src/SettingsPage.php:490
+#: src/SettingsPage.php:1264
 msgid "بررسی طرح‌های فعال افزونه WooCommerce Memberships."
 msgstr ""
 
-#: src/SettingsPage.php:488
+#: src/SettingsPage.php:1262
 msgid "بررسی مستقیم نقش وردپرس هم‌نام با نامک سطح عضویت."
+msgstr ""
+
+#: src/SettingsPage.php:852
+msgid "برچسبی کوتاه در لینک (مثل k1). هنگام تعویض کلید، این مقدار را عوض کنید تا لینک‌های قدیمی همچنان تا انقضا کار کنند."
+msgstr ""
+
+#: src/SettingsPage.php:1003
+msgid "بستهبندی HLS و رمزنگاری (مخصوص حالت edge_hls)"
+msgstr ""
+
+#: src/Hls/HlsPackager.php:346
+#, php-format
+msgid "بستهبندی رِندیشن %d کیلوبیت با خطای ffmpeg مواجه شد."
+msgstr ""
+
+#: src/SettingsPage.php:1037
+msgid "بستهبندی همیشه در پسزمینه اجرا میشود و هرگز درخواست کاربر را معطل نمیکند."
+msgstr ""
+
+#: src/SettingsPage.php:641
+msgid "بسته‌بندی HLS"
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:75
 msgid "بهترین ارزش سالانه"
 msgstr ""
 
-#: src/SettingsPage.php:791
-msgid "به‌صورت پیش‌فرض خاموش و ایمن است: هنگام حذف موقت یا به‌روزرسانی دستی افزونه، تمام اشتراک‌های پرداخت‌شدهٔ مشتریان، جدول mw_vip_assets، گزارش حسابرسی و تنظیمات حفظ می‌شوند. تنها در صورت روشن کردن این گزینه، هنگام حذف کامل افزونه تمام داده‌های پایگاه داده پاک خواهند شد (فایل‌های روی دیسک هرگز پاک نمی‌شوند)."
+#: src/SettingsPage.php:1550
+msgid "به‌صورت پیش‌فرض خاموش و ایمن است: هنگام حذف موقت یا به‌روزرسانی دستی افزونه، تمام اشتراک‌های پرداخت‌شدهٔ مشتریان، جدول‌های مخزن (mw_vip_assets)، کلید HLS (mw_vip_asset_keys)، صف آپلود (mw_vip_upload_queue)، نشست‌های پخش (mw_stream_sessions)، گزارش حسابرسی و تنظیمات حفظ می‌شوند. تنها در صورت روشن کردن این گزینه، هنگام حذف کامل افزونه تمام داده‌های پایگاه داده پاک خواهند شد (فایل‌های روی دیسک هرگز پاک نمی‌شوند)."
 msgstr ""
 
-#: src/SettingsPage.php:112 src/SettingsPage.php:681
+#: src/Delivery/RemoteUploadManager.php:193
+msgid "تأیید اثر انگشت پس از آپلود ناموفق بود."
+msgstr ""
+
+#: src/SettingsPage.php:1179
+msgid "تأیید اندازهٔ فایل در مقصد"
+msgstr ""
+
+#: src/SettingsPage.php:119 src/SettingsPage.php:1477
 msgid "تأیید حذف قطعی؟"
 msgstr ""
 
-#: src/SettingsPage.php:339
+#: src/SettingsPage.php:344
 msgid "تأیید حذف نگاشت؟"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:143
+#: src/Checkout/SubscriptionOrderPresenter.php:236
 #, php-format
 msgid "تاریخ اعطا: %s"
 msgstr ""
@@ -423,16 +726,64 @@ msgstr ""
 msgid "تاریخچه تغییرات اشتراک VIP این کاربر"
 msgstr ""
 
-#: src/SettingsPage.php:129 src/SettingsPage.php:564
+#: src/SettingsPage.php:1221
+msgid "تازهسازی checksum"
+msgstr ""
+
+#: src/SettingsPage.php:1337
 msgid "تحویل حفاظت‌شده"
 msgstr ""
 
-#: src/SettingsPage.php:865
+#: src/SettingsPage.php:1624
 msgid "تحویل حفاظت‌شده و عضویت‌های VIP"
 msgstr ""
 
-#: src/SettingsPage.php:553
+#: src/SettingsPage.php:648
+msgid "تحویل راهدور"
+msgstr ""
+
+#: src/SettingsPage.php:912
+msgid "تحویل راهدور — تغییرمسیر امضاشده به سرور دانلود/CDN شما"
+msgstr ""
+
+#: src/SettingsPage.php:1326
 msgid "تحویل فایل حفاظت‌شده، مخزن خصوصی فایل‌ها خارج از ریشهٔ وب، نشانی‌های امضاشده HMAC و اشتراک‌های زمان‌دار ووکامرس."
+msgstr ""
+
+#: src/SettingsPage.php:620 src/SettingsPage.php:627
+msgid "تحویل محلی"
+msgstr ""
+
+#: src/SettingsPage.php:620 src/SettingsPage.php:627
+msgid "تحویل محلی هوشمند"
+msgstr ""
+
+#: src/SettingsPage.php:1207
+msgid "تحویل محلی هوشمند و خودترمیمگر"
+msgstr ""
+
+#: src/SettingsPage.php:889
+msgid "تحویل محلی — پوشه و روش ارسال فایل"
+msgstr ""
+
+#: src/SettingsPage.php:1218
+msgid "ترمیم خودکار"
+msgstr ""
+
+#: src/SettingsPage.php:1219
+msgid "ترمیم خودکار پوشه و سپرهای حفاظتی"
+msgstr ""
+
+#: src/SettingsPage.php:1191
+msgid "تست اتصال آپلود"
+msgstr ""
+
+#: src/SettingsPage.php:872
+msgid "تست اتصال لبه/CDN"
+msgstr ""
+
+#: src/SettingsPage.php:1214
+msgid "تشخیص خودکار روش offload"
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:269 src/Users/UsersListIntegration.php:340
@@ -451,35 +802,55 @@ msgstr ""
 msgid "تغییر به اشتراک مادام‌العمر"
 msgstr ""
 
-#: src/SettingsPage.php:391
-msgid "تغییرمسیر راه‌دور امضاشده با HTTPS HMAC (سرور دانلود / CDN)"
+#: src/SettingsPage.php:592
+msgid "تغییرمسیر به سرور دانلود/CDN شما"
 msgstr ""
 
-#: src/SettingsPage.php:537
+#: src/SettingsPage.php:1182
+msgid "تلاش مجدد (۱ تا ۱۰)"
+msgstr ""
+
+#: src/SettingsPage.php:1181
+msgid "تلاش مجدد و هم‌روندی"
+msgstr ""
+
+#: src/SettingsPage.php:1310
 msgid "تمام تب‌ها یکجا اعتبارسنجی و ذخیره می‌شوند؛ پوشهٔ حفاظت‌شده خارج از ریشهٔ وب به صورت خودکار ایجاد و ایمن‌سازی می‌گردد."
+msgstr ""
+
+#: src/SettingsPage.php:988
+msgid "تمدید خودکار نشست تا وقتی پخش ادامه دارد"
 msgstr ""
 
 #: src/VipAuditLog.php:89
 msgid "تمدید دستی مدیر"
 msgstr ""
 
+#: src/SettingsPage.php:987
+msgid "تمدید کشویی"
+msgstr ""
+
 #: src/Users/UsersListIntegration.php:629
 msgid "تمدید گروهی +۳۰ روز در users.php"
 msgstr ""
 
-#: music-wave-vip.php:335
+#: music-wave-vip.php:378
 msgid "تنظیمات"
 msgstr ""
 
-#: src/SettingsPage.php:67
+#: src/SettingsPage.php:68
 msgid "تنظیمات MusicWave VIP"
 msgstr ""
 
-#: src/SettingsPage.php:817
+#: src/Delivery/Adapters/SftpUploadAdapter.php:234
+msgid "تنظیمات SFTP ناقص است."
+msgstr ""
+
+#: src/SettingsPage.php:1576
 msgid "تنظیمات VIP"
 msgstr ""
 
-#: src/SettingsPage.php:801
+#: src/SettingsPage.php:1560
 msgid "تنظیمات مرتبط در هستهٔ MusicWave"
 msgstr ""
 
@@ -495,23 +866,60 @@ msgstr ""
 msgid "توضیحات محصول و قابلیت‌های اشتراک"
 msgstr ""
 
-#: src/SettingsPage.php:344
+#: src/SettingsPage.php:349
 msgid "توضیحات، چک‌لیست امکانات و قیمت هر طرح مستقیماً از صفحه ویرایش محصول در ووکامرس خوانده شده و در کارت‌های عضویت (.mw-membership__plan) و صفحه تک‌محصول نمایش داده می‌شود."
 msgstr ""
 
-#: src/SettingsPage.php:447
+#: src/SettingsPage.php:1108
+msgid "توکن احراز"
+msgstr ""
+
+#: src/SettingsPage.php:1113
+msgid "توکن/رمز WebDAV"
+msgstr ""
+
+#: src/SettingsPage.php:1108
+msgid "توکنی که همراه هر آپلود به‌عنوان Bearer فرستاده می‌شود."
+msgstr ""
+
+#: src/Delivery/Adapters/S3CompatibleUploadAdapter.php:347
+#, php-format
+msgid "تکمیل آپلود چندبخشی با کد %d رد شد."
+msgstr ""
+
+#: src/Hls/HlsRoutes.php:231
+msgid "تکهٔ مدیا یافت نشد."
+msgstr ""
+
+#: src/SettingsPage.php:1028
+msgid "ثانیه (۲ تا ۱۵)"
+msgstr ""
+
+#: src/SettingsPage.php:979
+msgid "ثانیه (۳۰ تا ۶۰۰)"
+msgstr ""
+
+#: src/SettingsPage.php:473 src/SettingsPage.php:973
 msgid "ثانیه (۳۰ تا ۹۰۰)"
+msgstr ""
+
+#: src/SettingsPage.php:855
+msgid "ثانیه (۳۰۰ تا ۱۴۴۰۰)"
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:354
 msgid "ثبت / تمدید"
 msgstr ""
 
+#: src/SettingsPage.php:1011
+msgid "ثبت مسیرهای manifest / variant / segment / key"
+msgstr ""
+
 #: src/Users/UsersListIntegration.php:349
 msgid "جایگزینی از امروز"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:116
+#: src/Checkout/SubscriptionOrderPresenter.php:194
 msgid "جزئیات اشتراک"
 msgstr ""
 
@@ -519,35 +927,51 @@ msgstr ""
 msgid "جزئیات کامل"
 msgstr ""
 
-#: src/SettingsPage.php:652
+#: src/SettingsPage.php:1448
 msgid "جستجو در نام فایل‌های حفاظت‌شده…"
 msgstr ""
 
+#: src/Hls/HlsRoutes.php:136
+msgid "جلسهٔ شما تمام شده است. برای پخش دوباره وارد شوید."
+msgstr ""
+
+#: src/SettingsPage.php:728
+msgid "حالت تحویل"
+msgstr ""
+
+#: src/SettingsPage.php:1384
+msgid "حالت تحویل (Delivery mode) — کدام روش تحویل فایل‌ها را می‌خواهید؟"
+msgstr ""
+
 #: src/SettingsPage.php:211
-msgid "حالت تغییرمسیر راه‌دور هم به نشانی پایهٔ HTTPS و هم به راز امضا (حداقل ۳۲ کاراکتر) نیاز دارد. تا پیکربندی هر دو، تحویل با رد امن پیش‌فرض باقی می‌ماند."
+msgid "حالت تغییرمسیر راه‌دور هم به نشانی پایهٔ HTTPS و هم به کلید مخفی امضا (حداقل ۳۲ کاراکتر) نیاز دارد. تا پیکربندی هر دو، تحویل با رد امن پیش‌فرض باقی می‌ماند."
 msgstr ""
 
-#: src/SettingsPage.php:395
-msgid "حالت محلی فایل‌ها را از دیسک خصوصی می‌فرستد؛ حالت راه‌دور نشانی کوتاه‌عمر امضاشده با HMAC-SHA256 صادر می‌کند."
+#: src/SettingsPage.php:422
+msgid "حالت محلی و پروکسی بایت‌ها را از دیسک خصوصی می‌فرستند؛ حالت‌های لبه و راهدور نشانی کوتاه‌عمر امضاشده با HMAC-SHA256 صادر می‌کنند. حالت‌های لبه در صورت نبود کلید قوی، ایمن به تحویل محلی برمی‌گردند و هرگز نشانی بدون امضا صادر نمی‌کنند."
 msgstr ""
 
-#: src/SettingsPage.php:234
-msgid "حالت محلی فایل‌ها را خارج از ریشهٔ عمومی وب نگه می‌دارد و با PHP (پشتیبانی کامل HTTP Range) یا شتاب‌دهی وب‌سرور (X-Sendfile / Nginx X-Accel-Redirect) پخش می‌کند. حالت راه‌دور نشانی‌های کوتاه‌عمر HTTPS با امضای HMAC-SHA256 برای سرور دانلود، Cloudflare، R2 یا CDN می‌سازد."
-msgstr ""
-
-#: src/SettingsPage.php:550
+#: src/SettingsPage.php:1323
 msgid "حالت پروموشن باز (VIP خاموش)"
 msgstr ""
 
-#: src/SettingsPage.php:658
+#: src/SettingsPage.php:1454
 msgid "حجم"
 msgstr ""
 
-#: src/SettingsPage.php:111 src/SettingsPage.php:681
+#: src/Delivery/RemoteUploadManager.php:144
+msgid "حجم فایل بیش از حد مجاز است."
+msgstr ""
+
+#: src/SettingsPage.php:975
+msgid "حداکثر پخش همزمان"
+msgstr ""
+
+#: src/SettingsPage.php:118 src/SettingsPage.php:1477
 msgid "حذف"
 msgstr ""
 
-#: src/SettingsPage.php:790
+#: src/SettingsPage.php:1549
 msgid "حذف داده‌ها هنگام حذف افزونه"
 msgstr ""
 
@@ -555,31 +979,59 @@ msgstr ""
 msgid "حذف دسترسی"
 msgstr ""
 
-#: src/SettingsPage.php:339
+#: src/Delivery/Adapters/SftpUploadAdapter.php:81
+msgid "حذف فایل از طریق SFTP در این نسخه پشتیبانی نمیشود."
+msgstr ""
+
+#: src/SettingsPage.php:344
 msgid "حذف نگاشت"
 msgstr ""
 
-#: src/SettingsPage.php:795
+#: src/SettingsPage.php:1554
 msgid "حذف همهٔ داده‌های پایگاه دادهٔ VIP هنگام حذف افزونه"
 msgstr ""
 
-#: src/SettingsPage.php:383
+#: src/SettingsPage.php:388
 msgid "حساب‌های VIP فعال را در فهرست کاربران وردپرس مشخص می‌کند و پس از انقضا یا لغو سفارش خودکار بازپس گرفته می‌شود."
 msgstr ""
 
-#: src/SettingsPage.php:620
+#: src/SettingsPage.php:1178
+msgid "حفظ نسخهٔ محلی پس از بارگذاری موفق"
+msgstr ""
+
+#: src/SettingsPage.php:1416
 msgid "خارج بودن از ریشهٔ عمومی وب (ABSPATH / DOCUMENT_ROOT)"
 msgstr ""
 
-#: src/SettingsPage.php:407
+#: src/SettingsPage.php:434
 msgid "خالی بگذارید تا پوشهٔ خودکار کنار وردپرس ساخته شود، یا مسیر دلخواه خارج از ریشهٔ وب (مانند /var/private/musicwave) را وارد کنید تا خودکار ایجاد و ایمن‌سازی شود."
+msgstr ""
+
+#: src/SettingsPage.php:785
+msgid "خالی؛ با دکمهٔ «ایجاد» پر کنید"
+msgstr ""
+
+#: src/SettingsPage.php:1017
+msgid "خاموش (قطعههای HLS بدون رمز)"
+msgstr ""
+
+#: src/SettingsPage.php:1042
+msgid "خاموش (پیشنهادی): قطعات رمزنگاریشده از CDN میآیند و بار سرور کم میماند. روشن: قطعات از همان دامنهٔ سایت سرو میشوند."
+msgstr ""
+
+#: src/SettingsPage.php:1178
+msgid "خاموش: فایل محلی پس از تأیید انتقال راهدور آزاد می‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:970
+msgid "خاموش: مسیرهای نشست ثبت نمیشوند. روشن: اجارهٔ همزمانی و کوکی HttpOnly اعمال میشود."
 msgstr ""
 
 #: src/VipAuditLog.php:85 src/VipAuditLog.php:86
 msgid "خرید / تمدید اشتراک"
 msgstr ""
 
-#: src/SettingsPage.php:487
+#: src/SettingsPage.php:1261
 msgid "خرید طرح یا اعطای دستی مدیر سطح را فوراً فعال می‌کند و بازپرداخت یا انقضا آن را خودکار پس می‌گیرد."
 msgstr ""
 
@@ -589,6 +1041,30 @@ msgstr ""
 
 #: src/Users/UserProfilePanel.php:222
 msgid "دائمی"
+msgstr ""
+
+#: src/Delivery/RemoteUploadManager.php:114
+msgid "دارایی در فهرست ثبتشده یافت نشد."
+msgstr ""
+
+#: src/Delivery/RemoteUploadManager.php:117
+msgid "دارایی یافت نشد."
+msgstr ""
+
+#: src/SettingsPage.php:835
+msgid "دامنهٔ عمومی لینک‌ها"
+msgstr ""
+
+#: src/SettingsPage.php:836
+msgid "دامنه‌ای که در لینک نهایی به کاربر نشان داده می‌شود (بدون https و بدون اسلش). اگر خالی بماند، دامنهٔ «نشانی پایه» استفاده می‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:869
+msgid "دامنه‌های مجاز اضافی"
+msgstr ""
+
+#: src/SettingsPage.php:944
+msgid "دامنه‌های مجاز اضافی برای لینک‌های راهدور"
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:65
@@ -603,41 +1079,93 @@ msgstr ""
 msgid "دانلود نامحدود نسخه‌های اورجینال و Lossless / Hi-Res بدون افت کیفیت"
 msgstr ""
 
-#: src/SettingsPage.php:246
+#: src/SettingsPage.php:251
 msgid "در این حالت انتشارهای «فقط عضویت» و «خرید یا عضویت» موقتاً رایگان‌اند، اما انتشارهای «فقط خرید تکی» و «محدود» همچنان بسته می‌مانند و سفارش‌های جدید اشتراک همچنان زمان VIP مشتریان را ثبت می‌کنند."
 msgstr ""
 
-#: src/SettingsPage.php:104
-msgid "در حال ایجاد پوشه، ایمن‌سازی (.htaccess / web.config) و اسکن فایل‌ها…"
+#: src/SettingsPage.php:121
+msgid "در حال آزمایش اتصال..."
 msgstr ""
 
-#: src/SettingsPage.php:106
-msgid "در حال بارگذاری در مخزن خصوصی و محاسبه هش SHA-256…"
+#: src/SettingsPage.php:111
+msgid "در حال ایجاد پوشه، ایمنسازی (.htaccess / web.config) و اسکن فایلها..."
 msgstr ""
 
-#: src/SettingsPage.php:373
+#: src/SettingsPage.php:113
+msgid "در حال بارگذاری در مخزن خصوصی و محاسبه هش SHA-256..."
+msgstr ""
+
+#: src/SettingsPage.php:378
 #, php-format
 msgid "در حال حاضر %d طرح فعال پیکربندی‌شده است."
+msgstr ""
+
+#: src/SettingsPage.php:126
+msgid "در حال خواندن وضعیت صف..."
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:102
 msgid "در حال ذخیره..."
 msgstr ""
 
+#: src/SettingsPage.php:124
+msgid "در حال صفکردن کتابخانه برای همگامسازی..."
+msgstr ""
+
 #: src/Users/UserProfilePanel.php:313
 msgid "در حال پخش"
+msgstr ""
+
+#: src/SettingsPage.php:128 src/SettingsPage.php:701
+msgid "در حالت فعلی بیاثر"
+msgstr ""
+
+#: src/SettingsPage.php:127 src/SettingsPage.php:701
+msgid "در حالت فعلی فعال"
+msgstr ""
+
+#: src/SettingsPage.php:1187
+msgid "در سایت واقعی هرگز روشن نکنید؛ فقط برای سرور آزمایشی با گواهی خودامضا."
+msgstr ""
+
+#: src/SettingsPage.php:1082
+msgid "در سرور دانلود/CDN خود یک مقصد بسازید: یک endpoint برای Webhook، یک سطل S3/R2، یک پوشهٔ WebDAV، یا یک حساب SFTP."
 msgstr ""
 
 #: src/PrivacyPolicy.php:52
 msgid "در صورت حذف کامل افزونه، تنظیمات، نقش mw_vip و متاداده‌های مجوز عضویت VIP از پایگاه‌داده پاک می‌شوند؛ فایل‌های بارگذاری‌شده در پوشهٔ حفاظت‌شده دست‌نخورده باقی می‌مانند تا محتوای کاتالوگ از بین نرود."
 msgstr ""
 
-#: src/SettingsPage.php:368
+#: src/SettingsPage.php:1219
+msgid "در صورت نبود یا آسیب .htaccess / web.config، هنگام سرویسدهی بازسازی میشود."
+msgstr ""
+
+#: src/SettingsPage.php:1035
+msgid "در لحظهٔ پخش (سنگین؛ بهصورت صفپسزمینه)"
+msgstr ""
+
+#: src/SettingsPage.php:234
+msgid "در هر حالتی لینک دائمی و عمومی وجود ندارد: هنگام پخش یا دانلود، یک نشانی کوتاه‌عمرِ امضاشده ساخته می‌شود و اگر کسی آن را دست‌کاری کند باطل است."
+msgstr ""
+
+#: src/SettingsPage.php:373
 msgid "در هر خط یک طرح با فرمت level:product_id[:days]."
+msgstr ""
+
+#: src/SettingsPage.php:829
+msgid "در پنل CDN یک توزیع (Distribution/Zone) بسازید و دامنهٔ عمومی آن را در «دامنهٔ عمومی لینک‌ها» و «نشانی پایهٔ HTTPS لبه» وارد کنید."
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:136
 msgid "درخواست‌های موسیقی ثبت‌شده"
+msgstr ""
+
+#: src/Hls/HlsRoutes.php:421
+msgid "دسترسی به پخش HLS مجاز نیست."
+msgstr ""
+
+#: src/Hls/StreamKeyEndpoint.php:85
+msgid "دسترسی به کلید پخش مجاز نیست."
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:261
@@ -664,71 +1192,150 @@ msgstr ""
 msgid "دسترسی‌ها و دوره‌های VIP ثبت‌شده برای کاربر"
 msgstr ""
 
+#: src/SettingsPage.php:1061
+msgid "دستکم یک کیفیت لازم است؛ اگر هیچکدام انتخاب نشود، پیشفرضهای ۱۲۸ و ۳۲۰ اعمال میشوند."
+msgstr ""
+
 #: src/Users/UserProfilePanel.php:194
 msgid "دستی توسط مدیر"
 msgstr ""
 
-#: src/SettingsPage.php:536
+#: src/SettingsPage.php:783
+msgid "ذخیره شده — برای حفظ آن خالی بگذارید"
+msgstr ""
+
+#: src/SettingsPage.php:1309
 msgid "ذخیرهٔ تنظیمات VIP"
 msgstr ""
 
-#: src/SettingsPage.php:876
+#: src/SettingsPage.php:1635
 msgid "ذخیره‌سازی محلی خارج از ریشهٔ وب، سرور دانلود امضاشده با HMAC و اشتراک‌های زمان‌دار ووکامرس."
 msgstr ""
 
-#: src/SettingsPage.php:134 src/SettingsPage.php:702
-msgid "راز امضای راه‌دور"
-msgstr ""
-
-#: src/SettingsPage.php:219
-msgid "راز امضای راه‌دور کوتاه‌تر از ۳۲ نویسه است. تا ذخیرهٔ راز قوی‌تر، نشانی امضاشده صادر نمی‌شود."
-msgstr ""
-
-#: src/SettingsPage.php:425
-msgid "راز ذخیره‌شده — برای حفظ آن خالی بگذارید"
-msgstr ""
-
-#: src/SettingsPage.php:798
+#: src/SettingsPage.php:1557
 msgid "رازهای راه‌دور هرگز در معرض مرورگر قرار نمی‌گیرند؛ فقط نشانی‌های کوتاه‌عمر امضاشده با Referrer-Policy: no-referrer صادر می‌شوند."
 msgstr ""
 
-#: src/SettingsPage.php:873
+#: src/SettingsPage.php:726
+msgid "راهنمای سریع: هر حالت به چه بخش‌هایی نیاز دارد؟"
+msgstr ""
+
+#: src/SettingsPage.php:1632
 msgid "راه‌دورِ امضاشده"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:95
+#: src/SettingsPage.php:751
+msgid "ردیف پررنگ همان حالتی است که همین حالا انتخاب کرده‌اید. بخش‌هایی که در حالت جاری اثری ندارند، پایین‌تر جمع می‌شوند ولی سرتیترشان می‌ماند."
+msgstr ""
+
+#: src/VipPlans.php:1192
+#, php-format
+msgid "رزرو از %s"
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:209
+#, php-format
+msgid "رزرو؛ فعال‌سازی از %1$s تا %2$s"
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:171
 msgid "رفتن به پنل کاربری"
 msgstr ""
 
-#: src/SettingsPage.php:433
-msgid "رمز فعلی کوتاه‌تر از ۳۲ کاراکتر است. تا ذخیرهٔ رمز قوی‌تر، نشانی امضاشده صادر نمی‌شود."
+#: src/SettingsPage.php:1125
+msgid "رمز SFTP"
+msgstr ""
+
+#: src/SettingsPage.php:1125
+msgid "رمز حساب SFTP روی سرور دانلود شما؛ MusicWave آن را نمی‌سازد."
+msgstr ""
+
+#: src/SettingsPage.php:1113
+msgid "رمز یا App Password حساب WebDAV شما."
+msgstr ""
+
+#: src/SettingsPage.php:1013
+msgid "رمزنگاری جریان"
+msgstr ""
+
+#: src/SettingsPage.php:899
+msgid "روش ارسال فایل"
+msgstr ""
+
+#: src/SettingsPage.php:1091
+msgid "روش انتقال"
 msgstr ""
 
 #: src/PlanProducts.php:175
 msgid "روش درخواست نامعتبر است. حذف طرح باید با POST انجام شود."
 msgstr ""
 
-#: src/SettingsPage.php:253
+#: src/SettingsPage.php:1252
+msgid "روش فعلی شما با این پیشنهاد تفاوت دارد."
+msgstr ""
+
+#: src/SettingsPage.php:1081
+msgid "روش کار:"
+msgstr ""
+
+#: src/SettingsPage.php:982
+msgid "روشن (پیشنهادی): لینک کپیشده در آیپی دیگر کار نمیکند. اگر کاربران موبایل زیاد جابهجا میشوند و قطعی آزارنده است، خاموش کنید و به رمزنگاری HLS تکیه کنید."
+msgstr ""
+
+#: src/SettingsPage.php:258
 msgid "روشن: قفل‌های عضویت، خرید یا عضویت، سطح‌های پلن و زمان انقضا اعمال می‌شوند. خاموش: حالت پروموشن باز برای محتوای عضویت فعال می‌شود، بدون آنکه خریدهای تکی WooCommerce یا ثبت اشتراک سفارش‌های جدید مختل شود."
 msgstr ""
 
-#: src/SettingsPage.php:269
+#: src/SettingsPage.php:988
+msgid "روشن: هر heartbeat معتبر عمر نشست را تازه میکند تا آهنگهای بلند قطع نشوند."
+msgstr ""
+
+#: src/SettingsPage.php:1089
+msgid "روشن: هر فایل تازه در صف قرار می‌گیرد و با کرون دقیقه‌ای به مقصد راهدور منتقل می‌شود. خاموش: هیچ بایتی از سرور خارج نمی‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:274
 msgid "روی آثار عمومی ثبت‌نام اختیاری است، اما آثار VIP و خریدنی همچنان صددرصد نیازمند اشتراک معتبر یا خرید محصول‌اند (این گزینه هرگز آثار پولی را رایگان نمی‌کند)."
 msgstr ""
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:1126
+msgid "روی لینوکس: ssh-keyscan -t rsa sftp.example.com | ssh-keygen -lf -"
+msgstr ""
+
+#: src/SettingsPage.php:588
+msgid "روی همین سرور (بدون سرور خارجی)"
+msgstr ""
+
+#: src/SettingsPage.php:1530
 msgid "رویداد"
 msgstr ""
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:1530
 msgid "زمان"
+msgstr ""
+
+#: src/SettingsPage.php:1030
+msgid "زمان بستهبندی"
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:53
 msgid "ساخت فهرست‌های پخش نامحدود و ثبت درخواست اختصاصی موسیقی"
 msgstr ""
 
-#: src/SettingsPage.php:771
+#: src/Delivery/Adapters/WebhookUploadAdapter.php:97
+#, php-format
+msgid "سرور دانلود پاسخ ناموفق داد (کد %d)."
+msgstr ""
+
+#: src/SettingsPage.php:491
+msgid "سریعتر: ارسال فایل توسط وبسرور Nginx (هدر X-Accel-Redirect)"
+msgstr ""
+
+#: src/SettingsPage.php:490
+msgid "سریعتر: ارسال فایل توسط وبسرور آپاچی/LiteSpeed (هدر X-Sendfile)"
+msgstr ""
+
+#: src/SettingsPage.php:1530
 msgid "سطح"
 msgstr ""
 
@@ -740,11 +1347,11 @@ msgstr ""
 msgid "سطح اشتراک"
 msgstr ""
 
-#: src/SettingsPage.php:301
+#: src/SettingsPage.php:306
 msgid "سطح و آیکن"
 msgstr ""
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:1530
 msgid "سفارش / مدیر"
 msgstr ""
 
@@ -753,20 +1360,24 @@ msgstr ""
 msgid "سفارش ووکامرس #%d"
 msgstr ""
 
-#: src/SettingsPage.php:293
+#: src/SettingsPage.php:1174
+msgid "سقف اندازهٔ فایل"
+msgstr ""
+
+#: src/SettingsPage.php:298
 msgid "سه محصول مجازی ووکامرس همراه با آیکن اختصاصی، توضیحات کامل قابلیت‌ها و چک‌لیست امکانات ایجاد و به‌عنوان طرح VIP نگاشت می‌کند."
 msgstr ""
 
-#: src/SettingsPage.php:578
+#: src/SettingsPage.php:1177
+msgid "سیاست محلی و تأیید"
+msgstr ""
+
+#: src/SettingsPage.php:1351
 msgid "سیاست پخش و دانلود مهمانان در تحویل حفاظت‌شده"
 msgstr ""
 
-#: src/SettingsPage.php:140 src/SettingsPage.php:728
-msgid "شتاب‌دهی سرور"
-msgstr ""
-
-#: src/SettingsPage.php:726
-msgid "شتاب‌دهی وب‌سرور"
+#: src/Delivery/Adapters/S3CompatibleUploadAdapter.php:257
+msgid "شروع آپلود چندبخشی S3 ناموفق بود."
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:155
@@ -777,7 +1388,7 @@ msgstr ""
 msgid "شروع سریع"
 msgstr ""
 
-#: src/SettingsPage.php:618
+#: src/SettingsPage.php:1414
 msgid "شناسایی مسیر پوشهٔ خصوصی"
 msgstr ""
 
@@ -785,7 +1396,7 @@ msgstr ""
 msgid "شناسه"
 msgstr ""
 
-#: src/SettingsPage.php:659
+#: src/SettingsPage.php:1455
 msgid "شناسه امن تحویل (Asset ID)"
 msgstr ""
 
@@ -793,15 +1404,23 @@ msgstr ""
 msgid "شناسه را در فیلد طرح پایین وارد کنید. اگر یک سطح چند محصول می‌پذیرد، شناسه‌ها را با کاما جدا کنید."
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:188
+#: src/Delivery/RemoteUploadManager.php:100
+msgid "شناسهٔ دارایی نامعتبر است."
+msgstr ""
+
+#: src/ProtectedAssetStorage.php:258
 msgid "شناسهٔ فایل حفاظت‌شده نامعتبر است."
 msgstr ""
 
-#: src/SettingsPage.php:139 src/SettingsPage.php:717
+#: src/SettingsPage.php:947
 msgid "شناسهٔ کلید امضا"
 msgstr ""
 
-#: src/SettingsPage.php:370
+#: src/SettingsPage.php:851
+msgid "شناسهٔ کلید امضا (برای چرخش کلید)"
+msgstr ""
+
+#: src/SettingsPage.php:375
 msgid "شناسه‌های محصول، شناسهٔ محصولات ووکامرس هستند. مدت به‌روز است (۱ تا ۳۶۵۰)؛ برای مادام‌العمر خالی بگذارید."
 msgstr ""
 
@@ -809,11 +1428,15 @@ msgstr ""
 msgid "صافی VIP"
 msgstr ""
 
+#: src/SettingsPage.php:697
+msgid "ضروری"
+msgstr ""
+
 #: src/Users/UserProfilePanel.php:248
 msgid "طرح / سطح اشتراک"
 msgstr ""
 
-#: src/SettingsPage.php:356
+#: src/SettingsPage.php:361
 msgid "طرح‌های ووکامرس:"
 msgstr ""
 
@@ -821,8 +1444,20 @@ msgstr ""
 msgid "طرح‌های پیش‌فرض از قبل پیکربندی‌شده‌اند؛ مورد جدیدی برای ایجاد نیست."
 msgstr ""
 
-#: src/SettingsPage.php:137 src/SettingsPage.php:711
-msgid "طول عمر نشانی راه‌دور"
+#: src/SettingsPage.php:941
+msgid "طول عمر نشانی راهدور"
+msgstr ""
+
+#: src/SettingsPage.php:972
+msgid "طول عمر نشست"
+msgstr ""
+
+#: src/SettingsPage.php:1027
+msgid "طول هر قطعه"
+msgstr ""
+
+#: src/SettingsPage.php:589
+msgid "عبور از خودِ سایت (مبدأ پنهان)"
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:762
@@ -849,15 +1484,19 @@ msgstr ""
 msgid "عضویت VIP — ۶ ماه"
 msgstr ""
 
-#: src/SettingsPage.php:565
+#: src/SettingsPage.php:1338
 msgid "عضویت و طرح‌ها"
 msgstr ""
 
-#: src/SettingsPage.php:739
+#: src/SettingsPage.php:1498
 msgid "عضویت و مجوز دسترسی"
 msgstr ""
 
-#: src/Admin/VipSettingsUi.php:61 src/SettingsPage.php:301 src/SettingsPage.php:660
+#: src/SettingsPage.php:854
+msgid "عمر هر لینک امضاشده"
+msgstr ""
+
+#: src/Admin/VipSettingsUi.php:61 src/SettingsPage.php:306 src/SettingsPage.php:1456
 msgid "عملیات"
 msgstr ""
 
@@ -866,47 +1505,95 @@ msgstr ""
 msgid "عملیات گروهی اشتراک VIP برای %1$s کاربر با موفقیت اجرا شد (%2$s)."
 msgstr ""
 
-#: src/SettingsPage.php:563
+#: src/SettingsPage.php:1336
 msgid "عمومی"
 msgstr ""
 
-#: src/SettingsPage.php:572
+#: src/SettingsPage.php:1345
 msgid "عمومی — کلید اصلی و سیاست تحویل"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:404
+#: src/SettingsPage.php:1187
+msgid "غیرفعال‌کردن بررسی گواهی TLS (فقط آزمایش محلی)"
+msgstr ""
+
+#: src/ProtectedAssetStorage.php:474
 msgid "فایل انتخاب‌شده از رسانه‌ها در دسترس نیست."
 msgstr ""
 
-#: src/SettingsPage.php:107
+#: src/SettingsPage.php:114
 msgid "فایل با موفقیت در مخزن خصوصی ذخیره شد:"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:192 src/ProtectedAssetStorage.php:203
+#: src/Delivery/RemoteUploadManager.php:141
+msgid "فایل بزرگتر از حد مجاز آپلود خودکار است."
+msgstr ""
+
+#: src/SettingsPage.php:640
+msgid "فایل به قطعه‌های کوچک شکسته و با AES-128 رمز می‌شود و از CDN پخش می‌گردد؛ کلید رمز فقط روی سایت می‌ماند."
+msgstr ""
+
+#: src/SettingsPage.php:619
+msgid "فایل بیرون از ریشهٔ وب می‌ماند و از همین سرور با PHP یا وب‌سرور سرو می‌شود."
+msgstr ""
+
+#: src/ProtectedAssetStorage.php:262 src/ProtectedAssetStorage.php:273
 msgid "فایل حفاظت‌شده موردنظر یافت نشد."
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:422
+#: src/ProtectedAssetStorage.php:492
 msgid "فایل رسانه‌ها در ذخیره‌سازی حفاظت‌شده کپی نشد."
 msgstr ""
 
-#: src/SettingsPage.php:646
+#: src/SettingsPage.php:633
+msgid "فایل روی CDN سرو می‌شود و کاربر نشانی کوتاه‌عمرِ امضاشده روی دامنهٔ CDN می‌گیرد؛ مبدأ پنهان می‌ماند."
+msgstr ""
+
+#: src/SettingsPage.php:893
+msgid "فایل روی همان سرور سایت می‌ماند و از پوشه‌ای خارج از ریشهٔ وب سرو می‌شود. برای حالت‌های «محلی» و «پروکسی» اثر دارد و به هیچ سرور خارجی نیاز ندارد."
+msgstr ""
+
+#: src/SettingsPage.php:1442
 msgid "فایل صوتی (MP3, FLAC, WAV, M4A, AAC, OGG) یا بسته ZIP آلبوم را مستقیماً خارج از پوشهٔ عمومی وردپرس ذخیره کنید."
 msgstr ""
 
-#: src/SettingsPage.php:834
+#: src/SettingsPage.php:1007
+msgid "فایل صوتی به قطعههای کوچک تقسیم و با AES-128 رمز میشود. کلید رمز فقط روی سایت شما میماند (نه روی CDN)، پس اگر قطعهای لو برود بدون کلید بیارزش است. این بخش فقط در حالت edge_hls لازم است و به نصب ffmpeg روی سرور نیاز دارد."
+msgstr ""
+
+#: src/Delivery/RemoteUploadManager.php:123 src/Delivery/RemoteUploadManager.php:126
+msgid "فایل محلی در دسترس نیست."
+msgstr ""
+
+#: src/Delivery/Adapters/S3CompatibleUploadAdapter.php:262 src/Delivery/Adapters/S3CompatibleUploadAdapter.php:459 src/Delivery/Adapters/WebdavUploadAdapter.php:237 src/Delivery/Adapters/WebhookUploadAdapter.php:169
+msgid "فایل محلی قابل باز شدن نیست."
+msgstr ""
+
+#: src/Hls/HlsPackager.php:102
+msgid "فایل منبع برای بسته‌بندی یافت نشد."
+msgstr ""
+
+#: src/Hls/HlsRoutes.php:278
+msgid "فایل پلیلیست روی سرور یافت نشد."
+msgstr ""
+
+#: src/SettingsPage.php:919
+msgid "فایل‌ها را روی سرور دانلود/CDN قرار دهید (دستی یا با روشن‌کردن بخش «آپلود خودکار» = پیشنهادی). ساختار مسیر: نشانی پایه + پیشوند مسیر + نام فایل."
+msgstr ""
+
+#: src/SettingsPage.php:1593
 msgid "فایل‌های بازدارندهٔ لایهٔ دفاعی (.htaccess / web.config) وجود دارند."
 msgstr ""
 
-#: src/SettingsPage.php:637
+#: src/SettingsPage.php:1433
 msgid "فایل‌های ثبت‌شده در مخزن:"
 msgstr ""
 
 #: src/SettingsPage.php:233
-msgid "فایل‌های حفاظت‌شده کجا قرار می‌گیرند و چگونه تحویل داده می‌شوند."
+msgid "فایل‌های حفاظت‌شده کجا نگه داشته می‌شوند و چگونه به کاربر مجاز می‌رسند."
 msgstr ""
 
-#: src/SettingsPage.php:657
+#: src/SettingsPage.php:1453
 msgid "فرمت / مشخصات"
 msgstr ""
 
@@ -919,6 +1606,14 @@ msgstr ""
 msgid "فعال روی حساب شما"
 msgstr ""
 
+#: src/SettingsPage.php:1010
+msgid "فعالسازی مسیرهای HLS"
+msgstr ""
+
+#: src/SettingsPage.php:969
+msgid "فعالسازی نشستهای پخش"
+msgstr ""
+
 #: src/Users/UsersListIntegration.php:189
 msgid "فعالیت و پرداخت‌ها"
 msgstr ""
@@ -927,15 +1622,27 @@ msgstr ""
 msgid "فعال‌سازی آنی بلافاصله پس از پرداخت آنلاین با قابلیت تمدید انباشتی"
 msgstr ""
 
-#: src/SettingsPage.php:253
+#: src/SettingsPage.php:258
 msgid "فعال‌سازی اعمال عضویت VIP (کلید اصلی)"
 msgstr ""
 
-#: src/SettingsPage.php:795
+#: src/SettingsPage.php:1088
+msgid "فعال‌سازی صف بارگذاری"
+msgstr ""
+
+#: src/SettingsPage.php:1554
 msgid "فقط هنگام حذف کامل افزونه اعمال می‌شود، نه غیرفعال‌سازی. پیش‌فرض امن: خاموش."
 msgstr ""
 
-#: src/SettingsPage.php:264
+#: src/SettingsPage.php:621
+msgid "فقط پوشهٔ فایل"
+msgstr ""
+
+#: src/SettingsPage.php:1215
+msgid "فقط پیشنهاد میدهد و هیچچیز را خودکار تغییر نمیدهد؛ تغییر فقط با کلیک صریح شما ذخیره میشود."
+msgstr ""
+
+#: src/SettingsPage.php:269
 msgid "فقط کاربران ثبت‌نام‌شده (الزام به ورود برای دانلود/استریم فایل حفاظت‌شده)"
 msgstr ""
 
@@ -947,8 +1654,24 @@ msgstr ""
 msgid "فیلتر سطح VIP"
 msgstr ""
 
-#: src/SettingsPage.php:489
+#: src/SettingsPage.php:1263
 msgid "فیلتر عضویت خارجی (آداپتر توسعه‌دهنده)"
+msgstr ""
+
+#: src/SettingsPage.php:1042
+msgid "قطعات از سایت عبور کنند (بهجای CDN)"
+msgstr ""
+
+#: src/SettingsPage.php:1225
+msgid "قطعهٔ بزرگتر توان کمتری میبرد؛ قطعهٔ کوچکتر حافظهٔ کمتری مصرف میکند."
+msgstr ""
+
+#: src/SettingsPage.php:1028
+msgid "قطعهٔ کوتاهتر پخش را سریعتر شروع میکند اما فایلهای بیشتری میسازد؛ ۶ ثانیه تعادل خوبی است."
+msgstr ""
+
+#: src/SettingsPage.php:1211
+msgid "قواعدی که وقتی فایل روی همان سرور سایت میماند بهکار میآیند: ترمیم خودکار فایلهای محافظتی، تازهسازی خودکار اثر انگشت فایل، اندازهٔ تکهٔ پخش و پیشنهاد بهترین روش ارسال فایل. بدون نیاز به سرور خارجی."
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:228
@@ -979,7 +1702,7 @@ msgstr ""
 msgid "لغو گروهی در users.php"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:123 src/PlanProducts.php:413 src/Users/UserProfilePanel.php:158 src/Users/UserProfilePanel.php:200 src/VipPlans.php:400
+#: src/Checkout/SubscriptionOrderPresenter.php:202 src/PlanProducts.php:425 src/Users/UserProfilePanel.php:158 src/Users/UserProfilePanel.php:200 src/VipPlans.php:410
 msgid "مادام‌العمر"
 msgstr ""
 
@@ -987,20 +1710,24 @@ msgstr ""
 msgid "مادام‌العمر (بدون انقضا)"
 msgstr ""
 
-#: src/SettingsPage.php:872
+#: src/SettingsPage.php:1631
 #, php-format
 msgid "متصل شد: تحویل %1$s فعال است و %2$d طرح اشتراک VIP پیکربندی شده است."
+msgstr ""
+
+#: src/SettingsPage.php:626
+msgid "مثل حالت محلی، اما نشانی کوتاه‌عمر از دامنهٔ سایت عبور می‌کند و آدرس مبدأ پنهان می‌ماند."
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:288
 msgid "مثلاً هدیه پشتیبانی یا تمدید تلفنی"
 msgstr ""
 
-#: src/SettingsPage.php:621
+#: src/SettingsPage.php:1417
 msgid "مجوز خواندن توسط سرور"
 msgstr ""
 
-#: src/SettingsPage.php:622
+#: src/SettingsPage.php:1418
 msgid "مجوز نوشتن برای بارگذاری امن"
 msgstr ""
 
@@ -1008,15 +1735,23 @@ msgstr ""
 msgid "محاسبه از همین لحظه"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:366
+#: src/Delivery/RemoteUploadManager.php:150 src/Delivery/RemoteUploadManager.php:153
+msgid "محاسبهٔ اثر انگشت فایل ناموفق بود."
+msgstr ""
+
+#: src/SettingsPage.php:1222
+msgid "محاسبهٔ مجدد SHA-256 هنگام تغییر فایل"
+msgstr ""
+
+#: src/ProtectedAssetStorage.php:436
 msgid "محتوای فایل با پسوند آن مطابقت ندارد."
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:383
+#: src/ProtectedAssetStorage.php:453
 msgid "محتوای فایل یک بایگانی ZIP معتبر نیست."
 msgstr ""
 
-#: src/SettingsPage.php:804
+#: src/SettingsPage.php:1563
 msgid "محدودیت نرخ دانلود، سهمیهٔ روزانه و TTL توکن‌ها"
 msgstr ""
 
@@ -1024,15 +1759,15 @@ msgstr ""
 msgid "محصول"
 msgstr ""
 
-#: src/SettingsPage.php:301
+#: src/SettingsPage.php:306
 msgid "محصول و توضیحات طرح"
 msgstr ""
 
-#: src/SettingsPage.php:145 src/SettingsPage.php:749
+#: src/SettingsPage.php:1508
 msgid "محصولات طرح VIP"
 msgstr ""
 
-#: src/SettingsPage.php:487
+#: src/SettingsPage.php:1261
 msgid "محصولات طرح ووکامرس و اعطای دستی پنل کاربران — پیشنهادشده"
 msgstr ""
 
@@ -1040,7 +1775,7 @@ msgstr ""
 msgid "محصولات طرح پیش‌فرض ایجاد شدند. قیمت آن‌ها را در ووکامرس → محصولات تعیین کنید."
 msgstr ""
 
-#: src/SettingsPage.php:288 src/SettingsPage.php:555
+#: src/SettingsPage.php:293 src/SettingsPage.php:1328
 msgid "محصولات ووکامرس"
 msgstr ""
 
@@ -1048,15 +1783,27 @@ msgstr ""
 msgid "محصولی پیدا نشد. برای شروع، نخستین محصول طرح VIP خود را ایجاد کنید."
 msgstr ""
 
-#: src/SettingsPage.php:873
+#: src/SettingsPage.php:990
+msgid "محل نگهداری نشست"
+msgstr ""
+
+#: src/SettingsPage.php:1632
 msgid "محلی"
 msgstr ""
 
-#: src/SettingsPage.php:645
+#: src/SettingsPage.php:620 src/SettingsPage.php:627
+msgid "مخزن فایل"
+msgstr ""
+
+#: src/SettingsPage.php:1441
 msgid "مخزن فایل‌های خصوصی (بارگذاری مستقیم و مدیریت شناسه‌های vip:)"
 msgstr ""
 
-#: src/SettingsPage.php:301
+#: src/SettingsPage.php:1394
+msgid "مخزن فایل‌های خصوصی و سلامت آن"
+msgstr ""
+
+#: src/SettingsPage.php:306
 msgid "مدت"
 msgstr ""
 
@@ -1064,7 +1811,11 @@ msgstr ""
 msgid "مدت اعتبار"
 msgstr ""
 
-#: src/SettingsPage.php:783
+#: src/Hls/HlsPackager.php:132
+msgid "مدت فایل صوتی قابل شناسایی نیست."
+msgstr ""
+
+#: src/SettingsPage.php:1542
 msgid "مدیر #"
 msgstr ""
 
@@ -1076,31 +1827,47 @@ msgstr ""
 msgid "مدیریت اشتراک ویژه (MusicWave VIP) و کارنامه فعالیت کاربر"
 msgstr ""
 
-#: src/SettingsPage.php:805
+#: src/SettingsPage.php:1564
 msgid "مدیریت حالت دسترسی انبوه کاتالوگ"
 msgstr ""
 
-#: src/SettingsPage.php:283
+#: src/SettingsPage.php:288
 msgid "مدیریت طرح‌های اشتراک VIP"
 msgstr ""
 
-#: src/SettingsPage.php:818
+#: src/SettingsPage.php:1577
 msgid "مدیریت یکپارچه کلید اصلی VIP، تحویل حفاظت‌شده، طرح‌های اشتراک ووکامرس و چرخهٔ حیات داده‌ها."
 msgstr ""
 
-#: src/SettingsPage.php:604
+#: src/SettingsPage.php:708
+msgid "مربوط به حالتهای:"
+msgstr ""
+
+#: src/SettingsPage.php:1378
 msgid "مرکز کنترل تحویل حفاظت‌شده"
 msgstr ""
 
-#: src/SettingsPage.php:636
+#: src/SettingsPage.php:1044
+msgid "مسیر اجرایی رسانه"
+msgstr ""
+
+#: src/SettingsPage.php:1432
 msgid "مسیر فعال فعلی:"
 msgstr ""
 
-#: src/SettingsPage.php:403
+#: src/SettingsPage.php:1041
+msgid "مسیر قطعات"
+msgstr ""
+
+#: src/SettingsPage.php:430
 msgid "مسیر مطلق خارج از public_html؛ در صورت نبود، هنگام ذخیره به صورت خودکار ساخته و با .htaccess / web.config ایمن‌سازی می‌شود."
 msgstr ""
 
-#: src/SettingsPage.php:829
+#: src/SettingsPage.php:1172
+msgid "مسیر نسبی داخل سطل/سرور مقصد."
+msgstr ""
+
+#: src/SettingsPage.php:1588
 msgid "مسیر پوشهٔ حفاظت‌شده تنظیم شده یا قابل تشخیص است."
 msgstr ""
 
@@ -1112,7 +1879,7 @@ msgstr ""
 msgid "مشاهده پرداخت‌ها و سفارش‌های ووکامرس این کاربر"
 msgstr ""
 
-#: src/SettingsPage.php:337
+#: src/SettingsPage.php:342
 msgid "مشترکین"
 msgstr ""
 
@@ -1120,7 +1887,19 @@ msgstr ""
 msgid "مقایسه سایر طرح‌های اشتراک ویژه"
 msgstr ""
 
-#: src/SettingsPage.php:144 src/SettingsPage.php:746
+#: src/SettingsPage.php:787
+msgid "مقدار را از سرویس خود بردارید (خودکار ساخته نمیشود)"
+msgstr ""
+
+#: src/SettingsPage.php:865
+msgid "مقدار مخفی همان هدر. باید در پیکربندی لبه و سرور مبدأ یکسان تنظیم شود."
+msgstr ""
+
+#: src/SettingsPage.php:1100
+msgid "مقصدی که MusicWave فایل‌ها را به آن می‌فرستد. پس از تغییر، فقط همان گروه از فیلدها نمایش داده می‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:1505
 msgid "منابع عضویت"
 msgstr ""
 
@@ -1128,7 +1907,11 @@ msgstr ""
 msgid "منبع / سفارش"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:131
+#: src/SettingsPage.php:1118
+msgid "منطقه (Region)"
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:224
 msgid "منقضی شده"
 msgstr ""
 
@@ -1136,20 +1919,44 @@ msgstr ""
 msgid "منقضی‌شده"
 msgstr ""
 
-#: src/SettingsPage.php:286
+#: src/SettingsPage.php:291
 msgid "منقضی‌شده‌ها"
 msgstr ""
 
-#: src/SettingsPage.php:138 src/SettingsPage.php:714
-msgid "میزبان‌های مجاز اضافی برای تغییرمسیر"
+#: src/SettingsPage.php:978
+msgid "مهلت آزادسازی اجاره"
 msgstr ""
 
-#: src/SettingsPage.php:656
+#: src/SettingsPage.php:1175
+msgid "مگابایت (۰ = بی‌توجه به اندازه)"
+msgstr ""
+
+#: src/SettingsPage.php:1117
+msgid "نام سطل (Bucket)"
+msgstr ""
+
+#: src/SettingsPage.php:1452
 msgid "نام فایل"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:371
+#: src/ProtectedAssetStorage.php:441
 msgid "نام فایل مجاز نیست."
+msgstr ""
+
+#: src/SettingsPage.php:1112
+msgid "نام کاربری WebDAV"
+msgstr ""
+
+#: src/SettingsPage.php:1045
+msgid "نام یا مسیر مطلق ffmpeg روی سرور."
+msgstr ""
+
+#: src/SettingsPage.php:1046
+msgid "نام یا مسیر مطلق ffprobe روی سرور."
+msgstr ""
+
+#: src/SettingsPage.php:858
+msgid "نام یک هدر سفارشی که فقط لبه و سرور شما آن را می‌شناسند. لبه این هدر را به سرور مبدأ می‌فرستد و سرور فقط درخواست‌های دارای این هدر را قبول می‌کند. این هدر از کاربر پنهان است؛ نامش را مثلاً X-Origin-Token بگذارید."
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:347
@@ -1168,23 +1975,103 @@ msgstr ""
 msgid "نشان ویژه VIP در حساب کاربری با تضمین حفظ کامل سابقه و پلی‌لیست‌ها"
 msgstr ""
 
-#: src/SettingsPage.php:132 src/SettingsPage.php:696
-msgid "نشانی پایهٔ میزبان راه‌دور"
+#: src/SettingsPage.php:1107
+msgid "نشانی endpoint امضاشده"
 msgstr ""
 
-#: src/SettingsPage.php:488
+#: src/SettingsPage.php:1116
+msgid "نشانی endpoint سازگار با S3"
+msgstr ""
+
+#: src/SettingsPage.php:647
+msgid "نشانی امضاشده با HMAC روی سرور دانلود شما ساخته می‌شود و مرورگر با تغییرمسیر ۳۰۲ به آن می‌رود."
+msgstr ""
+
+#: src/SettingsPage.php:590
+msgid "نشانی امضاشده روی CDN (بدون HLS)"
+msgstr ""
+
+#: src/SettingsPage.php:1123
+msgid "نشانی سرور SFTP"
+msgstr ""
+
+#: src/SettingsPage.php:838
+msgid "نشانی پایهٔ HTTPS لبه (CDN)"
+msgstr ""
+
+#: src/SettingsPage.php:635
+msgid "نشانی پایهٔ HTTPS لبه و کلید مخفی امضای لینک"
+msgstr ""
+
+#: src/SettingsPage.php:649
+msgid "نشانی پایهٔ HTTPS و کلید مخفی امضا (۳۲ نویسه یا بیشتر)"
+msgstr ""
+
+#: src/SettingsPage.php:1111
+msgid "نشانی پایهٔ WebDAV"
+msgstr ""
+
+#: src/SettingsPage.php:925
+msgid "نشانی پایهٔ سرور راهدور"
+msgstr ""
+
+#: src/SettingsPage.php:236
+msgid "نشانی کوتاه‌عمر امضاشده با HMAC"
+msgstr ""
+
+#: src/SettingsPage.php:1107
+msgid "نشانی‌ای که MusicWave فایل را به آن می‌فرستد؛ باید HTTPS و عمومی باشد. آدرس‌های خصوصی/loopback رد می‌شوند."
+msgstr ""
+
+#: src/SettingsPage.php:985
+msgid "نشست به User-Agent گره بخورد"
+msgstr ""
+
+#: src/SettingsPage.php:982
+msgid "نشست به نشانی آیپی کاربر گره بخورد"
+msgstr ""
+
+#: src/SettingsPage.php:976
+msgid "نشست همزمان برای هر کاربر"
+msgstr ""
+
+#: src/SettingsPage.php:991
+msgid "نشستها در جدول اختصاصی و اتمیک ذخیره میشوند تا شمارش همزمانی دقیق باشد. (روی هاستهای بسیار ضعیف در نسخهٔ آینده میتوان حالت سبکتر را اضافه کرد.)"
+msgstr ""
+
+#: src/SettingsPage.php:979
+msgid "نشستهای بلااستفاده پس از این مدت توسط پاکسازی دورهای آزاد میشوند."
+msgstr ""
+
+#: src/SettingsPage.php:962
+msgid "نشستهای پخش و جلوگیری از اشتراکگذاری لینک"
+msgstr ""
+
+#: src/SettingsPage.php:627
+msgid "نشست‌های پخش"
+msgstr ""
+
+#: src/SettingsPage.php:1262
 msgid "نقش‌های وردپرس (مانند نقش mw_vip)"
 msgstr ""
 
-#: src/SettingsPage.php:426
-msgid "نمایش/پنهان‌کردن راز"
+#: src/SettingsPage.php:800
+msgid "نمایش/پنهانکردن"
 msgstr ""
 
-#: src/SettingsPage.php:370
+#: src/SettingsPage.php:375
 msgid "نمونهٔ نگاشت کامل"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:359 src/ProtectedAssetStorage.php:416
+#: src/Hls/HlsPackager.php:142
+msgid "نوشتن فایل موقت کلید ffmpeg ناموفق بود."
+msgstr ""
+
+#: src/Hls/HlsPackager.php:381
+msgid "نوشتن پلیلیست اصلی HLS ناموفق بود."
+msgstr ""
+
+#: src/ProtectedAssetStorage.php:429 src/ProtectedAssetStorage.php:486
 msgid "نوع یا اندازهٔ asset مجاز نیست."
 msgstr ""
 
@@ -1192,7 +2079,7 @@ msgstr ""
 msgid "نکته: یک محصول عادی ووکامرس بسازید (محصول ساده، قیمت و غیره). شناسهٔ آن را از فهرست محصولات یادداشت کنید (روی آن بروید → ID). سپس شناسه را پایین وارد کنید."
 msgstr ""
 
-#: src/SettingsPage.php:368
+#: src/SettingsPage.php:373
 msgid "نگاشت طرح VIP"
 msgstr ""
 
@@ -1200,12 +2087,36 @@ msgstr ""
 msgid "نگاشت طرح حذف شد. خود محصول حذف نشده است."
 msgstr ""
 
-#: src/SettingsPage.php:613
+#: src/SettingsPage.php:1409
 msgid "نیازمند تکمیل پیکربندی"
 msgstr ""
 
-#: src/SettingsPage.php:799
+#: src/SettingsPage.php:1011
+msgid "نیازمند کلید مخفی امضای لبه/CDN حداقل ۳۲ نویسه‌ای است؛ در غیر این صورت مسیرها ایمن ثبت نمی‌شوند. در حالت «edge_hls» این گزینه خودکار روشن می‌ماند."
+msgstr ""
+
+#: src/SettingsPage.php:857
+msgid "هدر مخفی احراز هویت مبدأ (Origin header)"
+msgstr ""
+
+#: src/SettingsPage.php:1558
 msgid "هر تصمیم دسترسی به‌صورت زنده دوباره بررسی می‌شود تا لغو سفارش یا انقضا بلافاصله اثر کند."
+msgstr ""
+
+#: music-wave-vip.php:41
+msgid "هر دقیقه (MusicWave VIP)"
+msgstr ""
+
+#: src/SettingsPage.php:855
+msgid "هر لینک بعد از این مدت می‌میرد. باید از طولانی‌ترین آهنگ بیشتر باشد (مثلاً ۳۶۰۰ = یک ساعت)."
+msgstr ""
+
+#: src/SettingsPage.php:966
+msgid "هر پخش یک «نشست» کوتاهعمر میسازد که به کاربر و دستگاه او گره میخورد. اگر کسی لینک یا کوکی را کپی کند، در جای دیگر کار نمیکند. این بخش برای حالتهای لبه و پروکسی توصیه میشود."
+msgstr ""
+
+#: src/SettingsPage.php:642
+msgid "همان مقادیر لبه به‌همراه ffmpeg روی سرور"
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:104
@@ -1220,15 +2131,35 @@ msgstr ""
 msgid "همه سطوح VIP"
 msgstr ""
 
-#: music-wave-vip.php:282
+#: music-wave-vip.php:325
 msgid "همه مشترکین فعال VIP (mw_vip)"
 msgstr ""
 
-#: src/SettingsPage.php:636
+#: src/SettingsPage.php:1398
+msgid "همهٔ فایل‌ها ابتدا همین‌جا بارگذاری می‌شوند و شناسهٔ vip: می‌گیرند. در حالت‌های محلی/پروکسی از همین سرور سرو می‌شوند، در حالت‌های لبه مبدأ فایل‌اند، و در حالت راهدور فقط وقتی «آپلود خودکار» روشن باشد محل بارگذاری اولیه‌اند."
+msgstr ""
+
+#: src/SettingsPage.php:125
+msgid "همگامسازی انجام شد."
+msgstr ""
+
+#: src/Delivery/RemoteUploadRoutes.php:166
+msgid "همگامسازی کل کتابخانه فقط برای مدیران مجاز است."
+msgstr ""
+
+#: src/SettingsPage.php:1089
+msgid "همگام‌سازی خودکار فایل‌های حفاظت‌شده با سرور دانلود"
+msgstr ""
+
+#: src/SettingsPage.php:1192
+msgid "همگام‌سازی کل کتابخانه"
+msgstr ""
+
+#: src/SettingsPage.php:1432
 msgid "هنوز ایجاد نشده است — روی دکمهٔ بالا کلیک کنید"
 msgstr ""
 
-#: src/SettingsPage.php:769
+#: src/SettingsPage.php:1528
 msgid "هنوز رویداد اعطا، تمدید، لغو یا انقضایی در گزارش حسابرسی ثبت نشده است."
 msgstr ""
 
@@ -1236,16 +2167,24 @@ msgstr ""
 msgid "هنوز سابقه پخشی ثبت نشده است."
 msgstr ""
 
-#: src/SettingsPage.php:375
+#: src/SettingsPage.php:380
 msgid "هنوز طرحی پیکربندی‌نشده است. دست‌کم یک خط اضافه و ذخیره کنید."
 msgstr ""
 
-#: src/SettingsPage.php:299
+#: src/SettingsPage.php:304
 msgid "هنوز نگاشتی برای طرح وجود ندارد. از دکمهٔ بالا استفاده کنید یا در کادر نگاشت پایین خط اضافه کنید."
 msgstr ""
 
-#: src/SettingsPage.php:113 src/SettingsPage.php:663
+#: src/SettingsPage.php:120
+msgid "هنوز هیچ فایل حفاظتشدهای در مخزن خصوصی ثبت نشده است."
+msgstr ""
+
+#: src/SettingsPage.php:1459
 msgid "هنوز هیچ فایل حفاظت‌شده‌ای در مخزن خصوصی ثبت نشده است."
+msgstr ""
+
+#: src/SettingsPage.php:1034
+msgid "هنگام آپلود (ارزان و یکباره — پیشنهادی)"
 msgstr ""
 
 #: src/PrivacyPolicy.php:50
@@ -1260,19 +2199,19 @@ msgstr ""
 msgid "هیچ دوره اشتراک فعالی یا قبلی برای این کاربر ثبت نشده است."
 msgstr ""
 
-#: src/SettingsPage.php:832
+#: src/SettingsPage.php:1591
 msgid "وب‌سرور می‌تواند بارگذاری‌ها را در پوشهٔ حفاظت‌شده بنویسد."
 msgstr ""
 
-#: src/SettingsPage.php:831
+#: src/SettingsPage.php:1590
 msgid "وب‌سرور می‌تواند پوشهٔ حفاظت‌شده را بخواند."
 msgstr ""
 
-#: src/SettingsPage.php:623
+#: src/SettingsPage.php:1419
 msgid "وجود فایل‌های حفاظتی (.htaccess / web.config)"
 msgstr ""
 
-#: src/SettingsPage.php:619
+#: src/SettingsPage.php:1415
 msgid "وجود فیزیکی پوشه روی سرور"
 msgstr ""
 
@@ -1280,8 +2219,12 @@ msgstr ""
 msgid "وضعیت"
 msgstr ""
 
-#: src/SettingsPage.php:610
+#: src/SettingsPage.php:1406
 msgid "وضعیت زنده و پیش‌بررسی امنیتی مخزن"
+msgstr ""
+
+#: src/SettingsPage.php:1193
+msgid "وضعیت صف"
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:156
@@ -1312,11 +2255,11 @@ msgstr ""
 msgid "ویرایش سریع در users.php"
 msgstr ""
 
-#: src/SettingsPage.php:135 src/SettingsPage.php:705
+#: src/SettingsPage.php:935
 msgid "پارامتر query امضا"
 msgstr ""
 
-#: src/SettingsPage.php:136 src/SettingsPage.php:708
+#: src/SettingsPage.php:938
 msgid "پارامتر query انقضا"
 msgstr ""
 
@@ -1324,8 +2267,18 @@ msgstr ""
 msgid "پارامترهای تاریخ یا سطح اشتراک معتبر نیستند."
 msgstr ""
 
-#: src/SettingsPage.php:430
-msgid "پاک‌سازی راز امضای ذخیره‌شده"
+#: src/Delivery/Adapters/S3CompatibleUploadAdapter.php:219
+#, php-format
+msgid "پاسخ S3 ناموفق بود (کد %d)."
+msgstr ""
+
+#: src/Delivery/Adapters/WebdavUploadAdapter.php:143
+#, php-format
+msgid "پاسخ WebDAV ناموفق بود (کد %d)."
+msgstr ""
+
+#: src/SettingsPage.php:807
+msgid "پاکسازی مقدار ذخیرهشده"
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:274
@@ -1333,12 +2286,12 @@ msgstr ""
 msgid "پایان در %s"
 msgstr ""
 
-#: src/Plans/VipPlanCatalog.php:51
-msgid "پخش آنلاین کامل و بدون وقفه تمامی آثار اختصاصی آرشیو"
+#: src/SettingsPage.php:591
+msgid "پخش HLS رمزنگاری‌شده از CDN"
 msgstr ""
 
-#: src/SettingsPage.php:463
-msgid "پخش جریانی مستقیم PHP با پشتیبانی کامل HTTP Range (پیش‌فرض)"
+#: src/Plans/VipPlanCatalog.php:51
+msgid "پخش آنلاین کامل و بدون وقفه تمامی آثار اختصاصی آرشیو"
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:313
@@ -1353,11 +2306,19 @@ msgstr ""
 msgid "پخش کامل آهنگ‌ها و آیتم‌های ذخیره‌شده در کتابخانه"
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:93
+#: src/Checkout/SubscriptionOrderPresenter.php:92
+msgid "پرداخت اشتراک شما کامل نشد و مبلغی از حساب شما کسر نشده است. می‌توانید همین‌جا پرداخت را دوباره انجام دهید یا به صفحهٔ اشتراک‌ها بازگردید و پلن دیگری انتخاب کنید."
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:169
 msgid "پرداخت با موفقیت انجام شد و دسترسی VIP شما فعال شد. می‌توانید از پنل کاربری خود استفاده کنید و از محتوای ویژه لذت ببرید."
 msgstr ""
 
-#: src/Checkout/SubscriptionOrderPresenter.php:26 src/Checkout/SubscriptionOrderPresenter.php:31
+#: src/Checkout/SubscriptionOrderPresenter.php:91
+msgid "پرداخت تکمیل نشد"
+msgstr ""
+
+#: src/Checkout/SubscriptionOrderPresenter.php:32 src/Checkout/SubscriptionOrderPresenter.php:37
 msgid "پرداخت شما با موفقیت انجام شد. اشتراک VIP شما فعال شد."
 msgstr ""
 
@@ -1369,11 +2330,27 @@ msgstr ""
 msgid "پرداخت‌های ووکامرس"
 msgstr ""
 
-#: src/SettingsPage.php:833
+#: src/SettingsPage.php:1179
+msgid "پس از انتقال، اندازهٔ مقصد با منبع مقایسه می‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:953
+msgid "پس از ذخیرهٔ نشانی پایه و کلید مخفی، اینجا یک نمونهٔ واقعی از لینک امضاشده نمایش داده می‌شود."
+msgstr ""
+
+#: src/Hls/HlsRoutes.php:273
+msgid "پلیلیست HLS برای این انتشار بستهبندی نشده است."
+msgstr ""
+
+#: src/SettingsPage.php:1168
+msgid "پورت SFTP"
+msgstr ""
+
+#: src/SettingsPage.php:1592
 msgid "پوشه خارج از همهٔ ریشه‌های وب عمومی است."
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:345 src/ProtectedAssetStorage.php:409
+#: src/ProtectedAssetStorage.php:415 src/ProtectedAssetStorage.php:479
 msgid "پوشهٔ asset حفاظت‌شده در دسترس نیست یا قابل نوشتن نیست."
 msgstr ""
 
@@ -1381,72 +2358,108 @@ msgstr ""
 msgid "پوشهٔ حفاظت‌شده باید خارج از ریشهٔ عمومی وب (ABSPATH / DOCUMENT_ROOT) بوده و قابل خواندن و نوشتن باشد. مقدار قبلی حفظ شد."
 msgstr ""
 
-#: src/SettingsPage.php:800
+#: src/SettingsPage.php:1559
 msgid "پوشهٔ حفاظت‌شده خارج از تمام ریشه‌های وب (ABSPATH و DOCUMENT_ROOT) نگهداری و با .htaccess / web.config سخت‌سازی می‌شود."
 msgstr ""
 
-#: src/SettingsPage.php:830
+#: src/SettingsPage.php:1589
 msgid "پوشهٔ حفاظت‌شده وجود دارد."
 msgstr ""
 
-#: src/SettingsPage.php:390
-msgid "پوشهٔ حفاظت‌شدهٔ محلی خارج از ریشهٔ وب (پیشنهادشده)"
+#: src/Hls/HlsPackager.php:111
+msgid "پوشهٔ خروجی بسته‌بندی قابل ایجاد نیست."
 msgstr ""
 
-#: src/SettingsPage.php:105
-msgid "پوشهٔ خصوصی با موفقیت ایمن‌سازی و فهرست فایل‌ها همگام‌سازی شد."
+#: src/SettingsPage.php:112
+msgid "پوشهٔ خصوصی با موفقیت ایمنسازی و فهرست فایلها همگامسازی شد."
 msgstr ""
 
-#: src/SettingsPage.php:131 src/SettingsPage.php:693
+#: src/SettingsPage.php:628
+msgid "پوشهٔ فایل و روشن‌بودن نشست‌ها"
+msgstr ""
+
+#: src/SettingsPage.php:896
 msgid "پوشهٔ فایل‌های حفاظت‌شده"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:84
+#: src/ProtectedAssetStorage.php:92
 msgid "پوشهٔ فایل‌های حفاظت‌شده در دسترس نیست یا داخل ریشهٔ وب قرار دارد."
 msgstr ""
 
-#: src/SettingsPage.php:803
+#: src/SettingsPage.php:930
+msgid "پوشه‌ای داخل سرور مقصد که فایل‌ها در آن قرار می‌گیرند، مثلاً musicwave. خالی بگذارید تا فایل‌ها در ریشهٔ نشانی پایه باشند."
+msgstr ""
+
+#: src/SettingsPage.php:1111
+msgid "پوشه‌ای که فایل در آن ذخیره می‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:1562
 msgid "پیام‌های دسترسی (شامل خرید یا عضویت) و رفتار ماژول عضویت"
 msgstr ""
 
-#: src/SettingsPage.php:566
+#: src/SettingsPage.php:1339
 msgid "پیشرفته و حسابرسی"
 msgstr ""
 
-#: src/SettingsPage.php:763
+#: src/SettingsPage.php:1522
 msgid "پیشرفته، حسابرسی و مدیریت چرخهٔ داده"
+msgstr ""
+
+#: src/SettingsPage.php:985
+msgid "پیشفرض خاموش است؛ روشنکردن آن امنیت را بالا میبرد اما ممکن است برخی پخشکنندههای ثالث را محدود کند."
+msgstr ""
+
+#: src/SettingsPage.php:1215
+msgid "پیشنهاد خودکار بهترین روش ارسال فایل (nginx/آپاچی)"
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:61
 msgid "پیشنهاد محبوب"
 msgstr ""
 
-#: src/SettingsPage.php:141 src/SettingsPage.php:731
+#: src/SettingsPage.php:902
 msgid "پیشوند داخلی X-Accel"
 msgstr ""
 
-#: src/SettingsPage.php:133 src/SettingsPage.php:699
-msgid "پیشوند مسیر راه‌دور"
+#: src/SettingsPage.php:928
+msgid "پیشوند مسیر راهدور"
 msgstr ""
 
-#: src/SettingsPage.php:847
+#: src/SettingsPage.php:1171
+msgid "پیشوند مسیر مقصد"
+msgstr ""
+
+#: src/SettingsPage.php:1606
 msgid "پیش‌آزمایش تحویل حفاظت‌شده نیازمند اقدام است (در تب «تحویل حفاظت‌شده» روی «ایجاد، ایمن‌سازی و همگام‌سازی خودکار پوشه» کلیک کنید):"
 msgstr ""
 
-#: src/SettingsPage.php:802
+#: src/SettingsPage.php:1561
 msgid "پیش‌فرض‌های انتشار جدید و سطح‌های عضویت پیش‌فرض"
 msgstr ""
 
-#: src/SettingsPage.php:720
-msgid "پیش‌نمایش زنده لینک امضاشده آزمایشی:"
+#: src/SettingsPage.php:950
+msgid "پیش‌نمایش زندهٔ نشانی امضاشدهٔ آزمایشی:"
+msgstr ""
+
+#: src/SettingsPage.php:238
+msgid "پیکربندی ناقص، ایمن به تحویل محلی برمی‌گردد"
 msgstr ""
 
 #: src/PrivacyPolicy.php:49
 msgid "چه داده‌هایی توسط افزونه عضویت VIP MusicWave ذخیره می‌شود"
 msgstr ""
 
-#: src/SettingsPage.php:771
+#: src/SettingsPage.php:729
+msgid "چه می‌کند؟"
+msgstr ""
+
+#: src/SettingsPage.php:1530
 msgid "کاربر"
+msgstr ""
+
+#: src/SettingsPage.php:1124
+msgid "کاربر SFTP"
 msgstr ""
 
 #: src/Users/UsersListIntegration.php:231
@@ -1469,44 +2482,104 @@ msgstr ""
 msgid "کتابخانه موسیقی و فهرست‌های پخش"
 msgstr ""
 
-#: src/SettingsPage.php:442
+#: src/Delivery/Adapters/SftpUploadAdapter.php:71
+msgid "کتابخانهٔ SFTP (ssh2/phpseclib) در دسترس نیست."
+msgstr ""
+
+#: src/SettingsPage.php:1020
+msgid "کلید AES هرگز روی CDN منتشر نمیشود و تنها از مسیر key با امضای نشست تحویل داده میشود."
+msgstr ""
+
+#: src/SettingsPage.php:468
 msgid "کلید query که timestamp انقضای Unix را دریافت می‌کند."
 msgstr ""
 
-#: src/SettingsPage.php:438
+#: src/SettingsPage.php:464
 msgid "کلید query که امضای base64url با HMAC-SHA256 را دریافت می‌کند."
 msgstr ""
 
-#: src/SettingsPage.php:868
+#: src/SettingsPage.php:1627
 msgid "کلید اصلی خاموش است: انتشارهای عضویت در حالت پروموشن رایگان‌اند؛ خریدهای تکی ووکامرس و تحویل امن فعال‌اند."
 msgstr ""
 
-#: src/SettingsPage.php:109
+#: src/SettingsPage.php:237
+msgid "کلید رمز هرگز روی CDN نمی‌رود"
+msgstr ""
+
+#: src/Hls/HlsPackager.php:122
+msgid "کلید رمزنگاری HLS قابل تولید نیست (ثبت AUTH_KEY و SECURE_AUTH_SALT را بررسی کنید)."
+msgstr ""
+
+#: src/SettingsPage.php:459
+msgid "کلید فعلی کوتاه‌تر از ۳۲ نویسه است. تا ذخیرهٔ کلید قوی‌تر، نشانی امضاشده صادر نمی‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:932
+msgid "کلید مخفی امضای راهدور"
+msgstr ""
+
+#: src/SettingsPage.php:219
+msgid "کلید مخفی امضای راه‌دور کوتاه‌تر از ۳۲ نویسه است. تا ذخیرهٔ کلید مخفی قوی‌تر، لینک امضاشده ساخته نمی‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:841
+msgid "کلید مخفی امضای لینک (Edge secret)"
+msgstr ""
+
+#: src/SettingsPage.php:455
+msgid "کلیدی که MusicWave با آن نشانی فایل روی سرور دانلود شما را امضا می‌کند. حداقل ۳۲ نویسه؛ با دکمهٔ «ایجاد» یک کلید ۶۴ نویسه‌ای تصادفی بسازید و همان مقدار را در پیکربندی سرور دانلود هم بگذارید. اگر خالی یا کوتاه باشد، نشانی امضاشده ساخته نمی‌شود."
+msgstr ""
+
+#: src/SettingsPage.php:116
 msgid "کپی شد!"
 msgstr ""
 
-#: src/SettingsPage.php:110 src/SettingsPage.php:679
+#: src/SettingsPage.php:117 src/SettingsPage.php:1475
 msgid "کپی شناسه"
+msgstr ""
+
+#: src/SettingsPage.php:1024
+msgid "کیفیتهای خروجی (kbps)"
+msgstr ""
+
+#: src/SettingsPage.php:1225
+msgid "کیلوبایت (۶۴ تا ۸۱۹۲)"
+msgstr ""
+
+#: src/SettingsPage.php:1186
+msgid "گزینهٔ آزمایشی"
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:295
 msgid "یادداشت داخلی مدیریت برای این مشترک (فقط قابل مشاهده برای مدیر)"
 msgstr ""
 
-#: src/SettingsPage.php:797
+#: src/SettingsPage.php:1556
 msgid "یادداشت‌های امنیتی"
+msgstr ""
+
+#: src/SettingsPage.php:877
+msgid "یک درخواست سبک با هدر مخفی مبدأ می‌فرستد تا از درست‌بودن نشانی پایه و هدر مطمئن شوید."
 msgstr ""
 
 #: src/Plans/VipPlanCatalog.php:78
 msgid "یک سال کامل دسترسی نامحدود به تمام آرشیو ویژه و انتشارهای روز"
 msgstr ""
 
-#: src/ProtectedAssetStorage.php:396
+#: src/ProtectedAssetStorage.php:466
 msgid "یک فایل معتبر از رسانه‌ها انتخاب کنید."
 msgstr ""
 
-#: src/SettingsPage.php:489
+#: src/SettingsPage.php:1263
 msgid "یکپارچه‌سازی سفارشی از طریق فیلترهای music_wave_vip_membership_*."
+msgstr ""
+
+#: src/SettingsPage.php:1222
+msgid "یکپارچگی فایلهای حفاظتشده را با فهرست مخزن همگام نگه میدارد."
+msgstr ""
+
+#: src/SettingsPage.php:1169
+msgid "۱ تا ۶۵۵۳۵ (پیش‌فرض ۲۲)"
 msgstr ""
 
 #: src/Users/UserProfilePanel.php:260 src/Users/UsersListIntegration.php:332

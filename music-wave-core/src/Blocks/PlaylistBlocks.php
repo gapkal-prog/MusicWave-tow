@@ -406,7 +406,7 @@ final class PlaylistBlocks {
 				$header = '<header class="mw-public-playlists__header">'
 				. '<div class="mw-public-playlists__heading">'
 				. '<span class="mw-public-playlists__eyebrow"><span class="mw-public-playlists__eyebrow-icon" aria-hidden="true">◎</span> ' . esc_html( $eyebrow ) . '</span>'
-				. '<h2 class="mw-public-playlists__title">' . esc_html( $heading ) . '</h2>'
+				. '<h2 class="mw-public-playlists__title">' . SectionHeader::title( $heading, isset( $attributes['icon'] ) && is_scalar( $attributes['icon'] ) ? trim( (string) $attributes['icon'] ) : '' ) . '</h2>'
 				. ( '' !== $intro ? '<p class="mw-public-playlists__intro">' . esc_html( $intro ) . '</p>' : '' )
 				. '</div>'
 				. ( '' !== $header_actions ? '<div class="mw-public-playlists__header-actions">' . $header_actions . '</div>' : '' )
@@ -445,8 +445,14 @@ final class PlaylistBlocks {
 				$cards[] = $this->public_card_markup( $playlist, false, $card_options );
 			}
 
-			$grid_class = 'mw-public-playlists__grid mw-public-playlists__grid--' . $layout . ' mw-public-playlists__grid--columns-' . $columns;
-			$body       = '<div class="' . esc_attr( $grid_class ) . '">' . implode( '', $cards ) . '</div>';
+			// Column counts only describe a real grid; scroll and list are
+			// single-axis layouts, so printing a column modifier there would
+			// fight their own `grid-template-columns`.
+			$grid_class = 'mw-public-playlists__grid mw-public-playlists__grid--' . $layout;
+			if ( 'grid' === $layout ) {
+				$grid_class .= ' mw-public-playlists__grid--columns-' . $columns;
+			}
+			$body = '<div class="' . esc_attr( $grid_class ) . '">' . implode( '', $cards ) . '</div>';
 
 			$pagination = '';
 			if ( ! empty( $card_options['showPagination'] ) && $pages > 1 ) {

@@ -4,7 +4,7 @@
   "name": "music-wave/artists-shelf",
   "title": "ویترین هنرمندان",
   "category": "music-wave",
-  "description": "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با دکمه‌های دنبال‌کردن و تعداد انتشار نمایش می‌دهد. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای.",
+  "description": "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با صفحهٔ وینیل پشت جلد، نشان محبوبیت، تعداد آثار و دکمه‌های دنبال‌کردن نمایش می‌دهد. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای.",
   "keywords": [
     "هنرمندان",
     "خواننده‌ها",
@@ -20,6 +20,10 @@
       "default": ""
     },
     "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "icon": {
       "type": "string",
       "default": ""
     },
@@ -51,7 +55,15 @@
       "type": "integer",
       "default": 8
     },
+    "showAll": {
+      "type": "boolean",
+      "default": false
+    },
     "pagination": {
+      "type": "boolean",
+      "default": false
+    },
+    "browseIndex": {
       "type": "boolean",
       "default": false
     },
@@ -94,6 +106,18 @@
     "showFollowButton": {
       "type": "boolean",
       "default": true
+    },
+    "showCrowns": {
+      "type": "boolean",
+      "default": false
+    },
+    "showResultCount": {
+      "type": "boolean",
+      "default": false
+    },
+    "noResultsMessage": {
+      "type": "string",
+      "default": ""
     },
     "bioLength": {
       "type": "integer",

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/artists-toolbar",
+  "title": "ابزارهای هنرمندان",
+  "category": "music-wave",
+  "description": "نوار ابزار فهرست هنرمندان: جست‌وجوی خواننده و تب‌های ترتیب (پیکارتین/الفبایی). همهٔ کنترل‌ها بدون جاوااسکریپت کار می‌کنند و از طریق نشانی به ویترین هنرمندان متصل‌اند.",
+  "keywords": [
+    "هنرمندان",
+    "جست‌وجو",
+    "مرتب‌سازی",
+    "ابزار"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "search",
+  "attributes": {
+    "showSearch": {
+      "type": "boolean",
+      "default": true
+    },
+    "searchPlaceholder": {
+      "type": "string",
+      "default": ""
+    },
+    "showSortTabs": {
+      "type": "boolean",
+      "default": true
+    },
+    "popularLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "alphabeticalLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "defaultSort": {
+      "type": "string",
+      "default": "popular"
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "shadow": true
+  },
+  "example": {
+    "attributes": {
+      "showSearch": true,
+      "showSortTabs": true
+    }
+  }
+}

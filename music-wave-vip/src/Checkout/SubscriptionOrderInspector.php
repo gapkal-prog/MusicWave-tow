@@ -219,6 +219,30 @@ final class SubscriptionOrderInspector {
 		return $order instanceof \WC_Order ? $order : null;
 	}
 
+	/**
+	 * Single canonical resolver for the standard WooCommerce `order-pay` endpoint,
+	 * used by the retry/failed-payment screen.
+	 */
+	public static function resolve_pay_order(): ?\WC_Order {
+		if ( ! function_exists( 'wc_get_order' ) ) {
+			return null;
+		}
+
+		$order_id = 0;
+		if ( isset( $GLOBALS['wp']->query_vars['order-pay'] ) ) {
+			$order_id = absint( $GLOBALS['wp']->query_vars['order-pay'] );
+		} elseif ( isset( $_GET['order-pay'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$order_id = absint( $_GET['order-pay'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+
+		if ( $order_id < 1 ) {
+			return null;
+		}
+		$order = wc_get_order( $order_id );
+
+		return $order instanceof \WC_Order ? $order : null;
+	}
+
 	public static function is_thankyou_page(): bool {
 		if ( ! function_exists( 'did_action' ) || ! did_action( 'init' ) ) {
 			return false;

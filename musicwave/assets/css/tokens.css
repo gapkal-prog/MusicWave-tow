@@ -42,6 +42,11 @@
 	--mw-font-display: "Vazirmatn", "Syne", system-ui, sans-serif;
 	--mw-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
+	/* One shared size for every shelf/section heading. It follows the
+	 * WordPress "Large" typography preset, so changing the preset in the
+	 * Site Editor (Styles → Typography) scales all section titles together. */
+	--mw-section-title-size: var(--wp--preset--font-size--large, clamp(1.4rem, 1.1rem + 1vw, 2rem));
+
 	/* Live palette → semantic tokens (deep-obsidian defaults). */
 	--mw-color-canvas: var(--wp--preset--color--canvas, #0b0b0d);
 	--mw-color-surface: var(--wp--preset--color--surface, #131316);

@@ -416,7 +416,6 @@ function actionButtonsSearchArtistAndTracklistContracts() {
 		'desktopMode',
 		'tabletMode',
 		'mobileMode',
-		'maxWidth',
 		'enableShortcut',
 		'showScopeTabs',
 		'showRecentSearches',
@@ -429,6 +428,20 @@ function actionButtonsSearchArtistAndTracklistContracts() {
 			`header-search must define ${ attr } attribute.`
 		);
 	}
+	// Width, border, radius and colour are WordPress support concerns: the
+	// block must not carry its own pixel-width attribute or an editor-only
+	// viewport simulator.
+	assert.equal(
+		searchMeta.attributes.maxWidth,
+		undefined,
+		'header-search must not define maxWidth.'
+	);
+	assert.equal(
+		themeEditorJs.includes( 'mw-editor-search-sim' ) ||
+			themeEditorJs.includes( 'headerSearchDevices' ),
+		false,
+		'header-search must not ship an editor-only viewport simulator.'
+	);
 	const headerSearchSlice = themeEditorJs.slice(
 		themeEditorJs.indexOf( 'function headerSearchInspector' ),
 		themeEditorJs.indexOf( 'function queryFilteringPanel' )

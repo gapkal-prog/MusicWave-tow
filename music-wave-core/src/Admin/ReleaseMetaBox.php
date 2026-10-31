@@ -16,6 +16,7 @@ use ManaCore\MusicWave\Core\Commerce\ProductMapper;
 use ManaCore\MusicWave\Core\Contracts\ReleaseRepository;
 use ManaCore\MusicWave\Core\Schema\MetaDefinition;
 use ManaCore\MusicWave\Core\Schema\ReleaseMetaSchema;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 use WP_Post;
 use WP_Query;
 
@@ -127,12 +128,12 @@ final class ReleaseMetaBox {
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
 		echo '<div class="mw-admin-fields">';
 		echo '<p class="description">' . esc_html__( 'اطلاعات کاتالوگ مستقل از WooCommerce است. محصولات فقط این انتشار را می‌فروشند یا اجازهٔ دسترسی به آن را می‌دهند.', 'music-wave-core' ) . '</p>';
+		if ( ! VipModuleStatus::is_active() ) {
+			echo '<div class="notice notice-info inline" style="margin:0 0 12px;"><p>' . esc_html__( 'افزونهٔ MusicWave VIP غیرفعال است؛ حالت‌های «اشتراک VIP»، سطح‌های عضویت و فایل‌های حفاظت‌شدهٔ VIP تا فعال‌شدن افزونه غیرفعال هستند. لینک‌های مستقیم (direct:) بدون VIP کار می‌کنند.', 'music-wave-core' ) . '</p></div>';
+		}
 
 		$grid_open = false;
 		foreach ( $this->schema->admin_fields() as $definition ) {
-			if ( in_array( $definition->admin()['type'] ?? '', array( 'protected_asset', 'protected_assets' ), true ) ) {
-				continue;
-			}
 			$in_grid = in_array( $definition->key(), self::GRID_FIELDS, true );
 			if ( $in_grid && ! $grid_open ) {
 				echo '<div class="mw-admin-fields__grid">';
@@ -185,9 +186,6 @@ final class ReleaseMetaBox {
 			}
 
 			$value = wp_unslash( $_POST[ $key ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			if ( 'mw_download_assets' === $key ) {
-				$value = $this->download_assets_from_submission( $value );
-			}
 			$this->repository->update( $post_id, $key, $value );
 		}
 
@@ -241,14 +239,24 @@ final class ReleaseMetaBox {
 		echo '<div class="mw-admin-field mw-admin-field--' . esc_attr( $type ) . '"' . $field_attr . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $field_attr escaped immediately above.
 		echo '<label for="' . esc_attr( $key ) . '"><strong>' . esc_html( (string) $config['label'] ) . '</strong></label><br>';
 
+		$vip_active = VipModuleStatus::is_active();
 		if ( 'select' === $type ) {
+			// VIP-only modes are offered but not selectable while VIP is inactive.
+			// The currently stored value stays enabled so saving never wipes it.
+			$locked_modes = 'mw_access_mode' === $key && ! $vip_active
+				? AccessModePolicy::vip_only_modes()
+				: array();
 			echo '<select id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '">';
 			foreach ( $config['options'] as $option_value => $option_label ) {
-				echo '<option value="' . esc_attr( (string) $option_value ) . '" ' . selected( $value, $option_value, false ) . '>' . esc_html( (string) $option_label ) . '</option>';
+				$locked = in_array( (string) $option_value, $locked_modes, true ) && (string) $value !== (string) $option_value;
+				echo '<option value="' . esc_attr( (string) $option_value ) . '" ' . selected( $value, $option_value, false ) . ( $locked ? ' disabled' : '' ) . '>' . esc_html( (string) $option_label ) . '</option>';
 			}
 			echo '</select>';
 			if ( 'mw_access_mode' === $key ) {
 				echo '<span class="description mw-access-mode-hint" data-mw-access-hint aria-live="polite"></span>';
+				if ( ! $vip_active ) {
+					echo '<span class="description"><strong>' . esc_html__( 'حالت‌های «اشتراک VIP» و «خرید یا اشتراک VIP» تا فعال‌شدن افزونهٔ MusicWave VIP قابل انتخاب نیستند.', 'music-wave-core' ) . '</strong></span>';
+				}
 			}
 		} elseif ( 'checkbox' === $type ) {
 			echo '<input type="checkbox" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" value="1" ' . checked( (bool) $value, true, false ) . '>';
@@ -256,16 +264,13 @@ final class ReleaseMetaBox {
 			$this->render_products( $key, is_array( $value ) ? $value : array() );
 		} elseif ( 'credits' === $type ) {
 			$this->render_credits_repeater( $key, is_array( $value ) ? $value : array() );
-		} elseif ( 'protected_asset' === $type ) {
-			$this->render_protected_asset( $key, $value );
-		} elseif ( 'protected_assets' === $type ) {
-			$this->render_protected_assets( $key, $value );
 		} elseif ( 'textarea' === $type ) {
 			echo '<textarea class="widefat" rows="10" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" dir="auto">' . esc_textarea( is_scalar( $value ) ? (string) $value : '' ) . '</textarea>';
 		} else {
 			$input_type = in_array( $type, array( 'date', 'number', 'url' ), true ) ? $type : 'text';
 			$display    = 'key_list' === $type && is_array( $value ) ? implode( ', ', $value ) : (string) $value;
-			echo '<input class="widefat" type="' . esc_attr( $input_type ) . '" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" value="' . esc_attr( $display ) . '"';
+			$readonly   = 'mw_membership_levels' === $key && ! $vip_active;
+			echo '<input class="widefat" type="' . esc_attr( $input_type ) . '" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" value="' . esc_attr( $display ) . '"' . ( $readonly ? ' readonly aria-disabled="true"' : '' );
 			foreach ( array( 'min', 'max' ) as $attribute ) {
 				if ( isset( $config[ $attribute ] ) ) {
 					echo ' ' . esc_attr( $attribute ) . '="' . esc_attr( (string) $config[ $attribute ] ) . '"';
@@ -273,7 +278,7 @@ final class ReleaseMetaBox {
 			}
 			echo '>';
 			if ( 'mw_membership_levels' === $key ) {
-				$this->render_membership_level_picker( is_array( $value ) ? $value : array() );
+				$this->render_membership_level_picker( is_array( $value ) ? $value : array(), $readonly );
 			}
 		}
 
@@ -304,7 +309,7 @@ final class ReleaseMetaBox {
 		$position = 0;
 		foreach ( $credits as $credit ) {
 			$this->render_credit_row( $key, (string) $position, is_array( $credit ) ? $credit : array() );
-			$position++;
+			++$position;
 		}
 
 		echo '</div>';
@@ -337,8 +342,9 @@ final class ReleaseMetaBox {
 	 * Render interactive VIP plan level quick-select chips beneath `#mw_membership_levels`.
 	 *
 	 * @param array<int, mixed> $selected Currently saved level slugs.
+	 * @param bool              $disabled Whether VIP is inactive and the chips are locked.
 	 */
-	private function render_membership_level_picker( array $selected ): void {
+	private function render_membership_level_picker( array $selected, bool $disabled = false ): void {
 		$available = apply_filters( 'music_wave_available_membership_levels', array() );
 		if ( ! is_array( $available ) || empty( $available ) ) {
 			$available = array(
@@ -353,62 +359,13 @@ final class ReleaseMetaBox {
 				continue;
 			}
 			$is_on = in_array( $clean, $active, true );
-			echo '<button type="button" class="button button-small mw-level-chip' . ( $is_on ? ' is-active' : '' ) . '" data-mw-level-slug="' . esc_attr( $clean ) . '" aria-pressed="' . ( $is_on ? 'true' : 'false' ) . '">' . esc_html( (string) $label ) . '</button>';
+			echo '<button type="button" class="button button-small mw-level-chip' . ( $is_on ? ' is-active' : '' ) . '" data-mw-level-slug="' . esc_attr( $clean ) . '" aria-pressed="' . ( $is_on ? 'true' : 'false' ) . '"' . ( $disabled ? ' disabled aria-disabled="true"' : '' ) . '>' . esc_html( (string) $label ) . '</button>';
 		}
 		echo '</span>';
 		echo '<span class="description">' . esc_html__( 'با کلیک روی هر طرح، کلید آن اضافه یا حذف می‌شود. انتخاب «mw_vip» دسترسی را به تمام مشترکین فعال VIP می‌دهد و انتخاب کلید یک طرح خاص (مانند vip-12m) آن را به همان طرح محدود می‌کند.', 'music-wave-core' ) . '</span>';
-	}
-
-	/**
-	 * @param mixed $value Stored asset identifier.
-	 */
-	private function render_protected_asset( string $key, $value ): void {
-		echo '<input class="widefat" type="text" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" value="' . esc_attr( is_scalar( $value ) ? (string) $value : '' ) . '" autocomplete="off">';
-		echo '<span class="description">' . esc_html__( 'شناسهٔ دارایی ارائه‌دهنده مانند local:album/track.zip را ذخیره کنید؛ هرگز نشانی دانلود عمومی ذخیره نکنید.', 'music-wave-core' ) . '</span>';
-	}
-
-	/**
-	 * @param mixed $value Stored variants.
-	 */
-	private function render_protected_assets( string $key, $value ): void {
-		$lines = array();
-		if ( is_array( $value ) ) {
-			foreach ( $value as $asset ) {
-				if ( ! is_array( $asset ) || empty( $asset['key'] ) || empty( $asset['label'] ) || empty( $asset['asset_id'] ) ) {
-					continue;
-				}
-				$lines[] = (string) $asset['key'] . ' | ' . (string) $asset['label'] . ' | ' . (string) $asset['asset_id'];
-			}
+		if ( $disabled ) {
+			echo '<span class="description"><strong>' . esc_html__( 'افزونهٔ MusicWave VIP غیرفعال است؛ انتخاب طرح‌های عضویت تا فعال‌شدن آن قفل است.', 'music-wave-core' ) . '</strong></span>';
 		}
-
-		echo '<textarea class="widefat" rows="5" id="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '">' . esc_textarea( implode( "\n", $lines ) ) . '</textarea>';
-		echo '<span class="description">' . esc_html__( 'در هر خط یک کیفیت: quality-key | برچسب مشتری | شناسهٔ opaque دارایی ارائه‌دهنده. نمونه: mp3-320 | MP3 320 kbps | local:downloads/track-320.mp3', 'music-wave-core' ) . '</span>';
-	}
-
-	/**
-	 * @param mixed $value Posted textarea value.
-	 * @return array<int, array<string, string>>
-	 */
-	private function download_assets_from_submission( $value ): array {
-		if ( ! is_scalar( $value ) ) {
-			return array();
-		}
-
-		$assets = array();
-		$rows   = preg_split( '/\r\n|\r|\n/', (string) $value );
-		foreach ( is_array( $rows ) ? $rows : array() as $line ) {
-			$parts = array_map( 'trim', explode( '|', $line, 3 ) );
-			if ( 3 !== count( $parts ) ) {
-				continue;
-			}
-			$assets[] = array(
-				'key'      => $parts[0],
-				'label'    => $parts[1],
-				'asset_id' => $parts[2],
-			);
-		}
-
-		return $assets;
 	}
 
 	/** @param array<int, int> $selected_ids */

@@ -34,6 +34,9 @@ final class LibraryRepository {
 
 	public const RELEASE_DATE_META = 'mw_release_date';
 
+	/** How long the public "saved by N" aggregate may be cached, in seconds. */
+	private const COUNT_CACHE_TTL = 300;
+
 	/** @var array<int, array<int, array<string, mixed>>> */
 	private $cache = array();
 
@@ -134,6 +137,34 @@ final class LibraryRepository {
 		}
 
 		return $matched;
+	}
+
+	/**
+	 * Public aggregate: how many customers saved one item.
+	 *
+	 * Only a count leaves this method — never user IDs — so it is safe to render
+	 * on public surfaces. The value is cached briefly because it is social proof,
+	 * not authoritative state.
+	 */
+	public function count_for_item( string $type, int $item_id ): int {
+		if ( $item_id < 1 || ! in_array( $type, $this->types(), true ) ) {
+			return 0;
+		}
+
+		$cache_key = self::count_cache_key( $type, $item_id );
+		if ( function_exists( 'get_transient' ) ) {
+			$cached = get_transient( $cache_key );
+			if ( false !== $cached && is_numeric( $cached ) ) {
+				return max( 0, (int) $cached );
+			}
+		}
+
+		$count = $this->count_users_with( $type, $item_id );
+		if ( function_exists( 'set_transient' ) ) {
+			set_transient( $cache_key, $count, self::COUNT_CACHE_TTL );
+		}
+
+		return $count;
 	}
 
 	public function release_timestamp( int $release_id ): int {
@@ -268,6 +299,7 @@ final class LibraryRepository {
 			$items                   = $this->fetch_from_table( $user_id );
 			$this->cache[ $user_id ] = $items;
 			update_user_meta( $user_id, self::META_KEY, array_values( $items ) );
+			$this->forget_count( $type, $item_id );
 
 			return true;
 		}
@@ -286,7 +318,12 @@ final class LibraryRepository {
 			'added' => time(),
 		);
 
-		return $this->persist( $user_id, $items );
+		if ( ! $this->persist( $user_id, $items ) ) {
+			return false;
+		}
+		$this->forget_count( $type, $item_id );
+
+		return true;
 	}
 
 	public function remove( int $user_id, string $type, int $item_id ): bool {
@@ -314,6 +351,7 @@ final class LibraryRepository {
 			$items                   = $this->fetch_from_table( $user_id );
 			$this->cache[ $user_id ] = $items;
 			update_user_meta( $user_id, self::META_KEY, array_values( $items ) );
+			$this->forget_count( $type, $item_id );
 
 			return true;
 		}
@@ -330,7 +368,12 @@ final class LibraryRepository {
 			)
 		);
 
-		return $this->persist( $user_id, $items );
+		if ( ! $this->persist( $user_id, $items ) ) {
+			return false;
+		}
+		$this->forget_count( $type, $item_id );
+
+		return true;
 	}
 
 	/**
@@ -412,6 +455,7 @@ final class LibraryRepository {
 	 */
 	private function purge_target( string $type, int $item_id ): void {
 		$this->cache = array();
+		$this->forget_count( $type, $item_id );
 		if ( $this->table_exists() ) {
 			global $wpdb;
 			if ( $wpdb instanceof \wpdb ) {
@@ -499,6 +543,44 @@ final class LibraryRepository {
 		}
 
 		return $items;
+	}
+
+	private static function count_cache_key( string $type, int $item_id ): string {
+		return 'mw_library_count_' . $type . '_' . $item_id;
+	}
+
+	/**
+	 * Count distinct owners for one item, preferring the indexed table.
+	 */
+	private function count_users_with( string $type, int $item_id ): int {
+		global $wpdb;
+		if ( ! $wpdb instanceof \wpdb ) {
+			return 0;
+		}
+		if ( $this->table_exists() ) {
+			$table = $wpdb->prefix . self::TABLE;
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$count = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT COUNT(DISTINCT user_id) FROM {$table} WHERE type = %s AND item_id = %d",
+					$type,
+					$item_id
+				)
+			);
+
+			return max( 0, (int) $count );
+		}
+
+		return count( $this->users_with( $type, $item_id ) );
+	}
+
+	/**
+	 * Drop the cached aggregate for one item after a write.
+	 */
+	private function forget_count( string $type, int $item_id ): void {
+		if ( function_exists( 'delete_transient' ) ) {
+			delete_transient( self::count_cache_key( $type, $item_id ) );
+		}
 	}
 
 	private function table_count( int $user_id ): int {

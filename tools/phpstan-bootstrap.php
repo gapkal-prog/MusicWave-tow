@@ -55,7 +55,7 @@ if ( ! defined( 'MUSIC_WAVE_VIP_URL' ) ) {
 	define( 'MUSIC_WAVE_VIP_URL', 'http://example.com/wp-content/plugins/music-wave-vip/' );
 }
 if ( ! defined( 'MUSIC_WAVE_VIP_VERSION' ) ) {
-	define( 'MUSIC_WAVE_VIP_VERSION', '0.5.1' );
+	define( 'MUSIC_WAVE_VIP_VERSION', '0.5.2' );
 }
 if ( ! defined( 'MUSICWAVE_VERSION' ) ) {
 	define( 'MUSICWAVE_VERSION', '0.9.0' );

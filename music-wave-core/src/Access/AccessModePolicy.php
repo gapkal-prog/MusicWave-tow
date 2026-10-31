@@ -121,10 +121,19 @@ final class AccessModePolicy {
 	}
 
 	/**
+	 * Access modes that require the MusicWave VIP membership module.
+	 *
+	 * @return array<int, string>
+	 */
+	public static function vip_only_modes(): array {
+		return array( 'membership', 'purchase_or_membership' );
+	}
+
+	/**
 	 * Whether an access mode involves VIP/membership entitlement checks.
 	 */
 	public static function uses_membership( string $mode ): bool {
-		return in_array( sanitize_key( $mode ), array( 'membership', 'purchase_or_membership' ), true );
+		return in_array( sanitize_key( $mode ), self::vip_only_modes(), true );
 	}
 
 	/**

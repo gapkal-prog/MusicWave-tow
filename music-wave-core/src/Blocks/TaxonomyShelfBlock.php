@@ -146,6 +146,7 @@ final class TaxonomyShelfBlock {
 			'show_count'    => ! isset( $attributes['showCount'] ) || (bool) $attributes['showCount'],
 			'eyebrow'       => isset( $attributes['eyebrow'] ) ? sanitize_text_field( (string) $attributes['eyebrow'] ) : '',
 			'heading'       => $heading_val,
+			'icon'          => isset( $attributes['icon'] ) ? (string) $attributes['icon'] : '',
 			'description'   => isset( $attributes['description'] ) ? sanitize_text_field( (string) $attributes['description'] ) : '',
 			'section_url'   => isset( $attributes['sectionUrl'] ) ? esc_url_raw( (string) $attributes['sectionUrl'] ) : '',
 			'section_label' => isset( $attributes['sectionLinkLabel'] ) ? sanitize_text_field( (string) $attributes['sectionLinkLabel'] ) : '',

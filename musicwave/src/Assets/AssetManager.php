@@ -157,6 +157,10 @@ final class AssetManager {
 				'file'         => 'assets/css/components/artists-shelf.css',
 				'dependencies' => array( 'musicwave-utilities', 'musicwave-shelf', 'musicwave-pagination' ),
 			),
+			'musicwave-artists-index'   => array(
+				'file'         => 'assets/css/components/artists-index.css',
+				'dependencies' => array( 'musicwave-utilities', 'musicwave-pagination' ),
+			),
 			'musicwave-taxonomy-shelf'  => array(
 				'file'         => 'assets/css/components/taxonomy-shelf.css',
 				'dependencies' => array( 'musicwave-utilities', 'musicwave-shelf' ),
@@ -313,11 +317,12 @@ final class AssetManager {
 		}
 
 		$lazy_scripts = array(
-			'musicwave-slider'        => 'assets/slider.js',
-			'musicwave-release-hero'  => 'assets/release-hero.js',
-			'musicwave-lyrics'        => 'assets/lyrics.js',
-			'musicwave-hero-slider'   => 'assets/hero-slider.js',
-			'musicwave-header-search' => 'assets/header-search.js',
+			'musicwave-slider'          => 'assets/slider.js',
+			'musicwave-release-hero'    => 'assets/release-hero.js',
+			'musicwave-release-content' => 'assets/release-content.js',
+			'musicwave-lyrics'          => 'assets/lyrics.js',
+			'musicwave-hero-slider'     => 'assets/hero-slider.js',
+			'musicwave-header-search'   => 'assets/header-search.js',
 		);
 
 		foreach ( $lazy_scripts as $handle => $relative_path ) {
@@ -360,11 +365,11 @@ final class AssetManager {
 		);
 
 		wp_localize_script(
-			'musicwave-release-hero',
-			'musicwaveReleaseHero',
+			'musicwave-release-content',
+			'musicwaveReleaseContent',
 			array(
-				'more' => __( 'بیشتر بخوانید', 'musicwave' ),
-				'less' => __( 'کمتر', 'musicwave' ),
+				'more' => __( 'نمایش بیشتر محتوا', 'musicwave' ),
+				'less' => __( 'نمایش کمتر', 'musicwave' ),
 			)
 		);
 
@@ -446,6 +451,7 @@ final class AssetManager {
 
 		if ( function_exists( 'is_singular' ) && is_singular( 'mw_release' ) ) {
 			wp_enqueue_script( 'musicwave-release-hero' );
+			wp_enqueue_script( 'musicwave-release-content' );
 		}
 	}
 
@@ -468,6 +474,10 @@ final class AssetManager {
 			array(
 				'music-wave/release-shelf'          => array( 'musicwave-shelf', 'musicwave-collections', 'musicwave-vinyl' ),
 				'music-wave/artists-shelf'          => array( 'musicwave-artists-shelf', 'musicwave-shelf' ),
+				'music-wave/artists-hero'           => array( 'musicwave-artists-index' ),
+				'music-wave/artists-toolbar'        => array( 'musicwave-artists-index' ),
+				'music-wave/artists-alphabet'       => array( 'musicwave-artists-index' ),
+				'music-wave/artists-pagination'     => array( 'musicwave-artists-index' ),
 				'music-wave/taxonomy-shelf'         => array( 'musicwave-taxonomy-shelf', 'musicwave-shelf' ),
 				'music-wave/release-card'           => array( 'musicwave-catalog', 'musicwave-shelf' ),
 				'music-wave/hero-slider'            => array( 'musicwave-hero-slider', 'musicwave-slider' ),

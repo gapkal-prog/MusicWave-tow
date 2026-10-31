@@ -86,7 +86,7 @@ final class ShelfAndSliderRenderer {
 	/**
 	 * Render a shared shelf section header, delegating to Core's SectionHeader when active.
 	 */
-	public function render_shelf_header( string $eyebrow, string $title, string $description = '', string $section_url = '', string $section_link_label = '' ): string {
+	public function render_shelf_header( string $eyebrow, string $title, string $description = '', string $section_url = '', string $section_link_label = '', string $icon = '' ): string {
 		if ( '' === $eyebrow && '' === $title && '' === $description && '' === $section_url ) {
 			return '';
 		}
@@ -94,7 +94,7 @@ final class ShelfAndSliderRenderer {
 		$section_link_label = '' !== $section_link_label ? $section_link_label : __( 'مشاهده همه', 'musicwave' );
 
 		if ( class_exists( SectionHeader::class ) ) {
-			return SectionHeader::shelf_header( $eyebrow, $title, $description, $section_url, $section_link_label );
+			return SectionHeader::shelf_header( $eyebrow, $title, $description, $section_url, $section_link_label, $icon );
 		}
 
 		$link = '' !== $section_url
@@ -189,7 +189,10 @@ final class ShelfAndSliderRenderer {
 
 		$release_ids = isset( $attributes['releaseIds'] ) ? (string) $attributes['releaseIds'] : '';
 		$release_ids = preg_split( '/[\s,]+/', $release_ids );
-		$release_ids = is_array( $release_ids ) ? array_slice( array_values( array_unique( array_filter( array_map( 'absint', $release_ids ) ) ) ), 0, 24 ) : array();
+		// Manual picks honour the block's item count, and stay unrestricted when
+		// the author asked for every release (`showAll` passes -1).
+		$id_limit    = $items > 0 ? max( 24, $items ) : 1000;
+		$release_ids = is_array( $release_ids ) ? array_slice( array_values( array_unique( array_filter( array_map( 'absint', $release_ids ) ) ) ), 0, $id_limit ) : array();
 		if ( ! empty( $release_ids ) ) {
 			$query['post__in'] = $release_ids;
 			$query['orderby']  = 'post__in';
@@ -474,7 +477,7 @@ final class ShelfAndSliderRenderer {
 
 		$items = isset( $attributes['itemsToShow'] ) ? absint( $attributes['itemsToShow'] ) : 0;
 		$items = $items >= 3 && $items <= 12 ? $items : $this->slider_number( 'slider_items', 6 );
-		$items = min( 12, max( 3, $items ) );
+		$items = ! empty( $attributes['showAll'] ) ? -1 : min( 12, max( 3, $items ) );
 		$ids   = get_posts( $this->release_query_args( $attributes, $items ) );
 		if ( ( ! is_array( $ids ) || empty( $ids ) ) && empty( $tabbed['tabs'] ) ) {
 			return '';
@@ -487,6 +490,14 @@ final class ShelfAndSliderRenderer {
 		$thumb_size = 'large' === $size_key ? 'large' : ( 'small' === $size_key ? 'medium' : 'medium_large' );
 		$shape      = isset( $attributes['imageShape'] ) ? sanitize_key( (string) $attributes['imageShape'] ) : 'square';
 		$shape      = in_array( $shape, array( 'square', 'landscape', 'portrait', 'circle' ), true ) ? $shape : 'square';
+
+		// Columns drive the card width. A zero value (or legacy saved block)
+		// falls back to the card-size preset so older sliders keep their look.
+		$columns = isset( $attributes['columns'] ) ? absint( $attributes['columns'] ) : 0;
+		if ( $columns < 2 || $columns > 6 ) {
+			$columns = 'small' === $size_key ? 5 : ( 'large' === $size_key ? 3 : 4 );
+		}
+		$columns = min( 6, max( 2, $columns ) );
 
 		foreach ( $ids as $release_id ) {
 			$item = $this->release_presentation_data( absint( $release_id ) );
@@ -577,7 +588,7 @@ final class ShelfAndSliderRenderer {
 
 		return '<section ' . get_block_wrapper_attributes(
 			array(
-				'class' => 'mw-release-slider mw-release-slider--size-' . $size_key . ' mw-release-slider--shape-' . $shape . $slider_variant,
+				'class' => 'mw-release-slider mw-release-slider--columns-' . $columns . ' mw-release-slider--shape-' . $shape . $slider_variant,
 				'style' => '--mw-feature-overlay:' . (string) $slider_overlay . ';',
 			)
 		) . $scope_attr . ' data-mw-slider data-autoplay="' . esc_attr( $autoplay ? '1' : '0' ) . '" data-loop="' . esc_attr( $loop ? '1' : '0' ) . '" data-pause-hover="' . esc_attr( $pause ? '1' : '0' ) . '" data-interval="' . esc_attr( (string) $interval ) . '">' . $header_markup . $body_markup . $dot_container . '<p class="screen-reader-text" aria-live="polite" data-mw-slider-status></p></section>';
@@ -629,6 +640,7 @@ final class ShelfAndSliderRenderer {
 		$section_url        = isset( $attributes['sectionUrl'] ) ? esc_url( (string) $attributes['sectionUrl'] ) : '';
 		$section_link_label = isset( $attributes['sectionLinkLabel'] ) ? sanitize_text_field( (string) $attributes['sectionLinkLabel'] ) : '';
 		$section_link_label = '' !== $section_link_label ? $section_link_label : __( 'مشاهدهٔ همهٔ فهرست‌های پخش', 'musicwave' );
+		$header_icon        = isset( $attributes['icon'] ) ? trim( (string) $attributes['icon'] ) : '';
 		if ( '' !== $eyebrow || '' !== $title ) {
 			$title   = '' !== $title ? $title : __( 'فهرست‌های پخش اجتماعی', 'musicwave' );
 			$eyebrow = '' !== $eyebrow ? $eyebrow : __( 'منتخب شنوندگان', 'musicwave' );
@@ -703,7 +715,7 @@ final class ShelfAndSliderRenderer {
 			$cards[] = '<article class="mw-release-shelf__item mw-release-shelf__item--playlist">' . $thumb_wrap . '<div class="mw-release-shelf__body"><h3><a href="' . esc_url( $link ) . '">' . esc_html( $ptitle ) . '</a></h3>' . $artist_m . $count_m . '</div></article>';
 		}
 
-		$header      = $this->render_shelf_header( $eyebrow, $title, $description, $section_url, $section_link_label );
+		$header      = $this->render_shelf_header( $eyebrow, $title, $description, $section_url, $section_link_label, $header_icon );
 		$viewport_id = wp_unique_id( 'mw-shelf-viewport-' );
 		$nav         = $this->shelf_nav_markup( $layout, $viewport_id );
 
@@ -735,9 +747,10 @@ final class ShelfAndSliderRenderer {
 		$tabbed         = $this->apply_filter_tab( $attributes, $tab_scope );
 		$attributes     = $tabbed['attributes'];
 
-		$items = isset( $attributes['itemsToShow'] ) ? absint( $attributes['itemsToShow'] ) : 8;
-		$items = min( 24, max( 1, $items ) );
-		$ids   = get_posts( $this->release_query_args( $attributes, $items ) );
+		$show_all = ! empty( $attributes['showAll'] );
+		$items    = isset( $attributes['itemsToShow'] ) ? absint( $attributes['itemsToShow'] ) : 8;
+		$items    = $show_all ? -1 : min( 24, max( 1, $items ) );
+		$ids      = get_posts( $this->release_query_args( $attributes, $items ) );
 		if ( ( ! is_array( $ids ) || empty( $ids ) ) && empty( $tabbed['tabs'] ) ) {
 			return '';
 		}
@@ -768,6 +781,7 @@ final class ShelfAndSliderRenderer {
 		$section_url        = isset( $attributes['sectionUrl'] ) ? esc_url( (string) $attributes['sectionUrl'] ) : '';
 		$section_link_label = isset( $attributes['sectionLinkLabel'] ) ? sanitize_text_field( (string) $attributes['sectionLinkLabel'] ) : '';
 		$section_link_label = '' !== $section_link_label ? $section_link_label : __( 'مشاهده همه', 'musicwave' );
+		$header_icon        = isset( $attributes['icon'] ) ? trim( (string) $attributes['icon'] ) : '';
 
 		$tabs_markup = $this->render_filter_tabs( $tabbed['tabs'], $tabbed['active'], $tab_scope );
 		$scope_attr  = ! empty( $tabbed['tabs'] ) ? ' data-mw-filter-scope="' . esc_attr( $tab_scope ) . '"' : '';
@@ -835,7 +849,7 @@ final class ShelfAndSliderRenderer {
 			return '';
 		}
 
-		$header      = $this->render_shelf_header( $eyebrow, $section_title, $description, $section_url, $section_link_label );
+		$header      = $this->render_shelf_header( $eyebrow, $section_title, $description, $section_url, $section_link_label, $header_icon );
 		$viewport_id = $shelf_instance . '-viewport';
 		$nav         = ! empty( $cards ) ? $this->shelf_nav_markup( $layout, $viewport_id ) : '';
 		$items_html  = ! empty( $cards )
@@ -1143,7 +1157,7 @@ final class ShelfAndSliderRenderer {
 			: '';
 
 		$region_label = '' !== $title ? $title : __( 'اسلایدر انتشارها', 'musicwave' );
-		$header       = $this->render_shelf_header( $eyebrow, $title, $description, $section_url, $section_link_label );
+		$header       = $this->render_shelf_header( $eyebrow, $title, $description, $section_url, $section_link_label, isset( $attributes['icon'] ) ? trim( (string) $attributes['icon'] ) : '' );
 		$hero_overlay = isset( $attributes['overlay'] ) ? min( 100, max( 0, absint( $attributes['overlay'] ) ) ) / 100 : 0.55;
 
 		return '<section ' . get_block_wrapper_attributes(

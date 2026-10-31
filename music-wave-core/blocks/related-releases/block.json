@@ -53,29 +53,17 @@
       "type": "string",
       "default": ""
     },
+    "sameArtistIcon": {
+      "type": "string",
+      "default": ""
+    },
     "similarHeading": {
       "type": "string",
       "default": ""
     },
-    "showSectionLink": {
-      "type": "boolean",
-      "default": false
-    },
-    "sectionLinkLabel": {
+    "similarIcon": {
       "type": "string",
       "default": ""
-    },
-    "layout": {
-      "type": "string",
-      "default": "grid"
-    },
-    "columns": {
-      "type": "integer",
-      "default": 4
-    },
-    "imageShape": {
-      "type": "string",
-      "default": "square"
     },
     "showArtwork": {
       "type": "boolean",
@@ -104,6 +92,18 @@
     "actionLabel": {
       "type": "string",
       "default": ""
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    },
+    "columns": {
+      "type": "integer",
+      "default": 4
+    },
+    "imageShape": {
+      "type": "string",
+      "default": "square"
     }
   },
   "usesContext": [
@@ -139,8 +139,6 @@
   },
   "example": {
     "attributes": {
-      "layout": "grid",
-      "columns": 4,
       "showArtwork": true,
       "showPreview": true
     }

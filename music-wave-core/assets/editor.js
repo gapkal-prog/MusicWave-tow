@@ -17,6 +17,17 @@
 		return isFinite( numeric ) && numeric > 0 ? numeric : 0;
 	}
 
+	/**
+	 * Whether the MusicWave VIP plugin is active for this page load.
+	 *
+	 * Mirrors `VipModuleStatus::is_active()` in PHP via `mwEditorConfig`.
+	 */
+	function vipActive() {
+		return Boolean(
+			window.mwEditorConfig && window.mwEditorConfig.isVipActive === '1'
+		);
+	}
+
 	function humanDuration( seconds ) {
 		var numeric = numericValue( seconds );
 		return numeric
@@ -328,6 +339,9 @@
 		var setAssetHasMore = assetHasMoreState[ 1 ];
 		var status = statusState[ 0 ];
 		var setStatus = statusState[ 1 ];
+		var directUrlState = useState( '' );
+		var directUrl = directUrlState[ 0 ];
+		var setDirectUrl = directUrlState[ 1 ];
 
 		useEffect(
 			function () {
@@ -454,6 +468,15 @@
 		}
 
 		function addProviderAsset() {
+			if ( ! vipActive() ) {
+				setStatus(
+					__(
+						'این قابلیت نیازمند فعال بودن افزونهٔ MusicWave VIP است.',
+						'music-wave-core'
+					)
+				);
+				return;
+			}
 			var number = privateAssets.length + 1;
 			var fileKey =
 				targetFileKey ||
@@ -507,7 +530,79 @@
 			);
 		}
 
+		function addDirectLinkAsset() {
+			var url = directUrl.trim();
+			if ( ! url || ! /^https:\/\//i.test( url ) ) {
+				setStatus(
+					__(
+						'لینک مستقیم باید با https:// شروع شود.',
+						'music-wave-core'
+					)
+				);
+				return;
+			}
+			setDirectUrl( '' );
+			var number = privateAssets.length + 1;
+			var fileKey =
+				targetFileKey ||
+				uniqueFileKey( 'download-file-' + number, privateAssets );
+			var selectedGroup = targetFileKey
+				? groupedDownloadFiles( privateAssets ).filter(
+						function ( group ) {
+							return group.key === targetFileKey;
+						}
+				  )[ 0 ]
+				: null;
+			var fileLabel = selectedGroup
+				? selectedGroup.label
+				: __( 'دانلود فایل', 'music-wave-core' ) + ' ' + number;
+			if ( targetFileKey && ! selectedGroup ) {
+				fileKey = uniqueFileKey(
+					'download-file-' + number,
+					privateAssets
+				);
+				setTargetFileKey( fileKey );
+			}
+			var encodedAssetId = 'direct:' + url;
+			var nextAssets = privateAssets.concat( [
+				{
+					key: uniqueQualityKey(
+						'direct-download-' + number,
+						privateAssets
+					),
+					label:
+						__( 'لینک مستقیم', 'music-wave-core' ) + ' ' + number,
+					asset_id: encodedAssetId,
+					file_name: '',
+					file_key: fileKey,
+					file_label: fileLabel,
+					format: '',
+					bitrate: 0,
+					duration: 0,
+					file_size: 0,
+				},
+			] );
+			setPrivateAssets( nextAssets );
+			setTargetFileKey( fileKey );
+			setStatus(
+				__(
+					'لینک مستقیم اضافه شد. قبل از ذخیره، مطمئن شوید میزبان مقصد HTTPS است و برای دانلود هدر Content-Disposition: attachment را ارسال می‌کند.',
+					'music-wave-core'
+				)
+			);
+		}
+
 		function uploadAsset( event ) {
+			if ( ! vipActive() ) {
+				setStatus(
+					__(
+						'آپلود فایل حفاظت‌شده نیازمند فعال بودن افزونهٔ MusicWave VIP است.',
+						'music-wave-core'
+					)
+				);
+				event.target.value = '';
+				return;
+			}
 			var files = event.target.files;
 			if ( ! files || ! files.length ) {
 				return;
@@ -546,6 +641,15 @@
 		}
 
 		function selectMediaLibraryAsset() {
+			if ( ! vipActive() ) {
+				setStatus(
+					__(
+						'انتخاب فایل از کتابخانهٔ رسانه نیازمند فعال بودن افزونهٔ MusicWave VIP است.',
+						'music-wave-core'
+					)
+				);
+				return;
+			}
 			if ( ! wp.media ) {
 				setStatus(
 					__(
@@ -713,13 +817,18 @@
 			var keys = {};
 			return ! privateAssets.some( function ( asset ) {
 				var key = normalizedKey( asset.key );
+				var assetId = asset.asset_id || '';
+				var isDirect = 0 === assetId.indexOf( 'direct:' );
 				if (
 					! asset.key ||
 					! asset.label ||
-					! asset.asset_id ||
+					! assetId ||
 					keys[ key ] ||
-					/^https?:\/\//i.test( asset.asset_id )
+					( ! isDirect && /^https?:\/\//i.test( assetId ) )
 				) {
+					return true;
+				}
+				if ( isDirect && ! /^direct:https:\/\//i.test( assetId ) ) {
 					return true;
 				}
 				keys[ key ] = true;
@@ -900,10 +1009,16 @@
 						'دارایی ارائه‌دهنده حفاظت‌شده ID',
 						'music-wave-core'
 					),
-					help: __(
-						'از یک شناسهٔ غیرشفاف مانند local:album/track.flac استفاده کنید. نشانی‌های عمومی مجاز نیستند.',
-						'music-wave-core'
-					),
+					help:
+						0 === ( asset.asset_id || '' ).indexOf( 'direct:' )
+							? __(
+									'لینک HTTPS فایل روی CDN/میزبان خارجی. پس از بررسی دسترسی، کاربر به آن هدایت می‌شود.',
+									'music-wave-core'
+							  )
+							: __(
+									'از یک شناسهٔ غیرشفاف مانند local:album/track.flac استفاده کنید. نشانی‌های عمومی مجاز نیستند.',
+									'music-wave-core'
+							  ),
 					value: asset.asset_id || '',
 					onChange( value ) {
 						setQualityValue( index, 'asset_id', value );
@@ -1001,6 +1116,34 @@
 			);
 		}
 
+		var vip_on = vipActive();
+		var provider_label;
+		if ( ! vip_on ) {
+			provider_label = __(
+				'افزودن فایل قابل دانلود دستی (VIP) — غیرفعال',
+				'music-wave-core'
+			);
+		} else if ( targetFileKey ) {
+			provider_label = __( 'افزودن کیفیت دستی (VIP)', 'music-wave-core' );
+		} else {
+			provider_label = __(
+				'افزودن فایل قابل دانلود دستی (VIP)',
+				'music-wave-core'
+			);
+		}
+		var upload_label =
+			( targetFileKey
+				? __( 'بارگذاری یک کیفیت', 'music-wave-core' )
+				: __( 'آپلود فایل جدید', 'music-wave-core' ) ) +
+			( vip_on ? '' : ' (VIP) — غیرفعال' );
+		var media_label =
+			( targetFileKey
+				? __( 'یک کیفیت را از رسانه‌ها انتخاب کنید', 'music-wave-core' )
+				: __(
+						'فایلی را از کتابخانهٔ رسانه انتخاب کنید',
+						'music-wave-core'
+				  ) ) + ( vip_on ? '' : ' — غیرفعال' );
+
 		return el(
 			'section',
 			{ className: 'mw-release-manager' },
@@ -1014,9 +1157,26 @@
 				)
 			),
 			groupedDownloadFiles( privateAssets ).map( downloadFileGroup ),
+			! vip_on
+				? el(
+						Notice,
+						{ status: 'info', isDismissible: false },
+						__(
+							'افزونهٔ MusicWave VIP غیرفعال است؛ آپلود فایل حفاظت‌شده، انتخاب از کتابخانهٔ رسانه و افزودن دارایی دستی VIP غیرفعال شده‌اند. لینک مستقیم (direct:) بدون VIP کار می‌کند.',
+							'music-wave-core'
+						)
+				  )
+				: null,
 			el(
 				'div',
 				{ className: 'mw-editor-actions' },
+				el( TextControl, {
+					label: __( 'لینک مستقیم فایل (HTTPS)', 'music-wave-core' ),
+					value: directUrl,
+					onChange( value ) {
+						setDirectUrl( value );
+					},
+				} ),
 				privateAssets.length
 					? el( SelectControl, {
 							label: __(
@@ -1047,11 +1207,20 @@
 					: null,
 				el(
 					Button,
-					{ variant: 'secondary', onClick: addProviderAsset },
+					{
+						variant: 'secondary',
+						onClick: addProviderAsset,
+						disabled: ! vip_on,
+					},
+					provider_label
+				),
+				el(
+					Button,
+					{ variant: 'secondary', onClick: addDirectLinkAsset },
 					targetFileKey
-						? __( 'افزودن کیفیت دستی', 'music-wave-core' )
+						? __( 'افزودن کیفیت لینک مستقیم', 'music-wave-core' )
 						: __(
-								'افزودن فایل قابل دانلود دستی',
+								'افزودن فایل با لینک مستقیم (CDN/میزبان خارجی)',
 								'music-wave-core'
 						  )
 				),
@@ -1059,29 +1228,26 @@
 					'label',
 					{
 						className:
-							'components-button is-secondary mw-editor-upload',
+							'components-button is-secondary mw-editor-upload' +
+							( vip_on ? '' : ' is-disabled' ),
+						'aria-disabled': ! vip_on,
 					},
-					targetFileKey
-						? __( 'بارگذاری یک کیفیت', 'music-wave-core' )
-						: __( 'آپلود فایل جدید', 'music-wave-core' ),
+					upload_label,
 					el( 'input', {
 						type: 'file',
 						accept: '.mp3,.m4a,.aac,.ogg,.wav,.flac,.zip',
 						onChange: uploadAsset,
+						disabled: ! vip_on,
 					} )
 				),
 				el(
 					Button,
-					{ variant: 'secondary', onClick: selectMediaLibraryAsset },
-					targetFileKey
-						? __(
-								'یک کیفیت را از رسانه‌ها انتخاب کنید',
-								'music-wave-core'
-						  )
-						: __(
-								'فایلی را از کتابخانهٔ رسانه انتخاب کنید',
-								'music-wave-core'
-						  )
+					{
+						variant: 'secondary',
+						onClick: selectMediaLibraryAsset,
+						disabled: ! vip_on,
+					},
+					media_label
 				),
 				el(
 					Button,

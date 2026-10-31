@@ -229,7 +229,9 @@ html:has(.mw-site-header.is-position-sticky) {
 		padding-block: 0.55rem;
 		padding-inline: 0.75rem;
 		border-radius: var(--mw-radius-sm);
-		color: var(--mw-color-text-muted);
+		/* Inherit the Navigation block colour so Styles / Settings changes reach
+		 * the links; the mix keeps the resting state quieter than hover. */
+		color: color-mix(in srgb, currentColor 76%, transparent);
 		font-size: 0.9rem;
 		font-weight: 600;
 		text-decoration: none;
@@ -240,13 +242,13 @@ html:has(.mw-site-header.is-position-sticky) {
 	.mw-site-header .wp-block-navigation-item__content:hover,
 	.mw-site-header .wp-block-navigation-item__content:focus-visible,
 	.mw-site-header .wp-block-navigation-submenu__toggle[aria-expanded="true"] {
-		color: var(--mw-color-text);
+		color: currentColor;
 		background: color-mix(in srgb, var(--mw-color-text) 7%, transparent);
 	}
 
 	.mw-site-header .current-menu-item > .wp-block-navigation-item__content,
 	.mw-site-header .current-menu-ancestor > .wp-block-navigation-item__content {
-		color: var(--mw-color-text);
+		color: currentColor;
 		background: color-mix(in srgb, var(--mw-color-accent) 14%, transparent);
 		font-weight: 700;
 	}
@@ -443,9 +445,9 @@ body.has-modal-open {
 	inline-size: 100%;
 	min-block-size: 3.5rem;
 	box-sizing: border-box;
-	padding: 0.9rem 1.15rem;
-	color: var(--mw-color-text);
-	background: color-mix(in srgb, var(--mw-color-surface) 86%, transparent);
+padding: 0.9rem 1.15rem;
+		color: currentColor;
+		background: color-mix(in srgb, var(--mw-color-surface) 86%, transparent);
 	border: 1px solid var(--mw-color-border);
 	border-radius: var(--mw-radius-md);
 	font-size: clamp(1.05rem, 2.8vw, 1.3rem);

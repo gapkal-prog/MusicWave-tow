@@ -124,7 +124,7 @@
 
 .mw-section-head h2 {
 	font-family: var(--wp--preset--font-family--display, "Syne", sans-serif);
-	font-size: clamp(1.55rem, 3.2vw, 2.5rem);
+	font-size: var(--mw-section-title-size);
 	font-weight: 800;
 	letter-spacing: -0.025em;
 	line-height: 1.06;
@@ -826,41 +826,4 @@
 	.mw-release-shelf.mw-release-shelf--editorial .mw-release-shelf__item:is(:hover, :focus-within) {
 		transform: none;
 	}
-}
-
-/* -------------------------------------------------------------------------
- * 9. Demo packs
- *
- * The `demo-*.php` patterns introduce three classes of their own. They are
- * deliberately few: every pack already composes live renderers and core
- * blocks, so the only styling it needs is the intro chrome, the badge and a
- * container that keeps two adjacent panels side by side until the viewport
- * gets too narrow.
- * ---------------------------------------------------------------------- */
-
-/* The intro strip opens each pack with a magazine rule instead of a card, so
-   the demo header never reads as one more surface in the stack. */
-.mw-demo__intro {
-	border-inline-start: 3px solid var(--mw-color-editorial, #fa2d48);
-	padding-inline-start: var(--wp--preset--spacing--30);
-}
-
-.mw-demo__badge {
-	background: var(--mw-color-accent-soft);
-	border-radius: 999px;
-	color: var(--mw-color-accent);
-	display: inline-block;
-	font-size: 0.625rem;
-	font-weight: 700;
-	letter-spacing: 0.08em;
-	margin: 0;
-	padding: 0.25rem 0.65rem;
-}
-
-/* Same auto-fit idiom as `.mw-release-grid` (components/catalog.css): core
-   prints a container query for the group layout, so the collapse needs
-   `!important` to win regardless of stylesheet order. */
-.mw-demo__grid {
-	align-items: start;
-	grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr)) !important;
 }

@@ -26,6 +26,7 @@ final class DownloadResolver {
 	/** @var DownloadTokenService */ private $tokens;
 	/** @var ReplayStore */ private $replays;
 	/** @var DownloadProvider */ private $provider;
+	/** @var DeliveryCapabilities|null */ private $capabilities;
 	/** @var OpaqueTicketStore */ private $tickets;
 	/** @var string Last deny reason for richer REST errors. */
 	private $last_deny_reason = '';
@@ -34,13 +35,14 @@ final class DownloadResolver {
 		return $this->last_deny_reason;
 	}
 
-	public function __construct( ReleaseRepository $releases, AccessPolicyEngine $policy, DownloadTokenService $tokens, ReplayStore $replays, DownloadProvider $provider, ?OpaqueTicketStore $tickets = null ) {
-		$this->releases = $releases;
-		$this->policy   = $policy;
-		$this->tokens   = $tokens;
-		$this->replays  = $replays;
-		$this->provider = $provider;
-		$this->tickets  = null !== $tickets ? $tickets : new OpaqueTicketStore(); }
+	public function __construct( ReleaseRepository $releases, AccessPolicyEngine $policy, DownloadTokenService $tokens, ReplayStore $replays, DownloadProvider $provider, ?OpaqueTicketStore $tickets = null, ?DeliveryCapabilities $capabilities = null ) {
+		$this->releases     = $releases;
+		$this->policy       = $policy;
+		$this->tokens       = $tokens;
+		$this->replays      = $replays;
+		$this->provider     = $provider;
+		$this->tickets      = null !== $tickets ? $tickets : new OpaqueTicketStore();
+		$this->capabilities = $capabilities; }
 
 	/**
 	 * Whether the current visitor may reach the delivery endpoints at all.
@@ -53,7 +55,9 @@ final class DownloadResolver {
 		if ( $release_id < 1 ) {
 			return false;
 		}
-		if ( ! $this->policy->decide( $release_id, AccessSubject::current() )->is_allowed() ) {
+		$decision = $this->policy->decide( $release_id, AccessSubject::current() );
+		if ( ! $decision->is_allowed() ) {
+			$this->last_deny_reason = '' !== $decision->reason() ? $decision->reason() : 'entitlement';
 			return false;
 		}
 		if ( get_current_user_id() < 1 && ! (bool) apply_filters( 'music_wave_guest_delivery_allowed', true, $release_id ) ) {
@@ -68,15 +72,20 @@ final class DownloadResolver {
 	 * Resolve configured token lifetime (in seconds) for `'download'` or `'stream'`.
 	 */
 	public function ttl_for( string $purpose ): int {
+		// The token service caps every token at DownloadTokenService::MAX_TTL, so
+		// report that effective ceiling — never a larger lifetime the token itself
+		// cannot honour.
+		$cap = class_exists( DownloadTokenService::class ) ? DownloadTokenService::MAX_TTL : 900;
+
 		if ( 'stream' === $purpose ) {
 			$default = class_exists( Settings::class ) ? Settings::get_stream_token_ttl() : 900;
 			$ttl     = (int) apply_filters( 'music_wave_stream_token_ttl', $default );
-			return max( 60, min( 7200, $ttl > 0 ? $ttl : $default ) );
+			return max( 60, min( $cap, $ttl > 0 ? $ttl : $default ) );
 		}
 
 		$default = class_exists( Settings::class ) ? Settings::get_token_ttl() : 300;
 		$ttl     = (int) apply_filters( 'music_wave_download_token_ttl', $default );
-		return max( 30, min( 3600, $ttl > 0 ? $ttl : $default ) );
+		return max( 30, min( $cap, $ttl > 0 ? $ttl : $default ) );
 	}
 
 	public function issue( int $release_id, AccessSubject $subject, string $binding, string $asset_key = '', string $purpose = 'download' ): ?string {
@@ -95,7 +104,12 @@ final class DownloadResolver {
 			$this->last_deny_reason = 'unknown_asset';
 			$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => 'unknown_asset' ) );
 			return null; }
-		if ( $this->provider instanceof NullDownloadProvider && ( 0 === strpos( $asset['asset_id'], 'vip:' ) || 0 === strpos( $asset['asset_id'], 'local:' ) ) ) {
+		if ( null !== $this->capabilities && ! $this->capabilities->supports( $asset['asset_id'] ) ) {
+			$this->last_deny_reason = 'provider_unavailable';
+			$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => 'provider_unavailable' ) );
+			return null;
+		}
+		if ( null === $this->capabilities && $this->provider instanceof NullDownloadProvider && ( 0 === strpos( $asset['asset_id'], 'vip:' ) || 0 === strpos( $asset['asset_id'], 'local:' ) ) ) {
 			$this->last_deny_reason = 'provider_unavailable';
 			$this->audit( 'token_denied', $release_id, $subject->user_id(), array( 'reason' => 'provider_unavailable' ) );
 			return null;
@@ -247,6 +261,16 @@ final class DownloadResolver {
 	}
 
 	/**
+	 * Return the default asset for a release, used when binding a playback
+	 * session to an asset key.
+	 *
+	 * @return array<string, string>|null
+	 */
+	public function asset_for_session( int $release_id ): ?array {
+		return $this->asset( $release_id, '' );
+	}
+
+	/**
 	 * Return the selected private asset with legacy single-file compatibility.
 	 *
 	 * @return array<string, string>|null
@@ -289,15 +313,12 @@ final class DownloadResolver {
 	 * @return array<string, string>|null
 	 */
 	private function valid_asset( array $asset ) {
-		$sanitize = static function ( string $value ): string {
-			if ( function_exists( 'sanitize_text_field' ) ) {
-				return sanitize_text_field( $value );
-			}
-			return function_exists( 'wp_strip_all_tags' ) ? trim( wp_strip_all_tags( $value ) ) : trim( (string) preg_replace( '/<[^>]*>/', '', $value ) );
-		};
-		$key      = isset( $asset['key'] ) ? sanitize_key( (string) $asset['key'] ) : '';
-		$label    = isset( $asset['label'] ) ? $sanitize( (string) $asset['label'] ) : '';
-		$asset_id = isset( $asset['asset_id'] ) ? $sanitize( (string) $asset['asset_id'] ) : '';
+		$key   = isset( $asset['key'] ) ? sanitize_key( (string) $asset['key'] ) : '';
+		$label = isset( $asset['label'] ) ? sanitize_text_field( (string) $asset['label'] ) : '';
+		// AssetIdSanitizer preserves `direct:<https-url>` percent-encoding
+		// (%20, %28, %29, …) which sanitize_text_field() can corrupt; other
+		// opaque identifiers (`vip:`, `local:`) pass through normally.
+		$asset_id = isset( $asset['asset_id'] ) ? AssetIdSanitizer::sanitize( (string) $asset['asset_id'] ) : '';
 
 		return '' !== $key && '' !== $label && '' !== $asset_id ? array(
 			'key'      => $key,

@@ -11,6 +11,9 @@ declare(strict_types=1);
 namespace ManaCore\MusicWave\Vip\Delivery;
 
 use ManaCore\MusicWave\Core\Downloads\DownloadTokenClaims;
+use ManaCore\MusicWave\Vip\Hls\AssetKeyStore;
+use ManaCore\MusicWave\Vip\Hls\HlsPackager;
+use ManaCore\MusicWave\Vip\Hls\HlsRenditions;
 use ManaCore\MusicWave\Vip\ProtectedAssetStorage;
 use ManaCore\MusicWave\Vip\RemoteRedirectProvider;
 use ManaCore\MusicWave\Vip\VipSettings;
@@ -98,6 +101,47 @@ final class ProtectedDeliveryDiagnostics {
 				'sample_download_url' => $sample_download_url,
 				'sample_stream_url'   => $sample_stream_url,
 			),
+			'edge'            => $this->edge_section( $config ),
+			'hls'             => $this->hls_section( $config ),
 		);
+	}
+
+	/**
+	 * Edge-signed readiness (non-probing; the live probe lives behind the
+	 * `/protected-assets/edge-test` REST route).
+	 *
+	 * @param array<string, mixed> $config Normalized VIP settings.
+	 * @return array<string, mixed>
+	 */
+	private function edge_section( array $config ): array {
+		$manager = new EdgeConnectionManager( $config );
+		$header  = $manager->origin_header_config();
+		$base    = trim( (string) ( $config['edge_base_url'] ?? '' ) );
+		$secret  = (string) ( $config['edge_signing_secret'] ?? '' );
+
+		return array(
+			'base_url'      => '' !== $base ? (string) wp_parse_url( $base, PHP_URL_HOST ) : '',
+			'https_valid'   => '' !== $base && 'https' === wp_parse_url( $base, PHP_URL_SCHEME ),
+			'secret_strong' => strlen( $secret ) >= 32,
+			'header_name'   => isset( $header['name'] ) ? (string) $header['name'] : '',
+			'header_valid'  => ! isset( $header['error'] ),
+		);
+	}
+
+	/**
+	 * HLS packaging/encryption readiness.
+	 *
+	 * @param array<string, mixed> $config Normalized VIP settings.
+	 * @return array<string, mixed>
+	 */
+	private function hls_section( array $config ): array {
+		$packager = new HlsPackager(
+			(string) ( $config['ffmpeg_binary'] ?? 'ffmpeg' ),
+			(string) ( $config['ffprobe_binary'] ?? 'ffprobe' ),
+			new HlsRenditions( (array) ( $config['hls_renditions'] ?? array( 128, 320 ) ) ),
+			new AssetKeyStore()
+		);
+
+		return ( new HlsDiagnostics( $packager, new AssetKeyStore(), $config ) )->snapshot();
 	}
 }

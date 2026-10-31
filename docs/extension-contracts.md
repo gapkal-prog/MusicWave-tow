@@ -138,6 +138,15 @@ The public endpoint is `admin-post.php` action `music_wave_submit_request` (nonc
 the admin endpoint is `music_wave_manage_request` and requires `manage_mw_requests`. Both return through
 post/redirect/get; field errors travel in a 10-minute transient keyed by a random token, never in the URL.
 
+## Page builders (stable)
+
+| Surface | Contract |
+|---|---|
+| `[musicwave_block]` shortcode | `name` (required, `music-wave/*` only) and `attributes` / `attrs` (JSON object of the block's declared attributes). Rendered through `render_block()`, so output matches the block and Site Editors. Unknown namespaces, malformed JSON and undeclared attribute keys are rejected. |
+
+See `docs/elementor-compatibility.md` for Elementor usage, context-dependent blocks and the
+reason the FSE templates themselves stay in the Site Editor.
+
 ## Experimental
 
 | Hook | Type | Notes |

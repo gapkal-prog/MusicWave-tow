@@ -79,7 +79,8 @@ final class LibraryButton {
 			if ( ! is_scalar( $chunk ) ) {
 				continue;
 			}
-			foreach ( preg_split( '/\s+/', trim( (string) $chunk ) ) ?: array() as $candidate ) {
+			$parts = preg_split( '/\s+/', trim( (string) $chunk ) );
+			foreach ( ( is_array( $parts ) ? $parts : array() ) as $candidate ) {
 				if ( '' === $candidate ) {
 					continue;
 				}
@@ -91,6 +92,38 @@ final class LibraryButton {
 		}
 
 		return array_values( array_unique( $out ) );
+	}
+
+	/**
+	 * Build the aggregate "saved by N" badge.
+	 *
+	 * Only a total is resolved — never member identities — and the value is
+	 * served from the repository's short-lived cache. The badge is rendered
+	 * even at zero (visually hidden) so the client can keep it in sync while
+	 * the visitor toggles the button. Purely decorative for assistive tech:
+	 * the button's accessible name stays the stable action label.
+	 *
+	 * @param string               $type     Library item type.
+	 * @param int                  $item_id  Target item ID.
+	 * @param array<string, mixed> $settings Button settings.
+	 * @param bool                 $sample   Render a sample value for the editor preview.
+	 */
+	private static function count_badge( string $type, int $item_id, array $settings, bool $sample = false ): string {
+		if ( empty( $settings['showCount'] ) ) {
+			return '';
+		}
+
+		$count = 0;
+		if ( $sample ) {
+			$count = 12;
+		} elseif ( null !== self::$repository ) {
+			$count = self::$repository->count_for_item( $type, $item_id );
+		}
+
+		$formatted = function_exists( 'number_format_i18n' ) ? number_format_i18n( $count ) : (string) $count;
+
+		return '<span class="mw-library-button__count" data-mw-library-count-value="' . esc_attr( (string) $count ) . '" aria-hidden="true"'
+			. ( $count > 0 ? '' : ' hidden' ) . '>' . esc_html( $formatted ) . '</span>';
 	}
 
 	/**
@@ -125,6 +158,7 @@ final class LibraryButton {
 
 		$in_library = null !== self::$repository && self::$repository->has( get_current_user_id(), $type, $item_id );
 		$label      = self::label( $type, $in_library, $settings );
+		$badge      = self::count_badge( $type, $item_id, $settings );
 
 		$action_mode = $is_heart ? 'icon' : 'button';
 		$variant     = ActionButtonStyle::resolve_variant( $settings, ActionButtonStyle::VARIANT_SURFACE );
@@ -151,6 +185,9 @@ final class LibraryButton {
 		if ( $in_library ) {
 			$classes[] = 'is-saved';
 		}
+		if ( '' !== $badge ) {
+			$classes[] = 'mw-library-button--has-count';
+		}
 		foreach ( self::extra_classes( $settings ) as $extra_class ) {
 			$classes[] = $extra_class;
 		}
@@ -171,10 +208,10 @@ final class LibraryButton {
 		$label_html  = '<span class="' . esc_attr( $label_class ) . '">' . esc_html( $label ) . '</span>';
 
 		if ( get_current_user_id() < 1 ) {
-			return '<a class="' . esc_attr( $class ) . ' mw-library-button--guest" href="' . esc_url( AuthPolicy::login_url( BlockSupport::current_url() ) ) . '" aria-label="' . esc_attr( $label ) . '">' . $icon . $label_html . '</a>';
+			return '<a class="' . esc_attr( $class ) . ' mw-library-button--guest" href="' . esc_url( AuthPolicy::login_url( BlockSupport::current_url() ) ) . '" aria-label="' . esc_attr( $label ) . '">' . $icon . $label_html . $badge . '</a>';
 		}
 
-		return '<button type="button" class="' . esc_attr( $class ) . '" data-mw-library-type="' . esc_attr( $type ) . '" data-mw-library-id="' . esc_attr( (string) $item_id ) . '" data-mw-library-state="' . ( $in_library ? 'in' : 'out' ) . '" data-mw-library-label-add="' . esc_attr( self::label( $type, false, $settings ) ) . '" data-mw-library-label-added="' . esc_attr( self::label( $type, true, $settings ) ) . '" aria-pressed="' . ( $in_library ? 'true' : 'false' ) . '" aria-label="' . esc_attr( $label ) . '">' . $icon . $label_html . '<span class="mw-library-button__status" role="status" aria-live="polite"></span></button>';
+		return '<button type="button" class="' . esc_attr( $class ) . '" data-mw-library-type="' . esc_attr( $type ) . '" data-mw-library-id="' . esc_attr( (string) $item_id ) . '" data-mw-library-state="' . ( $in_library ? 'in' : 'out' ) . '" data-mw-library-label-add="' . esc_attr( self::label( $type, false, $settings ) ) . '" data-mw-library-label-added="' . esc_attr( self::label( $type, true, $settings ) ) . '" aria-pressed="' . ( $in_library ? 'true' : 'false' ) . '" aria-label="' . esc_attr( $label ) . '">' . $icon . $label_html . $badge . '<span class="mw-library-button__status" role="status" aria-live="polite"></span></button>';
 	}
 
 	/**
@@ -189,6 +226,7 @@ final class LibraryButton {
 		$compact     = ! empty( $settings['compact'] );
 		$is_heart    = 'heart' === $mode;
 		$label       = self::label( $type, false, $settings );
+		$badge       = self::count_badge( $type, 0, $settings, true );
 		$action_mode = $is_heart ? 'icon' : 'button';
 		$variant     = ActionButtonStyle::resolve_variant( $settings, ActionButtonStyle::VARIANT_SURFACE );
 		$size        = $compact ? ActionButtonStyle::SIZE_SM : ActionButtonStyle::resolve_size( $settings, ActionButtonStyle::SIZE_MD );
@@ -200,6 +238,7 @@ final class LibraryButton {
 			. ' mw-library-button--' . $mode
 			. ( $compact ? ' mw-library-button--compact' : '' )
 			. ( $is_heart ? ' mw-library-button--icon-only' : '' )
+			. ( '' !== $badge ? ' mw-library-button--has-count' : '' )
 			. ' mw-library-button--placeholder';
 		$extras      = self::extra_classes( $settings );
 		if ( array() !== $extras ) {
@@ -217,6 +256,7 @@ final class LibraryButton {
 		return '<button type="button" class="' . esc_attr( $classes ) . '" aria-label="' . esc_attr( $label ) . '">'
 			. $icon
 			. '<span class="' . esc_attr( $label_class ) . '">' . esc_html( $label ) . '</span>'
+			. $badge
 			. '</button>';
 	}
 

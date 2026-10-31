@@ -116,10 +116,12 @@ final class ArtistProfileBlock {
 		$profile_url = (string) $profile['profile_url'];
 		$image_id    = (int) $profile['image_id'];
 
-		/* An artist without a photo simply has no avatar: the frame owns the size,
+		/*
+		 * An artist without a photo simply has no avatar: the frame owns the size,
 		 * ratio and accent ring, so a monogram stand-in would only pretend to be a
 		 * portrait. `imageShape` lives on the root class instead of a second frame
-		 * modifier, keeping one owner per rule. */
+		 * modifier, keeping one owner per rule.
+		 */
 		$media_html = '';
 		if ( $show_image && $image_id > 0 ) {
 			$img = wp_get_attachment_image(

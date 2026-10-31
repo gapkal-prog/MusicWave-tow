@@ -22,6 +22,7 @@ use ManaCore\MusicWave\Core\Listening\ListeningRepository;
 use ManaCore\MusicWave\Core\Migrations\MigrationRunner;
 use ManaCore\MusicWave\Core\Playlists\PlaylistRepository;
 use ManaCore\MusicWave\Core\Support\Settings;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 use WP_Query;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -210,7 +211,7 @@ final class SettingsPage {
 		echo '<div class="mw-settings__columns"><section class="mw-settings__panel"><h2>' . esc_html__( 'اقدامات سریع', 'music-wave-core' ) . '</h2>';
 		$this->action_link( admin_url( 'post-new.php?post_type=' . ReleasePostType::KEY ), __( 'افزودن انتشار', 'music-wave-core' ), __( 'محتوای کاتالوگ را ایجاد و پیکربندی کنید.', 'music-wave-core' ) );
 		$this->action_link( admin_url( 'edit.php?post_type=' . ReleasePostType::KEY ), __( 'مرور همهٔ انتشارها', 'music-wave-core' ), __( 'وضعیت آمادگی و دسترسی را بررسی کنید.', 'music-wave-core' ) );
-		if ( defined( 'MUSIC_WAVE_VIP_FILE' ) ) {
+		if ( VipModuleStatus::is_active() ) {
 			$this->action_link( admin_url( 'edit.php?post_type=' . ReleasePostType::KEY . '&page=music-wave-vip&tab=delivery' ), __( 'تحویل حفاظت‌شده و طرح‌های VIP', 'music-wave-core' ), __( 'مدیریت پوشهٔ خصوصی، امضای HMAC و طرح‌های اشتراک VIP.', 'music-wave-core' ) );
 		}
 		$this->action_link( \ManaCore\MusicWave\Core\Requests\RequestsAdminPage::url( array( 'view' => 'settings' ) ), __( 'درخواست‌ها و تنظیمات چت', 'music-wave-core' ), __( 'مدیریت درخواست‌های کاربران و فعال‌سازی چت و گفتگو.', 'music-wave-core' ) );
@@ -228,7 +229,8 @@ final class SettingsPage {
 				MigrationRunner::LATEST_VERSION
 			)
 		);
-		$this->status_row( __( 'تحویل حفاظت‌شده', 'music-wave-core' ), has_filter( 'music_wave_download_provider' ), __( 'فایل‌های خصوصی و دانلود ایمن', 'music-wave-core' ) );
+		$delivery_caps = \ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities::probe();
+		$this->status_row( __( 'تحویل حفاظت‌شده', 'music-wave-core' ), $delivery_caps->is_available(), __( 'فایل‌های خصوصی و دانلود ایمن', 'music-wave-core' ) );
 		$this->status_row( __( 'ارائه‌دهنده عضویت', 'music-wave-core' ), has_filter( 'music_wave_membership_provider' ), __( 'تصمیمات دسترسی مبتنی بر عضویت', 'music-wave-core' ) );
 		$this->status_row( __( 'تم بلوک همراه', 'music-wave-core' ), 'musicwave' === $theme->get_stylesheet(), __( 'قالب‌ها و سبک‌های MusicWave', 'music-wave-core' ) );
 		echo '</section></div>';
@@ -247,12 +249,17 @@ final class SettingsPage {
 		$this->settings_form_start();
 		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'پیش‌فرض‌های انتشار جدید', 'music-wave-core' ) . '</h2>';
 		echo '<p>' . esc_html__( 'این مقادیر هنگام ایجاد هر انتشار جدید (چه در ویرایشگر بلوکی و چه کلاسیک/REST) به‌صورت خودکار ثبت می‌شوند. انتشارهای قبلی هرگز بازنویسی نمی‌شوند.', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
-		$this->select_row( 'default_access_mode', __( 'حالت دسترسی پیش‌فرض', 'music-wave-core' ), (string) $settings['default_access_mode'], $this->access_labels(), __( 'زمانی که انتشارهای جدید باید به‌صورت پیش‌فرض نیازمند اشتراک یا خرید باشند، حالت موردنظر را انتخاب کنید.', 'music-wave-core' ) );
+		$this->select_row( 'default_access_mode', __( 'حالت دسترسی پیش‌فرض', 'music-wave-core' ), (string) $settings['default_access_mode'], $this->access_labels(), __( 'زمانی که انتشارهای جدید باید به‌صورت پیش‌فرض نیازمند اشتراک یا خرید باشند، حالت موردنظر را انتخاب کنید.', 'music-wave-core' ), '', $this->disabled_vip_access_modes() );
 		$default_levels = (string) $settings['default_membership_levels'];
+		$vip_active     = VipModuleStatus::is_active();
 		echo '<tr><th scope="row"><label for="mw-setting-default_membership_levels">' . esc_html__( 'سطح عضویت پیش‌فرض انتشارهای جدید', 'music-wave-core' ) . '</label></th><td>';
-		echo '<input class="regular-text" type="text" id="mw-setting-default_membership_levels" name="' . esc_attr( Settings::OPTION ) . '[default_membership_levels]" value="' . esc_attr( $default_levels ) . '">';
-		$this->render_level_picker_chips( 'mw-setting-default_membership_levels', AccessModePolicy::sanitize_levels( $default_levels ) );
-		echo '<p class="description">' . esc_html__( 'هنگام ایجاد انتشار با حالت «اشتراک VIP» یا «خرید تکی یا اشتراک VIP»، این کلیدها خودکار روی انتشار ثبت می‌شوند (پیش‌فرض: mw_vip برای همه مشترکین فعال VIP).', 'music-wave-core' ) . '</p></td></tr>';
+		echo '<input class="regular-text" type="text" id="mw-setting-default_membership_levels" name="' . esc_attr( Settings::OPTION ) . '[default_membership_levels]" value="' . esc_attr( $default_levels ) . '"' . ( $vip_active ? '' : ' readonly aria-disabled="true"' ) . '>';
+		$this->render_level_picker_chips( 'mw-setting-default_membership_levels', AccessModePolicy::sanitize_levels( $default_levels ), ! $vip_active );
+		echo '<p class="description">' . esc_html__( 'هنگام ایجاد انتشار با حالت «اشتراک VIP» یا «خرید تکی یا اشتراک VIP»، این کلیدها خودکار روی انتشار ثبت می‌شوند (پیش‌فرض: mw_vip برای همه مشترکین فعال VIP).', 'music-wave-core' ) . '</p>';
+		if ( ! $vip_active ) {
+			echo '<p class="description"><strong>' . esc_html__( 'افزونهٔ MusicWave VIP غیرفعال است؛ این فیلد و گزینه‌های اشتراک تا فعال‌شدن VIP قابل ویرایش نیستند.', 'music-wave-core' ) . '</strong></p>';
+		}
+		echo '</td></tr>';
 		$this->number_row( 'default_preview_duration', __( 'مدت پیش‌نمایش پیش‌فرض', 'music-wave-core' ), (int) $settings['default_preview_duration'], 10, 120, __( 'ثانیه؛ هر انتشار می‌تواند این مقدار را به‌طور مستقل تغییر دهد.', 'music-wave-core' ) );
 		echo '</table></section>';
 
@@ -328,22 +335,47 @@ final class SettingsPage {
 		}
 
 		$settings = Settings::all();
+		$vip_on   = $this->vip_enforcement_active();
 		$this->settings_form_start();
 		$absent = (string) $settings['membership_absent_behavior'];
 		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'رفتار ماژول عضویت', 'music-wave-core' ) . '</h2>';
 		$this->render_live_vip_status_banner();
 		echo '<p>' . esc_html__( 'وقتی هیچ ماژول عضویتی مانند MusicWave VIP فعال نیست، انتشارهای دارای محدودیت عضویت می‌توانند برای همه در دسترس بمانند یا تا زمان فعال‌شدن یک ماژول، دسترسی‌شان مسدود شود (در حالت دوگانه «خرید یا اشتراک»، در صورت داشتن محصول WooCommerce مسیر خرید تکی همچنان فعال می‌ماند).', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
-		echo '<tr><th>' . esc_html__( 'در حالی که هیچ ماژول عضویت فعال نیست', 'music-wave-core' ) . '</th><td><label style="display:block;margin-bottom:6px;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="allow" ' . checked( $absent, 'allow', false ) . '> ' . esc_html__( 'دسترسی آزاد — انتشارهای صرفاً عضویتی بدون افزونه VIP قابل مشاهده بمانند (توصیه می‌شود)', 'music-wave-core' ) . '</label><label style="display:block;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="deny" ' . checked( $absent, 'deny', false ) . '> ' . esc_html__( 'مسدودسازی — تا زمان فعال‌شدن یک ماژول عضویت، دسترسی به انتشارهای عضویتی قفل بماند', 'music-wave-core' ) . '</label></td></tr>';
+		$choices           = \ManaCore\MusicWave\Core\Access\MembershipAbsencePolicy::choices();
+		$vip_disabled_attr = $vip_on ? 'disabled' : '';
+		$vip_disabled_note = $vip_on
+			? ' (قفل است زیرا MusicWave VIP فعال است و تصمیمات دسترسی را می‌گیرد)'
+			: '';
+		echo '<tr><th>' . esc_html__( 'در حالی که هیچ ماژول عضویت فعال نیست', 'music-wave-core' ) . esc_html( $vip_disabled_note ) . '</th><td>';
+		foreach ( $choices as $key => $choice ) {
+			echo '<label style="display:block;margin-bottom:6px;"><input type="radio" name="' . esc_attr( Settings::OPTION ) . '[membership_absent_behavior]" value="' . esc_attr( $key ) . '" ' . checked( $absent, $key, false ) . ' ' . esc_attr( $vip_disabled_attr ) . '> <strong>' . esc_html( $choice[0] ) . '</strong><br><span class="description" style="font-size:12px;">' . esc_html( $choice[1] ) . '</span></label>';
+		}
+		echo '</td></tr>';
 		echo '</table></section>';
 
+		// خط اثر فعلی (بخش ۶.۱).
+		$has_vip_provider = has_filter( 'music_wave_membership_provider' );
+		if ( ! $has_vip_provider ) {
+			echo '<div class="notice notice-info inline" style="margin:12px 0 0;"><p><strong>' . esc_html__( 'اثر فعلی:', 'music-wave-core' ) . '</strong> ' . esc_html__( 'هیچ ماژول عضویتی فعال نیست؛ این سیاست همین حالا اعمال می‌شود.', 'music-wave-core' ) . '</p></div>';
+		} elseif ( $vip_on ) {
+			echo '<div class="notice notice-success inline" style="margin:12px 0 0;"><p><strong>' . esc_html__( 'اثر فعلی:', 'music-wave-core' ) . '</strong> ' . esc_html__( 'MusicWave VIP فعال است؛ این سیاست تا غیرفعال‌شدن ماژول اثری ندارد.', 'music-wave-core' ) . '</p></div>';
+		} else {
+			echo '<div class="notice notice-warning inline" style="margin:12px 0 0;"><p><strong>' . esc_html__( 'اثر فعلی:', 'music-wave-core' ) . '</strong> ' . esc_html__( 'VIP نصب است اما اعمال قوانین خاموش است؛ محتوای عضویتی باز است و تحویل امن همچنان کار می‌کند.', 'music-wave-core' ) . '</p></div>';
+		}
+
 		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'پیام‌های دسترسی مشتری', 'music-wave-core' ) . '</h2>';
-		echo '<p>' . esc_html__( 'برای استفاده از پیش‌فرض MusicWave ترجمه‌شده، یک فیلد خالی بگذارید. متن سفارشی قبل از خروجی ایمن‌سازی می‌شود.', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
+		echo '<p>' . esc_html__( 'برای استفاده از پیش‌فرض MusicWave ترجمه‌شده، یک فیلد خالی بگذارید. متن سفارشی قبل از خروجی ایمن‌سازی می‌شود.', 'music-wave-core' ) . '</p>';
+		$vip_controls_locked = ! VipModuleStatus::is_active();
+		if ( $vip_controls_locked ) {
+			echo '<div class="notice notice-info inline" style="margin:0 0 12px;"><p>' . esc_html__( 'افزونهٔ MusicWave VIP غیرفعال است؛ پیام‌ها و مقصد دکمهٔ اشتراک فقط‌خواندنی شده‌اند و حالت‌های اشتراک تا فعال‌شدن VIP در دسترس نیستند.', 'music-wave-core' ) . '</p></div>';
+		}
+		echo '<table class="form-table" role="presentation">';
 		$this->text_row( 'purchase_message', __( 'پیام خرید تکی', 'music-wave-core' ), (string) $settings['purchase_message'] );
 		$this->text_row( 'purchase_cta_label', __( 'برچسب دکمه خرید تکی', 'music-wave-core' ), (string) $settings['purchase_cta_label'] );
-		$this->text_row( 'membership_message', __( 'پیام اشتراک VIP', 'music-wave-core' ), (string) $settings['membership_message'] );
-		$this->text_row( 'membership_cta_label', __( 'برچسب دکمه اشتراک VIP', 'music-wave-core' ), (string) $settings['membership_cta_label'] );
-		$this->url_row( 'membership_cta_url', __( 'نشانی صفحهٔ اشتراک VIP (خالی = تشخیص خودکار)', 'music-wave-core' ), (string) $settings['membership_cta_url'] );
-		$this->text_row( 'purchase_or_membership_message', __( 'پیام حالت دوگانه (خرید تکی یا اشتراک VIP)', 'music-wave-core' ), (string) $settings['purchase_or_membership_message'] );
+		$this->text_row( 'membership_message', __( 'پیام اشتراک VIP', 'music-wave-core' ), (string) $settings['membership_message'], '', $vip_controls_locked );
+		$this->text_row( 'membership_cta_label', __( 'برچسب دکمه اشتراک VIP', 'music-wave-core' ), (string) $settings['membership_cta_label'], '', $vip_controls_locked );
+		$this->url_row( 'membership_cta_url', __( 'نشانی صفحهٔ اشتراک VIP (خالی = تشخیص خودکار)', 'music-wave-core' ), (string) $settings['membership_cta_url'], '', $vip_controls_locked );
+		$this->text_row( 'purchase_or_membership_message', __( 'پیام حالت دوگانه (خرید تکی یا اشتراک VIP)', 'music-wave-core' ), (string) $settings['purchase_or_membership_message'], '', $vip_controls_locked );
 		$this->text_row( 'login_required_message', __( 'پیام حالت «فقط کاربران ثبت‌نام‌شده»', 'music-wave-core' ), (string) $settings['login_required_message'] );
 		$this->text_row( 'restricted_message', __( 'پیام دسترسی محدودشده', 'music-wave-core' ), (string) $settings['restricted_message'] );
 		$this->text_row( 'access_granted_message', __( 'پیام دسترسی اعطاشده', 'music-wave-core' ), (string) $settings['access_granted_message'] );
@@ -364,18 +396,33 @@ final class SettingsPage {
 			return;
 		}
 
-		$vip_opts = get_option( 'music_wave_vip_settings', array() );
-		$vip_on   = ! is_array( $vip_opts ) || ! isset( $vip_opts['module_enabled'] ) || 'disabled' !== (string) $vip_opts['module_enabled'];
-		$status   = $vip_on
+		$vip_on = $this->vip_enforcement_active();
+		$status = $vip_on
 			? __( 'ماژول عضویت MusicWave VIP فعال است و «اعمال قوانین VIP» روشن است.', 'music-wave-core' )
 			: __( 'ماژول MusicWave VIP نصب است، اما کلید «اعمال قوانین VIP» موقتاً خاموش (حالت رایگان) است.', 'music-wave-core' );
 
 		echo '<div class="notice notice-' . esc_attr( $vip_on ? 'info' : 'warning' ) . ' inline" style="margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">';
 		echo '<span><strong>' . esc_html( $status ) . '</strong></span>';
-		if ( defined( 'MUSIC_WAVE_VIP_FILE' ) ) {
+		if ( VipModuleStatus::is_active() ) {
 			echo '<a class="button button-secondary" href="' . esc_url( $vip_url ) . '">' . esc_html__( 'تنظیمات کامل MusicWave VIP و طرح‌ها', 'music-wave-core' ) . '</a>';
 		}
 		echo '</div>';
+	}
+
+	/**
+	 * Whether the VIP plugin is loaded and its master enforcement switch is on.
+	 *
+	 * A missing `module_enabled` value means VIP's default (`enabled`), matching
+	 * `VipSettings::all()` inside the VIP plugin.
+	 */
+	private function vip_enforcement_active(): bool {
+		if ( ! VipModuleStatus::is_active() ) {
+			return false;
+		}
+
+		$options = get_option( 'music_wave_vip_settings', array() );
+
+		return ! is_array( $options ) || ! isset( $options['module_enabled'] ) || 'disabled' !== (string) $options['module_enabled'];
 	}
 
 	// ------------------------------------------------------------------
@@ -390,9 +437,27 @@ final class SettingsPage {
 		$this->settings_form_start();
 
 		echo '<section class="mw-settings__panel"><h2>' . esc_html__( 'دانلودهای ایمن', 'music-wave-core' ) . '</h2>';
-		if ( defined( 'MUSIC_WAVE_VIP_FILE' ) ) {
+		if ( VipModuleStatus::is_active() ) {
 			echo '<div class="notice notice-info inline" style="margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span>' . esc_html__( 'محل ذخیره‌سازی خصوصی، خودآزمایی پوشه، امضای HMAC سرور راه‌دور و مدیر فایل‌های حفاظت‌شده در تب «تحویل حفاظت‌شده» افزونه VIP قرار دارد.', 'music-wave-core' ) . '</span><a class="button button-secondary" href="' . esc_url( admin_url( 'edit.php?post_type=' . ReleasePostType::KEY . '&page=music-wave-vip&tab=delivery' ) ) . '">' . esc_html__( 'باز کردن تب تحویل حفاظت‌شده VIP', 'music-wave-core' ) . '</a></div>';
 		}
+		// بنر تحویل (بخش ۶.۱).
+		$delivery_caps = \ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities::probe();
+		$state         = $delivery_caps->state();
+		switch ( $state ) {
+			case \ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities::STATE_EXTERNAL_ADAPTER:
+				$banner_class = 'notice-success';
+				$banner_msg   = __( 'ارائه‌دهنده تحویل فعال است؛ دارایی‌های vip:/local: و direct: قابل تحویل هستند.', 'music-wave-core' );
+				break;
+			case \ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities::STATE_DIRECT_ONLY:
+				$banner_class = 'notice-warning';
+				$banner_msg   = __( 'فقط لینک‌های مستقیم (direct:) قابل تحویل هستند؛ فایل‌های vip:/local: نیاز به افزونه MusicWave VIP دارند.', 'music-wave-core' );
+				break;
+			default:
+				$banner_class = 'notice-error';
+				$banner_msg   = __( 'هیچ مسیر تحویل فعال نیست؛ دانلودهای حفاظت‌شده رد می‌شوند.', 'music-wave-core' );
+				break;
+		}
+		echo '<div class="notice ' . esc_attr( $banner_class ) . ' inline" style="margin:0 0 12px;"><p><strong>' . esc_html__( 'وضعیت تحویل:', 'music-wave-core' ) . '</strong> ' . esc_html( $banner_msg ) . '</p></div>';
 		echo '<p>' . esc_html__( 'صدور توکن امضاشدهٔ یک‌بارمصرف، طول عمر پیوندها و سهمیهٔ تحویل به ازای هر بازدیدکننده یا کاربر را کنترل کنید.', 'music-wave-core' ) . '</p><table class="form-table" role="presentation">';
 		$this->number_row( 'download_token_ttl', __( 'مدت اعتبار پیوند دانلود (ثانیه)', 'music-wave-core' ), (int) $settings['download_token_ttl'], 30, 3600, __( 'طول عمر تیکت یک‌بارمصرف دانلود فایل (پیش‌فرض: 300 ثانیه = ۵ دقیقه).', 'music-wave-core' ) );
 		$this->number_row( 'stream_token_ttl', __( 'مدت اعتبار پیوند پخش امن (ثانیه)', 'music-wave-core' ), (int) $settings['stream_token_ttl'], 60, 7200, __( 'طول عمر پیوند استریم امن برای پخش بی‌وقفه در پلیر سراسری (پیش‌فرض: 900 ثانیه = ۱۵ دقیقه).', 'music-wave-core' ) );
@@ -477,7 +542,8 @@ final class SettingsPage {
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		wp_nonce_field( 'music_wave_bulk_access_start' );
 		echo '<input type="hidden" name="action" value="music_wave_bulk_access_start"><div class="mw-settings__bulk-grid">';
-		$this->plain_select( 'target_mode', __( 'حالت دسترسی جدید', 'music-wave-core' ), $this->access_labels(), 'membership' );
+		$default_target = VipModuleStatus::is_active() ? 'membership' : 'restricted';
+		$this->plain_select( 'target_mode', __( 'حالت دسترسی جدید', 'music-wave-core' ), $this->access_labels(), $default_target, $this->disabled_vip_access_modes() );
 		$this->plain_select( 'current_mode', __( 'فیلتر حالت فعلی', 'music-wave-core' ), array_merge( array( 'any' => __( 'هر حالت', 'music-wave-core' ) ), $this->access_labels() ), 'any' );
 		$this->plain_select(
 			'post_status',
@@ -520,9 +586,13 @@ final class SettingsPage {
 		echo '</div>';
 
 		echo '<div style="margin:12px 0;">';
+		$vip_active = VipModuleStatus::is_active();
 		echo '<label for="mw-bulk-levels" style="display:block;font-weight:600;margin-bottom:4px;">' . esc_html__( 'کلیدهای سطح عضویت اعمالی (اختیاری — خالی = سطح پیش‌فرض):', 'music-wave-core' ) . '</label>';
-		echo '<input type="text" id="mw-bulk-levels" name="bulk_membership_levels" value="" placeholder="' . esc_attr( implode( ', ', AccessModePolicy::default_membership_levels() ) ) . '" class="regular-text">';
-		$this->render_level_picker_chips( 'mw-bulk-levels', array() );
+		echo '<input type="text" id="mw-bulk-levels" name="bulk_membership_levels" value="" placeholder="' . esc_attr( implode( ', ', AccessModePolicy::default_membership_levels() ) ) . '" class="regular-text"' . ( $vip_active ? '' : ' readonly aria-disabled="true"' ) . '>';
+		$this->render_level_picker_chips( 'mw-bulk-levels', array(), ! $vip_active );
+		if ( ! $vip_active ) {
+			echo '<p class="description"><strong>' . esc_html__( 'افزونهٔ MusicWave VIP غیرفعال است؛ تخصیص سطح عضویت و حالت‌های اشتراک در به‌روزرسانی انبوه غیرفعال شده‌اند.', 'music-wave-core' ) . '</strong></p>';
+		}
 		echo '</div>';
 
 		echo '<label class="mw-settings__confirm"><input type="checkbox" required> ' . esc_html__( 'من تأیید می‌کنم که سیاست دسترسی جدید برای انتشارهای منطبق با فیلترهای بالا اعمال شود.', 'music-wave-core' ) . '</label>';
@@ -555,7 +625,7 @@ final class SettingsPage {
 	/**
 	 * @param array<int, string> $active_slugs Active slugs.
 	 */
-	private function render_level_picker_chips( string $input_id, array $active_slugs ): void {
+	private function render_level_picker_chips( string $input_id, array $active_slugs, bool $disabled = false ): void {
 		$available = apply_filters( 'music_wave_available_membership_levels', array() );
 		if ( ! is_array( $available ) || empty( $available ) ) {
 			$available = array(
@@ -569,17 +639,27 @@ final class SettingsPage {
 				continue;
 			}
 			$is_on = in_array( $clean, $active_slugs, true );
-			echo '<button type="button" class="button button-small mw-level-chip' . ( $is_on ? ' is-active' : '' ) . '" data-mw-level-slug="' . esc_attr( $clean ) . '" aria-pressed="' . ( $is_on ? 'true' : 'false' ) . '">' . esc_html( (string) $label ) . '</button>';
+			echo '<button type="button" class="button button-small mw-level-chip' . ( $is_on ? ' is-active' : '' ) . '" data-mw-level-slug="' . esc_attr( $clean ) . '" aria-pressed="' . ( $is_on ? 'true' : 'false' ) . '"' . ( $disabled ? ' disabled aria-disabled="true"' : '' ) . '>' . esc_html( (string) $label ) . '</button>';
 		}
 		echo '</span>';
+	}
+
+	/**
+	 * Access modes that require MusicWave VIP, disabled while VIP is inactive.
+	 *
+	 * @return array<int, string>
+	 */
+	private function disabled_vip_access_modes(): array {
+		return VipModuleStatus::is_active() ? array() : AccessModePolicy::vip_only_modes();
 	}
 
 	// ------------------------------------------------------------------
 	// Integrations – cards + metadata provider keys
 	// ------------------------------------------------------------------
 	private function render_integrations(): void {
-		$theme = wp_get_theme();
-		$cards = array(
+		$theme      = wp_get_theme();
+		$vip_active = VipModuleStatus::is_active();
+		$cards      = array(
 			array(
 				'id'          => 'woocommerce',
 				'name'        => __( 'WooCommerce', 'music-wave-core' ),
@@ -591,10 +671,10 @@ final class SettingsPage {
 			array(
 				'id'          => 'music-wave-vip',
 				'name'        => __( 'MusicWave VIP', 'music-wave-core' ),
-				'active'      => defined( 'MUSIC_WAVE_VIP_FILE' ),
+				'active'      => $vip_active,
 				'description' => __( 'فایل‌های محلی حفاظت‌شده، تغییرمسیر HMAC و عضویت طرح‌های ووکامرس.', 'music-wave-core' ),
-				'url'         => defined( 'MUSIC_WAVE_VIP_FILE' ) ? admin_url( 'edit.php?post_type=mw_release&page=music-wave-vip' ) : admin_url( 'plugins.php' ),
-				'action'      => defined( 'MUSIC_WAVE_VIP_FILE' ) ? __( 'باز کردن تنظیمات VIP', 'music-wave-core' ) : __( 'بررسی افزونه‌ها', 'music-wave-core' ),
+				'url'         => $vip_active ? admin_url( 'edit.php?post_type=mw_release&page=music-wave-vip' ) : admin_url( 'plugins.php' ),
+				'action'      => $vip_active ? __( 'باز کردن تنظیمات VIP', 'music-wave-core' ) : __( 'بررسی افزونه‌ها', 'music-wave-core' ),
 			),
 			array(
 				'id'          => 'musicwave-theme',

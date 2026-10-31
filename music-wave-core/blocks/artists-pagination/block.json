@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/artists-pagination",
+  "title": "صفحه‌بندی هنرمندان",
+  "category": "music-wave",
+  "description": "ناوبری شماره‌ای صفحهٔ هنرمندان. «تعداد هنرمند در هر صفحه» باید با همان مقدار ویترین هنرمندان تنظیم شود تا شماره‌ها با محتوای صفحه هم‌خوان بمانند.",
+  "keywords": [
+    "هنرمندان",
+    "صفحه‌بندی",
+    "ناوبری",
+    "صفحه"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "admin-page",
+  "attributes": {
+    "perPage": {
+      "type": "integer",
+      "default": 12
+    },
+    "showStatus": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "shadow": true
+  },
+  "example": {
+    "attributes": {
+      "perPage": 12,
+      "showStatus": true
+    }
+  }
+}

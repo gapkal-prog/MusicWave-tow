@@ -569,6 +569,7 @@ final class LibraryBlocks {
 			'shape'      => isset( $attributes['shape'] ) && is_scalar( $attributes['shape'] ) ? sanitize_key( (string) $attributes['shape'] ) : 'pill',
 			'icon'       => isset( $attributes['icon'] ) && is_scalar( $attributes['icon'] ) ? trim( (string) $attributes['icon'] ) : 'heart',
 			'compact'    => ! empty( $attributes['compact'] ),
+			'showCount'  => ! empty( $attributes['showCount'] ),
 		);
 	}
 }

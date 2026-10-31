@@ -250,7 +250,7 @@ Bundled patterns that demonstrated the layer at the time of this round were `vin
 spec strip, liner notes — composed from `core/post-terms`, `core/post-date`,
 and `core/post-excerpt`, so every value is the real release data). The single
 release template renders the fact sheet under the hero and ships the
-`is-style-tracklist` collection list. **Superseded in 0.9.2:** both of those patterns were removed. The chip rail, metabar and spec strip vocabulary now lives in the live renderers (`release-meta`, `collection-list`, `release-credits`) and is composed by the full-page demo packs in `patterns/demo-*.php` and by `patterns/release-grid.php`.
+`is-style-tracklist` collection list. **Superseded in 0.9.2:** both of those patterns were removed. The chip rail, metabar and spec strip vocabulary now lives in the live renderers (`release-meta`, `collection-list`, `release-credits`) and is composed by the release page and by `patterns/release-grid.php`.
 
 Verification for this round: `php tests/run.php` (domain smoke tests +
 template integrity + the style-variation contract), `php

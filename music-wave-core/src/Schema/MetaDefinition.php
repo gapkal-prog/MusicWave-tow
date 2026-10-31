@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Core\Schema;
 
+use ManaCore\MusicWave\Core\Downloads\AssetIdSanitizer;
+use ManaCore\MusicWave\Core\Downloads\DirectLinkUrlValidator;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -140,6 +143,12 @@ final class MetaDefinition {
 				return $this->sanitize_collection_items( $value );
 			case 'mw_download_assets':
 				return $this->sanitize_download_assets( $value );
+			case 'mw_download_asset_id':
+				if ( ! is_scalar( $value ) ) {
+					return '';
+				}
+
+				return AssetIdSanitizer::sanitize( (string) $value );
 			case 'mw_access_mode':
 				if ( ! is_scalar( $value ) ) {
 					return 'restricted';
@@ -291,12 +300,22 @@ final class MetaDefinition {
 				continue;
 			}
 
-			$key      = substr( sanitize_key( (string) $asset['key'] ), 0, 40 );
-			$label    = substr( sanitize_text_field( (string) $asset['label'] ), 0, 80 );
-			$asset_id = sanitize_text_field( (string) $asset['asset_id'] );
-			$scheme   = wp_parse_url( $asset_id, PHP_URL_SCHEME );
+			$key       = substr( sanitize_key( (string) $asset['key'] ), 0, 40 );
+			$label     = substr( sanitize_text_field( (string) $asset['label'] ), 0, 80 );
+			$asset_id  = AssetIdSanitizer::sanitize( (string) $asset['asset_id'] );
+			$is_direct = 0 === strpos( $asset_id, 'direct:' );
+			// `direct:<https-url>` is allowed after validation; raw http/https URLs are rejected.
+			$scheme = $is_direct ? 'direct' : wp_parse_url( $asset_id, PHP_URL_SCHEME );
 			if ( '' === $key || '' === $label || '' === $asset_id || isset( $keys[ $key ] ) || in_array( strtolower( (string) $scheme ), array( 'http', 'https' ), true ) ) {
 				continue;
+			}
+			if ( $is_direct ) {
+				$validator = new DirectLinkUrlValidator();
+				$validated = $validator->validate( substr( $asset_id, strlen( 'direct:' ) ) );
+				if ( null === $validated ) {
+					continue;
+				}
+				$asset_id = 'direct:' . $validated;
 			}
 
 			$normalized = array(

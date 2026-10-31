@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "music-wave/artists-hero",
+  "title": "بنر هنرمندان",
+  "category": "music-wave",
+  "description": "بنر آغازین فهرست هنرمندان: ابرو، عنوان، مقدمه و آمار کاتالوگ.",
+  "keywords": [
+    "هنرمندان",
+    "خواننده‌ها",
+    "بنر",
+    "سربرگ",
+    "هیرو"
+  ],
+  "textdomain": "music-wave-core",
+  "icon": "admin-users",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    },
+    "level": {
+      "type": "string",
+      "default": "1"
+    },
+    "showStats": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "shadow": true
+  },
+  "example": {
+    "attributes": {
+      "eyebrow": "کتابخانهٔ هنرمندان",
+      "heading": "خوانندگان",
+      "description": "همهٔ خوانندگان کاتالوگ را یک‌جا ببینید.",
+      "showStats": true
+    }
+  }
+}

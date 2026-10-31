@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Core\Support;
 
+use ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities;
 use ManaCore\MusicWave\Core\Migrations\MigrationRunner;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -130,7 +131,7 @@ final class SiteHealth {
 
 	/** @return array<string, string|array<string, string>> */
 	public function test_download_provider(): array {
-		$ready = has_filter( 'music_wave_download_provider' );
+		$ready = DeliveryCapabilities::probe()->is_available();
 		return $this->result(
 			$ready ? __( 'ارائه‌دهنده تحویل حفاظت‌شده MusicWave در دسترس است', 'music-wave-core' ) : __( 'ارائه‌دهنده تحویل حفاظت‌شده MusicWave اختیاری است اما در دسترس نیست', 'music-wave-core' ),
 			$ready ? 'good' : 'recommended',

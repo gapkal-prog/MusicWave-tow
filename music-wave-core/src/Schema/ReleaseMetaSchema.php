@@ -360,17 +360,7 @@ final class ReleaseMetaSchema {
 				'mw_metadata_source'   => new MetaDefinition( 'mw_metadata_source', 'string', '', false ),
 				'mw_metadata_provider' => new MetaDefinition( 'mw_metadata_provider', 'string', '', false ),
 				'mw_download_asset_id' => new MetaDefinition( 'mw_download_asset_id', 'string', '', false ),
-				'mw_download_assets'   => new MetaDefinition(
-					'mw_download_assets',
-					'array',
-					array(),
-					false,
-					array(
-						'label' => __( 'فایل‌های حفاظت‌شده و کیفیت دانلود', 'music-wave-core' ),
-						'type'  => 'protected_assets',
-						'group' => 'access',
-					)
-				),
+				'mw_download_assets'   => new MetaDefinition( 'mw_download_assets', 'array', array(), false ),
 			);
 		}
 

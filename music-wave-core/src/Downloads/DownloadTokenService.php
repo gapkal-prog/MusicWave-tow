@@ -14,13 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class DownloadTokenService {
+	/** Hard ceiling on any issued token lifetime (seconds). */
+	public const MAX_TTL = 900;
+
 	/** @var string */
 	private $secret;
 	public function __construct( string $secret ) {
 		$this->secret = $secret; }
 
 	public function issue( int $release_id, int $user_id, int $ttl = 300, string $binding = '', string $asset_key = 'standard', string $purpose = 'download' ): string {
-		$expires_at = time() + max( 30, min( $ttl, 900 ) );
+		$expires_at = time() + max( 30, min( $ttl, self::MAX_TTL ) );
 		$purpose    = in_array( $purpose, array( 'download', 'stream' ), true ) ? $purpose : 'download';
 		$payload    = array(
 			'r' => $release_id,

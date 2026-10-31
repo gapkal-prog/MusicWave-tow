@@ -47,20 +47,6 @@
 	display: none;
 }
 
-.mw-release-actions .mw-preview-button.mw-preview-button--outline {
-	color: var(--mw-color-text);
-	background: transparent;
-	border: 1.5px solid var(--mw-color-accent, #1db954);
-	box-shadow: none;
-}
-
-.mw-release-actions .mw-preview-button.mw-preview-button--ghost {
-	color: var(--mw-color-text);
-	background: color-mix(in srgb, var(--mw-color-text) 8%, transparent);
-	border: 1px solid color-mix(in srgb, var(--mw-color-text) 16%, transparent);
-	box-shadow: none;
-}
-
 /* Tablet (48–64rem): keep the two-column hero but rebalance the cover so
  * the title never squeezes into a narrow strip beside a wide square. */
 @media (min-width: 48rem) and (max-width: 64rem) {

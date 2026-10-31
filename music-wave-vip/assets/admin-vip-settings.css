@@ -93,8 +93,195 @@
 	color: #50575e;
 }
 
+/* Help tooltip: always-visible help icon with a styled, accessible bubble. */
 .mwvip-tooltip {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	vertical-align: middle;
+	margin-inline-start: 4px;
 	cursor: help;
+	outline: none;
+}
+
+/* Guarantee the glyph even if the dashicons font is only partially loaded. */
+.mwvip-tooltip .dashicons-editor-help:before {
+	content: "\f223";
+}
+
+.mwvip-tooltip .dashicons {
+	width: 16px;
+	height: 16px;
+}
+
+.mwvip-tooltip::after {
+	content: attr( aria-label );
+	position: absolute;
+	z-index: 100;
+	bottom: calc( 100% + 8px );
+	inset-inline-start: 0;
+	width: max-content;
+	max-width: 320px;
+	padding: 8px 10px;
+	background: #1d2327;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.6;
+	border-radius: 6px;
+	box-shadow: 0 2px 10px rgba( 0, 0, 0, 0.25 );
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY( 4px );
+	transition: opacity 0.12s ease, transform 0.12s ease, visibility 0.12s;
+	white-space: normal;
+	pointer-events: none;
+}
+
+.mwvip-tooltip:hover::after,
+.mwvip-tooltip:focus::after,
+.mwvip-tooltip:focus-within::after {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY( 0 );
+}
+
+/* Auto-detect suggestion for the best file-serving method. */
+.mwvip-suggestion {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	margin: 8px 0 0;
+	padding: 8px 10px;
+	border-radius: 6px;
+	font-size: 12.5px;
+	line-height: 1.6;
+	max-width: 760px;
+	background: #eef6ff;
+	border: 1px solid #bcd7f5;
+	color: #1d4e89;
+}
+
+.mwvip-suggestion .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+	flex: 0 0 auto;
+	margin-top: 1px;
+}
+
+.mwvip-tools-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.mwvip-tools-row .mwvip-inline-feedback {
+	margin: 0;
+}
+
+/* Bounded settings sections: a clear visual start/end per group. */
+.mwvip-section {
+	border: 1px solid #dcdcde;
+	border-inline-start: 4px solid #2271b1;
+	border-radius: 6px;
+	background: #fff;
+	padding: 14px 16px 6px;
+	margin: 0 0 18px;
+}
+
+.mwvip-section__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 4px;
+}
+
+.mwvip-section__head h3 {
+	margin: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 15px;
+}
+
+.mwvip-section__head h3 .dashicons {
+	color: #2271b1;
+}
+
+.mwvip-section__badges {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.mwvip-section__badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 11.5px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.mwvip-section__badge.is-req {
+	background: #fef2f2;
+	color: #b32d2e;
+}
+
+.mwvip-section__badge.is-opt {
+	background: #f0f0f1;
+	color: #50575e;
+}
+
+.mwvip-section__badge.is-on {
+	background: #dcfce7;
+	color: #166534;
+}
+
+.mwvip-section__badge.is-off {
+	background: #fef3c7;
+	color: #92400e;
+}
+
+.mwvip-section__summary {
+	margin: 0 0 10px;
+	color: #50575e;
+	line-height: 1.8;
+}
+
+/* Quick matrix: which delivery mode needs which sections. */
+.mwvip-matrix {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 6px;
+	padding: 14px 16px;
+	margin: 0 0 18px;
+	overflow-x: auto;
+}
+
+.mwvip-matrix h4 {
+	margin: 0 0 10px;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.mwvip-matrix table th,
+.mwvip-matrix table td {
+	vertical-align: top;
+	font-size: 12.5px;
+}
+
+.mwvip-secret-row .button .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+	vertical-align: text-bottom;
 }
 
 .mwvip-module-control:disabled {
@@ -113,7 +300,6 @@
 
 .mwvip-product-table {
 	margin-top: 10px;
-	max-width: 780px;
 }
 
 .form-table th {
@@ -157,9 +343,7 @@
 	border: 1px solid #dcdcde;
 	padding: 14px 16px;
 	border-radius: 4px;
-	max-width: 1000px;
 	margin-top: 16px;
-	border-inline-start: 4px solid #d63638;
 }
 
 .mwvip-danger-box h4 {
@@ -171,7 +355,6 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 	gap: 16px;
-	max-width: 1000px;
 	margin-top: 16px;
 }
 
@@ -192,7 +375,6 @@
 	border: 1px solid #ccd0d4;
 	border-radius: 6px;
 	padding: 16px;
-	max-width: 1000px;
 	margin-bottom: 16px;
 }
 
@@ -349,4 +531,241 @@
 .mwvip-event--expired {
 	background: #fef2f2;
 	color: #991b1b;
+}
+
+/* Bounded section body + one deterministic collapse rule for every section. */
+.mwvip-section__body {
+	margin-top: 6px;
+}
+
+.mwvip-section.is-collapsed {
+	border-inline-start-color: #c3c4c7;
+	background: #fafafa;
+}
+
+.mwvip-section.is-collapsed .mwvip-section__body {
+	display: none;
+}
+
+.mwvip-section__modes {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0 0 8px;
+	font-size: 12px;
+	color: #646970;
+}
+
+.mwvip-section__modes .dashicons {
+	font-size: 15px;
+	width: 15px;
+	height: 15px;
+}
+
+/* Delivery-mode chooser + the live "what to fill" hint for the chosen mode. */
+.mwvip-chooser {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-inline-start: 4px solid #2271b1;
+	border-radius: 6px;
+	padding: 14px 16px;
+	margin: 0 0 18px;
+}
+
+.mwvip-chooser__label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 10px;
+	font-weight: 600;
+}
+
+.mwvip-chooser__label .dashicons {
+	color: #2271b1;
+}
+
+.mwvip-mode-hint {
+	max-width: 900px;
+	margin: 12px 0 0;
+	padding: 12px 14px;
+	border: 1px solid #bcd7f5;
+	border-inline-start: 4px solid #2271b1;
+	border-radius: 6px;
+	background: #f4f9ff;
+	color: #1d4e89;
+	font-size: 12.5px;
+	line-height: 1.8;
+}
+
+.mwvip-mode-hint p {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+}
+
+.mwvip-mode-hint p + p {
+	margin-top: 6px;
+}
+
+.mwvip-mode-hint__what {
+	font-size: 13px;
+	color: #14304f;
+}
+
+.mwvip-mode-hint__what .dashicons,
+.mwvip-mode-hint__req .dashicons,
+.mwvip-steps__note .dashicons,
+.mwvip-source-note .dashicons,
+.mwvip-inline-warn .dashicons {
+	flex: 0 0 auto;
+	width: 16px;
+	height: 16px;
+	margin-top: 1px;
+	font-size: 16px;
+}
+
+.mwvip-mode-hint__req .dashicons {
+	margin-top: 0;
+	color: #166534;
+}
+
+/* Small reusable chips ("which sections" / "which mode"). */
+.mwvip-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 1px 9px;
+	border: 1px solid #cbd5e1;
+	border-radius: 999px;
+	background: #fff;
+	color: #1e293b;
+	font-size: 11.5px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+/* Benefit highlights in the panel intro. */
+.mwvip-highlights {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 10px 0 0;
+}
+
+.mwvip-highlight {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 11px;
+	border: 1px solid #bcd7f5;
+	border-radius: 999px;
+	background: #fff;
+	color: #1d4e89;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.mwvip-highlight .dashicons {
+	width: 15px;
+	height: 15px;
+	font-size: 15px;
+}
+
+/* Quick-guide matrix: emphasise the row of the chosen mode. */
+.mwvip-matrix tr.is-current td {
+	background: #eef6ff;
+}
+
+.mwvip-matrix__mode .dashicons {
+	color: #2271b1;
+	vertical-align: text-bottom;
+}
+
+.mwvip-matrix__mode code {
+	display: inline-block;
+	margin-top: 3px;
+}
+
+.mwvip-matrix__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
+.mwvip-matrix__note {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	margin: 10px 0 0;
+	color: #50575e;
+	font-size: 12.5px;
+}
+
+.mwvip-matrix__note .dashicons {
+	flex: 0 0 auto;
+	width: 16px;
+	height: 16px;
+	margin-top: 1px;
+	font-size: 16px;
+}
+
+/* Numbered "how to connect" steps inside a section. */
+.mwvip-steps {
+	padding: 12px 14px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #f6f7f7;
+	line-height: 1.8;
+}
+
+.mwvip-steps ol {
+	margin: 8px 0 0;
+	padding-inline-start: 22px;
+}
+
+.mwvip-steps li {
+	margin-bottom: 4px;
+}
+
+.mwvip-steps__note {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	margin: 10px 0 0;
+	padding: 8px 10px;
+	border: 1px solid #bcd7f5;
+	border-radius: 6px;
+	background: #eef6ff;
+	color: #1d4e89;
+	font-size: 12.5px;
+}
+
+/* "Where does this value come from" note for third-party credentials. */
+.mwvip-source-note {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	max-width: 760px;
+	margin: 8px 0 0;
+	padding: 8px 10px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #f6f7f7;
+	color: #50575e;
+	font-size: 12.5px;
+}
+
+.mwvip-inline-warn {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	max-width: 760px;
+	margin: 8px 0 0;
+	padding: 8px 10px;
+	border: 1px solid #f3c9c9;
+	border-radius: 6px;
+	background: #fef2f2;
+	color: #b32d2e;
+	font-size: 12.5px;
 }

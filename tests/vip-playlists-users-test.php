@@ -695,10 +695,13 @@ $mw_full_specs_html = $mw_specs_blocks->render_meta(
 		'fullSpecs'         => true,
 	)
 );
-foreach ( array( 'MW-2026-99', 'آلبوم رؤیای شرقی', '2026-10-15', '4:34', 'FLAC 24-bit · MP3 320 kbps', '118', 'F#m', '3 / 9', 'فصل 2 · قسمت 7', 'IR-MW1-26-00099', 'فارسی', 'ایران', 'انتشارات موج موسیقی', '6260000098765', 'محتوای صریح' ) as $mw_expected_spec ) {
+foreach ( array( 'MW-2026-99', 'آلبوم رؤیای شرقی', '2026-10-15', '4:34', '118', 'F#m', '3 / 9', 'فصل 2 · قسمت 7', 'IR-MW1-26-00099', 'فارسی', 'ایران', 'انتشارات موج موسیقی', '6260000098765', 'محتوای صریح' ) as $mw_expected_spec ) {
 	mw_assert_same( true, false !== strpos( $mw_full_specs_html, $mw_expected_spec ), 'Full release specs block must display populated metadata field: ' . $mw_expected_spec );
 	mw_assert_same( 1, substr_count( $mw_full_specs_html, $mw_expected_spec ), 'Full release specs field must render strictly once without duplication: ' . $mw_expected_spec );
 }
+// Audio quality was removed from the details block; files keep their labels in downloads only.
+mw_assert_same( false, false !== strpos( $mw_full_specs_html, 'FLAC 24-bit' ), 'Release details block must not render audio quality labels.' );
+mw_assert_same( false, false !== strpos( $mw_full_specs_html, 'MP3 320 kbps' ), 'Release details block must not render audio quality labels.' );
 
 // Guard against duplicate `fullSpecs: true` blocks on the same release page:
 $mw_full_specs_duplicate = $mw_specs_blocks->render_meta(

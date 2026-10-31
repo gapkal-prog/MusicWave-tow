@@ -213,8 +213,8 @@ final class CatalogFilterRenderer {
 	 * @return array<int, string>
 	 */
 	private function active_catalog_filter_chips( string $base_url ): array {
-		$args    = $this->current_catalog_query_args();
-		$chips   = array();
+		$args  = $this->current_catalog_query_args();
+		$chips = array();
 
 		if ( isset( $args['s'] ) ) {
 			$without_search = $args;

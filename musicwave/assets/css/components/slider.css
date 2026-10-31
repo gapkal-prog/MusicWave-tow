@@ -1,10 +1,18 @@
 .mw-release-slider {
 	--mw-slider-gap: clamp(0.9rem, 2vw, 1.5rem);
+	--mw-slider-columns: 4;
 	display: grid;
 	gap: var(--wp--preset--spacing--20);
 	min-width: 0;
 	margin-block: var(--wp--preset--spacing--40);
 }
+
+/* Author-selected desktop column count, mirrored from the «ستون‌های دسکتاپ» stepper. */
+.mw-release-slider--columns-2 { --mw-slider-columns: 2; }
+.mw-release-slider--columns-3 { --mw-slider-columns: 3; }
+.mw-release-slider--columns-4 { --mw-slider-columns: 4; }
+.mw-release-slider--columns-5 { --mw-slider-columns: 5; }
+.mw-release-slider--columns-6 { --mw-slider-columns: 6; }
 
 .mw-release-slider__header {
 	display: flex;
@@ -34,14 +42,6 @@
 
 .mw-release-slider__more:is(:hover, :focus-visible) {
 	color: var(--mw-color-text);
-}
-
-.mw-release-slider--size-small .mw-release-slider__track {
-	grid-auto-columns: minmax(10rem, calc((100% - (var(--mw-slider-gap) * 4)) / 5));
-}
-
-.mw-release-slider--size-large .mw-release-slider__track {
-	grid-auto-columns: minmax(16rem, calc((100% - (var(--mw-slider-gap) * 2)) / 3));
 }
 
 .mw-filter-tabs {
@@ -97,7 +97,7 @@
 
 .mw-release-slider__header h2 {
 	margin: 0.2rem 0 0;
-	font-size: clamp(1.5rem, 3vw, 2.5rem);
+	font-size: var(--mw-section-title-size);
 }
 
 .mw-release-slider__eyebrow {
@@ -161,7 +161,7 @@ html[dir="rtl"] .mw-release-slider__slide {
 
 .mw-release-slider__track {
 	display: grid;
-	grid-auto-columns: minmax(13rem, calc((100% - (var(--mw-slider-gap) * 3)) / 4));
+	grid-auto-columns: minmax(0, calc((100% - (var(--mw-slider-gap) * (var(--mw-slider-columns) - 1))) / var(--mw-slider-columns)));
 	grid-auto-flow: column;
 	gap: var(--mw-slider-gap);
 }
@@ -305,13 +305,13 @@ html[dir="rtl"] .mw-release-slider__slide {
 
 @media (max-width: 64rem) {
 	.mw-release-slider__track {
-		grid-auto-columns: minmax(12rem, calc((100% - (var(--mw-slider-gap) * 2)) / 3));
+		grid-auto-columns: minmax(0, calc((100% - (var(--mw-slider-gap) * (min(var(--mw-slider-columns), 3) - 1))) / min(var(--mw-slider-columns), 3)));
 	}
 }
 
 @media (max-width: 44rem) {
 	.mw-release-slider__track {
-		grid-auto-columns: minmax(11rem, calc((100% - var(--mw-slider-gap)) / 2));
+		grid-auto-columns: minmax(0, calc((100% - (var(--mw-slider-gap) * (min(var(--mw-slider-columns), 2) - 1))) / min(var(--mw-slider-columns), 2)));
 	}
 }
 

@@ -31,6 +31,10 @@
       "type": "string",
       "default": ""
     },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
     "orderBy": {
       "type": "string",
       "default": "date"
@@ -61,6 +65,14 @@
 			"default": ""
 		},
     "itemsToShow": {
+      "type": "integer",
+      "default": 0
+    },
+    "showAll": {
+      "type": "boolean",
+      "default": false
+    },
+    "columns": {
       "type": "integer",
       "default": 0
     },

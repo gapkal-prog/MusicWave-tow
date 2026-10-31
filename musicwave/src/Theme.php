@@ -83,7 +83,7 @@ final class Theme {
 		$this->chrome        = $chrome ?? new ChromeBlocksRenderer();
 		$this->breadcrumbs   = $breadcrumbs ?? new BreadcrumbRenderer( $this->blocks, $this->chrome );
 		$this->routes        = $routes ?? new RouteManager();
-		$this->header        = $header ?? new SiteHeaderManager( $this->routes );
+		$this->header        = $header ?? new SiteHeaderManager();
 		$this->header_search = $header_search ?? new HeaderSearchEnhancer( $this->header );
 		$this->nav_icons     = $nav_icons ?? new NavigationIconService();
 		$this->widget_seeder = $widget_seeder ?? new WidgetAreaSeeder();

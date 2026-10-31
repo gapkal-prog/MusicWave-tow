@@ -306,7 +306,7 @@ entry, no `fieldConfig`, no SSR.
 | `musicwave/patterns/release-card.php` | A | Canonical card for the inserter |
 | `musicwave/patterns/release-grid.php` | A | Query + post-template + card + pagination + no-results |
 | `music-wave-core/src/Blocks/ReleaseCard.php` | B | Single release-card renderer (`presentation_data`, `artwork`, `render`) |
-| `music-wave-core/src/Blocks/SectionHeader.php` | B | Shared `more_link()` + `shelf_header()` |
+| `music-wave-core/src/Blocks/SectionHeader.php` | B | Shared `more_link()`, `shelf_header()` and `title()` (optional leading icon via `ActionButtonStyle::optional_icon()`, no glyph by default) |
 | `tests/card-markup.php` | B | **Done** — standalone parity gate for all five card/header producers |
 | `tests/fixtures/card-markup.json` | B | **Done** — 30 recorded pre-refactor cases |
 | `musicwave/blocks/section-head/block.json` | D | Static container metadata |
@@ -465,10 +465,16 @@ Each stage is a separate commit and separately revertable.
 ### 10.1 Stage B — done (`bb18048`)
 
 `Core\Blocks\ReleaseCard` (`presentation_data`, `initial`, `artwork`, `render`) and
-`Core\Blocks\SectionHeader` (`more_link`, `shelf_header`) now own the shared markup;
+`Core\Blocks\SectionHeader` (`more_link`, `shelf_header`, `title`) now own the shared markup;
 `ReleaseBlocks::related_card()`, `ReleaseBlocks::related_section()`,
 `ListeningBlocks::history_card()`, the theme's release-shelf card loop,
 `musicwave_render_shelf_header()` and `musicwave_release_presentation_data()` all delegate.
+
+`SectionHeader::title( $title, $icon )` is the single place that prints a section title. The
+`icon` argument is optional and empty by default; when set, `ActionButtonStyle::optional_icon()`
+accepts a canonical slug (`play`, `download`, …), a font-icon class (`dashicons dashicons-…`) or
+inline `<svg>` markup and prints a decorative boxed glyph — every shelf/heading producer therefore
+gains the same opt-in icon control without duplicating sanitisation.
 
 Two plan corrections discovered while implementing:
 
@@ -621,7 +627,7 @@ different jobs, and the difference is documented in both directions:
 
 | | `musicwave/section-heading` (pattern) | `music-wave/section-head` (block) |
 |---|---|---|
-| Inserter surface | Patterns tab (`musicwave`, `featured`, `musicwave-demos`, `musicwave-shelves`, `musicwave-cards`) | Blocks tab, category `music-wave` |
+| Inserter surface | Patterns tab (`musicwave`, `featured`, `musicwave-shelves`, `musicwave-cards`) | Blocks tab, category `music-wave` |
 | What it inserts | A wide `core/group` with eyebrow/title/muted paragraph, styled through Global Styles | The `.mw-section-head` component shell with a seeded `__text` stack |
 | Component vocabulary | none — plain core blocks | `mw-section-head` + `__text` (+ optional `__rule`), `mw-eyebrow` |
 | Looks | inline typography, `mw-muted` | Styles panel: center / stack / invert |
@@ -700,6 +706,47 @@ Shipped templates (`home.html`, `page-stream.html`, `single-mw_release.html`, `s
 
 **Tests.** `tests/template-integrity.php` asserts vinyl pairing, empty-header gates (including related heading fill), compact skip (meta + download), and inspector help. `tests/editor-lanes.js` stays at 11 (no new lane). No live Site Editor run in this environment.
 
+### 10.7 Stage F — the artists index becomes a composed leaf surface (this stage)
+
+Stage E left `artists-shelf` intentionally fat. Stage F does not convert it either: the query,
+the card renderer and the follow button stay PHP. What changed is that the *browsing chrome* around
+it became four independent leaves, each SSR-only and each with the full `supports` set, so the
+artists page is edited section by section instead of through one 23-attribute block.
+
+| Surface | Lane | Why |
+| --- | --- | --- |
+| `music-wave/artists-hero` | E — fat dynamic | Copy + two catalogue totals. No query input, but the data is server-side. |
+| `music-wave/artists-toolbar` | E — fat dynamic | GET form + link tabs. Nothing to compose: every control is a URL built from shared state. |
+| `music-wave/artists-alphabet` | E — fat dynamic | Letter row whose link/inert state depends on term counts. |
+| `music-wave/artists-pagination` | E — fat dynamic | Numbered pager; delegates to `Concerns\ArtistsPager`, the same renderer the shelf uses. |
+| `music-wave/artists-shelf` | ⏸️ E — fat dynamic | Query + card chrome stay PHP. Gained `browseIndex`, `showCrowns`, `showResultCount`, `noResultsMessage` as display-only attributes. |
+
+**One state service, four readers.** `Catalog\ArtistIndex` owns the browsing state — page, search,
+letter and ordering query vars — plus the term queries, the per-letter counts, the page
+arithmetic and every generated URL. No block parses `$_GET` or builds a link on its own, which is
+what keeps the toolbar, alphabet, summary and pager from drifting the way §1.3 describes. A
+`browseIndex` shelf and the standalone pagination block count the same `matching_total()` through
+the same `page_count()`, so `perPage` in one and `perPage` in the other cannot disagree.
+
+**Placement.** The chrome leaves carry no cross-block assumptions: the alphabet row emits
+`id="mw-artists-alphabet"` only when its owner has not set an anchor, and the toolbar's menu icon
+links to that id (configurable through `menuTarget`). Filters are plain GET parameters, so the
+surface works with JavaScript disabled and every leaf can be removed without breaking the others.
+
+**Backward compatible.** `artists-shelf` keeps its attributes, its `pagination` attribute still
+renders the identical `mw-artists-shelf__pager` markup through the shared pager, and
+`ArtistShelfBlock::PAGE_QUERY_VAR`, the `music_wave_artists_shelf_terms` and
+`music_wave_artists_page` filters and the canonical-URL filter are unchanged. The new attributes
+default to the previous appearance (`browseIndex`, `showCrowns` and `showResultCount` off).
+
+**Tests.** `tests/run.php` covers the shared service (letter bucketing incl. Arabic variants,
+search, per-letter counts, page counts, URL canonicalisation) and each leaf (hero defaults, toolbar
+links and active states, alphabet links vs inert chips, shelf summary, crowns, `browseIndex`
+slicing, empty-filter message, standalone pager).
+`tests/template-integrity.php` pins the four new `block.json` files, the 41-block inventory and the
+`Rendering::LOCALIZED_ATTRIBUTE_KEYS` contract. `tests/editor-contracts.js` and
+`tests/editor-lanes.js` stay unchanged: no new lane, no InnerBlocks.
+
 ### Remaining-block classification (audit inventory)
 
 Lane legend: ✅ upgraded this programme · 🟡 pairing/empty-header available · 🔵 Core composition already · ⏸️ intentionally fat (query/access/download/playlist) · 🔴 deferred (Stage C only on overlay-break).
@@ -720,6 +767,7 @@ Lane legend: ✅ upgraded this programme · 🟡 pairing/empty-header available 
 | `catalog-filters` / `catalog-results` | ⏸️ E | GET form + live archive query. Labels already inspector-controlled. Style variations exist. |
 | `request-form` | ✅ D+E | Form/POST/nonce/honeypot stay fat PHP. `request-cta` + the three request page templates compose heading/highlights/steps as core blocks on `.mw-request-form__*` (not `.mw-section-head`). Nested PHP section is flattened in CSS. Inspector hides chrome copy while the matching `show*` toggle is off. |
 | `public-playlists` / `continue-listening` / `artists-shelf` / `taxonomy-shelf` | ⏸️ E | Query shelves. Same empty-header contract as theme shelf where they share `SectionHeader`. |
+| `artists-hero` / `artists-toolbar` / `artists-alphabet` / `artists-pagination` | ✅ E | Stage F browsing chrome split out of `artists-shelf`; each reads shared `Catalog\ArtistIndex` state, so they have no InnerBlocks to offer. |
 | `playlists` / `playback-queue` / `music-library` / add-to-* | ⏸️ E | Auth + mutation. Not canvas composition. |
 | `preview-button` / `preview-player` / `share-button` / `shuffle-button` / `library-button` | ⏸️ E | Leaf actions; already small. |
 | `term-hero` / `artist-profile` | ⏸️ E | Term/query identity. Archives already compose them as leaves. |

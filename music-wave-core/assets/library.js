@@ -47,8 +47,37 @@
 		return error && error.message ? error.message : config.errorMessage;
 	}
 
+	function formatCount( value ) {
+		if ( window.wp && window.wp.i18n && window.wp.i18n.numberFormat ) {
+			return window.wp.i18n.numberFormat( value );
+		}
+
+		return String( value );
+	}
+
+	function syncLibraryCount( button, wasInLibrary, inLibrary ) {
+		var count = button.querySelector( '.mw-library-button__count' );
+		if ( ! count || wasInLibrary === inLibrary ) {
+			return;
+		}
+
+		var current = parseInt(
+			count.getAttribute( 'data-mw-library-count-value' ),
+			10
+		);
+		var next = Math.max(
+			0,
+			( isNaN( current ) ? 0 : current ) + ( inLibrary ? 1 : -1 )
+		);
+		count.setAttribute( 'data-mw-library-count-value', String( next ) );
+		count.textContent = formatCount( next );
+		count.hidden = next < 1;
+	}
+
 	function setButtonState( button, inLibrary ) {
 		var label = button.querySelector( '.mw-library-button__label' );
+		var wasInLibrary =
+			button.getAttribute( 'data-mw-library-state' ) === 'in';
 		var isHeart =
 			button.classList.contains( 'mw-library-button--heart' ) ||
 			button.classList.contains( 'mw-library-button--icon-only' );
@@ -62,6 +91,7 @@
 		);
 		button.setAttribute( 'aria-pressed', inLibrary ? 'true' : 'false' );
 		button.classList.toggle( 'is-saved', inLibrary );
+		syncLibraryCount( button, wasInLibrary, inLibrary );
 		if ( next ) {
 			button.setAttribute( 'aria-label', next );
 			if ( label ) {

@@ -21,6 +21,7 @@ namespace ManaCore\MusicWave\Core\Admin;
 
 use ManaCore\MusicWave\Core\Admin\Concerns\DiagnosticsChecks;
 use ManaCore\MusicWave\Core\Migrations\MigrationRunner;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -119,7 +120,7 @@ final class DiagnosticsPage {
 			array( __( 'ایجاد اولین انتشار', 'music-wave-core' ), __( 'قطعه، آلبوم یا پادکست را با تصویر جلد، فایل پیش‌نمایش و قیمت اضافه کنید.', 'music-wave-core' ), admin_url( 'post-new.php?post_type=mw_release' ), 'dashicons-format-audio' ),
 			array( __( 'بررسی انواع انتشار و هنرمندان', 'music-wave-core' ), __( 'طبقه‌بندی‌ها و نمایه‌های هنرمند مورد استفاده در کاتالوگ را تأیید کنید.', 'music-wave-core' ), admin_url( 'edit-tags.php?taxonomy=mw_release_type&post_type=mw_release' ), 'dashicons-category' ),
 			array( __( 'ذخیره تنظیمات پیوندهای یکتا', 'music-wave-core' ), __( 'برای URLهای کاتالوگ، هنرمند و بایگانی قابل خواندن از یک ساختار غیر پیش‌فرض استفاده کنید.', 'music-wave-core' ), admin_url( 'options-permalink.php' ), 'dashicons-admin-links' ),
-			array( __( 'پیکربندی تحویل حفاظت‌شده', 'music-wave-core' ), __( 'MusicWave VIP را فعال کنید و قبل از فعال کردن دانلودهای خصوصی، یک پوشهٔ حفاظت‌شده تنظیم کنید.', 'music-wave-core' ), admin_url( 'edit.php?post_type=mw_release&page=music-wave-vip' ), 'dashicons-lock' ),
+			array( __( 'پیکربندی تحویل حفاظت‌شده', 'music-wave-core' ), __( 'MusicWave VIP را فعال کنید و قبل از فعال کردن دانلودهای خصوصی، یک پوشهٔ حفاظت‌شده تنظیم کنید.', 'music-wave-core' ), VipModuleStatus::is_active() ? admin_url( 'edit.php?post_type=mw_release&page=music-wave-vip' ) : admin_url( 'plugins.php' ), 'dashicons-lock' ),
 		);
 
 		echo '<div class="mw-settings__panel"><h2>' . esc_html__( 'شروع سریع', 'music-wave-core' ) . '</h2>';

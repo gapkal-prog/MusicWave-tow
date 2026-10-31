@@ -5,10 +5,18 @@
  * preference (data-mw-theme-value="system|light|dark") is revealed so the
  * script only has to swap an attribute. Sizing matches the header icon
  * buttons (2.75rem circle, 44px touch target).
+ *
+ * Colour, border and shadow are painted through custom properties because
+ * the block wrapper *is* the button: WordPress prints support styles inline
+ * on this element, so anything set in the Styles / Settings tab wins over
+ * these defaults and the front end matches the editor exactly.
  */
 
 .mw-theme-toggle,
 .nbp-theme-toggle-fallback {
+	--mw-toggle-bg: var(--mw-color-surface-raised);
+	--mw-toggle-border: var(--mw-color-border);
+	--mw-toggle-color: var(--mw-color-text);
 	position: relative;
 	display: inline-grid;
 	flex: 0 0 auto;
@@ -16,9 +24,9 @@
 	block-size: 2.5rem;
 	padding: 0;
 	place-items: center;
-	color: var(--mw-color-text);
-	background: var(--mw-color-surface-raised);
-	border: 1px solid var(--mw-color-border);
+	color: var(--mw-toggle-color);
+	background: var(--mw-toggle-bg);
+	border: 1px solid var(--mw-toggle-border);
 	border-radius: 50%;
 	box-shadow: none;
 	font-size: 1.15rem;
@@ -34,9 +42,9 @@
 .mw-theme-toggle:focus-visible,
 .nbp-theme-toggle-fallback:hover,
 .nbp-theme-toggle-fallback:focus-visible {
-	color: var(--mw-color-on-accent);
-	background: var(--mw-color-accent);
-	border-color: var(--mw-color-accent);
+	--mw-toggle-color: var(--mw-color-on-accent);
+	--mw-toggle-bg: var(--mw-color-accent);
+	--mw-toggle-border: var(--mw-color-accent);
 }
 
 .mw-theme-toggle__icon,

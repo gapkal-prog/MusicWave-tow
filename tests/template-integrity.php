@@ -367,7 +367,10 @@ foreach ( $core_block_files as $core_block_file ) {
 	mw_assert_same( 'https://schemas.wp.org/trunk/block.json', is_array( $metadata ) && isset( $metadata['$schema'] ) ? $metadata['$schema'] : '', $label . ' must declare the WordPress block.json schema.' );
 	mw_assert_same( true, is_array( $metadata ) && ! empty( $metadata['keywords'] ) && isset( $metadata['attributes'] ) && is_array( $metadata['attributes'] ) && isset( $metadata['supports'] ) && is_array( $metadata['supports'] ) && isset( $metadata['example'] ) && is_array( $metadata['example'] ), $label . ' must provide complete metadata objects.' );
 }
-mw_assert_same( 37, count( $core_names ), 'Core metadata inventory must contain 37 unified blocks.' );
+mw_assert_same( 41, count( $core_names ), 'Core metadata inventory must contain 41 unified blocks.' );
+foreach ( array( 'music-wave/artists-hero', 'music-wave/artists-toolbar', 'music-wave/artists-alphabet', 'music-wave/artists-pagination' ) as $artists_surface_block ) {
+	mw_assert_same( true, in_array( $artists_surface_block, $core_names, true ), 'The artists browsing surface must ship the ' . $artists_surface_block . ' block.' );
+}
 mw_assert_same( count( $core_names ), count( array_unique( $core_names ) ), 'Core metadata names must be unique.' );
 
 $theme_json_blocks = isset( $theme_json['settings']['blocks'] ) && is_array( $theme_json['settings']['blocks'] ) ? $theme_json['settings']['blocks'] : array();
@@ -643,7 +646,7 @@ foreach ( (array) glob( dirname( __DIR__ ) . '/music-wave-core/src/Blocks/Releas
 }
 $rendering_module      = (string) file_get_contents( dirname( __DIR__ ) . '/music-wave-core/src/Modules/Rendering.php' );
 
-foreach ( array( 'layout', 'columns', 'imageShape', 'showArtwork', 'showPreview', 'showAction', 'sameArtistSection', 'similarSection', 'matchGenre', 'matchMood', 'matchType', 'orderBy', 'showSectionLink' ) as $related_attribute ) {
+foreach ( array( 'showArtwork', 'showPreview', 'showAction', 'sameArtistSection', 'sameArtistIcon', 'similarSection', 'similarIcon', 'matchGenre', 'matchMood', 'matchType', 'orderBy', 'layout', 'columns', 'imageShape' ) as $related_attribute ) {
 	mw_assert_same(
 		true,
 		false !== strpos( $release_blocks_source, '\'' . $related_attribute . '\'' ),
@@ -747,13 +750,11 @@ foreach ( array( 'showLabels', 'fullSpecs', 'showMood', 'showReleaseType', 'show
 }
 
 $related_css = (string) file_get_contents( $theme_directory . '/assets/css/components/related.css' );
-foreach ( array( '.mw-related-releases__section-header', '.mw-related-releases__more' ) as $related_selector ) {
-	mw_assert_same(
-		true,
-		false !== strpos( $related_css, $related_selector ),
-		'The theme must style the related-releases variant ' . $related_selector . '.'
-	);
-}
+mw_assert_same(
+	true,
+	false !== strpos( $related_css, '.mw-related-releases__section-header' ),
+	'The theme must style the related-releases section header.'
+);
 
 // Related rails reuse the MusicWave release shelf layout system so they stay
 // visually identical to the shelf block. The section chrome still lives in
@@ -1028,7 +1029,7 @@ foreach ( array( '.mw-music-library__tabs', '.mw-music-library__items--grid', '.
 }
 
 $account_library_source = (string) file_get_contents( dirname( __DIR__ ) . '/music-wave-core/src/Commerce/AccountLibrary.php' );
-foreach ( array( 'data-mw-dashboard-tab', 'data-mw-dashboard-panel', 'class_exists( \'WooCommerce\' )', 'MUSIC_WAVE_VIP_FILE' ) as $dashboard_marker ) {
+foreach ( array( 'data-mw-dashboard-tab', 'data-mw-dashboard-panel', 'class_exists( \'WooCommerce\' )', 'VipModuleStatus::is_active()' ) as $dashboard_marker ) {
 	mw_assert_same(
 		true,
 		false !== strpos( $account_library_source, $dashboard_marker ),
@@ -1075,6 +1076,10 @@ $music_wave_expected_blocks    = array(
 	'public-playlists',
 	'continue-listening',
 	'artists-shelf',
+	'artists-hero',
+	'artists-toolbar',
+	'artists-alphabet',
+	'artists-pagination',
 	'taxonomy-shelf',
 	'term-hero',
 	'playback-queue',
@@ -1240,10 +1245,9 @@ foreach ( array( 'musicwave/release-card', 'musicwave/release-grid', 'musicwave/
 	);
 }
 
-// The demo packs are the theme's bundled "styles" story: each one is a full
-// page of live renderers an editor can drop in and reorder. They must stay
-// registered, stay tagged with the demo category, and keep composing the
-// shared composer instead of duplicating intro/section-head markup.
+// The full-page demo packs were retired: editors now compose pages from the
+// seven bundled sections instead. Their files, the shared chrome composer and
+// the demo pattern category must all be gone so nothing re-registers them.
 $mw_demo_patterns = array(
 	'musicwave/demo-account-studio',
 	'musicwave/demo-account-commerce',
@@ -1254,40 +1258,30 @@ $mw_demo_patterns = array(
 );
 foreach ( $mw_demo_patterns as $mw_demo_pattern ) {
 	mw_assert_same(
-		true,
+		false,
 		in_array( $mw_demo_pattern, $registered_patterns, true ),
-		'Demo pattern ' . $mw_demo_pattern . ' must stay registered so the bundled demos remain available.'
-	);
-	$mw_demo_file = $theme_directory . '/patterns/' . substr( $mw_demo_pattern, strlen( 'musicwave/' ) ) . '.php';
-	$mw_demo_source = (string) file_get_contents( $mw_demo_file );
-	mw_assert_same(
-		true,
-		false !== strpos( $mw_demo_source, 'Categories: musicwave, musicwave-demos' ),
-		basename( $mw_demo_file ) . ' must be filed under the musicwave-demos pattern category.'
+		'Retired demo pattern ' . $mw_demo_pattern . ' must no longer be registered.'
 	);
 	mw_assert_same(
-		true,
-		false !== strpos( $mw_demo_source, '$musicwave_demo = new \\ManaCore\\MusicWave\\Theme\\Patterns\\DemoComposer();' ),
-		basename( $mw_demo_file ) . ' must build its chrome through the shared DemoComposer instead of duplicating it.'
+		false,
+		file_exists( $theme_directory . '/patterns/' . substr( $mw_demo_pattern, strlen( 'musicwave/' ) ) . '.php' ),
+		'Retired demo pattern must be deleted from disk: ' . $mw_demo_pattern
 	);
 }
-$mw_composer_source = (string) file_get_contents( $theme_directory . '/src/Patterns/DemoComposer.php' );
 mw_assert_same(
-	true,
-	false !== strpos( $mw_composer_source, 'final class DemoComposer' )
-		&& false !== strpos( $mw_composer_source, 'public function intro(' )
-		&& false !== strpos( $mw_composer_source, 'public function section_head(' ),
-	'DemoComposer must expose the intro() and section_head() fragments the demo packs share.'
+	false,
+	file_exists( $theme_directory . '/src/Patterns/DemoComposer.php' ),
+	'The shared demo chrome composer must be deleted together with the demo packs.'
 );
 $mw_block_registry_source = (string) file_get_contents( $theme_directory . '/src/Blocks/BlockRegistry.php' );
-foreach ( array( 'musicwave-demos', 'musicwave-shelves', 'musicwave-cards' ) as $mw_live_category ) {
+foreach ( array( 'musicwave-shelves', 'musicwave-cards' ) as $mw_live_category ) {
 	mw_assert_same(
 		true,
 		false !== strpos( $mw_block_registry_source, "'" . $mw_live_category . "'" ),
 		'Pattern category ' . $mw_live_category . ' must stay registered.'
 	);
 }
-foreach ( array( 'musicwave-hero', 'musicwave-widgets' ) as $mw_dead_category ) {
+foreach ( array( 'musicwave-demos', 'musicwave-hero', 'musicwave-widgets' ) as $mw_dead_category ) {
 	mw_assert_same(
 		false,
 		false !== strpos( $mw_block_registry_source, "'" . $mw_dead_category . "'" ),
@@ -1297,9 +1291,9 @@ foreach ( array( 'musicwave-hero', 'musicwave-widgets' ) as $mw_dead_category ) 
 $mw_editorial_css = (string) file_get_contents( $theme_directory . '/assets/css/components/editorial.css' );
 foreach ( array( '.mw-demo__intro', '.mw-demo__badge', '.mw-demo__grid' ) as $mw_demo_selector ) {
 	mw_assert_same(
-		true,
+		false,
 		false !== strpos( $mw_editorial_css, $mw_demo_selector ),
-		'editorial.css must style the demo vocabulary selector ' . $mw_demo_selector . '.'
+		'editorial.css must drop the retired demo selector ' . $mw_demo_selector . '.'
 	);
 }
 $mw_release_card_pattern = (string) file_get_contents( $theme_directory . '/patterns/release-card.php' );
@@ -1628,8 +1622,8 @@ mw_assert_same(
 mw_assert_same(
 	true,
 	false !== strpos( $release_blocks_source, "'' !== \$heading ? '<h2>'" )
-		&& false !== strpos( $release_blocks_source, "'' !== \$heading_html || '' !== \$more" ),
-	'Related-releases must skip an empty h2 and omit the section-header wrapper when heading and more are both empty.'
+		&& false !== strpos( $release_blocks_source, "'' !== \$heading_html ? '<div class=\"mw-related-releases__section-header\">'" ),
+	'Related-releases must skip an empty h2 and omit the section-header wrapper when no heading is set.'
 );
 
 mw_assert_same(

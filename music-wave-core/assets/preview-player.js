@@ -33,11 +33,11 @@
 			: initialSettings.labels || {};
 
 	/**
-	 * Legacy glyph swap for text-only play triggers (`▶` / `❚❚`).
+	 * Glyph fallback for the few remaining text-only triggers.
 	 *
-	 * Vector triggers now ship both states inside `.mw-icon-swap` and are
-	 * toggled purely by CSS from `aria-pressed` / `data-mw-playing`, so the
-	 * glyph rewrite must never clobber that SVG markup.
+	 * Every SVG trigger ships both states inside `.mw-icon-swap` and is
+	 * toggled purely by CSS from `aria-pressed` / `data-mw-playing`, so this
+	 * rewrite must never clobber that markup.
 	 */
 	function setPlayGlyph( icon, active ) {
 		if ( ! icon || icon.querySelector( '.mw-icon-swap' ) ) {

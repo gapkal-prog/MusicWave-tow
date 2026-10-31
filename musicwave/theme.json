@@ -370,14 +370,17 @@
         "shadow": true
       },
       "music-wave/theme-text": {
-        "color": { "background": true, "text": true },
+        "color": { "background": true, "text": true, "gradient": true, "link": true },
         "spacing": { "margin": true, "padding": true },
-        "typography": { "fontSize": true, "fontWeight": true }
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "letterSpacing": true, "textTransform": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
       },
       "music-wave/theme-toggle": {
         "color": { "background": true, "text": true },
         "spacing": { "margin": true, "padding": true },
-        "border": { "radius": true }
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
       },
       "music-wave/synced-lyrics": {
         "color": { "background": true, "text": true },
@@ -412,28 +415,33 @@
         "shadow": true
       },
       "musicwave/theme-text": {
-        "color": { "background": true, "text": true },
+        "color": { "background": true, "text": true, "gradient": true, "link": true },
         "spacing": { "margin": true, "padding": true },
-        "typography": { "fontSize": true, "fontWeight": true }
+        "typography": { "fontSize": true, "fontWeight": true, "lineHeight": true, "letterSpacing": true, "textTransform": true },
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
       },
       "musicwave/theme-toggle": {
         "color": { "background": true, "text": true },
         "spacing": { "margin": true, "padding": true },
-        "border": { "radius": true }
+        "border": { "color": true, "radius": true, "style": true, "width": true },
+        "shadow": true
       },
       "music-wave/header-search": {
-        "color": { "background": true, "text": true },
-        "spacing": { "margin": true, "padding": true },
+        "color": { "background": true, "gradients": true, "text": true, "link": true },
+        "spacing": { "margin": true, "padding": true, "blockGap": true },
         "border": { "color": true, "radius": true, "style": true, "width": true },
         "shadow": true,
-        "typography": { "fontSize": true }
+        "typography": { "fontSize": true, "lineHeight": true },
+        "dimensions": { "minHeight": true }
       },
       "musicwave/header-search": {
-        "color": { "background": true, "text": true },
-        "spacing": { "margin": true, "padding": true },
+        "color": { "background": true, "gradients": true, "text": true, "link": true },
+        "spacing": { "margin": true, "padding": true, "blockGap": true },
         "border": { "color": true, "radius": true, "style": true, "width": true },
         "shadow": true,
-        "typography": { "fontSize": true }
+        "typography": { "fontSize": true, "lineHeight": true },
+        "dimensions": { "minHeight": true }
       },
       "music-wave/rail-toggle": {
         "color": { "background": true, "text": true },

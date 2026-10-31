@@ -76,6 +76,9 @@
                 "%d day left",
                 "%d days left"
             ],
+            "%d روز تا فعال‌سازی": [
+                "%d days until activation"
+            ],
             "%d روز پیش": [
                 "%d day ago",
                 "%d days ago"
@@ -94,6 +97,9 @@
             ],
             "%d%% تخفیف": [
                 "%d%% off"
+            ],
+            "%s اثر": [
+                "%s releases"
             ],
             "%s انتشار": [
                 "%s release"
@@ -154,6 +160,15 @@
             "FLAC بدون اتلاف": [
                 "FLAC lossless"
             ],
+            "H1": [
+                "H1"
+            ],
+            "H2": [
+                "H2"
+            ],
+            "H3": [
+                "H3"
+            ],
             "ISRC": [
                 "ISRC"
             ],
@@ -193,6 +208,9 @@
             "MusicWave VIP فعال است اما هنوز ارائه‌دهنده تحویل ثبت نشده است. برای فعال کردن دانلودهای حفاظت‌شده، تنظیمات تحویل VIP را ذخیره کنید.": [
                 "MusicWave VIP is active but no delivery provider is registered yet. Save the VIP delivery settings to enable protected downloads."
             ],
+            "MusicWave VIP فعال است؛ این سیاست تا غیرفعال‌شدن ماژول اثری ندارد.": [
+                "MusicWave VIP is active; this policy has no effect until the module is deactivated."
+            ],
             "MusicWave از پیوندهای ثابت زیبا استفاده می‌کند": [
                 "MusicWave uses pretty permalinks"
             ],
@@ -231,6 +249,9 @@
             ],
             "VIP حفاظت‌شده": [
                 "VIP protected"
+            ],
+            "VIP نصب است اما اعمال قوانین خاموش است؛ محتوای عضویتی باز است و تحویل امن همچنان کار می‌کند.": [
+                "VIP is installed but enforcement is off; membership content is open and secure delivery still works."
             ],
             "WAV بدون اتلاف": [
                 "WAV lossless"
@@ -400,6 +421,9 @@
             "آپلود فایل جدید": [
                 "Upload a new file"
             ],
+            "آپلود فایل حفاظت‌شده نیازمند فعال بودن افزونهٔ MusicWave VIP است.": [
+                "Uploading a protected file requires the MusicWave VIP plugin to be active."
+            ],
             "آپلود فایل حفاظت‌شده و خواندن فرادادهٔ آن…": [
                 "Uploading protected file and reading its metadata…"
             ],
@@ -424,11 +448,35 @@
             "آیکون سفارشی دکمه پخش (اختیاری)": [
                 "Custom Play Button Icon (optional)"
             ],
+            "آیکون عنوان «انتشارهای مشابه» (اختیاری)": [
+                "“Similar releases” title icon (optional)"
+            ],
+            "آیکون عنوان «همان هنرمند» (اختیاری)": [
+                "“Same artist” title icon (optional)"
+            ],
+            "آیکون عنوان بخش (اختیاری)": [
+                "Section title icon (optional)"
+            ],
+            "آیکون کنار عنوان بخش نمایش داده می‌شود و به‌صورت پیش‌فرض خالی است. یک آیکون انتخاب کنید، کلاس CSS فونت آیکون بنویسید، یا کد <svg>…</svg> را جای‌گذاری کنید.": [
+                "The icon is shown next to the section title and is empty by default. Pick an icon, enter a font icon CSS class, or paste <svg>...</svg> markup."
+            ],
             "ابرو": [
                 "Eyebrow"
             ],
+            "ابزار": [
+                "Toolbar"
+            ],
+            "ابزارهای هنرمندان": [
+                "Artist tools"
+            ],
             "ابزارک‌ها": [
                 "Widgets"
+            ],
+            "اثر فعلی:": [
+                "Current effect:"
+            ],
+            "اثر منتشرشده": [
+                "Published releases"
             ],
             "اثر هنری روی جلد": [
                 "Cover artwork"
@@ -471,6 +519,9 @@
             ],
             "ارائه‌دهنده تحویل حفاظت‌شده MusicWave در دسترس است": [
                 "MusicWave protected delivery provider is available"
+            ],
+            "ارائه‌دهنده تحویل فعال است؛ دارایی‌های vip:/local: و direct: قابل تحویل هستند.": [
+                "A delivery provider is active; vip:/local: and direct: assets can be delivered."
             ],
             "ارائه‌دهنده عضویت": [
                 "Membership provider"
@@ -532,9 +583,6 @@
             "از صف حذف شد.": [
                 "Removed from the queue."
             ],
-            "از طریق پیوندهای امضاشده و منقضی‌شده تحویل داده می‌شود. نشانی مستقیم فایل هرگز در معرض دید قرار نمی‌گیرد.": [
-                "Delivered through signed, expiring links. Direct file URLs are never exposed."
-            ],
             "از فهرست پخش حذف شد.": [
                 "Removed from the playlist."
             ],
@@ -595,6 +643,9 @@
             "اشتراک ویژه فعال": [
                 "Active VIP Membership"
             ],
+            "اشتراکگذاری انجام نشد.": [
+                "Sharing failed."
+            ],
             "اشتراک‌های فعال شما": [
                 "Your Active Memberships"
             ],
@@ -652,11 +703,17 @@
             "اعتبار فعلی تا %s": [
                 "Valid until %s"
             ],
+            "اعتبار کل عضویت شما تا %s": [
+                "Your membership is valid until %s"
+            ],
             "اعتبارات": [
                 "Credits"
             ],
             "اعتبارات اضافی": [
                 "Additional credits"
+            ],
+            "اعتبارسنجی nonce ناموفق است.": [
+                "Nonce validation failed."
             ],
             "اعلان‌ها و ایمیل": [
                 "Notifications & email"
@@ -669,6 +726,9 @@
             ],
             "اعمال فیلتر": [
                 "Apply filters"
+            ],
+            "افزایش": [
+                "Increase"
             ],
             "افزودن": [
                 "Add"
@@ -709,17 +769,47 @@
             "افزودن عامل": [
                 "Add credit"
             ],
+            "افزودن فایل با لینک مستقیم (CDN/میزبان خارجی)": [
+                "Add file via direct link (CDN/external host)"
+            ],
             "افزودن فایل بعدی به": [
                 "Add next file to"
             ],
-            "افزودن فایل قابل دانلود دستی": [
-                "Add manual downloadable file"
+            "افزودن فایل قابل دانلود دستی (VIP)": [
+                "Add manually downloadable file (VIP)"
+            ],
+            "افزودن فایل قابل دانلود دستی (VIP) — غیرفعال": [
+                "Add manually downloadable file (VIP) — disabled"
             ],
             "افزودن لیست": [
                 "Playlist Add"
             ],
-            "افزودن کیفیت دستی": [
-                "Add manual quality"
+            "افزودن کیفیت دستی (VIP)": [
+                "Add manual quality (VIP)"
+            ],
+            "افزودن کیفیت لینک مستقیم": [
+                "Add direct-link quality"
+            ],
+            "افزونهٔ MusicWave VIP غیرفعال است؛ آپلود فایل حفاظت‌شده، انتخاب از کتابخانهٔ رسانه و افزودن دارایی دستی VIP غیرفعال شده‌اند. لینک مستقیم (direct:) بدون VIP کار می‌کند.": [
+                "MusicWave VIP is inactive; protected-file uploads, media-library selection and manual VIP asset entry are disabled. Direct links (direct:) work without VIP."
+            ],
+            "افزونهٔ MusicWave VIP غیرفعال است؛ انتخاب طرح‌های عضویت تا فعال‌شدن آن قفل است.": [
+                "MusicWave VIP is inactive; membership plan selection stays locked until it is activated."
+            ],
+            "افزونهٔ MusicWave VIP غیرفعال است؛ این فیلد و گزینه‌های اشتراک تا فعال‌شدن VIP قابل ویرایش نیستند.": [
+                "MusicWave VIP is inactive; this field and the subscription options are read-only until VIP is activated."
+            ],
+            "افزونهٔ MusicWave VIP غیرفعال است؛ تخصیص سطح عضویت و حالت‌های اشتراک در به‌روزرسانی انبوه غیرفعال شده‌اند.": [
+                "MusicWave VIP is inactive; membership level assignment and subscription modes are disabled in bulk updates."
+            ],
+            "افزونهٔ MusicWave VIP غیرفعال است؛ حالت‌های «اشتراک VIP»، سطح‌های عضویت و فایل‌های حفاظت‌شدهٔ VIP تا فعال‌شدن افزونه غیرفعال هستند. لینک‌های مستقیم (direct:) بدون VIP کار می‌کنند.": [
+                "MusicWave VIP is inactive; “VIP subscription” modes, membership levels and VIP protected files are disabled until the plugin is activated. Direct links (direct:) work without VIP."
+            ],
+            "افزونهٔ MusicWave VIP غیرفعال است؛ پیام‌ها و مقصد دکمهٔ اشتراک فقط‌خواندنی شده‌اند و حالت‌های اشتراک تا فعال‌شدن VIP در دسترس نیستند.": [
+                "MusicWave VIP is inactive; the subscription button messages and destination are read-only and subscription modes are unavailable until VIP is activated."
+            ],
+            "افزونهٔ MusicWave VIP غیرفعال است؛ گزینهٔ «خرید تکی یا اشتراک VIP» تا فعال‌شدن آن در دسترس نیست.": [
+                "MusicWave VIP is inactive; the “one-off purchase or VIP subscription” option is unavailable until it is activated."
             ],
             "اقتصادی": [
                 "Starter"
@@ -751,6 +841,12 @@
             "الزامات هسته MusicWave برآورده شده است": [
                 "MusicWave core requirements are met"
             ],
+            "الفبا": [
+                "Alphabet"
+            ],
+            "الفبایی": [
+                "Alphabetical"
+            ],
             "الکترونیک": [
                 "Electronic"
             ],
@@ -777,6 +873,9 @@
             ],
             "انتخاب تصویر": [
                 "Select image"
+            ],
+            "انتخاب فایل از کتابخانهٔ رسانه نیازمند فعال بودن افزونهٔ MusicWave VIP است.": [
+                "Selecting a file from the media library requires the MusicWave VIP plugin to be active."
             ],
             "انتخاب نقش درخواست‌دهنده": [
                 "Requester role picker"
@@ -899,6 +998,9 @@
             ],
             "انتشارهای ذخیره‌شده و فایل‌های حفاظت‌شده کاربر.": [
                 "Saved releases and unlocked protected downloads."
+            ],
+            "انتشارهای صرفاً عضویتی باز می‌شوند؛ «خرید یا عضویت» با محصول نگاشت‌شده همچنان خرید می‌خواهد. فایل‌های حفاظت‌شدهٔ VIP بدون ماژول تحویل نمی‌شوند.": [
+                "Membership-only releases open up; “purchase or membership” still requires a purchase when a product is mapped. VIP protected files are not delivered without the module."
             ],
             "انتشارهای مرتبط": [
                 "Related releases"
@@ -1062,6 +1164,9 @@
             "این فهرست پخش در حال حاضر صدای قابل پخش ندارد.": [
                 "This playlist has no playable audio right now."
             ],
+            "این قابلیت نیازمند فعال بودن افزونهٔ MusicWave VIP است.": [
+                "This feature requires the MusicWave VIP plugin to be active."
+            ],
             "این مقادیر هنگام ایجاد هر انتشار جدید (چه در ویرایشگر بلوکی و چه کلاسیک/REST) به‌صورت خودکار ثبت می‌شوند. انتشارهای قبلی هرگز بازنویسی نمی‌شوند.": [
                 "These values are applied automatically when a new release is created (in the block editor, classic editor, or REST API). Existing releases are never overwritten."
             ],
@@ -1158,6 +1263,9 @@
             "باکس دانلود، کیفیت‌ها و برچسب‌ها": [
                 "Download panel, qualities, and labels"
             ],
+            "باید با «هنرمند در هر صفحه» در بلوک ویترین هنرمندان یکی باشد.": [
+                "Must match “Artists per page” in the Artists shelf block."
+            ],
             "بایگانی": [
                 "Archive"
             ],
@@ -1173,9 +1281,6 @@
             "بخش خوش‌آمدگویی حساب با آواتار، نشان VIP، وضعیت اشتراک واقعی و دکمه تمدید.": [
                 "Account welcome header with avatar, live VIP badge, subscription status, and renewal CTA."
             ],
-            "بخش مربوط به همان هنرمند را به آرشیو هنرمند و بخش مشابه را به کاتالوگ پیوند می‌دهد.": [
-                "Links the same-artist section to the artist archive and the similar section to the catalog."
-            ],
             "بخش همان هنرمند": [
                 "Same-artist section"
             ],
@@ -1185,8 +1290,14 @@
             "بخش‌های حساب": [
                 "Account sections"
             ],
+            "بدون آیکون": [
+                "No icon"
+            ],
             "بدون تغییر حالت فعلی انتشار": [
                 "Keep current release access mode unchanged"
+            ],
+            "بدون صفحه‌بندی (نمایش یک‌جا)": [
+                "No pagination (show all)"
             ],
             "بدون عنوان": [
                 "Untitled"
@@ -1205,6 +1316,9 @@
             ],
             "برای «%s» فایل صوتی یا پیش‌نمایش ثبت نشده است.": [
                 "No audio stream or preview file is saved for \"%s\"."
+            ],
+            "برای «%s» فهرست قطعات قابلپخش ثبت نشده است؛ دکمه پخش تصادفی در سایت پنهان میماند.": [
+                "No playable tracklist is registered for “%s”; the shuffle button stays hidden on the site."
             ],
             "برای «%s» هنوز عوامل تولید (Credits) ثبت نشده است؛ در نمای عمومی نمایش داده نمی‌شود.": [
                 "No production credits have been added for “%s” yet; this block stays hidden on the public page."
@@ -1344,11 +1458,17 @@
             "برای منبع ژانر و حال‌وهوا استفاده می‌شود. مثال: پاپ.": [
                 "Used by the genre and mood sources. Example: pop."
             ],
+            "برای نمایش همهٔ هنرمندان، گزینهٔ «نمایش همه» را روشن کنید.": [
+                "To show all artists, enable “Show all”."
+            ],
             "برای هر آهنگ، قسمت یا بسته یک فایل قابل دانلود ایجاد کنید. سپس تمام کیفیت‌های موجود را به آن فایل اضافه کنید. این کار آلبوم‌ها و پادکست‌ها را بدون آپلود مجدد همان صدا سازماندهی می‌کند.": [
                 "Create a downloadable file for every song, episode, or bundle. Then add all available qualities to that file. This keeps albums and podcasts organized without uploading the same audio again."
             ],
             "برای ویرایش حساب وارد شوید.": [
                 "Sign in to edit your account details."
+            ],
+            "برای پخش این فایل وارد حساب کاربری خود شوید.": [
+                "Log in to your account to play this file."
             ],
             "برای پخش یا دانلود فایل حفاظت‌شده، ابتدا وارد حساب کاربری خود شوید.": [
                 "Please sign in to your account to stream or download this protected file."
@@ -1404,6 +1524,12 @@
             "برچسب": [
                 "Label"
             ],
+            "برچسب تب الفبایی": [
+                "Alphabetical tab label"
+            ],
+            "برچسب تب محبوب": [
+                "Popular tab label"
+            ],
             "برچسب دکمه": [
                 "Button label"
             ],
@@ -1449,8 +1575,8 @@
             "برچسب پیوند اقدام": [
                 "Action link label"
             ],
-            "برچسب پیوند بخش": [
-                "Section link label"
+            "برچسب کلید «همه»": [
+                "“All” chip label"
             ],
             "برچسب‌ها": [
                 "Labels"
@@ -1515,8 +1641,17 @@
             "بنر (پیام و اقدام در یک ردیف)": [
                 "Banner (message and action in one row)"
             ],
+            "بنر آغازین فهرست هنرمندان: ابرو، عنوان، مقدمه و آمار کاتالوگ.": [
+                "Artists index hero banner: eyebrow, title, intro and catalogue stats."
+            ],
+            "بنر آغازین فهرست هنرمندان: ابرو، عنوان، مقدمه، آمار کاتالوگ و مجموعه‌ای از صفحه‌های هم‌پوشان هنرمندان برتر.": [
+                "Artists index hero banner: eyebrow, title, intro, catalogue stats and a collage of overlapping discs for the top artists."
+            ],
             "بنر شاخص هنرمند (Spotlight)": [
                 "Featured artist spotlight"
+            ],
+            "بنر هنرمندان": [
+                "Artists banner"
             ],
             "به %1$s توسط %2$s در %3$s گوش دهید.": [
                 "Listen to %1$s by %2$s on %3$s."
@@ -1614,11 +1749,17 @@
             "بی‌صدا": [
                 "Mute"
             ],
+            "تأمین lease ناموفق بود.": [
+                "Acquiring the lease failed."
+            ],
             "تأکیدی توپر (اصلی)": [
                 "Solid accent (primary)"
             ],
             "تا زمان تغییر از پیش‌فرض جهانی استفاده می‌کند.": [
                 "Uses the global default until changed."
+            ],
+            "تا فعال‌شدن یک ماژول عضویت (مانند MusicWave VIP)، انتشارهای عضویتی مسدود می‌مانند.": [
+                "Until a membership module (such as MusicWave VIP) is activated, membership releases stay locked."
             ],
             "تاریخ": [
                 "history"
@@ -1665,6 +1806,9 @@
             "تحریریه": [
                 "Editorial"
             ],
+            "تحویل از طریق پیوندهای امضاشده و منقضی‌شده انجام می‌شود و لینک مستقیم فایل هرگز نمایش داده نمی‌شود.": [
+                "Delivery uses signed, expiring links and the direct file URL is never exposed."
+            ],
             "تحویل حفاظت‌شده": [
                 "Protected delivery"
             ],
@@ -1683,6 +1827,9 @@
             "تراکم و چیدمان ردیف‌ها": [
                 "Row density & layout"
             ],
+            "ترتیب": [
+                "Ordering"
+            ],
             "ترتیب صف به‌روز شد.": [
                 "Queue order updated."
             ],
@@ -1695,8 +1842,14 @@
             "ترتیب فهرست پخش را به‌صورت فهرستی از شناسه‌های انتشار ارسال کنید.": [
                 "Send the playlist order as a list of release IDs."
             ],
+            "ترتیب نمایش": [
+                "Sort order"
+            ],
             "ترتیب و چیدمان پنل‌ها": [
                 "Panel Order & Layout"
+            ],
+            "ترتیب پیش‌فرض": [
+                "Default sorting"
             ],
             "ترجیح حالت تصادفی ذخیره نشد.": [
                 "The shuffle preference could not be saved."
@@ -1745,6 +1898,9 @@
             ],
             "تعداد تلاش‌های ناموفق بیش از حد مجاز است. چند دقیقه بعد دوباره تلاش کنید.": [
                 "Too many failed attempts. Try again in a few minutes."
+            ],
+            "تعداد خواننده‌ها و آثار منتشرشده را زیر مقدمه نمایش می‌دهد.": [
+                "Shows the artist and published-release counts under the intro."
             ],
             "تعداد در هر گروه": [
                 "Items per group"
@@ -2034,6 +2190,9 @@
             "جست‌وجوی انتشار یا نام فایل": [
                 "Search release or file name"
             ],
+            "جست‌وجوی خواننده": [
+                "Search artists"
+            ],
             "جست‌وجو…": [
                 "Searching…"
             ],
@@ -2091,6 +2250,9 @@
             "حالت روی‌هم‌چیده نیز در پنل سبک‌های بلوک در دسترس است.": [
                 "Stacked is also available in the block Styles panel."
             ],
+            "حالت صفحه‌بندی": [
+                "Pagination mode"
+            ],
             "حالت فرم": [
                 "Form mode"
             ],
@@ -2111,6 +2273,9 @@
             ],
             "حالت پخش تصادفی به‌روزرسانی شد.": [
                 "Shuffle mode updated."
+            ],
+            "حالت‌های «اشتراک VIP» و «خرید یا اشتراک VIP» تا فعال‌شدن افزونهٔ MusicWave VIP قابل انتخاب نیستند.": [
+                "The “VIP subscription” and “purchase or VIP subscription” modes cannot be selected until the MusicWave VIP plugin is activated."
             ],
             "حال‌وهوا": [
                 "Mood"
@@ -2190,6 +2355,9 @@
             "حذف آن فهرست پخش انجام نشد.": [
                 "Could not delete that playlist."
             ],
+            "حذف آیکون عنوان بخش": [
+                "Remove section title icon"
+            ],
             "حذف از فهرست ادامهٔ پخش": [
                 "Remove from continue listening"
             ],
@@ -2228,6 +2396,9 @@
             ],
             "حرفه‌ای": [
                 "Premium"
+            ],
+            "حروف": [
+                "Letters"
             ],
             "حروف لاتین، عدد، نقطه، خط تیره و زیرخط.": [
                 "Latin letters, numbers, dots, hyphens, and underscores."
@@ -2313,6 +2484,9 @@
             "خصوصی": [
                 "Private"
             ],
+            "خط «نمایش ۱۰ از ۱۰ خواننده» را بالای کارت‌ها چاپ می‌کند.": [
+                "Prints a “Showing 10 of 10 artists” line above the cards."
+            ],
             "خطا در دریافت پیش‌نمایش از سرور وردپرس.": [
                 "Failed to render block preview from WordPress server."
             ],
@@ -2334,8 +2508,17 @@
             "خواننده": [
                 "Singer"
             ],
+            "خواننده‌ای با این فیلترها پیدا نشد. جست‌وجو را پاک کنید یا حرف دیگری را امتحان کنید.": [
+                "No artists match these filters. Clear the search or try another letter."
+            ],
             "خواننده‌ها": [
                 "singers"
+            ],
+            "خوانندگان": [
+                "Artists"
+            ],
+            "خوانندگان با حرف %1$s، %2$s نفر": [
+                "Artists starting with “%1$s” (%2$s)"
             ],
             "خودکار (بایگانی فعلی)": [
                 "Automatic (current archive)"
@@ -2520,9 +2703,6 @@
             "در مدت کوتاهی چند درخواست فرستاده‌اید. لطفاً کمی بعد دوباره تلاش کنید.": [
                 "You have sent several requests in a short time. Please try again a little later."
             ],
-            "در هر خط یک کیفیت: quality-key | برچسب مشتری | شناسهٔ opaque دارایی ارائه‌دهنده. نمونه: mp3-320 | MP3 320 kbps | local:downloads/track-320.mp3": [
-                "One quality per line: quality-key | customer label | opaque provider asset ID. Example: mp3-320 | MP3 320 kbps | local:downloads/track-320.mp3"
-            ],
             "در چند ثانیه حساب بسازید و کتابخانه، صف شنیدن و دانلودهای خود را در یک‌جا نگه دارید.": [
                 "Create an account in seconds and keep your library, listening queue, and downloads in one place."
             ],
@@ -2586,6 +2766,9 @@
             "درخواست، اطلاعات تماس و کل سابقه برای همیشه حذف می‌شود. برای نگهداری بدون نمایش، به‌جای حذف «بایگانی» کنید.": [
                 "The request, its contact details, and the whole history will be deleted forever. To keep it out of sight instead, choose “Archive”."
             ],
+            "درخواستهای پخش پیوسته زیاد است. یک لحظه صبر کنید.": [
+                "Too many consecutive playback requests. Please wait a moment."
+            ],
             "درخواست‌ها و تنظیمات چت": [
                 "Requests & Conversation Settings"
             ],
@@ -2606,6 +2789,9 @@
             ],
             "درخواست‌های همکاری MusicWave": [
                 "MusicWave collaboration requests"
+            ],
+            "درخواست‌های پیوسته زیاد است. یک لحظه صبر کنید.": [
+                "Too many consecutive requests. Please wait a moment."
             ],
             "درخواست‌کننده": [
                 "Requester"
@@ -2631,9 +2817,6 @@
             "دسترسی «%s» محدود به اشتراک ویژه یا خرید است — فایل‌های واقعی آن برای پیش‌نمایش نمایش داده شده‌اند.": [
                 "Access to \"%s\" requires VIP membership or purchase — showing its real files for editor preview."
             ],
-            "دسترسی آزاد — انتشارهای صرفاً عضویتی بدون افزونه VIP قابل مشاهده بمانند (توصیه می‌شود)": [
-                "Allow access — keep membership-gated releases open when no membership add-on is active (recommended)"
-            ],
             "دسترسی اعطا شد": [
                 "Access granted"
             ],
@@ -2648,6 +2831,9 @@
             ],
             "دسترسی دائمی فعال روی حساب شما": [
                 "Lifetime access active on your account"
+            ],
+            "دسترسی کامل و لینک دانلود": [
+                "Full access and download link"
             ],
             "دسته‌ها": [
                 "categories"
@@ -2805,6 +2991,9 @@
             "راه‌اندازی و عیب‌یابی را باز کنید": [
                 "Open Setup & diagnostics"
             ],
+            "رتبهٔ %s در محبوبیت": [
+                "Popularity rank %s"
+            ],
             "رد اطلاعیه": [
                 "Dismiss notice"
             ],
@@ -2820,6 +3009,12 @@
             "ردیف آمار کاربر": [
                 "Listener Stats Row"
             ],
+            "ردیف حروف الفبای فارسی برای مرور خوانندگان. حروف بدون هنرمند به‌صورت برچسب غیرقابل‌کلیک نمایش داده می‌شوند و فیلتر با جست‌وجو و ترتیب فعال ترکیب می‌شود.": [
+                "Persian alphabet row for browsing artists. Letters with no artists render as inert labels, and the filter combines with the active search and ordering."
+            ],
+            "ردیف حروف الفبای فارسی برای مرور خوانندگان؛ حروف بدون هنرمند غیرقابل‌کلیک می‌شوند.": [
+                "Persian alphabet row for browsing artists; letters with no artists become inert."
+            ],
             "ردیف‌های انباشته": [
                 "Stacked rows"
             ],
@@ -2828,6 +3023,12 @@
             ],
             "ردیف‌های پشته‌ای (برچسب در کنار مقدار)": [
                 "Stacked Rows (Label Beside Value)"
+            ],
+            "رزرو": [
+                "Reserved"
+            ],
+            "رزرو — فعال‌سازی از %s": [
+                "Reserved — active from %s"
             ],
             "رفتار ماژول عضویت": [
                 "Membership module behavior"
@@ -2861,6 +3062,9 @@
             ],
             "روش‌های پرداخت ذخیره‌شده.": [
                 "Saved payment methods."
+            ],
+            "روی سه هنرمند اولِ ترتیب «بیشترین انتشار» نشان ۱، ۲ و ۳ می‌گذارد.": [
+                "Marks the top three artists of the “Most releases” order with badges 1, 2 and 3."
             ],
             "رویداد": [
                 "Event"
@@ -2904,9 +3108,6 @@
             "زمان‌بندی‌شده": [
                 "Scheduled"
             ],
-            "زیر ویترین، ناوبری صفحه‌بندی با شمارهٔ صفحه، «قبلی/بعدی» و شمارش هنرمندان اضافه می‌شود. برای فهرست کامل هنرمندان در صفحهٔ هنرمندان مناسب است.": [
-                "Adds a pager under the shelf — numbered pages, Previous/Next, and the artist total. Best for the full artist index."
-            ],
             "سئو و داده‌های ساختاریافته": [
                 "SEO and structured data"
             ],
@@ -2939,6 +3140,9 @@
             ],
             "ساخت سریع محصول تکی WooCommerce برای این انتشار (اختیاری):": [
                 "Quick-create single WooCommerce product for this release (optional):"
+            ],
+            "ساخت نشست پخش ناموفق بود.": [
+                "Creating the playback session failed."
             ],
             "ساختار URL کاتالوگ و طبقه‌بندی‌های متعارف را پیکربندی کنید.": [
                 "Configure canonical catalog and taxonomy URL structure."
@@ -3009,6 +3213,9 @@
             "ستاره": [
                 "Star"
             ],
+            "ستون‌های دسکتاپ": [
+                "Desktop columns"
+            ],
             "ستون‌های شبکه": [
                 "Grid columns"
             ],
@@ -3050,6 +3257,9 @@
             ],
             "سطح عضویت پیش‌فرض انتشارهای جدید": [
                 "Default membership levels for new releases"
+            ],
+            "سطح عنوان": [
+                "Heading level"
             ],
             "سطحی هماهنگ با پوسته": [
                 "Subtle surface"
@@ -3111,6 +3321,12 @@
             "سیستم": [
                 "System"
             ],
+            "سیستم نشست پخش در این سایت فعال نیست.": [
+                "The playback-session system is not enabled on this site."
+            ],
+            "سیستم نشست پخش فعال نیست.": [
+                "The playback-session system is not active."
+            ],
             "شبانه": [
                 "Nocturne"
             ],
@@ -3158,6 +3374,9 @@
             ],
             "شما مجاز به اختصاص این دارایی حفاظت‌شده نیستید.": [
                 "You are not authorized to assign this protected asset."
+            ],
+            "شما مجاز به اختصاص لینک مستقیم نیستید.": [
+                "You are not allowed to assign direct links."
             ],
             "شما مجاز به تغییر تنظیمات دسترسی MusicWave نیستید.": [
                 "You are not allowed to change MusicWave access settings."
@@ -3237,8 +3456,8 @@
             "شناسه هنرمند ثابت (اختیاری)": [
                 "Pinned artist term ID (optional)"
             ],
-            "شناسهٔ دارایی ارائه‌دهنده مانند local:album/track.zip را ذخیره کنید؛ هرگز نشانی دانلود عمومی ذخیره نکنید.": [
-                "Store a provider asset identifier such as local:album/track.zip, never a public download URL."
+            "شناسهٔ نشست ارسال نشده است.": [
+                "No session ID was submitted."
             ],
             "شناسهٔ کلاینت Spotify": [
                 "Spotify client ID"
@@ -3260,6 +3479,9 @@
             ],
             "شکل اثر هنری": [
                 "Artwork shape"
+            ],
+            "شکل تصویر": [
+                "Image shape"
             ],
             "شکل تصویر فشرده": [
                 "Compact art shape"
@@ -3318,6 +3540,9 @@
             "صفحات کتابخانه": [
                 "Library pages"
             ],
+            "صفحه": [
+                "Page"
+            ],
             "صفحه فهرست‌های پخش عمومی %1$d از %2$d": [
                 "Public playlists page %1$d of %2$d"
             ],
@@ -3341,6 +3566,18 @@
             ],
             "صفحهٔ وینیل (چرخان)": [
                 "Vinyl disc (spinning)"
+            ],
+            "صفحه‌بندی": [
+                "Pagination"
+            ],
+            "صفحه‌بندی با بلوک «صفحه‌بندی هنرمندان»": [
+                "Paginate with the Artists Pagination block"
+            ],
+            "صفحه‌بندی درون بلوک": [
+                "Paginate inside the block"
+            ],
+            "صفحه‌بندی درون‌بلوکی، صفحه‌بندی با بلوک جداگانهٔ هنرمندان، یا نمایش یک‌جای همه. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند.": [
+                "Paginate inside the block, paginate with the separate Artists Pagination block, or show everything at once. Pagination only works for the “All artists” source with stable ordering."
             ],
             "صفحه‌بندی هنرمندان": [
                 "Artist pagination"
@@ -3407,9 +3644,6 @@
             ],
             "طول پنجرهٔ ثابت استفاده‌شده توسط محدودیت نرخ کشف.": [
                 "Length of the fixed window used by the discovery rate limit."
-            ],
-            "طومار افقی": [
-                "Horizontal scroll"
             ],
             "عادی": [
                 "Normal"
@@ -3500,6 +3734,9 @@
             ],
             "عنوان بخش": [
                 "Section heading"
+            ],
+            "عنوان بنر": [
+                "Banner title"
             ],
             "عنوان جزئیات و ویرایش حساب": [
                 "Account Details & Edit Heading"
@@ -3618,9 +3855,6 @@
             "فایل‌های حفاظت‌شده ذخیره نمی‌شوند.": [
                 "The protected files could not be saved."
             ],
-            "فایل‌های حفاظت‌شده و کیفیت دانلود": [
-                "Protected files and download qualities"
-            ],
             "فایل‌های حفاظت‌شده و کیفیت دانلود ذخیره شدند.": [
                 "Protected files and download qualities saved."
             ],
@@ -3726,6 +3960,9 @@
             "فعالیت پخش فقط برای کاربرانی که با ذخیره سابقه موافقت کرده‌اند (REST POST music-wave/v1/listening/consent) ثبت می‌شود. جدول mw_user_activity (ListeningRepository.php) شامل user_id, release_id, event, position, updated_at است. نگهداری پیش‌فرض %d روز (تنظیم listening_retention_days در music_wave_settings، پیش‌فرض 180)، پاک‌سازی روزانه via cron music_wave_listening_cleanup. کاربران می‌توانند از داشبورد حساب خود سابقه شخصی را پاک کنند. Exporter/Eraser در PersonalData.php پوشش می‌دهد.": [
                 "Playback activity is recorded only after explicit consent in mw_user_activity with %d-day retention, daily cleanup cron, account history clearing, and PersonalData export/erase support."
             ],
+            "فعال‌سازی از %s": [
+                "Active from %s"
+            ],
             "فعال‌سازی بخش‌های داشبورد": [
                 "Enabled Dashboard Sections"
             ],
@@ -3749,6 +3986,9 @@
             ],
             "فقط سفارش آهنگ اختصاصی": [
                 "Custom song only"
+            ],
+            "فقط لینک‌های مستقیم (direct:) قابل تحویل هستند؛ فایل‌های vip:/local: نیاز به افزونه MusicWave VIP دارند.": [
+                "Only direct links (direct:) can be delivered; vip:/local: files require the MusicWave VIP plugin."
             ],
             "فقط مرجع ویرایشگر خصوصی": [
                 "Private editor reference only."
@@ -3898,11 +4138,20 @@
             "فوری: درخواست را در فهرست برجسته می‌کند و با فیلتر اولویت پیدا می‌شود.": [
                 "Urgent: highlights the request in the list and makes it findable with the priority filter."
             ],
+            "فیلتر": [
+                "Filter"
+            ],
             "فیلتر music_wave_max_playlist_items.": [
                 "Filter music_wave_max_playlist_items."
             ],
             "فیلتر music_wave_max_playlists_per_user برای override per user.": [
                 "Filter music_wave_max_playlists_per_user for per-user overrides."
+            ],
+            "فیلتر الفبایی خوانندگان": [
+                "Alphabetical artist filter"
+            ],
+            "فیلتر الفبایی هنرمندان": [
+                "Alphabetical artists filter"
             ],
             "فیلتر حالت فعلی": [
                 "Filter current mode"
@@ -4036,6 +4285,9 @@
             "قفسه موسیقی": [
                 "Music shelf"
             ],
+            "قفل کامل": [
+                "Fully locked"
+            ],
             "قلب": [
                 "Heart"
             ],
@@ -4072,8 +4324,26 @@
             "لیست پخش": [
                 "Playlist"
             ],
+            "لینک HTTPS فایل روی CDN/میزبان خارجی. پس از بررسی دسترسی، کاربر به آن هدایت می‌شود.": [
+                "HTTPS URL of the file on a CDN/external host. After the access check, the user is redirected to it."
+            ],
             "لینک سفارش": [
                 "Order link"
+            ],
+            "لینک مستقیم": [
+                "Direct link"
+            ],
+            "لینک مستقیم اضافه شد. قبل از ذخیره، مطمئن شوید میزبان مقصد HTTPS است و برای دانلود هدر Content-Disposition: attachment را ارسال می‌کند.": [
+                "Direct link added. Before saving, make sure the destination host uses HTTPS and sends a Content-Disposition: attachment header for downloads."
+            ],
+            "لینک مستقیم باید با https:// شروع شود.": [
+                "The direct link must start with https://."
+            ],
+            "لینک مستقیم فایل (HTTPS)": [
+                "Direct file link (HTTPS)"
+            ],
+            "لینک مستقیم نامعتبر است: فقط HTTPS، بدون کاراکتر کنترل، بدون userinfo/IP/سرور محلی، و port ۴۴۳.": [
+                "Invalid direct link: HTTPS only, no control characters, no userinfo/IP/local server, and port 443."
             ],
             "مادام‌العمر": [
                 "Lifetime"
@@ -4113,6 +4383,9 @@
             ],
             "متن دکمه پخش تصادفی در حالت «دکمه کامل با متن»؛ خالی = پیش‌فرض.": [
                 "Shuffle button text in “Full Button with Label” mode; leave empty for default."
+            ],
+            "متن راهنمای جست‌وجو": [
+                "Search placeholder"
             ],
             "متن سفارشی دکمه": [
                 "Custom button label"
@@ -4312,6 +4585,9 @@
             "مربعی": [
                 "Square"
             ],
+            "مرتب‌سازی": [
+                "Sorting"
+            ],
             "مرتب‌سازی انتشارات": [
                 "Sort releases"
             ],
@@ -4333,6 +4609,9 @@
             "مرور همهٔ انتشارها": [
                 "Review all releases"
             ],
+            "مرور و فیلتر": [
+                "Browsing and filters"
+            ],
             "مرکز کنترل MusicWave": [
                 "MusicWave control center"
             ],
@@ -4341,9 +4620,6 @@
             ],
             "مرکز کنترل پیکربندی MusicWave را بر اساس موضوع گروه‌بندی می‌کند:": [
                 "The control center groups MusicWave configuration by concern:"
-            ],
-            "مسدودسازی — تا زمان فعال‌شدن یک ماژول عضویت، دسترسی به انتشارهای عضویتی قفل بماند": [
-                "Block access — keep membership-gated releases locked until a membership add-on is enabled"
             ],
             "مشابه": [
                 "similar"
@@ -4383,6 +4659,9 @@
             ],
             "مشاهده گزینه‌های عضویت": [
                 "View membership options"
+            ],
+            "مشاهدهٔ آزاد انتشارهای عضویتی": [
+                "Membership releases open to all"
             ],
             "مشاهدهٔ همهٔ فهرست‌های پخش": [
                 "See all playlists"
@@ -4558,6 +4837,9 @@
             "نام بیش از حد طولانی است.": [
                 "The name is too long."
             ],
+            "نام خواننده را جست‌وجو کنید…": [
+                "Search artist names…"
+            ],
             "نام خود را وارد کنید (حداقل ۲ نویسه).": [
                 "Enter your name (at least 2 characters)."
             ],
@@ -4618,6 +4900,12 @@
             "ناوبری": [
                 "Navigation"
             ],
+            "ناوبری شماره‌ای صفحهٔ هنرمندان. «تعداد هنرمند در هر صفحه» باید با همان مقدار ویترین هنرمندان تنظیم شود تا شماره‌ها با محتوای صفحه هم‌خوان بمانند.": [
+                "Numbered paging for the artists index. The “artists per page” value must match the Artists shelf block so page numbers match the content."
+            ],
+            "ناوبری شماره‌ای صفحهٔ هنرمندان؛ با همان «تعداد هنرمند در هر صفحه» ویترین تنظیم شود.": [
+                "Numbered paging for the artists index; set the same “artists per page” value as the shelf."
+            ],
             "نتایج": [
                 "Results"
             ],
@@ -4666,6 +4954,9 @@
             "نشان VIP واقعی": [
                 "Verified VIP badge"
             ],
+            "نشان محبوبیت سه نفر اول": [
+                "Top-three popularity badge"
+            ],
             "نشان می‌دهد که چند انتشار با فیلترهای فعلی مطابقت دارند.": [
                 "Shows how many releases match the current filters."
             ],
@@ -4684,11 +4975,20 @@
             "نشانی صفحهٔ اشتراک VIP (خالی = تشخیص خودکار)": [
                 "VIP plans page URL (blank = auto-detect)"
             ],
+            "نشانی عمومی مجاز نیست. از شناسهٔ دارایی EOP (مثل vip:…) یا پیشوند direct:<https-url> استفاده کنید.": [
+                "Public URLs are not allowed. Use an EOP asset ID (such as vip:...) or the direct:<https-url> prefix."
+            ],
             "نشانی پاسخ (Reply-To)": [
                 "Reply-To address"
             ],
             "نشانی‌ها را با ویرگول یا خط جدید جدا کنید. خالی = ایمیل مدیر سایت.": [
                 "Separate addresses with commas or new lines. Empty = the site admin email."
+            ],
+            "نشست نامعتبر است.": [
+                "The session is invalid."
+            ],
+            "نشست نامعتبر یا منقضی شده است.": [
+                "The session is invalid or has expired."
             ],
             "نصب WooCommerce": [
                 "Install WooCommerce"
@@ -4723,11 +5023,17 @@
             "نمایش %1$d از فهرست‌های پخش %2$d": [
                 "Showing %1$d of %2$d playlists"
             ],
+            "نمایش %1$s از %2$s خواننده": [
+                "Showing %1$s of %2$s artists"
+            ],
             "نمایش آثار هنری": [
                 "Show artwork"
             ],
             "نمایش آمار جمع‌وجور: دانلودهای موجود، علاقه‌مندی‌ها و هنرمندان دنبال‌شده.": [
                 "Display compact metrics for available downloads, saved items, and followed artists."
+            ],
+            "نمایش آمار کاتالوگ": [
+                "Show catalogue stats"
             ],
             "نمایش آواتار": [
                 "Show avatar"
@@ -4765,6 +5071,9 @@
             "نمایش تاریخ به‌روزرسانی": [
                 "Show updated date"
             ],
+            "نمایش تب‌های ترتیب": [
+                "Show sorting tabs"
+            ],
             "نمایش تراشه‌های فیلتر فعال": [
                 "Show active filter chips"
             ],
@@ -4792,6 +5101,9 @@
             "نمایش تعداد و زمان کل مجموعه": [
                 "Show track count & total duration"
             ],
+            "نمایش تعداد کاربران کتابخانه": [
+                "Show library user count"
+            ],
             "نمایش تغییر فهرست قطعه‌ها": [
                 "Show the track list toggle"
             ],
@@ -4812,6 +5124,9 @@
             ],
             "نمایش حال و هوا": [
                 "Show mood"
+            ],
+            "نمایش خط وضعیت صفحه": [
+                "Show page status line"
             ],
             "نمایش خوش‌آمدگویی و VIP": [
                 "Show welcome & VIP card"
@@ -4881,6 +5196,12 @@
             ],
             "نمایش شبکهٔ تصاویر جلد": [
                 "Show cover art grid"
+            ],
+            "نمایش شمارش نتایج": [
+                "Show result count"
+            ],
+            "نمایش شمارش هر حرف": [
+                "Show count per letter"
             ],
             "نمایش شماره قطعه": [
                 "Show track numbers"
@@ -4957,6 +5278,9 @@
             "نمایش همهٔ جزئیات انتشار MusicWave": [
                 "Show all MusicWave release details"
             ],
+            "نمایش همهٔ هنرمندان (بدون محدودیت)": [
+                "Show all artists (no limit)"
+            ],
             "نمایش همپوشانی پخش": [
                 "Show play overlay"
             ],
@@ -4987,9 +5311,6 @@
             "نمایش پیوند بازنشانی": [
                 "Show reset link"
             ],
-            "نمایش پیوند بخش": [
-                "Show section link"
-            ],
             "نمایش ژانر": [
                 "Show genre"
             ],
@@ -4998,6 +5319,9 @@
             ],
             "نمایش کل فهرست پخش": [
                 "Show playlist total"
+            ],
+            "نمایش کلید «همه»": [
+                "Show “All” chip"
             ],
             "نمایش کلید موسیقی": [
                 "Show musical key"
@@ -5031,6 +5355,12 @@
             ],
             "نمونه‌کارها و پیوندها": [
                 "Portfolio & links"
+            ],
+            "نوار ابزار فهرست هنرمندان: جست‌وجوی خواننده و تب‌های ترتیب (پیکارتین/الفبایی). همهٔ کنترل‌ها بدون جاوااسکریپت کار می‌کنند و از طریق نشانی به ویترین هنرمندان متصل‌اند.": [
+                "Artists index toolbar: artist search and sorting tabs (popular/alphabetical). Every control works without JavaScript and links to the artists showcase through the URL."
+            ],
+            "نوار ابزار فهرست هنرمندان: جست‌وجوی خواننده، تب‌های ترتیب و کلید شبکه/فهرست؛ بدون نیاز به جاوااسکریپت.": [
+                "Artists index toolbar: artist search, sorting tabs and a grid/list toggle; no JavaScript required."
             ],
             "نوار درون‌خطی": [
                 "Inline bar"
@@ -5173,11 +5503,20 @@
             "همهٔ انتشارها": [
                 "All releases"
             ],
+            "همهٔ انتشارهای عضویتی و «خرید یا عضویت» برای همه باز می‌شوند. فایل‌های با لینک مستقیم پخش و دانلود می‌شوند. فایل‌های مخزن حفاظت‌شدهٔ VIP همچنان به ماژول VIP نیاز دارند.": [
+                "All membership and “purchase or membership” releases open to everyone. Direct-link files play and download. VIP protected-repository files still require the VIP module."
+            ],
             "همهٔ انواع": [
                 "All types"
             ],
+            "همهٔ خوانندگان کاتالوگ را در یک جا ببینید؛ بر اساس محبوبیت یا الفبا مرتب کنید و هر هنرمند را دنبال کنید تا انتشارهای تازه‌اش را از دست ندهید.": [
+                "Browse every artist in the catalogue in one place; sort by popularity or alphabetically and follow any artist so you never miss a new release."
+            ],
             "همهٔ نقش‌ها": [
                 "All roles"
+            ],
+            "همهٔ هنرمندانِ منطبق با منبع را نمایش می‌دهد و صفحه‌بندی را غیرفعال می‌کند.": [
+                "Shows every artist matching the source and disables pagination."
             ],
             "همکاری": [
                 "Collaboration"
@@ -5242,11 +5581,11 @@
             "هنرمندان محبوب": [
                 "Popular artists"
             ],
-            "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با دکمه‌های دنبال‌کردن و تعداد انتشار نمایش می‌دهد.": [
-                "Displays catalog artists as a responsive grid, horizontal scroll shelf, or compact list with follow buttons and release counts."
+            "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با صفحهٔ وینیل پشت جلد، نشان محبوبیت، تعداد آثار و دکمه‌های دنبال‌کردن نمایش می‌دهد.": [
+                "Renders the catalogue artists as a responsive grid, horizontal rail or compact list with a vinyl disc behind the cover, a popularity badge, release counts and follow buttons."
             ],
-            "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با دکمه‌های دنبال‌کردن و تعداد انتشار نمایش می‌دهد. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای.": [
-                "Displays catalog artists in a responsive grid, horizontal rail, or compact list with release counts and follow buttons."
+            "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با صفحهٔ وینیل پشت جلد، نشان محبوبیت، تعداد آثار و دکمه‌های دنبال‌کردن نمایش می‌دهد. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای.": [
+                "Renders the catalogue artists as a responsive grid, horizontal rail or compact list with a vinyl disc behind the cover, a popularity badge, release counts and follow buttons. Ships minimal, editorial and glass styles."
             ],
             "هنرمندان یک حال‌وهوا": [
                 "Artists behind one mood"
@@ -5256,6 +5595,9 @@
             ],
             "هنوز آدرسی ثبت نکرده‌اید.": [
                 "You have not saved an address yet."
+            ],
+            "هنوز خواننده‌ای با انتشار منتشرشده وجود ندارد. با افزودن هنرمند به انتشارها، آمار این بنر خودکار پر می‌شود.": [
+                "No artist with a published release exists yet. Adding an artist to releases fills this banner automatically."
             ],
             "هنوز درخواستی اینجا نیست": [
                 "No requests here yet"
@@ -5308,6 +5650,9 @@
             "هنگامی‌که قالب یا افزونهٔ فعال آن‌ها را ثبت می‌کند، ناحیه‌های ابزارک را مدیریت کنید.": [
                 "Manage widget areas when the active theme or plugin registers them."
             ],
+            "هیرو": [
+                "Hero"
+            ],
             "هیچ اصطلاح منطبقی پیدا نشد. شناسه‌های اصطلاح انتخاب‌شده را بررسی کنید.": [
                 "No matching terms were found. Check the selected term IDs."
             ],
@@ -5328,6 +5673,12 @@
             ],
             "هیچ فهرست پخشی یافت نشد.": [
                 "No playlists found."
+            ],
+            "هیچ ماژول عضویتی فعال نیست؛ این سیاست همین حالا اعمال می‌شود.": [
+                "No membership module is active; this policy applies immediately."
+            ],
+            "هیچ مسیر تحویل فعال نیست؛ دانلودهای حفاظت‌شده رد می‌شوند.": [
+                "No delivery route is active; protected downloads are rejected."
             ],
             "هیچ منطبق با کاتالوگ یافت نشد.": [
                 "No catalog matches found."
@@ -5383,6 +5734,9 @@
             "وضعیت اشتراک ویژه و طرح‌های قابل خرید.": [
                 "Active VIP membership status and available plans."
             ],
+            "وضعیت تحویل:": [
+                "Delivery status:"
+            ],
             "وضعیت درخواست به‌روزرسانی شد.": [
                 "Request status updated."
             ],
@@ -5406,6 +5760,9 @@
             ],
             "وقتی بازدیدکننده‌ای فرم «درخواست آهنگ و همکاری» را پر کند، اینجا نمایش داده می‌شود. بلوک «فرم درخواست همکاری» را در هر برگه‌ای قرار دهید یا از الگوی آمادهٔ پوسته استفاده کنید.": [
                 "When a visitor fills in the “Song & collaboration request” form it will appear here. Place the “Collaboration request form” block on any page or use the theme's ready-made template."
+            ],
+            "وقتی جست‌وجو یا فیلتر الفبایی نتیجه‌ای ندارد نمایش داده می‌شود. خالی بگذارید تا پیام پیش‌فرض استفاده شود.": [
+                "Shown when a search or alphabet filter returns nothing. Leave empty to use the default message."
             ],
             "وقتی خاموش است، بلوک برای بازدیدکنندگانی که از قبل دسترسی دارند پنهان می‌ماند.": [
                 "When off, the block stays hidden for visitors who already have access."
@@ -5533,6 +5890,9 @@
             "پخش انتشار": [
                 "Play release"
             ],
+            "پخش این فایل مجاز نیست.": [
+                "Playing this file is not allowed."
+            ],
             "پخش بعدی": [
                 "Play next"
             ],
@@ -5574,6 +5934,9 @@
             ],
             "پخش مداوم": [
                 "Persistent playback"
+            ],
+            "پخش همزمان مجاز برای این حساب تمام است.": [
+                "The allowed concurrent streams for this account are used up."
             ],
             "پخش همه": [
                 "Play all"
@@ -5634,6 +5997,9 @@
             ],
             "پلن‌های اشتراک": [
                 "Membership Plans"
+            ],
+            "پلن‌های رزرو‌شده": [
+                "Reserved plans"
             ],
             "پلی‌لیست‌ها": [
                 "Playlists"
@@ -5716,6 +6082,9 @@
             "پیام موفقیت سفارشی": [
                 "Custom success message"
             ],
+            "پیام نبود نتیجه برای فیلترها": [
+                "No-results message for filters"
+            ],
             "پیام کاربر در گفتگو": [
                 "User reply in conversation"
             ],
@@ -5733,6 +6102,9 @@
             ],
             "پیشرفت پخش ذخیره نشد.": [
                 "Playback progress could not be saved."
+            ],
+            "پیشفرض (تنظیم جهانی)": [
+                "Default (global setting)"
             ],
             "پیشنهاد شما چیست؟": [
                 "What is your proposal?"
@@ -5757,6 +6129,12 @@
             ],
             "پیش‌فرض ۳۶۰۰ ثانیه (یک ساعت).": [
                 "Default 3600 seconds (one hour)."
+            ],
+            "پیش‌فرض: الفبایی": [
+                "Default: Alphabetical"
+            ],
+            "پیش‌فرض: پیکارتین": [
+                "Default: Most releases"
             ],
             "پیش‌فرض‌های انتشار جدید": [
                 "New release defaults"
@@ -5823,6 +6201,12 @@
             ],
             "پیوندهای نمونه‌کار": [
                 "Portfolio links"
+            ],
+            "پیکارتین": [
+                "Most releases"
+            ],
+            "پیکارتین (محبوب)": [
+                "Most releases (popular)"
             ],
             "پیکربندی تحویل حفاظت‌شده": [
                 "Configure protected delivery"
@@ -5974,6 +6358,9 @@
             "کامل": [
                 "Full"
             ],
+            "کاهش": [
+                "Decrease"
+            ],
             "کاور": [
                 "Cover"
             ],
@@ -6012,6 +6399,9 @@
             ],
             "کتابخانهٔ رسانه WordPress در این صفحه در دسترس نیست.": [
                 "The WordPress Media Library is unavailable on this screen."
+            ],
+            "کتابخانهٔ هنرمندان": [
+                "Artists library"
             ],
             "کدام طبقه‌بندی را مرور کنیم؟": [
                 "Which taxonomy to browse"
@@ -6108,9 +6498,6 @@
             ],
             "کیفیت دانلود جدید": [
                 "New download quality"
-            ],
-            "کیفیت صدا": [
-                "Audio Quality"
             ],
             "کیفیت و اندازه تصویر": [
                 "Image Size & Quality"

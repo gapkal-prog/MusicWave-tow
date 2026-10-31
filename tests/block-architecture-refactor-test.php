@@ -414,6 +414,12 @@ foreach ( array(
 	'editorial-intro.php',
 	'editorial-notes.php',
 	'widget-panel.php',
+	'demo-account-studio.php',
+	'demo-account-commerce.php',
+	'demo-release-showcase.php',
+	'demo-artists-directory.php',
+	'demo-discovery-browse.php',
+	'demo-community-requests.php',
 ) as $mw_deleted_pattern ) {
 	mw_assert_same(
 		false,

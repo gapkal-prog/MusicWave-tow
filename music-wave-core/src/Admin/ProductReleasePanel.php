@@ -16,6 +16,7 @@ namespace ManaCore\MusicWave\Core\Admin;
 use ManaCore\MusicWave\Core\Access\AccessModePolicy;
 use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
 use ManaCore\MusicWave\Core\Commerce\ProductMapper;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 use WP_Post;
 use WP_Query;
 
@@ -90,8 +91,12 @@ final class ProductReleasePanel {
 		echo '<select id="mw-product-apply-mode" name="mw_product_apply_mode" class="widefat">';
 		echo '<option value="">' . esc_html__( 'بدون تغییر حالت فعلی انتشار', 'music-wave-core' ) . '</option>';
 		echo '<option value="purchase">' . esc_html__( 'تنظیم روی «خرید تکی الزامی است»', 'music-wave-core' ) . '</option>';
-		echo '<option value="purchase_or_membership">' . esc_html__( 'تنظیم روی «خرید تکی یا اشتراک VIP»', 'music-wave-core' ) . '</option>';
+		$vip_active = VipModuleStatus::is_active();
+		echo '<option value="purchase_or_membership"' . ( $vip_active ? '' : ' disabled' ) . '>' . esc_html__( 'تنظیم روی «خرید تکی یا اشتراک VIP»', 'music-wave-core' ) . '</option>';
 		echo '</select>';
+		if ( ! $vip_active ) {
+			echo '<p class="description"><strong>' . esc_html__( 'افزونهٔ MusicWave VIP غیرفعال است؛ گزینهٔ «خرید تکی یا اشتراک VIP» تا فعال‌شدن آن در دسترس نیست.', 'music-wave-core' ) . '</strong></p>';
+		}
 	}
 
 	public function save( int $product_id, WP_Post $post ): void {

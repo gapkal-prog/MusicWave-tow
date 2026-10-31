@@ -24,6 +24,13 @@ final class VirtualCheckoutSimplifier {
 		'woocommerce/cart-order-summary-shipping-block',
 		'woocommerce/checkout-order-summary-shipping-block',
 		'woocommerce/checkout-billing-address-block',
+
+		/*
+		 * A plan cart renders a single line whose price is already shown in the totals,
+		 * so the itemised product list inside «خلاصۀ سفارش» is dropped entirely.
+		 */
+		'woocommerce/checkout-order-summary-cart-items-block',
+		'woocommerce/cart-order-summary-cart-items-block',
 	);
 
 	/** @param mixed $needs */
@@ -204,6 +211,14 @@ final class VirtualCheckoutSimplifier {
 			}
 		}
 
+		$pay_order = SubscriptionOrderInspector::resolve_pay_order();
+		if ( $pay_order instanceof \WC_Order
+			&& $pay_order->needs_payment()
+			&& SubscriptionOrderInspector::order_has_subscription_item( $pay_order )
+		) {
+			$classes[] = 'mw-pay--subscription';
+		}
+
 		return $classes;
 	}
 
@@ -223,6 +238,10 @@ final class VirtualCheckoutSimplifier {
 			. 'body.mw-checkout--virtual-only .wp-block-woocommerce-checkout-shipping-address-block,'
 			. 'body.mw-checkout--virtual-only .wc-block-checkout__shipping-methods,'
 			. 'body.mw-checkout--virtual-only .wp-block-woocommerce-checkout-shipping-methods-block{display:none!important;}'
+			. 'body.mw-checkout--virtual-only .wp-block-woocommerce-checkout-order-summary-cart-items-block,'
+			. 'body.mw-checkout--virtual-only .wp-block-woocommerce-cart-order-summary-cart-items-block,'
+			. 'body.mw-checkout--virtual-only .wc-block-components-order-summary.is-large .wc-block-components-order-summary__content,'
+			. 'body.mw-checkout--virtual-only .wc-block-components-order-summary.is-large .wc-block-components-order-summary-item{display:none!important;}'
 			. 'body.mw-checkout--virtual-only .mw-hidden-billing-field{display:none!important;}'
 			. 'body.mw-checkout--virtual-only .woocommerce-checkout .woocommerce-billing-fields::before{content:"";display:none;}'
 			. '</style>';

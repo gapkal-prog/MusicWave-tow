@@ -144,9 +144,7 @@
 .mw-collection-list__total {
 	display: inline-flex;
 	align-items: center;
-	padding: 0.24rem 0.65rem;
-	font-size: 0.75rem;
-	font-weight: 700;
+	padding: 0rem 0.4rem;
 	font-variant-numeric: tabular-nums;
 	color: var(--mw-color-text-muted);
 	background: color-mix(in srgb, var(--mw-color-text) 6%, transparent);

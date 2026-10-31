@@ -118,13 +118,13 @@ final class ReleaseBlocks {
 		'order',
 		'sameArtistSection',
 		'sameArtistHeading',
+		'sameArtistIcon',
 		'similarSection',
 		'similarHeading',
+		'similarIcon',
 		'matchGenre',
 		'matchMood',
 		'matchType',
-		'showSectionLink',
-		'sectionLinkLabel',
 	);
 
 	/** @var AccessPolicyEngine|null */
@@ -294,8 +294,8 @@ final class ReleaseBlocks {
 	 * @param array<int, int>      $release_ids Related release IDs.
 	 * @param array<string, mixed> $options     Resolved card options.
 	 */
-	private function related_section( string $heading, array $release_ids, array $options, string $section_url = '', string $section_link_label = '' ): string {
-		return $this->related_renderer()->related_section( $heading, $release_ids, $options, $section_url, $section_link_label );
+	private function related_section( string $heading, array $release_ids, array $options ): string {
+		return $this->related_renderer()->related_section( $heading, $release_ids, $options );
 	}
 
 	private function register_dynamic_block( string $name, string $callback ): void {

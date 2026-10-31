@@ -26,6 +26,10 @@
       "type": "string",
       "default": ""
     },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
     "description": {
       "type": "string",
       "default": ""
@@ -53,6 +57,10 @@
     "itemsToShow": {
       "type": "integer",
       "default": 8
+    },
+    "showAll": {
+      "type": "boolean",
+      "default": false
     },
     "columns": {
       "type": "integer",

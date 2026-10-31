@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class VipSettingsUi {
 
 	public static function tooltip( string $text ): string {
-		return ' <span class="mwvip-tooltip" title="' . esc_attr( $text ) . '" aria-label="' . esc_attr( $text ) . '"><span class="dashicons dashicons-editor-help" style="font-size:16px;vertical-align:middle;color:#646970;"></span></span>';
+		return ' <span class="mwvip-tooltip" role="note" tabindex="0" title="' . esc_attr( $text ) . '" aria-label="' . esc_attr( $text ) . '"><span class="dashicons dashicons-editor-help" aria-hidden="true" style="font-size:16px;vertical-align:middle;color:#646970;"></span></span>';
 	}
 
 	public static function example_box( string $title, string $code, string $note = '' ): string {

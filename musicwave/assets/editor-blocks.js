@@ -178,6 +178,110 @@
 	}
 
 	/**
+	 * Optional icon field that sits directly under a section title setting.
+	 * Empty stays icon-free — no default glyph is substituted.
+	 *
+	 * @param {Object} props Block props.
+	 * @param {string} attr  Attribute name holding the icon.
+	 * @return {Object} TextControl element.
+	 */
+	function sectionIconControl( props, attr ) {
+		return createElement( components.TextControl, {
+			label: __( 'آیکون عنوان بخش (اختیاری)', 'musicwave' ),
+			value: props.attributes[ attr ] || '',
+			placeholder: 'dashicons dashicons-controls-volumeon / <svg>…',
+			help: __(
+				'کنار عنوان نمایش داده می‌شود؛ خالی یعنی بدون آیکون. یک اسلاگ، کلاس آیکون فونت، یا کد SVG جای‌گذاری کنید.',
+				'musicwave'
+			),
+			onChange( value ) {
+				var next = {};
+				next[ attr ] = value;
+				props.setAttributes( next );
+			},
+		} );
+	}
+
+	/**
+	 * Numeric stepper (−/+ around a number field) for precise card-size counts.
+	 *
+	 * Replaces the coarse range slider so «ستون‌های دسکتاپ» can be dialled in
+	 * one column at a time with a visible, clamped number.
+	 *
+	 * @param {Object} props    Block props.
+	 * @param {string} attr     Attribute name.
+	 * @param {string} label    Visible label.
+	 * @param {number} min      Minimum value.
+	 * @param {number} max      Maximum value.
+	 * @param {number} fallback Value shown when the attribute is unset.
+	 * @return {Object} Stepper element.
+	 */
+	function numberStepper( props, attr, label, min, max, fallback ) {
+		var raw = parseInt( props.attributes[ attr ], 10 );
+		var value = isNaN( raw ) ? fallback : raw;
+
+		function apply( next ) {
+			var clamped = Math.max( min, Math.min( max, next ) );
+			var update = {};
+			update[ attr ] = clamped;
+			props.setAttributes( update );
+		}
+
+		return createElement(
+			'div',
+			{ className: 'mw-stepper' },
+			createElement( 'div', { className: 'mw-stepper__label' }, label ),
+			createElement(
+				'div',
+				{ className: 'mw-stepper__control' },
+				createElement(
+					components.Button,
+					{
+						className: 'mw-stepper__button',
+						variant: 'secondary',
+						isSmall: true,
+						disabled: value <= min,
+						onClick() {
+							apply( value - 1 );
+						},
+						'aria-label': __( 'کاهش', 'musicwave' ),
+					},
+					'\u2212'
+				),
+				createElement( components.TextControl, {
+					className: 'mw-stepper__input',
+					type: 'number',
+					min,
+					max,
+					step: 1,
+					value,
+					__nextHasNoMarginBottom: true,
+					onChange( next ) {
+						var parsed = parseInt( next, 10 );
+						if ( ! isNaN( parsed ) ) {
+							apply( parsed );
+						}
+					},
+				} ),
+				createElement(
+					components.Button,
+					{
+						className: 'mw-stepper__button',
+						variant: 'secondary',
+						isSmall: true,
+						disabled: value >= max,
+						onClick() {
+							apply( value + 1 );
+						},
+						'aria-label': __( 'افزایش', 'musicwave' ),
+					},
+					'+'
+				)
+			)
+		);
+	}
+
+	/**
 	 * Inspector for the dynamic breadcrumb block (`music-wave/breadcrumb`).
 	 *
 	 * @param {Object} props Block props.
@@ -327,29 +431,50 @@
 				},
 				createElement( components.SelectControl, {
 					label: __( 'منبع متن قالب', 'musicwave' ),
-					value: props.attributes.key || 'tagline',
+					value: props.attributes.key || '',
 					options: [
 						{
-							label: __( 'شعار سایت (Tagline)', 'musicwave' ),
-							value: 'tagline',
+							label: __( '— انتخاب کنید —', 'musicwave' ),
+							value: '',
+						},
+						{
+							label: __( 'آخرین انتشارها', 'musicwave' ),
+							value: 'latest_releases',
+						},
+						{
+							label: __( 'موسیقی‌ای پیدا نشد.', 'musicwave' ),
+							value: 'no_music_found',
+						},
+						{
+							label: __( 'عنوان صفحهٔ یافت‌نشد', 'musicwave' ),
+							value: 'not_found_title',
+						},
+						{
+							label: __( 'متن صفحهٔ یافت‌نشد', 'musicwave' ),
+							value: 'not_found_message',
+						},
+						{
+							label: __( 'عنوان سبد خرید', 'musicwave' ),
+							value: 'cart_title',
+						},
+						{
+							label: __( 'عنوان تسویه‌حساب', 'musicwave' ),
+							value: 'checkout_title',
+						},
+						{
+							label: __( 'عنوان حساب کاربری', 'musicwave' ),
+							value: 'account_title',
 						},
 						{
 							label: __(
-								'متن معرفی فوتر (درباره ما)',
+								'متن «قدرت‌گرفته از MusicWave»',
 								'musicwave'
 							),
-							value: 'footer_about',
-						},
-						{
-							label: __(
-								'متن کپی‌رایت فوتر (همراه سال جاری)',
-								'musicwave'
-							),
-							value: 'footer_copyright',
+							value: 'powered_by',
 						},
 					],
 					help: __(
-						'مقادیر سفارشی این متن‌ها از بخش سفارشی‌سازی پوسته یا تنظیمات عمومی وردپرس خوانده می‌شوند.',
+						'هر متن ترجمه‌شده و آماده است؛ برای تغییر خودِ نوشته، ترجمهٔ پوسته را ویرایش کنید تا در همهٔ زبان‌ها هماهنگ بماند.',
 						'musicwave'
 					),
 					onChange( value ) {
@@ -358,11 +483,16 @@
 				} ),
 				createElement( components.SelectControl, {
 					label: __( 'تگ HTML خروجی', 'musicwave' ),
+					help: __(
+						'تگ را متناسب با جای استفاده انتخاب کنید؛ تگ‌های ناشناخته به پاراگراف تبدیل می‌شوند.',
+						'musicwave'
+					),
 					value: props.attributes.tagName || 'p',
 					options: [
 						{ label: 'p', value: 'p' },
-						{ label: 'div', value: 'div' },
 						{ label: 'span', value: 'span' },
+						{ label: 'h2', value: 'h2' },
+						{ label: 'h3', value: 'h3' },
 					],
 					onChange( value ) {
 						props.setAttributes( { tagName: value } );
@@ -651,12 +781,6 @@
 		},
 	];
 
-	var headerSearchDevices = [
-		{ value: 'desktop', label: __( 'دسکتاپ', 'musicwave' ) },
-		{ value: 'tablet', label: __( 'تبلت', 'musicwave' ) },
-		{ value: 'mobile', label: __( 'موبایل', 'musicwave' ) },
-	];
-
 	/**
 	 * Resolve the effective per-breakpoint modes exactly like the server renderer,
 	 * including the legacy `variant="popup"` fallback, so the Settings panel
@@ -764,13 +888,7 @@
 		} );
 	}
 
-	function headerSearchInspector(
-		props,
-		previewDevice,
-		setPreviewDevice,
-		popupPreview,
-		setPopupPreview
-	) {
+	function headerSearchInspector( props ) {
 		var modes = resolvedHeaderSearchModes( props.attributes );
 
 		return createElement(
@@ -819,71 +937,12 @@
 				} ),
 				headerSearchBreakpoints.map( function ( breakpoint ) {
 					return headerSearchModeSelect( props, breakpoint, modes );
-				} ),
-				createElement( components.RangeControl, {
-					label: __(
-						'حداکثر عرض نوار جستجو در دسکتاپ (پیکسل)',
-						'musicwave'
-					),
-					help: __(
-						'عرض بیشینه فیلد جستجو در حالت «نوار جستجوی کامل»؛ برای نوار باریکتر عدد کوچکتری بگذارید.',
-						'musicwave'
-					),
-					value: props.attributes.maxWidth || 480,
-					min: 200,
-					max: 760,
-					step: 20,
-					onChange( value ) {
-						props.setAttributes( { maxWidth: value || 480 } );
-					},
 				} )
 			),
 			createElement(
 				components.PanelBody,
 				{
-					title: __( 'ظاهر بلوک', 'musicwave' ),
-					initialOpen: false,
-				},
-				createElement( components.SelectControl, {
-					label: __( 'سبک نمایش', 'musicwave' ),
-					help: __(
-						'رنگ، قلم و فاصلهها را از زبانه «شیوهنامهها» تنظیم کنید؛ این گزینه فقط قالب ظاهری فیلد را عوض میکند.',
-						'musicwave'
-					),
-					value: resolvePresentationStyle(
-						props.attributes,
-						[ 'minimal', 'glass' ],
-						''
-					),
-					options: [
-						{
-							label: __( 'کپسولی پیشفرض', 'musicwave' ),
-							value: '',
-						},
-						{
-							label: __( 'مینیمال', 'musicwave' ),
-							value: 'minimal',
-						},
-						{
-							label: __( 'شیشهای (Glass)', 'musicwave' ),
-							value: 'glass',
-						},
-					],
-					onChange( value ) {
-						props.setAttributes(
-							applyPresentationStyle(
-								props.attributes,
-								value,
-								''
-							)
-						);
-					},
-				} )
-			),
-			createElement(
-				components.PanelBody,
-				{
-					title: __( 'متنها و برچسبها', 'musicwave' ),
+					title: __( 'متن‌ها و برچسب‌ها', 'musicwave' ),
 					initialOpen: false,
 				},
 				createElement( components.TextControl, {
@@ -981,46 +1040,6 @@
 					'showFooterHints',
 					__( 'نوار راهنمای کلیدهای میانبر در فوتر', 'musicwave' )
 				)
-			),
-			createElement(
-				components.PanelBody,
-				{
-					title: __( 'پیشنمایش ویرایشگر', 'musicwave' ),
-					initialOpen: false,
-				},
-				createElement(
-					components.ButtonGroup,
-					null,
-					headerSearchDevices.map( function ( device ) {
-						var active = previewDevice === device.value;
-						return createElement(
-							components.Button,
-							{
-								key: device.value,
-								variant: active ? 'primary' : 'secondary',
-								'aria-pressed': active,
-								onClick() {
-									setPreviewDevice( device.value );
-								},
-							},
-							device.label
-						);
-					} )
-				),
-				createElement( components.ToggleControl, {
-					label: __(
-						'نمایش پنجره پاپآپ باز در پیشنمایش',
-						'musicwave'
-					),
-					help: __(
-						'این دو گزینه فقط پیشنمایش داخل ویرایشگر را تغییر میدهند و هیچ اثری روی سایت ندارند.',
-						'musicwave'
-					),
-					checked: !! popupPreview,
-					onChange( value ) {
-						setPopupPreview( !! value );
-					},
-				} )
 			)
 		);
 	}
@@ -1437,13 +1456,32 @@
 						props.setAttributes( { title: value } );
 					},
 				} ),
-				createElement( components.RangeControl, {
-					label: __( 'تعداد انتشارهای بارگذاری‌شده', 'musicwave' ),
-					value: props.attributes.itemsToShow || 6,
-					min: 3,
-					max: 12,
+				sectionIconControl( props, 'icon' ),
+				! props.attributes.showAll
+					? createElement( components.RangeControl, {
+							label: __(
+								'تعداد انتشارهای بارگذاریشده',
+								'musicwave'
+							),
+							value: props.attributes.itemsToShow || 6,
+							min: 3,
+							max: 12,
+							onChange( value ) {
+								props.setAttributes( {
+									itemsToShow: value || 6,
+								} );
+							},
+					  } )
+					: null,
+				createElement( components.ToggleControl, {
+					label: __( 'بارگذاری همهٔ انتشارها', 'musicwave' ),
+					help: __(
+						'همهٔ انتشارهای منطبق با فیلترهای این بلوک را بدون محدودیت تعداد نمایش می‌دهد.',
+						'musicwave'
+					),
+					checked: !! props.attributes.showAll,
 					onChange( value ) {
-						props.setAttributes( { itemsToShow: value || 6 } );
+						props.setAttributes( { showAll: !! value } );
 					},
 				} ),
 				createElement( components.ToggleControl, {
@@ -1540,23 +1578,32 @@
 						props.setAttributes( { imageShape: value } );
 					},
 				} ),
+				numberStepper(
+					props,
+					'columns',
+					__( 'ستون‌های دسکتاپ (اندازه کارت)', 'musicwave' ),
+					2,
+					6,
+					4
+				),
 				createElement( components.SelectControl, {
-					label: __( 'اندازه کارت‌ها', 'musicwave' ),
+					label: __( 'کیفیت تصویر', 'musicwave' ),
+					help: __(
+						'اندازهٔ فایل تصویر بارگذاری‌شده را تعیین می‌کند و روی تعداد ستون‌ها اثری ندارد.',
+						'musicwave'
+					),
 					value: props.attributes.imageSize || 'medium',
 					options: [
 						{
-							label: __( 'فشرده (۵ ستون دسکتاپ)', 'musicwave' ),
+							label: __( 'سبک (سریع‌تر)', 'musicwave' ),
 							value: 'small',
 						},
 						{
-							label: __(
-								'استاندارد (۴ ستون دسکتاپ)',
-								'musicwave'
-							),
+							label: __( 'متعادل', 'musicwave' ),
 							value: 'medium',
 						},
 						{
-							label: __( 'بزرگ (۳ ستون دسکتاپ)', 'musicwave' ),
+							label: __( 'بزرگ (کیفیت بالا)', 'musicwave' ),
 							value: 'large',
 						},
 					],
@@ -1649,7 +1696,10 @@
 					.indexOf( 'is-style-bento' );
 		var activeLayout =
 			'grid' === rawLayout && hasLegacyBento ? 'bento' : rawLayout;
-		var usesColumns = 'grid' === activeLayout || 'bento' === activeLayout;
+		var usesColumns =
+			'grid' === activeLayout ||
+			'bento' === activeLayout ||
+			'scroll' === activeLayout;
 		var usesCardFields = 'slider' !== activeLayout;
 
 		return createElement(
@@ -1700,6 +1750,7 @@
 						update( 'title', value );
 					},
 				} ),
+				sectionIconControl( props, 'icon' ),
 				createElement( components.TextareaControl, {
 					label: __( 'توضیحات', 'musicwave' ),
 					value: props.attributes.description || '',
@@ -1707,19 +1758,38 @@
 						update( 'description', value );
 					},
 				} ),
-				createElement( components.RangeControl, {
-					label:
-						'playlists' ===
-						( props.attributes.source || 'releases' )
-							? __( 'فهرست‌های پخش برای نمایش', 'musicwave' )
-							: __( 'انتشارها برای نمایش', 'musicwave' ),
-					value: props.attributes.itemsToShow || 8,
-					min: 1,
-					max: 24,
-					onChange( value ) {
-						update( 'itemsToShow', value || 8 );
-					},
-				} )
+				'playlists' === ( props.attributes.source || 'releases' ) ||
+					! props.attributes.showAll
+					? createElement( components.RangeControl, {
+							label:
+								'playlists' ===
+								( props.attributes.source || 'releases' )
+									? __(
+											'فهرست‌های پخش برای نمایش',
+											'musicwave'
+									  )
+									: __( 'انتشارها برای نمایش', 'musicwave' ),
+							value: props.attributes.itemsToShow || 8,
+							min: 1,
+							max: 24,
+							onChange( value ) {
+								update( 'itemsToShow', value || 8 );
+							},
+					  } )
+					: null,
+				'playlists' === ( props.attributes.source || 'releases' )
+					? null
+					: createElement( components.ToggleControl, {
+							label: __( 'نمایش همهٔ انتشارها', 'musicwave' ),
+							help: __(
+								'همهٔ انتشارهای منطبق با فیلترهای ویترین را بدون محدودیت تعداد نمایش می‌دهد.',
+								'musicwave'
+							),
+							checked: !! props.attributes.showAll,
+							onChange( value ) {
+								update( 'showAll', !! value );
+							},
+					  } )
 			),
 			'playlists' === ( props.attributes.source || 'releases' )
 				? createElement(
@@ -1863,15 +1933,14 @@
 					},
 				} ),
 				usesColumns
-					? createElement( components.RangeControl, {
-							label: __( 'ستون‌های دسکتاپ', 'musicwave' ),
-							value: props.attributes.columns || 4,
-							min: 2,
-							max: 6,
-							onChange( value ) {
-								update( 'columns', value || 4 );
-							},
-					  } )
+					? numberStepper(
+							props,
+							'columns',
+							__( 'ستون‌های دسکتاپ', 'musicwave' ),
+							2,
+							6,
+							4
+					  )
 					: null,
 				'feature' !== activeLayout
 					? createElement( components.SelectControl, {
@@ -2340,12 +2409,6 @@
 					};
 				}, [] );
 			}
-			var deviceState = element.useState
-				? element.useState( 'desktop' )
-				: [ 'desktop', function () {} ];
-			var popupState = element.useState
-				? element.useState( false )
-				: [ false, function () {} ];
 			var isLyricsBlock =
 				'music-wave/synced-lyrics' === block.name ||
 				'musicwave/synced-lyrics' === block.name;
@@ -2475,25 +2538,8 @@
 				return createElement(
 					Fragment,
 					null,
-					headerSearchInspector(
-						props,
-						deviceState[ 0 ],
-						deviceState[ 1 ],
-						popupState[ 0 ],
-						popupState[ 1 ]
-					),
-					createElement(
-						'div',
-						{
-							className:
-								'mw-editor-search-sim mw-editor-search-sim--' +
-								deviceState[ 0 ] +
-								( popupState[ 0 ]
-									? ' mw-editor-search-sim--open'
-									: '' ),
-						},
-						preview
-					)
+					headerSearchInspector( props ),
+					preview
 				);
 			}
 

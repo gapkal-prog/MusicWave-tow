@@ -93,9 +93,10 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 			exit;
 		}
 
-		$start  = $range[0];
-		$length = $range[1];
-		if ( 0 !== $start || $length !== (int) $size ) {
+		$start    = $range[0];
+		$length   = $range[1];
+		$explicit = $range[2];
+		if ( $explicit ) {
 			status_header( 206 );
 			header( 'Content-Range: bytes ' . (string) $start . '-' . (string) ( $start + $length - 1 ) . '/' . (string) $size );
 		} else {
@@ -105,7 +106,8 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 		while ( ob_get_level() > 0 ) {
 			ob_end_clean();
 		}
-		$this->stream_file( $file, $start, $length );
+		$chunk_kb = max( 64, min( 8192, (int) ( $settings['local_stream_chunk_kb'] ?? 1024 ) ) );
+		$this->stream_file( $file, $start, $length, $chunk_kb * 1024 );
 		exit;
 	}
 
@@ -126,6 +128,11 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 			'Content-Disposition: ' . $disposition,
 		);
 
+		if ( 'xsendfile' === $mode && '' !== $file && ! self::header_value_safe( $file ) ) {
+			// A path carrying control characters (CR/LF) must never be emitted as
+			// a header; fall back to PHP streaming instead of risking injection.
+			return null;
+		}
 		if ( 'xsendfile' === $mode && '' !== $file ) {
 			$common[] = 'X-Sendfile: ' . $file;
 			return $common;
@@ -137,6 +144,14 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 		}
 
 		return null;
+	}
+
+	/**
+	 * Whether a value is safe to place on its own header line (no CR/LF/NUL or
+	 * other control characters that could split the header).
+	 */
+	private static function header_value_safe( string $value ): bool {
+		return 1 !== preg_match( '/[\x00-\x1F\x7F]/', $value );
 	}
 
 	/**
@@ -177,12 +192,12 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 	}
 
 	/**
-	 * @return array<int, int>|false
+	 * @return array{0: int, 1: int, 2: bool}|false [start, length, explicit-range] or false for an unsatisfiable range.
 	 */
 	private function requested_range( int $size ) {
 		$header = isset( $_SERVER['HTTP_RANGE'] ) && is_string( $_SERVER['HTTP_RANGE'] ) ? trim( sanitize_text_field( wp_unslash( $_SERVER['HTTP_RANGE'] ) ) ) : '';
 		if ( '' === $header ) {
-			return array( 0, $size );
+			return array( 0, $size, false );
 		}
 		if ( 1 !== preg_match( '/^bytes=(\d*)-(\d*)$/', $header, $matches ) ) {
 			return false;
@@ -195,7 +210,7 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 		}
 		if ( null === $start ) {
 			$length = min( $end, $size );
-			return $length < 1 ? false : array( $size - $length, $length );
+			return $length < 1 ? false : array( $size - $length, $length, true );
 		}
 		if ( $start >= $size ) {
 			return false;
@@ -205,10 +220,10 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 			return false;
 		}
 
-		return array( $start, $end - $start + 1 );
+		return array( $start, $end - $start + 1, true );
 	}
 
-	private function stream_file( string $file, int $start, int $length ): void {
+	private function stream_file( string $file, int $start, int $length, int $chunk_bytes = 1048576 ): void {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Raw binary range streaming requires a native resource handle.
 		$handle = fopen( $file, 'rb' );
 		if ( false === $handle ) {
@@ -218,7 +233,7 @@ final class ProtectedFileProvider implements DownloadProvider, StreamableDownloa
 		fseek( $handle, $start );
 		while ( $length > 0 && ! feof( $handle ) ) {
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- Read exact byte ranges without loading protected audio into memory.
-			$chunk = fread( $handle, min( 1024 * 1024, $length ) );
+			$chunk = fread( $handle, min( max( 1024, $chunk_bytes ), $length ) );
 			if ( false === $chunk || '' === $chunk ) {
 				break;
 			}

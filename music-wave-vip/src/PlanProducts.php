@@ -109,8 +109,8 @@ final class PlanProducts {
 				continue;
 			}
 			update_post_meta( $product_id, '_virtual', 'yes' );
-			// Allow quantity stacking / reservation: buying same plan again extends expiry.
-			update_post_meta( $product_id, '_sold_individually', 'no' );
+			// Single-seat: a plan is one line at quantity 1, and the cart holds at most one plan.
+			update_post_meta( $product_id, '_sold_individually', 'yes' );
 			update_post_meta( $product_id, '_manage_stock', 'no' );
 			update_post_meta( $product_id, '_downloadable', 'no' );
 			update_post_meta( $product_id, '_regular_price', '0' );
@@ -285,10 +285,19 @@ final class PlanProducts {
 					'remaining_days' => $remaining,
 					'percent_used'   => $percent,
 					'is_lifetime'    => $is_lifetime,
+					'is_reserved'    => ! empty( $grant['is_reserved'] ),
+					'starts_label'   => isset( $grant['starts_label'] ) ? sanitize_text_field( (string) $grant['starts_label'] ) : '',
+					'reserved_days'  => isset( $grant['reserved_days'] ) ? max( 0, (int) $grant['reserved_days'] ) : 0,
 					'order_id'       => $order_id,
 				);
 
-				if ( ! isset( $by_level[ $lvl ] ) || $is_lifetime || $expires_at > (int) $by_level[ $lvl ]['expires_at'] ) {
+				$existing = $by_level[ $lvl ] ?? null;
+				if ( null === $existing ) {
+					$by_level[ $lvl ] = $entry;
+				} elseif ( ! empty( $existing['is_reserved'] ) && empty( $entry['is_reserved'] ) ) {
+					// A live term always wins over a queued one for plan status.
+					$by_level[ $lvl ] = $entry;
+				} elseif ( ! empty( $existing['is_reserved'] ) === ! empty( $entry['is_reserved'] ) && ( $is_lifetime || $expires_at > (int) $existing['expires_at'] ) ) {
 					$by_level[ $lvl ] = $entry;
 				}
 			}
@@ -369,10 +378,13 @@ final class PlanProducts {
 					'features'       => $copy['features'],
 					'url'            => $url,
 					'cart_url'       => $cart,
-					'is_active'      => null !== $matched,
+					'is_active'      => null !== $matched && empty( $matched['is_reserved'] ),
+					'is_reserved'    => null !== $matched && ! empty( $matched['is_reserved'] ),
 					'is_lifetime'    => null !== $matched && ! empty( $matched['is_lifetime'] ),
 					'remaining_days' => null !== $matched ? (int) $matched['remaining_days'] : null,
 					'expires_label'  => null !== $matched ? (string) $matched['expires_label'] : '',
+					'starts_label'   => null !== $matched && ! empty( $matched['is_reserved'] ) ? (string) $matched['starts_label'] : '',
+					'reserved_days'  => null !== $matched && ! empty( $matched['is_reserved'] ) ? (int) $matched['reserved_days'] : 0,
 				);
 			}
 		}
@@ -449,10 +461,20 @@ final class PlanProducts {
 			$updated = true;
 		}
 
-		$existing_icon = function_exists( 'get_post_meta' ) ? (string) get_post_meta( $product_id, self::ICON_META, true ) : '';
+		$existing_icon = (string) get_post_meta( $product_id, self::ICON_META, true );
 		if ( '' === trim( $existing_icon ) ) {
 			update_post_meta( $product_id, self::ICON_META, $preset['icon'] );
 			$updated = true;
+		}
+
+		foreach ( array(
+			'_virtual'           => 'yes',
+			'_sold_individually' => 'yes',
+		) as $meta_key => $expected ) {
+			if ( (string) get_post_meta( $product_id, $meta_key, true ) !== $expected ) {
+				update_post_meta( $product_id, $meta_key, $expected );
+				$updated = true;
+			}
 		}
 
 		return $updated;

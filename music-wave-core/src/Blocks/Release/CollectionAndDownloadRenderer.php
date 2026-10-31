@@ -20,11 +20,14 @@ namespace ManaCore\MusicWave\Core\Blocks\Release;
 
 use ManaCore\MusicWave\Core\Blocks\BlockSupport;
 use ManaCore\MusicWave\Core\Blocks\Concerns\ActionButtonStyle;
+use ManaCore\MusicWave\Core\Blocks\Concerns\CollectionTracks;
 use ManaCore\MusicWave\Core\Blocks\Concerns\EditorPreviewCatalog;
 use ManaCore\MusicWave\Core\Blocks\Concerns\ReleaseResolver;
-use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
+use ManaCore\MusicWave\Core\Blocks\Concerns\TrackMetadata;
+use ManaCore\MusicWave\Core\Downloads\DeliveryCapabilities;
 use ManaCore\MusicWave\Core\Downloads\ReleaseDownloadCatalog;
 use ManaCore\MusicWave\Core\Playback\TrackStreamPresenter;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 use WP_Post;
 use ManaCore\MusicWave\Core\Account\AuthPolicy;
 
@@ -158,7 +161,12 @@ final class CollectionAndDownloadRenderer {
 		$variation  = BlockSupport::style_variation( $attributes, array( 'outline', 'ghost', 'vinyl' ) );
 
 		$style_opts = $attributes;
-		if ( '' !== $variation && ! isset( $style_opts['variant'] ) && 'vinyl' !== $variation ) {
+		// A selected block style (Styles panel / template preset) is the
+		// author's most recent intent, so it always wins over the legacy
+		// `variant` attribute — which block.json pre-fills with its default,
+		// making an `isset()` guard here permanently false. `vinyl` is a card
+		// treatment, not a color variant, and is applied through its own class.
+		if ( '' !== $variation && 'vinyl' !== $variation ) {
 			$style_opts['variant'] = $variation;
 		}
 		if ( ! empty( $attributes['compact'] ) && ! isset( $style_opts['size'] ) ) {
@@ -229,13 +237,12 @@ final class CollectionAndDownloadRenderer {
 		}
 
 		if ( '' !== $preview_url ) {
-			$title   = (string) get_the_title( $release_id );
-			$artists = wp_get_post_terms( $release_id, 'mw_artist', array( 'fields' => 'names' ) );
-			$artist  = is_array( $artists ) && ! empty( $artists ) ? implode( ', ', $artists ) : '';
-			$image   = function_exists( 'get_the_post_thumbnail_url' ) ? get_the_post_thumbnail_url( $release_id, 'thumbnail' ) : '';
-			$link    = (string) get_permalink( $release_id );
-			$limit   = TrackStreamPresenter::preview_limit( $release_id, $repo );
-			$label   = BlockSupport::text_attribute( $attributes, 'label', __( 'پخش پیش‌نمایش', 'music-wave-core' ) );
+			$title  = (string) get_the_title( $release_id );
+			$artist = TrackMetadata::artist_names( $release_id );
+			$image  = TrackMetadata::artwork_url( $release_id );
+			$link   = (string) get_permalink( $release_id );
+			$limit  = TrackStreamPresenter::preview_limit( $release_id, $repo );
+			$label  = BlockSupport::text_attribute( $attributes, 'label', __( 'پخش پیش‌نمایش', 'music-wave-core' ) );
 
 			return '<section ' . BlockSupport::wrapper_attributes( 'mw-preview-player mw-preview-player--' . $action_mode ) . '>'
 				. '<h2 class="screen-reader-text">' . esc_html__( 'پیش‌نمایش صوتی', 'music-wave-core' ) . '</h2>'
@@ -243,7 +250,7 @@ final class CollectionAndDownloadRenderer {
 				. ' data-preview-url="' . esc_url( $preview_url ) . '"'
 				. ' data-preview-title="' . esc_attr( $title ) . '"'
 				. ' data-preview-artist="' . esc_attr( $artist ) . '"'
-				. ' data-preview-image="' . esc_url( is_string( $image ) ? $image : '' ) . '"'
+				. ' data-preview-image="' . esc_url( $image ) . '"'
 				. ' data-preview-link="' . esc_url( $link ) . '"'
 				. ' data-preview-limit="' . esc_attr( (string) $limit ) . '">'
 				. $icon_html
@@ -307,7 +314,7 @@ final class CollectionAndDownloadRenderer {
 		$show_lbl      = ActionButtonStyle::shows_label( $mode );
 		$icon_px       = 'sm' === $size ? 15 : ( 'lg' === $size ? 20 : 17 );
 		$icon_svg      = ActionButtonStyle::render_icon( $attributes, 'download', $icon_px );
-		$play_icon_svg = ActionButtonStyle::render_icon( $attributes, 'play-filled', $icon_px, 'playIcon' );
+		$play_icon_svg = ActionButtonStyle::play_toggle_icon( 'play-filled', $icon_px, $attributes, 'playIcon' );
 		$btn_cls       = ActionButtonStyle::button_classes(
 			$attributes,
 			'wp-element-button mw-download-button',
@@ -537,12 +544,15 @@ final class CollectionAndDownloadRenderer {
 			? '<div class="mw-download-action__heading">' . $heading_html . $description_html . '</div>'
 			: '';
 
-		$protected = function_exists( 'has_filter' ) && (bool) \has_filter( 'music_wave_download_provider' );
-		$message   = $protected
-			? __( 'حفاظت‌شده توسط MusicWave VIP: فایل‌ها از پوشه‌ای حفاظت‌شده و از طریق پیوندهای امضاشده و زمان‌دار پخش می‌شوند. نشانی مستقیم فایل هرگز نمایش داده نمی‌شود.', 'music-wave-core' )
-			: __( 'از طریق پیوندهای امضاشده و منقضی‌شده تحویل داده می‌شود. نشانی مستقیم فایل هرگز در معرض دید قرار نمی‌گیرد.', 'music-wave-core' );
-		$badge     = $protected ? '<span class="mw-download-action__security-badge">' . esc_html__( 'VIP حفاظت‌شده', 'music-wave-core' ) . '</span>' : '';
-		$security  = '<p class="mw-download-action__security"><svg class="mw-download-action__security-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>' . esc_html( $message ) . '</span>' . $badge . '</p>';
+		$vip_active = VipModuleStatus::is_active();
+		if ( $vip_active ) {
+			$message = __( 'حفاظت‌شده توسط MusicWave VIP: فایل‌ها از پوشه‌ای حفاظت‌شده و از طریق پیوندهای امضاشده و زمان‌دار پخش می‌شوند. نشانی مستقیم فایل هرگز نمایش داده نمی‌شود.', 'music-wave-core' );
+			$badge   = '<span class="mw-download-action__security-badge">' . esc_html__( 'VIP حفاظت‌شده', 'music-wave-core' ) . '</span>';
+		} else {
+			$message = __( 'تحویل از طریق پیوندهای امضاشده و منقضی‌شده انجام می‌شود و لینک مستقیم فایل هرگز نمایش داده نمی‌شود.', 'music-wave-core' );
+			$badge   = '';
+		}
+		$security = '<p class="mw-download-action__security"><svg class="mw-download-action__security-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>' . esc_html( $message ) . '</span>' . $badge . '</p>';
 
 		$panel_extra  = count( $files ) === 1 ? ' mw-download-action--single' : '';
 		$panel_extra .= ' mw-download-action--unified';
@@ -593,7 +603,7 @@ final class CollectionAndDownloadRenderer {
 				: '';
 
 			$play_btn = $show_stream && $qualities['has_streamable']
-				? $this->secure_play_button( $target_release_id, $play_label, $default_quality, ! $qualities['first_streamable'], $options )
+				? $this->secure_play_button( $target_release_id, $play_label, $default_quality, ! $qualities['first_streamable'], $options, $release_id )
 				: '';
 			$row_cls  = 'mw-download-file-row' . ( $show_quality ? '' : ' mw-download-file-row--no-quality' );
 
@@ -683,7 +693,7 @@ final class CollectionAndDownloadRenderer {
 				? '<select class="' . esc_attr( $quality_cls ) . '" aria-label="' . esc_attr( $select_aria ) . '">' . $qualities['html'] . '</select>'
 				: '';
 			$play        = $show_stream && $qualities['has_streamable']
-				? $this->secure_play_button( $target_release_id, $play_label, $default_quality, ! $qualities['first_streamable'], $options )
+				? $this->secure_play_button( $target_release_id, $play_label, $default_quality, ! $qualities['first_streamable'], $options, $release_id )
 				: '';
 			$row_cls     = $multi_files ? 'mw-download-inline mw-download-inline--stacked' : 'mw-download-inline';
 			$groups[]    = '<div class="' . esc_attr( $row_cls ) . '">' . $file_label . '<div class="mw-download-inline__controls">' . $select . $play . $this->secure_download_button( $target_release_id, $download_label, $default_quality, $options ) . '</div></div>';
@@ -735,23 +745,30 @@ final class CollectionAndDownloadRenderer {
 	 * Build one secure playback button inside the download panel, sharing the
 	 * exact `ActionButtonStyle` size, shape, mode, and custom icon controls.
 	 *
-	 * @param int                  $release_id        Release post ID.
+	 * The `data-mw-track-*` metadata feeds the global player's now-playing card;
+	 * `$cover_id` is the owning release, so a child track without its own
+	 * featured image still shows the album artwork instead of a blank cover.
+	 *
+	 * @param int                  $release_id        Played release/track post ID.
 	 * @param string               $play_label        Visible and accessible label.
 	 * @param string               $quality_attribute Optional `data-download-quality` attribute.
 	 * @param bool                 $disabled          Initial disabled state when non-streamable quality selected.
 	 * @param array<string, mixed> $options           Synchronized button appearance options.
+	 * @param int                  $cover_id          Owning release whose cover backs the track artwork.
 	 */
-	private function secure_play_button( int $release_id, string $play_label, string $quality_attribute, bool $disabled, array $options = array() ): string {
+	private function secure_play_button( int $release_id, string $play_label, string $quality_attribute, bool $disabled, array $options = array(), int $cover_id = 0 ): string {
 		$btn_cls  = isset( $options['play_class'] ) ? (string) $options['play_class'] : 'mw-secure-play-button mw-action-button mw-action-button--button mw-action-button--surface mw-action-button--md mw-action-button--pill';
-		$icon_svg = isset( $options['play_icon_svg'] ) ? (string) $options['play_icon_svg'] : ActionButtonStyle::icon_svg( 'play-filled', 17 );
+		$icon_svg = isset( $options['play_icon_svg'] ) ? (string) $options['play_icon_svg'] : ActionButtonStyle::play_toggle_icon( 'play-filled', 17 );
 		$show_lbl = ! isset( $options['show_label'] ) || ! empty( $options['show_label'] );
 		$lbl_cls  = $show_lbl ? 'mw-secure-play-button__label' : 'mw-secure-play-button__label screen-reader-text';
+		$metadata = TrackMetadata::attributes( $release_id, $cover_id, 'data-mw-track' );
 
 		return '<button class="' . esc_attr( $btn_cls ) . '" type="button" aria-label="' . esc_attr( $play_label ) . '"'
 			. ' data-release-id="' . esc_attr( (string) $release_id ) . '"'
 			. $quality_attribute
 			. ' data-play-label="' . esc_attr( $play_label ) . '"'
 			. ' data-pause-label="' . esc_attr( __( 'مکث', 'music-wave-core' ) ) . '"'
+			. $metadata
 			. ( $disabled ? ' disabled' : '' )
 			. '><span class="mw-secure-play-button__icon" aria-hidden="true">' . $icon_svg . '</span>'
 			. '<span class="' . esc_attr( $lbl_cls ) . '">' . esc_html( $play_label ) . '</span></button>';
@@ -1015,19 +1032,9 @@ final class CollectionAndDownloadRenderer {
 				: '<span class="mw-collection-list__artwork mw-collection-list__artwork--fallback" aria-hidden="true">' . ActionButtonStyle::icon_svg( 'waveform', 16 ) . '</span>';
 		}
 
-		$artist_text = '';
-		$artist_html = '';
-		$artists     = wp_get_post_terms( $child->ID, 'mw_artist', array( 'fields' => 'all' ) );
-		if ( ! is_wp_error( $artists ) && ! empty( $artists ) ) {
-			$artist_html = $this->context->terms_markup( $artists, true );
-			$names       = array();
-			foreach ( $artists as $term ) {
-				if ( $term instanceof \WP_Term ) {
-					$names[] = $term->name;
-				}
-			}
-			$artist_text = implode( '، ', $names );
-		}
+		$artist_terms = TrackMetadata::artist_terms( $child->ID );
+		$artist_text  = TrackMetadata::artist_names( $child->ID );
+		$artist_html  = '' !== $artist_text ? $this->context->terms_markup( $artist_terms, true ) : '';
 
 		$repo    = $this->context->repository();
 		$raw_bpm = absint( $repo->get( $child->ID, 'mw_bpm' ) );
@@ -1052,7 +1059,7 @@ final class CollectionAndDownloadRenderer {
 		$valid_preview = TrackStreamPresenter::is_valid_preview_url( $preview_url );
 		$can_stream    = $allowed_child && '' !== TrackStreamPresenter::streamable_quality( $child->ID, $repo );
 		$is_playable   = $valid_preview || $can_stream;
-		$thumb_url     = function_exists( 'get_the_post_thumbnail_url' ) ? get_the_post_thumbnail_url( $child->ID, 'thumbnail' ) : '';
+		$thumb_url     = TrackMetadata::artwork_url( $child->ID, (int) $child->post_parent );
 		$limit         = absint( $repo->get( $child->ID, 'mw_preview_duration' ) );
 		$limit         = $limit >= 10 && $limit <= 120 ? $limit : 30;
 
@@ -1061,7 +1068,7 @@ final class CollectionAndDownloadRenderer {
 			$play_attrs = ' data-preview-url="' . esc_url( (string) $preview_url ) . '"'
 				. ' data-preview-title="' . esc_attr( $title ) . '"'
 				. ' data-preview-artist="' . esc_attr( $artist_text ) . '"'
-				. ' data-preview-image="' . esc_url( is_string( $thumb_url ) ? $thumb_url : '' ) . '"'
+				. ' data-preview-image="' . esc_url( $thumb_url ) . '"'
 				. ' data-preview-link="' . esc_url( $link ) . '"'
 				. ' data-preview-limit="' . esc_attr( (string) $limit ) . '"';
 		} elseif ( $can_stream ) {
@@ -1338,98 +1345,25 @@ final class CollectionAndDownloadRenderer {
 	}
 
 	/**
-	 * Resolve ordered track entries for an album/EP/collection release:
-	 * 1. Primary source: `mw_collection_items` via `$repository->collection_items( $parent_id )`
-	 *    (preserving exact `position` and `disc_number` stored in the collection metabox).
-	 * 2. Legacy fallback: child `mw_release` posts using `post_parent => $parent_id`.
+	 * Resolve ordered track entries for an album/EP/collection release.
+	 *
+	 * Delegates to the shared `CollectionTracks` resolver so the tracklist
+	 * renderer, the smart play trigger, and the shuffle trigger all agree on
+	 * what this collection's tracklist is.
 	 *
 	 * @param int  $parent_id          Parent collection release ID.
 	 * @param bool $allow_unpublished  Whether editor drafts may appear in previews.
 	 * @return array<int, array{post: WP_Post, position: int, disc_number: int}>
 	 */
 	private function collection_entries( int $parent_id, bool $allow_unpublished = false ): array {
-		$repo    = $this->context->repository();
-		$stored  = $repo->collection_items( $parent_id );
-		$entries = array();
-		$seen    = array();
+		return $this->collection_tracks()->entries( $parent_id, $allow_unpublished );
+	}
 
-		if ( ! empty( $stored ) ) {
-			foreach ( $stored as $item ) {
-				$track_id = isset( $item['release_id'] )
-					? absint( $item['release_id'] )
-					: ( isset( $item['track_id'] ) ? absint( $item['track_id'] ) : 0 );
-				if ( $track_id <= 0 || isset( $seen[ $track_id ] ) || ! ReleaseResolver::is_release( $track_id, $allow_unpublished ) ) {
-					continue;
-				}
-				$post = get_post( $track_id );
-				if ( ! ( $post instanceof WP_Post ) ) {
-					continue;
-				}
-				$seen[ $track_id ] = true;
-				$pos               = isset( $item['position'] ) ? absint( $item['position'] ) : 0;
-				if ( $pos <= 0 ) {
-					$pos = absint( $repo->get( $track_id, 'mw_track_number' ) );
-				}
-				$disc = isset( $item['disc'] )
-					? absint( $item['disc'] )
-					: ( isset( $item['disc_number'] ) ? absint( $item['disc_number'] ) : 0 );
-				if ( $disc <= 0 ) {
-					$disc = absint( get_post_meta( $track_id, 'mw_disc_number', true ) );
-				}
-				$entries[] = array(
-					'post'        => $post,
-					'position'    => $pos,
-					'disc_number' => $disc > 0 ? $disc : 1,
-				);
-			}
-			if ( ! empty( $entries ) ) {
-				return $entries;
-			}
-		}
-
-		$posts = get_posts(
-			array(
-				'post_type'      => ReleasePostType::KEY,
-				'post_parent'    => $parent_id,
-				'post_status'    => $allow_unpublished ? array( 'publish', 'draft', 'pending', 'private', 'future' ) : 'publish',
-				'posts_per_page' => 100,
-				'orderby'        => array(
-					'menu_order' => 'ASC',
-					'ID'         => 'ASC',
-				),
-				'no_found_rows'  => true,
-			)
-		);
-		if ( ! is_array( $posts ) ) {
-			return array();
-		}
-
-		foreach ( $posts as $post ) {
-			if ( ! ( $post instanceof WP_Post ) ) {
-				continue;
-			}
-			$disc      = absint( get_post_meta( $post->ID, 'mw_disc_number', true ) );
-			$entries[] = array(
-				'post'        => $post,
-				'position'    => absint( $repo->get( $post->ID, 'mw_track_number' ) ),
-				'disc_number' => $disc > 0 ? $disc : 1,
-			);
-		}
-
-		usort(
-			$entries,
-			static function ( array $left, array $right ): int {
-				if ( $left['disc_number'] !== $right['disc_number'] ) {
-					return $left['disc_number'] <=> $right['disc_number'];
-				}
-				if ( $left['position'] !== $right['position'] ) {
-					return $left['position'] <=> $right['position'];
-				}
-				return $left['post']->ID <=> $right['post']->ID;
-			}
-		);
-
-		return $entries;
+	/**
+	 * Shared collection membership/playability resolver (DRY).
+	 */
+	private function collection_tracks(): CollectionTracks {
+		return new CollectionTracks( $this->context->repository() );
 	}
 
 	/**

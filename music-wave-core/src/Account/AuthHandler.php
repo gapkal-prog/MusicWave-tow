@@ -53,9 +53,11 @@ final class AuthHandler {
 		add_action( 'register_post', array( $this, 'record_native_registration' ), 10, 3 );
 	}
 
-	/* ---------------------------------------------------------------------
+	/*
+	 * ---------------------------------------------------------------------
 	 * MusicWave form endpoints
-	 * ------------------------------------------------------------------ */
+	 * ---------------------------------------------------------------------
+	 */
 
 	/**
 	 * Handle a sign-in POST.
@@ -152,9 +154,11 @@ final class AuthHandler {
 		$this->redirect( AuthPolicy::NOTICE_ARG, 'registered', AuthForms::PANEL_LOGIN );
 	}
 
-	/* ---------------------------------------------------------------------
+	/*
+	 * ---------------------------------------------------------------------
 	 * Native wp-login.php hardening
-	 * ------------------------------------------------------------------ */
+	 * ---------------------------------------------------------------------
+	 */
 
 	/**
 	 * Count one failed authentication attempt.
@@ -257,9 +261,11 @@ final class AuthHandler {
 		AuthPolicy::register_failure( 'register', $this->registration_bucket( $sanitized_user_login, $user_email ) );
 	}
 
-	/* ---------------------------------------------------------------------
+	/*
+	 * ---------------------------------------------------------------------
 	 * Internals
-	 * ------------------------------------------------------------------ */
+	 * ---------------------------------------------------------------------
+	 */
 
 	/**
 	 * Validate method, CSRF nonce, form marker, and honeypot.
@@ -276,7 +282,7 @@ final class AuthHandler {
 			$this->redirect( AuthPolicy::ERROR_ARG, 'invalid-request', $panel );
 		}
 
-		if ( $panel !== AuthPolicy::request_value( AuthPolicy::MARKER_FIELD, 'post' ) ) {
+		if ( AuthPolicy::request_value( AuthPolicy::MARKER_FIELD, 'post' ) !== $panel ) {
 			$this->redirect( AuthPolicy::ERROR_ARG, 'invalid-request', $panel );
 		}
 
@@ -355,10 +361,8 @@ final class AuthHandler {
 	 * @param string $key POST key.
 	 */
 	private function raw_password( string $key ): string {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce verified by assert_submission(); passwords must never be sanitized.
-		$value = isset( $_POST[ $key ] ) && is_scalar( $_POST[ $key ] ) ? (string) $_POST[ $key ] : '';
-
-		return function_exists( 'wp_unslash' ) ? wp_unslash( $value ) : $value;
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce verified by assert_submission(); passwords must never be sanitized.
+		return isset( $_POST[ $key ] ) && is_scalar( $_POST[ $key ] ) ? (string) wp_unslash( $_POST[ $key ] ) : '';
 	}
 
 	/**
@@ -385,7 +389,7 @@ final class AuthHandler {
 	 */
 	private function request_method(): string {
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- compared against a literal, never output.
-		$method = isset( $_SERVER['REQUEST_METHOD'] ) && is_scalar( $_SERVER['REQUEST_METHOD'] ) ? (string) $_SERVER['REQUEST_METHOD'] : '';
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) && is_scalar( $_SERVER['REQUEST_METHOD'] ) ? (string) wp_unslash( $_SERVER['REQUEST_METHOD'] ) : '';
 
 		return strtoupper( $method );
 	}

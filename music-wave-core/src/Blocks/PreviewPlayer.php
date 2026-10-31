@@ -302,11 +302,7 @@ final class PreviewPlayer {
 		$label       = '' !== $custom_label ? $custom_label : ( $compact ? __( 'پیش‌نمایش', 'music-wave-core' ) : __( 'پخش پیش‌نمایش', 'music-wave-core' ) );
 		$icon_markup = '';
 		if ( $show_icon ) {
-			if ( array() === $options ) {
-				$icon_markup = '<span class="mw-preview-button__icon" aria-hidden="true">▶</span>';
-			} else {
-				$icon_markup = '<span class="mw-preview-button__icon" aria-hidden="true">' . ActionButtonStyle::play_toggle_icon( 'play-filled', 18, $options, 'icon' ) . '</span>';
-			}
+			$icon_markup = '<span class="mw-preview-button__icon" aria-hidden="true">' . ActionButtonStyle::play_toggle_icon( 'play-filled', 18, $options, 'icon' ) . '</span>';
 		}
 		$label_html = $is_icon
 			? '<span class="screen-reader-text">' . esc_html( $label ) . '</span>'
@@ -344,11 +340,7 @@ final class PreviewPlayer {
 		$label   = '' !== $custom_label ? $custom_label : ( $compact ? __( 'پیش‌نمایش', 'music-wave-core' ) : __( 'پخش پیش‌نمایش', 'music-wave-core' ) );
 		$icon    = '';
 		if ( $show_icon ) {
-			if ( array() === $options ) {
-				$icon = '<span class="mw-preview-button__icon" aria-hidden="true">▶</span>';
-			} else {
-				$icon = '<span class="mw-preview-button__icon" aria-hidden="true">' . ActionButtonStyle::play_toggle_icon( 'play-filled', 18, $options, 'icon' ) . '</span>';
-			}
+			$icon = '<span class="mw-preview-button__icon" aria-hidden="true">' . ActionButtonStyle::play_toggle_icon( 'play-filled', 18, $options, 'icon' ) . '</span>';
 		}
 		$label_html = $is_icon
 			? '<span class="screen-reader-text">' . esc_html( $label ) . '</span>'

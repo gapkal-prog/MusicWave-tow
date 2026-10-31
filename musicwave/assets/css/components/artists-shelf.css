@@ -18,7 +18,6 @@
 }
 
 .mw-artists-shelf__avatar {
-	--avatar-size: min(100%, 11rem);
 	position: relative;
 	align-self: center;
 	aspect-ratio: 1;
@@ -66,16 +65,17 @@
 .mw-artists-shelf__avatar--square { border-radius: var(--mw-radius-xl); }
 
 /* Image size modifiers – make imageSize attribute visually effective */
-.mw-artists-shelf--size-thumbnail .mw-artists-shelf__avatar { --avatar-size: min(100%, 6.5rem); }
-.mw-artists-shelf--size-medium .mw-artists-shelf__avatar { --avatar-size: min(100%, 9rem); }
-.mw-artists-shelf--size-large .mw-artists-shelf__avatar { --avatar-size: min(100%, 11rem); }
-.mw-artists-shelf--size-full .mw-artists-shelf__avatar { --avatar-size: min(100%, 14rem); }
+.mw-artists-shelf--size-thumbnail .mw-artists-shelf__media { --avatar-size: min(100%, 6.5rem); }
+.mw-artists-shelf--size-medium .mw-artists-shelf__media { --avatar-size: min(100%, 9rem); }
+.mw-artists-shelf--size-large .mw-artists-shelf__media { --avatar-size: min(100%, 11rem); }
+.mw-artists-shelf--size-full .mw-artists-shelf__media { --avatar-size: min(100%, 14rem); }
 
-/* Keep list layout compact regardless of size */
-.mw-release-shelf--list.mw-artists-shelf--size-thumbnail .mw-artists-shelf__avatar { --avatar-size: 2.75rem; }
-.mw-release-shelf--list.mw-artists-shelf--size-medium .mw-artists-shelf__avatar { --avatar-size: 3.5rem; }
-.mw-release-shelf--list.mw-artists-shelf--size-large .mw-artists-shelf__avatar { --avatar-size: 4.25rem; }
-.mw-release-shelf--list.mw-artists-shelf--size-full .mw-artists-shelf__avatar { --avatar-size: 5rem; }
+/* List layout keeps its cover compact but still honours every imageSize step,
+ * so the setting has a visible effect instead of collapsing to one size. */
+.mw-release-shelf--list.mw-artists-shelf--size-thumbnail .mw-artists-shelf__media { --avatar-size: 3rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-medium .mw-artists-shelf__media { --avatar-size: 4rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-large .mw-artists-shelf__media { --avatar-size: 5.5rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-full .mw-artists-shelf__media { --avatar-size: 7rem; }
 
 .mw-artists-shelf__image,
 .mw-artists-shelf__initial {
@@ -189,6 +189,57 @@
 	margin-block-start: 0.65rem;
 }
 
+/* The cover keeps the sizing it had as a direct child of the card; the media
+ * shell shares the variable so the rank badge can hug the cover's top-left. */
+.mw-artists-shelf__media {
+	--avatar-size: min(100%, 11rem);
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-self: stretch;
+	min-inline-size: 0;
+}
+
+.mw-artists-shelf__crown {
+	position: absolute;
+	inset-block-start: 0.2rem;
+	inset-inline-start: calc(50% - var(--avatar-size) / 2 + 0.2rem);
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.18rem;
+	padding: 0.18rem 0.45rem;
+	border-radius: var(--mw-radius-pill);
+	font-size: 0.68rem;
+	font-weight: 900;
+	line-height: 1;
+	color: var(--mw-color-on-gold);
+	background: linear-gradient(140deg, #f8e2a6 0%, var(--mw-color-gold) 70%);
+	box-shadow: 0 0.35rem 0.9rem rgb(0 0 0 / 28%), inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+	font-variant-numeric: tabular-nums;
+}
+
+.mw-artists-shelf__crown--1 {
+	background: linear-gradient(140deg, #fff1c2 0%, #e9b949 60%, #c9962f 100%);
+}
+
+.mw-artists-shelf__crown--2 {
+	background: linear-gradient(140deg, #f3f5f8 0%, #cfd6e0 65%, #a9b2c1 100%);
+}
+
+.mw-artists-shelf__crown--3 {
+	background: linear-gradient(140deg, #f6d7b8 0%, #d9a06a 65%, #b97c45 100%);
+}
+
+.mw-artists-shelf__summary {
+	margin: 0 0 1rem;
+	font-size: 0.82rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	color: var(--mw-color-text-muted);
+}
+
 /* Compact list layout — editorial */
 .mw-release-shelf--list .mw-artists-shelf__item {
 	flex-direction: row;
@@ -214,9 +265,14 @@
 }
 
 .mw-release-shelf--list .mw-artists-shelf__avatar {
-	--avatar-size: 3.75rem;
 	flex: 0 0 auto;
 	box-shadow: var(--mw-shadow-card);
+}
+
+.mw-release-shelf--list .mw-artists-shelf__media {
+	--avatar-size: 4rem;
+	flex: 0 0 auto;
+	align-self: center;
 }
 
 .mw-release-shelf--list .mw-artists-shelf__body {
@@ -409,7 +465,7 @@
 
 @media (max-width: 36rem) {
 	.mw-release-shelf--list .mw-artists-shelf__item {
-		grid-template-columns: 3.5rem minmax(0, 1fr);
+		grid-template-columns: auto minmax(0, 1fr);
 		display: grid;
 	}
 

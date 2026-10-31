@@ -557,6 +557,33 @@
 		}
 
 		/**
+		 * Class list for one public browsing layout.
+		 *
+		 * Columns only describe a real grid: scroll and list are single-axis
+		 * layouts, and printing a column modifier there would win the cascade
+		 * against their own `grid-template-columns`.
+		 *
+		 * @param {string} layout  Layout key (grid|scroll|list).
+		 * @param {number} columns Editor column count.
+		 * @return {string} Class list.
+		 */
+		function publicGridClassName( layout, columns ) {
+			var resolved =
+				'scroll' === layout || 'list' === layout ? layout : 'grid';
+			var className =
+				'mw-public-playlists__grid mw-public-playlists__grid--' +
+				resolved;
+			if ( 'grid' === resolved ) {
+				var count = parseInt( columns, 10 );
+				count = isNaN( count )
+					? 3
+					: Math.min( 6, Math.max( 2, count ) );
+				className += ' mw-public-playlists__grid--columns-' + count;
+			}
+			return className;
+		}
+
+		/**
 		 * Cover stack markup matching PlaylistBlocks::playlist_covers_markup():
 		 * up to four cells (image / title initial / empty pad) or the empty
 		 * sleeve with a note glyph, so client-rendered cards share the
@@ -729,11 +756,10 @@
 					empty.remove();
 				}
 				grid = document.createElement( 'div' );
-				grid.className =
-					'mw-public-playlists__grid mw-public-playlists__grid--' +
-					( cardOptions.layout || 'grid' ) +
-					' mw-public-playlists__grid--columns-' +
-					( cardOptions.columns || 3 );
+				grid.className = publicGridClassName(
+					cardOptions.layout,
+					cardOptions.columns
+				);
 				publicRoot.appendChild( grid );
 			}
 			if ( ! items || ! items.length ) {

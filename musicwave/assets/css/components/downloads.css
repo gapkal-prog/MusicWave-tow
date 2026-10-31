@@ -136,7 +136,19 @@
 .mw-download-action .mw-download-button:hover:not(:disabled),
 .mw-download-action .mw-secure-play-button:hover:not(:disabled) { transform: translateY(-1px); }
 .mw-download-button__icon,
-.mw-secure-play-button__icon { display: inline-grid; place-items: center; font-size: 1rem; line-height: 1; }
+.mw-secure-play-button__icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  line-height: 0;
+}
+.mw-download-button__icon .mw-btn-svg,
+.mw-secure-play-button__icon .mw-btn-svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
 .mw-download-button__label,
 .mw-secure-play-button__label { display: inline-block; font-weight: 700; line-height: 1.2; white-space: nowrap; }
 

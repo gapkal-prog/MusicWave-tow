@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace ManaCore\MusicWave\Core\Account;
 
 use ManaCore\MusicWave\Core\Access\AccessPolicyEngine;
+use ManaCore\MusicWave\Core\Support\VipModuleStatus;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -39,7 +40,11 @@ final class MembershipPresenter {
 	 *   is_vip: bool,
 	 *   plans: array<int, array<string, mixed>>,
 	 *   active: array<int, array<string, mixed>>,
+	 *   reserved: array<int, array<string, mixed>>,
 	 *   primary: array<string, mixed>|null,
+	 *   ends_at: int,
+	 *   ends_label: string,
+	 *   has_lifetime: bool,
 	 *   renewal: array<string, mixed>|null,
 	 *   renewal_url: string
 	 * }
@@ -128,28 +133,61 @@ final class MembershipPresenter {
 			? array_values( $raw['detailed_active'] )
 			: ( isset( $raw['active'] ) && is_array( $raw['active'] ) ? array_values( $raw['active'] ) : array() );
 
-		$active           = array();
-		$active_by_levels = array();
+		$active            = array();
+		$reserved          = array();
+		$active_by_levels  = array();
+		$reserved_by_level = array();
+		$ends_at           = 0;
+		$has_lifetime      = false;
 		foreach ( $source_grants as $grant ) {
 			if ( ! is_array( $grant ) ) {
 				continue;
 			}
 			$normalized = $this->normalize_grant( $grant, $plan_titles_by_level );
-			$active[]   = $normalized;
-			if ( '' !== $normalized['level'] && ! isset( $active_by_levels[ $normalized['level'] ] ) ) {
-				$active_by_levels[ $normalized['level'] ] = $normalized;
+			$level      = (string) $normalized['level'];
+			if ( ! empty( $normalized['is_reserved'] ) ) {
+				$reserved[] = $normalized;
+			} else {
+				$active[] = $normalized;
 			}
+			if ( '' !== $level ) {
+				if ( ! empty( $normalized['is_reserved'] ) ) {
+					if ( ! isset( $reserved_by_level[ $level ] ) || (int) $normalized['expires_at'] > (int) $reserved_by_level[ $level ]['expires_at'] ) {
+						$reserved_by_level[ $level ] = $normalized;
+					}
+				} elseif ( ! isset( $active_by_levels[ $level ] ) || (int) $normalized['expires_at'] > (int) $active_by_levels[ $level ]['expires_at'] ) {
+					$active_by_levels[ $level ] = $normalized;
+				}
+			}
+			$exp = (int) $normalized['expires_at'];
+			if ( 0 === $exp ) {
+				if ( ! empty( $normalized['is_lifetime'] ) ) {
+					$has_lifetime = true;
+				}
+			} elseif ( $exp > $ends_at ) {
+				$ends_at = $exp;
+			}
+		}
+		if ( $has_lifetime ) {
+			$ends_at = 0;
 		}
 
 		foreach ( $plans as $idx => $plan ) {
-			if ( '' !== $plan['level'] && isset( $active_by_levels[ $plan['level'] ] ) ) {
-				$matched                        = $active_by_levels[ $plan['level'] ];
+			$plan_level = (string) $plan['level'];
+			if ( '' !== $plan_level && isset( $active_by_levels[ $plan_level ] ) ) {
+				$matched                        = $active_by_levels[ $plan_level ];
 				$plans[ $idx ]['is_active']     = true;
 				$plans[ $idx ]['is_lifetime']   = ! empty( $matched['is_lifetime'] );
 				$plans[ $idx ]['expires_label'] = (string) $matched['expires_label'];
 				if ( null !== $matched['remaining_days'] ) {
 					$plans[ $idx ]['remaining_days'] = (int) $matched['remaining_days'];
 				}
+			} elseif ( '' !== $plan_level && isset( $reserved_by_level[ $plan_level ] ) ) {
+				$queued                         = $reserved_by_level[ $plan_level ];
+				$plans[ $idx ]['is_reserved']   = true;
+				$plans[ $idx ]['starts_label']  = (string) $queued['starts_label'];
+				$plans[ $idx ]['reserved_days'] = (int) $queued['reserved_days'];
+				$plans[ $idx ]['expires_label'] = (string) $queued['expires_label'];
 			}
 		}
 
@@ -174,12 +212,24 @@ final class MembershipPresenter {
 			$renewal_url = $this->resolve_plan_url( $plans );
 		}
 
+		if ( $has_lifetime ) {
+			$ends_label = __( 'مادام‌العمر', 'music-wave-core' );
+		} elseif ( $ends_at > 0 && function_exists( 'date_i18n' ) ) {
+			$ends_label = (string) date_i18n( (string) get_option( 'date_format' ), $ends_at );
+		} else {
+			$ends_label = '';
+		}
+
 		$this->cache[ $user_id ] = array(
-			'module_enabled' => ! empty( $raw['module_enabled'] ) || defined( 'MUSIC_WAVE_VIP_FILE' ),
+			'module_enabled' => ! empty( $raw['module_enabled'] ) || VipModuleStatus::is_active(),
 			'is_vip'         => $is_vip,
 			'plans'          => $plans,
 			'active'         => $active,
+			'reserved'       => $reserved,
 			'primary'        => $primary,
+			'ends_at'        => $ends_at,
+			'ends_label'     => $ends_label,
+			'has_lifetime'   => $has_lifetime,
 			'renewal'        => $renewal,
 			'renewal_url'    => $renewal_url,
 		);
@@ -339,6 +389,8 @@ final class MembershipPresenter {
 		$context          = $this->context( $user_id );
 		$plans            = $context['plans'];
 		$active           = $context['active'];
+		$reserved_list    = isset( $context['reserved'] ) && is_array( $context['reserved'] ) ? $context['reserved'] : array();
+		$ends_label       = isset( $context['ends_label'] ) ? (string) $context['ends_label'] : '';
 		$has_member       = $context['is_vip'];
 		$show_active      = ! isset( $attributes['showActive'] ) || ! empty( $attributes['showActive'] );
 		$show_plans       = ! isset( $attributes['showPlans'] ) || ! empty( $attributes['showPlans'] );
@@ -369,6 +421,26 @@ final class MembershipPresenter {
 				<p class="mw-membership__notice"><?php echo esc_html__( 'اشتراک ویژه شما فعال است و به تمام آثار ویژه دسترسی کامل دارید.', 'music-wave-core' ); ?></p>
 			<?php elseif ( $show_active ) : ?>
 				<p class="mw-membership__empty"><?php echo esc_html( $empty_text ); ?></p>
+			<?php endif; ?>
+
+			<?php if ( $show_active && ( ! empty( $active ) || ! empty( $reserved_list ) ) && '' !== $ends_label ) : ?>
+				<p class="mw-membership__summary">
+					<?php
+					printf(
+						/* translators: %s: total membership end date (wrapped in <strong>). */
+						esc_html__( 'اعتبار کل عضویت شما تا %s', 'music-wave-core' ),
+						'<strong>' . esc_html( $ends_label ) . '</strong>'
+					);
+					?>
+				</p>
+			<?php endif; ?>
+
+			<?php if ( $show_active && ! empty( $reserved_list ) ) : ?>
+				<ul class="mw-membership__levels mw-membership__levels--reserved" aria-label="<?php esc_attr_e( 'پلن‌های رزرو‌شده', 'music-wave-core' ); ?>">
+					<?php foreach ( $reserved_list as $grant ) : ?>
+						<?php echo $this->render_grant_item( $grant, $plans, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside render_grant_item(). ?>
+					<?php endforeach; ?>
+				</ul>
 			<?php endif; ?>
 
 			<?php echo $this->render_renewal_callout( $context, '#mw-membership-plans' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -447,7 +519,9 @@ final class MembershipPresenter {
 							<?php if ( '' !== $duration ) : ?>
 								<span class="mw-membership__plan-duration"><?php echo esc_html( $duration ); ?></span>
 							<?php endif; ?>
-							<?php if ( $is_active ) : ?>
+							<?php if ( ! $is_active && ! empty( $plan['is_reserved'] ) ) : ?>
+								<span class="mw-membership__plan-badge mw-membership__plan-badge--reserved"><?php echo esc_html__( 'رزرو', 'music-wave-core' ); ?></span>
+							<?php elseif ( $is_active ) : ?>
 								<span class="mw-membership__plan-badge mw-membership__plan-badge--active"><?php echo esc_html__( 'فعال برای شما', 'music-wave-core' ); ?></span>
 							<?php elseif ( '' !== $badge ) : ?>
 								<span class="mw-membership__plan-badge"><?php echo esc_html( $badge ); ?></span>
@@ -509,10 +583,24 @@ final class MembershipPresenter {
 						}
 						?>
 					</p>
-				<?php endif; ?>
-			</div>
+<?php endif; ?>
+					<?php
+					$reserved_starts = isset( $plan['starts_label'] ) ? trim( (string) $plan['starts_label'] ) : '';
+					if ( ! $is_active && '' !== $reserved_starts ) :
+						?>
+						<p class="mw-membership__plan-status mw-membership__plan-status--reserved">
+							<?php
+							printf(
+								/* translators: %s: activation date of the reserved plan. */
+								esc_html__( 'رزرو — فعال‌سازی از %s', 'music-wave-core' ),
+								esc_html( $reserved_starts )
+							);
+							?>
+						</p>
+					<?php endif; ?>
+				</div>
 
-			<?php if ( ( $show_buy_button && '' !== $cart_url ) || '' !== $product_url ) : ?>
+				<?php if ( ( $show_buy_button && '' !== $cart_url ) || '' !== $product_url ) : ?>
 				<div class="mw-membership__plan-footer">
 					<?php if ( $show_buy_button && '' !== $cart_url ) : ?>
 						<a class="wp-element-button mw-membership__buy" href="<?php echo esc_url( $cart_url ); ?>">
@@ -611,10 +699,13 @@ final class MembershipPresenter {
 	 */
 	private function render_grant_item( array $grant, array $plans, bool $show_progress = true, bool $show_order_link = false ): string {
 		$item_classes = array( 'mw-membership__level', 'mw-membership__level--active' );
+		$is_reserved  = ! empty( $grant['is_reserved'] );
 		if ( ! empty( $grant['is_lifetime'] ) ) {
 			$item_classes[] = 'mw-membership__level--lifetime';
 		}
-		if ( ! empty( $grant['is_stacked'] ) ) {
+		if ( $is_reserved ) {
+			$item_classes[] = 'mw-membership__level--reserved';
+		} elseif ( ! empty( $grant['is_stacked'] ) ) {
 			$item_classes[] = 'mw-membership__level--stacked';
 		}
 		$renew_url = empty( $grant['is_lifetime'] ) ? $this->resolve_plan_url( $plans, $grant['level'], $grant['title'] ) : '';
@@ -624,10 +715,22 @@ final class MembershipPresenter {
 		<li class="<?php echo esc_attr( implode( ' ', $item_classes ) ); ?>">
 			<div class="mw-membership__level-main">
 				<span class="mw-membership__level-name"><?php echo esc_html( $grant['title'] ); ?></span>
-				<?php if ( ! empty( $grant['is_stacked'] ) ) : ?>
+				<?php if ( $is_reserved ) : ?>
+					<span class="mw-membership__level-stacked-badge mw-membership__level-stacked-badge--reserved"><?php echo esc_html__( 'رزرو', 'music-wave-core' ); ?></span>
+				<?php elseif ( ! empty( $grant['is_stacked'] ) ) : ?>
 					<span class="mw-membership__level-stacked-badge"><?php echo esc_html__( 'تمدیدشده', 'music-wave-core' ); ?></span>
 				<?php endif; ?>
-				<?php if ( ! empty( $grant['is_lifetime'] ) ) : ?>
+				<?php if ( $is_reserved ) : ?>
+					<span class="mw-membership__level-expiry mw-membership__level-expiry--reserved">
+						<?php
+						printf(
+							/* translators: %s: activation date of the reserved plan. */
+							esc_html__( 'فعال‌سازی از %s', 'music-wave-core' ),
+							esc_html( (string) $grant['starts_label'] )
+						);
+						?>
+					</span>
+				<?php elseif ( ! empty( $grant['is_lifetime'] ) ) : ?>
 					<span class="mw-membership__level-expiry mw-membership__level-expiry--lifetime"><?php echo esc_html__( 'مادام‌العمر', 'music-wave-core' ); ?></span>
 				<?php elseif ( '' !== $grant['expires_label'] ) : ?>
 					<span class="mw-membership__level-expiry">
@@ -640,7 +743,17 @@ final class MembershipPresenter {
 						?>
 					</span>
 				<?php endif; ?>
-				<?php if ( empty( $grant['is_lifetime'] ) && null !== $grant['remaining_days'] ) : ?>
+				<?php if ( $is_reserved ) : ?>
+					<span class="mw-membership__level-remaining">
+						<?php
+						printf(
+							/* translators: %d: days until the reserved plan activates. */
+							esc_html__( '%d روز تا فعال‌سازی', 'music-wave-core' ),
+							(int) $grant['reserved_days']
+						);
+						?>
+					</span>
+				<?php elseif ( empty( $grant['is_lifetime'] ) && null !== $grant['remaining_days'] ) : ?>
 					<span class="mw-membership__level-remaining">
 						<?php
 						printf(
@@ -653,7 +766,7 @@ final class MembershipPresenter {
 				<?php endif; ?>
 			</div>
 
-			<?php if ( $show_progress && empty( $grant['is_lifetime'] ) && null !== $grant['percent_width'] ) : ?>
+			<?php if ( $show_progress && ! $is_reserved && empty( $grant['is_lifetime'] ) && null !== $grant['percent_width'] ) : ?>
 				<div class="mw-membership__level-progress" role="progressbar" aria-valuenow="<?php echo esc_attr( (string) round( $grant['percent_width'] ) ); ?>" aria-valuemin="0" aria-valuemax="100" aria-label="<?php esc_attr_e( 'میزان مصرف دوره اشتراک', 'music-wave-core' ); ?>">
 					<div class="mw-membership__level-progress-bar" style="width: <?php echo esc_attr( number_format( (float) $grant['percent_width'], 1, '.', '' ) ); ?>%;"></div>
 				</div>
@@ -782,6 +895,11 @@ final class MembershipPresenter {
 			'order_id'       => isset( $grant['order_id'] ) ? max( 0, (int) $grant['order_id'] ) : 0,
 			'is_lifetime'    => ! empty( $grant['is_lifetime'] ),
 			'is_stacked'     => ! empty( $grant['is_stacked'] ),
+			'is_reserved'    => ! empty( $grant['is_reserved'] ),
+			'expires_at'     => isset( $grant['expires_at'] ) ? max( 0, (int) $grant['expires_at'] ) : 0,
+			'starts_at'      => isset( $grant['starts_at'] ) ? max( 0, (int) $grant['starts_at'] ) : 0,
+			'starts_label'   => isset( $grant['starts_label'] ) ? (string) $grant['starts_label'] : '',
+			'reserved_days'  => isset( $grant['reserved_days'] ) ? max( 0, (int) $grant['reserved_days'] ) : 0,
 			'expires_label'  => $expires,
 			'remaining_days' => $remaining,
 			'percent_width'  => $percent_width,
@@ -834,7 +952,7 @@ final class MembershipPresenter {
 		$raw_excerpt = (string) get_post_field( 'post_excerpt', $product_id );
 		$features    = array();
 
-		if ( preg_match_all( '/<li\b[^>]*>(.*?)<\/li>/is', $raw_content . "\n" . $raw_excerpt, $matches ) && ! empty( $matches[1] ) ) {
+		if ( preg_match_all( '/<li\b[^>]*>(.*?)<\/li>/is', $raw_content . "\n" . $raw_excerpt, $matches ) ) {
 			foreach ( $matches[1] as $item ) {
 				$clean = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $item ) ) ?? '' );
 				if ( '' !== $clean && ! in_array( $clean, $features, true ) ) {

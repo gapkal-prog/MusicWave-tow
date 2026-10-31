@@ -19,11 +19,35 @@ declare(strict_types=1);
 
 namespace ManaCore\MusicWave\Core\Blocks;
 
+use ManaCore\MusicWave\Core\Blocks\Concerns\ActionButtonStyle;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 final class SectionHeader {
+
+	/**
+	 * Heading contents with an optional leading icon.
+	 *
+	 * Section titles carry no icon by default; the glyph is purely decorative
+	 * and only appears when the block author sets one.
+	 *
+	 * @param string $title Already-translated heading text.
+	 * @param string $icon  Icon slug, CSS icon classes, or inline `<svg>`.
+	 */
+	public static function title( string $title, string $icon = '' ): string {
+		if ( '' === $title ) {
+			return '';
+		}
+
+		$glyph = ActionButtonStyle::optional_icon( $icon, 24, 'mw-section-header__icon-svg' );
+		if ( '' === $glyph ) {
+			return esc_html( $title );
+		}
+
+		return '<span class="mw-section-header__icon" aria-hidden="true">' . $glyph . '</span>' . esc_html( $title );
+	}
 
 	/**
 	 * A trailing "see all" link.
@@ -54,15 +78,16 @@ final class SectionHeader {
 	 * @param string $description Optional supporting copy.
 	 * @param string $url         Optional "see all" URL.
 	 * @param string $label       Already-resolved link label.
+	 * @param string $icon        Optional heading icon.
 	 */
-	public static function shelf_header( string $eyebrow, string $title, string $description = '', string $url = '', string $label = '' ): string {
+	public static function shelf_header( string $eyebrow, string $title, string $description = '', string $url = '', string $label = '', string $icon = '' ): string {
 		if ( '' === $eyebrow && '' === $title && '' === $description && '' === $url ) {
 			return '';
 		}
 
 		return '<header class="mw-release-shelf__header"><div>'
 			. ( '' !== $eyebrow ? '<span>' . esc_html( $eyebrow ) . '</span>' : '' )
-			. ( '' !== $title ? '<h2>' . esc_html( $title ) . '</h2>' : '' )
+			. ( '' !== $title ? '<h2>' . self::title( $title, $icon ) . '</h2>' : '' )
 			. ( '' !== $description ? '<p>' . esc_html( $description ) . '</p>' : '' )
 			. '</div>' . self::more_link( 'mw-release-shelf__more', $url, $label ) . '</header>';
 	}

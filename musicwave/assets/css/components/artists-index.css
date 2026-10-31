@@ -1,0 +1,345 @@
+/* ================================================================
+   Artists index — hero, toolbar, alphabet and standalone pagination
+   Shared by the composable artists blocks so the page reads as one
+   surface while every section stays independently editable.
+   ================================================================ */
+
+/* --- Hero ------------------------------------------------------- */
+
+.mw-artists-hero {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 3rem);
+	align-items: center;
+	padding: clamp(1.6rem, 3.6vw, 3rem);
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-xl);
+	background:
+		radial-gradient(110% 130% at 100% 0%, color-mix(in srgb, var(--mw-color-accent) 24%, transparent), transparent 62%),
+		linear-gradient(160deg, var(--mw-color-surface-raised) 0%, var(--mw-color-surface) 100%);
+	box-shadow: var(--mw-shadow-card);
+	overflow: hidden;
+	isolation: isolate;
+}
+
+.mw-artists-hero::before {
+	content: "";
+	position: absolute;
+	inset: auto 0 -40% 0;
+	block-size: 60%;
+	background: radial-gradient(60% 100% at 50% 100%, color-mix(in srgb, var(--mw-color-accent) 18%, transparent), transparent 70%);
+	pointer-events: none;
+	z-index: -1;
+}
+
+.mw-artists-hero__content {
+	display: grid;
+	gap: 0.75rem;
+	min-inline-size: 0;
+}
+
+.mw-artists-hero__eyebrow {
+	margin: 0;
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--mw-color-accent);
+}
+
+.mw-artists-hero__title {
+	margin: 0;
+	font-family: var(--mw-font-display);
+	font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+	font-weight: 900;
+	line-height: 1.05;
+	letter-spacing: -0.035em;
+	color: var(--mw-color-text);
+	text-wrap: balance;
+}
+
+.mw-artists-hero__description {
+	margin: 0;
+	max-inline-size: 46ch;
+	font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.075rem);
+	line-height: 1.75;
+	color: color-mix(in srgb, var(--mw-color-text) 72%, var(--mw-color-text-muted));
+	text-wrap: pretty;
+}
+
+.mw-artists-hero__stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.85rem;
+	margin: 0.5rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.mw-artists-hero__stat {
+	display: grid;
+	gap: 0.1rem;
+	position: relative;
+}
+
+.mw-artists-hero__stat + .mw-artists-hero__stat::before {
+	content: "";
+	position: absolute;
+	inset-block: 15% 15%;
+	inset-inline-start: -0.95rem;
+	inline-size: 1px;
+	background: var(--mw-color-border-strong);
+}
+
+.mw-artists-hero__stat-value {
+	font-family: var(--mw-font-display);
+	font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.85rem);
+	font-weight: 900;
+	line-height: 1;
+	color: var(--mw-color-text);
+	font-variant-numeric: tabular-nums;
+}
+
+.mw-artists-hero__stat-label {
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	color: var(--mw-color-text-muted);
+}
+
+/* --- Toolbar ---------------------------------------------------- */
+
+.mw-artists-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.5rem;
+	border: 1px solid var(--mw-color-border);
+	border-radius: var(--mw-radius-pill);
+	background: color-mix(in srgb, var(--mw-color-surface) 82%, transparent);
+	box-shadow: var(--mw-shadow-sm);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+}
+
+.mw-artists-toolbar__submit,
+.mw-artists-toolbar__clear {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: 2.35rem;
+	block-size: 2.35rem;
+	flex: 0 0 auto;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	color: var(--mw-color-text-muted);
+	background: transparent;
+	text-decoration: none;
+	cursor: pointer;
+	transition: color var(--mw-speed-fast) ease, background-color var(--mw-speed-fast) ease;
+}
+
+.mw-artists-toolbar__submit:hover,
+.mw-artists-toolbar__clear:hover,
+.mw-artists-toolbar__submit:focus-visible,
+.mw-artists-toolbar__clear:focus-visible {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-hover);
+}
+
+.mw-artists-toolbar__sorts {
+	display: inline-flex;
+	gap: 0.15rem;
+	padding: 0.2rem;
+	margin: 0;
+	border-radius: var(--mw-radius-pill);
+	background: var(--mw-color-surface-raised);
+}
+
+.mw-artists-toolbar__sort {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.42rem 0.95rem;
+	border-radius: var(--mw-radius-pill);
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: var(--mw-color-text-muted);
+	text-decoration: none;
+	white-space: nowrap;
+	transition: color var(--mw-speed-fast) ease, background-color var(--mw-speed-fast) ease;
+}
+
+.mw-artists-toolbar__sort:hover,
+.mw-artists-toolbar__sort:focus-visible {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-hover);
+}
+
+.mw-artists-toolbar__sort.is-active,
+.mw-artists-toolbar__sort[aria-current="true"] {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	box-shadow: var(--mw-shadow-glow);
+}
+
+.mw-artists-toolbar__search {
+	display: flex;
+	align-items: center;
+	gap: 0.15rem;
+	flex: 1 1 12rem;
+	min-inline-size: 0;
+	margin-inline-start: auto;
+	padding-inline-start: 0.85rem;
+	border-radius: var(--mw-radius-pill);
+	background: var(--mw-color-surface-raised);
+	position: relative;
+}
+
+.mw-artists-toolbar__field {
+	flex: 1 1 auto;
+	min-inline-size: 0;
+	block-size: 2.35rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--mw-color-text);
+	font-size: 0.9rem;
+	font-family: inherit;
+}
+
+.mw-artists-toolbar__field::placeholder {
+	color: var(--mw-color-text-subtle);
+}
+
+.mw-artists-toolbar__field:focus {
+	outline: none;
+}
+
+.mw-artists-toolbar__search:focus-within {
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--mw-color-accent) 45%, transparent);
+}
+
+.mw-artists-toolbar__clear {
+	inline-size: 1.9rem;
+	block-size: 1.9rem;
+}
+
+.mw-artists-toolbar__submit {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+}
+
+.mw-artists-toolbar__submit:hover,
+.mw-artists-toolbar__submit:focus-visible {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent-strong);
+}
+
+@media (max-width: 36rem) {
+	.mw-artists-toolbar__search {
+		flex-basis: 100%;
+		margin-inline-start: 0;
+		order: 3;
+	}
+
+	.mw-artists-toolbar__sorts {
+		flex: 1 1 auto;
+		justify-content: space-between;
+	}
+}
+
+/* --- Alphabet filter -------------------------------------------- */
+
+.mw-artists-alphabet {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.3rem;
+	padding-block: 0.35rem;
+}
+
+.mw-artists-alphabet__item {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.25rem;
+	min-inline-size: 2.15rem;
+	block-size: 2.15rem;
+	padding-inline: 0.55rem;
+	border-radius: var(--mw-radius-pill);
+	font-size: 0.9rem;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--mw-color-text-muted);
+	text-decoration: none;
+	transition: color var(--mw-speed-fast) ease, background-color var(--mw-speed-fast) ease, transform var(--mw-speed-fast) ease;
+}
+
+a.mw-artists-alphabet__item:hover,
+a.mw-artists-alphabet__item:focus-visible {
+	color: var(--mw-color-text);
+	background: var(--mw-color-surface-hover);
+	transform: translateY(-1px);
+}
+
+.mw-artists-alphabet__item.is-active,
+.mw-artists-alphabet__item[aria-current="true"] {
+	color: var(--mw-color-on-accent);
+	background: var(--mw-color-accent);
+	box-shadow: var(--mw-shadow-glow);
+}
+
+.mw-artists-alphabet__item.is-empty {
+	color: var(--mw-color-text-subtle);
+	opacity: 0.55;
+	cursor: default;
+}
+
+.mw-artists-alphabet__item.is-empty[data-count="0"] {
+	opacity: 0.4;
+}
+
+.mw-artists-alphabet__count {
+	font-size: 0.62rem;
+	font-weight: 800;
+	opacity: 0.75;
+}
+
+/* --- Standalone pagination -------------------------------------- */
+
+.mw-artists-pagination-wrap {
+	margin-block-start: 1.5rem;
+}
+
+.mw-artists-pagination {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.mw-artists-pagination-status {
+	margin: 0;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	color: var(--mw-color-text-muted);
+}
+
+/* --- Editor placeholders ---------------------------------------- */
+
+.mw-artists-hero--placeholder {
+	border-style: dashed;
+	background: var(--mw-color-surface);
+	box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mw-artists-toolbar__sort,
+	.mw-artists-alphabet__item {
+		transition: none;
+	}
+}

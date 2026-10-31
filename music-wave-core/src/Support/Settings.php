@@ -190,7 +190,7 @@ final class Settings {
 		$result['json_ld_mode'] = in_array( $json_ld_mode, array( 'auto', 'enabled', 'disabled' ), true ) ? $json_ld_mode : $defaults['json_ld_mode'];
 
 		$absent_behavior                      = isset( $value['membership_absent_behavior'] ) && is_scalar( $value['membership_absent_behavior'] ) ? sanitize_key( (string) $value['membership_absent_behavior'] ) : '';
-		$result['membership_absent_behavior'] = in_array( $absent_behavior, array( 'allow', 'deny' ), true ) ? $absent_behavior : $defaults['membership_absent_behavior'];
+		$result['membership_absent_behavior'] = in_array( $absent_behavior, array( 'allow', 'deny', 'open_download' ), true ) ? $absent_behavior : $defaults['membership_absent_behavior'];
 
 		foreach ( array( 'purchase_message', 'purchase_cta_label', 'membership_message', 'membership_cta_label', 'purchase_or_membership_message', 'login_required_message', 'restricted_message', 'access_granted_message' ) as $key ) {
 			$result[ $key ] = isset( $value[ $key ] ) && is_scalar( $value[ $key ] ) ? sanitize_text_field( (string) $value[ $key ] ) : '';

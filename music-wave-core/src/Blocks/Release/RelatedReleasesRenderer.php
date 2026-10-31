@@ -23,6 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class RelatedReleasesRenderer {
+	/** Allow-lists behind the «سبک نمایش» inspector group. */
+	private const LAYOUTS          = array( 'grid', 'scroll', 'list' );
+	private const SHAPES           = array( 'square', 'landscape', 'portrait', 'circle' );
+	private const FALLBACK_LAYOUT  = 'grid';
+	private const FALLBACK_SHAPE   = 'square';
+	private const FALLBACK_COLUMNS = 4;
+
 	/** @var ReleaseBlockContext */
 	private $context;
 
@@ -61,8 +68,8 @@ final class RelatedReleasesRenderer {
 			$same_artist_heading = '' !== $same_artist_heading ? $same_artist_heading : __( 'انتشارهای بیشتر از این هنرمند', 'music-wave-core' );
 			$similar_heading     = '' !== $similar_heading ? $similar_heading : __( 'انتشارهای مشابه', 'music-wave-core' );
 		}
-		$show_section_link  = BlockSupport::bool_attribute( $attributes, 'showSectionLink', false );
-		$section_link_label = BlockSupport::text_attribute( $attributes, 'sectionLinkLabel', __( 'همه را ببینید', 'music-wave-core' ) );
+		$same_artist_icon = BlockSupport::text_attribute( $attributes, 'sameArtistIcon', '' );
+		$similar_icon     = BlockSupport::text_attribute( $attributes, 'similarIcon', '' );
 
 		if ( $release_id > 0 && $this->context->visibility_attribute( $attributes, 'sameArtistSection', 'show_same_artist_releases' ) ) {
 			$artist_ids = wp_get_post_terms( $release_id, 'mw_artist', array( 'fields' => 'ids' ) );
@@ -82,12 +89,11 @@ final class RelatedReleasesRenderer {
 					$order
 				);
 				if ( ! empty( $artist_releases ) ) {
-					$artist_link = '';
-					if ( $show_section_link ) {
-						$term_link   = get_term_link( $artist_ids[0] );
-						$artist_link = ! is_wp_error( $term_link ) && is_string( $term_link ) ? $term_link : '';
-					}
-					$sections[] = $this->related_section( $same_artist_heading, $artist_releases, $options, $artist_link, $section_link_label );
+					$sections[] = $this->related_section(
+						$same_artist_heading,
+						$artist_releases,
+						array_merge( $options, array( 'icon' => $same_artist_icon ) )
+					);
 					$excluded   = array_merge( $excluded, $artist_releases );
 				}
 			}
@@ -131,12 +137,11 @@ final class RelatedReleasesRenderer {
 			if ( count( $tax_query ) > 1 ) {
 				$similar = $this->similar_query( $excluded, $limit, $tax_query, $signals, $order_by, $order );
 				if ( ! empty( $similar ) ) {
-					$archive_link = '';
-					if ( $show_section_link ) {
-						$archive      = get_post_type_archive_link( ReleasePostType::KEY );
-						$archive_link = is_string( $archive ) ? $archive : '';
-					}
-					$sections[] = $this->related_section( $similar_heading, $similar, $options, $archive_link, $section_link_label );
+					$sections[] = $this->related_section(
+						$similar_heading,
+						$similar,
+						array_merge( $options, array( 'icon' => $similar_icon ) )
+					);
 				}
 			}
 		}
@@ -144,7 +149,7 @@ final class RelatedReleasesRenderer {
 		if ( empty( $sections ) && $is_editor ) {
 			$fallback_ids = $this->related_query( $excluded, $limit, array(), $order_by, $order );
 			if ( ! empty( $fallback_ids ) ) {
-				$sections[] = $this->related_section( $similar_heading, $fallback_ids, $options, '', $section_link_label );
+				$sections[] = $this->related_section( $similar_heading, $fallback_ids, array_merge( $options, array( 'icon' => $similar_icon ) ) );
 			} else {
 				$sections[] = \ManaCore\MusicWave\Core\Blocks\Concerns\EditorDiagnosticNotice::render(
 					$release_id > 0
@@ -170,9 +175,9 @@ final class RelatedReleasesRenderer {
 	 */
 	private function related_card_options( array $attributes ): array {
 		return array(
-			'layout'       => BlockSupport::key_attribute( $attributes, 'layout', array( 'grid', 'scroll', 'list' ), 'grid' ),
-			'columns'      => BlockSupport::range_attribute( $attributes, 'columns', 2, 6, 4 ),
-			'shape'        => BlockSupport::key_attribute( $attributes, 'imageShape', array( 'square', 'landscape', 'portrait', 'circle' ), 'square' ),
+			'layout'       => BlockSupport::key_attribute( $attributes, 'layout', self::LAYOUTS, self::FALLBACK_LAYOUT ),
+			'columns'      => BlockSupport::range_attribute( $attributes, 'columns', 2, 6, self::FALLBACK_COLUMNS ),
+			'shape'        => BlockSupport::key_attribute( $attributes, 'imageShape', self::SHAPES, self::FALLBACK_SHAPE ),
 			'show_artwork' => BlockSupport::bool_attribute( $attributes, 'showArtwork', true ),
 			'show_artist'  => BlockSupport::bool_attribute( $attributes, 'showArtist', true ),
 			'show_date'    => BlockSupport::bool_attribute( $attributes, 'showDate', false ),
@@ -251,10 +256,10 @@ final class RelatedReleasesRenderer {
 	}
 
 	/**
-	 * @param array<int, int>      $release_ids        Related release IDs.
-	 * @param array<string, mixed> $options            Resolved card options.
+	 * @param array<int, int>      $release_ids Related release IDs.
+	 * @param array<string, mixed> $options     Resolved card options (`icon` carries the per-section title glyph).
 	 */
-	public function related_section( string $heading, array $release_ids, array $options, string $section_url = '', string $section_link_label = '' ): string {
+	public function related_section( string $heading, array $release_ids, array $options ): string {
 		$cards = array();
 		foreach ( $release_ids as $release_id ) {
 			$card = $this->related_card( $release_id, $options );
@@ -266,23 +271,22 @@ final class RelatedReleasesRenderer {
 			return '';
 		}
 
-		$more        = SectionHeader::more_link( 'mw-related-releases__more', $section_url, $section_link_label );
-		$shelf_class = 'mw-release-shelf mw-release-shelf--' . $options['layout'];
+		$layout      = isset( $options['layout'] ) ? (string) $options['layout'] : self::FALLBACK_LAYOUT;
+		$shelf_class = 'mw-release-shelf mw-release-shelf--' . $layout
+			. ' mw-release-shelf--columns-' . ( isset( $options['columns'] ) ? (int) $options['columns'] : self::FALLBACK_COLUMNS );
 		if ( '' !== $options['variation'] ) {
 			$shelf_class .= ' mw-release-shelf--' . $options['variation'];
 		}
-		if ( 'grid' === $options['layout'] ) {
-			$shelf_class .= ' mw-release-shelf--columns-' . $options['columns'];
-		}
 
-		$heading_html = '' !== $heading ? '<h2>' . esc_html( $heading ) . '</h2>' : '';
-		$header       = '' !== $heading_html || '' !== $more ? '<div class="mw-related-releases__section-header">' . $heading_html . $more . '</div>' : '';
+		$icon         = isset( $options['icon'] ) ? (string) $options['icon'] : '';
+		$heading_html = '' !== $heading ? '<h2>' . SectionHeader::title( $heading, $icon ) . '</h2>' : '';
+		$header       = '' !== $heading_html ? '<div class="mw-related-releases__section-header">' . $heading_html . '</div>' : '';
 
 		// ShelfNavMarkup::items_region emits `.mw-release-shelf__items` (plus accessible scroll nav on `scroll`).
 		return '<section class="mw-related-releases__section ' . esc_attr( $shelf_class ) . '">'
 			. $header
 			. \ManaCore\MusicWave\Core\Support\ShelfNavMarkup::items_region(
-				(string) $options['layout'],
+				$layout,
 				implode( '', $cards ),
 				$heading
 			)
