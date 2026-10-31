@@ -314,3 +314,59 @@ html .editor-styles-wrapper .wp-site-blocks {
 		font-size: 0.92rem;
 	}
 }
+
+/*
+ * Numeric stepper used by the «ستون‌های دسکتاپ» and «حداکثر محتوا» settings.
+ *
+ * The plugin ships the same control (`music-wave-core/assets/editor.css`) for
+ * its own inspectors; the theme editor script renders the identical
+ * `.mw-stepper*` markup, so both registries must share one rule set — without
+ * it the −/+ buttons collapse and the number field takes the whole panel.
+ */
+.mw-stepper {
+	margin-bottom: 16px;
+}
+
+.mw-stepper__label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+
+.mw-stepper__help {
+	display: block;
+	margin-top: 2px;
+	color: #757575;
+	font-size: 12px;
+	font-weight: 400;
+	text-transform: none;
+}
+
+.mw-stepper__control {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.mw-stepper__button.components-button {
+	flex: 0 0 auto;
+	min-width: 30px;
+	height: 30px;
+	padding: 0;
+	font-size: 16px;
+	line-height: 1;
+	justify-content: center;
+}
+
+.mw-stepper__input {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.mw-stepper__input .components-text-control__input {
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+}

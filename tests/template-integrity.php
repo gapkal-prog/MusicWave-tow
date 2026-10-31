@@ -367,8 +367,8 @@ foreach ( $core_block_files as $core_block_file ) {
 	mw_assert_same( 'https://schemas.wp.org/trunk/block.json', is_array( $metadata ) && isset( $metadata['$schema'] ) ? $metadata['$schema'] : '', $label . ' must declare the WordPress block.json schema.' );
 	mw_assert_same( true, is_array( $metadata ) && ! empty( $metadata['keywords'] ) && isset( $metadata['attributes'] ) && is_array( $metadata['attributes'] ) && isset( $metadata['supports'] ) && is_array( $metadata['supports'] ) && isset( $metadata['example'] ) && is_array( $metadata['example'] ), $label . ' must provide complete metadata objects.' );
 }
-mw_assert_same( 41, count( $core_names ), 'Core metadata inventory must contain 41 unified blocks.' );
-foreach ( array( 'music-wave/artists-hero', 'music-wave/artists-toolbar', 'music-wave/artists-alphabet', 'music-wave/artists-pagination' ) as $artists_surface_block ) {
+mw_assert_same( 40, count( $core_names ), 'Core metadata inventory must contain 40 unified blocks (the artists index pages through WordPress\' own pagination, not a block).' );
+foreach ( array( 'music-wave/artists-hero', 'music-wave/artists-toolbar', 'music-wave/artists-alphabet' ) as $artists_surface_block ) {
 	mw_assert_same( true, in_array( $artists_surface_block, $core_names, true ), 'The artists browsing surface must ship the ' . $artists_surface_block . ' block.' );
 }
 mw_assert_same( count( $core_names ), count( array_unique( $core_names ) ), 'Core metadata names must be unique.' );
@@ -1079,7 +1079,6 @@ $music_wave_expected_blocks    = array(
 	'artists-hero',
 	'artists-toolbar',
 	'artists-alphabet',
-	'artists-pagination',
 	'taxonomy-shelf',
 	'term-hero',
 	'playback-queue',

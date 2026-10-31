@@ -661,6 +661,62 @@ function remove_query_arg( $keys, string $url = '' ): string {
 	return $url;
 }
 
+/**
+ * Core `paginate_links()` double.
+ *
+ * Mirrors the parts of wp-includes/general-template.php the artists index uses:
+ * `%#%` substitution in `base`, a `<span aria-current="page">` for the current
+ * page, dotted gaps, and `prev`/`next` anchors. Keeping the shape faithful
+ * means the block's output can be asserted against real WordPress markup.
+ *
+ * @param array<string, mixed> $args Pagination arguments.
+ */
+function paginate_links( array $args = array() ): string {
+	$args = array_merge(
+		array(
+			'base'      => '%_%',
+			'format'    => '?page=%#%',
+			'total'     => 1,
+			'current'   => 1,
+			'mid_size'  => 2,
+			'end_size'  => 1,
+			'type'      => 'plain',
+			'prev_text' => '&laquo;',
+			'next_text' => '&raquo;',
+		),
+		$args
+	);
+
+	$total   = max( 1, (int) $args['total'] );
+	$current = max( 1, min( $total, (int) $args['current'] ) );
+	if ( $total < 2 ) {
+		return '';
+	}
+
+	$link = static function ( int $page ) use ( $args ): string {
+		$base = str_replace( '%_%', (string) $args['format'], (string) $args['base'] );
+
+		return str_replace( '%#%', (string) $page, $base );
+	};
+
+	$parts = array();
+	if ( $current > 1 ) {
+		$parts[] = '<a class="prev page-numbers" href="' . $link( $current - 1 ) . '">' . $args['prev_text'] . '</a>';
+	}
+	for ( $page = 1; $page <= $total; $page++ ) {
+		if ( $page === $current ) {
+			$parts[] = '<span aria-current="page" class="page-numbers current">' . $page . '</span>';
+			continue;
+		}
+		$parts[] = '<a class="page-numbers" href="' . $link( $page ) . '">' . $page . '</a>';
+	}
+	if ( $current < $total ) {
+		$parts[] = '<a class="next page-numbers" href="' . $link( $current + 1 ) . '">' . $args['next_text'] . '</a>';
+	}
+
+	return implode( "\n", $parts );
+}
+
 function is_singular( $post_types = '' ): bool {
 	if ( empty( $GLOBALS['mw_test_singular_type'] ) ) {
 		return false;
@@ -3412,9 +3468,9 @@ $paged_args = array(
 unset( $_GET[ ManaCore\MusicWave\Core\Blocks\ArtistShelfBlock::PAGE_QUERY_VAR ], $_SERVER['REQUEST_URI'] );
 $paged_first = $artists_shelf->render( $paged_args );
 mw_assert_same( true, false !== strpos( $paged_first, 'mw-artists-shelf__pager' ), 'A paginated artists index must render the pager under the shelf.' );
-mw_assert_same( true, false !== strpos( $paged_first, 'aria-current="page">1</span>' ), 'The active page must be marked with aria-current instead of a link.' );
-mw_assert_same( false, false !== strpos( $paged_first, 'rel="prev"' ), 'The first page must not render a previous link.' );
-mw_assert_same( true, false !== strpos( $paged_first, 'rel="next"' ), 'The first page must offer a next link when more pages exist.' );
+mw_assert_same( true, false !== strpos( $paged_first, 'aria-current="page" class="page-numbers current">1</span>' ), 'The active page must be marked with aria-current instead of a link.' );
+mw_assert_same( false, false !== strpos( $paged_first, 'class="prev page-numbers"' ), 'The first page must not render a previous link.' );
+mw_assert_same( true, false !== strpos( $paged_first, 'class="next page-numbers"' ), 'The first page must offer a next link when more pages exist.' );
 mw_assert_same( true, false !== strpos( $paged_first, '>2</a>' ) && false !== strpos( $paged_first, '>3</a>' ), 'The pager must link every reachable page number (the current one stays a span).' );
 mw_assert_same( true, false !== strpos( $paged_first, 'Paged Artist 10' ), 'Page one must render the first slice of artists.' );
 mw_assert_same( false, false !== strpos( $paged_first, 'Paged Artist 11' ), 'Page one must stop at the page size.' );
@@ -3423,12 +3479,12 @@ $_GET[ ManaCore\MusicWave\Core\Blocks\ArtistShelfBlock::PAGE_QUERY_VAR ] = '2';
 $paged_second = $artists_shelf->render( $paged_args );
 mw_assert_same( true, false !== strpos( $paged_second, 'Paged Artist 11' ), 'Page two must continue after the page-one slice (offset query).' );
 mw_assert_same( false, false !== strpos( $paged_second, 'Paged Artist 10<' ), 'Page two must not repeat page-one artists.' );
-mw_assert_same( true, false !== strpos( $paged_second, 'rel="prev"' ), 'Page two must offer a previous link.' );
-mw_assert_same( true, false !== strpos( $paged_second, 'aria-current="page">2</span>' ), 'Page two must be the marked current page.' );
+mw_assert_same( true, false !== strpos( $paged_second, 'class="prev page-numbers"' ), 'Page two must offer a previous link.' );
+mw_assert_same( true, false !== strpos( $paged_second, 'class="page-numbers current">2</span>' ), 'Page two must be the marked current page.' );
 
 $_GET[ ManaCore\MusicWave\Core\Blocks\ArtistShelfBlock::PAGE_QUERY_VAR ] = '99';
 $paged_clamped = $artists_shelf->render( $paged_args );
-mw_assert_same( true, false !== strpos( $paged_clamped, 'aria-current="page">3</span>' ), 'An out-of-range page must clamp to the last page instead of rendering an empty shelf.' );
+mw_assert_same( true, false !== strpos( $paged_clamped, 'class="page-numbers current">3</span>' ), 'An out-of-range page must clamp to the last page instead of rendering an empty shelf.' );
 
 unset( $_GET[ ManaCore\MusicWave\Core\Blocks\ArtistShelfBlock::PAGE_QUERY_VAR ] );
 $paged_random = $artists_shelf->render( array_merge( $paged_args, array( 'orderBy' => 'rand' ) ) );
@@ -3642,33 +3698,63 @@ foreach ( $mw_artists_query_keys as $mw_artists_query_key ) {
 }
 unset( $_SERVER['REQUEST_URI'] );
 
-$artists_pagination = new ManaCore\MusicWave\Core\Blocks\ArtistsPaginationBlock();
-$pager_markup       = $artists_pagination->render( array( 'perPage' => 4 ) );
-mw_assert_same( true, false !== strpos( $pager_markup, 'mw-artists-pagination-wrap' ) && false !== strpos( $pager_markup, '<nav class="mw-artists-pagination"' ), 'The pagination block must render the shared pager chrome in its own wrapper.' );
-mw_assert_same( true, false !== strpos( $pager_markup, 'aria-current="page">1</span>' ), 'The active page must be marked with aria-current instead of a link.' );
-mw_assert_same( true, false !== strpos( $pager_markup, 'rel="next"' ) && false === strpos( $pager_markup, 'rel="prev"' ), 'The first page must offer only a next link.' );
-mw_assert_same( true, false !== strpos( $pager_markup, 'صفحهٔ 1 از 7 · 25 هنرمند' ), 'The pager status line must summarise the matching total.' );
+$_GET['mw_artists_page'] = '1';
+$paged_shelf             = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+		'pagination'       => true,
+		'perPage'          => 4,
+		'showResultCount'  => true,
+	)
+);
+mw_assert_same( true, false !== strpos( $paged_shelf, '<nav class="wp-block-query-pagination' ), 'A paginated artists shelf must render the standard WordPress pager under its items.' );
+mw_assert_same( true, false !== strpos( $paged_shelf, 'class="page-numbers current">1</span>' ), 'The pager must mark the active page with aria-current.' );
+mw_assert_same( true, false !== strpos( $paged_shelf, 'Artist P01' ) && false === strpos( $paged_shelf, 'Artist P05' ), 'Page one must slice the shelf to the page size.' );
+mw_assert_same( true, false !== strpos( $paged_shelf, 'نمایش 4 از 25 خواننده' ), 'A paged shelf must report the page slice against the full matching total.' );
 
-$_GET['mw_artists_page'] = '7';
-$last_page_markup        = $artists_pagination->render( array( 'perPage' => 4 ) );
-mw_assert_same( true, false !== strpos( $last_page_markup, 'aria-current="page">7</span>' ) && false !== strpos( $last_page_markup, 'rel="prev"' ) && false === strpos( $last_page_markup, 'rel="next"' ), 'The last page must mark page seven and drop the next link.' );
-
-$browse_shelf = $artists_shelf->render(
+// Saved content from before the pager block was removed stored `browseIndex`.
+$legacy_paged_shelf = $artists_shelf->render(
 	array(
 		'source'           => 'all',
 		'showHeading'      => false,
 		'showFollowButton' => false,
 		'browseIndex'      => true,
 		'perPage'          => 4,
-		'showResultCount'  => true,
 	)
 );
-mw_assert_same( true, false !== strpos( $browse_shelf, 'Artist P25' ) && false === strpos( $browse_shelf, 'Artist P24' ), 'browseIndex must slice the shelf to the requested page.' );
-mw_assert_same( true, false !== strpos( $browse_shelf, 'نمایش 1 از 25 خواننده' ), 'A paged shelf must report the page slice against the full matching total.' );
-mw_assert_same( false, false !== strpos( $browse_shelf, 'mw-artists-shelf__pager' ), 'browseIndex pages the shelf but leaves the pager to the pagination block.' );
+mw_assert_same( true, false !== strpos( $legacy_paged_shelf, '<nav class="wp-block-query-pagination' ), 'The legacy browseIndex attribute must still page the artists index with the standard pager.' );
+
+$_GET['mw_artists_page'] = '7';
+$last_page_shelf         = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+		'pagination'       => true,
+		'perPage'          => 4,
+	)
+);
+mw_assert_same( true, false !== strpos( $last_page_shelf, 'class="page-numbers current">7</span>' ), 'The last page must be the marked current page.' );
+mw_assert_same( true, false !== strpos( $last_page_shelf, 'class="prev page-numbers"' ) && false === strpos( $last_page_shelf, 'class="next page-numbers"' ), 'The last page must offer a previous link and no next link.' );
+
+// The pager has to keep the browsing state the visitor arrived with.
+$_GET['mw_artists_letter'] = 'آ';
+$filtered_pager_shelf      = $artists_shelf->render(
+	array(
+		'source'           => 'all',
+		'showHeading'      => false,
+		'showFollowButton' => false,
+		'pagination'       => true,
+		'perPage'          => 4,
+	)
+);
+unset( $_GET['mw_artists_letter'] );
+mw_assert_same( false, false !== strpos( $filtered_pager_shelf, 'mw_artists_page=' ), 'A single-page filtered index must not render pager links.' );
 
 unset( $_GET['mw_artists_page'] );
-mw_assert_same( '', $artists_pagination->render( array( 'perPage' => 30 ) ), 'A single-page index must not render pager chrome.' );
+mw_assert_same( false, false !== strpos( $artists_shelf->render( array( 'source' => 'all', 'showHeading' => false, 'showFollowButton' => false ) ), '<nav class="wp-block-query-pagination' ), 'A non-paged shelf must not render a pager.' );
 
 $GLOBALS['mw_test_terms'] = $paging_backup;
 
@@ -3714,6 +3800,30 @@ $rock_tile = substr( $manual_hues, max( 0, (int) strpos( $manual_hues, '>Rock</s
 $pop_tile  = substr( $manual_hues, max( 0, (int) strpos( $manual_hues, '>Pop</span>' ) - 320 ), 380 );
 mw_assert_same( true, false !== strpos( $rock_tile, 'mw-term-hue-' . $rock_hue ) && false === strpos( $rock_tile, 'mw-term-hue-' . $pop_hue ), 'Reordering a shelf must not repaint Rock: its tile keeps its own hue.' );
 mw_assert_same( true, false !== strpos( $pop_tile, 'mw-term-hue-' . $pop_hue ) && false === strpos( $pop_tile, 'mw-term-hue-' . $rock_hue ), 'Reordering a shelf must not repaint Pop: its tile keeps its own hue.' );
+
+/*
+ * «حداکثر کاشی» is an author decision for every supported taxonomy, and it has
+ * to bind before the `music_wave_terms_shelf_terms` filter can widen it.
+ */
+$mw_cap_term_ids = array();
+foreach ( array( 'mw_genre' => 'mw-genre-cap-', 'mw_mood' => 'mw-mood-cap-', 'mw_label' => 'mw-label-cap-' ) as $cap_taxonomy => $cap_slug_prefix ) {
+	for ( $cap_index = 1; $cap_index <= 5; $cap_index++ ) {
+		$cap_term = wp_insert_term( $cap_taxonomy . ' Cap ' . $cap_index, $cap_taxonomy, array( 'slug' => $cap_slug_prefix . $cap_index ) );
+		$GLOBALS['mw_test_terms'][ $cap_term['term_id'] ]->count = 3;
+		$mw_cap_term_ids[]                                       = (int) $cap_term['term_id'];
+	}
+	$GLOBALS['mw_test_filters']['music_wave_terms_shelf_terms'] = static function ( $terms ) {
+		// A hook that tries to widen the shelf must not win over the cap.
+		return array_merge( $terms, $terms );
+	};
+	$capped_terms = $taxonomy_shelf->render( array( 'taxonomy' => $cap_taxonomy, 'itemsToShow' => 2, 'showHeading' => false, 'cardStyle' => 'plain' ) );
+	unset( $GLOBALS['mw_test_filters']['music_wave_terms_shelf_terms'] );
+	mw_assert_same( 2, substr_count( $capped_terms, 'mw-terms-shelf__name' ), '«حداکثر کاشی» must cap the ' . $cap_taxonomy . ' shelf at the requested tile count, even after a filter hook.' );
+	foreach ( $mw_cap_term_ids as $mw_cap_term_id ) {
+		unset( $GLOBALS['mw_test_terms'][ $mw_cap_term_id ] );
+	}
+	$mw_cap_term_ids = array();
+}
 
 $GLOBALS['mw_test_filters']['music_wave_terms_shelf_terms'] = array();
 $empty_terms                                                = $taxonomy_shelf->render( array( 'emptyMessage' => 'No genres yet.', 'taxonomy' => 'mw_label' ) );
@@ -4995,6 +5105,49 @@ $mw_preview_breadcrumb_html = $mw_breadcrumb_renderer->render(
 mw_assert_same( true, false !== strpos( $mw_preview_breadcrumb_html, 'mw-breadcrumb--pill' ), 'BreadcrumbRenderer must emit the selected pill style variation class.' );
 mw_assert_same( true, false !== strpos( $mw_preview_breadcrumb_html, 'aria-current="page"' ) && false !== strpos( $mw_preview_breadcrumb_html, '<nav' ), 'BreadcrumbRenderer must render accessible nav + aria-current="page" markup.' );
 
+/*
+ * Query Loop bridge doubles.
+ *
+ * «نمایش همهٔ انتشارها» hands the listing to `core/query`. The shelf builds
+ * real block markup and runs it through `do_blocks()`, so the double records
+ * the markup it was handed instead of rendering blocks. Declared conditionally
+ * so earlier suites (which rely on `do_blocks()` being absent) are unaffected.
+ */
+if ( ! function_exists( 'do_blocks' ) ) {
+	/**
+	 * Record the block markup a shelf hands to the block renderer.
+	 *
+	 * @param string $content Serialized block markup.
+	 */
+	function do_blocks( string $content ): string {
+		$GLOBALS['mw_test_do_blocks'][] = $content;
+
+		return '<div class="wp-block-query mw-release-shelf__loop"><ul class="mw-release-shelf__items"></ul></div>';
+	}
+}
+
+if ( ! function_exists( 'remove_filter' ) ) {
+	/**
+	 * Drop a callback previously registered through `add_filter()`.
+	 *
+	 * @param string   $hook     Filter tag.
+	 * @param callable $callback Registered callback (matched by equality).
+	 * @param int      $priority Priority the callback was added with.
+	 */
+	function remove_filter( string $hook, callable $callback, int $priority = 10 ): bool {
+		unset( $priority );
+		$kept = array();
+		foreach ( $GLOBALS['mw_test_action_callbacks'][ $hook ] ?? array() as $registered ) {
+			if ( $registered !== $callback ) {
+				$kept[] = $registered;
+			}
+		}
+		$GLOBALS['mw_test_action_callbacks'][ $hook ] = $kept;
+
+		return true;
+	}
+}
+
 // --- ShelfAndSliderRenderer Settings, Display Styles, Filter Tabs & Slider Image Shape Suite ---
 $mw_shelf_renderer = $mw_theme_kernel->shelves();
 $mw_parsed_tabs    = $mw_shelf_renderer->parse_filter_tabs( "امروز|today\nهفته|week\nماه|month\nآلبوم|taxonomy:mw_release_type:album\nهمه|all" );
@@ -5046,6 +5199,58 @@ $mw_hero_slider_html = $mw_shelf_renderer->render_release_shelf(
 	)
 );
 mw_assert_same( true, false !== strpos( $mw_hero_slider_html, 'mw-release-shelf--slider' ) && false !== strpos( $mw_hero_slider_html, 'mw-release-shelf--editorial' ) && false !== strpos( $mw_hero_slider_html, '--mw-feature-overlay:0.68' ) && false !== strpos( $mw_hero_slider_html, 'color:#ffcc00;font-size:36px;' ) && false !== strpos( $mw_hero_slider_html, 'data-mw-filter-tab="today"' ), 'Hero slider layout must preserve styleVariant, overlay, hero typography colors, and interactive filter tabs.' );
+
+
+/*
+ * Releases pagination: «نمایش همهٔ انتشارها» delegates to a real Query Loop and
+ * WordPress' own pager instead of an unbounded `get_posts()` listing.
+ */
+$GLOBALS['mw_test_do_blocks'] = array();
+$mw_loop_shelf               = $mw_shelf_renderer->render_release_shelf(
+	array(
+		'title'     => 'همهٔ انتشارها',
+		'layout'    => 'grid',
+		'columns'   => 4,
+		'showAll'   => true,
+		'taxonomy'  => 'mw_genre',
+		'termSlug'  => 'pop',
+	)
+);
+mw_assert_same( 1, count( $GLOBALS['mw_test_do_blocks'] ), 'A show-all shelf must hand exactly one Query Loop to the block renderer.' );
+$mw_loop_markup = $GLOBALS['mw_test_do_blocks'][0];
+foreach ( array( '<!-- wp:query ', '<!-- wp:post-template ', '<!-- wp:music-wave/preview-player', '<!-- wp:music-wave/release-meta /-->', '<!-- wp:query-no-results -->', '<!-- wp:query-pagination ' ) as $mw_loop_token ) {
+	mw_assert_same( true, false !== strpos( $mw_loop_markup, $mw_loop_token ), 'The show-all shelf must compose the standard Query Loop (' . $mw_loop_token . ').' );
+}
+mw_assert_same( true, false !== strpos( $mw_loop_markup, '"perPage":12' ), 'The Query Loop must default to 12 releases per page.' );
+mw_assert_same( true, false !== strpos( $mw_loop_markup, '"columnCount":4' ), 'The Query Loop post template must carry the author column count.' );
+mw_assert_same( true, false !== strpos( $mw_loop_markup, '"queryId":' ), 'The Query Loop must carry an explicit queryId so the shelf can scope its query vars.' );
+mw_assert_same( true, false !== strpos( $mw_loop_shelf, 'mw-release-shelf--grid mw-release-shelf--columns-4 mw-release-shelf--loop' ) && false !== strpos( $mw_loop_shelf, 'همهٔ انتشارها' ), 'The show-all shelf must keep the section chrome and layout classes.' );
+mw_assert_same( array(), $GLOBALS['mw_test_action_callbacks']['query_loop_block_query_vars'] ?? array(), 'The shelf must remove its Query Loop filter once the loop has rendered.' );
+
+$GLOBALS['mw_test_do_blocks'] = array();
+$mw_loop_paged_shelf         = $mw_shelf_renderer->render_release_shelf(
+	array(
+		'layout'  => 'list',
+		'showAll' => true,
+		'perPage' => 5,
+	)
+);
+mw_assert_same( true, false !== strpos( $GLOBALS['mw_test_do_blocks'][0], '"perPage":5' ), '«انتشار در هر صفحه» must drive the Query Loop page size.' );
+mw_assert_same( true, false !== strpos( $GLOBALS['mw_test_do_blocks'][0], '"columnCount":1' ), 'The compact list layout must render the loop as one column.' );
+
+// Curated layouts keep their own composition: a rail has no pager.
+$GLOBALS['mw_test_do_blocks'] = array();
+$mw_rail_shelf               = $mw_shelf_renderer->render_release_shelf(
+	array(
+		'layout'  => 'scroll',
+		'showAll' => true,
+	)
+);
+mw_assert_same( 0, count( $GLOBALS['mw_test_do_blocks'] ), 'The horizontal shelf must not paginate: it keeps its own bounded rail.' );
+
+// A rail never loads every release, even with the legacy attribute saved.
+$mw_rail_query = $mw_shelf_renderer->release_query_args( array( 'showAll' => true ), 6 );
+mw_assert_same( 6, $mw_rail_query['posts_per_page'], 'A release slider must never issue an unbounded `posts_per_page` query.' );
 
 $mw_slider_circle_html = $mw_shelf_renderer->render_release_slider(
 	array(

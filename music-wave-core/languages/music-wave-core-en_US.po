@@ -159,7 +159,7 @@ msgstr[1] "%d items"
 msgid "%d%% تخفیف"
 msgstr "%d%% off"
 
-#: src/Blocks/ArtistShelfBlock.php:483
+#: src/Blocks/ArtistShelfBlock.php:484
 #, php-format
 msgid "%s اثر"
 msgstr "%s releases"
@@ -255,15 +255,15 @@ msgstr "EP"
 msgid "FLAC بدون اتلاف"
 msgstr "FLAC lossless"
 
-#: assets/blocks.js:2570
+#: assets/blocks.js:2574
 msgid "H1"
 msgstr "H1"
 
-#: assets/blocks.js:2571
+#: assets/blocks.js:2575
 msgid "H2"
 msgstr "H2"
 
-#: assets/blocks.js:2572
+#: assets/blocks.js:2576
 msgid "H3"
 msgstr "H3"
 
@@ -367,7 +367,7 @@ msgstr "Spotify"
 msgid "URLهای انتشار، هنرمند و کاتالوگ به ساختار پیوند ثابت غیر پیش‌فرض نیاز دارند."
 msgstr "Release, artist, and catalog URLs need a non-default permalink structure."
 
-#: src/Account/MembershipPresenter.php:303 src/Modules/Rendering.php:817 src/Modules/Rendering.php:831 /blocks/dashboard-subscription/block.json /blocks/dashboard-welcome/block.json
+#: src/Account/MembershipPresenter.php:303 src/Modules/Rendering.php:810 src/Modules/Rendering.php:824 blocks/dashboard-subscription/block.json blocks/dashboard-welcome/block.json
 msgid "VIP"
 msgstr "VIP"
 
@@ -403,7 +403,7 @@ msgstr "WordPress"
 msgid "bpm"
 msgstr "bpm"
 
-#: /blocks/request-form/block.json
+#: blocks/request-form/block.json
 msgid "collaboration"
 msgstr "collaboration"
 
@@ -415,27 +415,27 @@ msgstr "iTunes"
 msgid "noindex پیش‌فرض (امن)"
 msgstr "Default noindex (safe)"
 
-#: /blocks/request-form/block.json
+#: blocks/request-form/block.json
 msgid "request"
 msgstr "request"
 
-#: /blocks/search-unified/block.json
+#: blocks/search-unified/block.json
 msgid "search"
 msgstr "search"
 
-#: src/Modules/Rendering.php:936 /blocks/share-button/block.json
+#: src/Modules/Rendering.php:929 blocks/share-button/block.json
 msgid "share"
 msgstr "share"
 
-#: src/Modules/Rendering.php:943 /blocks/shuffle-button/block.json
+#: src/Modules/Rendering.php:936 blocks/shuffle-button/block.json
 msgid "shuffle"
 msgstr "shuffle"
 
-#: /blocks/search-unified/block.json
+#: blocks/search-unified/block.json
 msgid "unified"
 msgstr "unified"
 
-#: src/Modules/Rendering.php:880 /blocks/membership-panel/block.json
+#: src/Modules/Rendering.php:873 blocks/membership-panel/block.json
 msgid "vip"
 msgstr "vip"
 
@@ -456,7 +456,7 @@ msgstr "Manage cover artwork and public preview media."
 msgid "آثار، آهنگ‌ها و آلبوم‌های مرتبط با %1$s در %2$s."
 msgstr "Tracks, albums, and releases related to %1$s on %2$s."
 
-#: src/Modules/Rendering.php:845 /blocks/dashboard-addresses/block.json
+#: src/Modules/Rendering.php:838 blocks/dashboard-addresses/block.json
 msgid "آدرس"
 msgstr "Address"
 
@@ -476,15 +476,15 @@ msgstr "billing and shipping addresses"
 msgid "آدرس صورتحساب و حمل‌ونقل خود را ویرایش کنید."
 msgstr "Edit your billing and shipping addresses."
 
-#: assets/blocks.js:1784 assets/blocks.js:4986 src/Account/WooAccountBridge.php:250 src/Commerce/AccountLibrary.php:526
+#: assets/blocks.js:1784 assets/blocks.js:4973 src/Account/WooAccountBridge.php:250 src/Commerce/AccountLibrary.php:526
 msgid "آدرس‌ها"
 msgstr "Addresses"
 
-#: src/Modules/Rendering.php:842 /blocks/dashboard-addresses/block.json
+#: src/Modules/Rendering.php:835 blocks/dashboard-addresses/block.json
 msgid "آدرس‌های حساب"
 msgstr "Account Addresses"
 
-#: src/Modules/Rendering.php:698 src/Modules/Rendering.php:789 /blocks/catalog-filters/block.json /blocks/term-hero/block.json
+#: src/Modules/Rendering.php:698 src/Modules/Rendering.php:782 blocks/catalog-filters/block.json blocks/term-hero/block.json
 msgid "آرشیو"
 msgstr "archive"
 
@@ -528,15 +528,15 @@ msgstr "Readiness"
 msgid "آمادگی انتشار"
 msgstr "Release readiness"
 
-#: assets/blocks.js:1662 assets/blocks.js:2578 src/Modules/Rendering.php:824 /blocks/dashboard-stats/block.json
+#: assets/blocks.js:1662 assets/blocks.js:2582 src/Modules/Rendering.php:817 blocks/dashboard-stats/block.json
 msgid "آمار"
 msgstr "Stats"
 
-#: src/Modules/Rendering.php:822
+#: src/Modules/Rendering.php:815
 msgid "آمار حساب: دانلودها، علاقه‌مندی‌ها، هنرمندان."
 msgstr "Account stats: downloads, favorites, and followed artists."
 
-#: src/Modules/Rendering.php:821 /blocks/dashboard-stats/block.json
+#: src/Modules/Rendering.php:814 blocks/dashboard-stats/block.json
 msgid "آمار داشبورد"
 msgstr "Dashboard Stats"
 
@@ -572,11 +572,11 @@ msgstr "That playlist is not available."
 msgid "آن مورد منتشر نشده است و نمی‌توان آن را به فهرست پخش اضافه کرد."
 msgstr "That item is not a release and cannot be added to a playlist."
 
-#: /blocks/dashboard-requests/block.json
+#: blocks/dashboard-requests/block.json
 msgid "آهنگ"
 msgstr "Track"
 
-#: src/Modules/Rendering.php:950 /blocks/request-form/block.json
+#: src/Modules/Rendering.php:943 blocks/request-form/block.json
 msgid "آهنگ اختصاصی"
 msgstr "Custom song"
 
@@ -588,11 +588,11 @@ msgstr "Displays the song, album, podcast, or artist label."
 msgid "آهنگ‌ها، آلبوم‌ها و هنرمندان ذخیره‌شده شما."
 msgstr "Your saved tracks, albums, and followed artists."
 
-#: src/Modules/Rendering.php:885 /blocks/music-library/block.json
+#: src/Modules/Rendering.php:878 blocks/music-library/block.json
 msgid "آهنگ‌ها، آلبوم‌ها، پادکست‌ها و هنرمندانی را که بازدیدکننده ذخیره کرده‌اند را نمایش می‌دهد."
 msgstr "Displays the visitor's saved songs, albums, podcasts, and followed artists."
 
-#: assets/blocks.js:4146
+#: assets/blocks.js:4123
 msgid "آواتار و رنگ تأکیدی"
 msgstr "Avatar & accent color"
 
@@ -612,7 +612,7 @@ msgstr "Uploading a protected file requires the MusicWave VIP plugin to be activ
 msgid "آپلود فایل حفاظت‌شده و خواندن فرادادهٔ آن…"
 msgstr "Uploading protected file and reading its metadata…"
 
-#: /blocks/preview-player/block.json
+#: blocks/preview-player/block.json
 msgid "آیکون"
 msgstr "Icon"
 
@@ -628,7 +628,7 @@ msgstr "Play button icon (optional)"
 msgid "آیکون سفارشی (اختیاری)"
 msgstr "Custom icon (optional)"
 
-#: assets/blocks.js:4350
+#: assets/blocks.js:4327
 msgid "آیکون سفارشی دنبال‌کردن (اختیاری)"
 msgstr "Custom Follow Icon (optional)"
 
@@ -648,7 +648,7 @@ msgstr "“Similar releases” title icon (optional)"
 msgid "آیکون عنوان «همان هنرمند» (اختیاری)"
 msgstr "“Same artist” title icon (optional)"
 
-#: assets/blocks.js:2223 assets/blocks.js:2724 assets/blocks.js:3422 assets/blocks.js:3620
+#: assets/blocks.js:2223 assets/blocks.js:2701 assets/blocks.js:3399 assets/blocks.js:3597
 msgid "آیکون عنوان بخش (اختیاری)"
 msgstr "Section title icon (optional)"
 
@@ -656,15 +656,15 @@ msgstr "Section title icon (optional)"
 msgid "آیکون کنار عنوان بخش نمایش داده می‌شود و به‌صورت پیش‌فرض خالی است. یک آیکون انتخاب کنید، کلاس CSS فونت آیکون بنویسید، یا کد <svg>…</svg> را جای‌گذاری کنید."
 msgstr "The icon is shown next to the section title and is empty by default. Pick an icon, enter a font icon CSS class, or paste <svg>...</svg> markup."
 
-#: assets/blocks.js:2211 assets/blocks.js:2549 assets/blocks.js:2712 assets/blocks.js:3412
+#: assets/blocks.js:2211 assets/blocks.js:2553 assets/blocks.js:2689 assets/blocks.js:3389
 msgid "ابرو"
 msgstr "Eyebrow"
 
-#: /blocks/artists-toolbar/block.json
+#: blocks/artists-toolbar/block.json
 msgid "ابزار"
 msgstr "Toolbar"
 
-#: src/Modules/Rendering.php:758 /blocks/artists-toolbar/block.json
+#: src/Modules/Rendering.php:758 blocks/artists-toolbar/block.json
 msgid "ابزارهای هنرمندان"
 msgstr "Artist tools"
 
@@ -688,7 +688,7 @@ msgstr "Cover artwork"
 msgid "اجرا"
 msgstr "Performance"
 
-#: assets/blocks.js:3243 src/Requests/RequestPostType.php:196
+#: assets/blocks.js:3220 src/Requests/RequestPostType.php:196
 msgid "اجرا و رویداد"
 msgstr "Performance & events"
 
@@ -696,11 +696,11 @@ msgstr "Performance & events"
 msgid "اختیاری؛ هر پیوند در یک خط (حداکثر ۵)."
 msgstr "Optional; one link per line (up to 5)."
 
-#: src/Blocks/ListeningBlocks.php:473 src/Modules/Rendering.php:922 /blocks/continue-listening/block.json
+#: src/Blocks/ListeningBlocks.php:473 src/Modules/Rendering.php:915 blocks/continue-listening/block.json
 msgid "اخیراً پخش‌شده"
 msgstr "Recently played"
 
-#: src/Modules/Rendering.php:922 /blocks/continue-listening/block.json
+#: src/Modules/Rendering.php:915 blocks/continue-listening/block.json
 msgid "ادامه"
 msgstr "continue"
 
@@ -750,7 +750,7 @@ msgstr "Membership provider"
 msgid "ارائه‌دهنده می‌تواند دارایی‌های حفاظت‌شده غیرشفاف را پس از تصویب بررسی‌های دسترسی، پخش کند."
 msgstr "A provider can stream opaque protected assets after access checks pass."
 
-#: assets/blocks.js:2924
+#: assets/blocks.js:2901
 msgid "ارتفاع بنر"
 msgstr "Banner height"
 
@@ -814,7 +814,7 @@ msgstr "From your account"
 msgid "از حساب کاربری شما – غیرقابل ویرایش"
 msgstr "From your account — read-only"
 
-#: assets/blocks.js:2535
+#: assets/blocks.js:2539
 msgid "از دکمه دنبال‌کردن کتابخانه شخصی دوباره استفاده می‌کند، بنابراین دنبال کنندگان در همه جا همگام می‌مانند."
 msgstr "Reuses the personal library follow button, so followers stay in sync everywhere."
 
@@ -830,11 +830,11 @@ msgstr "Removed from the playlist."
 msgid "از پیش ذخیره‌شده"
 msgstr "Pre-saved"
 
-#: assets/blocks.js:5341
+#: assets/blocks.js:5328
 msgid "از چیدمان متراکم‌تر برای کارت‌ها، فهرست‌ها و نوارهای کناری استفاده کنید."
 msgstr "Use the denser layout for cards, lists, and sidebars."
 
-#: assets/blocks.js:2437 assets/blocks.js:2852 assets/blocks.js:3681
+#: assets/blocks.js:2437 assets/blocks.js:2829 assets/blocks.js:3658
 msgid "از کروم اشتراک‌گذاری قفسه استفادهٔ مجدد می‌کند، بنابراین با قفسه‌های دیگر مطابقت دارد."
 msgstr "Reuses the shared release-shelf chrome, so it matches every other shelf."
 
@@ -866,7 +866,7 @@ msgstr "Use artist image"
 msgid "استفاده به عنوان کیفیت برای"
 msgstr "Use as a quality for"
 
-#: assets/blocks.js:2303 assets/blocks.js:2797
+#: assets/blocks.js:2303 assets/blocks.js:2774
 msgid "استفاده شده توسط منبع منتخب. شناسه‌های عددی جداشده با ویرگول، ترتیب دقیق شما را حفظ می‌کنند."
 msgstr "Uses the selected source. Comma-separated numeric IDs preserve your exact order."
 
@@ -874,7 +874,7 @@ msgstr "Uses the selected source. Comma-separated numeric IDs preserve your exac
 msgid "اسلایدر"
 msgstr "Slider"
 
-#: src/Blocks/Concerns/ActionButtonStyle.php:587 src/Modules/Rendering.php:831 src/Modules/Rendering.php:880 src/Modules/Rendering.php:936 /blocks/dashboard-subscription/block.json /blocks/dashboard-welcome/block.json /blocks/membership-panel/block.json /blocks/share-button/block.json
+#: src/Blocks/Concerns/ActionButtonStyle.php:587 src/Modules/Rendering.php:824 src/Modules/Rendering.php:873 src/Modules/Rendering.php:929 blocks/dashboard-subscription/block.json blocks/dashboard-welcome/block.json blocks/membership-panel/block.json blocks/share-button/block.json
 msgid "اشتراک"
 msgstr "subscription"
 
@@ -919,7 +919,7 @@ msgstr "Share"
 msgid "اشتراک‌گذاری %s"
 msgstr "Share %s"
 
-#: src/Modules/Rendering.php:933 /blocks/share-button/block.json
+#: src/Modules/Rendering.php:926 blocks/share-button/block.json
 msgid "اشتراک‌گذاری انتشار"
 msgstr "Share release"
 
@@ -927,15 +927,15 @@ msgstr "Share release"
 msgid "اشتراک‌گذاری انجام نشد."
 msgstr "Sharing failed."
 
-#: assets/blocks.js:3039
+#: assets/blocks.js:3016
 msgid "اصطلاح ID"
 msgstr "Term ID"
 
-#: assets/blocks.js:2795
+#: assets/blocks.js:2772
 msgid "اصطلاح شناسه‌ها"
 msgstr "Term IDs"
 
-#: assets/blocks.js:3863
+#: assets/blocks.js:3840
 msgid "اصطلاح نمونه (هنرمند / سبک / حال‌وهوا)"
 msgstr "Sample term (Artist / Genre / Mood)"
 
@@ -947,7 +947,7 @@ msgstr "Refine search"
 msgid "اضافه شد"
 msgstr "Added"
 
-#: src/Modules/Rendering.php:803 /blocks/add-to-queue/block.json
+#: src/Modules/Rendering.php:796 blocks/add-to-queue/block.json
 msgid "اضافه کردن"
 msgstr "add"
 
@@ -968,7 +968,7 @@ msgstr "Request details saved."
 msgid "اطلاعات کاتالوگ مستقل از WooCommerce است. محصولات فقط این انتشار را می‌فروشند یا اجازهٔ دسترسی به آن را می‌دهند."
 msgstr "Catalog data is independent from WooCommerce. Products only sell or grant access to this release."
 
-#: /blocks/dashboard-subscription/block.json
+#: blocks/dashboard-subscription/block.json
 msgid "اعتبار"
 msgstr "Validity"
 
@@ -1019,7 +1019,7 @@ msgstr "Apply button label"
 msgid "اعمال فیلتر"
 msgstr "Apply filters"
 
-#: assets/blocks.js:4901
+#: assets/blocks.js:4888
 msgid "افزایش"
 msgstr "Increase"
 
@@ -1039,11 +1039,11 @@ msgstr "Add a release"
 msgid "افزودن انتشار جدید"
 msgstr "Add new release"
 
-#: assets/blocks.js:3392
+#: assets/blocks.js:3369
 msgid "افزودن به انتهای صف"
 msgstr "Add to end of queue"
 
-#: src/Blocks/QueueBlock.php:109 src/Modules/Rendering.php:800 /blocks/add-to-queue/block.json
+#: src/Blocks/QueueBlock.php:109 src/Modules/Rendering.php:793 blocks/add-to-queue/block.json
 msgid "افزودن به صف"
 msgstr "Add to queue"
 
@@ -1059,7 +1059,7 @@ msgstr "Add as a quality for…"
 msgid "افزودن به فهرست علاقه‌مندی‌ها"
 msgstr "Add to wishlist"
 
-#: src/Blocks/PlaylistBlocks.php:173 src/Blocks/PlaylistBlocks.php:762 src/Modules/Rendering.php:905 /blocks/add-to-playlist/block.json
+#: src/Blocks/PlaylistBlocks.php:173 src/Blocks/PlaylistBlocks.php:762 src/Modules/Rendering.php:898 blocks/add-to-playlist/block.json
 msgid "افزودن به فهرست پخش"
 msgstr "Add to playlist"
 
@@ -1147,7 +1147,7 @@ msgstr "Actions"
 msgid "اقدامات دانلود"
 msgstr "Download actions"
 
-#: /blocks/download-button/block.json
+#: blocks/download-button/block.json
 msgid "اقدامات دانلود مجاز را برای یک انتشار با انتخابگر آیکون، حالت فشرده یا پنل فایل‌ها و ظاهر یکپارچه نمایش می‌دهد."
 msgstr "Renders authorized release download actions with custom icon selection, inline or panel layouts, and unified button styling."
 
@@ -1171,11 +1171,11 @@ msgstr "Collection items must be an array."
 msgid "الزامات هسته MusicWave برآورده شده است"
 msgstr "MusicWave core requirements are met"
 
-#: src/Modules/Rendering.php:768 /blocks/artists-alphabet/block.json
+#: src/Modules/Rendering.php:768 blocks/artists-alphabet/block.json
 msgid "الفبا"
 msgstr "Alphabet"
 
-#: assets/blocks.js:2646 src/Blocks/ArtistsToolbarBlock.php:79
+#: assets/blocks.js:2650 src/Blocks/ArtistsToolbarBlock.php:79
 msgid "الفبایی"
 msgstr "Alphabetical"
 
@@ -1183,11 +1183,11 @@ msgstr "Alphabetical"
 msgid "الکترونیک"
 msgstr "Electronic"
 
-#: assets/blocks.js:4045
+#: assets/blocks.js:4022
 msgid "الگوی چیدمان پروفایل"
 msgstr "Profile layout style"
 
-#: assets/blocks.js:5108
+#: assets/blocks.js:5095
 msgid "الگوی چیدمان پنل‌ها"
 msgstr "Panel Layout Preset"
 
@@ -1219,7 +1219,7 @@ msgstr "Select image"
 msgid "انتخاب فایل از کتابخانهٔ رسانه نیازمند فعال بودن افزونهٔ MusicWave VIP است."
 msgstr "Selecting a file from the media library requires the MusicWave VIP plugin to be active."
 
-#: assets/blocks.js:3254
+#: assets/blocks.js:3231
 msgid "انتخاب نقش درخواست‌دهنده"
 msgstr "Requester role picker"
 
@@ -1253,7 +1253,7 @@ msgstr "Release"
 msgid "انتشار #%d"
 msgstr "Release #%d"
 
-#: src/Blocks/TaxonomyShelfBlock.php:204 src/Blocks/TermHeroBlock.php:303
+#: src/Blocks/TaxonomyShelfBlock.php:211 src/Blocks/TermHeroBlock.php:303
 #, php-format
 msgid "انتشار %s"
 msgid_plural "انتشار %s"
@@ -1296,27 +1296,27 @@ msgstr "The release was saved but the submitted collection items were rejected a
 msgid "انتشار را باز کنید"
 msgstr "Open release"
 
-#: src/Modules/Rendering.php:906
+#: src/Modules/Rendering.php:899
 msgid "انتشار فعلی را به یکی از فهرست‌های پخش شنونده اضافه می‌کند."
 msgstr "Adds the current release to one of the listener's playlists."
 
-#: /blocks/add-to-playlist/block.json
+#: blocks/add-to-playlist/block.json
 msgid "انتشار فعلی را به یکی از فهرست‌های پخش شنونده اضافه می‌کند؛ با انتخابگر آیکون، حالت آیکونی یا متنی و اندازه قابل تنظیم."
 msgstr "Adds the current release to a listener playlist with custom icon selection, icon-only or labeled modes, and configurable sizing."
 
-#: /blocks/add-to-queue/block.json
+#: blocks/add-to-queue/block.json
 msgid "انتشار فعلی یا سنجاق‌شده را به صف پخش شنونده اضافه می‌کند — بعد از قطعهٔ فعلی یا در پایان صف — با انتخابگر آیکون و ظاهر یکپارچه."
 msgstr "Adds the current or pinned release to the listener playback queue—next or at the end—with icon selection and unified button styling."
 
-#: src/Modules/Rendering.php:801
+#: src/Modules/Rendering.php:794
 msgid "انتشار فعلی یا سنجاق‌شده را به صف پخش شنونده اضافه می‌کند — بعد از قطعهٔ فعلی یا در پایان صف — بدون نیاز به JavaScript."
 msgstr "Adds the current or pinned release to the listener's play queue — next in line or at the end — without JavaScript."
 
-#: src/Modules/Rendering.php:941
+#: src/Modules/Rendering.php:934
 msgid "انتشار فعلی یا مجموعه را به صورت تصادفی پخش می‌کند."
 msgstr "Plays the current release or collection in random order."
 
-#: /blocks/shuffle-button/block.json
+#: blocks/shuffle-button/block.json
 msgid "انتشار فعلی یا مجموعه را به صورت تصادفی پخش می‌کند؛ با انتخابگر آیکون، حالت آیکونی یا متنی، اندازه و جلوهٔ ظاهری."
 msgstr "Shuffles playback for the current release or collection with icon selection, icon-only or labeled modes, sizing, and visual variants."
 
@@ -1333,7 +1333,7 @@ msgstr "Music release #%d"
 msgid "انتشار نامعتبر است."
 msgstr "Invalid release."
 
-#: assets/blocks.js:3854
+#: assets/blocks.js:3831
 msgid "انتشار یا آلبوم نمونه برای پیش‌نمایش"
 msgstr "Sample release or album for preview"
 
@@ -1361,7 +1361,7 @@ msgstr "Filter and update releases in safe batches of 200 by post status, releas
 msgid "انتشارهای MusicWave مرتبط"
 msgstr "Linked MusicWave releases"
 
-#: assets/blocks.js:3644
+#: assets/blocks.js:3621
 msgid "انتشارهای اخیراً پخش‌شده"
 msgstr "Recently played releases"
 
@@ -1377,7 +1377,7 @@ msgstr "More from the same artist"
 msgid "انتشارهای حفاظت‌شده فعلی شما در اینجا ظاهر می‌شوند. با شروع هر بارگیری، دسترسی دوباره بررسی می‌شود."
 msgstr "Your currently available protected releases appear here. Access is checked again when each download starts."
 
-#: assets/blocks.js:3637
+#: assets/blocks.js:3614
 msgid "انتشارهای در حال پیشرفت"
 msgstr "In-progress releases"
 
@@ -1393,11 +1393,11 @@ msgstr "Saved releases and unlocked protected downloads."
 msgid "انتشارهای صرفاً عضویتی باز می‌شوند؛ «خرید یا عضویت» با محصول نگاشت‌شده همچنان خرید می‌خواهد. فایل‌های حفاظت‌شدهٔ VIP بدون ماژول تحویل نمی‌شوند."
 msgstr "Membership-only releases open up; “purchase or membership” still requires a purchase when a product is mapped. VIP protected files are not delivered without the module."
 
-#: src/Modules/Rendering.php:730 /blocks/related-releases/block.json
+#: src/Modules/Rendering.php:730 blocks/related-releases/block.json
 msgid "انتشارهای مرتبط"
 msgstr "Related releases"
 
-#: src/Modules/Rendering.php:731 /blocks/related-releases/block.json
+#: src/Modules/Rendering.php:731 blocks/related-releases/block.json
 msgid "انتشارهای مرتبط MusicWave را نمایش می‌دهد."
 msgstr "Displays related MusicWave releases."
 
@@ -1417,15 +1417,15 @@ msgstr "Draft releases"
 msgid "انتشارهای کودک را در یک مجموعه نمایش می‌دهد."
 msgstr "Displays child releases in a collection."
 
-#: assets/blocks.js:5195
+#: assets/blocks.js:5182
 msgid "انتقال به بالا"
 msgstr "Move Up"
 
-#: assets/blocks.js:5208
+#: assets/blocks.js:5195
 msgid "انتقال به پایین"
 msgstr "Move Down"
 
-#: assets/blocks.js:2486
+#: assets/blocks.js:2490
 msgid "اندازه تصویر"
 msgstr "Image size"
 
@@ -1465,7 +1465,7 @@ msgstr "Request priority updated."
 msgid "اولین فهرست پخش خود را بسازید"
 msgstr "Create your first playlist"
 
-#: assets/blocks.js:3224
+#: assets/blocks.js:3201
 msgid "اولین نوع مجاز"
 msgstr "First allowed kind"
 
@@ -1635,7 +1635,7 @@ msgstr "This kind of request is not accepted on this form."
 msgid "با احترام، تیم %s"
 msgstr "Kind regards, the %s team"
 
-#: assets/blocks.js:5230
+#: assets/blocks.js:5217
 msgid "با دکمه‌های ↑ و ↓ ترتیب دقیق نمایش زبانه‌ها و پنل‌ها را در داشبورد تنظیم کنید."
 msgstr "Use the ↑ and ↓ buttons to set the exact display order of tabs and panels in the dashboard."
 
@@ -1672,7 +1672,7 @@ msgstr "Load more files"
 msgid "بارگذاری یک کیفیت"
 msgstr "Upload a quality"
 
-#: src/Blocks/ArtistShelfBlock.php:448 src/Blocks/ListeningBlocks.php:115 src/Blocks/ListeningBlocks.php:444 src/Blocks/Release/RelatedReleasesRenderer.php:324
+#: src/Blocks/ArtistShelfBlock.php:449 src/Blocks/ListeningBlocks.php:115 src/Blocks/ListeningBlocks.php:444 src/Blocks/Release/RelatedReleasesRenderer.php:324
 #, php-format
 msgid "باز کردن %s"
 msgstr "Open %s"
@@ -1729,7 +1729,7 @@ msgstr "Reset link label"
 msgid "بازهٔ محدودیت (ثانیه)"
 msgstr "Rate-limit window (seconds)"
 
-#: assets/blocks.js:3932
+#: assets/blocks.js:3909
 msgid "بازگشت به آیکون پیش‌فرض استاندارد"
 msgstr "Reset to standard default icon"
 
@@ -1745,10 +1745,6 @@ msgstr "Unmute"
 msgid "باکس دانلود، کیفیت‌ها و برچسب‌ها"
 msgstr "Download panel, qualities, and labels"
 
-#: assets/blocks.js:2691
-msgid "باید با «هنرمند در هر صفحه» در بلوک ویترین هنرمندان یکی باشد."
-msgstr "Must match “Artists per page” in the Artists shelf block."
-
 #: src/Requests/RequestPostType.php:157 src/Requests/RequestsAdminPage.php:727
 msgid "بایگانی"
 msgstr "Archive"
@@ -1761,11 +1757,11 @@ msgstr "Release, artist, and taxonomy archives can use readable canonical URLs."
 msgid "بخش انتشارات مشابه"
 msgstr "Similar releases section"
 
-#: /blocks/dashboard-welcome/block.json
+#: blocks/dashboard-welcome/block.json
 msgid "بخش خوش‌آمدگویی حساب با آواتار، نشان VIP، وضعیت اشتراک واقعی و دکمه تمدید پس از ۹۰٪ اعتبار."
 msgstr "Account welcome header with avatar, live VIP badge, subscription status, and renewal CTA after 90% usage."
 
-#: src/Modules/Rendering.php:815
+#: src/Modules/Rendering.php:808
 msgid "بخش خوش‌آمدگویی حساب با آواتار، نشان VIP، وضعیت اشتراک واقعی و دکمه تمدید."
 msgstr "Account welcome header with avatar, live VIP badge, subscription status, and renewal CTA."
 
@@ -1789,11 +1785,11 @@ msgstr "No icon"
 msgid "بدون تغییر حالت فعلی انتشار"
 msgstr "Keep current release access mode unchanged"
 
-#: assets/blocks.js:4801
+#: assets/blocks.js:4783
 msgid "بدون صفحه‌بندی (نمایش یک‌جا)"
 msgstr "No pagination (show all)"
 
-#: src/Blocks/TaxonomyShelfBlock.php:197 src/Blocks/TermHeroBlock.php:294
+#: src/Blocks/TaxonomyShelfBlock.php:204 src/Blocks/TermHeroBlock.php:294
 msgid "بدون عنوان"
 msgstr "Untitled"
 
@@ -1852,15 +1848,15 @@ msgstr "Sign in to continue this conversation."
 msgid "برای ادامه، نام کاربری یا ایمیل و گذرواژه خود را وارد کنید."
 msgstr "Enter your username or email and your password to continue."
 
-#: assets/blocks.js:3369
+#: assets/blocks.js:3346
 msgid "برای استفاده از برچسب پخش بعدی یا افزودن به صف، خالی بگذارید."
 msgstr "Leave empty to use the default Play next or Add to queue label."
 
-#: assets/blocks.js:4382
+#: assets/blocks.js:4359
 msgid "برای استفاده از برچسب پیش‌فرض خالی بگذارید."
 msgstr "Leave empty to use the default label."
 
-#: assets/blocks.js:2217 assets/blocks.js:2555 assets/blocks.js:2718
+#: assets/blocks.js:2217 assets/blocks.js:2559 assets/blocks.js:2695
 msgid "برای استفاده از عنوان پیش‌فرض ترجمه‌شده خالی بگذارید."
 msgstr "Leave empty to use the translated default heading."
 
@@ -1880,7 +1876,7 @@ msgstr "Leave empty to use the global MusicWave message or setting."
 msgid "برای استفاده از پیش‌فرض MusicWave ترجمه‌شده، یک فیلد خالی بگذارید. متن سفارشی قبل از خروجی ایمن‌سازی می‌شود."
 msgstr "Leave a field blank to use the translated MusicWave default. Custom copy is sanitized before output."
 
-#: assets/blocks.js:3614
+#: assets/blocks.js:3591
 msgid "برای استفاده از پیش‌فرض هوشمند، خالی بگذارید: به گوش‌دادن ادامه دهید یا اخیراً پخش‌شده است."
 msgstr "Leave empty to use the smart default: Continue listening or Recently played."
 
@@ -1912,7 +1908,7 @@ msgstr "So that we can make a precise proposal, please clarify a few points for 
 msgid "برای باز کردن تجربهٔ کامل و دانلود فایل اصلی، این انتشار را خریداری کنید."
 msgstr "Purchase this release to unlock the full experience and download the original master file."
 
-#: assets/blocks.js:3472 assets/blocks.js:5360
+#: assets/blocks.js:3449 assets/blocks.js:5347
 msgid "برای به ارث بردن برچسب پیش‌فرض MusicWave ترجمه‌شده، خالی بگذارید."
 msgstr "Leave empty to inherit the translated MusicWave default label."
 
@@ -2096,19 +2092,19 @@ msgstr "Environment checks — required items block launch; recommended items ar
 msgid "بررسی‌های پیشنهادی"
 msgstr "Recommended checks"
 
-#: assets/blocks.js:3280 src/Requests/RequestPostType.php:211
+#: assets/blocks.js:3257 src/Requests/RequestPostType.php:211
 msgid "برند / آژانس تبلیغاتی"
 msgstr "Brand / advertising agency"
 
-#: assets/blocks.js:3032 src/Blocks/Release/ReleaseMetaRenderer.php:63 src/Blocks/Release/ReleaseMetaRenderer.php:250 src/Blocks/TermHeroBlock.php:271 src/Catalog/ReleaseTaxonomies.php:45
+#: assets/blocks.js:3009 src/Blocks/Release/ReleaseMetaRenderer.php:63 src/Blocks/Release/ReleaseMetaRenderer.php:250 src/Blocks/TermHeroBlock.php:271 src/Catalog/ReleaseTaxonomies.php:45
 msgid "برچسب"
 msgstr "Label"
 
-#: assets/blocks.js:2631
+#: assets/blocks.js:2635
 msgid "برچسب تب الفبایی"
 msgstr "Alphabetical tab label"
 
-#: assets/blocks.js:2624
+#: assets/blocks.js:2628
 msgid "برچسب تب محبوب"
 msgstr "Popular tab label"
 
@@ -2132,7 +2128,7 @@ msgstr "Single purchase button label"
 msgid "برچسب دکمه دانلود"
 msgstr "Download button label"
 
-#: assets/blocks.js:3768
+#: assets/blocks.js:3745
 msgid "برچسب دکمه رضایت"
 msgstr "Consent button label"
 
@@ -2148,7 +2144,7 @@ msgstr "Guest sign-in button label"
 msgid "برچسب دکمه پخش کامل"
 msgstr "Stream button label"
 
-#: assets/blocks.js:3334
+#: assets/blocks.js:3311
 msgid "برچسب دکمهٔ ارسال"
 msgstr "Submit button label"
 
@@ -2156,15 +2152,15 @@ msgstr "Submit button label"
 msgid "برچسب مشتری"
 msgstr "Customer label"
 
-#: assets/blocks.js:3132
+#: assets/blocks.js:3109
 msgid "برچسب پخش تصادفی (خالی = خودکار)"
 msgstr "Shuffle button label (blank = automatic)"
 
-#: assets/blocks.js:3127
+#: assets/blocks.js:3104
 msgid "برچسب پخش همه"
 msgstr "Play all label"
 
-#: assets/blocks.js:2243 assets/blocks.js:2739 assets/blocks.js:3467 assets/blocks.js:3659
+#: assets/blocks.js:2243 assets/blocks.js:2716 assets/blocks.js:3444 assets/blocks.js:3636
 msgid "برچسب پیوند «مشاهدهٔ همه»"
 msgstr "See-all link label"
 
@@ -2172,11 +2168,11 @@ msgstr "See-all link label"
 msgid "برچسب پیوند اقدام"
 msgstr "Action link label"
 
-#: assets/blocks.js:2668
+#: assets/blocks.js:2672
 msgid "برچسب کلید «همه»"
 msgstr "“All” chip label"
 
-#: assets/blocks.js:2767 src/Catalog/ReleaseTaxonomies.php:46 src/Modules/Rendering.php:782 /blocks/taxonomy-shelf/block.json
+#: assets/blocks.js:2744 src/Catalog/ReleaseTaxonomies.php:46 src/Modules/Rendering.php:775 blocks/taxonomy-shelf/block.json
 msgid "برچسب‌ها"
 msgstr "Labels"
 
@@ -2197,11 +2193,11 @@ msgstr "Hidden labels remain accessible to screen readers."
 msgid "برگه‌ها (یک بخش در یک زمان)"
 msgstr "Tabs (one section at a time)"
 
-#: assets/blocks.js:2493
+#: assets/blocks.js:2497
 msgid "بزرگ"
 msgstr "Large"
 
-#: assets/blocks.js:4216
+#: assets/blocks.js:4193
 msgid "بزرگ (کیفیت کامل)"
 msgstr "Large (full resolution)"
 
@@ -2225,7 +2221,7 @@ msgstr "Close player"
 msgid "بسته نرم افزاری ZIP"
 msgstr "ZIP bundle"
 
-#: src/Blocks/Concerns/ArtistsPager.php:68 src/Blocks/PreviewPlayer.php:138 src/Blocks/PreviewPlayer.php:387 src/Blocks/QueueBlock.php:182 src/Blocks/QueueBlock.php:238 src/Modules/Listening.php:104 src/Modules/Rendering.php:796 src/Support/ShelfNavMarkup.php:42 /blocks/playback-queue/block.json
+#: src/Blocks/ArtistShelfBlock.php:640 src/Blocks/PreviewPlayer.php:138 src/Blocks/PreviewPlayer.php:387 src/Blocks/QueueBlock.php:182 src/Blocks/QueueBlock.php:238 src/Modules/Listening.php:104 src/Modules/Rendering.php:789 src/Support/ShelfNavMarkup.php:42 blocks/playback-queue/block.json
 msgid "بعدی"
 msgstr "Up next"
 
@@ -2233,11 +2229,11 @@ msgstr "Up next"
 msgid "بلافاصله پس از ثبت، شمارهٔ پیگیری و خلاصهٔ درخواست ایمیل می‌شود."
 msgstr "Right after submission, a reference number and a summary of the request are emailed to you."
 
-#: assets/blocks.js:2928
+#: assets/blocks.js:2905
 msgid "بلند"
 msgstr "Tall"
 
-#: /blocks/dashboard-account/block.json
+#: blocks/dashboard-account/block.json
 msgid "بلوک یکپارچه جزئیات و ویرایش حساب کاربری – نام، ایمیل، رمز عبور و آواتار با حالت فشرده مدرن، قابل ویرایش در ویرایشگر سایت."
 msgstr "Unified account details and profile editor block — display name, email, password, and avatar with a compact layout customizable in the Site Editor."
 
@@ -2245,15 +2241,15 @@ msgstr "Unified account details and profile editor block — display name, email
 msgid "بلوک‌های ناوبری و منوها را مدیریت کنید."
 msgstr "Manage navigation blocks and menus."
 
-#: assets/blocks.js:4198
+#: assets/blocks.js:4175
 msgid "بندانگشتی (سریع)"
 msgstr "Thumbnail (fast)"
 
-#: src/Modules/Rendering.php:754 src/Modules/Rendering.php:789 /blocks/artists-hero/block.json /blocks/term-hero/block.json
+#: src/Modules/Rendering.php:754 src/Modules/Rendering.php:782 blocks/artists-hero/block.json blocks/term-hero/block.json
 msgid "بنر"
 msgstr "banner"
 
-#: assets/blocks.js:2907
+#: assets/blocks.js:2884
 msgid "بنر (جلد تمام عرض)"
 msgstr "Banner (full-width cover)"
 
@@ -2261,7 +2257,7 @@ msgstr "Banner (full-width cover)"
 msgid "بنر (پیام و اقدام در یک ردیف)"
 msgstr "Banner (message and action in one row)"
 
-#: /blocks/artists-hero/block.json
+#: blocks/artists-hero/block.json
 msgid "بنر آغازین فهرست هنرمندان: ابرو، عنوان، مقدمه و آمار کاتالوگ."
 msgstr "Artists index hero banner: eyebrow, title, intro and catalogue stats."
 
@@ -2269,11 +2265,11 @@ msgstr "Artists index hero banner: eyebrow, title, intro and catalogue stats."
 msgid "بنر آغازین فهرست هنرمندان: ابرو، عنوان، مقدمه، آمار کاتالوگ و مجموعه‌ای از صفحه‌های هم‌پوشان هنرمندان برتر."
 msgstr "Artists index hero banner: eyebrow, title, intro, catalogue stats and a collage of overlapping discs for the top artists."
 
-#: assets/blocks.js:4067
+#: assets/blocks.js:4044
 msgid "بنر شاخص هنرمند (Spotlight)"
 msgstr "Featured artist spotlight"
 
-#: src/Blocks/ArtistsHeroBlock.php:55 src/Modules/Rendering.php:751 /blocks/artists-hero/block.json
+#: src/Blocks/ArtistsHeroBlock.php:55 src/Modules/Rendering.php:751 blocks/artists-hero/block.json
 msgid "بنر هنرمندان"
 msgstr "Artists banner"
 
@@ -2287,15 +2283,15 @@ msgstr "Listen to %1$s by %2$s on %3$s."
 msgid "به %1$s در %2$s گوش دهید."
 msgstr "Listen to %1$s on %2$s."
 
-#: src/Modules/Rendering.php:892
+#: src/Modules/Rendering.php:885
 msgid "به بازدیدکنندگان اجازه می‌دهد انتشاری را ذخیره کنند، آن را در فهرست علاقه‌مندی‌ها قرار دهند، انتشاری آینده را از قبل ذخیره کنند، یا هنرمندی را دنبال کنند."
 msgstr "Lets visitors save a release, wishlist it, pre-save an upcoming release, or follow an artist."
 
-#: /blocks/library-button/block.json
+#: blocks/library-button/block.json
 msgid "به بازدیدکنندگان اجازه می‌دهد انتشاری را ذخیره کنند، در علاقه‌مندی‌ها نگه دارند، پیش‌ذخیره کنند یا هنرمندی را دنبال کنند؛ با انتخابگر آیکون و ظاهر یکپارچه."
 msgstr "Allows listeners to save, favorite, or pre-save releases and follow artists with custom icon selection and unified button styling."
 
-#: assets/blocks.js:1188 assets/blocks.js:2311 assets/blocks.js:2805 assets/blocks.js:3537
+#: assets/blocks.js:1188 assets/blocks.js:2311 assets/blocks.js:2782 assets/blocks.js:3514
 msgid "به ترتیب"
 msgstr "Order by"
 
@@ -2311,7 +2307,7 @@ msgstr "Because of genres you listened to recently."
 msgid "به زودی"
 msgstr "Coming soon"
 
-#: src/Modules/Rendering.php:899 /blocks/playlists/block.json
+#: src/Modules/Rendering.php:892 blocks/playlists/block.json
 msgid "به شنوندگانی که وارد سیستم شده‌اند اجازه می‌دهد فهرست‌های پخش خود را ایجاد، سفارش، اشتراک‌گذاری و حذف کنند."
 msgstr "Lets signed-in listeners create, order, share, and delete their playlists."
 
@@ -2331,7 +2327,7 @@ msgstr "e.g. Late night drives"
 msgid "به فهرست پخش اضافه شد."
 msgstr "Added to the playlist."
 
-#: src/Modules/Rendering.php:920 /blocks/continue-listening/block.json
+#: src/Modules/Rendering.php:913 blocks/continue-listening/block.json
 msgid "به هر شنونده انتشارهای اخیراً پخش‌شده و در دست اجرا خود را نشان می‌دهد، با انتخاب اول رضایت برای بازدیدکنندگانی که سابقهٔ گوش‌دادن را فعال نکرده‌اند."
 msgstr "Shows each listener their recently played and in-progress releases, with a consent-first opt-in for visitors who have not enabled listening history."
 
@@ -2339,11 +2335,11 @@ msgstr "Shows each listener their recently played and in-progress releases, with
 msgid "به پخش در صفحات ادامه دهید"
 msgstr "Keep playing across pages"
 
-#: src/Blocks/ListeningBlocks.php:474 src/Modules/Rendering.php:919 /blocks/continue-listening/block.json
+#: src/Blocks/ListeningBlocks.php:474 src/Modules/Rendering.php:912 blocks/continue-listening/block.json
 msgid "به گوش‌دادن ادامه دهید"
 msgstr "Continue listening"
 
-#: assets/blocks.js:1196 assets/blocks.js:3541
+#: assets/blocks.js:1196 assets/blocks.js:3518
 msgid "به‌تازگی به‌روزشده"
 msgstr "Recently updated"
 
@@ -2375,15 +2371,15 @@ msgstr "Budget"
 msgid "بودجه:"
 msgstr "Budget:"
 
-#: assets/blocks.js:3310 src/Blocks/RequestFormBlock.php:243
+#: assets/blocks.js:3287 src/Blocks/RequestFormBlock.php:243
 msgid "بودجهٔ تقریبی"
 msgstr "Approximate budget"
 
-#: assets/blocks.js:2315 assets/blocks.js:2809
+#: assets/blocks.js:2315 assets/blocks.js:2786
 msgid "بیشترین انتشار اول"
 msgstr "Most releases first"
 
-#: src/Modules/Rendering.php:740 /blocks/artist-profile/block.json
+#: src/Modules/Rendering.php:740 blocks/artist-profile/block.json
 msgid "بیوگرافی"
 msgstr "biography"
 
@@ -2423,11 +2419,11 @@ msgstr "Uses the global default until changed."
 msgid "تا فعال‌شدن یک ماژول عضویت (مانند MusicWave VIP)، انتشارهای عضویتی مسدود می‌مانند."
 msgstr "Until a membership module (such as MusicWave VIP) is activated, membership releases stay locked."
 
-#: src/Modules/Rendering.php:922 src/Requests/RequestsAdminPage.php:487 src/Requests/RequestsAdminPage.php:573 /blocks/continue-listening/block.json
+#: src/Modules/Rendering.php:915 src/Requests/RequestsAdminPage.php:487 src/Requests/RequestsAdminPage.php:573 blocks/continue-listening/block.json
 msgid "تاریخ"
 msgstr "history"
 
-#: assets/blocks.js:1192 src/Blocks/Release/ReleaseMetaRenderer.php:244 src/Blocks/Release/ReleaseMetaRenderer.php:320 src/Schema/ReleaseMetaSchema.php:65 /blocks/release-meta/block.json
+#: assets/blocks.js:1192 src/Blocks/Release/ReleaseMetaRenderer.php:244 src/Blocks/Release/ReleaseMetaRenderer.php:320 src/Schema/ReleaseMetaSchema.php:65 blocks/release-meta/block.json
 msgid "تاریخ انتشار"
 msgstr "Release date"
 
@@ -2468,7 +2464,7 @@ msgstr "Turn on listening history"
 msgid "تاریخچه گوش‌دادن غیرفعال است."
 msgstr "Listening history is disabled."
 
-#: assets/blocks.js:3771
+#: assets/blocks.js:3748
 msgid "تاریخچه گوش‌دادن چیزی را ضبط نمی‌کند تا زمانی که هر شنونده ای را انتخاب کند. پس گرفتن رضایت، تاریخچه ذخیره‌شده را فوراً پاک می‌کند."
 msgstr "Listening history records nothing until each listener opts in; withdrawing consent erases stored history immediately."
 
@@ -2476,11 +2472,11 @@ msgstr "Listening history records nothing until each listener opts in; withdrawi
 msgid "تازه‌ها"
 msgstr "New Releases"
 
-#: assets/blocks.js:3239 src/Requests/RequestPostType.php:195
+#: assets/blocks.js:3216 src/Requests/RequestPostType.php:195
 msgid "تبلیغات و برند"
 msgstr "Advertising & brands"
 
-#: assets/blocks.js:1285 assets/blocks.js:2450 assets/blocks.js:4087
+#: assets/blocks.js:1285 assets/blocks.js:2454 assets/blocks.js:4064
 msgid "تحریریه"
 msgstr "Editorial"
 
@@ -2512,7 +2508,7 @@ msgstr "Delivery & Privacy — download token TTL, rate limiting, daily quotas, 
 msgid "تراکم و چیدمان ردیف‌ها"
 msgstr "Row density & layout"
 
-#: assets/blocks.js:2613
+#: assets/blocks.js:2617
 msgid "ترتیب"
 msgstr "Ordering"
 
@@ -2536,11 +2532,11 @@ msgstr "Send the playlist order as a list of release IDs."
 msgid "ترتیب نمایش"
 msgstr "Sort order"
 
-#: assets/blocks.js:5103
+#: assets/blocks.js:5090
 msgid "ترتیب و چیدمان پنل‌ها"
 msgstr "Panel Order & Layout"
 
-#: assets/blocks.js:2638
+#: assets/blocks.js:2642
 msgid "ترتیب پیش‌فرض"
 msgstr "Default sorting"
 
@@ -2553,7 +2549,7 @@ msgstr "The shuffle preference could not be saved."
 msgid "ترک %1$d از %2$d."
 msgstr "Track %1$d of %2$d."
 
-#: assets/blocks.js:3192
+#: assets/blocks.js:3169
 msgid "ترکیبی (سفارش آهنگ + همکاری)"
 msgstr "Combined (custom song + collaboration)"
 
@@ -2561,7 +2557,7 @@ msgstr "Combined (custom song + collaboration)"
 msgid "تشخیص خودکار تعارض"
 msgstr "Automatic conflict detection"
 
-#: assets/blocks.js:1202 assets/blocks.js:2321 assets/blocks.js:2815 src/Blocks/Concerns/ActionButtonStyle.php:588 src/Modules/Rendering.php:943 /blocks/shuffle-button/block.json
+#: assets/blocks.js:1202 assets/blocks.js:2321 assets/blocks.js:2792 src/Blocks/Concerns/ActionButtonStyle.php:588 src/Modules/Rendering.php:936 blocks/shuffle-button/block.json
 msgid "تصادفی"
 msgstr "Random"
 
@@ -2585,7 +2581,7 @@ msgstr "Artist image"
 msgid "تصویر هنرمند را انتخاب کنید"
 msgstr "Select artist image"
 
-#: assets/blocks.js:2490
+#: assets/blocks.js:2494
 msgid "تصویر کوچک"
 msgstr "Thumbnail"
 
@@ -2609,7 +2605,7 @@ msgstr "Too many view requests."
 msgid "تعداد تلاش‌های ناموفق بیش از حد مجاز است. چند دقیقه بعد دوباره تلاش کنید."
 msgstr "Too many failed attempts. Try again in a few minutes."
 
-#: assets/blocks.js:2585
+#: assets/blocks.js:2589
 msgid "تعداد خواننده‌ها و آثار منتشرشده را زیر مقدمه نمایش می‌دهد."
 msgstr "Shows the artist and published-release counts under the intro."
 
@@ -2670,11 +2666,11 @@ msgstr "MusicWave block theme"
 msgid "تم بلوک همراه"
 msgstr "Companion block theme"
 
-#: /blocks/request-form/block.json
+#: blocks/request-form/block.json
 msgid "تماس"
 msgstr "Contact"
 
-#: /blocks/dashboard-subscription/block.json
+#: blocks/dashboard-subscription/block.json
 msgid "تمدید"
 msgstr "Renew"
 
@@ -2686,7 +2682,7 @@ msgstr "Renew membership"
 msgid "تمدیدشده"
 msgstr "Extended"
 
-#: src/Blocks/Release/CollectionAndDownloadRenderer.php:985 src/Blocks/Release/ReleaseMetaRenderer.php:246 /blocks/release-meta/block.json
+#: src/Blocks/Release/CollectionAndDownloadRenderer.php:985 src/Blocks/Release/ReleaseMetaRenderer.php:246 blocks/release-meta/block.json
 msgid "تمپو"
 msgstr "Tempo"
 
@@ -2718,7 +2714,7 @@ msgstr "Notification & form settings"
 msgid "تنظیمات برگزیده اعلان"
 msgstr "Notification preferences"
 
-#: assets/blocks.js:5416
+#: assets/blocks.js:5403
 msgid "تنظیمات بلوک MusicWave"
 msgstr "MusicWave block settings"
 
@@ -2738,11 +2734,11 @@ msgstr "Settings & Chat"
 msgid "تنظیمات کامل MusicWave VIP و طرح‌ها"
 msgstr "Full MusicWave VIP & Plans Settings"
 
-#: assets/blocks.js:3269 src/Requests/RequestPostType.php:209
+#: assets/blocks.js:3246 src/Requests/RequestPostType.php:209
 msgid "تهیه‌کننده / آهنگساز"
 msgstr "Producer / composer"
 
-#: src/Modules/Rendering.php:684 /blocks/release-credits/block.json
+#: src/Modules/Rendering.php:684 blocks/release-credits/block.json
 msgid "تهیه‌کنندگان"
 msgstr "producers"
 
@@ -2777,7 +2773,7 @@ msgstr "Pause preview"
 msgid "توکن دسترسی شخصی Discogs"
 msgstr "Discogs personal access token"
 
-#: src/Modules/Rendering.php:796 /blocks/playback-queue/block.json
+#: src/Modules/Rendering.php:789 blocks/playback-queue/block.json
 msgid "تکرار"
 msgstr "repeat"
 
@@ -2874,7 +2870,7 @@ msgstr "Registration is disabled on this site."
 msgid "جامد (اصلی با متن)"
 msgstr "Solid (primary labeled)"
 
-#: src/Modules/Rendering.php:915 /blocks/public-playlists/block.json
+#: src/Modules/Rendering.php:908 blocks/public-playlists/block.json
 msgid "جامعه"
 msgstr "community"
 
@@ -2894,11 +2890,11 @@ msgstr "Table mw_release_views has not been created yet (migration 0.12.0); buff
 msgid "جدول mw_release_views وجود دارد، beacon REST POST music-wave/v1/releases/{id}/view با dwell 10 ثانیه (فیلتر music_wave_view_dwell_seconds)، dedupe 10 دقیقه، bot filter و rate limiter bucket views. cron ساعتی music_wave_hourly_view_sync به mw_views meta sync می‌کند."
 msgstr "Table mw_release_views is active; REST POST music-wave/v1/releases/{id}/view records 10s dwell beacons with 10m deduplication, bot filtering, rate limiting, and hourly mw_views meta sync."
 
-#: src/Modules/Rendering.php:857
+#: src/Modules/Rendering.php:850
 msgid "جدول سفارش‌ها با حالت فشرده."
 msgstr "Compact customer orders table."
 
-#: /blocks/dashboard-orders/block.json
+#: blocks/dashboard-orders/block.json
 msgid "جدول سفارش‌ها – فشرده با نشان وضعیت، تعداد قابل تنظیم."
 msgstr "Orders table — compact layout with status badges and configurable page size."
 
@@ -2914,15 +2910,15 @@ msgstr "New"
 msgid "جدید در کاتالوگ"
 msgstr "New in the catalog."
 
-#: assets/blocks.js:3548 src/Catalog/ReleaseArchiveQuery.php:161
+#: assets/blocks.js:3525 src/Catalog/ReleaseArchiveQuery.php:161
 msgid "جدیدترین اول"
 msgstr "Newest first"
 
-#: src/Modules/Rendering.php:726 /blocks/download-button/block.json
+#: src/Modules/Rendering.php:726 blocks/download-button/block.json
 msgid "جریان"
 msgstr "stream"
 
-#: src/Modules/Rendering.php:670 /blocks/release-meta/block.json
+#: src/Modules/Rendering.php:670 blocks/release-meta/block.json
 msgid "جزئیات"
 msgstr "details"
 
@@ -2942,15 +2938,15 @@ msgstr "File details were read, but release duration could not be saved automati
 msgid "جزئیات محصول"
 msgstr "Product details"
 
-#: assets/blocks.js:1734 assets/blocks.js:4996 src/Account/WooAccountBridge.php:333 src/Commerce/AccountLibrary.php:544 src/Modules/Rendering.php:835 /blocks/dashboard-account/block.json
+#: assets/blocks.js:1734 assets/blocks.js:4983 src/Account/WooAccountBridge.php:333 src/Commerce/AccountLibrary.php:544 src/Modules/Rendering.php:828 blocks/dashboard-account/block.json
 msgid "جزئیات و ویرایش حساب"
 msgstr "Account Details & Edit"
 
-#: src/Modules/Rendering.php:712 /blocks/search-unified/block.json
+#: src/Modules/Rendering.php:712 blocks/search-unified/block.json
 msgid "جستجو"
 msgstr "Search"
 
-#: assets/blocks.js:2597 assets/editor.js:1603 src/Blocks/ArtistsToolbarBlock.php:136 src/Blocks/PlaylistBlocks.php:421 src/Modules/Metadata.php:114 src/Modules/Rendering.php:698 src/Modules/Rendering.php:761 src/Seo/BreadcrumbTrail.php:195 /blocks/artists-toolbar/block.json /blocks/catalog-filters/block.json
+#: assets/blocks.js:2601 assets/editor.js:1603 src/Blocks/ArtistsToolbarBlock.php:136 src/Blocks/PlaylistBlocks.php:421 src/Modules/Metadata.php:114 src/Modules/Rendering.php:698 src/Modules/Rendering.php:761 src/Seo/BreadcrumbTrail.php:195 blocks/artists-toolbar/block.json blocks/catalog-filters/block.json
 msgid "جست‌وجو"
 msgstr "Search"
 
@@ -3039,7 +3035,7 @@ msgstr "Your session has expired. Refresh the page or sign in again."
 msgid "حاشیه‌دار (خطی)"
 msgstr "Outlined"
 
-#: assets/blocks.js:3188
+#: assets/blocks.js:3165
 msgid "حالت"
 msgstr "Mode"
 
@@ -3087,11 +3083,11 @@ msgstr "Stacked is also available in the block Styles panel."
 msgid "حالت صفحه‌بندی"
 msgstr "Pagination mode"
 
-#: assets/blocks.js:3183
+#: assets/blocks.js:3160
 msgid "حالت فرم"
 msgstr "Form mode"
 
-#: assets/blocks.js:1685 assets/blocks.js:1795 assets/blocks.js:1828 assets/blocks.js:1882 assets/blocks.js:1903 assets/blocks.js:5328
+#: assets/blocks.js:1685 assets/blocks.js:1795 assets/blocks.js:1828 assets/blocks.js:1882 assets/blocks.js:1903 assets/blocks.js:5315
 msgid "حالت فشرده"
 msgstr "Compact mode"
 
@@ -3119,11 +3115,11 @@ msgstr "Shuffle mode updated."
 msgid "حالت‌های «اشتراک VIP» و «خرید یا اشتراک VIP» تا فعال‌شدن افزونهٔ MusicWave VIP قابل انتخاب نیستند."
 msgstr "The “VIP subscription” and “purchase or VIP subscription” modes cannot be selected until the MusicWave VIP plugin is activated."
 
-#: assets/blocks.js:3028 src/Blocks/Concerns/EditorPreviewCatalog.php:342 src/Blocks/Release/ReleaseMetaRenderer.php:62 src/Blocks/Release/ReleaseMetaRenderer.php:249 src/Blocks/SearchUnifiedBlock.php:170 src/Blocks/SearchUnifiedBlock.php:545 src/Blocks/TermHeroBlock.php:269 src/Catalog/ReleaseTaxonomies.php:39 src/Support/SuggestAssets.php:83
+#: assets/blocks.js:3005 src/Blocks/Concerns/EditorPreviewCatalog.php:342 src/Blocks/Release/ReleaseMetaRenderer.php:62 src/Blocks/Release/ReleaseMetaRenderer.php:249 src/Blocks/SearchUnifiedBlock.php:170 src/Blocks/SearchUnifiedBlock.php:545 src/Blocks/TermHeroBlock.php:269 src/Catalog/ReleaseTaxonomies.php:39 src/Support/SuggestAssets.php:83
 msgid "حال‌وهوا"
 msgstr "Mood"
 
-#: assets/blocks.js:2763 src/Catalog/ReleaseTaxonomies.php:40 src/Modules/Rendering.php:782 /blocks/taxonomy-shelf/block.json
+#: assets/blocks.js:2740 src/Catalog/ReleaseTaxonomies.php:40 src/Modules/Rendering.php:775 blocks/taxonomy-shelf/block.json
 msgid "حال‌وهواها"
 msgstr "Moods"
 
@@ -3189,7 +3185,7 @@ msgstr "Maximum discovery requests one visitor can make before being throttled."
 msgid "حداکثر فهرست پخش در هر کاربر"
 msgstr "Max playlists per user"
 
-#: assets/blocks.js:3698
+#: assets/blocks.js:3675
 msgid "حداکثر موارد"
 msgstr "Maximum items"
 
@@ -3201,11 +3197,11 @@ msgstr "Maximum results shown per content group."
 msgid "حداکثر هنرمندان"
 msgstr "Maximum artists"
 
-#: assets/blocks.js:2821
+#: assets/blocks.js:2798
 msgid "حداکثر کاشی"
 msgstr "Maximum tiles"
 
-#: assets/blocks.js:4289
+#: assets/blocks.js:4266
 msgid "حداکثر کلمات بیوگرافی (۰ = کامل)"
 msgstr "Max Biography Words (0 = Full)"
 
@@ -3282,7 +3278,7 @@ msgstr "Delete all plugin data on uninstall"
 msgid "حرفه‌ای"
 msgstr "Premium"
 
-#: assets/blocks.js:2657 src/Modules/Rendering.php:768 /blocks/artists-alphabet/block.json
+#: assets/blocks.js:2661 src/Modules/Rendering.php:768 blocks/artists-alphabet/block.json
 msgid "حروف"
 msgstr "Letters"
 
@@ -3298,7 +3294,7 @@ msgstr "Move up"
 msgid "حرکت به پایین"
 msgstr "Move down"
 
-#: src/Modules/Rendering.php:824 src/Modules/Rendering.php:838 src/Modules/Rendering.php:845 src/Modules/Rendering.php:852 src/Modules/Rendering.php:859 src/Modules/Rendering.php:866 src/Modules/Rendering.php:873 /blocks/dashboard-account/block.json /blocks/dashboard-addresses/block.json /blocks/dashboard-downloads/block.json /blocks/dashboard-orders/block.json /blocks/dashboard-payment/block.json
+#: src/Modules/Rendering.php:817 src/Modules/Rendering.php:831 src/Modules/Rendering.php:838 src/Modules/Rendering.php:845 src/Modules/Rendering.php:852 src/Modules/Rendering.php:859 src/Modules/Rendering.php:866 blocks/dashboard-account/block.json blocks/dashboard-addresses/block.json blocks/dashboard-downloads/block.json blocks/dashboard-orders/block.json blocks/dashboard-payment/block.json
 msgid "حساب"
 msgstr "Account"
 
@@ -3310,7 +3306,7 @@ msgstr "Your account was created. Sign in to continue."
 msgid "حساب ویژه"
 msgstr "VIP Account"
 
-#: src/Account/AuthForms.php:65 src/Account/AuthForms.php:261 src/Account/MembershipPresenter.php:310 src/Account/MembershipPresenter.php:687 src/Modules/Rendering.php:810 src/Requests/RequestsAdminPage.php:708 /blocks/account-dashboard/block.json
+#: src/Account/AuthForms.php:65 src/Account/AuthForms.php:261 src/Account/MembershipPresenter.php:310 src/Account/MembershipPresenter.php:687 src/Modules/Rendering.php:803 src/Requests/RequestsAdminPage.php:708 blocks/account-dashboard/block.json
 msgid "حساب کاربری"
 msgstr "account"
 
@@ -3326,7 +3322,7 @@ msgstr "Your Rights"
 msgid "حلقه"
 msgstr "Loop"
 
-#: /blocks/dashboard-addresses/block.json
+#: blocks/dashboard-addresses/block.json
 msgid "حمل"
 msgstr "Shipping"
 
@@ -3334,7 +3330,7 @@ msgstr "Shipping"
 msgid "خالی = «با احترام، تیم [نام سایت]»."
 msgstr "Empty = “Kind regards, the [site name] team”."
 
-#: assets/blocks.js:4130
+#: assets/blocks.js:4107
 msgid "خالی بگذارید تا هنرمند صفحه فعلی به شکل خودکار نمایش داده شود."
 msgstr "Leave empty to automatically display the artist from the current page context."
 
@@ -3362,7 +3358,7 @@ msgstr "Sign out"
 msgid "خروج از سیستم"
 msgstr "Sign out"
 
-#: src/Modules/Rendering.php:677 /blocks/access-panel/block.json /blocks/dashboard-orders/block.json
+#: src/Modules/Rendering.php:677 blocks/access-panel/block.json blocks/dashboard-orders/block.json
 msgid "خرید"
 msgstr "Purchase"
 
@@ -3402,7 +3398,7 @@ msgstr "Private"
 msgid "خط «نمایش ۱۰ از ۱۰ خواننده» را بالای کارت‌ها چاپ می‌کند."
 msgstr "Prints a “Showing 10 of 10 artists” line above the cards."
 
-#: assets/blocks.js:5608
+#: assets/blocks.js:5595
 msgid "خطا در دریافت پیش‌نمایش از سرور وردپرس."
 msgstr "Failed to render block preview from WordPress server."
 
@@ -3418,7 +3414,7 @@ msgstr "Inline (one flowing row)"
 msgid "خلاصهٔ آمادگی — آیا همهٔ بررسی‌های محیطی لازم انجام شده‌اند یا خیر."
 msgstr "Readiness summary — whether every required environment check passes."
 
-#: src/Modules/Rendering.php:703 /blocks/catalog-results/block.json
+#: src/Modules/Rendering.php:703 blocks/catalog-results/block.json
 msgid "خلاصهٔ نتایج کاتالوگ فعلی را نمایش می‌دهد."
 msgstr "Displays the current catalog result summary."
 
@@ -3426,15 +3422,15 @@ msgstr "Displays the current catalog result summary."
 msgid "خلاصهٔ پیام شما:"
 msgstr "Summary of your message:"
 
-#: assets/blocks.js:3265 src/Blocks/ArtistsHeroBlock.php:102 src/Requests/RequestPostType.php:208 /blocks/artists-alphabet/block.json
+#: assets/blocks.js:3242 src/Blocks/ArtistsHeroBlock.php:102 src/Requests/RequestPostType.php:208 blocks/artists-alphabet/block.json
 msgid "خواننده"
 msgstr "Singer"
 
-#: src/Blocks/ArtistShelfBlock.php:313
+#: src/Blocks/ArtistShelfBlock.php:314
 msgid "خواننده‌ای با این فیلترها پیدا نشد. جست‌وجو را پاک کنید یا حرف دیگری را امتحان کنید."
 msgstr "No artists match these filters. Clear the search or try another letter."
 
-#: src/Modules/Rendering.php:747 src/Modules/Rendering.php:754 /blocks/artists-hero/block.json /blocks/artists-shelf/block.json
+#: src/Modules/Rendering.php:747 src/Modules/Rendering.php:754 blocks/artists-hero/block.json blocks/artists-shelf/block.json
 msgid "خواننده‌ها"
 msgstr "singers"
 
@@ -3447,15 +3443,15 @@ msgstr "Artists"
 msgid "خوانندگان با حرف %1$s، %2$s نفر"
 msgstr "Artists starting with “%1$s” (%2$s)"
 
-#: assets/blocks.js:3016
+#: assets/blocks.js:2993
 msgid "خودکار (بایگانی فعلی)"
 msgstr "Automatic (current archive)"
 
-#: assets/blocks.js:3885
+#: assets/blocks.js:3862
 msgid "خودکار (محتوای واقعی فعلی سایت)"
 msgstr "Automatic (live site content)"
 
-#: /blocks/dashboard-welcome/block.json
+#: blocks/dashboard-welcome/block.json
 msgid "خوش آمدید"
 msgstr "Welcome back"
 
@@ -3468,11 +3464,11 @@ msgstr "Welcome, %s"
 msgid "خوشحالیم که اعلام کنیم می‌توانیم این همکاری را انجام دهیم. در ادامه جزئیات قرارداد، مراحل کار و زمان‌بندی را با هم نهایی می‌کنیم."
 msgstr "We are happy to let you know that we can take on this collaboration. Next we will finalize the agreement details, the work stages, and the schedule together."
 
-#: assets/blocks.js:1616 src/Modules/Rendering.php:817
+#: assets/blocks.js:1616 src/Modules/Rendering.php:810
 msgid "خوش‌آمدگویی"
 msgstr "Welcome"
 
-#: src/Modules/Rendering.php:814 /blocks/dashboard-welcome/block.json
+#: src/Modules/Rendering.php:807 blocks/dashboard-welcome/block.json
 msgid "خوش‌آمدگویی داشبورد"
 msgstr "Dashboard Welcome"
 
@@ -3496,15 +3492,15 @@ msgstr "Music structured data"
 msgid "دارایی ارائه‌دهنده حفاظت‌شده ID"
 msgstr "Protected provider asset ID"
 
-#: /blocks/dashboard-stats/block.json /blocks/dashboard-welcome/block.json
+#: blocks/dashboard-stats/block.json blocks/dashboard-welcome/block.json
 msgid "داشبورد"
 msgstr "Dashboard"
 
-#: src/Modules/Rendering.php:807 /blocks/account-dashboard/block.json
+#: src/Modules/Rendering.php:800 blocks/account-dashboard/block.json
 msgid "داشبورد موسیقی کاربر"
 msgstr "User music dashboard"
 
-#: assets/editor.js:217 assets/editor.js:507 src/Blocks/Concerns/ActionButtonStyle.php:579 src/Blocks/Release/CollectionAndDownloadRenderer.php:1225 src/Blocks/Release/CollectionAndDownloadRenderer.php:1236 src/Blocks/Release/CollectionAndDownloadRenderer.php:1242 src/Modules/Rendering.php:866 /blocks/dashboard-downloads/block.json /blocks/download-button/block.json
+#: assets/editor.js:217 assets/editor.js:507 src/Blocks/Concerns/ActionButtonStyle.php:579 src/Blocks/Release/CollectionAndDownloadRenderer.php:1225 src/Blocks/Release/CollectionAndDownloadRenderer.php:1236 src/Blocks/Release/CollectionAndDownloadRenderer.php:1242 src/Modules/Rendering.php:859 blocks/dashboard-downloads/block.json blocks/download-button/block.json
 msgid "دانلود"
 msgstr "Download"
 
@@ -3516,7 +3512,7 @@ msgstr "Standard download"
 msgid "دانلود اصلی"
 msgstr "Main download"
 
-#: src/Blocks/Release/CollectionAndDownloadRenderer.php:347 src/Blocks/Release/CollectionAndDownloadRenderer.php:581 src/Blocks/Release/CollectionAndDownloadRenderer.php:669 src/Commerce/AccountLibrary.php:722 src/Modules/Rendering.php:723 /blocks/download-button/block.json
+#: src/Blocks/Release/CollectionAndDownloadRenderer.php:347 src/Blocks/Release/CollectionAndDownloadRenderer.php:581 src/Blocks/Release/CollectionAndDownloadRenderer.php:669 src/Commerce/AccountLibrary.php:722 src/Modules/Rendering.php:723 blocks/download-button/block.json
 msgid "دانلود ایمن"
 msgstr "Secure download"
 
@@ -3532,7 +3528,7 @@ msgstr "The download could not be started."
 msgid "دانلود فایل"
 msgstr "Download file"
 
-#: assets/blocks.js:1871 assets/blocks.js:4981 src/Account/WooAccountBridge.php:113 src/Account/WooAccountBridge.php:210 src/Account/WooAccountBridge.php:225 src/Commerce/AccountLibrary.php:518
+#: assets/blocks.js:1871 assets/blocks.js:4968 src/Account/WooAccountBridge.php:113 src/Account/WooAccountBridge.php:210 src/Account/WooAccountBridge.php:225 src/Commerce/AccountLibrary.php:518
 msgid "دانلودها"
 msgstr "Downloads"
 
@@ -3544,7 +3540,7 @@ msgstr "Protected Downloads & Rate Limiting"
 msgid "دانلودهای ایمن"
 msgstr "Secure downloads"
 
-#: src/Modules/Rendering.php:863 /blocks/dashboard-downloads/block.json
+#: src/Modules/Rendering.php:856 blocks/dashboard-downloads/block.json
 msgid "دانلودهای حساب"
 msgstr "Account Downloads"
 
@@ -3556,11 +3552,11 @@ msgstr "VIP protected downloads are currently unavailable. The VIP module is dis
 msgid "دانلودهای موجود"
 msgstr "Available downloads"
 
-#: assets/blocks.js:1264 assets/blocks.js:2476 assets/blocks.js:2940 assets/blocks.js:3522 assets/blocks.js:3710
+#: assets/blocks.js:1264 assets/blocks.js:2480 assets/blocks.js:2917 assets/blocks.js:3499 assets/blocks.js:3687
 msgid "دایره"
 msgstr "Circle"
 
-#: assets/blocks.js:4168
+#: assets/blocks.js:4145
 msgid "دایره‌ای"
 msgstr "Circle"
 
@@ -3638,7 +3634,7 @@ msgstr "Playing…"
 msgid "در حال کپی کردن فایل کتابخانهٔ رسانه در فضای ذخیره‌سازی حفاظت‌شده…"
 msgstr "Copying the Media Library file to protected storage…"
 
-#: assets/blocks.js:3212
+#: assets/blocks.js:3189
 msgid "در حالت ترکیبی انتخابگر نوع درخواست نمایش داده می‌شود؛ در حالت‌های تک‌منظوره نوع درخواست به‌صورت خودکار تنظیم می‌شود."
 msgstr "Combined mode shows the request-type selector; single-purpose modes set the request type automatically."
 
@@ -3702,7 +3698,7 @@ msgstr "Create an account in seconds and keep your library, listening queue, and
 msgid "در کتابخانه شما"
 msgstr "In your library"
 
-#: src/Modules/Rendering.php:873 src/Modules/Rendering.php:950 src/Requests/RequestsAdminPage.php:487 /blocks/account-dashboard/block.json /blocks/dashboard-requests/block.json /blocks/request-form/block.json
+#: src/Modules/Rendering.php:866 src/Modules/Rendering.php:943 src/Requests/RequestsAdminPage.php:487 blocks/account-dashboard/block.json blocks/dashboard-requests/block.json blocks/request-form/block.json
 msgid "درخواست"
 msgstr "Request"
 
@@ -3755,7 +3751,7 @@ msgstr "We have read your request carefully and are reviewing the details. Withi
 msgid "درخواست شما رسید"
 msgstr "We received your request"
 
-#: assets/blocks.js:3758
+#: assets/blocks.js:3735
 msgid "درخواست مهمان"
 msgstr "Guest prompt"
 
@@ -3874,7 +3870,7 @@ msgstr "Lifetime access active on your account"
 msgid "دسترسی کامل و لینک دانلود"
 msgstr "Full access and download link"
 
-#: src/Modules/Rendering.php:782 /blocks/taxonomy-shelf/block.json
+#: src/Modules/Rendering.php:775 blocks/taxonomy-shelf/block.json
 msgid "دسته‌ها"
 msgstr "categories"
 
@@ -3886,7 +3882,7 @@ msgstr "At least 8 characters, mixing letters, numbers, and symbols."
 msgid "دنبال"
 msgstr "Following"
 
-#: src/Blocks/Concerns/ActionButtonStyle.php:586 src/Modules/Rendering.php:747 src/Modules/Rendering.php:894 /blocks/artists-shelf/block.json /blocks/library-button/block.json
+#: src/Blocks/Concerns/ActionButtonStyle.php:586 src/Modules/Rendering.php:747 src/Modules/Rendering.php:887 blocks/artists-shelf/block.json blocks/library-button/block.json
 msgid "دنبال‌کردن"
 msgstr "follow"
 
@@ -3894,15 +3890,15 @@ msgstr "follow"
 msgid "دنبال‌کردن هنرمند"
 msgstr "Follow Artist"
 
-#: src/Modules/Rendering.php:934
+#: src/Modules/Rendering.php:927
 msgid "دکمه اشتراک‌گذاری بومی برای انتشار فعلی با Web Share API و بازگشت کپی پیوند."
 msgstr "Native share button for the current release using the Web Share API with a copy-link fallback."
 
-#: /blocks/share-button/block.json
+#: blocks/share-button/block.json
 msgid "دکمه اشتراک‌گذاری بومی برای انتشار فعلی با Web Share API و کپی پیوند؛ با انتخابگر آیکون و ظاهر یکپارچه."
 msgstr "Native Web Share API and link-copy action button for the current release with icon selection and unified styling."
 
-#: src/Modules/Rendering.php:891 /blocks/library-button/block.json
+#: src/Modules/Rendering.php:884 blocks/library-button/block.json
 msgid "دکمه افزودن به کتابخانه"
 msgstr "Add to library button"
 
@@ -3930,7 +3926,7 @@ msgstr "Sign-Out Button"
 msgid "دکمه دانلود مستقیم قطعه"
 msgstr "Track download button"
 
-#: assets/blocks.js:2999
+#: assets/blocks.js:2976
 msgid "دکمه فقط برای هنرمندان نمایش داده می‌شود؛ برای ژانرها، حال‌وهواها و برچسب‌ها پنهان می‌ماند."
 msgstr "Renders for artists only; genres, moods, and labels stay clean."
 
@@ -3938,7 +3934,7 @@ msgstr "Renders for artists only; genres, moods, and labels stay clean."
 msgid "دکمه پخش در انتهای ردیف"
 msgstr "Trailing play button"
 
-#: /blocks/preview-player/block.json
+#: blocks/preview-player/block.json
 msgid "دکمه پخش هوشمند انتشار با تشخیص خودکار تک‌آهنگ یا آلبوم، حالت آیکونی یا متنی و آیکون سفارشی."
 msgstr "Smart release play button with automatic single or collection detection, icon or labeled mode, and custom icon support."
 
@@ -3946,11 +3942,11 @@ msgstr "Smart release play button with automatic single or collection detection,
 msgid "دکمه پخش و عملیات هر قطعه"
 msgstr "Track play & row actions"
 
-#: src/Modules/Rendering.php:926 /blocks/preview-button/block.json
+#: src/Modules/Rendering.php:919 blocks/preview-button/block.json
 msgid "دکمه پیش‌نمایش"
 msgstr "Preview button"
 
-#: /blocks/preview-button/block.json
+#: blocks/preview-button/block.json
 msgid "دکمه پیش‌نمایش صوتی انتشار با انتخابگر آیکون، حالت آیکونی یا متنی، اندازه و جلوهٔ ظاهری."
 msgstr "Release audio preview trigger with custom icon picker, icon-only or labeled modes, sizing, and visual variants."
 
@@ -3962,11 +3958,11 @@ msgstr "Full Button with Label"
 msgid "دید"
 msgstr "Visibility"
 
-#: src/Blocks/ArtistShelfBlock.php:567
+#: src/Blocks/ArtistShelfBlock.php:568
 msgid "دیدن همه هنرمندان"
 msgstr "See all artists"
 
-#: src/Modules/Rendering.php:691 /blocks/collection-list/block.json
+#: src/Modules/Rendering.php:691 blocks/collection-list/block.json
 msgid "دیسک"
 msgstr "discs"
 
@@ -3983,7 +3979,7 @@ msgstr "Vinyl Disc"
 msgid "دیسکاگ"
 msgstr "Discogs"
 
-#: src/Blocks/PlaylistBlocks.php:1154 src/Modules/Rendering.php:894 src/Modules/Rendering.php:908 src/Requests/RequestsAdminPage.php:719 /blocks/add-to-playlist/block.json /blocks/library-button/block.json
+#: src/Blocks/PlaylistBlocks.php:1154 src/Modules/Rendering.php:887 src/Modules/Rendering.php:901 src/Requests/RequestsAdminPage.php:719 blocks/add-to-playlist/block.json blocks/library-button/block.json
 msgid "ذخیره"
 msgstr "Save"
 
@@ -4043,7 +4039,7 @@ msgstr "The request could not be saved. Please try again later."
 msgid "ذخیرهٔ یادداشت"
 msgstr "Save note"
 
-#: src/Modules/Rendering.php:887 /blocks/music-library/block.json
+#: src/Modules/Rendering.php:880 blocks/music-library/block.json
 msgid "ذخیره‌شده"
 msgstr "saved"
 
@@ -4083,7 +4079,7 @@ msgstr "MusicWave setup & diagnostics"
 msgid "راه‌اندازی و عیب‌یابی را باز کنید"
 msgstr "Open Setup & diagnostics"
 
-#: src/Blocks/ArtistShelfBlock.php:547
+#: src/Blocks/ArtistShelfBlock.php:548
 #, php-format
 msgid "رتبهٔ %s در محبوبیت"
 msgstr "Popularity rank %s"
@@ -4108,7 +4104,7 @@ msgstr "Content Rating"
 msgid "ردیف آمار کاربر"
 msgstr "Listener Stats Row"
 
-#: /blocks/artists-alphabet/block.json
+#: blocks/artists-alphabet/block.json
 msgid "ردیف حروف الفبای فارسی برای مرور خوانندگان. حروف بدون هنرمند به‌صورت برچسب غیرقابل‌کلیک نمایش داده می‌شوند و فیلتر با جست‌وجو و ترتیب فعال ترکیب می‌شود."
 msgstr "Persian alphabet row for browsing artists. Letters with no artists render as inert labels, and the filter combines with the active search and ordering."
 
@@ -4145,19 +4141,19 @@ msgstr "Membership module behavior"
 msgid "رفتن به حساب من"
 msgstr "Go to my account"
 
-#: /blocks/dashboard-account/block.json
+#: blocks/dashboard-account/block.json
 msgid "رمز عبور"
 msgstr "Password"
 
-#: assets/blocks.js:4237
+#: assets/blocks.js:4214
 msgid "رنگ تأکیدی اختصاصی"
 msgstr "Custom Accent Color"
 
-#: assets/blocks.js:2873
+#: assets/blocks.js:2850
 msgid "رنگارنگ (رنگ‌های انتخاب‌شده)"
 msgstr "Colorful (curated hues)"
 
-#: assets/blocks.js:3935
+#: assets/blocks.js:3912
 msgid "روش ۱: روی یکی از آیکون‌های بالا کلیک کنید. روش ۲: کلاس CSS فونت آیکون (مثل dashicons dashicons-download) بنویسید. روش ۳: کد <svg>…</svg> دلخواه را جای‌گذاری کنید (خالی = آیکون پیش‌فرض)."
 msgstr "Method 1: Click any preset icon above. Method 2: Enter an icon font CSS class (e.g. dashicons dashicons-download). Method 3: Paste custom <svg>…</svg> markup (leave empty for default icon)."
 
@@ -4165,7 +4161,7 @@ msgstr "Method 1: Click any preset icon above. Method 2: Enter an icon font CSS 
 msgid "روشن — مسدود کردن"
 msgstr "Enabled — block enumeration"
 
-#: assets/blocks.js:1817 assets/blocks.js:4991 src/Account/WooAccountBridge.php:293 src/Commerce/AccountLibrary.php:534 src/Modules/Rendering.php:849 /blocks/dashboard-payment/block.json
+#: assets/blocks.js:1817 assets/blocks.js:4978 src/Account/WooAccountBridge.php:293 src/Commerce/AccountLibrary.php:534 src/Modules/Rendering.php:842 blocks/dashboard-payment/block.json
 msgid "روش‌های پرداخت"
 msgstr "Payment methods"
 
@@ -4177,7 +4173,7 @@ msgstr "saved payment methods"
 msgid "روش‌های پرداخت ذخیره‌شده خود را مدیریت کنید."
 msgstr "Manage your saved payment methods."
 
-#: src/Modules/Rendering.php:850
+#: src/Modules/Rendering.php:843
 msgid "روش‌های پرداخت ذخیره‌شده."
 msgstr "Saved payment methods."
 
@@ -4205,7 +4201,7 @@ msgstr "Stacked (action below the message)"
 msgid "روی‌هم‌چیده (همهٔ بخش‌ها نمایش داده می‌شوند)"
 msgstr "Stacked (all sections visible)"
 
-#: assets/blocks.js:2845
+#: assets/blocks.js:2822
 msgid "ریل افقی"
 msgstr "Horizontal rail"
 
@@ -4222,7 +4218,7 @@ msgstr "Language: %s."
 msgid "زبانه‌ها موارد ذخیره‌شده را بر اساس نوع انتشار و هنرمندان دنبال‌شده گروه‌بندی می‌کنند."
 msgstr "Tabs group saved items by release type and followed artists."
 
-#: assets/blocks.js:3316 src/Blocks/RequestFormBlock.php:246 src/Requests/RequestPrivacy.php:79 src/Requests/RequestsAdminPage.php:704
+#: assets/blocks.js:3293 src/Blocks/RequestFormBlock.php:246 src/Requests/RequestPrivacy.php:79 src/Requests/RequestsAdminPage.php:704
 msgid "زمان مورد نظر"
 msgstr "Requested date"
 
@@ -4246,7 +4242,7 @@ msgstr "Scheduled"
 msgid "سئو و داده‌های ساختاریافته"
 msgstr "SEO and structured data"
 
-#: src/Modules/Rendering.php:922 /blocks/continue-listening/block.json
+#: src/Modules/Rendering.php:915 blocks/continue-listening/block.json
 msgid "سابقه"
 msgstr "resume"
 
@@ -4294,7 +4290,7 @@ msgstr "Creating the playback session failed."
 msgid "ساختار URL کاتالوگ و طبقه‌بندی‌های متعارف را پیکربندی کنید."
 msgstr "Configure canonical catalog and taxonomy URL structure."
 
-#: assets/blocks.js:2880
+#: assets/blocks.js:2857
 msgid "ساده (سطح آرام)"
 msgstr "Plain (quiet surface)"
 
@@ -4315,15 +4311,15 @@ msgstr "Release year"
 msgid "سال انتشار: %s."
 msgstr "Release year: %s."
 
-#: assets/blocks.js:3299 src/Requests/RequestPostType.php:214
+#: assets/blocks.js:3276 src/Requests/RequestPostType.php:214
 msgid "سایر"
 msgstr "Other"
 
-#: assets/blocks.js:3025 src/Blocks/Concerns/EditorPreviewCatalog.php:341 src/Blocks/Release/ReleaseMetaRenderer.php:61 src/Blocks/Release/ReleaseMetaRenderer.php:248 src/Blocks/SearchUnifiedBlock.php:544 src/Blocks/TermHeroBlock.php:267 src/Catalog/ReleaseTaxonomies.php:33 src/Support/SuggestAssets.php:82
+#: assets/blocks.js:3002 src/Blocks/Concerns/EditorPreviewCatalog.php:341 src/Blocks/Release/ReleaseMetaRenderer.php:61 src/Blocks/Release/ReleaseMetaRenderer.php:248 src/Blocks/SearchUnifiedBlock.php:544 src/Blocks/TermHeroBlock.php:267 src/Catalog/ReleaseTaxonomies.php:33 src/Support/SuggestAssets.php:82
 msgid "سبک"
 msgstr "Genre"
 
-#: assets/blocks.js:4319
+#: assets/blocks.js:4296
 msgid "سبک دکمه دنبال‌کردن"
 msgstr "Follow button style"
 
@@ -4335,7 +4331,7 @@ msgstr "Color variant"
 msgid "سبک رنگی دکمه"
 msgstr "Button variant"
 
-#: assets/blocks.js:4083
+#: assets/blocks.js:4060
 msgid "سبک ظاهری کارت"
 msgstr "Card visual style"
 
@@ -4355,7 +4351,7 @@ msgstr "Row action button style"
 msgid "سبک و حال‌وهوا، مدت زمان، نمونه‌های الهام‌بخش، محل استفاده…"
 msgstr "Style and mood, duration, reference examples, where it will be used…"
 
-#: assets/blocks.js:2869
+#: assets/blocks.js:2846
 msgid "سبک کاشی"
 msgstr "Tile style"
 
@@ -4371,7 +4367,7 @@ msgstr "Download button style, size & icon"
 msgid "سبک، اندازه و آیکون پخش‌کننده"
 msgstr "Player button style, size & icon"
 
-#: assets/blocks.js:2759 src/Blocks/SearchUnifiedBlock.php:160 src/Blocks/SearchUnifiedBlock.php:286 src/Catalog/ReleaseTaxonomies.php:34
+#: assets/blocks.js:2736 src/Blocks/SearchUnifiedBlock.php:160 src/Blocks/SearchUnifiedBlock.php:286 src/Catalog/ReleaseTaxonomies.php:34
 msgid "سبک‌ها"
 msgstr "Genres"
 
@@ -4383,23 +4379,23 @@ msgstr "Set cover artwork"
 msgid "ستاره"
 msgstr "Star"
 
-#: assets/blocks.js:1270 assets/blocks.js:2465 assets/blocks.js:2860
+#: assets/blocks.js:1270 assets/blocks.js:2469 assets/blocks.js:2837
 msgid "ستون‌های دسکتاپ"
 msgstr "Desktop columns"
 
-#: assets/blocks.js:2029 assets/blocks.js:3502 assets/blocks.js:3689
+#: assets/blocks.js:2029 assets/blocks.js:3479 assets/blocks.js:3666
 msgid "ستون‌های شبکه"
 msgstr "Grid columns"
 
-#: assets/blocks.js:1972 assets/blocks.js:2209 assets/blocks.js:2710 assets/blocks.js:3407 assets/blocks.js:3607 src/Modules/Rendering.php:754 src/Modules/Rendering.php:789 /blocks/artists-hero/block.json /blocks/term-hero/block.json
+#: assets/blocks.js:1972 assets/blocks.js:2209 assets/blocks.js:2687 assets/blocks.js:3384 assets/blocks.js:3584 src/Modules/Rendering.php:754 src/Modules/Rendering.php:782 blocks/artists-hero/block.json blocks/term-hero/block.json
 msgid "سربرگ"
 msgstr "Header"
 
-#: src/Modules/Rendering.php:787
+#: src/Modules/Rendering.php:780
 msgid "سربرگ بایگانی برای صفحات هنرمند، ژانر، حال‌وهوا و برچسب؛ با بنر جلد یا ردیف فشرده شامل نام، توضیحات، تعداد انتشار و گزینهٔ دنبال‌کردن."
 msgstr "Archive header for artist, genre, mood, and label pages: cover banner or compact row with name, description, release count, and follow."
 
-#: /blocks/term-hero/block.json
+#: blocks/term-hero/block.json
 msgid "سربرگ بایگانی برای صفحات هنرمند، ژانر، حال‌وهوا و برچسب؛ با بنر جلد یا ردیف فشرده شامل نام، توضیحات، تعداد انتشار و گزینهٔ دنبال‌کردن. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای."
 msgstr "Archive hero for artist, genre, mood, and tag pages with cover banner or compact row, release count, and follow action."
 
@@ -4427,7 +4423,7 @@ msgstr "The metadata service is unavailable or rate limited. Check the outbound 
 msgid "سرویس‌های شخص ثالث"
 msgstr "Third-Party Services"
 
-#: /blocks/public-playlists/block.json
+#: blocks/public-playlists/block.json
 msgid "سرپرستی"
 msgstr "curated"
 
@@ -4443,7 +4439,7 @@ msgstr "Active subscription tier, expiration date, and available VIP plans."
 msgid "سطح عضویت پیش‌فرض انتشارهای جدید"
 msgstr "Default membership levels for new releases"
 
-#: assets/blocks.js:2568
+#: assets/blocks.js:2572
 msgid "سطح عنوان"
 msgstr "Heading level"
 
@@ -4451,23 +4447,23 @@ msgstr "Heading level"
 msgid "سطحی هماهنگ با پوسته"
 msgstr "Subtle surface"
 
-#: src/Modules/Rendering.php:878 /blocks/membership-panel/block.json
+#: src/Modules/Rendering.php:871 blocks/membership-panel/block.json
 msgid "سطوح عضویت فعال مشتری را با انقضا و محصولات طرح VIP قابل خرید نشان می‌دهد."
 msgstr "Shows the customer's active membership levels with expiry and the purchasable VIP plan products."
 
-#: assets/blocks.js:1208 src/Modules/Rendering.php:859 /blocks/dashboard-orders/block.json
+#: assets/blocks.js:1208 src/Modules/Rendering.php:852 blocks/dashboard-orders/block.json
 msgid "سفارش"
 msgstr "Order"
 
-#: src/Modules/Rendering.php:950 /blocks/request-form/block.json
+#: src/Modules/Rendering.php:943 blocks/request-form/block.json
 msgid "سفارش آهنگ"
 msgstr "Song order"
 
-#: assets/blocks.js:3228 src/Requests/RequestPostType.php:193
+#: assets/blocks.js:3205 src/Requests/RequestPostType.php:193
 msgid "سفارش آهنگ اختصاصی"
 msgstr "Custom song order"
 
-#: /blocks/account-dashboard/block.json
+#: blocks/account-dashboard/block.json
 msgid "سفارشات"
 msgstr "Orders"
 
@@ -4475,11 +4471,11 @@ msgstr "Orders"
 msgid "سفارشی / شناسایی شده"
 msgstr "Custom / detected"
 
-#: assets/blocks.js:1838 assets/blocks.js:4976 src/Account/WooAccountBridge.php:95 src/Account/WooAccountBridge.php:158 src/Account/WooAccountBridge.php:174 src/Commerce/AccountLibrary.php:510
+#: assets/blocks.js:1838 assets/blocks.js:4963 src/Account/WooAccountBridge.php:95 src/Account/WooAccountBridge.php:158 src/Account/WooAccountBridge.php:174 src/Commerce/AccountLibrary.php:510
 msgid "سفارش‌ها"
 msgstr "Orders"
 
-#: src/Modules/Rendering.php:856 /blocks/dashboard-orders/block.json
+#: src/Modules/Rendering.php:849 blocks/dashboard-orders/block.json
 msgid "سفارش‌های حساب"
 msgstr "Account Orders"
 
@@ -4544,7 +4540,7 @@ msgstr "The playback-session system is not active."
 msgid "شبانه"
 msgstr "Nocturne"
 
-#: assets/blocks.js:506 assets/blocks.js:1242 assets/blocks.js:2023 assets/blocks.js:2427 assets/blocks.js:2842 assets/blocks.js:3487 assets/blocks.js:3678 src/Modules/Rendering.php:747 /blocks/artists-shelf/block.json
+#: assets/blocks.js:506 assets/blocks.js:1242 assets/blocks.js:2023 assets/blocks.js:2427 assets/blocks.js:2819 assets/blocks.js:3464 assets/blocks.js:3655 src/Modules/Rendering.php:747 blocks/artists-shelf/block.json
 msgid "شبکه"
 msgstr "Grid"
 
@@ -4641,7 +4637,7 @@ msgstr "You are signed in."
 msgid "شما که هستید؟"
 msgstr "Who are you?"
 
-#: src/Modules/Rendering.php:705 /blocks/catalog-results/block.json
+#: src/Modules/Rendering.php:705 blocks/catalog-results/block.json
 msgid "شمارش"
 msgstr "count"
 
@@ -4678,11 +4674,11 @@ msgstr "Episode number"
 msgid "شماره قطعه"
 msgstr "Track number"
 
-#: src/Blocks/Release/ReleaseMetaRenderer.php:251 src/Blocks/Release/ReleaseMetaRenderer.php:305 src/Modules/Rendering.php:670 src/Schema/ReleaseMetaSchema.php:30 /blocks/release-meta/block.json
+#: src/Blocks/Release/ReleaseMetaRenderer.php:251 src/Blocks/Release/ReleaseMetaRenderer.php:305 src/Modules/Rendering.php:670 src/Schema/ReleaseMetaSchema.php:30 blocks/release-meta/block.json
 msgid "شماره کاتالوگ"
 msgstr "Catalog number"
 
-#: assets/blocks.js:3322
+#: assets/blocks.js:3299
 msgid "شمارهٔ تماس"
 msgstr "Phone number"
 
@@ -4711,7 +4707,7 @@ msgstr "Detected:"
 msgid "شناسه هنرمند (۰ = هنرمند انتشار یا آرشیو فعلی)"
 msgstr "Artist Term ID (0 = Current Release or Artist Archive)"
 
-#: assets/blocks.js:4126
+#: assets/blocks.js:4103
 msgid "شناسه هنرمند ثابت (اختیاری)"
 msgstr "Pinned artist term ID (optional)"
 
@@ -4731,19 +4727,19 @@ msgstr "Artist term IDs"
 msgid "شنونده MusicWave"
 msgstr "MusicWave listener"
 
-#: assets/blocks.js:3294 src/Requests/RequestPostType.php:213
+#: assets/blocks.js:3271 src/Requests/RequestPostType.php:213
 msgid "شنونده و علاقه‌مند"
 msgstr "Listener & fan"
 
-#: assets/blocks.js:3061
+#: assets/blocks.js:3038
 msgid "شنوندگان فهرست‌های پخش را در اینجا مدیریت می‌کنند. هر کنترل بدون JavaScript کار می‌کند."
 msgstr "Listeners manage playlists here. Every control works without JavaScript."
 
-#: assets/blocks.js:2474
+#: assets/blocks.js:2478
 msgid "شکل آواتار"
 msgstr "Avatar shape"
 
-#: assets/blocks.js:3511 assets/blocks.js:3707
+#: assets/blocks.js:3488 assets/blocks.js:3684
 msgid "شکل اثر هنری"
 msgstr "Artwork shape"
 
@@ -4751,7 +4747,7 @@ msgstr "Artwork shape"
 msgid "شکل تصویر"
 msgstr "Image shape"
 
-#: assets/blocks.js:2934
+#: assets/blocks.js:2911
 msgid "شکل تصویر فشرده"
 msgstr "Compact art shape"
 
@@ -4759,7 +4755,7 @@ msgstr "Compact art shape"
 msgid "شیشه‌ای"
 msgstr "Glass"
 
-#: assets/blocks.js:2458 assets/blocks.js:4095
+#: assets/blocks.js:2462 assets/blocks.js:4072
 msgid "شیشه‌ای (گلس)"
 msgstr "Glass"
 
@@ -4780,7 +4776,7 @@ msgstr "Token issuance and file delivery enforce %1$d requests per %2$d seconds 
 msgid "صعودی"
 msgstr "Ascending"
 
-#: src/Modules/Listening.php:102 src/Modules/Rendering.php:796 src/Modules/Rendering.php:803 src/Modules/Rendering.php:901 src/Modules/Rendering.php:908 /blocks/add-to-playlist/block.json /blocks/add-to-queue/block.json /blocks/playback-queue/block.json /blocks/playlists/block.json
+#: src/Modules/Listening.php:102 src/Modules/Rendering.php:789 src/Modules/Rendering.php:796 src/Modules/Rendering.php:894 src/Modules/Rendering.php:901 blocks/add-to-playlist/block.json blocks/add-to-queue/block.json blocks/playback-queue/block.json blocks/playlists/block.json
 msgid "صف"
 msgstr "Queue"
 
@@ -4800,7 +4796,7 @@ msgstr "Queue cleared."
 msgid "صف پاک نشد."
 msgstr "The queue could not be cleared."
 
-#: src/Blocks/Concerns/ActionButtonStyle.php:581 src/Modules/Rendering.php:793 /blocks/playback-queue/block.json
+#: src/Blocks/Concerns/ActionButtonStyle.php:581 src/Modules/Rendering.php:786 blocks/playback-queue/block.json
 msgid "صف پخش"
 msgstr "Playback queue"
 
@@ -4812,7 +4808,7 @@ msgstr "Reorder, shuffle, and clear your play queue."
 msgid "صف پخش ذخیره نشد."
 msgstr "The playback queue could not be saved."
 
-#: src/Modules/Rendering.php:794 /blocks/playback-queue/block.json
+#: src/Modules/Rendering.php:787 blocks/playback-queue/block.json
 msgid "صف پخش پایدار شنوندهٔ واردشده با کنترل‌های مرتب‌سازی مجدد، حذف، پاک‌کردن، پخش تصادفی و تکرار؛ بدون نیاز به JavaScript."
 msgstr "The signed-in listener's durable play queue with reorder, remove, clear, shuffle, and repeat controls that work without JavaScript."
 
@@ -4828,10 +4824,6 @@ msgstr "Public playlists pages"
 msgid "صفحات کتابخانه"
 msgstr "Library pages"
 
-#: /blocks/artists-pagination/block.json
-msgid "صفحه"
-msgstr "Page"
-
 #: src/Blocks/PlaylistBlocks.php:651
 #, php-format
 msgid "صفحه فهرست‌های پخش عمومی %1$d از %2$d"
@@ -4845,11 +4837,6 @@ msgstr "Page Not Found (404)"
 #, php-format
 msgid "صفحه کتابخانه %d"
 msgstr "Library page %d"
-
-#: src/Blocks/Concerns/ArtistsPager.php:87
-#, php-format
-msgid "صفحهٔ %1$s از %2$s · %3$s هنرمند"
-msgstr "Page %1$s of %2$s · %3$s artists"
 
 #: src/Seo/BreadcrumbTrail.php:228
 #, php-format
@@ -4868,35 +4855,23 @@ msgstr "Previous page"
 msgid "صفحهٔ وینیل (چرخان)"
 msgstr "Vinyl disc (spinning)"
 
-#: assets/blocks.js:2683 src/Modules/Rendering.php:775 /blocks/artists-pagination/block.json
-msgid "صفحه‌بندی"
-msgstr "Pagination"
+#: assets/blocks.js:4790
+msgid "صفحه‌بندی با بلوک (جدا) — ناوبری استاندارد وردپرس"
+msgstr "Paging with a block (separate) — standard WordPress navigation"
 
-#: assets/blocks.js:4812
-msgid "صفحه‌بندی با بلوک «صفحه‌بندی هنرمندان»"
-msgstr "Paginate with the Artists Pagination block"
-
-#: assets/blocks.js:4808
-msgid "صفحه‌بندی درون بلوک"
-msgstr "Paginate inside the block"
-
-#: assets/blocks.js:2357
-msgid "صفحه‌بندی درون‌بلوکی، صفحه‌بندی با بلوک جداگانهٔ هنرمندان، یا نمایش یک‌جای همه. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند."
-msgstr "Paginate inside the block, paginate with the separate Artists Pagination block, or show everything at once. Pagination only works for the “All artists” source with stable ordering."
-
-#: src/Blocks/Concerns/ArtistsPager.php:71 src/Modules/Rendering.php:772 /blocks/artists-pagination/block.json
+#: src/Blocks/ArtistShelfBlock.php:651
 msgid "صفحه‌بندی هنرمندان"
 msgstr "Artist pagination"
 
-#: src/Modules/Rendering.php:719 /blocks/preview-player/block.json
+#: src/Modules/Rendering.php:719 blocks/preview-player/block.json
 msgid "صوتی"
 msgstr "audio"
 
-#: /blocks/dashboard-addresses/block.json
+#: blocks/dashboard-addresses/block.json
 msgid "صورتحساب"
 msgstr "Billing"
 
-#: assets/blocks.js:3012
+#: assets/blocks.js:2989
 msgid "طبقه‌بندی"
 msgstr "Taxonomy"
 
@@ -4936,7 +4911,7 @@ msgstr "Outline"
 msgid "طرح کلی (خطی)"
 msgstr "Outline"
 
-#: src/Modules/Rendering.php:880 /blocks/membership-panel/block.json
+#: src/Modules/Rendering.php:873 blocks/membership-panel/block.json
 msgid "طرح‌ها"
 msgstr "plans"
 
@@ -4948,11 +4923,11 @@ msgstr "Inspect schema, delivery, SEO, and environment health."
 msgid "طرح‌وارهٔ پایگاه داده"
 msgstr "Database schema"
 
-#: assets/blocks.js:2524
+#: assets/blocks.js:2528
 msgid "طول بیوگرافی (کلمات)"
 msgstr "Biography length (words)"
 
-#: assets/blocks.js:2985
+#: assets/blocks.js:2962
 msgid "طول توضیحات (کلمات)"
 msgstr "Description length (words)"
 
@@ -4976,7 +4951,7 @@ msgstr "Length of the fixed window used by the discovery rate limit."
 msgid "عادی"
 msgstr "Normal"
 
-#: assets/blocks.js:3042
+#: assets/blocks.js:3019
 msgid "عبارت ID را روی 0 بگذارید تا آرشیو مشاهده‌شده به‌طور خودکار نمایش داده شود."
 msgstr "Leave term ID at 0 to render the currently viewed archive automatically."
 
@@ -4984,7 +4959,7 @@ msgstr "Leave term ID at 0 to render the currently viewed archive automatically.
 msgid "عبارت انتخابی یافت نشد. طبقه‌بندی و شناسهٔ عبارت را در نوار کناری بلوک بررسی کنید."
 msgstr "The selected term was not found. Check the taxonomy and term ID in the block sidebar."
 
-#: assets/blocks.js:3872
+#: assets/blocks.js:3849
 msgid "عبارت جستجوی نمونه برای پیش‌نمایش"
 msgstr "Sample search query for preview"
 
@@ -4996,19 +4971,19 @@ msgstr "Not possible"
 msgid "عضو ویژه فعال"
 msgstr "Active VIP Member"
 
-#: src/Modules/Rendering.php:677 src/Modules/Rendering.php:880 /blocks/access-panel/block.json /blocks/account-dashboard/block.json /blocks/dashboard-subscription/block.json /blocks/membership-panel/block.json
+#: src/Modules/Rendering.php:677 src/Modules/Rendering.php:873 blocks/access-panel/block.json blocks/account-dashboard/block.json blocks/dashboard-subscription/block.json blocks/membership-panel/block.json
 msgid "عضویت"
 msgstr "Membership"
 
-#: src/Modules/Rendering.php:877 /blocks/membership-panel/block.json
+#: src/Modules/Rendering.php:870 blocks/membership-panel/block.json
 msgid "عضویت و طرح‌ها"
 msgstr "Membership & plans"
 
-#: assets/blocks.js:5006
+#: assets/blocks.js:4993
 msgid "عضویت ویژه (VIP)"
 msgstr "VIP Membership"
 
-#: assets/blocks.js:5127
+#: assets/blocks.js:5114
 msgid "عضویت ویژه در ابتدا"
 msgstr "VIP Membership First"
 
@@ -5048,7 +5023,7 @@ msgstr "Bulk actions"
 msgid "عملیات گروهی انجام شد."
 msgstr "Bulk action completed."
 
-#: src/Access/AccessModePolicy.php:52 src/Blocks/PlaylistBlocks.php:216 src/Blocks/PlaylistBlocks.php:1257 src/Modules/Rendering.php:915 /blocks/public-playlists/block.json
+#: src/Access/AccessModePolicy.php:52 src/Blocks/PlaylistBlocks.php:216 src/Blocks/PlaylistBlocks.php:1257 src/Modules/Rendering.php:908 blocks/public-playlists/block.json
 msgid "عمومی"
 msgstr "Public"
 
@@ -5060,11 +5035,11 @@ msgstr "Public (open to everyone)"
 msgid "عناوین پنل‌ها"
 msgstr "Panel headings"
 
-#: assets/blocks.js:1201 assets/blocks.js:3052 src/Requests/RequestPrivacy.php:74 src/Requests/RequestsAdminPage.php:836
+#: assets/blocks.js:1201 assets/blocks.js:3029 src/Requests/RequestPrivacy.php:74 src/Requests/RequestsAdminPage.php:836
 msgid "عنوان"
 msgstr "Heading"
 
-#: assets/blocks.js:3552
+#: assets/blocks.js:3529
 msgid "عنوان A–Z"
 msgstr "Title A–Z"
 
@@ -5088,11 +5063,11 @@ msgstr "Similar releases heading"
 msgid "عنوان باکس دانلود"
 msgstr "Download box heading"
 
-#: assets/blocks.js:473 assets/blocks.js:529 assets/blocks.js:1739 assets/blocks.js:1789 assets/blocks.js:1822 assets/blocks.js:1843 assets/blocks.js:1876 assets/blocks.js:1897 assets/blocks.js:1965 assets/blocks.js:1977 assets/blocks.js:2215 assets/blocks.js:2716 assets/blocks.js:3057 assets/blocks.js:3076 assets/blocks.js:3418 assets/blocks.js:3612
+#: assets/blocks.js:473 assets/blocks.js:529 assets/blocks.js:1739 assets/blocks.js:1789 assets/blocks.js:1822 assets/blocks.js:1843 assets/blocks.js:1876 assets/blocks.js:1897 assets/blocks.js:1965 assets/blocks.js:1977 assets/blocks.js:2215 assets/blocks.js:2693 assets/blocks.js:3034 assets/blocks.js:3053 assets/blocks.js:3395 assets/blocks.js:3589
 msgid "عنوان بخش"
 msgstr "Section heading"
 
-#: assets/blocks.js:2553
+#: assets/blocks.js:2557
 msgid "عنوان بنر"
 msgstr "Banner title"
 
@@ -5164,11 +5139,11 @@ msgstr "Title: A to Z"
 msgid "عنوان: Z تا A"
 msgstr "Title: Z to A"
 
-#: src/Modules/Rendering.php:681 src/Schema/ReleaseMetaSchema.php:286 /blocks/release-credits/block.json
+#: src/Modules/Rendering.php:681 src/Schema/ReleaseMetaSchema.php:286 blocks/release-credits/block.json
 msgid "عوامل انتشار"
 msgstr "Release credits"
 
-#: src/Modules/Rendering.php:682 /blocks/release-credits/block.json
+#: src/Modules/Rendering.php:682 blocks/release-credits/block.json
 msgid "عوامل و نقش‌های انتشار را نشان می‌دهد."
 msgstr "Displays release credits."
 
@@ -5196,7 +5171,7 @@ msgstr "Turn off history"
 msgid "فاصلهٔ پخش خودکار"
 msgstr "Autoplay interval"
 
-#: src/Blocks/Release/CollectionAndDownloadRenderer.php:559 /blocks/dashboard-downloads/block.json
+#: src/Blocks/Release/CollectionAndDownloadRenderer.php:559 blocks/dashboard-downloads/block.json
 msgid "فایل"
 msgstr "File"
 
@@ -5236,7 +5211,7 @@ msgstr "File:"
 msgid "فایلی را از کتابخانهٔ رسانه انتخاب کنید"
 msgstr "Choose a file from Media Library"
 
-#: src/Modules/Rendering.php:726 /blocks/download-button/block.json
+#: src/Modules/Rendering.php:726 blocks/download-button/block.json
 msgid "فایل‌ها"
 msgstr "files"
 
@@ -5301,7 +5276,7 @@ msgstr "The metadata was saved, but the cover could not be imported: %s"
 msgid "فراداده محتوای MusicWave برای نسخهٔ نصب‌شدهٔ افزونه آماده است."
 msgstr "MusicWave content metadata is ready for the installed plugin version."
 
-#: src/Modules/Rendering.php:667 /blocks/release-meta/block.json
+#: src/Modules/Rendering.php:667 blocks/release-meta/block.json
 msgid "فرادادهٔ انتشار"
 msgstr "Release metadata"
 
@@ -5309,15 +5284,15 @@ msgstr "Release metadata"
 msgid "فرادادهٔ انتشار را از هسته MusicWave نمایش می‌دهد."
 msgstr "Displays release metadata from MusicWave Core."
 
-#: assets/blocks.js:4164
+#: assets/blocks.js:4141
 msgid "فرم آواتار"
 msgstr "Avatar shape"
 
-#: /blocks/request-form/block.json
+#: blocks/request-form/block.json
 msgid "فرم تخصصی و ماژولار سفارش آهنگ اختصاصی و پیشنهاد همکاری برای خواننده‌ها، برندها و مخاطبان؛ بدون نیاز به جاوااسکریپت کار می‌کند و با هر چیدمان دلخواه گوتنبرگ ترکیب می‌شود."
 msgstr "Modular custom song commission and collaboration inquiry form for artists, brands, and fans — works progressively without JavaScript and composes cleanly inside any Gutenberg layout."
 
-#: src/Modules/Rendering.php:947 src/Privacy/PolicyContent.php:85 /blocks/request-form/block.json
+#: src/Modules/Rendering.php:940 src/Privacy/PolicyContent.php:85 blocks/request-form/block.json
 msgid "فرم درخواست آهنگ و همکاری"
 msgstr "Song & collaboration request form"
 
@@ -5325,7 +5300,7 @@ msgstr "Song & collaboration request form"
 msgid "فرم عمومی"
 msgstr "Public form"
 
-#: src/Modules/Rendering.php:948
+#: src/Modules/Rendering.php:941
 msgid "فرم عمومی سفارش آهنگ اختصاصی و پیشنهاد همکاری؛ با حالت ترکیبی یا اختصاصی (فقط سفارش آهنگ / فقط همکاری). درخواست‌ها در بخش «درخواست‌ها و همکاری» مدیریت می‌شوند."
 msgstr "Public custom-song and collaboration request form; combined or dedicated mode (song only / collaboration only). Requests are managed under \"Requests & collaboration\"."
 
@@ -5337,7 +5312,7 @@ msgstr "The form had expired. Please try again."
 msgid "فرم گوشه‌ها"
 msgstr "Corner shape"
 
-#: src/Modules/Rendering.php:836
+#: src/Modules/Rendering.php:829
 msgid "فرم یکپارچه جزئیات و ویرایش حساب کاربری با طراحی مدرن."
 msgstr "Unified account details and profile editor form with a clean layout."
 
@@ -5349,11 +5324,11 @@ msgstr "Unified display name, email, and password form in a compact card."
 msgid "فروشگاه"
 msgstr "Shop"
 
-#: assets/blocks.js:5120
+#: assets/blocks.js:5107
 msgid "فروشگاه و سفارش‌ها در ابتدا"
 msgstr "Commerce & Orders First"
 
-#: assets/blocks.js:2914
+#: assets/blocks.js:2891
 msgid "فشرده (ردیف کوچک)"
 msgstr "Compact (small row)"
 
@@ -5416,7 +5391,7 @@ msgstr "Icon Only"
 msgid "فقط آیکون جمع‌وجور"
 msgstr "Compact icon only"
 
-#: assets/blocks.js:4334
+#: assets/blocks.js:4311
 msgid "فقط آیکون دنبال‌کردن"
 msgstr "Follow icon only"
 
@@ -5428,7 +5403,7 @@ msgstr "Members only"
 msgid "فقط برای تیم شما؛ برای درخواست‌کننده ارسال نمی‌شود."
 msgstr "For your team only; not sent to the requester."
 
-#: assets/blocks.js:3199
+#: assets/blocks.js:3176
 msgid "فقط سفارش آهنگ اختصاصی"
 msgstr "Custom song only"
 
@@ -5440,7 +5415,7 @@ msgstr "Only direct links (direct:) can be delivered; vip:/local: files require 
 msgid "فقط مرجع ویرایشگر خصوصی"
 msgstr "Private editor reference only."
 
-#: assets/blocks.js:3206
+#: assets/blocks.js:3183
 msgid "فقط همکاری (هنری، برند، رویداد)"
 msgstr "Collaboration only (artistic, brand, event)"
 
@@ -5448,7 +5423,7 @@ msgstr "Collaboration only (artistic, brand, event)"
 msgid "فقط هنگام حذف از افزونه‌ها → حذف اعمال می‌شود، نه هنگام غیرفعال‌سازی."
 msgstr "Applies only when deleting the plugin under Plugins -> Delete, never on deactivation."
 
-#: assets/blocks.js:3914
+#: assets/blocks.js:3891
 msgid "فقط پیش‌نمایش داخل ویرایشگر را با داده‌های واقعی سایت تغییر می‌دهد و قالب فرانت را ثابت نمی‌کند."
 msgstr "Switches the live editor preview using real site data without hardcoding frontend templates."
 
@@ -5460,7 +5435,7 @@ msgstr "Registered members only (free with sign-in)"
 msgid "فلش‌های ناوبری"
 msgstr "Navigation arrows"
 
-#: assets/blocks.js:505 assets/blocks.js:1247 assets/blocks.js:2022 assets/blocks.js:3492 assets/blocks.js:3679
+#: assets/blocks.js:505 assets/blocks.js:1247 assets/blocks.js:2022 assets/blocks.js:3469 assets/blocks.js:3656
 msgid "فهرست"
 msgstr "List"
 
@@ -5468,27 +5443,27 @@ msgstr "List"
 msgid "فهرست جمع‌وجور"
 msgstr "Compact list"
 
-#: src/Modules/Rendering.php:864
+#: src/Modules/Rendering.php:857
 msgid "فهرست دانلودها."
 msgstr "Downloads list."
 
-#: /blocks/dashboard-downloads/block.json
+#: blocks/dashboard-downloads/block.json
 msgid "فهرست دانلودهای قابل دسترس – فشرده و مینیمال."
 msgstr "Available downloads list — compact and minimal."
 
-#: /blocks/dashboard-requests/block.json
+#: blocks/dashboard-requests/block.json
 msgid "فهرست درخواست‌های آهنگ و همکاری کاربر با وضعیت، شماره پیگیری و تاریخ. قابل تنظیم در ویرایشگر سایت."
 msgstr "User song and collaboration requests with status, reference code, and conversation drawer."
 
-#: src/Modules/Rendering.php:871
+#: src/Modules/Rendering.php:864
 msgid "فهرست درخواست‌های ارسال‌شده توسط کاربر با وضعیت و پاسخ مدیریت."
 msgstr "Submitted user requests with live status and collapsible support conversation."
 
-#: assets/blocks.js:2281 assets/blocks.js:2785
+#: assets/blocks.js:2281 assets/blocks.js:2762
 msgid "فهرست دست‌چین‌شده"
 msgstr "Hand-picked list"
 
-#: /blocks/dashboard-payment/block.json
+#: blocks/dashboard-payment/block.json
 msgid "فهرست روش‌های پرداخت ذخیره‌شده – طراحی مینیمال فشرده."
 msgstr "Saved payment methods list — compact minimal layout."
 
@@ -5496,7 +5471,7 @@ msgstr "Saved payment methods list — compact minimal layout."
 msgid "فهرست قطعات"
 msgstr "Tracklist"
 
-#: /blocks/collection-list/block.json
+#: blocks/collection-list/block.json
 msgid "فهرست واکنش‌گرای قطعات آلبوم و مجموعه با ستون‌های هم‌تراز، دکمه پخش هوشمند، عملیات آیکونی یا متنی و تفکیک دیسک."
 msgstr "Responsive album and collection tracklist with aligned grid columns, smart play controls, icon or labeled actions, and disc grouping."
 
@@ -5504,7 +5479,7 @@ msgstr "Responsive album and collection tracklist with aligned grid columns, sma
 msgid "فهرست وینیل (شماره‌دار)"
 msgstr "Vinyl tracklist (numbered)"
 
-#: src/Blocks/PlaylistBlocks.php:273 src/Catalog/ReleaseTaxonomies.php:141 src/Modules/Rendering.php:901 src/Modules/Rendering.php:908 src/Modules/Rendering.php:915 src/Privacy/PersonalData.php:166 /blocks/add-to-playlist/block.json /blocks/playlists/block.json /blocks/public-playlists/block.json
+#: src/Blocks/PlaylistBlocks.php:273 src/Catalog/ReleaseTaxonomies.php:141 src/Modules/Rendering.php:894 src/Modules/Rendering.php:901 src/Modules/Rendering.php:908 src/Privacy/PersonalData.php:166 blocks/add-to-playlist/block.json blocks/playlists/block.json blocks/public-playlists/block.json
 msgid "فهرست پخش"
 msgid_plural "فهرست‌های پخش"
 msgstr[0] "Playlist"
@@ -5546,11 +5521,11 @@ msgstr "Playlist deleted."
 msgid "فهرست پخش خود را ایجاد کنید، سفارش دهید و به‌اشتراک بگذارید."
 msgstr "Create, order, and share your playlists."
 
-#: src/Admin/SettingsPage.php:202 src/Modules/Rendering.php:912 /blocks/public-playlists/block.json
+#: src/Admin/SettingsPage.php:202 src/Modules/Rendering.php:905 blocks/public-playlists/block.json
 msgid "فهرست پخش عمومی"
 msgstr "Public playlists"
 
-#: assets/blocks.js:3869
+#: assets/blocks.js:3846
 msgid "فهرست پخش نمونه برای پیش‌نمایش"
 msgstr "Sample playlist for preview"
 
@@ -5558,7 +5533,7 @@ msgstr "Sample playlist for preview"
 msgid "فهرست پخش و کتابخانه"
 msgstr "Playlists & Library"
 
-#: src/Blocks/TaxonomyShelfBlock.php:241
+#: src/Blocks/TaxonomyShelfBlock.php:248
 msgid "فهرست کاتالوگ را مرور کنید"
 msgstr "Browse the catalog"
 
@@ -5566,7 +5541,7 @@ msgstr "Browse the catalog"
 msgid "فهرست‌های عمومی قابل ایندکس"
 msgstr "Indexable public playlists"
 
-#: assets/blocks.js:4971 src/Blocks/PlaylistBlocks.php:694 src/Blocks/SearchUnifiedBlock.php:438 src/Commerce/AccountLibrary.php:592 src/Modules/Playlists.php:58 src/Modules/Rendering.php:898 src/Privacy/PersonalData.php:162 /blocks/playlists/block.json
+#: assets/blocks.js:4958 src/Blocks/PlaylistBlocks.php:694 src/Blocks/SearchUnifiedBlock.php:438 src/Commerce/AccountLibrary.php:592 src/Modules/Playlists.php:58 src/Modules/Rendering.php:891 src/Privacy/PersonalData.php:162 blocks/playlists/block.json
 msgid "فهرست‌های پخش"
 msgstr "Playlists"
 
@@ -5612,11 +5587,11 @@ msgstr "Public Playlists"
 msgid "فهرست‌های پخش عمومی %d"
 msgstr "%d public playlists"
 
-#: src/Modules/Rendering.php:913
+#: src/Modules/Rendering.php:906
 msgid "فهرست‌های پخش عمومی جامعه را با جست‌وجو و صفحه‌بندی مرور و پخش کنید."
 msgstr "Browse and play community public playlists with search and pagination."
 
-#: /blocks/public-playlists/block.json
+#: blocks/public-playlists/block.json
 msgid "فهرست‌های پخش عمومی جامعه را مرور و پخش کنید. بازدیدکنندگان می‌توانند هر فهرست پخش عمومی را با یک کلیک جست‌وجو، فیلتر و پخش کنند."
 msgstr "Browse and play community public playlists. Visitors can search, filter and play any public playlist in one click."
 
@@ -5636,7 +5611,7 @@ msgstr "Urgent"
 msgid "فوری: درخواست را در فهرست برجسته می‌کند و با فیلتر اولویت پیدا می‌شود."
 msgstr "Urgent: highlights the request in the list and makes it findable with the priority filter."
 
-#: src/Modules/Rendering.php:768 /blocks/artists-alphabet/block.json
+#: src/Modules/Rendering.php:768 blocks/artists-alphabet/block.json
 msgid "فیلتر"
 msgstr "Filter"
 
@@ -5652,7 +5627,7 @@ msgstr "Filter music_wave_max_playlists_per_user for per-user overrides."
 msgid "فیلتر الفبایی خوانندگان"
 msgstr "Alphabetical artist filter"
 
-#: src/Modules/Rendering.php:765 /blocks/artists-alphabet/block.json
+#: src/Modules/Rendering.php:765 blocks/artists-alphabet/block.json
 msgid "فیلتر الفبایی هنرمندان"
 msgstr "Alphabetical artists filter"
 
@@ -5676,15 +5651,15 @@ msgstr "Filter artist"
 msgid "فیلتر وضعیت پست"
 msgstr "Filter post status"
 
-#: src/Modules/Rendering.php:705 /blocks/catalog-results/block.json
+#: src/Modules/Rendering.php:705 blocks/catalog-results/block.json
 msgid "فیلترهای فعال"
 msgstr "active filters"
 
-#: src/Modules/Rendering.php:695 /blocks/catalog-filters/block.json
+#: src/Modules/Rendering.php:695 blocks/catalog-filters/block.json
 msgid "فیلترهای کاتالوگ"
 msgstr "Catalog filters"
 
-#: src/Modules/Rendering.php:696 /blocks/catalog-filters/block.json
+#: src/Modules/Rendering.php:696 blocks/catalog-filters/block.json
 msgid "فیلترهای کاتالوگ انتشار را نمایش می‌دهد."
 msgstr "Displays release catalog filters."
 
@@ -5700,7 +5675,7 @@ msgstr "Library filters"
 msgid "فیلدها"
 msgstr "Fields"
 
-#: assets/blocks.js:3305
+#: assets/blocks.js:3282
 msgid "فیلدهای فرم"
 msgstr "Form fields"
 
@@ -5757,7 +5732,7 @@ msgstr "Confirm the environment is ready before importing catalog data or openin
 msgid "قبلاً خریده‌اید؟ ورود"
 msgstr "Already purchased? Sign in"
 
-#: src/Blocks/Concerns/ArtistsPager.php:65 src/Support/ShelfNavMarkup.php:41
+#: src/Blocks/ArtistShelfBlock.php:639 src/Support/ShelfNavMarkup.php:41
 msgid "قبلی"
 msgstr "Previous"
 
@@ -5769,7 +5744,7 @@ msgstr "Oldest first"
 msgid "قسمت پادکست"
 msgstr "Podcast episode"
 
-#: src/Modules/Rendering.php:691 /blocks/collection-list/block.json
+#: src/Modules/Rendering.php:691 blocks/collection-list/block.json
 msgid "قسمت‌ها"
 msgstr "episodes"
 
@@ -5817,15 +5792,15 @@ msgstr "Add a track, album, or podcast with artwork, preview audio, and pricing.
 msgid "قطعه، هنرمند یا آلبوم…"
 msgstr "Track, artist, or album…"
 
-#: src/Blocks/SearchUnifiedBlock.php:433 src/Modules/Rendering.php:691 /blocks/collection-list/block.json
+#: src/Blocks/SearchUnifiedBlock.php:433 src/Modules/Rendering.php:691 blocks/collection-list/block.json
 msgid "قطعه‌ها"
 msgstr "tracks"
 
-#: assets/blocks.js:1245 assets/blocks.js:2430 assets/blocks.js:3490 assets/blocks.js:3676
+#: assets/blocks.js:1245 assets/blocks.js:2430 assets/blocks.js:3467 assets/blocks.js:3653
 msgid "قفسه افقی"
 msgstr "Horizontal shelf"
 
-#: assets/blocks.js:3494
+#: assets/blocks.js:3471
 msgid "قفسه افقی با رفتار قفسه انتشار MusicWave مطابقت دارد."
 msgstr "Horizontal shelf matches the MusicWave release shelf behavior."
 
@@ -5837,7 +5812,7 @@ msgstr "Music shelf"
 msgid "قفل کامل"
 msgstr "Fully locked"
 
-#: src/Blocks/Concerns/ActionButtonStyle.php:583 /blocks/library-button/block.json
+#: src/Blocks/Concerns/ActionButtonStyle.php:583 blocks/library-button/block.json
 msgid "قلب"
 msgstr "Heart"
 
@@ -5874,15 +5849,15 @@ msgstr "Globally enables or disables MusicWave release sliders. Individual block
 msgid "لیست دلخواه"
 msgstr "Wishlist"
 
-#: assets/blocks.js:2849
+#: assets/blocks.js:2826
 msgid "لیست ردیف‌ها"
 msgstr "List rows"
 
-#: src/Modules/Rendering.php:688 /blocks/collection-list/block.json
+#: src/Modules/Rendering.php:688 blocks/collection-list/block.json
 msgid "لیست قطعه مجموعه"
 msgstr "Collection track list"
 
-#: /blocks/collection-list/block.json
+#: blocks/collection-list/block.json
 msgid "لیست پخش"
 msgstr "Playlist"
 
@@ -5934,7 +5909,7 @@ msgstr "Extra text for the confirmation email"
 msgid "متن توضیح کوتاه"
 msgstr "Short description text"
 
-#: assets/blocks.js:808 assets/blocks.js:3445
+#: assets/blocks.js:808 assets/blocks.js:3422
 msgid "متن جایگزین جست‌وجو"
 msgstr "Search placeholder"
 
@@ -5950,23 +5925,23 @@ msgstr "Welcome text"
 msgid "متن دکمه"
 msgstr "Button Label"
 
-#: assets/blocks.js:3172
+#: assets/blocks.js:3149
 msgid "متن دکمه اشتراک‌گذاری در حالت «دکمه کامل با متن»؛ خالی = پیش‌فرض."
 msgstr "Share button text in “Full Button with Label” mode; leave empty for default."
 
-#: assets/blocks.js:3160
+#: assets/blocks.js:3137
 msgid "متن دکمه در حالت «دکمه کامل با متن»؛ خالی = پیش‌فرض."
 msgstr "Button text in “Full Button with Label” mode; leave empty for default."
 
-#: assets/blocks.js:4378
+#: assets/blocks.js:4355
 msgid "متن دکمه مشاهده آثار"
 msgstr "View discography button label"
 
-#: assets/blocks.js:3350
+#: assets/blocks.js:3327
 msgid "متن دکمه پخش تصادفی در حالت «دکمه کامل با متن»؛ خالی = پیش‌فرض."
 msgstr "Shuffle button text in “Full Button with Label” mode; leave empty for default."
 
-#: assets/blocks.js:2608
+#: assets/blocks.js:2612
 msgid "متن راهنمای جست‌وجو"
 msgstr "Search placeholder"
 
@@ -5974,7 +5949,7 @@ msgstr "Search placeholder"
 msgid "متن سفارشی دکمه"
 msgstr "Custom button label"
 
-#: assets/blocks.js:1983 assets/blocks.js:2228 assets/blocks.js:2563 assets/blocks.js:2729 assets/blocks.js:3427 assets/blocks.js:3625
+#: assets/blocks.js:1983 assets/blocks.js:2228 assets/blocks.js:2567 assets/blocks.js:2706 assets/blocks.js:3404 assets/blocks.js:3602
 msgid "متن مقدمه"
 msgstr "Intro text"
 
@@ -5994,7 +5969,7 @@ msgstr "Reply text"
 msgid "متن پاسخ خالی است."
 msgstr "The reply text is empty."
 
-#: assets/blocks.js:3763
+#: assets/blocks.js:3740
 msgid "متن پانل رضایت"
 msgstr "Consent panel text"
 
@@ -6014,11 +5989,11 @@ msgstr "The note text is empty."
 msgid "متن‌های آماده:"
 msgstr "Canned replies:"
 
-#: assets/blocks.js:2492 assets/blocks.js:2927 assets/blocks.js:4205
+#: assets/blocks.js:2496 assets/blocks.js:2904 assets/blocks.js:4182
 msgid "متوسط"
 msgstr "Medium"
 
-#: assets/blocks.js:4209
+#: assets/blocks.js:4186
 msgid "متوسط رو به بزرگ"
 msgstr "Medium large"
 
@@ -6038,7 +6013,7 @@ msgstr "e.g. a pop track for an advertising teaser"
 msgid "مجرد"
 msgstr "Single"
 
-#: src/Modules/Rendering.php:887 src/Modules/Rendering.php:901 /blocks/music-library/block.json /blocks/playlists/block.json
+#: src/Modules/Rendering.php:880 src/Modules/Rendering.php:894 blocks/music-library/block.json blocks/playlists/block.json
 msgid "مجموعه"
 msgstr "collection"
 
@@ -6058,11 +6033,11 @@ msgstr "Author enumeration protection"
 msgid "محافظت enumeration کاربر اختیاری است (پیش‌فرض خاموش). وقتی روشن باشد، ?author=1 و REST /wp/v2/users برای کاربران کم‌مجوز مسدود و به خانه ریدایرکت می‌شود."
 msgstr "Optional user enumeration protection (off by default). When enabled, ?author=N queries and /wp/v2/users REST listings are restricted for unprivileged visitors."
 
-#: assets/blocks.js:468 assets/blocks.js:2547 assets/blocks.js:2947
+#: assets/blocks.js:468 assets/blocks.js:2551 assets/blocks.js:2924
 msgid "محتوا"
 msgstr "Content"
 
-#: assets/blocks.js:4253
+#: assets/blocks.js:4230
 msgid "محتوا و دکمه‌ها"
 msgstr "Content & Actions"
 
@@ -6094,7 +6069,7 @@ msgstr "Create and configure catalog content."
 msgid "محتوای کارت"
 msgstr "Card content"
 
-#: src/Access/AccessModePolicy.php:57 src/Modules/Rendering.php:677 /blocks/access-panel/block.json
+#: src/Access/AccessModePolicy.php:57 src/Modules/Rendering.php:677 blocks/access-panel/block.json
 msgid "محدود"
 msgstr "Restricted"
 
@@ -6150,7 +6125,7 @@ msgstr "Download token TTL (seconds)"
 msgid "مدت اعتبار پیوند پخش امن (ثانیه)"
 msgstr "Stream token TTL (seconds)"
 
-#: src/Blocks/Release/ReleaseMetaRenderer.php:245 src/Blocks/Release/ReleaseMetaRenderer.php:332 /blocks/release-meta/block.json
+#: src/Blocks/Release/ReleaseMetaRenderer.php:245 src/Blocks/Release/ReleaseMetaRenderer.php:332 blocks/release-meta/block.json
 msgid "مدت زمان"
 msgstr "Duration"
 
@@ -6226,15 +6201,15 @@ msgstr "Manage"
 msgid "مرا به خاطر بسپار"
 msgstr "Remember me"
 
-#: assets/blocks.js:1255 assets/blocks.js:2941 assets/blocks.js:3513 assets/blocks.js:3709
+#: assets/blocks.js:1255 assets/blocks.js:2918 assets/blocks.js:3490 assets/blocks.js:3686
 msgid "مربع"
 msgstr "Square"
 
-#: assets/blocks.js:4179
+#: assets/blocks.js:4156
 msgid "مربعی"
 msgstr "Square"
 
-#: src/Modules/Rendering.php:761 /blocks/artists-toolbar/block.json
+#: src/Modules/Rendering.php:761 blocks/artists-toolbar/block.json
 msgid "مرتب‌سازی"
 msgstr "Sorting"
 
@@ -6246,11 +6221,11 @@ msgstr "Sort releases"
 msgid "مرتب‌سازی پیش‌فرض"
 msgstr "Default sorting"
 
-#: src/Blocks/TermHeroBlock.php:274 src/Modules/Rendering.php:782 /blocks/taxonomy-shelf/block.json
+#: src/Blocks/TermHeroBlock.php:274 src/Modules/Rendering.php:775 blocks/taxonomy-shelf/block.json
 msgid "مرور"
 msgstr "Browse"
 
-#: src/Blocks/TaxonomyShelfBlock.php:210
+#: src/Blocks/TaxonomyShelfBlock.php:217
 #, php-format
 msgid "مرور %s"
 msgstr "Browse %s"
@@ -6284,7 +6259,7 @@ msgstr "Open MusicWave control center"
 msgid "مرکز کنترل پیکربندی MusicWave را بر اساس موضوع گروه‌بندی می‌کند:"
 msgstr "The control center groups MusicWave configuration by concern:"
 
-#: src/Modules/Rendering.php:733 /blocks/related-releases/block.json
+#: src/Modules/Rendering.php:733 blocks/related-releases/block.json
 msgid "مشابه"
 msgstr "similar"
 
@@ -6344,7 +6319,7 @@ msgstr "Membership releases open to all"
 msgid "مشاهدهٔ همهٔ فهرست‌های پخش"
 msgstr "See all playlists"
 
-#: assets/blocks.js:2233 assets/blocks.js:2734 assets/blocks.js:3457 assets/blocks.js:3654
+#: assets/blocks.js:2233 assets/blocks.js:2711 assets/blocks.js:3434 assets/blocks.js:3631
 msgid "مشاهدهٔ همهٔ نشانی پیوند"
 msgstr "See-all link URL"
 
@@ -6360,15 +6335,15 @@ msgstr "Not specified"
 msgid "مشخصات حساب"
 msgstr "Account details"
 
-#: assets/blocks.js:5337
+#: assets/blocks.js:5324
 msgid "مشخصات را بدون کادر و در یک خط با جداکننده نقطه (·) نمایش می‌دهد."
 msgstr "Displays release metadata inline without borders separated by middle dots (·)."
 
-#: src/Modules/Rendering.php:737 /blocks/artist-profile/block.json
+#: src/Modules/Rendering.php:737 blocks/artist-profile/block.json
 msgid "مشخصات هنرمند"
 msgstr "Artist profile"
 
-#: assets/blocks.js:3565
+#: assets/blocks.js:3542
 msgid "مشخصات کارت"
 msgstr "Card details"
 
@@ -6380,11 +6355,11 @@ msgstr "Match the release type"
 msgid "مطابقت با ژانرهای مشترک"
 msgstr "Match shared genres"
 
-#: src/Modules/Rendering.php:789 /blocks/term-hero/block.json
+#: src/Modules/Rendering.php:782 blocks/term-hero/block.json
 msgid "معرفی"
 msgstr "hero"
 
-#: src/Blocks/TermHeroBlock.php:355 src/Modules/Rendering.php:786 /blocks/term-hero/block.json
+#: src/Blocks/TermHeroBlock.php:355 src/Modules/Rendering.php:779 blocks/term-hero/block.json
 msgid "معرفی اصطلاح"
 msgstr "Term hero"
 
@@ -6400,7 +6375,7 @@ msgstr "Usually the catalog page or an artist directory page."
 msgid "من تأیید می‌کنم که سیاست دسترسی جدید برای انتشارهای منطبق با فیلترهای بالا اعمال شود."
 msgstr "I confirm applying the selected access policy to all releases matching the filters above."
 
-#: assets/blocks.js:2251 assets/blocks.js:2747 src/Modules/Metadata.php:121
+#: assets/blocks.js:2251 assets/blocks.js:2724 src/Modules/Metadata.php:121
 msgid "منبع"
 msgstr "Source"
 
@@ -6413,15 +6388,15 @@ msgstr "Catalog Selection — %s"
 msgid "منتشر شد"
 msgstr "Published"
 
-#: src/Modules/Rendering.php:808
+#: src/Modules/Rendering.php:801
 msgid "منطقه حساب یکپارچه: کتابخانه موسیقی، سفارش‌ها، بارگیری‌ها، آدرس‌ها، روش‌های پرداخت، عضویت و فهرست‌های پخش در یک پیمایش."
 msgstr "The unified account area: music library, orders, downloads, addresses, payment methods, membership, and playlists in one navigation."
 
-#: /blocks/account-dashboard/block.json
+#: blocks/account-dashboard/block.json
 msgid "منطقه حساب یکپارچه: کتابخانه موسیقی، سفارش‌ها، بارگیری‌ها، آدرس‌ها، روش‌های پرداخت، عضویت، پیگیری درخواست‌ها و فهرست‌های پخش در یک پیمایش."
 msgstr "Unified account hub: music library, orders, downloads, addresses, payment methods, VIP membership, request tracking, and playlists."
 
-#: assets/blocks.js:1258 assets/blocks.js:3516 assets/blocks.js:3713
+#: assets/blocks.js:1258 assets/blocks.js:3493 assets/blocks.js:3690
 msgid "منظره"
 msgstr "Landscape"
 
@@ -6442,7 +6417,7 @@ msgstr "Newer items"
 msgid "موارد در هر بخش"
 msgstr "Items per section"
 
-#: assets/blocks.js:2038 assets/blocks.js:3528
+#: assets/blocks.js:2038 assets/blocks.js:3505
 msgid "موارد در هر صفحه"
 msgstr "Items per page"
 
@@ -6470,11 +6445,11 @@ msgstr "I agree that my name and contact details are stored to answer this reque
 msgid "موج صوتی"
 msgstr "Waveform"
 
-#: src/Modules/Rendering.php:887 src/Modules/Rendering.php:894 /blocks/library-button/block.json /blocks/music-library/block.json
+#: src/Modules/Rendering.php:880 src/Modules/Rendering.php:887 blocks/library-button/block.json blocks/music-library/block.json
 msgid "مورد علاقه"
 msgstr "favorite"
 
-#: assets/blocks.js:5113
+#: assets/blocks.js:5100
 msgid "موسیقی در ابتدا (پیش‌فرض)"
 msgstr "Music First (Default)"
 
@@ -6482,7 +6457,7 @@ msgstr "Music First (Default)"
 msgid "موضوع ایمیل (اختیاری)"
 msgstr "Email subject (optional)"
 
-#: assets/blocks.js:3247 src/Requests/RequestPostType.php:197
+#: assets/blocks.js:3224 src/Requests/RequestPostType.php:197
 msgid "موضوع دیگر"
 msgstr "Something else"
 
@@ -6499,11 +6474,11 @@ msgstr "Subject: %s"
 msgid "موقعیت (ثانیه)"
 msgstr "Position (seconds)"
 
-#: assets/blocks.js:3376
+#: assets/blocks.js:3353
 msgid "موقعیت افزودن به صف"
 msgstr "Queue insertion position"
 
-#: assets/blocks.js:3381
+#: assets/blocks.js:3358
 msgid "موقعیت فرود در صف"
 msgstr "Queue landing position"
 
@@ -6535,7 +6510,7 @@ msgstr "Preview progress"
 msgid "میلی ثانیه بین حرکات خودکار."
 msgstr "Milliseconds between automatic movements."
 
-#: assets/blocks.js:2454 assets/blocks.js:4091
+#: assets/blocks.js:2458 assets/blocks.js:4068
 msgid "مینیمال"
 msgstr "Minimal"
 
@@ -6568,7 +6543,7 @@ msgstr "Label: %s."
 msgid "نام"
 msgstr "Name"
 
-#: assets/blocks.js:2320 assets/blocks.js:2814
+#: assets/blocks.js:2320 assets/blocks.js:2791
 msgid "نام A–Z"
 msgstr "Name A–Z"
 
@@ -6648,7 +6623,7 @@ msgstr "Name, email, or subject…"
 msgid "نام، ایمیل، تلفن (اختیاری)، پیام، نوع درخواست (song/collab)، نقش‌ها، اولویت — فیلدهای ثبت‌شده در RequestPostType.php و RequestFormHandler.php"
 msgstr "Name, email, optional phone, message, request type, roles, and priority stored privately on mw_request posts."
 
-#: assets/blocks.js:3337
+#: assets/blocks.js:3314
 msgid "نام، ایمیل، عنوان و توضیحات همیشه الزامی‌اند. عنوان، معرفی و ستون کناری صفحه با بلوک‌های مستقل وردپرس روی بوم قابل چیدمان و ویرایش هستند."
 msgstr "Name, email, title, and details are always required. Page headings, callouts, and sidebars compose freely using native WordPress blocks on the canvas."
 
@@ -6656,23 +6631,15 @@ msgstr "Name, email, title, and details are always required. Page headings, call
 msgid "نامی‌انتخاب کنید تا این انتشار را برای شما اضافه کنیم."
 msgstr "Pick a name and we’ll add this release for you."
 
-#: src/Admin/SettingsPage.php:730 src/Modules/Rendering.php:775 /blocks/artists-pagination/block.json
+#: src/Admin/SettingsPage.php:730
 msgid "ناوبری"
 msgstr "Navigation"
-
-#: /blocks/artists-pagination/block.json
-msgid "ناوبری شماره‌ای صفحهٔ هنرمندان. «تعداد هنرمند در هر صفحه» باید با همان مقدار ویترین هنرمندان تنظیم شود تا شماره‌ها با محتوای صفحه هم‌خوان بمانند."
-msgstr "Numbered paging for the artists index. The “artists per page” value must match the Artists shelf block so page numbers match the content."
-
-#: src/Modules/Rendering.php:773
-msgid "ناوبری شماره‌ای صفحهٔ هنرمندان؛ با همان «تعداد هنرمند در هر صفحه» ویترین تنظیم شود."
-msgstr "Numbered paging for the artists index; set the same “artists per page” value as the shelf."
 
 #: src/Modules/Rendering.php:712
 msgid "نتایج"
 msgstr "Results"
 
-#: src/Modules/Rendering.php:710 /blocks/search-unified/block.json
+#: src/Modules/Rendering.php:710 blocks/search-unified/block.json
 msgid "نتایج جستجو را گروه‌بندی شده مثل باکس پیشنهاد (انتشار، هنرمند، سبک، محصول) نمایش می‌دهد."
 msgstr "Displays grouped search results across releases, artists, genres, and products."
 
@@ -6680,7 +6647,7 @@ msgstr "Displays grouped search results across releases, artists, genres, and pr
 msgid "نتایج جستجو را گروه‌بندی شده نمایش می‌دهد. در صفحه جستجو، عبارت جستجو از query اصلی خوانده می‌شود."
 msgstr "Displays grouped search results read directly from the main search query."
 
-#: src/Modules/Rendering.php:709 /blocks/search-unified/block.json
+#: src/Modules/Rendering.php:709 blocks/search-unified/block.json
 msgid "نتایج جستجوی یکپارچه"
 msgstr "Unified Search Results"
 
@@ -6693,7 +6660,7 @@ msgstr "Search results for \"%s\""
 msgid "نتایج هنگام تایپ به‌روز می‌شوند. حداقل 2 کاراکتر وارد کنید."
 msgstr "Results update while typing. Enter at least 2 characters."
 
-#: src/Modules/Rendering.php:702 /blocks/catalog-results/block.json
+#: src/Modules/Rendering.php:702 blocks/catalog-results/block.json
 msgid "نتایج کاتالوگ"
 msgstr "Catalog results"
 
@@ -6799,7 +6766,7 @@ msgstr "Role"
 msgid "نقش شما"
 msgstr "Your role"
 
-#: assets/blocks.js:3260
+#: assets/blocks.js:3237
 msgid "نقش پیش‌فرض"
 msgstr "Default role"
 
@@ -6811,7 +6778,7 @@ msgstr "Role:"
 msgid "نقش، مثلاً تهیهکننده"
 msgstr "Role, e.g. producer"
 
-#: src/Modules/Rendering.php:684 /blocks/release-credits/block.json
+#: src/Modules/Rendering.php:684 blocks/release-credits/block.json
 msgid "نقش‌ها"
 msgstr "roles"
 
@@ -6819,7 +6786,7 @@ msgstr "roles"
 msgid "نمای کلی"
 msgstr "Overview"
 
-#: assets/blocks.js:373 assets/blocks.js:3071 src/Modules/Rendering.php:761
+#: assets/blocks.js:373 assets/blocks.js:3048 src/Modules/Rendering.php:761
 msgid "نمایش"
 msgstr "Display"
 
@@ -6828,24 +6795,24 @@ msgstr "Display"
 msgid "نمایش %1$d از فهرست‌های پخش %2$d"
 msgstr "Showing %1$d of %2$d playlists"
 
-#: src/Blocks/ArtistShelfBlock.php:206
+#: src/Blocks/ArtistShelfBlock.php:205
 #, php-format
 msgid "نمایش %1$s از %2$s خواننده"
 msgstr "Showing %1$s of %2$s artists"
 
-#: assets/blocks.js:1298 assets/blocks.js:3082 assets/blocks.js:3724
+#: assets/blocks.js:1298 assets/blocks.js:3059 assets/blocks.js:3701
 msgid "نمایش آثار هنری"
 msgstr "Show artwork"
 
-#: /blocks/dashboard-stats/block.json
+#: blocks/dashboard-stats/block.json
 msgid "نمایش آمار جمع‌وجور: دانلودهای موجود، علاقه‌مندی‌ها و هنرمندان دنبال‌شده."
 msgstr "Display compact metrics for available downloads, saved items, and followed artists."
 
-#: assets/blocks.js:2583
+#: assets/blocks.js:2587
 msgid "نمایش آمار کاتالوگ"
 msgstr "Show catalogue stats"
 
-#: assets/blocks.js:1621 assets/blocks.js:2500
+#: assets/blocks.js:1621 assets/blocks.js:2504
 msgid "نمایش آواتار"
 msgstr "Show avatar"
 
@@ -6857,7 +6824,7 @@ msgstr "Show User Avatar"
 msgid "نمایش آیتم"
 msgstr "Item display"
 
-#: assets/blocks.js:3121
+#: assets/blocks.js:3098
 msgid "نمایش انتخاب تکرار"
 msgstr "Show repeat selector"
 
@@ -6869,7 +6836,7 @@ msgstr "Show sort selector"
 msgid "نمایش انتشارها"
 msgstr "Show releases"
 
-#: assets/blocks.js:2958
+#: assets/blocks.js:2935
 msgid "نمایش برچسب بالای طبقه‌بندی"
 msgstr "Show taxonomy eyebrow"
 
@@ -6881,7 +6848,7 @@ msgstr "Show label badge"
 msgid "نمایش برچسب‌های فیلد"
 msgstr "Show field labels"
 
-#: assets/blocks.js:4276
+#: assets/blocks.js:4253
 msgid "نمایش بیوگرافی کوتاه"
 msgstr "Show biography"
 
@@ -6889,11 +6856,11 @@ msgstr "Show biography"
 msgid "نمایش تاریخ انتشار"
 msgstr "Show release date"
 
-#: assets/blocks.js:3597
+#: assets/blocks.js:3574
 msgid "نمایش تاریخ به‌روزرسانی"
 msgstr "Show updated date"
 
-#: assets/blocks.js:2618
+#: assets/blocks.js:2622
 msgid "نمایش تب‌های ترتیب"
 msgstr "Show sorting tabs"
 
@@ -6901,11 +6868,11 @@ msgstr "Show sorting tabs"
 msgid "نمایش تراشه‌های فیلتر فعال"
 msgstr "Show active filter chips"
 
-#: assets/blocks.js:4152
+#: assets/blocks.js:4129
 msgid "نمایش تصویر / آواتار هنرمند"
 msgstr "Show artist avatar"
 
-#: assets/blocks.js:2952
+#: assets/blocks.js:2929
 msgid "نمایش تصویر جلد"
 msgstr "Show cover media"
 
@@ -6913,7 +6880,7 @@ msgstr "Show cover media"
 msgid "نمایش تصویر کاور قطعه"
 msgstr "Show track artwork"
 
-#: assets/blocks.js:4267
+#: assets/blocks.js:4244
 msgid "نمایش تعداد آثار منتشرشده"
 msgstr "Show release count"
 
@@ -6921,7 +6888,7 @@ msgstr "Show release count"
 msgid "نمایش تعداد اقلام"
 msgstr "Show item counts"
 
-#: assets/blocks.js:2512 assets/blocks.js:2887 assets/blocks.js:2973
+#: assets/blocks.js:2516 assets/blocks.js:2864 assets/blocks.js:2950
 msgid "نمایش تعداد انتشارها"
 msgstr "Show release count"
 
@@ -6937,7 +6904,7 @@ msgstr "Show track count & total duration"
 msgid "نمایش تعداد کاربران کتابخانه"
 msgstr "Show library user count"
 
-#: assets/blocks.js:3582
+#: assets/blocks.js:3559
 msgid "نمایش تغییر فهرست قطعه‌ها"
 msgstr "Show the track list toggle"
 
@@ -6949,7 +6916,7 @@ msgstr "Show Tempo (BPM)"
 msgid "نمایش توضیح کوتاه زیر عنوان"
 msgstr "Show short description under heading"
 
-#: assets/blocks.js:2979
+#: assets/blocks.js:2956
 msgid "نمایش توضیحات"
 msgstr "Show description"
 
@@ -6957,7 +6924,7 @@ msgstr "Show description"
 msgid "نمایش جزئیات بیشتر"
 msgstr "Show more details"
 
-#: assets/blocks.js:2602 assets/blocks.js:3433
+#: assets/blocks.js:2606 assets/blocks.js:3410
 msgid "نمایش جست‌وجو"
 msgstr "Show search"
 
@@ -6965,31 +6932,27 @@ msgstr "Show search"
 msgid "نمایش حال و هوا"
 msgstr "Show mood"
 
-#: assets/blocks.js:2700
-msgid "نمایش خط وضعیت صفحه"
-msgstr "Show page status line"
-
 #: assets/blocks.js:1515
 msgid "نمایش خوش‌آمدگویی و VIP"
 msgstr "Show welcome & VIP card"
 
-#: assets/blocks.js:2533 assets/blocks.js:2997
+#: assets/blocks.js:2537 assets/blocks.js:2974
 msgid "نمایش دکمه دنبال هنرمند"
 msgstr "Show follow-artist button"
 
-#: assets/blocks.js:4305
+#: assets/blocks.js:4282
 msgid "نمایش دکمه دنبال‌کردن هنرمند"
 msgstr "Show Follow Artist Button"
 
-#: assets/blocks.js:3140
+#: assets/blocks.js:3117
 msgid "نمایش دکمه صف پاک"
 msgstr "Show clear-queue button"
 
-#: assets/blocks.js:4365
+#: assets/blocks.js:4342
 msgid "نمایش دکمه مشاهده همه آثار"
 msgstr "Show view-releases button"
 
-#: assets/blocks.js:3576
+#: assets/blocks.js:3553
 msgid "نمایش دکمه پخش"
 msgstr "Show play button"
 
@@ -6997,11 +6960,11 @@ msgstr "Show play button"
 msgid "نمایش دکمه پخش آنلاین کنار دانلود"
 msgstr "Show stream button beside download"
 
-#: assets/blocks.js:3115
+#: assets/blocks.js:3092
 msgid "نمایش دکمه پخش تصادفی"
 msgstr "Show shuffle button"
 
-#: assets/blocks.js:3109
+#: assets/blocks.js:3086
 msgid "نمایش دکمه پخش همه"
 msgstr "Show play all button"
 
@@ -7025,7 +6988,7 @@ msgstr "Show column header row"
 msgid "نمایش زبانه‌های فیلتر"
 msgstr "Show filter tabs"
 
-#: assets/blocks.js:3736
+#: assets/blocks.js:3713
 msgid "نمایش زمان پخش قبلی"
 msgstr "Show played-ago time"
 
@@ -7057,7 +7020,7 @@ msgstr "Show active tiers"
 msgid "نمایش سطوح فعال و انقضا"
 msgstr "Show active levels and expiry"
 
-#: assets/blocks.js:3570
+#: assets/blocks.js:3547
 msgid "نمایش شبکهٔ تصاویر جلد"
 msgstr "Show cover art grid"
 
@@ -7065,7 +7028,7 @@ msgstr "Show cover art grid"
 msgid "نمایش شمارش نتایج"
 msgstr "Show result count"
 
-#: assets/blocks.js:2673
+#: assets/blocks.js:2677
 msgid "نمایش شمارش هر حرف"
 msgstr "Show count per letter"
 
@@ -7073,7 +7036,7 @@ msgstr "Show count per letter"
 msgid "نمایش شماره قطعه"
 msgstr "Show track numbers"
 
-#: assets/blocks.js:3088
+#: assets/blocks.js:3065
 msgid "نمایش شماره موقعیت"
 msgstr "Show position numbers"
 
@@ -7081,7 +7044,7 @@ msgstr "Show position numbers"
 msgid "نمایش شماره کاتالوگ"
 msgstr "Show catalog number"
 
-#: assets/blocks.js:3559
+#: assets/blocks.js:3536
 msgid "نمایش صفحه‌بندی"
 msgstr "Show pagination"
 
@@ -7129,19 +7092,19 @@ msgstr "Show duration"
 msgid "نمایش مدت زمان هر قطعه"
 msgstr "Show track duration"
 
-#: assets/blocks.js:2967
+#: assets/blocks.js:2944
 msgid "نمایش نام"
 msgstr "Show name heading"
 
-#: assets/blocks.js:3591
+#: assets/blocks.js:3568
 msgid "نمایش نام متصدی"
 msgstr "Show curator name"
 
-#: assets/blocks.js:2052 assets/blocks.js:2506 assets/blocks.js:4259
+#: assets/blocks.js:2052 assets/blocks.js:2510 assets/blocks.js:4236
 msgid "نمایش نام هنرمند"
 msgstr "Show artist name"
 
-#: assets/blocks.js:3094 assets/blocks.js:3730
+#: assets/blocks.js:3071 assets/blocks.js:3707
 msgid "نمایش نام هنرمندان"
 msgstr "Show artist names"
 
@@ -7173,7 +7136,7 @@ msgstr "Show all MusicWave release details"
 msgid "نمایش همهٔ هنرمندان (بدون محدودیت)"
 msgstr "Show all artists (no limit)"
 
-#: assets/blocks.js:3742
+#: assets/blocks.js:3719
 msgid "نمایش همپوشانی پخش"
 msgstr "Show play overlay"
 
@@ -7193,7 +7156,7 @@ msgstr "Show status"
 msgid "نمایش وضعیت دسترسی اعطاشده"
 msgstr "Show the granted state"
 
-#: /blocks/dashboard-subscription/block.json
+#: blocks/dashboard-subscription/block.json
 msgid "نمایش وضعیت واقعی اشتراک: سطح دسترسی، اعتبار، روزهای باقی‌مانده، نوار پیشرفت و دکمه تمدید."
 msgstr "Display live subscription status: tier, validity, remaining days, progress bar, and renewal button."
 
@@ -7221,11 +7184,11 @@ msgstr "Show genre"
 msgid "نمایش کد رهگیری"
 msgstr "Show reference code"
 
-#: assets/blocks.js:3439
+#: assets/blocks.js:3416
 msgid "نمایش کل فهرست پخش"
 msgstr "Show playlist total"
 
-#: assets/blocks.js:2662
+#: assets/blocks.js:2666
 msgid "نمایش کلید «همه»"
 msgstr "Show “All” chip"
 
@@ -7233,7 +7196,7 @@ msgstr "Show “All” chip"
 msgid "نمایش کلید موسیقی"
 msgstr "Show musical key"
 
-#: assets/blocks.js:3100
+#: assets/blocks.js:3077
 msgid "نمایش کنترل‌های کلیک و تکرار"
 msgstr "Show shuffle and repeat controls"
 
@@ -7241,11 +7204,11 @@ msgstr "Show shuffle and repeat controls"
 msgid "نمایش گزیده"
 msgstr "Show excerpt"
 
-#: assets/blocks.js:2518
+#: assets/blocks.js:2522
 msgid "نمایش گزیده بیوگرافی"
 msgstr "Show biography excerpt"
 
-#: /blocks/release-meta/block.json
+#: blocks/release-meta/block.json
 msgid "نمایش یکپارچه و مینیمال فراداده‌های انتشار (هنرمند، تاریخ انتشار، مدت زمان، تمپو، گام موسیقی، سبک، برچسب و شماره کاتالوگ) به صورت خطی فشرده با جداکننده نقطه (·) یا جدول ساختارمند."
 msgstr "Unified minimal release metadata block (artist, release date, duration, tempo, musical key, genre, label, and catalog number) rendered inline with dot separators (·) or as structured facts."
 
@@ -7253,7 +7216,7 @@ msgstr "Unified minimal release metadata block (artist, release date, duration, 
 msgid "نمایهٔ طبقه‌بندی هنرمند را در صفحات بایگانی یا هر الگوی دیگری نمایش می‌دهد."
 msgstr "Displays the artist taxonomy profile on archive pages or any other template."
 
-#: /blocks/artist-profile/block.json
+#: blocks/artist-profile/block.json
 msgid "نمایهٔ هماهنگ و واکنش‌گرای هنرمند برای هدر انتشار، بایگانی هنرمند و ستون‌های کناری؛ با چیدمان‌های فشرده، افقی، کارتی و شاخص."
 msgstr "Cohesive responsive artist profile card for release headers, artist archives, and sidebars with compact, horizontal, card, and spotlight layouts."
 
@@ -7261,7 +7224,7 @@ msgstr "Cohesive responsive artist profile card for release headers, artist arch
 msgid "نمونه مسیر راهنما (Breadcrumb)"
 msgstr "Sample Breadcrumb Trail"
 
-#: assets/blocks.js:3906
+#: assets/blocks.js:3883
 msgid "نمونه پیش‌نمایش در ویرایشگر"
 msgstr "Editor Sample Preview"
 
@@ -7273,7 +7236,7 @@ msgstr "Portfolio or related links"
 msgid "نمونه‌کارها و پیوندها"
 msgstr "Portfolio & links"
 
-#: /blocks/artists-toolbar/block.json
+#: blocks/artists-toolbar/block.json
 msgid "نوار ابزار فهرست هنرمندان: جست‌وجوی خواننده و تب‌های ترتیب (پیکارتین/الفبایی). همهٔ کنترل‌ها بدون جاوااسکریپت کار می‌کنند و از طریق نشانی به ویترین هنرمندان متصل‌اند."
 msgstr "Artists index toolbar: artist search and sorting tabs (popular/alphabetical). Every control works without JavaScript and links to the artists showcase through the URL."
 
@@ -7318,7 +7281,7 @@ msgstr "Request type: %s"
 msgid "نوع مورد"
 msgstr "Item type"
 
-#: assets/blocks.js:3220
+#: assets/blocks.js:3197
 msgid "نوع پیش‌فرض"
 msgstr "Default kind"
 
@@ -7386,7 +7349,7 @@ msgstr "One line each: [mm:ss.xx] text. Optional translation after | or //. Exam
 msgid "هر درخواست از «جدید» شروع می‌شود. با ارسال پاسخ به «پاسخ داده شده» می‌رود و شما آن را به «پذیرفته شده»، «رد شده» یا «بایگانی» می‌برید."
 msgstr "Every request starts as “New”. Sending a reply moves it to “Replied”, and you move it on to “Accepted”, “Declined”, or “Archived”."
 
-#: assets/blocks.js:4627
+#: assets/blocks.js:4604
 msgid "هر دو عنوان را خالی بگذارید تا عنوان را با بلوک مستقل بسازید؛ خالی بماند تا سربرگ این بخش چاپ نشود."
 msgstr "Leave both titles empty to build the heading with a standalone block; leave it empty and this section prints no header."
 
@@ -7426,7 +7389,7 @@ msgstr "The more precise you are, the faster and more accurate our reply will be
 msgid "هسته MusicWave"
 msgstr "MusicWave Core"
 
-#: src/Modules/Rendering.php:733 /blocks/related-releases/block.json
+#: src/Modules/Rendering.php:733 blocks/related-releases/block.json
 msgid "همان هنرمند"
 msgstr "same artist"
 
@@ -7439,7 +7402,7 @@ msgstr "All"
 msgid "همه %s"
 msgstr "All %s"
 
-#: assets/blocks.js:2778
+#: assets/blocks.js:2755
 msgid "همه اصطلاحات در حال استفاده"
 msgstr "All terms in use"
 
@@ -7463,7 +7426,7 @@ msgstr "All artists"
 msgid "همه هنرمندان کاتالوگ"
 msgstr "All catalog artists"
 
-#: src/Blocks/TaxonomyShelfBlock.php:242
+#: src/Blocks/TaxonomyShelfBlock.php:249
 msgid "همه چیز را ببینید"
 msgstr "See everything"
 
@@ -7491,11 +7454,11 @@ msgstr "All roles"
 msgid "همهٔ هنرمندانِ منطبق با منبع را نمایش می‌دهد و صفحه‌بندی را غیرفعال می‌کند."
 msgstr "Shows every artist matching the source and disables pagination."
 
-#: src/Modules/Rendering.php:950 /blocks/dashboard-requests/block.json /blocks/request-form/block.json
+#: src/Modules/Rendering.php:943 blocks/dashboard-requests/block.json blocks/request-form/block.json
 msgid "همکاری"
 msgstr "Collaboration"
 
-#: assets/blocks.js:3235 src/Requests/RequestPostType.php:194
+#: assets/blocks.js:3212 src/Requests/RequestPostType.php:194
 msgid "همکاری هنری"
 msgstr "Artistic collaboration"
 
@@ -7523,7 +7486,7 @@ msgstr "Just now"
 msgid "همین بررسی‌های محیطی در صفحه سلامت سایت WordPress همراه با گزارش‌های سلامت ارائه‌دهنده یکپارچه‌سازی MusicWave نیز اجرا می‌شوند."
 msgstr "The same environment checks also run in the WordPress Site Health screen, together with MusicWave integration provider health reports."
 
-#: assets/blocks.js:3023 src/Blocks/Concerns/EditorPreviewCatalog.php:340 src/Blocks/Release/CollectionAndDownloadRenderer.php:982 src/Blocks/Release/ReleaseMetaRenderer.php:60 src/Blocks/Release/ReleaseMetaRenderer.php:243 src/Blocks/SearchUnifiedBlock.php:543 src/Blocks/TermHeroBlock.php:265 src/Catalog/ReleaseTaxonomies.php:27 src/Library/LibraryCatalog.php:263 src/Modules/Metadata.php:125 src/Modules/Rendering.php:740 src/Modules/Rendering.php:789 src/Support/SuggestAssets.php:81 /blocks/artist-profile/block.json /blocks/term-hero/block.json
+#: assets/blocks.js:3000 src/Blocks/Concerns/EditorPreviewCatalog.php:340 src/Blocks/Release/CollectionAndDownloadRenderer.php:982 src/Blocks/Release/ReleaseMetaRenderer.php:60 src/Blocks/Release/ReleaseMetaRenderer.php:243 src/Blocks/SearchUnifiedBlock.php:543 src/Blocks/TermHeroBlock.php:265 src/Catalog/ReleaseTaxonomies.php:27 src/Library/LibraryCatalog.php:263 src/Modules/Metadata.php:125 src/Modules/Rendering.php:740 src/Modules/Rendering.php:782 src/Support/SuggestAssets.php:81 blocks/artist-profile/block.json blocks/term-hero/block.json
 msgid "هنرمند"
 msgstr "Artist"
 
@@ -7531,11 +7494,11 @@ msgstr "Artist"
 msgid "هنرمند برگزیده"
 msgstr "Featured artist"
 
-#: src/Blocks/ArtistShelfBlock.php:446
+#: src/Blocks/ArtistShelfBlock.php:447
 msgid "هنرمند بی نام"
 msgstr "Unnamed artist"
 
-#: assets/blocks.js:2365 assets/blocks.js:2688
+#: assets/blocks.js:2365
 msgid "هنرمند در هر صفحه"
 msgstr "Artists per page"
 
@@ -7551,7 +7514,7 @@ msgstr "Canonical artist URL"
 msgid "هنرمند ناشناس"
 msgstr "Unknown artist"
 
-#: assets/blocks.js:3860
+#: assets/blocks.js:3837
 msgid "هنرمند نمونه برای پیش‌نمایش"
 msgstr "Sample artist for preview"
 
@@ -7559,7 +7522,7 @@ msgstr "Sample artist for preview"
 msgid "هنرمند یا برچسب رسمی اختیاری URL. فقط HTTPS."
 msgstr "Optional official artist or label URL. HTTPS only."
 
-#: src/Admin/SettingsPage.php:732 src/Blocks/SearchUnifiedBlock.php:155 src/Blocks/SearchUnifiedBlock.php:283 src/Catalog/ReleaseTaxonomies.php:28 src/Library/LibraryCatalog.php:165 src/Modules/Rendering.php:747 src/Modules/Rendering.php:754 src/Modules/Rendering.php:761 src/Modules/Rendering.php:768 src/Modules/Rendering.php:775 /blocks/artists-alphabet/block.json /blocks/artists-hero/block.json /blocks/artists-pagination/block.json /blocks/artists-shelf/block.json /blocks/artists-toolbar/block.json
+#: src/Admin/SettingsPage.php:732 src/Blocks/SearchUnifiedBlock.php:155 src/Blocks/SearchUnifiedBlock.php:283 src/Catalog/ReleaseTaxonomies.php:28 src/Library/LibraryCatalog.php:165 src/Modules/Rendering.php:747 src/Modules/Rendering.php:754 src/Modules/Rendering.php:761 src/Modules/Rendering.php:768 blocks/artists-alphabet/block.json blocks/artists-hero/block.json blocks/artists-shelf/block.json blocks/artists-toolbar/block.json
 msgid "هنرمندان"
 msgstr "Artists"
 
@@ -7571,7 +7534,7 @@ msgstr "Followed Artists"
 msgid "هنرمندان را نمی‌توان به این انتشار متصل کرد."
 msgstr "The artists could not be connected to this release."
 
-#: src/Blocks/ArtistShelfBlock.php:566
+#: src/Blocks/ArtistShelfBlock.php:567
 msgid "هنرمندان محبوب"
 msgstr "Popular artists"
 
@@ -7579,7 +7542,7 @@ msgstr "Popular artists"
 msgid "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با صفحهٔ وینیل پشت جلد، نشان محبوبیت، تعداد آثار و دکمه‌های دنبال‌کردن نمایش می‌دهد."
 msgstr "Renders the catalogue artists as a responsive grid, horizontal rail or compact list with a vinyl disc behind the cover, a popularity badge, release counts and follow buttons."
 
-#: /blocks/artists-shelf/block.json
+#: blocks/artists-shelf/block.json
 msgid "هنرمندان کاتالوگ را به‌صورت شبکهٔ واکنش‌گرا، نوار افقی یا فهرست جمع‌وجور با صفحهٔ وینیل پشت جلد، نشان محبوبیت، تعداد آثار و دکمه‌های دنبال‌کردن نمایش می‌دهد. دارای استایل‌های حداقلی، سرمقاله‌ای و شیشه‌ای."
 msgstr "Renders the catalogue artists as a responsive grid, horizontal rail or compact list with a vinyl disc behind the cover, a popularity badge, release counts and follow buttons. Ships minimal, editorial and glass styles."
 
@@ -7615,11 +7578,11 @@ msgstr "No public playlists yet. Be the first to share one!"
 msgid "هنوز مشخص نیست"
 msgstr "Not decided yet"
 
-#: src/Blocks/ArtistShelfBlock.php:185
+#: src/Blocks/ArtistShelfBlock.php:184
 msgid "هنوز هنرمندی برای نمایش وجود ندارد."
 msgstr "No artists to show yet."
 
-#: src/Blocks/TaxonomyShelfBlock.php:255
+#: src/Blocks/TaxonomyShelfBlock.php:262
 msgid "هنوز هیچ اصطلاحی با انتشارهای منتشرشده پیدا نشده است. این طبقه‌بندی را به انتشارها اختصاص دهید تا خودکار اینجا ظاهر شوند."
 msgstr "No terms with published releases were found yet. Assign this taxonomy to releases and they appear here automatically."
 
@@ -7627,7 +7590,7 @@ msgstr "No terms with published releases were found yet. Assign this taxonomy to
 msgid "هنوز هیچ انتشاری به این محصول پیوند نشده است. از فهرست زیر یک یا چند انتشار را انتخاب و محصول را ذخیره کنید."
 msgstr "No releases are linked to this product yet. Select one or more releases below and save the product."
 
-#: src/Blocks/ArtistShelfBlock.php:623
+#: src/Blocks/ArtistShelfBlock.php:663
 msgid "هنوز هیچ هنرمندی با انتشارهای منتشرشده یافت نشد. هنرمندان را به انتشارات اختصاص دهید و آن‌ها به‌طور خودکار در اینجا ظاهر می‌شوند."
 msgstr "No artists with published releases were found yet. Assign artists to releases and they appear here automatically."
 
@@ -7660,18 +7623,18 @@ msgid "هنگام ایجاد انتشار با حالت «اشتراک VIP» ی�
 msgstr "Automatically applied to new releases using VIP membership or Purchase or VIP membership (default: mw_vip for all active VIP subscribers)."
 
 #: assets/blocks.js:2368
-msgid "هنگام روشن‌بودن صفحه‌بندی، تعداد هنرمند هر صفحه را تعیین می‌کند و بر «حداکثر هنرمندان» اولویت دارد."
-msgstr "While pagination is on, this sets how many artists each page holds and overrides “Maximum artists”."
+msgid "هنگام روشن‌بودن صفحه‌بندی، تعداد هنرمند هر صفحه و شماره‌های صفحه‌بندی وردپرس را تعیین می‌کند و بر «حداکثر هنرمندان» اولویت دارد."
+msgstr "While pagination is on, sets the artists per page and the WordPress pagination numbers, and takes priority over «maximum artists»."
 
 #: src/Admin/SettingsPage.php:729
 msgid "هنگامی‌که قالب یا افزونهٔ فعال آن‌ها را ثبت می‌کند، ناحیه‌های ابزارک را مدیریت کنید."
 msgstr "Manage widget areas when the active theme or plugin registers them."
 
-#: /blocks/artists-hero/block.json
+#: blocks/artists-hero/block.json
 msgid "هیرو"
 msgstr "Hero"
 
-#: src/Blocks/TaxonomyShelfBlock.php:254
+#: src/Blocks/TaxonomyShelfBlock.php:261
 msgid "هیچ اصطلاح منطبقی پیدا نشد. شناسه‌های اصطلاح انتخاب‌شده را بررسی کنید."
 msgstr "No matching terms were found. Check the selected term IDs."
 
@@ -7723,7 +7686,7 @@ msgstr "No matches found. Try a different title or artist spelling."
 msgid "هیچ موردی برای عملیات گروهی انتخاب نشده بود."
 msgstr "No items were selected for the bulk action."
 
-#: src/Blocks/ArtistShelfBlock.php:622
+#: src/Blocks/ArtistShelfBlock.php:662
 msgid "هیچ هنرمند منطبقی پیدا نشد. شناسه‌های هنرمند انتخاب‌شده را بررسی کنید."
 msgstr "No matching artists were found. Check the selected artist IDs."
 
@@ -7793,7 +7756,7 @@ msgstr "Request status updated."
 msgid "وضعیت درخواست‌های آهنگ و همکاری و پاسخ مدیریت."
 msgstr "Track status and staff replies on your submitted requests."
 
-#: src/Modules/Rendering.php:675 /blocks/access-panel/block.json
+#: src/Modules/Rendering.php:675 blocks/access-panel/block.json
 msgid "وضعیت دسترسی انتشار فعلی و اقدامات را نشان می‌دهد."
 msgstr "Displays the current release access state and actions."
 
@@ -7837,11 +7800,11 @@ msgstr "When no membership add-on such as MusicWave VIP is active, membership-ga
 msgid "وقتی چیزی که از قبل ذخیره کرده بودم خارج شد"
 msgstr "When something I pre-saved is out"
 
-#: /blocks/account-dashboard/block.json
+#: blocks/account-dashboard/block.json
 msgid "ووکامرس"
 msgstr "woocommerce"
 
-#: src/Modules/Rendering.php:733 src/Modules/Rendering.php:747 src/Modules/Rendering.php:782 /blocks/artists-shelf/block.json /blocks/related-releases/block.json /blocks/taxonomy-shelf/block.json
+#: src/Modules/Rendering.php:733 src/Modules/Rendering.php:747 src/Modules/Rendering.php:775 blocks/artists-shelf/block.json blocks/related-releases/block.json blocks/taxonomy-shelf/block.json
 msgid "ویترین"
 msgstr "shelf"
 
@@ -7849,15 +7812,15 @@ msgstr "shelf"
 msgid "ویترین صفحه (وینیل)"
 msgstr "Record display (vinyl)"
 
-#: src/Blocks/TaxonomyShelfBlock.php:252 src/Modules/Rendering.php:779 /blocks/taxonomy-shelf/block.json
+#: src/Blocks/TaxonomyShelfBlock.php:259 src/Modules/Rendering.php:772 blocks/taxonomy-shelf/block.json
 msgid "ویترین طبقه‌بندی"
 msgstr "Taxonomy shelf"
 
-#: src/Blocks/ArtistShelfBlock.php:620 src/Modules/Rendering.php:744 /blocks/artists-shelf/block.json
+#: src/Blocks/ArtistShelfBlock.php:660 src/Modules/Rendering.php:744 blocks/artists-shelf/block.json
 msgid "ویترین هنرمندان"
 msgstr "Artists shelf"
 
-#: src/Account/WooAccountBridge.php:496 src/Admin/ReleaseMetaBox.php:398 src/Modules/Rendering.php:838 /blocks/dashboard-account/block.json
+#: src/Account/WooAccountBridge.php:496 src/Admin/ReleaseMetaBox.php:398 src/Modules/Rendering.php:831 blocks/dashboard-account/block.json
 msgid "ویرایش"
 msgstr "Edit"
 
@@ -7966,7 +7929,7 @@ msgstr "Clear history"
 msgid "پایان دوره فعلی: %s"
 msgstr "Current period ends: %s"
 
-#: src/Blocks/Release/CollectionAndDownloadRenderer.php:522 src/Blocks/Release/CollectionAndDownloadRenderer.php:582 src/Blocks/Release/CollectionAndDownloadRenderer.php:670 src/Blocks/Release/CollectionAndDownloadRenderer.php:1213 src/Modules/Rendering.php:929 src/Modules/Rendering.php:943 /blocks/preview-button/block.json /blocks/preview-player/block.json /blocks/shuffle-button/block.json
+#: src/Blocks/Release/CollectionAndDownloadRenderer.php:522 src/Blocks/Release/CollectionAndDownloadRenderer.php:582 src/Blocks/Release/CollectionAndDownloadRenderer.php:670 src/Blocks/Release/CollectionAndDownloadRenderer.php:1213 src/Modules/Rendering.php:922 src/Modules/Rendering.php:936 blocks/preview-button/block.json blocks/preview-player/block.json blocks/shuffle-button/block.json
 msgid "پخش"
 msgstr "Play"
 
@@ -8000,15 +7963,15 @@ msgstr "Play release"
 msgid "پخش این فایل مجاز نیست."
 msgstr "Playing this file is not allowed."
 
-#: src/Blocks/QueueBlock.php:110 src/Modules/Rendering.php:803 /blocks/add-to-queue/block.json
+#: src/Blocks/QueueBlock.php:110 src/Modules/Rendering.php:796 blocks/add-to-queue/block.json
 msgid "پخش بعدی"
 msgstr "Play next"
 
-#: assets/blocks.js:3385
+#: assets/blocks.js:3362
 msgid "پخش بعدی (بلافاصله بعد از قطعه فعلی)"
 msgstr "Play next (right after current track)"
 
-#: src/Blocks/ShuffleButtonBlock.php:144 src/Blocks/ShuffleButtonBlock.php:176 src/Modules/Rendering.php:940 /blocks/shuffle-button/block.json
+#: src/Blocks/ShuffleButtonBlock.php:144 src/Blocks/ShuffleButtonBlock.php:176 src/Modules/Rendering.php:933 blocks/shuffle-button/block.json
 msgid "پخش تصادفی"
 msgstr "Shuffle"
 
@@ -8017,7 +7980,7 @@ msgstr "Shuffle"
 msgid "پخش تصادفی %s"
 msgstr "Shuffle %s"
 
-#: assets/blocks.js:3357
+#: assets/blocks.js:3334
 msgid "پخش تصادفی صف پیش‌نمایش را به‌صورت تصادفی مرتب می‌کند."
 msgstr "Shuffle reorders the preview queue randomly."
 
@@ -8066,7 +8029,7 @@ msgstr "The allowed concurrent streams for this account are used up."
 msgid "پخش همه"
 msgstr "Play all"
 
-#: assets/blocks.js:3149
+#: assets/blocks.js:3126
 msgid "پخش همه قبل از تصادفی قرار می‌گیرد و هر دو از کلاس mw-shuffle-button استفاده می‌کنند؛ کلیک‌ها با JavaScript بدون رفرش مدیریت می‌شوند و فرم‌ها به‌عنوان بازگشت بدون JS باقی می‌مانند."
 msgstr "Play All appears before Shuffle using shared button styling with instant JS handling and no-JS form fallback."
 
@@ -8078,11 +8041,11 @@ msgstr "Play preview"
 msgid "پخش کامل و دانلود مستقیم با اشتراک ویژه فعال است"
 msgstr "Full streaming and direct downloads are available with VIP membership"
 
-#: src/Modules/Rendering.php:796 src/Modules/Rendering.php:803 /blocks/add-to-queue/block.json /blocks/playback-queue/block.json
+#: src/Modules/Rendering.php:789 src/Modules/Rendering.php:796 blocks/add-to-queue/block.json blocks/playback-queue/block.json
 msgid "پخش‌کننده"
 msgstr "player"
 
-#: src/Modules/Rendering.php:716 /blocks/preview-player/block.json
+#: src/Modules/Rendering.php:716 blocks/preview-player/block.json
 msgid "پخش‌کننده پیش‌نمایش"
 msgstr "Release preview player"
 
@@ -8106,11 +8069,11 @@ msgstr "Accept collaboration"
 msgid "پذیرفته شده"
 msgstr "Accepted"
 
-#: assets/blocks.js:1262 assets/blocks.js:3520 assets/blocks.js:3717
+#: assets/blocks.js:1262 assets/blocks.js:3497 assets/blocks.js:3694
 msgid "پرتره"
 msgstr "Portrait"
 
-#: src/Modules/Rendering.php:852 /blocks/dashboard-payment/block.json
+#: src/Modules/Rendering.php:845 blocks/dashboard-payment/block.json
 msgid "پرداخت"
 msgstr "Payment"
 
@@ -8122,7 +8085,7 @@ msgstr "Background processing"
 msgid "پرس‌وجو"
 msgstr "Query"
 
-#: src/Modules/Rendering.php:838 /blocks/artist-profile/block.json /blocks/dashboard-account/block.json /blocks/dashboard-welcome/block.json
+#: src/Modules/Rendering.php:831 blocks/artist-profile/block.json blocks/dashboard-account/block.json blocks/dashboard-welcome/block.json
 msgid "پروفایل"
 msgstr "Profile"
 
@@ -8166,7 +8129,7 @@ msgstr "Account Details & Edit Panel"
 msgid "پنل دانلودها"
 msgstr "Downloads panel"
 
-#: src/Modules/Rendering.php:674 /blocks/access-panel/block.json
+#: src/Modules/Rendering.php:674 blocks/access-panel/block.json
 msgid "پنل دسترسی آزاد"
 msgstr "Release access panel"
 
@@ -8215,7 +8178,7 @@ msgstr "New message on request %1$s from %2$s"
 msgid "پیام حالت «فقط کاربران ثبت‌نام‌شده»"
 msgstr "Registered-users-only message"
 
-#: assets/blocks.js:1966 assets/blocks.js:2005 assets/blocks.js:2377 assets/blocks.js:2830 assets/blocks.js:3146 assets/blocks.js:3451 assets/blocks.js:3753
+#: assets/blocks.js:1966 assets/blocks.js:2005 assets/blocks.js:2377 assets/blocks.js:2807 assets/blocks.js:3123 assets/blocks.js:3428 assets/blocks.js:3730
 msgid "پیام حالت خالی"
 msgstr "Empty state message"
 
@@ -8263,7 +8226,7 @@ msgstr "No-results message for filters"
 msgid "پیام کاربر در گفتگو"
 msgstr "User reply in conversation"
 
-#: assets/blocks.js:3748
+#: assets/blocks.js:3725
 msgid "پیام‌ها"
 msgstr "Messages"
 
@@ -8300,7 +8263,7 @@ msgstr "%d catalog suggestions available."
 msgid "پیش‌ذخیره انتشار آینده"
 msgstr "Pre-Save Upcoming Release"
 
-#: assets/blocks.js:1282 assets/blocks.js:3929
+#: assets/blocks.js:1282 assets/blocks.js:2450 assets/blocks.js:3906
 msgid "پیش‌فرض"
 msgstr "Default"
 
@@ -8312,7 +8275,7 @@ msgstr "Default (global setting)"
 msgid "پیش‌فرض noindex، meta robots nofollow روی صفحات حاوی بلوک public-playlists، sitemap exclude."
 msgstr "Applies robots noindex/nofollow and excludes pages containing the public-playlists block from XML sitemaps when disabled."
 
-#: assets/blocks.js:3262
+#: assets/blocks.js:3239
 msgid "پیش‌فرض حالت"
 msgstr "Mode default"
 
@@ -8320,11 +8283,11 @@ msgstr "Mode default"
 msgid "پیش‌فرض ۳۶۰۰ ثانیه (یک ساعت)."
 msgstr "Default 3600 seconds (one hour)."
 
-#: assets/blocks.js:2633
+#: assets/blocks.js:2637
 msgid "پیش‌فرض: الفبایی"
 msgstr "Default: Alphabetical"
 
-#: assets/blocks.js:2626
+#: assets/blocks.js:2630
 msgid "پیش‌فرض: پیکارتین"
 msgstr "Default: Most releases"
 
@@ -8336,7 +8299,7 @@ msgstr "New release defaults"
 msgid "پیش‌فرض‌های کاتالوگ، رفتار دسترسی، محدودیت‌های تحویل، ادغام‌ها و صفحه‌های WordPress را که نمایش را کنترل می‌کنند، مدیریت کنید."
 msgstr "Manage catalog defaults, access behavior, delivery limits, integrations, and the WordPress screens that control presentation."
 
-#: src/Blocks/PreviewPlayer.php:141 src/Blocks/PreviewPlayer.php:302 src/Blocks/PreviewPlayer.php:340 src/Blocks/Release/ReleaseBlockContext.php:237 /blocks/preview-button/block.json
+#: src/Blocks/PreviewPlayer.php:141 src/Blocks/PreviewPlayer.php:302 src/Blocks/PreviewPlayer.php:340 src/Blocks/Release/ReleaseBlockContext.php:237 blocks/preview-button/block.json
 msgid "پیش‌نمایش"
 msgstr "Preview"
 
@@ -8360,7 +8323,7 @@ msgstr "Previous preview"
 msgid "پیش‌نویس"
 msgstr "Draft"
 
-#: src/Modules/Rendering.php:936 /blocks/share-button/block.json
+#: src/Modules/Rendering.php:929 blocks/share-button/block.json
 msgid "پیوند"
 msgstr "link"
 
@@ -8372,7 +8335,7 @@ msgstr "The secure download link is invalid or has expired."
 msgid "پیوند را به‌اشتراک بگذارید"
 msgstr "Share link"
 
-#: assets/blocks.js:3459
+#: assets/blocks.js:3436
 msgid "پیوند سربرگ قفسه انتشار را منعکس می‌کند. خالی بگذارید تا پنهان شود."
 msgstr "Mirrors the release shelf header link. Leave empty to hide it."
 
@@ -8412,7 +8375,7 @@ msgstr "MusicWave pretty permalinks are enabled"
 msgid "پیوندهای مدیریت"
 msgstr "Management links"
 
-#: assets/blocks.js:3328
+#: assets/blocks.js:3305
 msgid "پیوندهای نمونه‌کار"
 msgstr "Portfolio links"
 
@@ -8420,7 +8383,7 @@ msgstr "Portfolio links"
 msgid "پیکارتین"
 msgstr "Most releases"
 
-#: assets/blocks.js:2642
+#: assets/blocks.js:2646
 msgid "پیکارتین (محبوب)"
 msgstr "Most releases (popular)"
 
@@ -8428,7 +8391,7 @@ msgstr "Most releases (popular)"
 msgid "پیکربندی تحویل حفاظت‌شده"
 msgstr "Configure protected delivery"
 
-#: src/Modules/Rendering.php:873 /blocks/account-dashboard/block.json /blocks/dashboard-requests/block.json
+#: src/Modules/Rendering.php:866 blocks/account-dashboard/block.json blocks/dashboard-requests/block.json
 msgid "پیگیری"
 msgstr "Tracking"
 
@@ -8436,7 +8399,7 @@ msgstr "Tracking"
 msgid "پیگیری در حساب کاربری"
 msgstr "Track in My Account"
 
-#: assets/blocks.js:1892 assets/blocks.js:5001 src/Account/RequestTrackingRenderer.php:60 src/Commerce/AccountLibrary.php:560 src/Modules/Rendering.php:870 /blocks/dashboard-requests/block.json
+#: assets/blocks.js:1892 assets/blocks.js:4988 src/Account/RequestTrackingRenderer.php:60 src/Commerce/AccountLibrary.php:560 src/Modules/Rendering.php:863 blocks/dashboard-requests/block.json
 msgid "پیگیری درخواست‌ها"
 msgstr "Request Tracking"
 
@@ -8480,11 +8443,11 @@ msgstr "Visibility: Administrators and the owning requester only; mw_request is 
 msgid "چه کسی می‌تواند آن را ببیند"
 msgstr "Who can see it"
 
-#: assets/blocks.js:498 assets/blocks.js:1240 assets/blocks.js:2015 assets/blocks.js:2425 assets/blocks.js:2840 assets/blocks.js:2898 assets/blocks.js:2903 assets/blocks.js:3480 assets/blocks.js:3485 assets/blocks.js:3667 assets/blocks.js:3672
+#: assets/blocks.js:498 assets/blocks.js:1240 assets/blocks.js:2015 assets/blocks.js:2425 assets/blocks.js:2817 assets/blocks.js:2875 assets/blocks.js:2880 assets/blocks.js:3457 assets/blocks.js:3462 assets/blocks.js:3644 assets/blocks.js:3649
 msgid "چیدمان"
 msgstr "Layout"
 
-#: assets/blocks.js:5131
+#: assets/blocks.js:5118
 msgid "چیدمان سفارشی"
 msgstr "Custom Order"
 
@@ -8500,7 +8463,7 @@ msgstr "Metadata Layout (Expanded Mode)"
 msgid "چیدمان فیلترها"
 msgstr "Filters layout"
 
-#: assets/blocks.js:2420 assets/blocks.js:2835
+#: assets/blocks.js:2420 assets/blocks.js:2812
 msgid "چیدمان و استایل"
 msgstr "Layout & style"
 
@@ -8512,7 +8475,7 @@ msgstr "Layout and labels"
 msgid "چیدمان و ستون‌های فهرست قطعه"
 msgstr "Tracklist layout & columns"
 
-#: assets/blocks.js:4036
+#: assets/blocks.js:4013
 msgid "چیدمان و منبع پروفایل هنرمند"
 msgstr "Artist profile layout & source"
 
@@ -8520,11 +8483,11 @@ msgstr "Artist profile layout & source"
 msgid "چیدمان پنل"
 msgstr "Panel layout"
 
-#: assets/blocks.js:4049
+#: assets/blocks.js:4026
 msgid "چیپ جمع‌وجور (مناسب بالای صفحه تک‌آهنگ)"
 msgstr "Compact chip (release hero)"
 
-#: src/Modules/Rendering.php:789 /blocks/term-hero/block.json
+#: src/Modules/Rendering.php:782 blocks/term-hero/block.json
 msgid "ژانر"
 msgstr "genre"
 
@@ -8532,7 +8495,7 @@ msgstr "genre"
 msgid "ژانر یا حال‌وهوا"
 msgstr "Genre or mood slug"
 
-#: src/Modules/Rendering.php:782 /blocks/taxonomy-shelf/block.json
+#: src/Modules/Rendering.php:775 blocks/taxonomy-shelf/block.json
 msgid "ژانرها"
 msgstr "genres"
 
@@ -8545,7 +8508,7 @@ msgstr "The genres could not be connected to this release."
 msgid "ژانرها: %s."
 msgstr "Genres: %s."
 
-#: src/Modules/Rendering.php:780 /blocks/taxonomy-shelf/block.json
+#: src/Modules/Rendering.php:773 blocks/taxonomy-shelf/block.json
 msgid "ژانرها، حال‌وهواها یا برچسب‌ها را به‌صورت کاشی‌های مرور قابل کلیک، همراه با تعداد انتشار، در شبکه، نوار یا فهرست نمایش می‌دهد."
 msgstr "Displays genres, moods, or labels as tappable browse tiles with release counts, in a grid, rail, or list."
 
@@ -8570,7 +8533,7 @@ msgstr "Catalog IDs"
 msgid "کار را لغو کنید"
 msgstr "Cancel job"
 
-#: src/Account/MembershipPresenter.php:282 src/Requests/RequestsAdminPage.php:763 /blocks/dashboard-account/block.json
+#: src/Account/MembershipPresenter.php:282 src/Requests/RequestsAdminPage.php:763 blocks/dashboard-account/block.json
 msgid "کاربر"
 msgstr "User"
 
@@ -8586,7 +8549,7 @@ msgstr "Users can create up to 20 playlists with 100 items each by default; publ
 msgid "کاربران"
 msgstr "Users"
 
-#: /blocks/dashboard-payment/block.json
+#: blocks/dashboard-payment/block.json
 msgid "کارت"
 msgstr "Card"
 
@@ -8594,19 +8557,19 @@ msgstr "Card"
 msgid "کارت (سطحی)"
 msgstr "Cards (surface)"
 
-#: assets/blocks.js:1695 src/Modules/Rendering.php:828 /blocks/dashboard-subscription/block.json
+#: assets/blocks.js:1695 src/Modules/Rendering.php:821 blocks/dashboard-subscription/block.json
 msgid "کارت اشتراک VIP"
 msgstr "VIP Subscription Card"
 
-#: src/Modules/Rendering.php:829
+#: src/Modules/Rendering.php:822
 msgid "کارت اشتراک VIP با سطح فعال، نوار پیشرفت و تمدید."
 msgstr "VIP subscription card with active tier, progress bar, and renewal CTA."
 
-#: assets/blocks.js:4056
+#: assets/blocks.js:4033
 msgid "کارت افقی متعادل (کنار هم)"
 msgstr "Horizontal card (side by side)"
 
-#: assets/blocks.js:4063
+#: assets/blocks.js:4040
 msgid "کارت پرتره عمودی"
 msgstr "Vertical portrait card"
 
@@ -8614,19 +8577,19 @@ msgstr "Vertical portrait card"
 msgid "کارتی برجسته"
 msgstr "Elevated cards"
 
-#: /blocks/dashboard-addresses/block.json
+#: blocks/dashboard-addresses/block.json
 msgid "کارت‌های آدرس صورتحساب و حمل‌ونقل – فشرده، مینیمال، با دکمه ویرایش."
 msgstr "Billing and shipping address cards — compact and minimal with edit button."
 
-#: src/Modules/Rendering.php:843
+#: src/Modules/Rendering.php:836
 msgid "کارت‌های آدرس صورتحساب و حمل‌ونقل."
 msgstr "Billing and shipping address cards."
 
-#: assets/blocks.js:2494
+#: assets/blocks.js:2498
 msgid "کامل"
 msgstr "Full"
 
-#: assets/blocks.js:4872
+#: assets/blocks.js:4859
 msgid "کاهش"
 msgstr "Decrease"
 
@@ -8634,7 +8597,7 @@ msgstr "Decrease"
 msgid "کاور"
 msgstr "Cover"
 
-#: src/Modules/Rendering.php:810 /blocks/account-dashboard/block.json /blocks/dashboard-stats/block.json
+#: src/Modules/Rendering.php:803 blocks/account-dashboard/block.json blocks/dashboard-stats/block.json
 msgid "کتابخانه"
 msgstr "library"
 
@@ -8642,7 +8605,7 @@ msgstr "library"
 msgid "کتابخانه شخصی MusicWave"
 msgstr "MusicWave personal library"
 
-#: src/Modules/Rendering.php:884 src/Privacy/PersonalData.php:111 /blocks/music-library/block.json
+#: src/Modules/Rendering.php:877 src/Privacy/PersonalData.php:111 blocks/music-library/block.json
 msgid "کتابخانه شخصی موسیقی"
 msgstr "Personal music library"
 
@@ -8662,7 +8625,7 @@ msgstr "Your library is empty. Open any release or artist page and use the “Ad
 msgid "کتابخانه علاقه‌مندی‌ها"
 msgstr "Favorites Library"
 
-#: assets/blocks.js:4966
+#: assets/blocks.js:4953
 msgid "کتابخانه موسیقی"
 msgstr "Music Library"
 
@@ -8686,15 +8649,15 @@ msgstr "The WordPress Media Library is unavailable on this screen."
 msgid "کتابخانهٔ هنرمندان"
 msgstr "Artists library"
 
-#: assets/blocks.js:2752
+#: assets/blocks.js:2729
 msgid "کدام طبقه‌بندی را مرور کنیم؟"
 msgstr "Which taxonomy to browse"
 
-#: assets/blocks.js:2774
+#: assets/blocks.js:2751
 msgid "کدام عبارت ظاهر می‌شود"
 msgstr "Which terms appear"
 
-#: assets/blocks.js:3630
+#: assets/blocks.js:3607
 msgid "کدام فعالیت ریل را تغذیه می‌کند"
 msgstr "Which activity feeds the rail"
 
@@ -8702,7 +8665,7 @@ msgstr "Which activity feeds the rail"
 msgid "کدام هنرمندان ظاهر می‌شوند"
 msgstr "Which artists appear"
 
-#: assets/blocks.js:3287 src/Requests/RequestPostType.php:212
+#: assets/blocks.js:3264 src/Requests/RequestPostType.php:212
 msgid "کسب‌وکار / رویداد"
 msgstr "Business / event"
 
@@ -8739,7 +8702,7 @@ msgstr "Technical key"
 msgid "کلید فنی، برچسب مشتری، قالب و میزان بیت را پر می‌کند."
 msgstr "Fills the technical key, customer label, format, and bitrate."
 
-#: src/Schema/ReleaseMetaSchema.php:125 /blocks/release-meta/block.json
+#: src/Schema/ReleaseMetaSchema.php:125 blocks/release-meta/block.json
 msgid "کلید موسیقی"
 msgstr "Musical key"
 
@@ -8751,7 +8714,7 @@ msgstr "Membership level keys"
 msgid "کلیدهای سطح عضویت اعمالی (اختیاری — خالی = سطح پیش‌فرض):"
 msgstr "Membership level keys to apply (optional — blank = default level):"
 
-#: src/Modules/Rendering.php:796 /blocks/playback-queue/block.json
+#: src/Modules/Rendering.php:789 blocks/playback-queue/block.json
 msgid "کلیک"
 msgstr "shuffle"
 
@@ -8763,7 +8726,7 @@ msgstr "Lists the viewer's current membership grants."
 msgid "کنترل‌های قبلی و بعدی را نشان می‌دهد."
 msgstr "Shows previous and next controls."
 
-#: assets/blocks.js:2926
+#: assets/blocks.js:2903
 msgid "کوتاه"
 msgstr "Short"
 
@@ -8771,7 +8734,7 @@ msgstr "Short"
 msgid "کوچک و جمع‌وجور (SM)"
 msgstr "Small compact (SM)"
 
-#: assets/blocks.js:4327
+#: assets/blocks.js:4304
 msgid "کپسول همراه با متن"
 msgstr "Labeled pill button"
 
@@ -8799,7 +8762,7 @@ msgstr "Copy link"
 msgid "کپی پیوند اشتراک"
 msgstr "Copy share link"
 
-#: src/Blocks/Release/CollectionAndDownloadRenderer.php:559 src/Blocks/Release/CollectionAndDownloadRenderer.php:988 src/Modules/Rendering.php:726 /blocks/download-button/block.json
+#: src/Blocks/Release/CollectionAndDownloadRenderer.php:559 src/Blocks/Release/CollectionAndDownloadRenderer.php:988 src/Modules/Rendering.php:726 blocks/download-button/block.json
 msgid "کیفیت"
 msgstr "Quality"
 
@@ -8815,7 +8778,7 @@ msgstr "Download quality"
 msgid "کیفیت دانلود جدید"
 msgstr "New download quality"
 
-#: assets/blocks.js:4191
+#: assets/blocks.js:4168
 msgid "کیفیت و اندازه تصویر"
 msgstr "Image Size & Quality"
 
@@ -8875,7 +8838,7 @@ msgstr "Request workflow"
 msgid "گروه اسلاید فعلی و کنترل‌های پیمایش مستقیم را نشان می‌دهد."
 msgstr "Shows the current slide group and direct navigation controls."
 
-#: assets/blocks.js:3276 src/Requests/RequestPostType.php:210
+#: assets/blocks.js:3253 src/Requests/RequestPostType.php:210
 msgid "گروه موسیقی"
 msgstr "Band"
 
@@ -8908,19 +8871,19 @@ msgstr "Conversation & Chat"
 msgid "گلچین آثار منتشرشده %s"
 msgstr "Curated published releases in %s"
 
-#: src/Modules/Rendering.php:719 src/Modules/Rendering.php:929 /blocks/preview-button/block.json /blocks/preview-player/block.json
+#: src/Modules/Rendering.php:719 src/Modules/Rendering.php:922 blocks/preview-button/block.json blocks/preview-player/block.json
 msgid "گوش کن"
 msgstr "listen"
 
-#: assets/blocks.js:2479 assets/blocks.js:2938
+#: assets/blocks.js:2483 assets/blocks.js:2915
 msgid "گوشه‌های گرد"
 msgstr "Rounded corners"
 
-#: assets/blocks.js:166 assets/blocks.js:4172
+#: assets/blocks.js:166 assets/blocks.js:4149
 msgid "گوشه‌گرد مدرن"
 msgstr "Modern rounded"
 
-#: src/Modules/Rendering.php:922 /blocks/continue-listening/block.json
+#: src/Modules/Rendering.php:915 blocks/continue-listening/block.json
 msgid "گوش‌دادن"
 msgstr "listening"
 
@@ -8931,6 +8894,10 @@ msgstr "New-request notification recipients"
 #: src/Blocks/PlaylistBlocks.php:866
 msgid "یا"
 msgstr "or"
+
+#: assets/blocks.js:2357
+msgid "یا بدون صفحه‌بندی (همه در یک صفحه) یا صفحه‌بندی استاندارد وردپرس که ویترین آن را جدا و زیر کارت‌ها نمایش می‌دهد. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند."
+msgstr "Either no pagination (everything on one page) or standard WordPress pagination, which the shelf renders separately below the cards. Paging only works for the «all artists» source with a stable order."
 
 #: src/Requests/RequestsAdminPage.php:673 src/Requests/RequestsAdminPage.php:767
 msgid "یادداشت داخلی"
@@ -8952,7 +8919,7 @@ msgstr "A provider streams opaque protected assets after access checks pass."
 msgid "یک ارائه‌دهنده یکپارچه سازی MusicWave یک مشکل را گزارش می‌کند"
 msgstr "A MusicWave integration provider reports a problem"
 
-#: assets/blocks.js:3007
+#: assets/blocks.js:2984
 msgid "یک اصطلاح را سنجاق کنید"
 msgstr "Pin a term"
 
@@ -8993,7 +8960,7 @@ msgstr "A new request was submitted (%s)."
 msgid "یک دکمه افزودن به سبد خرید را به هر محصول طرح اضافه می‌کند."
 msgstr "Adds an add-to-cart button to every plan product."
 
-#: src/Modules/Rendering.php:927
+#: src/Modules/Rendering.php:920
 msgid "یک دکمه پیش‌نمایش صوتی انتشار را نمایش می‌دهد."
 msgstr "Displays a release audio preview button."
 
@@ -9045,7 +9012,7 @@ msgstr "Unified"
 msgid "یکی از پیوندها معتبر نیست؛ فقط نشانی‌های http یا https پذیرفته می‌شوند."
 msgstr "One of the links is not valid; only http or https URLs are accepted."
 
-#: assets/blocks.js:2988
+#: assets/blocks.js:2965
 msgid "۰ برای نمایش توضیحات کامل است؛ هر مقدار دیگری گزیده‌ای کوتاه‌شده را نشان می‌دهد."
 msgstr "0 keeps the full description. Any other value shows a trimmed excerpt."
 

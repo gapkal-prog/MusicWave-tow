@@ -47,7 +47,36 @@
 <!-- /wp:columns --></div>
 <!-- /wp:group -->
 <!-- wp:music-wave/catalog-filters {"align":"wide"} /-->
-<!-- wp:music-wave/release-shelf {"align":"wide","title":"همهٔ انتشارها","description":"کاملترین فهرست کاتالوگ؛ مرتب‌سازی از فیلترهای بالا.","itemsToShow":24,"columns":4,"layout":"grid","showDate":true,"showViews":true} /--></main>
+<!-- wp:music-wave/catalog-results {"align":"wide"} /-->
+<!-- wp:query {"align":"wide","queryId":33,"query":{"inherit":true}} -->
+<div class="wp-block-query alignwide"><!-- wp:post-template {"className":"mw-release-grid","layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"className":"mw-release-card mw-surface","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-release-card mw-surface"><!-- wp:group {"className":"mw-release-card__media","layout":{"type":"default"}} -->
+<div class="wp-block-group mw-release-card__media"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"1"} /-->
+<!-- wp:music-wave/preview-player {"buttonStyle":"icon","variant":"accent","size":"md","className":"mw-hero-slide__play"} /--></div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"mw-release-card__body","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-release-card__body"><!-- wp:post-title {"isLink":true,"fontSize":"medium"} /-->
+<!-- wp:music-wave/release-meta /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+<!-- wp:query-no-results -->
+<!-- wp:group {"className":"mw-catalog-empty","layout":{"type":"constrained"}} -->
+<div class="wp-block-group mw-catalog-empty"><!-- wp:paragraph {"fontSize":"large"} -->
+<p class="has-large-font-size">چیزی برای نمایش پیدا نشد.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"textColor":"muted"} -->
+<p class="has-muted-color has-text-color">فیلترها را تغییر دهید یا کاتالوگ را بدون فیلتر مرور کنید.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- /wp:query-no-results -->
+<!-- wp:query-pagination {"className":"mw-catalog-pagination","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+<!-- wp:query-pagination-previous /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination --></div>
+<!-- /wp:query --></main>
 <!-- /wp:group --></div>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

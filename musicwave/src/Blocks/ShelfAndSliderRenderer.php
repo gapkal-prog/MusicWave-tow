@@ -8,6 +8,7 @@ use ManaCore\MusicWave\Core\Blocks\ReleaseCard;
 use ManaCore\MusicWave\Core\Blocks\SectionHeader;
 use ManaCore\MusicWave\Core\Playlists\PlaylistRepository;
 use ManaCore\MusicWave\Core\Support\Settings;
+use WP_Block;
 use WP_Post;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +21,44 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class ShelfAndSliderRenderer {
 
+	/**
+	 * Canonical release-card composition used by the standard Query Loop.
+	 *
+	 * It is the exact block list the bundled taxonomy templates ship
+	 * (`taxonomy-mw_genre.html`, `taxonomy-mw_artist.html`). Keeping one copy
+	 * here means a shelf that hands its full listing to WordPress renders the
+	 * same card WYSIWYG in the Site Editor and on the front end.
+	 */
+	private const LOOP_CARD_BLOCKS = '<!-- wp:group {"className":"mw-release-card mw-surface","layout":{"type":"constrained"}} -->'
+		. '<div class="wp-block-group mw-release-card mw-surface">'
+		. '<!-- wp:group {"className":"mw-release-card__media","layout":{"type":"default"}} -->'
+		. '<div class="wp-block-group mw-release-card__media">'
+		. '<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"1"} /-->'
+		. '<!-- wp:music-wave/preview-player {"buttonStyle":"icon","variant":"accent","size":"md","className":"mw-hero-slide__play"} /-->'
+		. '</div><!-- /wp:group -->'
+		. '<!-- wp:group {"className":"mw-release-card__body","layout":{"type":"constrained"}} -->'
+		. '<div class="wp-block-group mw-release-card__body">'
+		. '<!-- wp:post-title {"isLink":true,"fontSize":"medium"} /-->'
+		. '<!-- wp:music-wave/release-meta /-->'
+		. '</div><!-- /wp:group -->'
+		. '</div><!-- /wp:group -->';
+
 	/** @var BlockRegistry */
 	private BlockRegistry $blocks;
+
+	/**
+	 * Extra query vars for Query Loop blocks rendered by this request, keyed by
+	 * the synthetic `queryId` the shelf generated for that loop.
+	 *
+	 * @var array<int, array<string, mixed>>
+	 */
+	private array $loop_query_overrides = array();
+
+	/** Per-request counter that keeps every shelf loop's `queryId` unique. */
+	private static int $loop_sequence = 0;
+
+	/** `queryId` base that cannot collide with the bundled templates (12/31/32). */
+	private const LOOP_QUERY_ID_BASE = 900000;
 
 	public function __construct( BlockRegistry $blocks ) {
 		$this->blocks = $blocks;
@@ -477,7 +514,11 @@ final class ShelfAndSliderRenderer {
 
 		$items = isset( $attributes['itemsToShow'] ) ? absint( $attributes['itemsToShow'] ) : 0;
 		$items = $items >= 3 && $items <= 12 ? $items : $this->slider_number( 'slider_items', 6 );
-		$items = ! empty( $attributes['showAll'] ) ? -1 : min( 12, max( 3, $items ) );
+		// A rail only ever shows a bounded window of slides, so «load every
+		// release» is never useful here: it costs an unbounded query and the
+		// extra posts are unreachable. The saved attribute is ignored instead
+		// of honoured, which keeps old content rendering (capped, not broken).
+		$items = min( 12, max( 3, $items ) );
 		$ids   = get_posts( $this->release_query_args( $attributes, $items ) );
 		if ( ( ! is_array( $ids ) || empty( $ids ) ) && empty( $tabbed['tabs'] ) ) {
 			return '';
@@ -729,6 +770,167 @@ final class ShelfAndSliderRenderer {
 	}
 
 	/**
+	 * Query Loop bridge: turn the shelf's own query into the standard loop.
+	 *
+	 * The shelf never re-implements paging. When «نمایش همهٔ انتشارها» is on it
+	 * renders a real `core/query` → `core/post-template` → `core/query-pagination`
+	 * composition, and hands its filters to core through
+	 * `query_loop_block_query_vars` for that loop's `queryId` only, so every
+	 * other Query Loop on the page (archives, taxonomy templates, related
+	 * releases) keeps its own query untouched.
+	 *
+	 * @param array<string, mixed>                  $attributes  Block attributes.
+	 * @param array<string, mixed>                  $tabbed      Filter-tab state.
+	 * @param string                                $tab_scope   Filter tab scope key.
+	 * @param string                                $layout      Resolved layout key.
+	 * @param int                                   $columns     Resolved column count.
+	 * @param string                                $shelf_class Extra wrapper classes.
+	 * @param array{eyebrow:string,title:string,description:string,url:string,label:string,icon:string} $chrome Header chrome.
+	 * @return string
+	 */
+	private function render_release_loop(
+		array $attributes,
+		array $tabbed,
+		string $tab_scope,
+		string $layout,
+		int $columns,
+		string $shelf_class,
+		array $chrome
+	): string {
+		if ( ! function_exists( 'do_blocks' ) ) {
+			return '';
+		}
+
+		++self::$loop_sequence;
+		$query_id = self::LOOP_QUERY_ID_BASE + self::$loop_sequence;
+
+		$per_page = isset( $attributes['perPage'] ) ? absint( $attributes['perPage'] ) : 12;
+		$per_page = min( 24, max( 3, $per_page ) );
+
+		// Reuse the shelf's own filter pipeline; only the vars the Query block
+		// cannot express (taxonomy, date window, curated order, view ordering)
+		// travel through the filter.
+		$overrides = $this->release_query_args( $attributes, $per_page );
+		unset(
+			$overrides['fields'],
+			$overrides['posts_per_page'],
+			$overrides['no_found_rows'],
+			$overrides['update_post_meta_cache'],
+			$overrides['update_post_term_cache'],
+			$overrides['post_type'],
+			$overrides['post_status'],
+			$overrides['orderby'],
+			$overrides['order'],
+			$overrides['meta_key']
+		);
+		$this->loop_query_overrides[ $query_id ] = $overrides;
+
+		$apply_overrides = function ( $query, $block = null ) use ( $query_id ) {
+			if ( ! is_array( $query ) || ! isset( $this->loop_query_overrides[ $query_id ] ) ) {
+				return $query;
+			}
+			$block_query_id = $block instanceof WP_Block && isset( $block->attributes['queryId'] )
+				? (int) $block->attributes['queryId']
+				: 0;
+			if ( $query_id !== $block_query_id ) {
+				return $query;
+			}
+
+			return array_merge( $query, $this->loop_query_overrides[ $query_id ] );
+		};
+		add_filter( 'query_loop_block_query_vars', $apply_overrides, 10, 2 );
+
+		// Grid layouts carry the author's column count; the flat list stays one
+		// column, exactly like the hand-built layouts.
+		$template_layout = ',"layout":{"type":"grid","columnCount":' . ( 'list' === $layout ? 1 : $columns ) . '}';
+
+		// Ordering travels in the block attributes where core handles it. Only
+		// page-stable orders are allowed: a shuffled listing would repeat and
+		// drop releases between pages. «بازدید» is not a core order and travels
+		// through the filter below, with a date tiebreaker.
+		$order_by = isset( $attributes['orderBy'] ) ? (string) $attributes['orderBy'] : 'date';
+		$order_by = in_array( $order_by, array( 'date', 'title', 'modified' ), true ) ? $order_by : 'date';
+		$order     = isset( $attributes['order'] ) && 'ASC' === strtoupper( (string) $attributes['order'] ) ? 'ASC' : 'DESC';
+
+		if ( 'views' === ( isset( $attributes['orderBy'] ) ? (string) $attributes['orderBy'] : '' ) ) {
+			$this->loop_query_overrides[ $query_id ]['orderby'] = array(
+				'meta_value_num' => $order,
+				'date'           => 'DESC',
+			);
+			$this->loop_query_overrides[ $query_id ]['meta_key'] = 'mw_views'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+		}
+
+		if ( ! empty( $attributes['releaseIds'] ) && isset( $overrides['post__in'] ) ) {
+			// Manual picks keep the editor's order, like the hand-built shelves.
+			$this->loop_query_overrides[ $query_id ]['orderby'] = 'post__in';
+		}
+
+		$query_attributes = array(
+			'queryId' => $query_id,
+			'query'   => array(
+				'perPage'   => $per_page,
+				'pages'     => 0,
+				'offset'    => 0,
+				'postType'  => 'mw_release',
+				'order'     => $order,
+				'orderBy'   => $order_by,
+				'author'    => '',
+				'search'    => '',
+				'exclude'   => array(),
+				'sticky'    => '',
+				'inherit'   => false,
+			),
+			'className' => 'mw-release-shelf__loop',
+		);
+
+		$empty_copy = __( 'هنوز انتشاری با این فیلترها پیدا نشد.', 'musicwave' );
+		$markup     = '<!-- wp:query ' . $this->loop_json( $query_attributes ) . ' -->'
+			. '<!-- wp:post-template {"className":"mw-release-shelf__items"' . $template_layout . '} -->'
+			. self::LOOP_CARD_BLOCKS
+			. '<!-- /wp:post-template -->'
+			. '<!-- wp:query-no-results -->'
+			. '<!-- wp:paragraph {"className":"mw-release-shelf__empty"} -->'
+			. '<p class="mw-release-shelf__empty">' . esc_html( $empty_copy ) . '</p>'
+			. '<!-- /wp:paragraph -->'
+			. '<!-- /wp:query-no-results -->'
+			. '<!-- wp:query-pagination {"className":"mw-catalog-pagination","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->'
+			. '<!-- wp:query-pagination-previous /-->'
+			. '<!-- wp:query-pagination-numbers /-->'
+			. '<!-- wp:query-pagination-next /-->'
+			. '<!-- /wp:query-pagination -->'
+			. '<!-- /wp:query -->';
+
+		$rendered = do_blocks( $markup );
+
+		remove_filter( 'query_loop_block_query_vars', $apply_overrides, 10 );
+		unset( $this->loop_query_overrides[ $query_id ] );
+
+		if ( ! is_string( $rendered ) || '' === trim( $rendered ) ) {
+			return '';
+		}
+
+		$header      = $this->render_shelf_header( $chrome['eyebrow'], $chrome['title'], $chrome['description'], $chrome['url'], $chrome['label'], $chrome['icon'] );
+		$tabs_markup = $this->render_filter_tabs( $tabbed['tabs'], $tabbed['active'], $tab_scope );
+		$scope_attr  = ! empty( $tabbed['tabs'] ) ? ' data-mw-filter-scope="' . esc_attr( $tab_scope ) . '"' : '';
+		$bento_class = 'bento' === $layout ? ' mw-release-shelf--bento' : '';
+
+		return '<section ' . get_block_wrapper_attributes(
+			array( 'class' => 'mw-release-shelf mw-release-shelf--' . ( 'bento' === $layout ? 'grid' : $layout ) . $bento_class . ' mw-release-shelf--columns-' . $columns . ' mw-release-shelf--loop' . $shelf_class )
+		) . $scope_attr . '>' . $header . $tabs_markup . $rendered . '</section>';
+	}
+
+	/**
+	 * JSON-encode a block attribute payload for inline block markup.
+	 *
+	 * @param array<string, mixed> $attributes Attributes to encode.
+	 */
+	private function loop_json( array $attributes ): string {
+		$json = function_exists( 'wp_json_encode' ) ? wp_json_encode( $attributes ) : json_encode( $attributes );
+
+		return is_string( $json ) ? $json : '{}';
+	}
+
+	/**
 	 * Render configurable release shelf across grid, scroll, list, feature, and slider layouts.
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
@@ -749,12 +951,6 @@ final class ShelfAndSliderRenderer {
 
 		$show_all = ! empty( $attributes['showAll'] );
 		$items    = isset( $attributes['itemsToShow'] ) ? absint( $attributes['itemsToShow'] ) : 8;
-		$items    = $show_all ? -1 : min( 24, max( 1, $items ) );
-		$ids      = get_posts( $this->release_query_args( $attributes, $items ) );
-		if ( ( ! is_array( $ids ) || empty( $ids ) ) && empty( $tabbed['tabs'] ) ) {
-			return '';
-		}
-		$ids = is_array( $ids ) ? $ids : array();
 
 		$layout  = isset( $attributes['layout'] ) ? sanitize_key( (string) $attributes['layout'] ) : 'grid';
 		$layout  = in_array( $layout, array( 'grid', 'bento', 'scroll', 'list', 'feature', 'slider' ), true ) ? $layout : 'grid';
@@ -785,6 +981,41 @@ final class ShelfAndSliderRenderer {
 
 		$tabs_markup = $this->render_filter_tabs( $tabbed['tabs'], $tabbed['active'], $tab_scope );
 		$scope_attr  = ! empty( $tabbed['tabs'] ) ? ' data-mw-filter-scope="' . esc_attr( $tab_scope ) . '"' : '';
+
+		/*
+		 * «نمایش همهٔ انتشارها» is a publishing surface, not a bigger preview:
+		 * it delegates the complete listing — and its paging — to the standard
+		 * WordPress Query Loop instead of fetching an unbounded `get_posts()`
+		 * result. Curated/editorial layouts keep their hand-built composition.
+		 */
+		if ( $show_all && in_array( $layout, array( 'grid', 'bento', 'list' ), true ) ) {
+			$looped = $this->render_release_loop(
+				$attributes,
+				$tabbed,
+				$tab_scope,
+				$layout,
+				$columns,
+				$shelf_variant,
+				array(
+					'eyebrow'     => $eyebrow,
+					'title'       => $section_title,
+					'description' => $description,
+					'url'         => $section_url,
+					'label'       => $section_link_label,
+					'icon'        => $header_icon,
+				)
+			);
+			if ( '' !== $looped ) {
+				return $looped;
+			}
+		}
+
+		$items = $show_all ? -1 : min( 24, max( 1, $items ) );
+		$ids   = get_posts( $this->release_query_args( $attributes, $items ) );
+		if ( ( ! is_array( $ids ) || empty( $ids ) ) && empty( $tabbed['tabs'] ) ) {
+			return '';
+		}
+		$ids = is_array( $ids ) ? $ids : array();
 
 		if ( 'feature' === $layout && ! empty( $ids ) ) {
 			return $this->render_feature_shelf( $attributes, $ids, $eyebrow, $section_title, $description, $section_url, $section_link_label, $shelf_variant, $tabs_markup, $scope_attr );

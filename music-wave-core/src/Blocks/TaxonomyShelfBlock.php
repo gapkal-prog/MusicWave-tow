@@ -170,12 +170,19 @@ final class TaxonomyShelfBlock {
 		}
 
 		$source = isset( $attributes['source'] ) ? sanitize_key( (string) $attributes['source'] ) : 'all';
-		$terms  = TermShelfSupport::query_terms(
+
+		// «حداکثر کاشی» binds at the query for every taxonomy: asking for 3
+		// tiles must not read 24 terms (or shuffle 100) first. The absolute
+		// ceiling still applies, so an out-of-range saved value stays bounded.
+		$requested = isset( $attributes['itemsToShow'] ) ? absint( $attributes['itemsToShow'] ) : 0;
+		$requested = min( self::MAX_ITEMS, max( 1, $requested > 0 ? $requested : 8 ) );
+
+		$terms = TermShelfSupport::query_terms(
 			$taxonomy,
 			'manual' === $source,
 			isset( $attributes['termIds'] ) ? (string) $attributes['termIds'] : '',
 			isset( $attributes['orderBy'] ) ? sanitize_key( (string) $attributes['orderBy'] ) : 'count',
-			self::MAX_ITEMS
+			$requested
 		);
 
 		return TermShelfSupport::finalize_terms( $terms, $attributes, self::MAX_ITEMS, 'music_wave_terms_shelf_terms', $taxonomy );

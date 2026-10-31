@@ -768,13 +768,6 @@ final class Rendering implements Module {
 				'keywords'    => array( __( 'هنرمندان', 'music-wave-core' ), __( 'الفبا', 'music-wave-core' ), __( 'فیلتر', 'music-wave-core' ), __( 'حروف', 'music-wave-core' ) ),
 			),
 			array(
-				'name'        => 'music-wave/artists-pagination',
-				'title'       => __( 'صفحه‌بندی هنرمندان', 'music-wave-core' ),
-				'description' => __( 'ناوبری شماره‌ای صفحهٔ هنرمندان؛ با همان «تعداد هنرمند در هر صفحه» ویترین تنظیم شود.', 'music-wave-core' ),
-				'icon'        => 'admin-page',
-				'keywords'    => array( __( 'هنرمندان', 'music-wave-core' ), __( 'صفحه‌بندی', 'music-wave-core' ), __( 'ناوبری', 'music-wave-core' ) ),
-			),
-			array(
 				'name'        => 'music-wave/taxonomy-shelf',
 				'title'       => __( 'ویترین طبقه‌بندی', 'music-wave-core' ),
 				'description' => __( 'ژانرها، حال‌وهواها یا برچسب‌ها را به‌صورت کاشی‌های مرور قابل کلیک، همراه با تعداد انتشار، در شبکه، نوار یا فهرست نمایش می‌دهد.', 'music-wave-core' ),

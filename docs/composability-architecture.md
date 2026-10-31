@@ -718,14 +718,13 @@ artists page is edited section by section instead of through one 23-attribute bl
 | `music-wave/artists-hero` | E — fat dynamic | Copy + two catalogue totals. No query input, but the data is server-side. |
 | `music-wave/artists-toolbar` | E — fat dynamic | GET form + link tabs. Nothing to compose: every control is a URL built from shared state. |
 | `music-wave/artists-alphabet` | E — fat dynamic | Letter row whose link/inert state depends on term counts. |
-| `music-wave/artists-pagination` | E — fat dynamic | Numbered pager; delegates to `Concerns\ArtistsPager`, the same renderer the shelf uses. |
 | `music-wave/artists-shelf` | ⏸️ E — fat dynamic | Query + card chrome stay PHP. Gained `browseIndex`, `showCrowns`, `showResultCount`, `noResultsMessage` as display-only attributes. |
 
 **One state service, four readers.** `Catalog\ArtistIndex` owns the browsing state — page, search,
 letter and ordering query vars — plus the term queries, the per-letter counts, the page
 arithmetic and every generated URL. No block parses `$_GET` or builds a link on its own, which is
 what keeps the toolbar, alphabet, summary and pager from drifting the way §1.3 describes. A
-`browseIndex` shelf and the standalone pagination block count the same `matching_total()` through
+`browseIndex`/`pagination` shelf counts its pages through
 the same `page_count()`, so `perPage` in one and `perPage` in the other cannot disagree.
 
 **Placement.** The chrome leaves carry no cross-block assumptions: the alphabet row emits
@@ -741,11 +740,17 @@ default to the previous appearance (`browseIndex`, `showCrowns` and `showResultC
 
 **Tests.** `tests/run.php` covers the shared service (letter bucketing incl. Arabic variants,
 search, per-letter counts, page counts, URL canonicalisation) and each leaf (hero defaults, toolbar
-links and active states, alphabet links vs inert chips, shelf summary, crowns, `browseIndex`
-slicing, empty-filter message, standalone pager).
-`tests/template-integrity.php` pins the four new `block.json` files, the 41-block inventory and the
+links and active states, alphabet links vs inert chips, shelf summary, crowns, paging
+slice — `pagination` and the legacy `browseIndex` spelling — and the empty-filter message).
+`tests/template-integrity.php` pins the three new `block.json` files, the 40-block inventory and the
 `Rendering::LOCALIZED_ATTRIBUTE_KEYS` contract. `tests/editor-contracts.js` and
 `tests/editor-lanes.js` stay unchanged: no new lane, no InnerBlocks.
+
+Paging itself is not a block. A term list has no core Query Loop, so the shelf renders
+`paginate_links()` — WordPress' own pager — as `nav.wp-block-query-pagination` +
+`.page-numbers`, the exact shape `core/query-pagination` prints on the taxonomy templates.
+That removed the `artists-pagination` block, `Concerns\ArtistsPager` and the rule that its
+`perPage` had to be kept equal to the shelf's by hand.
 
 ### Remaining-block classification (audit inventory)
 
@@ -767,7 +772,7 @@ Lane legend: ✅ upgraded this programme · 🟡 pairing/empty-header available 
 | `catalog-filters` / `catalog-results` | ⏸️ E | GET form + live archive query. Labels already inspector-controlled. Style variations exist. |
 | `request-form` | ✅ D+E | Form/POST/nonce/honeypot stay fat PHP. `request-cta` + the three request page templates compose heading/highlights/steps as core blocks on `.mw-request-form__*` (not `.mw-section-head`). Nested PHP section is flattened in CSS. Inspector hides chrome copy while the matching `show*` toggle is off. |
 | `public-playlists` / `continue-listening` / `artists-shelf` / `taxonomy-shelf` | ⏸️ E | Query shelves. Same empty-header contract as theme shelf where they share `SectionHeader`. |
-| `artists-hero` / `artists-toolbar` / `artists-alphabet` / `artists-pagination` | ✅ E | Stage F browsing chrome split out of `artists-shelf`; each reads shared `Catalog\ArtistIndex` state, so they have no InnerBlocks to offer. |
+| `artists-hero` / `artists-toolbar` / `artists-alphabet` | ✅ E | Stage F browsing chrome split out of `artists-shelf`; each reads shared `Catalog\ArtistIndex` state, so they have no InnerBlocks to offer. |
 | `playlists` / `playback-queue` / `music-library` / add-to-* | ⏸️ E | Auth + mutation. Not canvas composition. |
 | `preview-button` / `preview-player` / `share-button` / `shuffle-button` / `library-button` | ⏸️ E | Leaf actions; already small. |
 | `term-hero` / `artist-profile` | ⏸️ E | Term/query identity. Archives already compose them as leaves. |

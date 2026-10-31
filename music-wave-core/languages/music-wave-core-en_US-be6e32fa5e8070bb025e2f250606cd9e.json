@@ -1263,9 +1263,6 @@
             "باکس دانلود، کیفیت‌ها و برچسب‌ها": [
                 "Download panel, qualities, and labels"
             ],
-            "باید با «هنرمند در هر صفحه» در بلوک ویترین هنرمندان یکی باشد.": [
-                "Must match “Artists per page” in the Artists shelf block."
-            ],
             "بایگانی": [
                 "Archive"
             ],
@@ -3540,9 +3537,6 @@
             "صفحات کتابخانه": [
                 "Library pages"
             ],
-            "صفحه": [
-                "Page"
-            ],
             "صفحه فهرست‌های پخش عمومی %1$d از %2$d": [
                 "Public playlists page %1$d of %2$d"
             ],
@@ -3551,9 +3545,6 @@
             ],
             "صفحه کتابخانه %d": [
                 "Library page %d"
-            ],
-            "صفحهٔ %1$s از %2$s · %3$s هنرمند": [
-                "Page %1$s of %2$s · %3$s artists"
             ],
             "صفحهٔ %s": [
                 "Page %s"
@@ -3567,17 +3558,8 @@
             "صفحهٔ وینیل (چرخان)": [
                 "Vinyl disc (spinning)"
             ],
-            "صفحه‌بندی": [
-                "Pagination"
-            ],
-            "صفحه‌بندی با بلوک «صفحه‌بندی هنرمندان»": [
-                "Paginate with the Artists Pagination block"
-            ],
-            "صفحه‌بندی درون بلوک": [
-                "Paginate inside the block"
-            ],
-            "صفحه‌بندی درون‌بلوکی، صفحه‌بندی با بلوک جداگانهٔ هنرمندان، یا نمایش یک‌جای همه. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند.": [
-                "Paginate inside the block, paginate with the separate Artists Pagination block, or show everything at once. Pagination only works for the “All artists” source with stable ordering."
+            "صفحه‌بندی با بلوک (جدا) — ناوبری استاندارد وردپرس": [
+                "Paging with a block (separate) — standard WordPress navigation"
             ],
             "صفحه‌بندی هنرمندان": [
                 "Artist pagination"
@@ -4900,12 +4882,6 @@
             "ناوبری": [
                 "Navigation"
             ],
-            "ناوبری شماره‌ای صفحهٔ هنرمندان. «تعداد هنرمند در هر صفحه» باید با همان مقدار ویترین هنرمندان تنظیم شود تا شماره‌ها با محتوای صفحه هم‌خوان بمانند.": [
-                "Numbered paging for the artists index. The “artists per page” value must match the Artists shelf block so page numbers match the content."
-            ],
-            "ناوبری شماره‌ای صفحهٔ هنرمندان؛ با همان «تعداد هنرمند در هر صفحه» ویترین تنظیم شود.": [
-                "Numbered paging for the artists index; set the same “artists per page” value as the shelf."
-            ],
             "نتایج": [
                 "Results"
             ],
@@ -5124,9 +5100,6 @@
             ],
             "نمایش حال و هوا": [
                 "Show mood"
-            ],
-            "نمایش خط وضعیت صفحه": [
-                "Show page status line"
             ],
             "نمایش خوش‌آمدگویی و VIP": [
                 "Show welcome & VIP card"
@@ -5644,8 +5617,8 @@
             "هنگام ایجاد انتشار با حالت «اشتراک VIP» یا «خرید تکی یا اشتراک VIP»، این کلیدها خودکار روی انتشار ثبت می‌شوند (پیش‌فرض: mw_vip برای همه مشترکین فعال VIP).": [
                 "Automatically applied to new releases using VIP membership or Purchase or VIP membership (default: mw_vip for all active VIP subscribers)."
             ],
-            "هنگام روشن‌بودن صفحه‌بندی، تعداد هنرمند هر صفحه را تعیین می‌کند و بر «حداکثر هنرمندان» اولویت دارد.": [
-                "While pagination is on, this sets how many artists each page holds and overrides “Maximum artists”."
+            "هنگام روشن‌بودن صفحه‌بندی، تعداد هنرمند هر صفحه و شماره‌های صفحه‌بندی وردپرس را تعیین می‌کند و بر «حداکثر هنرمندان» اولویت دارد.": [
+                "While pagination is on, sets the artists per page and the WordPress pagination numbers, and takes priority over «maximum artists»."
             ],
             "هنگامی‌که قالب یا افزونهٔ فعال آن‌ها را ثبت می‌کند، ناحیه‌های ابزارک را مدیریت کنید.": [
                 "Manage widget areas when the active theme or plugin registers them."
@@ -6585,6 +6558,9 @@
             ],
             "یا": [
                 "or"
+            ],
+            "یا بدون صفحه‌بندی (همه در یک صفحه) یا صفحه‌بندی استاندارد وردپرس که ویترین آن را جدا و زیر کارت‌ها نمایش می‌دهد. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند.": [
+                "Either no pagination (everything on one page) or standard WordPress pagination, which the shelf renders separately below the cards. Paging only works for the «all artists» source with a stable order."
             ],
             "یادداشت داخلی": [
                 "Internal note"

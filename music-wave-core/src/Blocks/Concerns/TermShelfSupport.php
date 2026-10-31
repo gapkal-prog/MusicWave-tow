@@ -108,13 +108,19 @@ final class TermShelfSupport {
 			return array();
 		}
 
-		return array_values(
-			array_filter(
-				$filtered,
-				static function ( $term ) use ( $taxonomy ): bool {
-					return $term instanceof WP_Term && $taxonomy === $term->taxonomy;
-				}
-			)
+		// The cap has to survive the filter: a hook may reorder or append
+		// terms, but «حداکثر آیتم‌ها» is an author decision, not a suggestion.
+		return array_slice(
+			array_values(
+				array_filter(
+					$filtered,
+					static function ( $term ) use ( $taxonomy ): bool {
+						return $term instanceof WP_Term && $taxonomy === $term->taxonomy;
+					}
+				)
+			),
+			0,
+			$items
 		);
 	}
 
