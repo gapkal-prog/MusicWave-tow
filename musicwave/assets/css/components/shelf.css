@@ -277,9 +277,16 @@
 	width: fit-content;
 }
 
+/*
+ * Horizontal shelf: «ستون‌های دسکتاپ» decides the card width here exactly as it
+ * does in the grid. The old `minmax(clamp(9rem, 18vw, 14rem), …)` pinned a hard
+ * floor, so raising the column count stopped resizing the rail. The floor is
+ * now 0 and the container queries below cap the count on narrower viewports,
+ * so no card can collapse to nothing.
+ */
 .mw-release-shelf--scroll .mw-release-shelf__items {
 	display: grid;
-	grid-auto-columns: minmax(clamp(9rem, 18vw, 14rem), calc((100% - (var(--mw-shelf-gap) * (var(--mw-shelf-columns) - 1))) / var(--mw-shelf-columns)));
+	grid-auto-columns: minmax(0, calc((100% - (var(--mw-shelf-gap) * (var(--mw-shelf-columns) - 1))) / var(--mw-shelf-columns)));
 	grid-auto-flow: column;
 	grid-template-columns: none;
 	overflow-x: auto;
@@ -403,6 +410,18 @@ html[dir="rtl"] .mw-release-shelf__nav-button svg {
 	grid-template-columns: 1fr;
 }
 
+/*
+ * «نمایش همهٔ انتشارها» renders a real `core/post-template`, whose items are
+ * wrapped in `<li class="wp-block-post">`. The shelf chrome expects the card it
+ * styles to be the grid child, so the wrapper steps out of the box model; that
+ * keeps the Query Loop card pixel-identical to the hand-built one.
+ *
+ * The class matches the modifier the renderer emits (`mw-release-shelf--loop`).
+ */
+.mw-release-shelf--loop .wp-block-post {
+	display: contents;
+}
+
 .mw-release-shelf--list .mw-release-shelf__item {
 	align-items: center;
 	border-block-end: 1px solid color-mix(in srgb, currentColor 12%, transparent);
@@ -427,6 +446,11 @@ html[dir="rtl"] .mw-release-shelf__nav-button svg {
 @container (max-width: 52rem) {
 	.mw-release-shelf--grid .mw-release-shelf__items {
 		grid-template-columns: repeat(min(3, var(--mw-shelf-columns)), minmax(0, 1fr));
+	}
+
+	/* The rail keeps the author's column count, capped at 3 on tablets. */
+	.mw-release-shelf--scroll .mw-release-shelf__items {
+		grid-auto-columns: minmax(0, calc((100% - (var(--mw-shelf-gap) * (min(var(--mw-shelf-columns), 3) - 1))) / min(var(--mw-shelf-columns), 3)));
 	}
 }
 

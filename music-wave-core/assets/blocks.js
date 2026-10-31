@@ -900,6 +900,78 @@
 				},
 			],
 		},
+		'music-wave/release-card': {
+			groups: [
+				{
+					title: __( 'کارت انتشار', 'music-wave-core' ),
+					help: __(
+						'این بلوک همان کارتی را می‌سازد که ویترین‌های MusicWave رندر می‌کنند. داخل بلوک «حلقهٔ کوئری» قرارش دهید تا هر انتشار یک کارت بگیرد.',
+						'music-wave-core'
+					),
+					controls: [
+						[
+							'select',
+							'imageShape',
+							__( 'شکل تصویر', 'music-wave-core' ),
+							[
+								[ 'square', __( 'مربع', 'music-wave-core' ) ],
+								[ 'landscape', __( 'منظره', 'music-wave-core' ) ],
+								[ 'portrait', __( 'پرتره', 'music-wave-core' ) ],
+								[ 'circle', __( 'دایره', 'music-wave-core' ) ],
+							],
+						],
+						[
+							'toggle',
+							'showArtwork',
+							__( 'نمایش تصویر', 'music-wave-core' ),
+							true,
+						],
+						[
+							'toggle',
+							'showPlayButton',
+							__( 'نمایش کنترل پخش', 'music-wave-core' ),
+							true,
+						],
+						[
+							'toggle',
+							'showArtist',
+							__( 'نمایش هنرمند', 'music-wave-core' ),
+							true,
+						],
+						[
+							'toggle',
+							'showDate',
+							__( 'نمایش تاریخ', 'music-wave-core' ),
+							false,
+						],
+						[
+							'toggle',
+							'showViews',
+							__( 'نمایش تعداد بازدید', 'music-wave-core' ),
+							false,
+						],
+						[
+							'toggle',
+							'showExcerpt',
+							__( 'نمایش چکیده', 'music-wave-core' ),
+							false,
+						],
+						[
+							'toggle',
+							'showAction',
+							__( 'نمایش پیوند اقدام', 'music-wave-core' ),
+							true,
+						],
+						[
+							'text',
+							'actionLabel',
+							__( 'برچسب اقدام', 'music-wave-core' ),
+							'',
+						],
+					],
+				},
+			],
+		},
 		'music-wave/preview-player': {
 			releaseId: true,
 			managesOwnStyles: true,
@@ -2355,7 +2427,7 @@
 							'pagination',
 							__( 'حالت صفحه‌بندی', 'music-wave-core' ),
 							__(
-								'صفحه‌بندی درون‌بلوکی، صفحه‌بندی با بلوک جداگانهٔ هنرمندان، یا نمایش یک‌جای همه. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند.',
+								'یا بدون صفحه‌بندی (همه در یک صفحه) یا صفحه‌بندی استاندارد وردپرس که ویترین آن را جدا و زیر کارت‌ها نمایش می‌دهد. صفحه‌بندی فقط برای منبع «همهٔ هنرمندان» با ترتیب پایدار کار می‌کند.',
 								'music-wave-core'
 							),
 						],
@@ -2366,7 +2438,7 @@
 							4,
 							24,
 							__(
-								'هنگام روشن‌بودن صفحه‌بندی، تعداد هنرمند هر صفحه را تعیین می‌کند و بر «حداکثر هنرمندان» اولویت دارد.',
+								'هنگام روشن‌بودن صفحه‌بندی، تعداد هنرمند هر صفحه و شماره‌های صفحه‌بندی وردپرس را تعیین می‌کند و بر «حداکثر هنرمندان» اولویت دارد.',
 								'music-wave-core'
 							),
 							12,
@@ -2442,9 +2514,13 @@
 						[
 							'styleClass',
 							[ 'editorial', 'minimal', 'glass' ],
-							'editorial',
+							'',
 							__( 'سبک نمایش', 'music-wave-core' ),
 							[
+								[
+									'',
+									__( 'پیش‌فرض', 'music-wave-core' ),
+								],
 								[
 									'editorial',
 									__( 'تحریریه', 'music-wave-core' ),
@@ -2672,33 +2748,6 @@
 							'showCounts',
 							__( 'نمایش شمارش هر حرف', 'music-wave-core' ),
 							false,
-						],
-					],
-				},
-			],
-		},
-		'music-wave/artists-pagination': {
-			groups: [
-				{
-					title: __( 'صفحه‌بندی', 'music-wave-core' ),
-					controls: [
-						[
-							'range',
-							'perPage',
-							__( 'هنرمند در هر صفحه', 'music-wave-core' ),
-							4,
-							48,
-							__(
-								'باید با «هنرمند در هر صفحه» در بلوک ویترین هنرمندان یکی باشد.',
-								'music-wave-core'
-							),
-							12,
-						],
-						[
-							'toggle',
-							'showStatus',
-							__( 'نمایش خط وضعیت صفحه', 'music-wave-core' ),
-							true,
 						],
 					],
 				},
@@ -4403,7 +4452,7 @@
 	 * ['select', attr, label, [[value, label]], help?]   SelectControl
 	 * ['range', attr, label, min, max, help?, fallback?]   RangeControl
 	 * ['stepper', attr, label, min, max, help?, fallback?] Numeric stepper (−/+ with a number field)
-	 * ['pagingMode', attr, label, help?]                SelectControl over pagination/browseIndex as one mode
+	 * ['pagingMode', attr, label, help?]                Two-state SelectControl (no paging / core pager) over pagination
 	 */
 	function buildGroupControl( descriptor, props, blockName ) {
 		var type = descriptor[ 0 ];
@@ -4500,8 +4549,8 @@
 		) {
 			return null;
 		}
-		// Artists index pagination: page size only matters while it is on, and
-		// paging is impossible for curated or shuffled shelves. «Show all»
+		// Artists index pagination: page size only matters while paging is on,
+		// and paging is impossible for curated or shuffled shelves. «Show all»
 		// replaces both the item cap and paging, so those controls hide.
 		if ( 'music-wave/artists-shelf' === blockName ) {
 			if (
@@ -4520,7 +4569,7 @@
 				return null;
 			}
 			if (
-				( 'pagination' === attr || 'browseIndex' === attr ) &&
+				'pagination' === attr &&
 				( ( props.attributes.source &&
 					'all' !== props.attributes.source ) ||
 					'rand' === props.attributes.orderBy )
@@ -4784,12 +4833,17 @@
 		}
 
 		if ( 'pagingMode' === type ) {
-			var pagingMode = 'none';
-			if ( props.attributes.browseIndex ) {
-				pagingMode = 'external';
-			} else if ( props.attributes.pagination ) {
-				pagingMode = 'internal';
-			}
+			/*
+			 * Two modes only: off, or the standard WordPress pager rendered by
+			 * the shelf below its items. `browseIndex` is the legacy spelling
+			 * of the same switch (it used to move the pager into a separate
+			 * block), so saved content still shows the right option and is
+			 * normalised onto `pagination` on the next edit.
+			 */
+			var pagingMode =
+				props.attributes.pagination || props.attributes.browseIndex
+					? 'block'
+					: 'none';
 			return createElement( components.SelectControl, {
 				key: 'pagingMode',
 				label,
@@ -4804,21 +4858,17 @@
 						),
 					},
 					{
-						value: 'internal',
-						label: __( 'صفحه‌بندی درون بلوک', 'music-wave-core' ),
-					},
-					{
-						value: 'external',
+						value: 'block',
 						label: __(
-							'صفحه‌بندی با بلوک «صفحه‌بندی هنرمندان»',
+							'صفحه‌بندی با بلوک (جدا) — ناوبری استاندارد وردپرس',
 							'music-wave-core'
 						),
 					},
 				],
 				onChange( value ) {
 					props.setAttributes( {
-						pagination: 'internal' === value,
-						browseIndex: 'external' === value,
+						pagination: 'block' === value,
+						browseIndex: false,
 					} );
 				},
 			} );
@@ -4834,7 +4884,16 @@
 			var minBound = isNaN( stepMin ) ? -Infinity : stepMin;
 			var maxBound = isNaN( stepMax ) ? Infinity : stepMax;
 			var stepRaw = parseInt( props.attributes[ attr ], 10 );
-			var stepValue = isNaN( stepRaw ) ? stepFallback : stepRaw;
+			/*
+			 * Unset (0) and out-of-range values are the "auto" state several
+			 * blocks ship with. Showing them verbatim produced a dead control:
+			 * the field read 0 while «−» was disabled and «+» walked up from
+			 * zero instead of from the documented default.
+			 */
+			var stepValue =
+				isNaN( stepRaw ) || stepRaw < minBound || stepRaw > maxBound
+					? stepFallback
+					: stepRaw;
 			var stepApply = function ( next ) {
 				var clamped = Math.max( minBound, Math.min( maxBound, next ) );
 				props.setAttributes(

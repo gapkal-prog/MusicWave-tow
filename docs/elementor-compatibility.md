@@ -50,7 +50,7 @@ The shortcode refuses:
 | Release shelf | `music-wave/release-shelf` | `layout`, `itemsToShow`, `showAll`, `columns`, `source` |
 | Release slider | `music-wave/release-slider` | `layout`, `itemsToShow`, `showAll`, `columns`, `imageSize` |
 | Related releases | `music-wave/related-releases` | `layout`, `sameArtistHeading`, `sameArtistIcon`, `similarIcon` |
-| Artists shelf | `music-wave/artists-shelf` | `layout`, `itemsToShow`, `showAll`, `columns`, `showBio`, `browseIndex` |
+| Artists shelf | `music-wave/artists-shelf` | `layout`, `itemsToShow`, `showAll`, `columns`, `showBio`, `pagination` |
 | Taxonomy shelf | `music-wave/taxonomy-shelf` | `taxonomy`, `layout`, `itemsToShow`, `columns` |
 | Tracklist | `music-wave/collection-list` | `showArtwork`, `showTotalDuration` |
 | Preview player | `music-wave/preview-player` | `showIcon`, `variant`, `size` |

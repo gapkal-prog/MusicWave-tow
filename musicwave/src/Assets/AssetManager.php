@@ -472,12 +472,11 @@ final class AssetManager {
 		$map = apply_filters(
 			'music_wave_conditional_assets',
 			array(
-				'music-wave/release-shelf'          => array( 'musicwave-shelf', 'musicwave-collections', 'musicwave-vinyl' ),
-				'music-wave/artists-shelf'          => array( 'musicwave-artists-shelf', 'musicwave-shelf' ),
+				'music-wave/release-shelf'          => array( 'musicwave-shelf', 'musicwave-collections', 'musicwave-vinyl', 'musicwave-catalog' ),
+				'music-wave/artists-shelf'          => array( 'musicwave-artists-shelf', 'musicwave-shelf', 'musicwave-catalog' ),
 				'music-wave/artists-hero'           => array( 'musicwave-artists-index' ),
 				'music-wave/artists-toolbar'        => array( 'musicwave-artists-index' ),
 				'music-wave/artists-alphabet'       => array( 'musicwave-artists-index' ),
-				'music-wave/artists-pagination'     => array( 'musicwave-artists-index' ),
 				'music-wave/taxonomy-shelf'         => array( 'musicwave-taxonomy-shelf', 'musicwave-shelf' ),
 				'music-wave/release-card'           => array( 'musicwave-catalog', 'musicwave-shelf' ),
 				'music-wave/hero-slider'            => array( 'musicwave-hero-slider', 'musicwave-slider' ),

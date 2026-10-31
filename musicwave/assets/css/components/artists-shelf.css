@@ -21,7 +21,11 @@
 	position: relative;
 	align-self: center;
 	aspect-ratio: 1;
+	/* Never let the flex row squeeze the cover: «اندازه تصویر» stays exact in
+	 * the compact list, and the avatar keeps a square footprint everywhere. */
+	flex: 0 0 auto;
 	inline-size: var(--avatar-size);
+	max-inline-size: 100%;
 	block-size: auto;
 	display: flex;
 	overflow: clip;
@@ -64,18 +68,19 @@
 .mw-artists-shelf__avatar--rounded,
 .mw-artists-shelf__avatar--square { border-radius: var(--mw-radius-xl); }
 
-/* Image size modifiers – make imageSize attribute visually effective */
-.mw-artists-shelf--size-thumbnail .mw-artists-shelf__media { --avatar-size: min(100%, 6.5rem); }
-.mw-artists-shelf--size-medium .mw-artists-shelf__media { --avatar-size: min(100%, 9rem); }
-.mw-artists-shelf--size-large .mw-artists-shelf__media { --avatar-size: min(100%, 11rem); }
-.mw-artists-shelf--size-full .mw-artists-shelf__media { --avatar-size: min(100%, 14rem); }
+/* Image size modifiers – the token lives on the shelf root so the card *and*
+ * the compact-list row track can both read it. */
+.mw-artists-shelf--size-thumbnail { --avatar-size: min(100%, 6.5rem); }
+.mw-artists-shelf--size-medium { --avatar-size: min(100%, 9rem); }
+.mw-artists-shelf--size-large { --avatar-size: min(100%, 11rem); }
+.mw-artists-shelf--size-full { --avatar-size: min(100%, 14rem); }
 
 /* List layout keeps its cover compact but still honours every imageSize step,
  * so the setting has a visible effect instead of collapsing to one size. */
-.mw-release-shelf--list.mw-artists-shelf--size-thumbnail .mw-artists-shelf__media { --avatar-size: 3rem; }
-.mw-release-shelf--list.mw-artists-shelf--size-medium .mw-artists-shelf__media { --avatar-size: 4rem; }
-.mw-release-shelf--list.mw-artists-shelf--size-large .mw-artists-shelf__media { --avatar-size: 5.5rem; }
-.mw-release-shelf--list.mw-artists-shelf--size-full .mw-artists-shelf__media { --avatar-size: 7rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-thumbnail { --avatar-size: 3rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-medium { --avatar-size: 4rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-large { --avatar-size: 5.5rem; }
+.mw-release-shelf--list.mw-artists-shelf--size-full { --avatar-size: 7rem; }
 
 .mw-artists-shelf__image,
 .mw-artists-shelf__initial {
@@ -240,8 +245,12 @@
 	color: var(--mw-color-text-muted);
 }
 
-/* Compact list layout — editorial */
+/* Compact list layout — editorial.
+ * A flex row keeps the cover at exactly «اندازه تصویر» (shelf.css used to pin
+ * the row to a fixed 4rem column, which squeezed a large cover and ignored the
+ * setting) and still lets a card without artwork use the full row width. */
 .mw-release-shelf--list .mw-artists-shelf__item {
+	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: clamp(0.85rem, 2.2vw, 1.35rem);
@@ -270,14 +279,16 @@
 }
 
 .mw-release-shelf--list .mw-artists-shelf__media {
-	--avatar-size: 4rem;
 	flex: 0 0 auto;
+	inline-size: var(--avatar-size, 4rem);
+	max-inline-size: 100%;
 	align-self: center;
 }
 
 .mw-release-shelf--list .mw-artists-shelf__body {
 	padding: 0;
 	flex: 1 1 auto;
+	min-inline-size: 0;
 	justify-items: start;
 	gap: 0.15rem;
 }
@@ -291,10 +302,31 @@
 	font-size: 1.35rem;
 }
 
-/* Scroll layout tweaks — more interesting spacing */
+/*
+ * Scroll layout: the rail track width already comes from «ستون‌های دسکتاپ»
+ * (`--mw-shelf-columns` in shelf.css). Pinning the card to a fixed 10rem used
+ * to shrink/ignore that setting, so the card now simply fills its track.
+ */
 .mw-release-shelf--scroll .mw-artists-shelf__item {
-	inline-size: 10rem;
-	flex: 0 0 auto;
+	inline-size: 100%;
+	min-inline-size: 0;
+	flex: 1 1 auto;
+}
+
+/*
+ * Pager rendered by the shelf (`paginate_links()`): same markup shape as
+ * `core/query-pagination`, so the shared `.mw-catalog-pagination` link chrome
+ * (catalog.css) applies and the artists index matches the taxonomy templates.
+ */
+.mw-artists-shelf__pagination {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-block-start: 2rem;
+	padding-block-start: 1.25rem;
+	border-block-start: 1px solid var(--mw-color-border-subtle);
 }
 
 /* Style variations — distinct, editorial-grade */
@@ -457,12 +489,6 @@
 }
 
 /* Responsive */
-@media (max-width: 48rem) {
-	.mw-release-shelf--scroll .mw-artists-shelf__item {
-		inline-size: 8.5rem;
-	}
-}
-
 @media (max-width: 36rem) {
 	.mw-release-shelf--list .mw-artists-shelf__item {
 		grid-template-columns: auto minmax(0, 1fr);

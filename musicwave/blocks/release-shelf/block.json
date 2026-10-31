@@ -214,6 +214,10 @@
     "filterTabs": {
       "type": "string",
       "default": ""
+    },
+    "perPage": {
+      "type": "integer",
+      "default": 12
     }
   },
   "supports": {

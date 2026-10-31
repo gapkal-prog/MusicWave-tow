@@ -19,7 +19,6 @@ namespace ManaCore\MusicWave\Core\Blocks;
 use ManaCore\MusicWave\Core\Catalog\ArtistIndex;
 use ManaCore\MusicWave\Core\Catalog\ReleasePostType;
 use ManaCore\MusicWave\Core\Catalog\TermHue;
-use ManaCore\MusicWave\Core\Blocks\Concerns\ArtistsPager;
 use ManaCore\MusicWave\Core\Blocks\Concerns\TermShelfSupport;
 use ManaCore\MusicWave\Core\Library\LibraryButton;
 use ManaCore\MusicWave\Core\Library\LibraryRepository;
@@ -50,9 +49,10 @@ final class ArtistShelfBlock {
 	/**
 	 * Register the artists browsing surface.
 	 *
-	 * The shelf, hero, toolbar, alphabet and pagination blocks compose one
-	 * page, so they are registered together here even though each block owns
-	 * its own markup and editor panel.
+	 * The shelf, hero, toolbar and alphabet blocks compose one page, so they
+	 * are registered together here even though each block owns its own markup
+	 * and editor panel. Paging is not a block of its own: the shelf renders
+	 * the standard WordPress pager, so there is nothing to keep in sync.
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,6 @@ final class ArtistShelfBlock {
 			new ArtistsHeroBlock(),
 			new ArtistsToolbarBlock(),
 			new ArtistsAlphabetBlock(),
-			new ArtistsPaginationBlock(),
 		);
 		foreach ( $siblings as $block ) {
 			$block->register();
@@ -275,15 +274,17 @@ final class ArtistShelfBlock {
 		// Paging needs a stable order: a shuffled or hand-picked list cannot be
 		// split across pages without repeating or dropping artists. Showing every
 		// artist at once is the opposite of paging, so it wins over both modes.
-		$pagination = ! $show_all && ! empty( $attributes['pagination'] );
-		$browse     = ! $show_all && ! empty( $attributes['browseIndex'] );
-		$paged      = ( $pagination || $browse ) && 'all' === $source && 'rand' !== $order_by;
+		// One paging mode. `browseIndex` is the legacy spelling of the same
+		// switch (it used to move the pager into a separate block): saved
+		// content keeps working, new content only writes `pagination`.
+		$pagination = ! $show_all && ( ! empty( $attributes['pagination'] ) || ! empty( $attributes['browseIndex'] ) );
+		$paged      = $pagination && 'all' === $source && 'rand' !== $order_by;
 
 		return array(
 			'source'            => $source,
 			'layout'            => $layout,
 			'paged'             => $paged,
-			'pager'             => $pagination && $paged,
+			'pager'             => $paged,
 			'per_page'          => $per_page,
 			'show_all'          => $show_all,
 			'image_shape'       => $image_shape,
@@ -596,7 +597,13 @@ final class ArtistShelfBlock {
 	}
 
 	/**
-	 * Render the paginated index navigation under the shelf.
+	 * Render the pager below the shelf with WordPress' own pager.
+	 *
+	 * The shelf used to ship a bespoke pager (and a second block to place it).
+	 * Both are gone: `paginate_links()` is the core API for paging a term
+	 * list, and it emits the exact `page-numbers` markup
+	 * `core/query-pagination` produces, so the artists index and the taxonomy
+	 * templates share one pagination shape and one set of styles.
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
 	 * @param array<string, mixed> $options    Resolved display options.
@@ -604,11 +611,44 @@ final class ArtistShelfBlock {
 	private function pager( array $attributes, array $options ): string {
 		unset( $attributes );
 
-		if ( empty( $options['pager'] ) ) {
+		if ( empty( $options['pager'] ) || ! function_exists( 'paginate_links' ) ) {
 			return '';
 		}
 
-		return ArtistsPager::render( $this->index(), (int) $options['per_page'], 'mw-artists-shelf__pager' );
+		$total_pages = $this->index()->page_count( (int) $options['per_page'] );
+		if ( $total_pages < 2 ) {
+			return '';
+		}
+
+		// `ArtistIndex::url()` already carries the active search, letter and
+		// sort state and drops page one, so the pager only has to append the
+		// page placeholder. `format` stays empty: the placeholder lives in
+		// the base URL, which keeps existing query vars untouched.
+		$base = $this->index()->url();
+		$sep  = false === strpos( $base, '?' ) ? '?' : '&';
+
+		$links = paginate_links(
+			array(
+				'base'      => $base . $sep . self::PAGE_QUERY_VAR . '=%#%',
+				'format'    => '',
+				'total'     => $total_pages,
+				'current'   => $this->current_page( $options ),
+				'mid_size'  => 1,
+				'end_size'  => 1,
+				'type'      => 'plain',
+				'prev_text' => __( 'قبلی', 'music-wave-core' ),
+				'next_text' => __( 'بعدی', 'music-wave-core' ),
+			)
+		);
+
+		if ( ! is_string( $links ) || '' === trim( $links ) ) {
+			return '';
+		}
+
+		// Core pager classes first (`core/query-pagination` parity), then the
+		// shelf's own hooks so existing styles keep matching.
+		return '<nav class="wp-block-query-pagination mw-catalog-pagination mw-artists-shelf__pager mw-artists-shelf__pagination" aria-label="'
+			. esc_attr__( 'صفحه‌بندی هنرمندان', 'music-wave-core' ) . '">' . $links . '</nav>';
 	}
 
 	/**

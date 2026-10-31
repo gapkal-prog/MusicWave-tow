@@ -287,7 +287,7 @@ msgstr "From your S3/R2 panel; MusicWave does not generate it."
 msgid "اشتراک"
 msgstr "Membership"
 
-#: src/VipPlans.php:1197
+#: src/VipPlans.php:1198
 #, php-format
 msgid "اشتراک VIP اعطا شد: %s"
 msgstr "VIP membership granted: %s"
@@ -1230,7 +1230,7 @@ msgstr "Remote signed"
 msgid "ردیف پررنگ همان حالتی است که همین حالا انتخاب کرده‌اید. بخش‌هایی که در حالت جاری اثری ندارند، پایین‌تر جمع می‌شوند ولی سرتیترشان می‌ماند."
 msgstr "The highlighted row is the mode you have selected. Sections that do not apply to the current mode are collapsed below while keeping their heading."
 
-#: src/VipPlans.php:1192
+#: src/VipPlans.php:1193
 #, php-format
 msgid "رزرو از %s"
 msgstr "Reserved from %s"

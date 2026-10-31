@@ -200,6 +200,9 @@
             "انتشار MusicWave": [
                 "MusicWave release"
             ],
+            "انتشار در هر صفحه": [
+                "Releases per page"
+            ],
             "انتشار یا آلبوم نمونه برای پیش‌نمایش": [
                 "Sample release or album for preview"
             ],
@@ -230,6 +233,9 @@
             "اندازه فونت عنوان (پیکسل، ۰ = پیش‌فرض)": [
                 "Title font size (px, 0 = default)"
             ],
+            "اندازهٔ صفحهٔ حلقهٔ کوئری؛ شماره‌های صفحه‌بندی وردپرس بر همین اساس ساخته می‌شوند.": [
+                "Query Loop page size; WordPress pagination numbers are built from it."
+            ],
             "اندازهٔ فایل تصویر بارگذاری‌شده را تعیین می‌کند و روی تعداد ستون‌ها اثری ندارد.": [
                 "Sets the uploaded image file size; it does not affect the column count."
             ],
@@ -251,11 +257,11 @@
             "با تب‌ها بین تازه‌ترین اضافه‌شده‌ها و پرسنشنیده‌ترین‌ها جابه‌جا شوید.": [
                 "Use the tabs to switch between the newest additions and the most played."
             ],
+            "با روشن‌کردن این گزینه، کل انتشارهای منطبق با حلقهٔ کوئری استاندارد وردپرس (Query Loop) خوانده می‌شوند و صفحه‌بندی وردپرس زیر همان حلقه نمایش داده می‌شود.": [
+                "When enabled, every matching release is read through the standard WordPress Query Loop, and WordPress pagination is rendered below that loop."
+            ],
             "با زدن Ctrl+K در هر جای سایت، پنجره جستجو باز میشود.": [
                 "Pressing Ctrl+K anywhere on the site opens the search overlay."
-            ],
-            "بارگذاری همهٔ انتشارها": [
-                "Load all releases"
             ],
             "باز و بستهٔ منو": [
                 "Toggle menu"
@@ -464,8 +470,8 @@
             "تصادفی": [
                 "Random"
             ],
-            "تعداد انتشارهای بارگذاریشده": [
-                "Number of releases loaded"
+            "تعداد انتشارهای اسلایدر": [
+                "Number of slider releases"
             ],
             "تعداد سفارشی‌سازی‌های ذخیره‌شده قالب: %d": [
                 "Customized built-in template overrides found: %d"
@@ -1055,6 +1061,9 @@
             "فعال": [
                 "Enabled"
             ],
+            "فقط تعداد اسلایدهای قابل پیمایش را تعیین می‌کند و روی اندازهٔ کارت‌ها اثری ندارد؛ اندازهٔ کارت از «ستون‌های دسکتاپ» می‌آید.": [
+                "Only sets how many slides can be scrolled; it does not affect card size — card size comes from «Desktop columns»."
+            ],
             "فقط موبایل (تا ۴۸rem)": [
                 "Mobile only (up to 48rem)"
             ],
@@ -1523,12 +1532,6 @@
             "همهٔ انتشارها در دو نسخهٔ ۲۴ بیت ارائه میشوند: ۴۸ و ۹۶ کیلوهرتز.": [
                 "All releases come in two 24-bit versions: 48 and 96 kHz."
             ],
-            "همهٔ انتشارهای منطبق با فیلترهای این بلوک را بدون محدودیت تعداد نمایش می‌دهد.": [
-                "Shows every release matching this block's filters without a count limit."
-            ],
-            "همهٔ انتشارهای منطبق با فیلترهای ویترین را بدون محدودیت تعداد نمایش می‌دهد.": [
-                "Shows every release matching the shelf filters without a count limit."
-            ],
             "همهٔ زمان‌ها (بدون محدودیت)": [
                 "All time (no limit)"
             ],
@@ -1546,6 +1549,9 @@
             ],
             "هنرمندان": [
                 "Artists"
+            ],
+            "هنوز انتشاری با این فیلترها پیدا نشد.": [
+                "No release matched these filters yet."
             ],
             "هیرو": [
                 "Hero"

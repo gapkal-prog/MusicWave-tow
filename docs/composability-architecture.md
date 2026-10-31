@@ -580,6 +580,15 @@ network-blocked; `codeload` and npm are not). Consequences worth recording:
   the exact step is recorded in docs/block-upgrade-roadmap.md §2.15 for a maintainer to apply.
 * The theme's files open with `if ( ! defined( 'ABSPATH' ) ) { exit; }` using a **bare `exit;`**, so
   any harness loading them must define `ABSPATH` or it terminates silently with no error recorded.
+  That trap had already fired: `tests/block-architecture-refactor-test.php`,
+  `tests/final-audit-seo-cwv-a11y-suite.php` and `tests/vip-access-delivery-suite.php` had no
+  bootstrap, so the plugin exited on include and the suites "passed" by printing nothing. The
+  WordPress mock now lives in one place — `tests/bootstrap.php` — with `mw_assert_same()` and
+  `mw_test_load_plugins()`; `tests/run.php` requires it instead of carrying its own copy. The
+  architecture and final-audit suites were re-pointed at it and now execute for real (42 registered
+  blocks and the full contrast/SEO/CWV sweep respectively). `staging-smoke.php` and
+  `vip-access-delivery-suite.php` still need a live WordPress (`$wpdb`, `wp_set_current_user`,
+  header delivery) and remain unrunnable in this sandbox; they are documented, not "green".
 
 ### 10.5 Stage D — done
 
@@ -718,14 +727,13 @@ artists page is edited section by section instead of through one 23-attribute bl
 | `music-wave/artists-hero` | E — fat dynamic | Copy + two catalogue totals. No query input, but the data is server-side. |
 | `music-wave/artists-toolbar` | E — fat dynamic | GET form + link tabs. Nothing to compose: every control is a URL built from shared state. |
 | `music-wave/artists-alphabet` | E — fat dynamic | Letter row whose link/inert state depends on term counts. |
-| `music-wave/artists-pagination` | E — fat dynamic | Numbered pager; delegates to `Concerns\ArtistsPager`, the same renderer the shelf uses. |
 | `music-wave/artists-shelf` | ⏸️ E — fat dynamic | Query + card chrome stay PHP. Gained `browseIndex`, `showCrowns`, `showResultCount`, `noResultsMessage` as display-only attributes. |
 
 **One state service, four readers.** `Catalog\ArtistIndex` owns the browsing state — page, search,
 letter and ordering query vars — plus the term queries, the per-letter counts, the page
 arithmetic and every generated URL. No block parses `$_GET` or builds a link on its own, which is
 what keeps the toolbar, alphabet, summary and pager from drifting the way §1.3 describes. A
-`browseIndex` shelf and the standalone pagination block count the same `matching_total()` through
+`browseIndex`/`pagination` shelf counts its pages through
 the same `page_count()`, so `perPage` in one and `perPage` in the other cannot disagree.
 
 **Placement.** The chrome leaves carry no cross-block assumptions: the alphabet row emits
@@ -741,11 +749,68 @@ default to the previous appearance (`browseIndex`, `showCrowns` and `showResultC
 
 **Tests.** `tests/run.php` covers the shared service (letter bucketing incl. Arabic variants,
 search, per-letter counts, page counts, URL canonicalisation) and each leaf (hero defaults, toolbar
-links and active states, alphabet links vs inert chips, shelf summary, crowns, `browseIndex`
-slicing, empty-filter message, standalone pager).
-`tests/template-integrity.php` pins the four new `block.json` files, the 41-block inventory and the
+links and active states, alphabet links vs inert chips, shelf summary, crowns, paging
+slice — `pagination` and the legacy `browseIndex` spelling — and the empty-filter message).
+`tests/template-integrity.php` pins the three new `block.json` files, the 41-block inventory and the
 `Rendering::LOCALIZED_ATTRIBUTE_KEYS` contract. `tests/editor-contracts.js` and
 `tests/editor-lanes.js` stay unchanged: no new lane, no InnerBlocks.
+
+Paging itself is not a block. A term list has no core Query Loop, so the shelf renders
+`paginate_links()` — WordPress' own pager — as `nav.wp-block-query-pagination` +
+`.page-numbers`, the exact shape `core/query-pagination` prints on the taxonomy templates.
+That removed the `artists-pagination` block, `Concerns\ArtistsPager` and the rule that its
+`perPage` had to be kept equal to the shelf's by hand.
+
+### 10.8 The release card becomes a block, and «نمایش همه» stops inventing a second card
+
+`music-wave/release-card` closes the last gap in Lane 2. Before it, a Query Loop could only be
+built from core blocks (`core/post-featured-image` + `core/post-title` + `music-wave/release-meta`),
+which prints the **archive** card (`mw-release-card`). The shelf's own listing prints the **shelf**
+card (`mw-release-shelf__item`), and every layout rule — grid/bento/list/rail, style variations,
+`imageShape`, vinyl disc, the columns custom property — is written against that vocabulary. So any
+shelf that delegated its listing to a Query Loop silently switched vocabulary and lost all of it.
+
+The block is a thin leaf:
+
+| Layer | Owner |
+| --- | --- |
+| attributes (`imageShape`, `showArtwork`, `showPlayButton`, `showArtist`, `showDate`, `showViews`, `showExcerpt`, `showAction`, `actionLabel`) | `blocks/release-card/block.json` |
+| attribute → card-option mapping | `ReleaseCard::options_from_attributes()` |
+| markup | `ReleaseCard::render()` — the same method the PHP shelf calls |
+| render callback | `ReleaseBlocks::render_release_card_item()` (resolves `postId`/`postType` context) |
+
+`tests/block-architecture-refactor-test.php` asserts the block's output is **byte-identical** to the
+card the PHP shelf renders for the same attributes, so the two producers cannot drift.
+
+**«نمایش همهٔ انتشارها» contract.** `ShelfAndSliderRenderer::render_release_loop()` renders
+
+```
+section.mw-release-shelf.mw-release-shelf--{layout}.mw-release-shelf--columns-N.{style-variant}.mw-release-shelf--loop
+ ├── header (eyebrow/title/description/section link)
+ ├── filter tabs
+ └── core/query (queryId scoped to this shelf)
+      ├── core/post-template .mw-release-shelf__items  →  music-wave/release-card
+      ├── core/query-no-results
+      └── core/query-pagination
+```
+
+The section chrome comes from `shelf_section_classes()`, the same composer the hand-built listing
+uses, so `layout`, `columns` and `styleVariant` reach the loop by construction instead of by
+duplication. `core/post-template` receives `columnCount` = the author's column count (1 for the
+compact list) and `scroll` deliberately hands layout to the rail CSS, whose
+`grid-auto-flow: column` + `grid-auto-columns` are driven by `--mw-shelf-columns`; the
+`.mw-release-shelf--loop .wp-block-post { display: contents }` rule makes the looped card the grid
+child, exactly like the hand-built one.
+
+Curated layouts (`feature`, `slider`) are **bounded previews** and stay hand-built: they render
+`itemsToShow` cards and never widen into an unbounded `get_posts()`. The rail therefore keeps
+`itemsToShow` for *count* and `columns` for *card size*, which is the split the Site Editor
+inspector documents.
+
+**Tests.** `tests/run.php` asserts the loop markup (card block, `queryId`, `perPage`, `columnCount`,
+`mw-release-shelf__items`, pager, filter removal), that the card block receives the shelf's card
+settings, that the style variant and column count survive the toggle, and that a rail never widens
+to an unbounded query.
 
 ### Remaining-block classification (audit inventory)
 
@@ -767,7 +832,7 @@ Lane legend: ✅ upgraded this programme · 🟡 pairing/empty-header available 
 | `catalog-filters` / `catalog-results` | ⏸️ E | GET form + live archive query. Labels already inspector-controlled. Style variations exist. |
 | `request-form` | ✅ D+E | Form/POST/nonce/honeypot stay fat PHP. `request-cta` + the three request page templates compose heading/highlights/steps as core blocks on `.mw-request-form__*` (not `.mw-section-head`). Nested PHP section is flattened in CSS. Inspector hides chrome copy while the matching `show*` toggle is off. |
 | `public-playlists` / `continue-listening` / `artists-shelf` / `taxonomy-shelf` | ⏸️ E | Query shelves. Same empty-header contract as theme shelf where they share `SectionHeader`. |
-| `artists-hero` / `artists-toolbar` / `artists-alphabet` / `artists-pagination` | ✅ E | Stage F browsing chrome split out of `artists-shelf`; each reads shared `Catalog\ArtistIndex` state, so they have no InnerBlocks to offer. |
+| `artists-hero` / `artists-toolbar` / `artists-alphabet` | ✅ E | Stage F browsing chrome split out of `artists-shelf`; each reads shared `Catalog\ArtistIndex` state, so they have no InnerBlocks to offer. |
 | `playlists` / `playback-queue` / `music-library` / add-to-* | ⏸️ E | Auth + mutation. Not canvas composition. |
 | `preview-button` / `preview-player` / `share-button` / `shuffle-button` / `library-button` | ⏸️ E | Leaf actions; already small. |
 | `term-hero` / `artist-profile` | ⏸️ E | Term/query identity. Archives already compose them as leaves. |

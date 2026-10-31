@@ -399,11 +399,16 @@ html[dir="rtl"] .mw-release-slider--vinyl .mw-release-slider__slide:where(:hover
 }
 
 /* Authoritative `imageShape` modifiers — placed after style variations so the
- * explicit user shape always wins the cascade. Each value only flips the two
- * frame tokens (`wide` is kept as a legacy alias of `landscape`). */
+ * explicit user shape always wins the cascade. Each value flips the two frame
+ * tokens *and* restates `border-radius`, because a style variation such as
+ * «مینیمال» writes a plain `border-radius` on the same element; without the
+ * restatement a circular cover silently kept the variation's rounded square.
+ * (`wide` is kept as a legacy alias of `landscape`.) */
 .mw-release-slider.mw-release-slider--shape-square .mw-release-slider__art,
 .mw-release-slider__art.mw-release-slider__art--square {
 	--mw-art-ratio: 1;
+	--mw-art-radius: calc(var(--mw-radius-md) - 0.25rem);
+	border-radius: var(--mw-art-radius);
 }
 
 .mw-release-slider.mw-release-slider--shape-wide .mw-release-slider__art,
@@ -411,17 +416,37 @@ html[dir="rtl"] .mw-release-slider--vinyl .mw-release-slider__slide:where(:hover
 .mw-release-slider__art.mw-release-slider__art--wide,
 .mw-release-slider__art.mw-release-slider__art--landscape {
 	--mw-art-ratio: 16 / 10;
+	--mw-art-radius: calc(var(--mw-radius-md) - 0.25rem);
+	border-radius: var(--mw-art-radius);
 }
 
 .mw-release-slider.mw-release-slider--shape-portrait .mw-release-slider__art,
 .mw-release-slider__art.mw-release-slider__art--portrait {
 	--mw-art-ratio: 4 / 5;
+	--mw-art-radius: calc(var(--mw-radius-md) - 0.25rem);
+	border-radius: var(--mw-art-radius);
 }
 
 .mw-release-slider.mw-release-slider--shape-circle .mw-release-slider__art,
 .mw-release-slider__art.mw-release-slider__art--circle {
 	--mw-art-ratio: 1;
 	--mw-art-radius: 50%;
+	border-radius: 50%;
+}
+
+/* A circular cover reads as a record, not a card: drop the square plate and
+ * center the play control on the disc so nothing hangs outside the circle. */
+.mw-release-slider.mw-release-slider--shape-circle .mw-release-slider__slide {
+	background: transparent;
+	border-color: transparent;
+}
+
+.mw-release-slider.mw-release-slider--shape-circle .mw-release-slider__play {
+	inset-inline-end: auto;
+	inset-block-end: auto;
+	inset-block-start: 50%;
+	inset-inline-start: 50%;
+	translate: -50% -50%;
 }
 
 @media (prefers-reduced-motion: reduce) {

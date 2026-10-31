@@ -233,6 +233,7 @@ final class Rendering implements Module {
 		'showTypeFilter',
 		'showUpdated',
 		'showVipBadge',
+		'showViews',
 		'showWelcome',
 		'showWhen',
 		'showWhenGranted',
@@ -733,6 +734,13 @@ final class Rendering implements Module {
 				'keywords'    => array( __( 'مشابه', 'music-wave-core' ), __( 'همان هنرمند', 'music-wave-core' ), __( 'ویترین', 'music-wave-core' ) ),
 			),
 			array(
+				'name'        => 'music-wave/release-card',
+				'title'       => __( 'کارت انتشار', 'music-wave-core' ),
+				'description' => __( 'کارت انتشار یادشده در حلقهٔ کوئری: جلد، کنترل پخش، عنوان، هنرمند و پیوند اقدام.', 'music-wave-core' ),
+				'icon'        => 'format-image',
+				'keywords'    => array( __( 'انتشار', 'music-wave-core' ), __( 'کارت', 'music-wave-core' ), __( 'حلقه', 'music-wave-core' ) ),
+			),
+			array(
 				'name'        => 'music-wave/artist-profile',
 				'title'       => __( 'مشخصات هنرمند', 'music-wave-core' ),
 				'description' => __( 'نمایهٔ طبقه‌بندی هنرمند را در صفحات بایگانی یا هر الگوی دیگری نمایش می‌دهد.', 'music-wave-core' ),
@@ -766,13 +774,6 @@ final class Rendering implements Module {
 				'description' => __( 'ردیف حروف الفبای فارسی برای مرور خوانندگان؛ حروف بدون هنرمند غیرقابل‌کلیک می‌شوند.', 'music-wave-core' ),
 				'icon'        => 'editor-textcolor',
 				'keywords'    => array( __( 'هنرمندان', 'music-wave-core' ), __( 'الفبا', 'music-wave-core' ), __( 'فیلتر', 'music-wave-core' ), __( 'حروف', 'music-wave-core' ) ),
-			),
-			array(
-				'name'        => 'music-wave/artists-pagination',
-				'title'       => __( 'صفحه‌بندی هنرمندان', 'music-wave-core' ),
-				'description' => __( 'ناوبری شماره‌ای صفحهٔ هنرمندان؛ با همان «تعداد هنرمند در هر صفحه» ویترین تنظیم شود.', 'music-wave-core' ),
-				'icon'        => 'admin-page',
-				'keywords'    => array( __( 'هنرمندان', 'music-wave-core' ), __( 'صفحه‌بندی', 'music-wave-core' ), __( 'ناوبری', 'music-wave-core' ) ),
 			),
 			array(
 				'name'        => 'music-wave/taxonomy-shelf',

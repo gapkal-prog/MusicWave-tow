@@ -218,7 +218,10 @@
 	 */
 	function numberStepper( props, attr, label, min, max, fallback ) {
 		var raw = parseInt( props.attributes[ attr ], 10 );
-		var value = isNaN( raw ) ? fallback : raw;
+		// Unset (0) and out-of-range values are the "auto" state several blocks
+		// ship with — show the documented fallback instead of a 0 the minus
+		// button can never reach.
+		var value = isNaN( raw ) || raw < min || raw > max ? fallback : raw;
 
 		function apply( next ) {
 			var clamped = Math.max( min, Math.min( max, next ) );
@@ -1457,31 +1460,22 @@
 					},
 				} ),
 				sectionIconControl( props, 'icon' ),
-				! props.attributes.showAll
-					? createElement( components.RangeControl, {
-							label: __(
-								'تعداد انتشارهای بارگذاریشده',
-								'musicwave'
-							),
-							value: props.attributes.itemsToShow || 6,
-							min: 3,
-							max: 12,
-							onChange( value ) {
-								props.setAttributes( {
-									itemsToShow: value || 6,
-								} );
-							},
-					  } )
-					: null,
-				createElement( components.ToggleControl, {
-					label: __( 'بارگذاری همهٔ انتشارها', 'musicwave' ),
-					help: __(
-						'همهٔ انتشارهای منطبق با فیلترهای این بلوک را بدون محدودیت تعداد نمایش می‌دهد.',
+				createElement( components.RangeControl, {
+					label: __(
+						'تعداد انتشارهای اسلایدر',
 						'musicwave'
 					),
-					checked: !! props.attributes.showAll,
+					help: __(
+						'فقط تعداد اسلایدهای قابل پیمایش را تعیین می‌کند و روی اندازهٔ کارت‌ها اثری ندارد؛ اندازهٔ کارت از «ستون‌های دسکتاپ» می‌آید.',
+						'musicwave'
+					),
+					value: props.attributes.itemsToShow || 6,
+					min: 3,
+					max: 12,
 					onChange( value ) {
-						props.setAttributes( { showAll: !! value } );
+						props.setAttributes( {
+							itemsToShow: value || 6,
+						} );
 					},
 				} ),
 				createElement( components.ToggleControl, {
@@ -1539,7 +1533,7 @@
 					label: __( 'سبک نمایش', 'musicwave' ),
 					value: resolvePresentationStyle(
 						props.attributes,
-						[ 'cinema', 'minimal' ],
+						[ 'cinema', 'minimal', 'vinyl' ],
 						'editorial'
 					),
 					options: [
@@ -1550,6 +1544,10 @@
 						{
 							label: __( 'سینمایی', 'musicwave' ),
 							value: 'cinema',
+						},
+						{
+							label: __( 'وینیل', 'musicwave' ),
+							value: 'vinyl',
 						},
 						{
 							label: __( 'مینیمال', 'musicwave' ),
@@ -1701,6 +1699,8 @@
 			'bento' === activeLayout ||
 			'scroll' === activeLayout;
 		var usesCardFields = 'slider' !== activeLayout;
+		var source = props.attributes.source || 'releases';
+		var isPlaylistSource = 'playlists' === source;
 
 		return createElement(
 			blockEditor.InspectorControls,
@@ -1711,27 +1711,46 @@
 					title: __( 'محتوای ویترین', 'musicwave' ),
 					initialOpen: true,
 				},
-				createElement( components.SelectControl, {
-					label: __( 'منبع محتوا', 'musicwave' ),
-					help: __(
-						'ویترین را بین انتشارهای کاتالوگ و فهرست‌های پخش عمومی جامعه جابه‌جا کنید.',
-						'musicwave'
-					),
-					value: props.attributes.source || 'releases',
-					options: [
-						{
-							label: __( 'انتشارها', 'musicwave' ),
-							value: 'releases',
-						},
-						{
-							label: __( 'فهرست‌های پخش عمومی', 'musicwave' ),
-							value: 'playlists',
-						},
-					],
-					onChange( value ) {
-						update( 'source', value );
-					},
-				} ),
+				// «ویژه‌نامه سرمقاله» و «اسلایدر هیرو» فقط انتشار را می‌شناسند، پس
+				// انتخاب منبع در آن چیدمان‌ها نمایش داده نمی‌شود.
+				'feature' !== activeLayout && 'slider' !== activeLayout
+					? createElement( components.SelectControl, {
+							label: __( 'منبع محتوا', 'musicwave' ),
+							help: __(
+								'ویترین را بین انتشارهای کاتالوگ و فهرست‌های پخش عمومی جامعه جابه‌جا کنید.',
+								'musicwave'
+							),
+							value: source,
+							options: [
+								{
+									label: __( 'انتشارها', 'musicwave' ),
+									value: 'releases',
+								},
+								{
+									label: __(
+										'فهرست‌های پخش عمومی',
+										'musicwave'
+									),
+									value: 'playlists',
+								},
+							],
+							onChange( value ) {
+								var next = { source: value };
+								// چیدمان‌های مخصوص انتشار با منبع فهرست پخش سازگار
+								// نیستند؛ در این حالت به شبکه برمی‌گردیم.
+								if (
+									'playlists' === value &&
+									-1 !==
+										[ 'feature', 'slider', 'bento' ].indexOf(
+											activeLayout
+										)
+								) {
+									next.layout = 'grid';
+								}
+								props.setAttributes( next );
+							},
+					  } )
+					: null,
 				createElement( components.TextControl, {
 					label: __( 'برچسب بالایی', 'musicwave' ),
 					value: props.attributes.eyebrow || '',
@@ -1777,19 +1796,40 @@
 							},
 					  } )
 					: null,
-				'playlists' === ( props.attributes.source || 'releases' )
+				isPlaylistSource ||
+				-1 !== [ 'feature', 'slider', 'scroll' ].indexOf( activeLayout )
 					? null
 					: createElement( components.ToggleControl, {
 							label: __( 'نمایش همهٔ انتشارها', 'musicwave' ),
 							help: __(
-								'همهٔ انتشارهای منطبق با فیلترهای ویترین را بدون محدودیت تعداد نمایش می‌دهد.',
+								'با روشن‌کردن این گزینه، کل انتشارهای منطبق با حلقهٔ کوئری استاندارد وردپرس (Query Loop) خوانده می‌شوند و صفحه‌بندی وردپرس زیر همان حلقه نمایش داده می‌شود.',
 								'musicwave'
 							),
 							checked: !! props.attributes.showAll,
 							onChange( value ) {
 								update( 'showAll', !! value );
 							},
+					  } ),
+				! isPlaylistSource &&
+				props.attributes.showAll &&
+				-1 === [ 'feature', 'slider', 'scroll' ].indexOf( activeLayout )
+					? createElement( components.RangeControl, {
+							label: __(
+								'انتشار در هر صفحه',
+								'musicwave'
+							),
+							help: __(
+								'اندازهٔ صفحهٔ حلقهٔ کوئری؛ شماره‌های صفحه‌بندی وردپرس بر همین اساس ساخته می‌شوند.',
+								'musicwave'
+							),
+							value: props.attributes.perPage || 12,
+							min: 3,
+							max: 24,
+							onChange( value ) {
+								update( 'perPage', value || 12 );
+							},
 					  } )
+					: null
 			),
 			'playlists' === ( props.attributes.source || 'releases' )
 				? createElement(
@@ -1855,32 +1895,54 @@
 				createElement( components.SelectControl, {
 					label: __( 'چیدمان', 'musicwave' ),
 					value: activeLayout,
+					// فهرست‌های پخش فقط شبکه/ریل/فهرست را پشتیبانی می‌کنند؛
+					// گزینه‌های نامرتبط نمایش داده نمی‌شوند.
 					options: [
 						{
 							label: __( 'شبکه واکنش‌گرا', 'musicwave' ),
 							value: 'grid',
 						},
-						{
-							label: __( 'بنتو (چیدمان موزاییکی)', 'musicwave' ),
-							value: 'bento',
-						},
-						{
-							label: __( 'ویترین افقی', 'musicwave' ),
-							value: 'scroll',
-						},
-						{
-							label: __( 'فهرست جمع‌وجور', 'musicwave' ),
-							value: 'list',
-						},
-						{
-							label: __( 'ویژه‌نامه سرمقاله', 'musicwave' ),
-							value: 'feature',
-						},
-						{
-							label: __( 'اسلایدر هیرو', 'musicwave' ),
-							value: 'slider',
-						},
-					],
+					]
+						.concat(
+							isPlaylistSource
+								? []
+								: [
+										{
+											label: __(
+												'بنتو (چیدمان موزاییکی)',
+												'musicwave'
+											),
+											value: 'bento',
+										},
+								  ]
+						)
+						.concat( [
+							{
+								label: __( 'ویترین افقی', 'musicwave' ),
+								value: 'scroll',
+							},
+							{
+								label: __( 'فهرست جمع‌وجور', 'musicwave' ),
+								value: 'list',
+							},
+						] )
+						.concat(
+							isPlaylistSource
+								? []
+								: [
+										{
+											label: __(
+												'ویژه‌نامه سرمقاله',
+												'musicwave'
+											),
+											value: 'feature',
+										},
+										{
+											label: __( 'اسلایدر هیرو', 'musicwave' ),
+											value: 'slider',
+										},
+								  ]
+						),
 					onChange( value ) {
 						var cleaned = ( props.attributes.className || '' )
 							.split( /\s+/ )
@@ -1958,19 +2020,21 @@
 					__( 'نمایش کنترل پخش', 'musicwave' )
 				),
 				toggle( 'showArtist', __( 'نمایش هنرمند', 'musicwave' ) ),
-				usesCardFields
+				usesCardFields && ! isPlaylistSource
 					? toggle( 'showDate', __( 'نمایش تاریخ', 'musicwave' ) )
 					: null,
-				usesCardFields
+				usesCardFields && ! isPlaylistSource
 					? toggle( 'showExcerpt', __( 'نمایش چکیده', 'musicwave' ) )
 					: null,
-				usesCardFields
+				usesCardFields && ! isPlaylistSource
 					? toggle(
 							'showAction',
 							__( 'نمایش پیوند اقدام', 'musicwave' )
 					  )
 					: null,
-				usesCardFields && false !== props.attributes.showAction
+				usesCardFields &&
+				! isPlaylistSource &&
+				false !== props.attributes.showAction
 					? createElement( components.TextControl, {
 							label: __( 'برچسب اقدام', 'musicwave' ),
 							value: props.attributes.actionLabel || '',
@@ -1980,7 +2044,10 @@
 					  } )
 					: null
 			),
-			'feature' === ( props.attributes.layout || 'grid' )
+			// A featured-release slot only exists for release sources: with the
+			// «فهرست‌های پخش عمومی» source there is no release to feature, so the
+			// whole panel would be a dead setting.
+			'feature' === ( props.attributes.layout || 'grid' ) && ! isPlaylistSource
 				? createElement(
 						components.PanelBody,
 						{
@@ -2304,7 +2371,9 @@
 					},
 				} )
 			),
-			filterTabsPanel( props )
+			// Filter tabs drive the release query only; a playlist shelf has no
+			// release query, so the panel would be a dead setting there.
+			isPlaylistSource ? null : filterTabsPanel( props )
 		);
 	}
 
